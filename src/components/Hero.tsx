@@ -142,18 +142,29 @@ function HeroPhoto() {
 
   const isPng = SOURCES[idx]?.endsWith(".png");
 
-  return (
-    <div
-      className={`relative h-[30vh] md:h-[50vh] aspect-[3/4] ${
-        isPng ? "" : "rounded-2xl md:rounded-[2rem] overflow-hidden shadow-2xl"
-      }`}
-    >
+  if (isPng) {
+    // PNG sem fundo: sem border, sem aspect fixo — só altura generosa
+    // pra foto sangrar natural entre as letras LARA / DAM
+    return (
       <img
         src={SOURCES[idx]}
         alt="Lara Dam"
-        className={`absolute inset-0 w-full h-full ${
-          isPng ? "object-contain" : "object-cover"
-        }`}
+        className="h-[38vh] md:h-[62vh] w-auto max-w-[44vw] object-contain"
+        onError={() => {
+          if (idx < SOURCES.length - 1) setIdx(idx + 1);
+          else setFailed(true);
+        }}
+      />
+    );
+  }
+
+  // JPG com fundo: mantém card retangular com bordas arredondadas
+  return (
+    <div className="relative h-[30vh] md:h-[50vh] aspect-[3/4] rounded-2xl md:rounded-[2rem] overflow-hidden shadow-2xl">
+      <img
+        src={SOURCES[idx]}
+        alt="Lara Dam"
+        className="absolute inset-0 w-full h-full object-cover"
         onError={() => {
           if (idx < SOURCES.length - 1) setIdx(idx + 1);
           else setFailed(true);
