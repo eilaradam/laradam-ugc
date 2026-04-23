@@ -3,13 +3,15 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { ABOUT } from "@/data/content";
+import DebugLabel from "./DebugLabel";
 
 export default function About() {
   return (
     <section
       id="sobre"
-      className="px-6 md:px-12 py-14 md:py-32 max-w-7xl mx-auto"
+      className="relative px-6 md:px-12 py-14 md:py-32 max-w-7xl mx-auto"
     >
+      <DebugLabel name="About" info="py-32 · px-12 · max-w-7xl · gap-16" />
       <div className="grid md:grid-cols-12 gap-8 md:gap-16">
         <motion.div
           initial={{ opacity: 0, y: 30 }}

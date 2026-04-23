@@ -2,10 +2,12 @@
 
 import { motion } from "framer-motion";
 import { BRANDS, type Brand } from "@/data/content";
+import DebugLabel from "./DebugLabel";
 
 export default function Brands() {
   return (
-    <section id="marcas" className="px-6 md:px-12 py-14 md:py-32">
+    <section id="marcas" className="relative px-6 md:px-12 py-14 md:py-32">
+      <DebugLabel name="Brands" info="py-32 · px-12 · max-w-7xl · grid-cols-5 (20 logos, aspect 5:3)" />
       <div className="max-w-7xl mx-auto">
         <div className="text-xs uppercase tracking-[0.3em] text-primary font-medium mb-6 flex items-center gap-3">
           <span className="h-px w-8 bg-primary" />

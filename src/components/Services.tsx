@@ -13,6 +13,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { SERVICES, type Service } from "@/data/content";
+import DebugLabel from "./DebugLabel";
 
 const ICONS: Record<string, LucideIcon> = {
   Video,
@@ -27,8 +28,9 @@ export default function Services() {
   return (
     <section
       id="servicos"
-      className="px-6 md:px-12 py-14 md:py-32 bg-foreground text-background"
+      className="relative px-6 md:px-12 py-14 md:py-32 bg-foreground text-background"
     >
+      <DebugLabel name="Services" info="py-32 · px-12 · max-w-7xl · gap-5 grid-cols-3" />
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10 md:mb-16">
           <div>
