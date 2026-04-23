@@ -8,7 +8,7 @@ export default function Hero() {
   return (
     <section
       id="top"
-      className="relative flex flex-col overflow-hidden bg-background noise pt-24 md:pt-28"
+      className="relative flex flex-col overflow-hidden bg-background noise pt-24 md:pt-24 md:h-[calc(100vh-2.75rem)] md:justify-between"
     >
       {/* Top row: 3 infos alinhadas na mesma linha (Disponível · Eyebrow · Litoral) */}
       <div className="relative z-40 px-5 md:px-12 flex flex-col md:flex-row items-center justify-between gap-3">
@@ -58,7 +58,7 @@ export default function Hero() {
             initial={{ opacity: 0, x: -40 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.5, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-            className="relative z-10 font-display font-black text-foreground leading-[0.82] tracking-tighter text-[22vw] md:text-[11vw] select-none"
+            className="relative z-10 font-display font-black text-foreground leading-[0.82] tracking-tighter text-[22vw] md:text-[10vw] select-none"
           >
             {/* "Prazer," accent colado no topo do "L" de LARA (desktop) */}
             <motion.span
@@ -85,7 +85,7 @@ export default function Hero() {
             initial={{ opacity: 0, x: 40 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.55, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-            className="relative z-10 font-display font-black text-primary leading-[0.82] tracking-tighter text-[22vw] md:text-[11vw] select-none"
+            className="relative z-10 font-display font-black text-primary leading-[0.82] tracking-tighter text-[22vw] md:text-[10vw] select-none"
           >
             DAM
             {/* "est. 2024 · portfólio 2026" colado embaixo do "M" de DAM (desktop) */}
@@ -155,8 +155,8 @@ function HeroPhoto() {
       alt="Lara Dam"
       className={`w-auto object-contain ${
         isPng
-          ? "h-[42vh] md:h-[78vh] max-w-[70vw] md:max-w-[36vw]"
-          : "h-[36vh] md:h-[62vh] max-w-[70vw] md:max-w-[36vw] rounded-2xl shadow-2xl"
+          ? "h-[42vh] md:h-[58vh] max-w-[70vw] md:max-w-[32vw]"
+          : "h-[36vh] md:h-[50vh] max-w-[70vw] md:max-w-[32vw] rounded-2xl shadow-2xl"
       }`}
       onError={() => {
         if (idx < SOURCES.length - 1) setIdx(idx + 1);
