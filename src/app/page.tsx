@@ -4,6 +4,7 @@ import Marquee from "@/components/Marquee";
 import Stats from "@/components/Stats";
 import About from "@/components/About";
 import Services from "@/components/Services";
+import BestResults from "@/components/BestResults";
 import CategoryGallery from "@/components/CategoryGallery";
 import Brands from "@/components/Brands";
 import Contact from "@/components/Contact";
@@ -18,6 +19,7 @@ export default function Home() {
       <Stats />
       <About />
       <Services />
+      <BestResults />
       <CategoryGallery />
       <Brands />
       <Contact />
