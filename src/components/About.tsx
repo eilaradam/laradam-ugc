@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useState } from "react";
 import { ABOUT } from "@/data/content";
 
 export default function About() {
@@ -17,22 +18,7 @@ export default function About() {
           transition={{ duration: 0.7 }}
           className="md:col-span-5 md:sticky md:top-32 self-start"
         >
-          <div className="aspect-[4/5] relative overflow-hidden rounded-3xl bg-foreground/5 border border-foreground/10">
-            <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background to-foreground/5" />
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="font-display font-black text-[16vw] md:text-[8vw] text-foreground/5">
-                LD
-              </div>
-            </div>
-            <div className="absolute bottom-4 left-4 right-4 p-4 rounded-2xl bg-background/80 backdrop-blur-sm border border-foreground/10">
-              <div className="text-[10px] uppercase tracking-wider text-muted">
-                Em breve
-              </div>
-              <div className="text-sm font-semibold text-foreground">
-                Troque por foto real aqui
-              </div>
-            </div>
-          </div>
+          <PhotoSlot />
         </motion.div>
 
         <motion.div
@@ -80,5 +66,53 @@ export default function About() {
         </motion.div>
       </div>
     </section>
+  );
+}
+
+function PhotoSlot() {
+  // Quando /public/lara-sobre.jpg existir, mostra a foto.
+  // Se der erro (arquivo ainda não foi subido), mostra o placeholder.
+  const [hasError, setHasError] = useState(false);
+
+  return (
+    <div className="aspect-[4/5] relative overflow-hidden rounded-3xl bg-foreground/5 border border-foreground/10">
+      {!hasError ? (
+        <img
+          src="/lara-sobre.jpg"
+          alt="Lara Dam, UGC Creator"
+          className="absolute inset-0 w-full h-full object-cover"
+          onError={() => setHasError(true)}
+        />
+      ) : (
+        <>
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background to-foreground/5" />
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="font-display font-black text-[16vw] md:text-[8vw] text-foreground/5">
+              LD
+            </div>
+          </div>
+          <div className="absolute bottom-4 left-4 right-4 p-4 rounded-2xl bg-background/80 backdrop-blur-sm border border-foreground/10">
+            <div className="text-[10px] uppercase tracking-wider text-muted">
+              Em breve
+            </div>
+            <div className="text-sm font-semibold text-foreground">
+              Salve a foto em public/lara-sobre.jpg
+            </div>
+          </div>
+        </>
+      )}
+
+      {/* Fraunces subtle caption over photo */}
+      {!hasError && (
+        <div className="absolute bottom-4 left-4 right-4 p-3 rounded-2xl bg-foreground/80 backdrop-blur-md text-background">
+          <div className="text-[10px] uppercase tracking-[0.2em] text-background/60">
+            Lara Dam
+          </div>
+          <div className="text-sm font-serif-accent italic">
+            UGC Creator · est. 2024
+          </div>
+        </div>
+      )}
+    </div>
   );
 }
