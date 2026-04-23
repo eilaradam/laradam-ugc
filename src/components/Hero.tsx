@@ -48,33 +48,6 @@ export default function Hero() {
 
       {/* Composição sobreposta: LARA — FOTO GRANDE — DAM */}
       <div className="relative flex items-center justify-center mt-2 md:mt-3 px-2">
-        {/* "Prazer," accent top-left (desktop) */}
-        <motion.div
-          initial={{ opacity: 0, x: -10 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.8, duration: 0.8 }}
-          className="hidden md:block absolute top-0 left-12 z-40"
-        >
-          <span className="font-serif-accent italic text-2xl text-foreground-soft">
-            Prazer,
-          </span>
-        </motion.div>
-
-        {/* "est. 2024" accent bottom-right (desktop) */}
-        <motion.div
-          initial={{ opacity: 0, x: 10 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.9, duration: 0.8 }}
-          className="hidden md:block absolute bottom-0 right-12 z-40 text-right"
-        >
-          <div className="font-serif-accent italic text-lg text-foreground-soft">
-            est. 2024
-          </div>
-          <div className="text-[10px] uppercase tracking-[0.25em] text-muted mt-0.5">
-            portfólio · 2026
-          </div>
-        </motion.div>
-
         {/* Desktop: LARA · FOTO · DAM com sobreposição.
             A foto avança em cima do último "A" de LARA e primeiro "D" de DAM
             via margem negativa horizontal (-mx). Z-index maior faz ela cobrir
@@ -87,6 +60,15 @@ export default function Hero() {
             transition={{ delay: 0.5, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
             className="relative z-10 font-display font-black text-foreground leading-[0.82] tracking-tighter text-[22vw] md:text-[11vw] select-none"
           >
+            {/* "Prazer," accent colado no topo do "L" de LARA (desktop) */}
+            <motion.span
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.8, duration: 0.8 }}
+              className="hidden md:block absolute -top-8 left-0 font-serif-accent italic text-2xl lg:text-3xl text-foreground-soft tracking-normal"
+            >
+              Prazer,
+            </motion.span>
             LARA
           </motion.h1>
 
@@ -106,6 +88,20 @@ export default function Hero() {
             className="relative z-10 font-display font-black text-primary leading-[0.82] tracking-tighter text-[22vw] md:text-[11vw] select-none"
           >
             DAM
+            {/* "est. 2024 · portfólio 2026" colado embaixo do "M" de DAM (desktop) */}
+            <motion.span
+              initial={{ opacity: 0, x: 10 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.9, duration: 0.8 }}
+              className="hidden md:block absolute -bottom-10 right-0 text-right tracking-normal"
+            >
+              <span className="block font-serif-accent italic text-xl lg:text-2xl text-foreground-soft leading-none">
+                est. 2024
+              </span>
+              <span className="block text-[10px] uppercase tracking-[0.25em] text-muted mt-1 font-sans font-medium">
+                portfólio · 2026
+              </span>
+            </motion.span>
           </motion.h1>
         </div>
       </div>
