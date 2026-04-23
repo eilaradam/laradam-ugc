@@ -11,7 +11,7 @@ export default function Hero() {
       className="relative min-h-screen flex flex-col overflow-hidden bg-background noise pt-24 md:pt-28"
     >
       {/* Top row: tags em cantos opostos */}
-      <div className="relative z-30 px-5 md:px-12 flex flex-wrap items-center justify-between gap-3">
+      <div className="relative z-40 px-5 md:px-12 flex flex-wrap items-center justify-between gap-3">
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -35,65 +35,76 @@ export default function Hero() {
         </motion.div>
       </div>
 
-      {/* Eyebrow label centralizado */}
+      {/* Eyebrow */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.4, duration: 0.8 }}
-        className="relative z-30 flex items-center justify-center gap-3 mt-6 md:mt-8 text-[10px] md:text-xs uppercase tracking-[0.3em] text-primary font-medium"
+        className="relative z-40 flex items-center justify-center gap-3 mt-6 md:mt-8 text-[10px] md:text-xs uppercase tracking-[0.3em] text-primary font-medium"
       >
         <span className="h-px w-6 md:w-8 bg-primary" />
         UGC Creator & Content Strategist
         <span className="h-px w-6 md:w-8 bg-primary" />
       </motion.div>
 
-      {/* Composição: LARA · FOTO · DAM numa linha horizontal */}
-      <div className="relative flex-1 flex items-center justify-center my-4 md:my-8 px-4">
-        {/* "Prazer," accent */}
+      {/* Composição sobreposta: LARA — FOTO GRANDE — DAM */}
+      <div className="relative flex-1 flex items-center justify-center my-4 md:my-6 px-2">
+        {/* "Prazer," accent top-left (desktop) */}
         <motion.div
           initial={{ opacity: 0, x: -10 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.6, duration: 0.8 }}
-          className="hidden md:block absolute top-4 left-12 z-10"
+          transition={{ delay: 0.8, duration: 0.8 }}
+          className="hidden md:block absolute top-0 left-12 z-40"
         >
           <span className="font-serif-accent italic text-2xl text-foreground-soft">
             Prazer,
           </span>
         </motion.div>
 
-        {/* Linha horizontal */}
-        <div className="flex items-center justify-center gap-3 md:gap-6 w-full max-w-7xl">
-          {/* LARA à esquerda */}
+        {/* "est. 2024" accent bottom-right (desktop) */}
+        <motion.div
+          initial={{ opacity: 0, x: 10 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.9, duration: 0.8 }}
+          className="hidden md:block absolute bottom-0 right-12 z-40 text-right"
+        >
+          <div className="font-serif-accent italic text-lg text-foreground-soft">
+            est. 2024
+          </div>
+          <div className="text-[10px] uppercase tracking-[0.25em] text-muted mt-0.5">
+            portfólio · 2026
+          </div>
+        </motion.div>
+
+        <div className="relative w-full max-w-7xl flex flex-col items-center">
+          {/* LARA — atrás */}
           <motion.h1
-            initial={{ opacity: 0, x: -40 }}
-            animate={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-            className="font-display font-black text-foreground leading-none tracking-tighter text-[14vw] md:text-[10vw]"
+            className="relative z-10 font-display font-black text-foreground leading-[0.82] tracking-tighter text-[26vw] md:text-[20vw] select-none"
           >
             LARA
           </motion.h1>
 
-          {/* FOTO no meio */}
+          {/* FOTO — na frente, sobrepondo parte do LARA (em cima) e DAM (embaixo) */}
           <motion.div
             initial={{ opacity: 0, scale: 0.92 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.65, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-            className="flex-shrink-0"
+            className="relative z-30 -my-[8vw] md:-my-[7vw] pointer-events-none"
           >
             <HeroPhoto />
           </motion.div>
 
-          {/* DAM à direita */}
+          {/* DAM — atrás */}
           <motion.h1
-            initial={{ opacity: 0, x: 40 }}
-            animate={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: -40 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.55, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-            className="font-display font-black text-primary leading-none tracking-tighter text-[14vw] md:text-[10vw] relative"
+            className="relative z-10 font-display font-black text-primary leading-[0.82] tracking-tighter text-[26vw] md:text-[20vw] select-none"
           >
             DAM
-            <span className="font-serif-accent italic text-[0.2em] text-foreground-soft absolute -bottom-1 -right-2 md:-right-4">
-              est. 2024
-            </span>
           </motion.h1>
         </div>
       </div>
@@ -103,7 +114,7 @@ export default function Hero() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.9, duration: 0.7 }}
-        className="relative z-30 px-5 md:px-12 pb-12 md:pb-16 max-w-7xl mx-auto w-full grid md:grid-cols-2 gap-5 md:gap-8 items-end"
+        className="relative z-40 px-5 md:px-12 pb-10 md:pb-14 max-w-7xl mx-auto w-full grid md:grid-cols-2 gap-5 md:gap-8 items-end"
       >
         <p className="text-foreground-soft text-sm md:text-base max-w-md leading-relaxed">
           Criando conteúdo que{" "}
@@ -133,7 +144,6 @@ export default function Hero() {
 }
 
 function HeroPhoto() {
-  // Cascata: larafundo.png (PNG sem fundo ideal) → fallbacks
   const SOURCES = ["/larafundo.png", "/lara-hero.png", "/lara-hero.jpg", "/lara-sobre.jpg"];
   const [idx, setIdx] = useState(0);
   const [failed, setFailed] = useState(false);
@@ -142,34 +152,19 @@ function HeroPhoto() {
 
   const isPng = SOURCES[idx]?.endsWith(".png");
 
-  if (isPng) {
-    // PNG sem fundo: sem border, sem aspect fixo — só altura generosa
-    // pra foto sangrar natural entre as letras LARA / DAM
-    return (
-      <img
-        src={SOURCES[idx]}
-        alt="Lara Dam"
-        className="h-[38vh] md:h-[62vh] w-auto max-w-[44vw] object-contain"
-        onError={() => {
-          if (idx < SOURCES.length - 1) setIdx(idx + 1);
-          else setFailed(true);
-        }}
-      />
-    );
-  }
-
-  // JPG com fundo: mantém card retangular com bordas arredondadas
   return (
-    <div className="relative h-[30vh] md:h-[50vh] aspect-[3/4] rounded-2xl md:rounded-[2rem] overflow-hidden shadow-2xl">
-      <img
-        src={SOURCES[idx]}
-        alt="Lara Dam"
-        className="absolute inset-0 w-full h-full object-cover"
-        onError={() => {
-          if (idx < SOURCES.length - 1) setIdx(idx + 1);
-          else setFailed(true);
-        }}
-      />
-    </div>
+    <img
+      src={SOURCES[idx]}
+      alt="Lara Dam"
+      className={`w-auto object-contain ${
+        isPng
+          ? "h-[42vh] md:h-[72vh] max-w-[70vw] md:max-w-[50vw]"
+          : "h-[36vh] md:h-[56vh] max-w-[70vw] md:max-w-[44vw] rounded-2xl shadow-2xl"
+      }`}
+      onError={() => {
+        if (idx < SOURCES.length - 1) setIdx(idx + 1);
+        else setFailed(true);
+      }}
+    />
   );
 }
