@@ -123,32 +123,18 @@ function CategoryRow({ category }: { category: Category }) {
         </div>
       </CategoryHeader>
 
-      <div className="relative -mx-6 md:-mx-12">
-        {/* Edge fades */}
-        <div
-          className={`pointer-events-none absolute top-0 bottom-0 left-0 w-12 md:w-16 bg-gradient-to-r from-background-alt to-transparent z-10 transition-opacity ${
-            canPrev ? "opacity-100" : "opacity-0"
-          }`}
-        />
-        <div
-          className={`pointer-events-none absolute top-0 bottom-0 right-0 w-12 md:w-16 bg-gradient-to-l from-background-alt to-transparent z-10 transition-opacity ${
-            canNext ? "opacity-100" : "opacity-0"
-          }`}
-        />
-
-        <div
-          ref={scrollerRef}
-          className="flex gap-4 md:gap-6 overflow-x-auto overflow-y-hidden scroll-smooth snap-x snap-mandatory scrollbar-hide px-6 md:px-12"
-        >
-          {videos.map((v, i) => (
-            <div
-              key={v.id}
-              className="flex-shrink-0 snap-start w-[calc((100%-1rem)/2)] sm:w-[calc((100%-2rem)/3)] lg:w-[calc((100%-4.5rem)/4)]"
-            >
-              <VideoCard video={v} index={i} />
-            </div>
-          ))}
-        </div>
+      <div
+        ref={scrollerRef}
+        className="flex gap-4 md:gap-6 overflow-x-auto overflow-y-hidden scroll-smooth snap-x snap-mandatory scrollbar-hide"
+      >
+        {videos.map((v, i) => (
+          <div
+            key={v.id}
+            className="flex-shrink-0 snap-start w-[calc((100%-1rem)/2)] sm:w-[calc((100%-2rem)/3)] lg:w-[calc((100%-4.5rem)/4)]"
+          >
+            <VideoCard video={v} index={i} />
+          </div>
+        ))}
       </div>
     </motion.div>
   );
