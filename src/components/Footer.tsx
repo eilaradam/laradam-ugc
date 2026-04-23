@@ -6,7 +6,7 @@ export default function Footer() {
     <footer className="bg-foreground text-background border-t border-background/10 px-6 md:px-12 py-10">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
         <div>
-          <div className="font-display font-black text-2xl">
+          <div className="font-display font-black text-xl">
             LARA DAM<span className="text-primary">.</span>
           </div>
           <div className="text-xs uppercase tracking-wider text-background/50 mt-1">

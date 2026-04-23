@@ -15,7 +15,7 @@ export default function FeaturedVideos() {
               <span className="h-px w-8 bg-primary" />
               Destaques
             </div>
-            <h2 className="font-display font-black text-5xl md:text-7xl leading-[0.9] tracking-tighter">
+            <h2 className="font-display font-black text-4xl md:text-6xl leading-[0.9] tracking-tighter">
               Os melhores{" "}
               <span className="font-serif-accent italic text-primary">
                 resultados

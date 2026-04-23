@@ -21,7 +21,7 @@ export default function CategoryGallery() {
             <span className="h-px w-8 bg-primary" />
             Categorias
           </div>
-          <h2 className="font-display font-black text-5xl md:text-7xl leading-[0.9] tracking-tighter max-w-4xl">
+          <h2 className="font-display font-black text-4xl md:text-6xl leading-[0.9] tracking-tighter max-w-4xl">
             Que tipo de{" "}
             <span className="font-serif-accent italic text-primary">
               conteúdo
@@ -167,7 +167,7 @@ function CategoryHeader({
     <div className="flex items-end justify-between gap-4 mb-5 md:mb-6">
       <div>
         <div className="flex items-baseline gap-3">
-          <h3 className="font-display font-black text-3xl md:text-5xl tracking-tighter text-foreground">
+          <h3 className="font-display font-black text-2xl md:text-4xl tracking-tighter text-foreground">
             {category.name}
           </h3>
           <span className="font-display font-bold text-xs md:text-sm text-muted">

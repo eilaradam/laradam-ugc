@@ -17,7 +17,7 @@ export default function Services() {
               <span className="h-px w-8 bg-primary" />
               Serviços
             </div>
-            <h2 className="font-display font-black text-5xl md:text-7xl leading-[0.9] tracking-tighter max-w-3xl">
+            <h2 className="font-display font-black text-4xl md:text-6xl leading-[0.9] tracking-tighter max-w-3xl">
               O que podemos criar{" "}
               <span className="font-serif-accent italic text-primary">juntos</span>
             </h2>
@@ -44,7 +44,7 @@ export default function Services() {
                 </span>
                 <ArrowUpRight className="w-5 h-5 text-background/30 group-hover:text-primary-light group-hover:-translate-y-1 group-hover:translate-x-1 transition-all" />
               </div>
-              <h3 className="font-display font-bold text-2xl md:text-3xl mb-3 tracking-tight">
+              <h3 className="font-display font-bold text-xl md:text-2xl mb-3 tracking-tight">
                 {s.title}
               </h3>
               <p className="text-background/60 group-hover:text-primary-light/80 text-sm leading-relaxed">

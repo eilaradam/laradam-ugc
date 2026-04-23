@@ -27,7 +27,7 @@ export default function Stats() {
             transition={{ duration: 0.5, delay: i * 0.08 }}
             className="bg-background p-6 md:p-10"
           >
-            <div className="font-display font-black text-5xl md:text-7xl text-foreground tracking-tight">
+            <div className="font-display font-black text-4xl md:text-6xl text-foreground tracking-tight">
               {s.value}
             </div>
             <div className="mt-2 text-xs md:text-sm uppercase tracking-wider text-muted">

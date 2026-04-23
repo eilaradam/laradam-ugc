@@ -20,7 +20,7 @@ export default function About() {
           <div className="aspect-[4/5] relative overflow-hidden rounded-3xl bg-foreground/5 border border-foreground/10">
             <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background to-foreground/5" />
             <div className="absolute inset-0 flex items-center justify-center">
-              <div className="font-display font-black text-[20vw] md:text-[10vw] text-foreground/5">
+              <div className="font-display font-black text-[16vw] md:text-[8vw] text-foreground/5">
                 LD
               </div>
             </div>
@@ -47,7 +47,7 @@ export default function About() {
             Sobre mim
           </div>
 
-          <h2 className="font-display font-black text-5xl md:text-7xl text-foreground leading-[0.9] tracking-tighter mb-8">
+          <h2 className="font-display font-black text-4xl md:text-6xl text-foreground leading-[0.9] tracking-tighter mb-8">
             {ABOUT.greeting.split(" ").map((word, i) => (
               <span key={i} className="inline-block mr-3">
                 {word === "Lara" || word === "Dam" ? (

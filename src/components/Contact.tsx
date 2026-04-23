@@ -55,7 +55,7 @@ export default function Contact() {
     >
       {/* Big background type */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none opacity-[0.04]">
-        <div className="font-display font-black text-[30vw] leading-none text-primary tracking-tighter">
+        <div className="font-display font-black text-[24vw] leading-none text-primary tracking-tighter">
           HELLO
         </div>
       </div>
@@ -72,7 +72,7 @@ export default function Contact() {
             <span className="h-px w-8 bg-primary" />
             Contato
           </div>
-          <h2 className="font-display font-black text-5xl md:text-7xl leading-[0.9] tracking-tighter mb-8">
+          <h2 className="font-display font-black text-4xl md:text-6xl leading-[0.9] tracking-tighter mb-8">
             Vamos criar algo{" "}
             <span className="font-serif-accent italic text-primary">
               memorável

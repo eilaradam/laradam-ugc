@@ -15,7 +15,7 @@ export default function Hero() {
           initial={{ opacity: 0, scale: 1.05 }}
           animate={{ opacity: 0.04, scale: 1 }}
           transition={{ duration: 2 }}
-          className="font-display font-black text-[40vw] leading-none text-primary tracking-tighter"
+          className="font-display font-black text-[32vw] leading-none text-primary tracking-tighter"
         >
           UGC
         </motion.div>
@@ -67,7 +67,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 60 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-            className="block text-[18vw] md:text-[13vw]"
+            className="block text-[14vw] md:text-[8vw]"
           >
             LARA
           </motion.span>
@@ -75,7 +75,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 60 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.45, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-            className="block text-[18vw] md:text-[13vw] text-primary relative"
+            className="block text-[14vw] md:text-[8vw] text-primary relative"
           >
             DAM
             <span className="font-serif-accent italic text-[0.3em] text-foreground-soft absolute -bottom-2 right-0 md:right-8">

@@ -8,7 +8,7 @@ export default function Marquee() {
         {doubled.map((item, i) => (
           <span
             key={i}
-            className="font-display font-black text-3xl md:text-5xl uppercase tracking-tight flex items-center gap-8"
+            className="font-display font-black text-2xl md:text-4xl uppercase tracking-tight flex items-center gap-8"
           >
             {item}
             <span className="text-primary">◆</span>

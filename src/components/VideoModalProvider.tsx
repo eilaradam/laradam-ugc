@@ -89,7 +89,7 @@ export default function VideoModalProvider({
               <div className="text-[10px] md:text-xs uppercase tracking-[0.2em] text-white/60">
                 {video.category}
               </div>
-              <div className="font-display font-black text-lg md:text-2xl tracking-tight mt-0.5">
+              <div className="font-display font-black text-lg md:text-xl tracking-tight mt-0.5">
                 {video.title}
               </div>
               <div className="flex items-center gap-2 mt-2 text-[10px] md:text-xs uppercase tracking-wider">

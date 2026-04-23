@@ -11,7 +11,7 @@ export default function Brands() {
           <span className="h-px w-8 bg-primary" />
           Marcas parceiras
         </div>
-        <h2 className="font-display font-black text-5xl md:text-7xl leading-[0.9] tracking-tighter mb-4 max-w-4xl">
+        <h2 className="font-display font-black text-4xl md:text-6xl leading-[0.9] tracking-tighter mb-4 max-w-4xl">
           Elas já apostaram em mim.{" "}
           <span className="font-serif-accent italic text-primary">
             Você será a próxima?
@@ -32,7 +32,7 @@ export default function Brands() {
               transition={{ duration: 0.4, delay: i * 0.03 }}
               className="bg-background py-10 md:py-14 flex items-center justify-center hover:bg-primary-light transition-colors group"
             >
-              <span className="font-display font-bold text-xl md:text-2xl text-foreground/60 group-hover:text-primary transition-colors tracking-tight">
+              <span className="font-display font-bold text-xl md:text-xl text-foreground/60 group-hover:text-primary transition-colors tracking-tight">
                 {brand}
               </span>
             </motion.div>
