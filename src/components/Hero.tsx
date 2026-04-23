@@ -58,7 +58,7 @@ export default function Hero() {
             initial={{ opacity: 0, x: -40 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.5, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-            className="relative z-10 font-display font-black text-foreground leading-[0.82] tracking-tighter text-[22vw] md:text-[14vw] select-none"
+            className="relative z-10 font-display font-black text-foreground leading-[0.82] tracking-tighter text-[20vw] md:text-[12vw] select-none"
           >
             {/* "Prazer," accent colado no topo do "L" de LARA (desktop) */}
             <motion.span
@@ -85,7 +85,7 @@ export default function Hero() {
             initial={{ opacity: 0, x: 40 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.55, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-            className="relative z-10 font-display font-black text-primary leading-[0.82] tracking-tighter text-[22vw] md:text-[14vw] select-none"
+            className="relative z-10 font-display font-black text-primary leading-[0.82] tracking-tighter text-[20vw] md:text-[12vw] select-none"
           >
             DAM
             {/* "est. 2024 · portfólio 2026" colado embaixo do "M" de DAM (desktop) */}
