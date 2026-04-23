@@ -76,33 +76,32 @@ export default function Hero() {
           </div>
         </motion.div>
 
-        <div className="relative w-full max-w-7xl flex flex-col items-center">
-          {/* LARA — atrás */}
+        {/* Desktop: LARA · FOTO · DAM numa linha horizontal.
+            Mobile: empilhado (LARA em cima, foto, DAM embaixo). */}
+        <div className="relative w-full max-w-7xl flex flex-col md:flex-row items-center justify-center gap-1 md:gap-4 lg:gap-8">
           <motion.h1
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, x: -40 }}
+            animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.5, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-            className="relative z-10 font-display font-black text-foreground leading-[0.82] tracking-tighter text-[26vw] md:text-[20vw] select-none"
+            className="relative z-10 font-display font-black text-foreground leading-[0.82] tracking-tighter text-[26vw] md:text-[11vw] select-none"
           >
             LARA
           </motion.h1>
 
-          {/* FOTO — na frente, sobrepondo parte do LARA (em cima) e DAM (embaixo) */}
           <motion.div
             initial={{ opacity: 0, scale: 0.92 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.65, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-            className="relative z-30 -my-[8vw] md:-my-[7vw] pointer-events-none"
+            className="relative z-30 -my-8 md:my-0 pointer-events-none flex-shrink-0"
           >
             <HeroPhoto />
           </motion.div>
 
-          {/* DAM — atrás */}
           <motion.h1
-            initial={{ opacity: 0, y: -40 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, x: 40 }}
+            animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.55, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-            className="relative z-10 font-display font-black text-primary leading-[0.82] tracking-tighter text-[26vw] md:text-[20vw] select-none"
+            className="relative z-10 font-display font-black text-primary leading-[0.82] tracking-tighter text-[26vw] md:text-[11vw] select-none"
           >
             DAM
           </motion.h1>
@@ -158,8 +157,8 @@ function HeroPhoto() {
       alt="Lara Dam"
       className={`w-auto object-contain ${
         isPng
-          ? "h-[42vh] md:h-[72vh] max-w-[70vw] md:max-w-[50vw]"
-          : "h-[36vh] md:h-[56vh] max-w-[70vw] md:max-w-[44vw] rounded-2xl shadow-2xl"
+          ? "h-[36vh] md:h-[68vh] max-w-[70vw] md:max-w-[32vw]"
+          : "h-[32vh] md:h-[56vh] max-w-[70vw] md:max-w-[32vw] rounded-2xl shadow-2xl"
       }`}
       onError={() => {
         if (idx < SOURCES.length - 1) setIdx(idx + 1);
