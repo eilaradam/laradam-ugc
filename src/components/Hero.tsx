@@ -86,7 +86,7 @@ export default function Hero() {
             initial={{ opacity: 0, x: -40 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.5, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-            className="relative z-10 font-display font-black text-foreground leading-[0.82] tracking-tighter text-[26vw] md:text-[13vw] select-none"
+            className="relative z-10 font-display font-black text-foreground leading-[0.82] tracking-tighter text-[22vw] md:text-[11vw] select-none"
           >
             LARA
           </motion.h1>
@@ -104,7 +104,7 @@ export default function Hero() {
             initial={{ opacity: 0, x: 40 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.55, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-            className="relative z-10 font-display font-black text-primary leading-[0.82] tracking-tighter text-[26vw] md:text-[13vw] select-none"
+            className="relative z-10 font-display font-black text-primary leading-[0.82] tracking-tighter text-[22vw] md:text-[11vw] select-none"
           >
             DAM
           </motion.h1>
@@ -160,8 +160,8 @@ function HeroPhoto() {
       alt="Lara Dam"
       className={`w-auto object-contain ${
         isPng
-          ? "h-[36vh] md:h-[68vh] max-w-[70vw] md:max-w-[32vw]"
-          : "h-[32vh] md:h-[56vh] max-w-[70vw] md:max-w-[32vw] rounded-2xl shadow-2xl"
+          ? "h-[42vh] md:h-[78vh] max-w-[70vw] md:max-w-[36vw]"
+          : "h-[36vh] md:h-[62vh] max-w-[70vw] md:max-w-[36vw] rounded-2xl shadow-2xl"
       }`}
       onError={() => {
         if (idx < SOURCES.length - 1) setIdx(idx + 1);
