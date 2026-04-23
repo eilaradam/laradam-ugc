@@ -5,37 +5,32 @@ import { STATS } from "@/data/content";
 
 export default function Stats() {
   return (
-    <section className="px-6 md:px-12 py-14 md:py-32 max-w-7xl mx-auto">
+    <section className="px-6 md:px-12 py-8 md:py-10 max-w-7xl mx-auto">
       <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
-        className="text-xs uppercase tracking-[0.3em] text-primary font-medium mb-6 flex items-center gap-3"
+        className="grid grid-cols-2 md:grid-cols-4 gap-y-6 gap-x-4 md:gap-x-8 md:divide-x md:divide-foreground/10"
       >
-        <span className="h-px w-8 bg-primary" />
-        Os números
-      </motion.div>
-
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-foreground/10 border border-foreground/10">
         {STATS.map((s, i) => (
           <motion.div
             key={s.label}
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: i * 0.08 }}
-            className="bg-background p-6 md:p-10"
+            transition={{ duration: 0.4, delay: i * 0.06 }}
+            className="flex flex-col md:pl-6 first:md:pl-0"
           >
-            <div className="font-display font-black text-4xl md:text-6xl text-foreground tracking-tight">
+            <div className="font-display font-black text-2xl md:text-3xl text-foreground tracking-tight leading-none">
               {s.value}
             </div>
-            <div className="mt-2 text-xs md:text-sm uppercase tracking-wider text-muted">
+            <div className="mt-1 text-[11px] md:text-xs uppercase tracking-[0.15em] text-muted">
               {s.label}
             </div>
           </motion.div>
         ))}
-      </div>
+      </motion.div>
     </section>
   );
 }
