@@ -8,7 +8,7 @@ export default function Hero() {
   return (
     <section
       id="top"
-      className="relative flex flex-col overflow-hidden bg-background noise pt-24 md:pt-24 md:h-[calc(100vh-2.75rem)] md:justify-between"
+      className="relative flex flex-col overflow-hidden bg-background noise pt-24 md:pt-24 md:h-[calc(100vh-2.75rem)]"
     >
       {/* Top row: 3 infos alinhadas na mesma linha (Disponível · Eyebrow · Litoral) */}
       <div className="relative z-40 px-5 md:px-12 flex flex-col md:flex-row items-center justify-between gap-3">
@@ -47,7 +47,7 @@ export default function Hero() {
       </div>
 
       {/* Composição sobreposta: LARA — FOTO GRANDE — DAM */}
-      <div className="relative flex items-center justify-center mt-2 md:mt-3 px-2">
+      <div className="relative flex items-center justify-center mt-2 md:mt-auto md:mb-20 px-2">
         {/* Desktop: LARA · FOTO · DAM com sobreposição.
             A foto avança em cima do último "A" de LARA e primeiro "D" de DAM
             via margem negativa horizontal (-mx). Z-index maior faz ela cobrir
