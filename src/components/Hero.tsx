@@ -76,14 +76,17 @@ export default function Hero() {
           </div>
         </motion.div>
 
-        {/* Desktop: LARA · FOTO · DAM numa linha horizontal.
+        {/* Desktop: LARA · FOTO · DAM com sobreposição.
+            A foto avança em cima do último "A" de LARA e primeiro "D" de DAM
+            via margem negativa horizontal (-mx). Z-index maior faz ela cobrir
+            as letras.
             Mobile: empilhado (LARA em cima, foto, DAM embaixo). */}
-        <div className="relative w-full max-w-7xl flex flex-col md:flex-row items-center justify-center gap-1 md:gap-4 lg:gap-8">
+        <div className="relative w-full max-w-7xl flex flex-col md:flex-row items-center justify-center gap-0">
           <motion.h1
             initial={{ opacity: 0, x: -40 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.5, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-            className="relative z-10 font-display font-black text-foreground leading-[0.82] tracking-tighter text-[26vw] md:text-[11vw] select-none"
+            className="relative z-10 font-display font-black text-foreground leading-[0.82] tracking-tighter text-[26vw] md:text-[13vw] select-none"
           >
             LARA
           </motion.h1>
@@ -92,7 +95,7 @@ export default function Hero() {
             initial={{ opacity: 0, scale: 0.92 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.65, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-            className="relative z-30 -my-8 md:my-0 pointer-events-none flex-shrink-0"
+            className="relative z-30 -my-10 md:my-0 md:-mx-[5vw] pointer-events-none flex-shrink-0"
           >
             <HeroPhoto />
           </motion.div>
@@ -101,7 +104,7 @@ export default function Hero() {
             initial={{ opacity: 0, x: 40 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.55, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-            className="relative z-10 font-display font-black text-primary leading-[0.82] tracking-tighter text-[26vw] md:text-[11vw] select-none"
+            className="relative z-10 font-display font-black text-primary leading-[0.82] tracking-tighter text-[26vw] md:text-[13vw] select-none"
           >
             DAM
           </motion.h1>
