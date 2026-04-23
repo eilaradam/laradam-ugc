@@ -71,8 +71,6 @@ export const CATEGORIES: Category[] = [
   { slug: "tech", name: "Tech & Apps", tagline: "Apps e gadgets em linguagem humana" },
   { slug: "moda", name: "Moda", tagline: "Outfits que contam história" },
   { slug: "viagem", name: "Viagem", tagline: "Experiências & destinos" },
-  { slug: "suplemento", name: "Suplementos", tagline: "Rotina & performance" },
-  { slug: "cabelo", name: "Cabelo", tagline: "Do wash day ao transformation" },
 ];
 
 export type Video = {
@@ -168,11 +166,6 @@ export const VIDEOS: Video[] = [
   { id: "va3", title: "Airbnb", category: "viagem", brand: "Airbnb", youtubeId: "s5iwpfzgxbI" },
   { id: "va4", title: "Airbnb", category: "viagem", brand: "Airbnb", youtubeId: "wUxGOQ3QwFw" },
 
-  // SUPLEMENTOS
-  { id: "s1", title: "Untamed", category: "suplemento", brand: "Untamed", youtubeId: "lnrpiDm9TjE" },
-
-  // CABELO — aguardando Lara subir os vídeos reais
-  { id: "c1", title: "Em breve", category: "cabelo", brand: "—" },
 ];
 
 // Marcas reais que a Lara já trabalhou (vitrine na seção Brands)
