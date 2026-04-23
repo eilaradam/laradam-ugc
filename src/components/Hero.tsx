@@ -47,54 +47,55 @@ export default function Hero() {
         <span className="h-px w-6 md:w-8 bg-primary" />
       </motion.div>
 
-      {/* Sanduíche: LARA — FOTO — DAM */}
-      <div className="relative flex-1 flex flex-col items-center justify-center my-4 md:my-8 px-4">
-        {/* "Prazer," accent à esquerda no desktop */}
+      {/* Composição: LARA · FOTO · DAM numa linha horizontal */}
+      <div className="relative flex-1 flex items-center justify-center my-4 md:my-8 px-4">
+        {/* "Prazer," accent */}
         <motion.div
           initial={{ opacity: 0, x: -10 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.6, duration: 0.8 }}
-          className="hidden md:block absolute top-4 left-12 text-right z-10"
+          className="hidden md:block absolute top-4 left-12 z-10"
         >
           <span className="font-serif-accent italic text-2xl text-foreground-soft">
             Prazer,
           </span>
         </motion.div>
 
-        {/* LARA — atrás da foto */}
-        <motion.h1
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-          className="relative z-10 font-display font-black text-foreground leading-none tracking-tighter text-[28vw] md:text-[18vw]"
-          style={{ marginBottom: "-0.1em" }}
-        >
-          LARA
-        </motion.h1>
+        {/* Linha horizontal */}
+        <div className="flex items-center justify-center gap-3 md:gap-6 w-full max-w-7xl">
+          {/* LARA à esquerda */}
+          <motion.h1
+            initial={{ opacity: 0, x: -40 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.5, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+            className="font-display font-black text-foreground leading-none tracking-tighter text-[14vw] md:text-[10vw]"
+          >
+            LARA
+          </motion.h1>
 
-        {/* FOTO no meio — sobrepõe parcialmente os nomes */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.92 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.65, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-          className="relative z-20 -my-8 md:-my-14"
-        >
-          <HeroPhoto />
-        </motion.div>
+          {/* FOTO no meio */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.92 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.65, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+            className="flex-shrink-0"
+          >
+            <HeroPhoto />
+          </motion.div>
 
-        {/* DAM — na frente parcial (laranja) */}
-        <motion.h1
-          initial={{ opacity: 0, y: -40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.55, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-          className="relative z-30 font-display font-black text-primary leading-none tracking-tighter text-[28vw] md:text-[18vw]"
-          style={{ marginTop: "-0.1em" }}
-        >
-          DAM
-          <span className="font-serif-accent italic text-[0.15em] text-foreground-soft absolute -bottom-1 right-0 md:-right-4">
-            est. 2024
-          </span>
-        </motion.h1>
+          {/* DAM à direita */}
+          <motion.h1
+            initial={{ opacity: 0, x: 40 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.55, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+            className="font-display font-black text-primary leading-none tracking-tighter text-[14vw] md:text-[10vw] relative"
+          >
+            DAM
+            <span className="font-serif-accent italic text-[0.2em] text-foreground-soft absolute -bottom-1 -right-2 md:-right-4">
+              est. 2024
+            </span>
+          </motion.h1>
+        </div>
       </div>
 
       {/* Bottom: descrição + CTAs */}
@@ -143,8 +144,8 @@ function HeroPhoto() {
 
   return (
     <div
-      className={`relative h-[36vh] md:h-[52vh] aspect-[3/4] max-w-full ${
-        isPng ? "" : "rounded-[1.5rem] md:rounded-[2rem] overflow-hidden shadow-2xl"
+      className={`relative h-[30vh] md:h-[50vh] aspect-[3/4] ${
+        isPng ? "" : "rounded-2xl md:rounded-[2rem] overflow-hidden shadow-2xl"
       }`}
     >
       <img
