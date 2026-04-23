@@ -133,8 +133,8 @@ export default function Hero() {
 }
 
 function HeroPhoto() {
-  // Tenta /lara-hero.png (ideal: PNG sem fundo) → /lara-hero.jpg → /lara-sobre.jpg
-  const SOURCES = ["/lara-hero.png", "/lara-hero.jpg", "/lara-sobre.jpg"];
+  // Cascata: larafundo.png (PNG sem fundo ideal) → fallbacks
+  const SOURCES = ["/larafundo.png", "/lara-hero.png", "/lara-hero.jpg", "/lara-sobre.jpg"];
   const [idx, setIdx] = useState(0);
   const [failed, setFailed] = useState(false);
 
