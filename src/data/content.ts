@@ -64,9 +64,9 @@ export type Category = {
 
 export const CATEGORIES: Category[] = [
   { slug: "all", name: "Todos", tagline: "" },
-  { slug: "gastronomia", name: "Gastronomia", tagline: "Comida que dá água na boca" },
   { slug: "beleza", name: "Beleza", tagline: "Produtos que viram ritual" },
   { slug: "casa", name: "Casa & Deco", tagline: "Ambientes que inspiram" },
+  { slug: "gastronomia", name: "Gastronomia", tagline: "Comida que dá água na boca" },
   { slug: "food", name: "Food & Bebidas", tagline: "Mercado, cafés e sabores" },
   { slug: "tech", name: "Tech & Apps", tagline: "Apps e gadgets em linguagem humana" },
   { slug: "moda", name: "Moda", tagline: "Outfits que contam história" },
