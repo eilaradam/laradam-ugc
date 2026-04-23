@@ -1,11 +1,9 @@
 import { SITE } from "@/data/content";
-import DebugLabel from "./DebugLabel";
 
 export default function Footer() {
   const year = new Date().getFullYear();
   return (
-    <footer className="relative bg-foreground text-background border-t border-background/10 px-6 md:px-12 py-10">
-      <DebugLabel name="Footer" info="py-10 · px-12 · max-w-7xl" />
+    <footer className="bg-foreground text-background border-t border-background/10 px-6 md:px-12 py-10">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
         <div>
           <div className="font-display font-black text-xl">

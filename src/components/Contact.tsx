@@ -22,7 +22,6 @@ function InstagramIcon(props: React.SVGProps<SVGSVGElement>) {
   );
 }
 import { SITE } from "@/data/content";
-import DebugLabel from "./DebugLabel";
 
 export default function Contact() {
   const [sent, setSent] = useState(false);
@@ -54,7 +53,6 @@ export default function Contact() {
       id="contato"
       className="px-6 md:px-12 py-14 md:py-32 bg-foreground text-background relative overflow-hidden"
     >
-      <DebugLabel name="Contact" info="py-32 · px-12 · max-w-7xl · grid-cols-12 (col-5/7)" />
       {/* Big background type */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none opacity-[0.04]">
         <div className="font-display font-black text-[24vw] leading-none text-primary tracking-tighter">

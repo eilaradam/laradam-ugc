@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import DebugLabel from "./DebugLabel";
 
 type Result = {
   views: string;
@@ -37,7 +36,6 @@ export default function BestResults() {
       id="destaques"
       className="px-6 md:px-12 py-14 md:py-32 bg-background relative overflow-hidden"
     >
-      <DebugLabel name="BestResults" info="py-32 · px-12 · max-w-7xl · grid-cols-3" />
       <div className="max-w-7xl mx-auto">
         <div className="mb-10 md:mb-16 max-w-3xl">
           <div className="text-xs uppercase tracking-[0.3em] text-primary font-medium mb-6 flex items-center gap-3">

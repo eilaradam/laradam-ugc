@@ -1,11 +1,9 @@
 import { MARQUEE_ITEMS } from "@/data/content";
-import DebugLabel from "./DebugLabel";
 
 export default function Marquee() {
   const doubled = [...MARQUEE_ITEMS, ...MARQUEE_ITEMS];
   return (
-    <div className="relative bg-foreground text-background py-2.5 overflow-hidden border-y border-foreground/10">
-      <DebugLabel name="Marquee" info="py-2.5 · ~44px altura total" />
+    <div className="bg-foreground text-background py-2.5 overflow-hidden border-y border-foreground/10">
       <div className="marquee">
         {doubled.map((item, i) => (
           <span

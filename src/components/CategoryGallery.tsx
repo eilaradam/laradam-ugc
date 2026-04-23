@@ -5,7 +5,6 @@ import { motion } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { CATEGORIES, VIDEOS, type Category } from "@/data/content";
 import VideoCard from "./VideoCard";
-import DebugLabel from "./DebugLabel";
 
 export default function CategoryGallery() {
   // todas as categorias menos "all"
@@ -14,9 +13,8 @@ export default function CategoryGallery() {
   return (
     <section
       id="categorias"
-      className="relative px-6 md:px-12 py-14 md:py-32 bg-background-alt"
+      className="px-6 md:px-12 py-14 md:py-32 bg-background-alt"
     >
-      <DebugLabel name="CategoryGallery" info="py-32 · px-12 · max-w-7xl · space-y-20 (entre rows) · 4 cards/row" />
       <div className="max-w-7xl mx-auto">
         <div className="mb-10 md:mb-16">
           <div className="text-xs uppercase tracking-[0.3em] text-primary font-medium mb-6 flex items-center gap-3">
