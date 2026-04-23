@@ -25,8 +25,8 @@ export const MARQUEE_ITEMS = [
 ];
 
 export const ABOUT = {
-  greeting: "Oi, eu sou a Lara Dam",
-  body: "Tenho 26 anos e sou UGC Creator e estrategista de conteúdo no Litoral de SP. Com 2 anos de experiência, meu trabalho é focado em criar conexões reais e estratégias de alta conversão para marcas que buscam destaque. Com uma bagagem sólida de mais de 500 vídeos gravados e parcerias com mais de 200 parceiros, utilizo meu olhar analítico para transformar produtos em desejos de consumo — garantindo autoridade e resultados concretos através de um conteúdo autêntico e humano.",
+  greeting: "Oie, eu sou a Lara Dam",
+  body: "Tenho 27 anos e sou UGC Creator e estrategista de conteúdo no Litoral de SP. Com 2 anos de experiência, meu trabalho é focado em criar conexões reais e estratégias de alta conversão para marcas que buscam destaque. Com uma bagagem sólida de mais de 500 vídeos gravados e parcerias com mais de 200 parceiros, utilizo meu olhar analítico para transformar produtos em desejos de consumo — garantindo autoridade e resultados concretos através de um conteúdo autêntico e humano.",
 };
 
 export type Service = {
