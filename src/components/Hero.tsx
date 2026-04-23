@@ -141,7 +141,7 @@ export default function Hero() {
 }
 
 function HeroPhoto() {
-  const SOURCES = ["/larafundo.png", "/lara-hero.png", "/lara-hero.jpg", "/lara-sobre.jpg"];
+  const SOURCES = ["/lara-fundo.png", "/larafundo.png", "/lara-hero.png", "/lara-hero.jpg", "/lara-sobre.jpg"];
   const [idx, setIdx] = useState(0);
   const [failed, setFailed] = useState(false);
 
