@@ -46,14 +46,32 @@ export default function Hero() {
         </motion.div>
       </div>
 
-      {/* Composição sobreposta: LARA — FOTO GRANDE — DAM */}
-      <div className="relative flex items-center justify-center mt-2 md:mt-3 px-2">
+      {/* Composição sobreposta: LARA — FOTO GRANDE — DAM com frame editorial */}
+      <div className="relative flex items-center justify-center mt-2 md:mt-3 px-2 md:px-6">
+        {/* Frame laranja editorial — só aparece no desktop */}
+        <div
+          aria-hidden
+          className="hidden md:block absolute inset-x-4 inset-y-0 border-2 border-primary/70 pointer-events-none z-0"
+        >
+          {/* Cross markers nas 4 bordas centrais (estilo guia editorial) */}
+          <span className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-px h-10 bg-primary" />
+          <span className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 w-px h-10 bg-primary" />
+          <span className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 h-px w-10 bg-primary" />
+          <span className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 h-px w-10 bg-primary" />
+
+          {/* Cantos em "L" pra reforçar o frame */}
+          <span className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-primary -translate-x-0.5 -translate-y-0.5" />
+          <span className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-primary translate-x-0.5 -translate-y-0.5" />
+          <span className="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-primary -translate-x-0.5 translate-y-0.5" />
+          <span className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-primary translate-x-0.5 translate-y-0.5" />
+        </div>
+
         {/* Desktop: LARA · FOTO · DAM com sobreposição.
             A foto avança em cima do último "A" de LARA e primeiro "D" de DAM
             via margem negativa horizontal (-mx). Z-index maior faz ela cobrir
             as letras.
             Mobile: empilhado (LARA em cima, foto, DAM embaixo). */}
-        <div className="relative w-full max-w-7xl flex flex-col md:flex-row items-center justify-center gap-0">
+        <div className="relative z-10 w-full max-w-7xl flex flex-col md:flex-row items-center justify-center gap-0 md:py-6">
           <motion.h1
             initial={{ opacity: 0, x: -40 }}
             animate={{ opacity: 1, x: 0 }}
@@ -155,8 +173,8 @@ function HeroPhoto() {
       alt="Lara Dam"
       className={`w-auto object-contain ${
         isPng
-          ? "h-[42vh] md:h-[58vh] max-w-[70vw] md:max-w-[32vw]"
-          : "h-[36vh] md:h-[50vh] max-w-[70vw] md:max-w-[32vw] rounded-2xl shadow-2xl"
+          ? "h-[42vh] md:h-[62vh] max-w-[70vw] md:max-w-[34vw]"
+          : "h-[36vh] md:h-[54vh] max-w-[70vw] md:max-w-[34vw] rounded-2xl shadow-2xl"
       }`}
       onError={() => {
         if (idx < SOURCES.length - 1) setIdx(idx + 1);
