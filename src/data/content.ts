@@ -3,8 +3,8 @@ export const SITE = {
   role: "UGC Creator & Content Strategist",
   location: "Litoral de SP, Brasil",
   email: "laradam.ugc@gmail.com",
-  instagram: "@laradam.ugc",
-  tiktok: "@laradam.ugc",
+  instagram: "@eilaradam",
+  tiktok: "@eilaradam",
 };
 
 export const STATS = [
