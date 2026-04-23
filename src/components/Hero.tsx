@@ -10,6 +10,8 @@ export default function Hero() {
       id="top"
       className="relative flex flex-col overflow-hidden bg-background noise pt-24 md:pt-24 md:h-[calc(100vh-2.75rem)] md:justify-between"
     >
+      <DebugMargins />
+
       {/* Top row: 3 infos alinhadas na mesma linha (Disponível · Eyebrow · Litoral) */}
       <div className="relative z-40 px-5 md:px-12 flex flex-col md:flex-row items-center justify-between gap-3">
         <motion.div
@@ -137,6 +139,39 @@ export default function Hero() {
         </div>
       </motion.div>
     </section>
+  );
+}
+
+/**
+ * Overlay temporário mostrando as margens/paddings atuais do Hero.
+ * Remover quando não precisar mais visualizar.
+ */
+function DebugMargins() {
+  const boxStyle = "hidden md:flex absolute text-[9px] font-mono tracking-tight items-center gap-1 px-1 py-0.5 rounded bg-primary text-primary-light shadow-md z-[60] pointer-events-none";
+  const guideStyle = "hidden md:block absolute border-dashed border-primary/50 pointer-events-none z-[59]";
+  return (
+    <>
+      {/* Padding top da section (pt-24 = 96px) — do topo do viewport até a nav */}
+      <span className={`${guideStyle} left-0 right-0 top-0 h-[96px] border-y`} />
+      <span className={`${boxStyle} left-3 top-10`}>pt-24 · 96px (topo da section)</span>
+
+      {/* Margem entre TopRow e composição (mt-3 md = 12px) */}
+      <span className={`${boxStyle} right-3 top-[130px]`}>mt-3 · 12px</span>
+
+      {/* Espaço flex (variável) entre composição e BottomRow */}
+      <span className={`${boxStyle} left-3 top-1/2 -translate-y-1/2`}>
+        justify-between · espaço variável (cresce em telas altas)
+      </span>
+
+      {/* Padding da BottomRow (pt-6 pb-6 = 24px cada) */}
+      <span className={`${boxStyle} right-3 bottom-8`}>pt-6 pb-6 · 24px cada</span>
+
+      {/* Altura da section (100vh - 44px do marquee) */}
+      <span className={`${boxStyle} left-3 bottom-3`}>section · h=calc(100vh-2.75rem)</span>
+
+      {/* Marquee altura (~44px) */}
+      <span className={`${boxStyle} right-3 bottom-3`}>marquee · ~44px</span>
+    </>
   );
 }
 
