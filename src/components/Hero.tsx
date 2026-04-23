@@ -40,7 +40,7 @@ export default function Hero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.4, duration: 0.8 }}
-        className="relative z-40 flex items-center justify-center gap-3 mt-6 md:mt-8 text-[10px] md:text-xs uppercase tracking-[0.3em] text-primary font-medium"
+        className="relative z-40 flex items-center justify-center gap-3 mt-3 md:mt-4 text-[10px] md:text-xs uppercase tracking-[0.3em] text-primary font-medium"
       >
         <span className="h-px w-6 md:w-8 bg-primary" />
         UGC Creator & Content Strategist
@@ -48,7 +48,7 @@ export default function Hero() {
       </motion.div>
 
       {/* Composição sobreposta: LARA — FOTO GRANDE — DAM */}
-      <div className="relative flex-1 flex items-center justify-center my-4 md:my-6 px-2">
+      <div className="relative flex-1 flex items-center justify-center my-1 md:my-2 px-2">
         {/* "Prazer," accent top-left (desktop) */}
         <motion.div
           initial={{ opacity: 0, x: -10 }}
@@ -116,7 +116,7 @@ export default function Hero() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.9, duration: 0.7 }}
-        className="relative z-40 px-5 md:px-12 pb-10 md:pb-14 max-w-7xl mx-auto w-full grid md:grid-cols-2 gap-5 md:gap-8 items-end"
+        className="relative z-40 px-5 md:px-12 pb-6 md:pb-10 max-w-7xl mx-auto w-full grid md:grid-cols-2 gap-5 md:gap-8 items-end"
       >
         <p className="text-foreground-soft text-sm md:text-base max-w-md leading-relaxed">
           Criando conteúdo que{" "}
