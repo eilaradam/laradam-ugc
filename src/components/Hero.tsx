@@ -8,10 +8,10 @@ export default function Hero() {
   return (
     <section
       id="top"
-      className="relative min-h-screen flex flex-col overflow-hidden bg-background noise pt-24 md:pt-28"
+      className="relative flex flex-col overflow-hidden bg-background noise pt-24 md:pt-28"
     >
-      {/* Top row: tags em cantos opostos */}
-      <div className="relative z-40 px-5 md:px-12 flex flex-wrap items-center justify-between gap-3">
+      {/* Top row: 3 infos alinhadas na mesma linha (Disponível · Eyebrow · Litoral) */}
+      <div className="relative z-40 px-5 md:px-12 flex flex-col md:flex-row items-center justify-between gap-3">
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -25,6 +25,17 @@ export default function Hero() {
         </motion.div>
 
         <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.4, duration: 0.8 }}
+          className="flex items-center justify-center gap-3 text-[10px] md:text-xs uppercase tracking-[0.3em] text-primary font-medium"
+        >
+          <span className="h-px w-6 md:w-8 bg-primary" />
+          UGC Creator & Content Strategist
+          <span className="h-px w-6 md:w-8 bg-primary" />
+        </motion.div>
+
+        <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 0.6 }}
@@ -35,20 +46,8 @@ export default function Hero() {
         </motion.div>
       </div>
 
-      {/* Eyebrow */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.4, duration: 0.8 }}
-        className="relative z-40 flex items-center justify-center gap-3 mt-3 md:mt-4 text-[10px] md:text-xs uppercase tracking-[0.3em] text-primary font-medium"
-      >
-        <span className="h-px w-6 md:w-8 bg-primary" />
-        UGC Creator & Content Strategist
-        <span className="h-px w-6 md:w-8 bg-primary" />
-      </motion.div>
-
       {/* Composição sobreposta: LARA — FOTO GRANDE — DAM */}
-      <div className="relative flex-1 flex items-center justify-center my-1 md:my-2 px-2">
+      <div className="relative flex items-center justify-center mt-2 md:mt-3 px-2">
         {/* "Prazer," accent top-left (desktop) */}
         <motion.div
           initial={{ opacity: 0, x: -10 }}
@@ -116,7 +115,7 @@ export default function Hero() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.9, duration: 0.7 }}
-        className="relative z-40 px-5 md:px-12 pb-6 md:pb-10 max-w-7xl mx-auto w-full grid md:grid-cols-2 gap-5 md:gap-8 items-end"
+        className="relative z-40 px-5 md:px-12 pt-4 md:pt-6 pb-4 md:pb-6 max-w-7xl mx-auto w-full grid md:grid-cols-2 gap-5 md:gap-8 items-end"
       >
         <p className="text-foreground-soft text-sm md:text-base max-w-md leading-relaxed">
           Criando conteúdo que{" "}
