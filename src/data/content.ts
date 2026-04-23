@@ -29,30 +29,53 @@ export const ABOUT = {
   body: "Tenho 26 anos e sou UGC Creator e estrategista de conteúdo no Litoral de SP. Com 2 anos de experiência, meu trabalho é focado em criar conexões reais e estratégias de alta conversão para marcas que buscam destaque. Com uma bagagem sólida de mais de 500 vídeos gravados e parcerias com mais de 200 parceiros, utilizo meu olhar analítico para transformar produtos em desejos de consumo — garantindo autoridade e resultados concretos através de um conteúdo autêntico e humano.",
 };
 
-export const SERVICES = [
+export type Service = {
+  title: string;
+  description: string;
+  icon: string; // nome do ícone Lucide
+  features: string[];
+  tag?: string;
+  highlight?: boolean; // card em destaque (maior no bento)
+};
+
+export const SERVICES: Service[] = [
   {
     title: "UGC de Conversão",
-    description: "Vídeos autênticos que vendem — pensados pra converter, não só engajar.",
+    description: "Vídeos autênticos que vendem — pensados pra performar em ads e orgânico.",
+    icon: "Video",
+    features: ["Roteiro + captação + edição", "Pacotes de 4, 8 ou 12 vídeos", "Direitos de uso pagos"],
+    tag: "Mais pedido",
+    highlight: true,
   },
   {
     title: "Criativos para Tráfego",
-    description: "Roteiros e edições otimizadas pra ads no Meta, TikTok e YouTube.",
+    description: "Roteiros e edições otimizadas pra ads no Meta, TikTok e YouTube com variações A/B.",
+    icon: "Target",
+    features: ["Hooks testados", "Múltiplas variações", "Feedback de performance"],
   },
   {
     title: "Roteiros Estratégicos",
-    description: "Scripts validados por performance, com hooks e CTAs testados.",
+    description: "Scripts validados por performance. Hooks, CTAs e storytelling com base em data.",
+    icon: "FileText",
+    features: ["Hook + desenvolvimento + CTA", "Brief estratégico", "Revisões inclusas"],
   },
   {
     title: "Fotos Lifestyle",
-    description: "Imagens para campanhas e e-commerce, com direção de arte.",
+    description: "Imagens para campanhas e e-commerce, com direção de arte e edição profissional.",
+    icon: "Camera",
+    features: ["30+ imagens tratadas", "Cenário + produto + estilo", "Formatos verticais e horizontais"],
   },
   {
     title: "Conteúdo E-commerce",
-    description: "Pacotes mensais de conteúdo pra marcas que vivem de DTC.",
+    description: "Pacotes mensais de conteúdo pra marcas DTC que precisam manter feed vivo.",
+    icon: "ShoppingBag",
+    features: ["Calendário editorial", "Entrega contínua", "Relatório mensal"],
   },
   {
     title: "Consultoria UGC",
-    description: "Gestão de campanha, briefing e direção de outros creators.",
+    description: "Gestão de campanha, briefing e direção de outros creators pra escalar sua operação.",
+    icon: "Sparkles",
+    features: ["Briefing + seleção de creators", "Acompanhamento", "Relatório final"],
   },
 ];
 
@@ -161,26 +184,73 @@ export const VIDEOS: Video[] = [
 
 ];
 
-// Marcas reais que a Lara já trabalhou (vitrine na seção Brands)
-export const BRANDS = [
-  "InfinitePay",
-  "Méliuz",
-  "Dolly",
-  "Decolar",
-  "Logitech",
-  "Rap10",
-  "L'Oréal",
-  "Inglot",
-  "Rituaria",
-  "Box Magenta",
-  "Quintal",
-  "Bem Me Fiz",
-  "DT3",
-  "Coza",
-  "Coala",
-  "Mez Móveis",
-  "Airbnb",
-  "OKA House",
-  "Reclame Aqui",
-  "BV Financeiro",
+export type Testimonial = {
+  quote: string;
+  author: string;
+  role: string;
+  brand: string;
+  brandDomain?: string; // logo do cliente no card
+  metric?: { value: string; label: string }; // ex: "3.2M views" / "Primeira campanha"
+};
+
+// Depoimentos — substituir pelos reais quando Lara passar os textos/prints.
+// Se quiser usar prints do WhatsApp/DM, pode subir em /public/depoimentos/
+// e trocar esse componente pra mostrar imagens.
+export const TESTIMONIALS: Testimonial[] = [
+  {
+    quote:
+      "A Lara entrega muito além do que a gente pede. Ela entende de performance e o vídeo veio pronto pra rodar como criativo — bateu recorde de CTR no Meta.",
+    author: "Em breve",
+    role: "Marketing",
+    brand: "InfinitePay",
+    brandDomain: "infinitepay.io",
+    metric: { value: "50M", label: "views em 1 vídeo" },
+  },
+  {
+    quote:
+      "Trabalho com vários creators e a Lara é a que mais converte. Roteiro afiado, entrega rápida e ela pega direção de brief no primeiro review.",
+    author: "Em breve",
+    role: "Head de Growth",
+    brand: "Méliuz",
+    brandDomain: "meliuz.com.br",
+    metric: { value: "10M", label: "views · campanha mercado" },
+  },
+  {
+    quote:
+      "Já fechamos 4 campanhas e cada uma performou melhor que a anterior. A Lara virou parte do nosso playbook de criativo.",
+    author: "Em breve",
+    role: "Social Media",
+    brand: "DT3",
+    brandDomain: "dt3sports.com.br",
+    metric: { value: "4+", label: "campanhas ativas" },
+  },
+];
+
+// Marcas reais que a Lara já trabalhou — vitrine com logos (Clearbit) + fallback
+export type Brand = {
+  name: string;
+  domain?: string; // pra puxar logo via logo.clearbit.com
+};
+
+export const BRANDS: Brand[] = [
+  { name: "InfinitePay", domain: "infinitepay.io" },
+  { name: "Méliuz", domain: "meliuz.com.br" },
+  { name: "Dolly", domain: "dolly.com.br" },
+  { name: "Decolar", domain: "decolar.com" },
+  { name: "Airbnb", domain: "airbnb.com.br" },
+  { name: "Logitech", domain: "logitech.com" },
+  { name: "L'Oréal", domain: "loreal.com" },
+  { name: "Reclame Aqui", domain: "reclameaqui.com.br" },
+  { name: "BV Financeiro", domain: "bv.com.br" },
+  { name: "Rap10", domain: "rap10.com.br" },
+  { name: "Inglot", domain: "inglot.com" },
+  { name: "Box Magenta", domain: "boxmagenta.com.br" },
+  { name: "Quintal", domain: "quintaldemanu.com.br" },
+  { name: "Bem Me Fiz", domain: "bemmefiz.com.br" },
+  { name: "DT3", domain: "dt3sports.com.br" },
+  { name: "Coza", domain: "coza.com.br" },
+  { name: "Coala", domain: "coalacolchoes.com.br" },
+  { name: "Mez Móveis", domain: "mezmoveis.com.br" },
+  { name: "OKA House", domain: "okahouse.com.br" },
+  { name: "Rituaria", domain: "rituaria.com.br" },
 ];
