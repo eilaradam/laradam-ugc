@@ -68,7 +68,7 @@ export const CATEGORIES: Category[] = [
   { slug: "beleza", name: "Beleza", tagline: "Produtos que viram ritual" },
   { slug: "casa", name: "Casa & Deco", tagline: "Ambientes que inspiram" },
   { slug: "food", name: "Food & Bebidas", tagline: "Mercado, cafés e sabores" },
-  { slug: "tech", name: "Tech", tagline: "Apps e gadgets em linguagem humana" },
+  { slug: "tech", name: "Tech & Apps", tagline: "Apps e gadgets em linguagem humana" },
   { slug: "moda", name: "Moda", tagline: "Outfits que contam história" },
   { slug: "viagem", name: "Viagem", tagline: "Experiências & destinos" },
   { slug: "suplemento", name: "Suplementos", tagline: "Rotina & performance" },
@@ -87,92 +87,114 @@ export type Video = {
 };
 
 export const VIDEOS: Video[] = [
-  // DESTAQUES (seção FeaturedVideos)
+  // DESTAQUES
   { id: "f1", title: "Bolsa InfinitePay", category: "tech", brand: "InfinitePay", views: "50M", featured: true },
   { id: "f2", title: "Compras Méliuz", category: "food", brand: "Méliuz", views: "10M", featured: true },
   { id: "f3", title: "Missão Impossível", category: "gastronomia", brand: "Dolly", views: "1M", featured: true },
 
   // GASTRONOMIA
   { id: "g1", title: "Ateliê", category: "gastronomia", brand: "Ateliê", youtubeId: "0FhBNV71z9A" },
-  { id: "g2", title: "Rap10", category: "gastronomia", brand: "Rap10", youtubeId: "orhbzi_XYiA" },
-  { id: "g3", title: "Rap10 Protagonista", category: "gastronomia", brand: "Rap10", views: "330k" },
-  { id: "g4", title: "China review", category: "gastronomia", brand: "Rap10", views: "353k" },
-  { id: "g5", title: "Massa perfeita", category: "gastronomia", brand: "Barilla" },
-  { id: "g6", title: "Delícia do dia", category: "gastronomia", brand: "Nestlé" },
-  { id: "g7", title: "Jantar express", category: "gastronomia", brand: "Knorr" },
-  { id: "g8", title: "Receita viral", category: "gastronomia", brand: "Sadia" },
+  { id: "g2", title: "Ateliê", category: "gastronomia", brand: "Ateliê", youtubeId: "XmjA7cpCPfQ" },
+  { id: "g3", title: "Rap10", category: "gastronomia", brand: "Rap10", youtubeId: "orhbzi_XYiA" },
+  { id: "g4", title: "Rap10", category: "gastronomia", brand: "Rap10", youtubeId: "It7GiFzsOe0" },
+  { id: "g5", title: "Copacol", category: "gastronomia", brand: "Copacol", youtubeId: "Kq93tU1dYuA" },
+  { id: "g6", title: "Tropical", category: "gastronomia", brand: "Tropical", youtubeId: "QgCK-EJKTm0" },
+  { id: "g7", title: "Rap10 Protagonista", category: "gastronomia", brand: "Rap10", views: "330k" },
+  { id: "g8", title: "China review", category: "gastronomia", brand: "Rap10", views: "353k" },
 
   // BELEZA
   { id: "b1", title: "Skincare noturno", category: "beleza", brand: "L'Oréal", views: "500k", youtubeId: "6kvtFKsPQPw" },
-  { id: "b2", title: "Box Magenta", category: "beleza", brand: "Box Magenta", youtubeId: "XwhHAl2LJ6k" },
-  { id: "b3", title: "Box Magenta", category: "beleza", brand: "Box Magenta", youtubeId: "cDRldAKYyKU" },
-  { id: "b4", title: "Cand Óculos", category: "beleza", brand: "Cand", youtubeId: "JPz1wMt_R4I" },
-  { id: "b5", title: "Quintal", category: "beleza", brand: "Quintal", youtubeId: "U_T_I-vcM7k" },
-  { id: "b6", title: "Bem Me Fiz", category: "beleza", brand: "Bem Me Fiz", youtubeId: "P3UrVHbwI9g" },
-  { id: "b7", title: "Review hidratante", category: "beleza", brand: "Nivea" },
-  { id: "b8", title: "Rotina de manhã", category: "beleza", brand: "Eudora" },
+  { id: "b2", title: "Inglot", category: "beleza", brand: "Inglot", youtubeId: "0g1pFDhxi-4" },
+  { id: "b3", title: "Rituaria", category: "beleza", brand: "Rituaria", youtubeId: "Yt_UjtmiMgg" },
+  { id: "b4", title: "Rituaria", category: "beleza", brand: "Rituaria", youtubeId: "CzO13_qS6Fs" },
+  { id: "b5", title: "Musquee", category: "beleza", brand: "Musquee", youtubeId: "ctKWcVRF35k" },
+  { id: "b6", title: "Quintal", category: "beleza", brand: "Quintal", youtubeId: "U_T_I-vcM7k" },
+  { id: "b7", title: "Quintal", category: "beleza", brand: "Quintal", youtubeId: "aTe89tMdv28" },
+  { id: "b8", title: "Quintal", category: "beleza", brand: "Quintal", youtubeId: "UCgbmlmT618" },
+  { id: "b9", title: "Amobeleza", category: "beleza", brand: "Amobeleza", youtubeId: "V5gvw_l08go" },
+  { id: "b10", title: "Belleton", category: "beleza", brand: "Belleton", youtubeId: "_d2dByXfvIw" },
+  { id: "b11", title: "Rarissima", category: "beleza", brand: "Rarissima", youtubeId: "dj9LD5x8MWI" },
+  { id: "b12", title: "Box Magenta", category: "beleza", brand: "Box Magenta", youtubeId: "XwhHAl2LJ6k" },
+  { id: "b13", title: "Box Magenta", category: "beleza", brand: "Box Magenta", youtubeId: "cDRldAKYyKU" },
+  { id: "b14", title: "Cand Óculos", category: "beleza", brand: "Cand", youtubeId: "JPz1wMt_R4I" },
+  { id: "b15", title: "Bem Me Fiz", category: "beleza", brand: "Bem Me Fiz", youtubeId: "P3UrVHbwI9g" },
+  { id: "b16", title: "Botox", category: "beleza", brand: "Botox", youtubeId: "YOmm3Zi87PE" },
 
   // CASA & DECO
   { id: "d1", title: "DT3", category: "casa", brand: "DT3", youtubeId: "Imt3HZDlCXU" },
-  { id: "d2", title: "Coza", category: "casa", brand: "Coza", youtubeId: "1Fm5v3bSdKM" },
-  { id: "d3", title: "Coala", category: "casa", brand: "Coala", youtubeId: "plSEfBiygVw" },
-  { id: "d4", title: "Mez Móveis", category: "casa", brand: "Mez Móveis", youtubeId: "R-y96AP_NLo" },
-  { id: "d5", title: "Mez Móveis", category: "casa", brand: "Mez Móveis", youtubeId: "mEc4A2oJ0_w" },
-  { id: "d6", title: "DT3", category: "casa", brand: "DT3", youtubeId: "JwblS_1IReM" },
-  { id: "d7", title: "Vinagreen", category: "casa", brand: "Vinagreen", youtubeId: "8T_dTUk5oX4" },
+  { id: "d2", title: "DT3", category: "casa", brand: "DT3", youtubeId: "JwblS_1IReM" },
+  { id: "d3", title: "DT3", category: "casa", brand: "DT3", youtubeId: "RPNeR2ANyrM" },
+  { id: "d4", title: "Coza", category: "casa", brand: "Coza", youtubeId: "1Fm5v3bSdKM" },
+  { id: "d5", title: "Coala", category: "casa", brand: "Coala", youtubeId: "plSEfBiygVw" },
+  { id: "d6", title: "Coala", category: "casa", brand: "Coala", youtubeId: "tClA-xjxP68" },
+  { id: "d7", title: "Mez Móveis", category: "casa", brand: "Mez Móveis", youtubeId: "R-y96AP_NLo" },
+  { id: "d8", title: "Mez Móveis", category: "casa", brand: "Mez Móveis", youtubeId: "mEc4A2oJ0_w" },
+  { id: "d9", title: "Vinagreen", category: "casa", brand: "Vinagreen", youtubeId: "8T_dTUk5oX4" },
+  { id: "d10", title: "Offertus", category: "casa", brand: "Offertus", youtubeId: "ucf6vv64SNY" },
+  { id: "d11", title: "Velds", category: "casa", brand: "Velds", youtubeId: "TZK3XeajRyI" },
+  { id: "d12", title: "Velds", category: "casa", brand: "Velds", youtubeId: "i9dHLO0VlFk" },
+  { id: "d13", title: "Lumai", category: "casa", brand: "Lumai", youtubeId: "2y9Xe6Q5eMc" },
+  { id: "d14", title: "Lumai", category: "casa", brand: "Lumai", youtubeId: "0Mkvi_n-bFU" },
 
   // FOOD & BEBIDAS
   { id: "o1", title: "Cafeza", category: "food", brand: "Cafeza", youtubeId: "R-PC_tGXdFk" },
   { id: "o2", title: "Tropical", category: "food", brand: "Tropical", youtubeId: "bUf0ItCQdUU" },
   { id: "o3", title: "Tropical", category: "food", brand: "Tropical", youtubeId: "vFmYLAliwIk" },
   { id: "o4", title: "Smoo Sorvete", category: "food", brand: "Smoo", youtubeId: "AXzcHi_Qq_Y" },
-  { id: "o5", title: "Bonduelle", category: "food", brand: "Bonduelle" },
-  { id: "o6", title: "Mercado do mês", category: "food", brand: "Assaí" },
 
-  // TECH
+  // TECH & APPS
   { id: "t1", title: "App Decolar", category: "tech", brand: "Decolar", youtubeId: "Y8nN7CMb73U" },
   { id: "t2", title: "BV Financeiro", category: "tech", brand: "BV", youtubeId: "2NMavMHi4jM" },
   { id: "t3", title: "BV Financeiro", category: "tech", brand: "BV", youtubeId: "Q_n4uwkxiDo" },
   { id: "t4", title: "Voy Saúde", category: "tech", brand: "Voy", youtubeId: "sIqDyvDsaZA" },
-  { id: "t5", title: "Unboxing tech", category: "tech", brand: "Samsung" },
-  { id: "t6", title: "Review smartwatch", category: "tech", brand: "Apple" },
+  { id: "t5", title: "Méliuz App", category: "tech", brand: "Méliuz", youtubeId: "GPcPWfWmA3A" },
+  { id: "t6", title: "Focus", category: "tech", brand: "Focus", youtubeId: "GvLjL_Ru19U" },
+  { id: "t7", title: "Logitech", category: "tech", brand: "Logitech", youtubeId: "sspAuh3TFqw" },
+  { id: "t8", title: "Logitech", category: "tech", brand: "Logitech", youtubeId: "xyaWdRi9pK4" },
+  { id: "t9", title: "Reclame Aqui", category: "tech", brand: "Reclame Aqui", youtubeId: "DxiroerLBGw" },
+  { id: "t10", title: "Gamma", category: "tech", brand: "Gamma", youtubeId: "nZQoMA114MA" },
 
   // MODA
   { id: "m1", title: "Outfit do dia", category: "moda", brand: "Lust", youtubeId: "nV1oWxv_J_4" },
   { id: "m2", title: "Midas Time", category: "moda", brand: "Midas Time", youtubeId: "wZgUdGFouNA" },
-  { id: "m3", title: "Look de inverno", category: "moda", brand: "C&A" },
-  { id: "m4", title: "Tendência 2026", category: "moda", brand: "Zara" },
+  { id: "m3", title: "Midas Time", category: "moda", brand: "Midas Time", youtubeId: "t2aysMm2INg" },
+  { id: "m4", title: "Midas Time", category: "moda", brand: "Midas Time", youtubeId: "QE-bUfK8z14" },
+  { id: "m5", title: "Rarissima", category: "moda", brand: "Rarissima", youtubeId: "_YF_bwGgC0Y" },
+  { id: "m6", title: "Rarissima", category: "moda", brand: "Rarissima", youtubeId: "Nhq12rZkpa8" },
 
   // VIAGEM
   { id: "va1", title: "OKA House", category: "viagem", brand: "OKA House", youtubeId: "7TzuVW8847A" },
   { id: "va2", title: "OKA House", category: "viagem", brand: "OKA House", youtubeId: "DzIWctdbjgg" },
+  { id: "va3", title: "Airbnb", category: "viagem", brand: "Airbnb", youtubeId: "s5iwpfzgxbI" },
+  { id: "va4", title: "Airbnb", category: "viagem", brand: "Airbnb", youtubeId: "wUxGOQ3QwFw" },
 
   // SUPLEMENTOS
   { id: "s1", title: "Untamed", category: "suplemento", brand: "Untamed", youtubeId: "lnrpiDm9TjE" },
 
-  // CABELO (placeholders — trocar quando subir os vídeos reais)
-  { id: "c1", title: "Wash day", category: "cabelo", brand: "Kerastase", views: "200k" },
-  { id: "c2", title: "Cachos definidos", category: "cabelo", brand: "Salon Line" },
-  { id: "c3", title: "Reconstrução", category: "cabelo", brand: "Wella" },
-  { id: "c4", title: "Low poo", category: "cabelo", brand: "Lola" },
+  // CABELO — aguardando Lara subir os vídeos reais
+  { id: "c1", title: "Em breve", category: "cabelo", brand: "—" },
 ];
 
-// Marcas reais que a Lara já trabalhou (destaque na seção Brands)
+// Marcas reais que a Lara já trabalhou (vitrine na seção Brands)
 export const BRANDS = [
   "InfinitePay",
   "Méliuz",
   "Dolly",
+  "Decolar",
+  "Logitech",
   "Rap10",
   "L'Oréal",
-  "Decolar",
-  "BV Financeiro",
+  "Inglot",
+  "Rituaria",
+  "Box Magenta",
+  "Quintal",
+  "Bem Me Fiz",
   "DT3",
   "Coza",
   "Coala",
   "Mez Móveis",
-  "Vinagreen",
-  "Box Magenta",
+  "Airbnb",
   "OKA House",
-  "Lust",
-  "Untamed",
+  "Reclame Aqui",
+  "BV Financeiro",
 ];
