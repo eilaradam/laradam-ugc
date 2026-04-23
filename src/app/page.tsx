@@ -4,7 +4,6 @@ import Marquee from "@/components/Marquee";
 import Stats from "@/components/Stats";
 import About from "@/components/About";
 import Services from "@/components/Services";
-import FeaturedVideos from "@/components/FeaturedVideos";
 import CategoryGallery from "@/components/CategoryGallery";
 import Brands from "@/components/Brands";
 import Contact from "@/components/Contact";
@@ -19,7 +18,6 @@ export default function Home() {
       <Stats />
       <About />
       <Services />
-      <FeaturedVideos />
       <CategoryGallery />
       <Brands />
       <Contact />

@@ -8,10 +8,10 @@ export default function Services() {
   return (
     <section
       id="servicos"
-      className="px-6 md:px-12 py-20 md:py-32 bg-foreground text-background"
+      className="px-6 md:px-12 py-14 md:py-32 bg-foreground text-background"
     >
       <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16">
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10 md:mb-16">
           <div>
             <div className="text-xs uppercase tracking-[0.3em] text-primary font-medium mb-6 flex items-center gap-3">
               <span className="h-px w-8 bg-primary" />

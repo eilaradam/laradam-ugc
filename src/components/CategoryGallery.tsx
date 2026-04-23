@@ -13,10 +13,10 @@ export default function CategoryGallery() {
   return (
     <section
       id="categorias"
-      className="px-6 md:px-12 py-20 md:py-32 bg-background-alt"
+      className="px-6 md:px-12 py-14 md:py-32 bg-background-alt"
     >
       <div className="max-w-7xl mx-auto">
-        <div className="mb-12 md:mb-16">
+        <div className="mb-10 md:mb-16">
           <div className="text-xs uppercase tracking-[0.3em] text-primary font-medium mb-6 flex items-center gap-3">
             <span className="h-px w-8 bg-primary" />
             Categorias

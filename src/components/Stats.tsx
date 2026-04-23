@@ -5,7 +5,7 @@ import { STATS } from "@/data/content";
 
 export default function Stats() {
   return (
-    <section className="px-6 md:px-12 py-20 md:py-32 max-w-7xl mx-auto">
+    <section className="px-6 md:px-12 py-14 md:py-32 max-w-7xl mx-auto">
       <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}

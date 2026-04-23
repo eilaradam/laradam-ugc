@@ -85,11 +85,6 @@ export type Video = {
 };
 
 export const VIDEOS: Video[] = [
-  // DESTAQUES
-  { id: "f1", title: "Bolsa InfinitePay", category: "tech", brand: "InfinitePay", views: "50M", featured: true },
-  { id: "f2", title: "Compras Méliuz", category: "food", brand: "Méliuz", views: "10M", featured: true },
-  { id: "f3", title: "Missão Impossível", category: "gastronomia", brand: "Dolly", views: "1M", featured: true },
-
   // GASTRONOMIA
   { id: "g1", title: "Ateliê", category: "gastronomia", brand: "Ateliê", youtubeId: "0FhBNV71z9A" },
   { id: "g2", title: "Ateliê", category: "gastronomia", brand: "Ateliê", youtubeId: "XmjA7cpCPfQ" },
@@ -97,8 +92,6 @@ export const VIDEOS: Video[] = [
   { id: "g4", title: "Rap10", category: "gastronomia", brand: "Rap10", youtubeId: "It7GiFzsOe0" },
   { id: "g5", title: "Copacol", category: "gastronomia", brand: "Copacol", youtubeId: "Kq93tU1dYuA" },
   { id: "g6", title: "Tropical", category: "gastronomia", brand: "Tropical", youtubeId: "QgCK-EJKTm0" },
-  { id: "g7", title: "Rap10 Protagonista", category: "gastronomia", brand: "Rap10", views: "330k" },
-  { id: "g8", title: "China review", category: "gastronomia", brand: "Rap10", views: "353k" },
 
   // BELEZA
   { id: "b1", title: "Skincare noturno", category: "beleza", brand: "L'Oréal", views: "500k", youtubeId: "6kvtFKsPQPw" },
