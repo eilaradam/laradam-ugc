@@ -47,7 +47,7 @@ export default function About() {
             ))}
           </h2>
 
-          <p className="text-lg md:text-xl text-foreground-soft leading-relaxed max-w-2xl">
+          <p className="text-sm md:text-base text-foreground-soft leading-relaxed max-w-2xl">
             {ABOUT.body}
           </p>
 
