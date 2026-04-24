@@ -20,12 +20,11 @@ type Case = {
   stats: Stat[];
 };
 
-// TODO: Lara — passar o youtubeId do vídeo da campanha do Bready
 const CASES: Case[] = [
   {
     brand: "Bready",
     brandLogoText: "BREADY",
-    youtubeId: "",
+    youtubeId: "2s6BI893C74",
     quote:
       "Basicamente vocês duplicaram o nosso ROAS e fizeram com que acabasse o nosso estoque.",
     author: "Andre Voskanian — CMO e founder do Bready",
