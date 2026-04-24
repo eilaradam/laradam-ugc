@@ -76,6 +76,15 @@ body {
   to { transform: translateX(-50%); }
 }
 
+.wave-bar {
+  animation: wave-bar 1.1s ease-in-out infinite;
+}
+
+@keyframes wave-bar {
+  0%, 100% { transform: scaleY(0.35); }
+  50% { transform: scaleY(1); }
+}
+
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }

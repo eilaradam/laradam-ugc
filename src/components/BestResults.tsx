@@ -1,7 +1,8 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { Mic, Play } from "lucide-react";
+import { Mic, Pause, Play } from "lucide-react";
 import { useVideoModal } from "./VideoModalProvider";
 import type { Video } from "@/data/content";
 
@@ -186,57 +187,81 @@ function HighlightCard({
 }
 
 function AudioTestimonialCard() {
-  const { open } = useVideoModal();
+  const [isPlaying, setIsPlaying] = useState(false);
+  const hasId = Boolean(AUDIO_TESTIMONIAL.youtubeId);
 
-  const video: Video = {
-    id: "audio-testimonial",
-    title: AUDIO_TESTIMONIAL.brand,
-    category: "tech",
-    brand: AUDIO_TESTIMONIAL.brand,
-    youtubeId: AUDIO_TESTIMONIAL.youtubeId || undefined,
-    audioOnly: true,
+  const toggle = () => {
+    if (!hasId) return;
+    setIsPlaying((p) => !p);
   };
+
+  // autoplay=1 só toca porque o click do usuário dispara o mount do iframe
+  const embedUrl = hasId
+    ? `https://www.youtube.com/embed/${AUDIO_TESTIMONIAL.youtubeId}?autoplay=1&controls=0&rel=0&modestbranding=1&playsinline=1`
+    : null;
 
   return (
     <button
-      onClick={() => open(video)}
-      className="w-full max-w-md group relative flex items-center gap-3 p-3 md:p-4 rounded-3xl bg-[#e9e4db] border border-foreground/5 shadow-sm hover:shadow-md transition-all cursor-pointer"
+      type="button"
+      onClick={toggle}
+      className="w-full max-w-md relative rounded-3xl shadow-sm hover:shadow-md transition-all cursor-pointer overflow-hidden"
     >
-      {/* Play button */}
-      <div className="flex-shrink-0 w-11 h-11 md:w-12 md:h-12 rounded-full bg-foreground text-background flex items-center justify-center group-hover:bg-primary transition-colors">
-        <Play className="w-4 h-4 md:w-5 md:h-5 fill-current ml-0.5" />
-      </div>
+      {/* iframe oculto atrás da UI — tem dimensão real pra o browser liberar autoplay */}
+      {isPlaying && embedUrl && (
+        <iframe
+          src={embedUrl}
+          title="Depoimento de cliente"
+          className="absolute inset-0 w-full h-full pointer-events-none"
+          allow="autoplay; encrypted-media"
+          aria-hidden
+          tabIndex={-1}
+        />
+      )}
 
-      {/* Waveform + metadata */}
-      <div className="flex-1 min-w-0">
-        <Waveform />
-        <div className="flex items-center justify-between mt-1.5 text-[10px] md:text-xs text-foreground/50 font-medium tabular-nums">
-          <span>0:01</span>
-          <span>{AUDIO_TESTIMONIAL.duration}</span>
+      {/* UI na frente cobre visualmente o iframe */}
+      <div className="relative z-10 flex items-center gap-3 p-3 md:p-4 bg-[#e9e4db] border border-foreground/5 rounded-3xl">
+        {/* Play/Pause */}
+        <div
+          className={`flex-shrink-0 w-11 h-11 md:w-12 md:h-12 rounded-full flex items-center justify-center transition-colors ${
+            isPlaying ? "bg-primary text-primary-light" : "bg-foreground text-background hover:bg-primary"
+          }`}
+        >
+          {isPlaying ? (
+            <Pause className="w-4 h-4 md:w-5 md:h-5 fill-current" />
+          ) : (
+            <Play className="w-4 h-4 md:w-5 md:h-5 fill-current ml-0.5" />
+          )}
         </div>
-      </div>
 
-      {/* Velocidade + mic — decorativo (estilo WhatsApp) */}
-      <div className="flex-shrink-0 flex flex-col items-center gap-1.5">
-        <span className="text-[10px] md:text-xs font-semibold text-foreground/60 bg-background/60 rounded-full px-2 py-0.5">
-          1,5x
-        </span>
-        <Mic className="w-4 h-4 text-foreground/40" strokeWidth={2} />
+        {/* Waveform + metadata */}
+        <div className="flex-1 min-w-0">
+          <Waveform playing={isPlaying} />
+          <div className="flex items-center justify-between mt-1.5 text-[10px] md:text-xs text-foreground/50 font-medium tabular-nums">
+            <span>{isPlaying ? "agora" : "0:01"}</span>
+            <span>{AUDIO_TESTIMONIAL.duration}</span>
+          </div>
+        </div>
+
+        {/* Velocidade + mic — decorativo (estilo WhatsApp) */}
+        <div className="flex-shrink-0 flex flex-col items-center gap-1.5">
+          <span className="text-[10px] md:text-xs font-semibold text-foreground/60 bg-background/60 rounded-full px-2 py-0.5">
+            1,5x
+          </span>
+          <Mic className="w-4 h-4 text-foreground/40" strokeWidth={2} />
+        </div>
       </div>
     </button>
   );
 }
 
-// Waveform fake estilo WhatsApp — barras de alturas variadas
-function Waveform() {
-  // padrão pseudo-random estável
+// Waveform fake estilo WhatsApp — barras animam quando playing
+function Waveform({ playing = false }: { playing?: boolean }) {
   const HEIGHTS = [
     30, 55, 42, 70, 50, 85, 60, 40, 72, 48, 88, 55, 65, 38, 52, 78, 45, 92,
     60, 50, 80, 42, 68, 55, 36, 72, 58, 48, 82, 52, 40, 68, 54, 88, 62, 44,
     76, 50, 38, 64,
   ];
-  // progresso (só decorativo, para dar aspecto de ouvido até ali)
-  const progress = 0.15;
+  const progress = playing ? 1 : 0.15;
 
   return (
     <div className="flex items-center gap-[2px] h-6 md:h-7 w-full">
@@ -245,10 +270,15 @@ function Waveform() {
         return (
           <span
             key={i}
-            className={`flex-1 rounded-full ${
+            className={`flex-1 rounded-full origin-center ${
               played ? "bg-primary" : "bg-foreground/35"
-            }`}
-            style={{ height: `${h}%` }}
+            } ${playing ? "wave-bar" : ""}`}
+            style={
+              {
+                height: `${h}%`,
+                animationDelay: `${(i % 10) * 80}ms`,
+              } as React.CSSProperties
+            }
           />
         );
       })}
