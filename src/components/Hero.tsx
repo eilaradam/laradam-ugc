@@ -155,8 +155,8 @@ function HeroPhoto() {
       alt="Lara Dam"
       className={`w-auto object-contain ${
         isPng
-          ? "h-[42vh] md:h-[66vh] max-w-[70vw] md:max-w-[38vw]"
-          : "h-[36vh] md:h-[56vh] max-w-[70vw] md:max-w-[38vw] rounded-2xl shadow-2xl"
+          ? "h-[42vh] md:h-[54vh] max-w-[70vw] md:max-w-[38vw]"
+          : "h-[36vh] md:h-[46vh] max-w-[70vw] md:max-w-[38vw] rounded-2xl shadow-2xl"
       }`}
       onError={() => {
         if (idx < SOURCES.length - 1) setIdx(idx + 1);
