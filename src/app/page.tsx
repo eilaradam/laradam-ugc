@@ -6,6 +6,7 @@ import About from "@/components/About";
 import BrandsMarquee from "@/components/BrandsMarquee";
 import Services from "@/components/Services";
 import BestResults from "@/components/BestResults";
+import Cases from "@/components/Cases";
 import CategoryGallery from "@/components/CategoryGallery";
 import YouTubeAds from "@/components/YouTubeAds";
 import Testimonials from "@/components/Testimonials";
@@ -23,6 +24,7 @@ export default function Home() {
       <BrandsMarquee />
       <Services />
       <BestResults />
+      <Cases />
       <CategoryGallery />
       <YouTubeAds />
       <Testimonials />
