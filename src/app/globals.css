@@ -89,6 +89,14 @@ body {
   50% { transform: scaleY(1); }
 }
 
+/* Esconde o cursor nativo sobre elementos que usam o cursor customizado */
+@media (hover: hover) and (pointer: fine) {
+  [data-cursor="play"],
+  [data-cursor="play"] * {
+    cursor: none;
+  }
+}
+
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }

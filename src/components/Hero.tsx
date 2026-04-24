@@ -79,6 +79,20 @@ export default function Hero() {
             className="relative z-30 -my-10 md:my-0 md:-mx-[5vw] pointer-events-none flex-shrink-0"
           >
             <HeroPhoto />
+
+            {/* Anotação em Fraunces italic flutuando na foto */}
+            <motion.div
+              initial={{ opacity: 0, rotate: 8, scale: 0.9 }}
+              animate={{ opacity: 1, rotate: -5, scale: 1 }}
+              transition={{ delay: 1.2, duration: 0.8 }}
+              className="hidden md:block absolute top-4 right-0 z-40"
+            >
+              <div className="bg-background/90 backdrop-blur-sm border border-foreground/10 rounded-full px-3 py-1.5 shadow-md">
+                <span className="font-serif-accent italic text-foreground text-sm whitespace-nowrap">
+                  filmado em iPhone <span className="not-italic">✦</span>
+                </span>
+              </div>
+            </motion.div>
           </motion.div>
 
           <motion.h1

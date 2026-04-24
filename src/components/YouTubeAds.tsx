@@ -108,6 +108,7 @@ function YouTubeAdCard({ ad, index }: { ad: YtAd; index: number }) {
       viewport={{ once: true }}
       transition={{ duration: 0.5, delay: index * 0.08 }}
       onClick={() => open(video)}
+      data-cursor="play"
       className="group relative aspect-video overflow-hidden rounded-xl bg-foreground cursor-pointer"
     >
       {ad.youtubeId ? (

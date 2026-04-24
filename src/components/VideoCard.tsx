@@ -44,6 +44,7 @@ export default function VideoCard({ video, index = 0, size = "md" }: Props) {
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.6, delay: index * 0.05 }}
       onClick={() => open(video)}
+      data-cursor="play"
       className="group relative cursor-pointer"
     >
       <div className="aspect-[9/16] relative overflow-hidden rounded-2xl bg-foreground">

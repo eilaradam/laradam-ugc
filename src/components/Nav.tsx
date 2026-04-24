@@ -5,10 +5,11 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 
 const LINKS = [
-  { href: "#sobre", label: "Sobre" },
-  { href: "#servicos", label: "Serviços" },
-  { href: "#categorias", label: "Categorias" },
-  { href: "#contato", label: "Contato" },
+  { href: "/#sobre", label: "Sobre" },
+  { href: "/#servicos", label: "Serviços" },
+  { href: "/#categorias", label: "Categorias" },
+  { href: "/processo", label: "Processo" },
+  { href: "/#contato", label: "Contato" },
 ];
 
 export default function Nav() {

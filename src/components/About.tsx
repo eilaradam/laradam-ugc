@@ -4,6 +4,40 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { ABOUT } from "@/data/content";
 
+// SVG de seta rabiscada apontando pra baixo-esquerda (estilo anotação à mão)
+function ScribbleArrow({
+  className,
+  flip = false,
+}: {
+  className?: string;
+  flip?: boolean;
+}) {
+  return (
+    <svg
+      viewBox="0 0 80 60"
+      fill="none"
+      className={className}
+      style={{ transform: flip ? "scaleX(-1)" : undefined }}
+    >
+      <path
+        d="M5 10 Q 30 5, 50 25 T 72 48"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        fill="none"
+      />
+      <path
+        d="M62 42 L 72 48 L 64 55"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        fill="none"
+      />
+    </svg>
+  );
+}
+
 export default function About() {
   return (
     <section
@@ -68,6 +102,43 @@ function PhotoSlot() {
   const [hasError, setHasError] = useState(false);
 
   return (
+    <div className="relative">
+      {/* Anotação: canto superior direito, rotacionada */}
+      {!hasError && (
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8, rotate: 6 }}
+          whileInView={{ opacity: 1, scale: 1, rotate: -4 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
+          className="absolute -top-4 -right-2 md:-top-6 md:-right-6 z-10 pointer-events-none"
+        >
+          <div className="bg-primary-light border border-primary/30 rounded-2xl px-3 py-2 shadow-md">
+            <div className="font-serif-accent italic text-primary text-sm md:text-base leading-none">
+              +500 vídeos <span className="not-italic">✦</span>
+            </div>
+          </div>
+          <ScribbleArrow
+            flip
+            className="w-12 h-9 text-primary/70 absolute -bottom-6 right-6"
+          />
+        </motion.div>
+      )}
+
+      {/* Anotação: canto inferior esquerdo */}
+      {!hasError && (
+        <motion.div
+          initial={{ opacity: 0, y: 10, rotate: -8 }}
+          whileInView={{ opacity: 1, y: 0, rotate: 3 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7, delay: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="absolute -bottom-3 -left-3 md:-bottom-5 md:-left-6 z-10 pointer-events-none"
+        >
+          <div className="font-serif-accent italic text-foreground text-sm md:text-base bg-background border border-foreground/15 rounded-full px-3 py-1.5 shadow-sm">
+            27 anos
+          </div>
+        </motion.div>
+      )}
+
     <div className="aspect-[4/5] relative overflow-hidden rounded-3xl bg-foreground/5 border border-foreground/10">
       {!hasError ? (
         <img
@@ -106,6 +177,7 @@ function PhotoSlot() {
           </div>
         </div>
       )}
+    </div>
     </div>
   );
 }

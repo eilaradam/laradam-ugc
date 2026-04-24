@@ -161,6 +161,7 @@ function HighlightCard({
       {/* Vídeo vertical */}
       <button
         onClick={() => open(video)}
+        data-cursor="play"
         className="group relative w-full aspect-[9/16] overflow-hidden rounded-2xl bg-foreground cursor-pointer"
       >
         {highlight.youtubeId ? (
