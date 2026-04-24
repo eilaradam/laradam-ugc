@@ -13,7 +13,7 @@ type YtAd = {
 
 // TODO Lara: trocar youtubeId pelos 4 vídeos horizontais de YouTube Ads
 const YT_ADS: YtAd[] = [
-  { youtubeId: "", brand: "Óculos", title: "YouTube Ad — Óculos" },
+  { youtubeId: "zZXflzISC1c", brand: "Óculos", title: "YouTube Ad — Óculos" },
   { youtubeId: "", brand: "Sheglam", title: "YouTube Ad — Sheglam" },
   { youtubeId: "", brand: "Cygnuss", title: "YouTube Ad — Cygnuss" },
   { youtubeId: "", brand: "Cygnuss", title: "YouTube Ad — Cygnuss Sutiã" },
