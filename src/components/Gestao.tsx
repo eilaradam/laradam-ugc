@@ -401,72 +401,6 @@ function BrandsLogoBar() {
   );
 }
 
-/* ============================ 3. PARA QUEM É ============================ */
-function ParaQuemE() {
-  const BLOCOS = [
-    {
-      tag: "Começando",
-      body:
-        "Você sabe que precisa estar no digital, mas não sabe por onde começar com UGC. Já viu concorrente postando vídeo de creator e fez sentido. Só que entre saber o que é e botar pra rodar tem uma distância grande, e você não quer queimar verba aprendendo.",
-      precisa:
-        "Estrutura desde o zero, com creators selecionados, briefing pronto e processo claro pra primeira campanha sair certa.",
-    },
-    {
-      tag: "Testou e não funcionou",
-      body:
-        "Você já contratou creator, já produziu vídeo, já rodou campanha. E os criativos saturaram rápido, vieram entregas que não bateram com a marca, ou o que veio bonito não converteu. Você já sentiu na pele que UGC ruim custa caro.",
-      precisa:
-        "Alguém que entenda por que não funcionou da última vez e estruture a próxima com lógica, não com sorte.",
-    },
-    {
-      tag: "Validado e quer escalar",
-      body:
-        "Sua marca já roda mídia paga, já entende criativo, já tem volume. Mas seu time está no limite, você precisa de mais material por mês e não tem como gerenciar dezenas de creators internamente sem perder qualidade.",
-      precisa:
-        "Uma operação externa que entrega volume com consistência, sem te dar mais trabalho.",
-    },
-  ];
-
-  return (
-    <section className="relative bg-white py-14 md:py-20">
-      <div className="max-w-6xl mx-auto px-6 md:px-12">
-        <h2 className="font-display font-black text-2xl md:text-4xl leading-[0.95] tracking-tighter text-black uppercase max-w-3xl mb-10 md:mb-14">
-          Você está no lugar certo se sua marca está em um destes{" "}
-          <span className="text-[var(--mm-orange)]">três momentos</span>.
-        </h2>
-
-        <div className="grid md:grid-cols-3 gap-4 md:gap-5">
-          {BLOCOS.map((b, i) => (
-            <motion.div
-              key={b.tag}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
-              className="rounded-2xl border-2 border-black/10 bg-white p-6 md:p-7 flex flex-col"
-            >
-              <div className="text-xs md:text-sm uppercase tracking-[0.2em] text-[var(--mm-orange)] font-bold mb-3">
-                {String(i + 1).padStart(2, "0")} / {b.tag}
-              </div>
-              <p className="text-sm md:text-base text-black leading-relaxed mb-5">
-                {b.body}
-              </p>
-              <div className="mt-auto pt-4 border-t border-black/10">
-                <div className="text-[11px] md:text-xs uppercase tracking-wider text-black/60 font-bold mb-1.5">
-                  O que você precisa
-                </div>
-                <p className="text-sm md:text-base text-black leading-relaxed">
-                  {b.precisa}
-                </p>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
 /* ============================ 4. O PROBLEMA ============================ */
 function OProblema() {
   const PONTOS = [
@@ -538,72 +472,159 @@ function OProblema() {
 function OQueFaço() {
   const ITENS = [
     {
-      titulo: "Seleção estratégica de creators",
+      titulo: "Seleção de creators",
+      tagShort: "Seleção",
+      emoji: "🎯",
       texto:
-        "Não é mandar mensagem pra qualquer um. É hunting com critério: perfil que conversa com sua persona, histórico de entrega, nicho compatível e disponibilidade real. Você recebe creators pré-aprovados, não uma lista pra você revisar.",
+        "Hunting com critério, não mensagem em massa. Perfil alinhado com sua persona, histórico de entrega, nicho compatível e disponibilidade real. Você recebe creators pré-aprovados.",
     },
     {
-      titulo: "Briefing co-criado e alinhado",
+      titulo: "Briefing co-criado",
+      tagShort: "Briefing",
+      emoji: "📋",
       texto:
-        "Eu construo o briefing junto com você, traduzindo posicionamento de marca em direção criativa que o creator entende e executa. Briefing claro é metade do trabalho.",
+        "Construído junto com você, traduzindo posicionamento de marca em direção criativa que o creator entende e executa. Briefing claro é metade do trabalho.",
     },
     {
-      titulo: "Roteiros revisados antes da gravação",
+      titulo: "Roteiros revisados",
+      tagShort: "Roteiro",
+      emoji: "✍️",
       texto:
-        "Toda campanha minha tem roteiro revisado por mim antes do creator gravar. Esse é o ponto onde mais campanha desanda no mercado, e onde mais cuido pra que não desande na sua.",
+        "Toda campanha minha tem roteiro revisado por mim antes do creator gravar. É onde mais campanha desanda no mercado, e onde mais cuido pra não desandar a sua.",
     },
     {
-      titulo: "Produção acompanhada de perto",
+      titulo: "Produção acompanhada",
+      tagShort: "Produção",
+      emoji: "🎬",
       texto:
-        "Acompanhamento direto com cada creator durante a produção. Cobrança de prazo, ajuste de execução, suporte técnico quando precisa. Você não vai ficar correndo atrás de ninguém.",
+        "Acompanhamento direto com cada creator. Cobrança de prazo, ajuste de execução, suporte técnico. Você não vai ficar correndo atrás de ninguém.",
     },
     {
-      titulo: "Revisão e ajustes antes da entrega",
+      titulo: "Revisão antes da entrega",
+      tagShort: "Revisão",
+      emoji: "✓",
       texto:
         "Antes do material chegar em você, ele já passou por revisão. Você recebe entrega, não rascunho.",
     },
     {
-      titulo: "Relatório e leitura do que funcionou",
+      titulo: "Relatório e leitura",
+      tagShort: "Relatório",
+      emoji: "📊",
       texto:
-        "Ao final de cada ciclo, eu te entrego leitura clara do que performou, o que saturou, e o que vamos testar no próximo ciclo. Decisão baseada em dado, não em achismo.",
+        "Leitura clara do que performou, o que saturou e o que vamos testar no próximo ciclo. Decisão baseada em dado, não em achismo.",
     },
   ];
+
+  const [active, setActive] = useState(0);
+  const current = ITENS[active];
+
+  // Auto-rotate enquanto o usuário não interage (a cada 5s)
+  // Removemos auto-play pra dar controle total ao usuário — pode rolar e ler
 
   return (
     <section className="bg-white py-14 md:py-20">
       <div className="max-w-6xl mx-auto px-6 md:px-12">
-        <h2 className="font-display font-black text-2xl md:text-4xl leading-[0.95] tracking-tighter text-black uppercase max-w-3xl">
-          Gestão completa.{" "}
-          <span className="text-[var(--mm-orange)]">
-            Você não precisa montar time interno pra isso.
-          </span>
-        </h2>
-        <p className="mt-4 text-base md:text-lg text-black/75 max-w-2xl leading-relaxed">
-          Eu opero a campanha de ponta a ponta. Você define o objetivo, eu
-          entrego o que vai pro ar.
-        </p>
+        <div className="text-center max-w-3xl mx-auto">
+          <h2 className="font-display font-black text-2xl md:text-4xl leading-[0.95] tracking-tighter text-black uppercase">
+            Gestão completa.{" "}
+            <span className="text-[var(--mm-orange)]">
+              Sem montar time interno.
+            </span>
+          </h2>
+          <p className="mt-4 text-base md:text-lg text-black/75 leading-relaxed">
+            Eu opero a campanha de ponta a ponta. Você define o objetivo, eu
+            entrego o que vai pro ar.
+          </p>
+        </div>
 
-        <div className="mt-10 md:mt-14 grid md:grid-cols-2 gap-4 md:gap-5">
+        {/* Tabs horizontais (pills) */}
+        <div className="mt-10 md:mt-14 flex flex-wrap justify-center gap-2 md:gap-2.5">
           {ITENS.map((it, i) => (
-            <motion.div
+            <button
               key={it.titulo}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.06 }}
-              className="rounded-2xl border-2 border-black/10 p-6 md:p-7 hover:border-[var(--mm-orange)]/40 transition-colors"
+              onClick={() => setActive(i)}
+              className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-full text-xs md:text-sm font-bold uppercase tracking-wider transition-all ${
+                active === i
+                  ? "bg-black text-white scale-105"
+                  : "bg-white border-2 border-black/10 text-black/70 hover:border-black/30"
+              }`}
             >
-              <div className="font-display font-black text-[var(--mm-orange)] text-sm tracking-widest mb-2">
+              <span
+                className={`text-[10px] md:text-xs ${
+                  active === i ? "text-[var(--mm-orange)]" : "text-[var(--mm-orange)]"
+                }`}
+              >
                 {String(i + 1).padStart(2, "0")}
-              </div>
-              <h3 className="font-display font-black text-lg md:text-xl tracking-tight mb-3 uppercase text-black">
-                {it.titulo}
-              </h3>
-              <p className="text-sm md:text-base text-black/80 leading-relaxed">
-                {it.texto}
-              </p>
-            </motion.div>
+              </span>
+              {it.tagShort}
+            </button>
           ))}
+        </div>
+
+        {/* Card grande com conteúdo do item ativo */}
+        <div className="mt-8 md:mt-10 relative">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={current.titulo}
+              initial={{ opacity: 0, x: 30 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -30 }}
+              transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+              className="grid md:grid-cols-12 gap-6 md:gap-10 items-center rounded-3xl bg-black text-white p-6 md:p-12 min-h-[280px]"
+            >
+              {/* Emoji/visual gigante */}
+              <div className="md:col-span-4 flex items-center justify-center">
+                <div className="relative">
+                  <div className="text-7xl md:text-9xl select-none">
+                    {current.emoji}
+                  </div>
+                  <div className="absolute -top-3 -right-3 md:-top-4 md:-right-4 font-display font-black text-[var(--mm-orange)] text-3xl md:text-5xl tabular-nums">
+                    {String(active + 1).padStart(2, "0")}
+                  </div>
+                </div>
+              </div>
+
+              {/* Texto */}
+              <div className="md:col-span-8">
+                <div className="text-xs md:text-sm uppercase tracking-[0.3em] text-[var(--mm-orange)] font-bold mb-3">
+                  Etapa {String(active + 1).padStart(2, "0")} de{" "}
+                  {String(ITENS.length).padStart(2, "0")}
+                </div>
+                <h3 className="font-display font-black text-2xl md:text-4xl tracking-tight uppercase mb-4 leading-tight">
+                  {current.titulo}
+                </h3>
+                <p className="text-base md:text-lg text-white/85 leading-relaxed">
+                  {current.texto}
+                </p>
+              </div>
+            </motion.div>
+          </AnimatePresence>
+
+          {/* Setas prev/next */}
+          <div className="mt-5 flex items-center justify-center gap-3">
+            <button
+              onClick={() => setActive((i) => (i - 1 + ITENS.length) % ITENS.length)}
+              aria-label="Anterior"
+              className="w-10 h-10 rounded-full border-2 border-black/15 text-black flex items-center justify-center hover:bg-black hover:text-white hover:border-black transition-all"
+            >
+              <svg className="w-4 h-4 fill-none stroke-current" viewBox="0 0 24 24" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M15 18 L9 12 L15 6" />
+              </svg>
+            </button>
+            <span className="text-xs md:text-sm font-bold text-black/60 tabular-nums px-2">
+              {String(active + 1).padStart(2, "0")} /{" "}
+              {String(ITENS.length).padStart(2, "0")}
+            </span>
+            <button
+              onClick={() => setActive((i) => (i + 1) % ITENS.length)}
+              aria-label="Próximo"
+              className="w-10 h-10 rounded-full border-2 border-black/15 text-black flex items-center justify-center hover:bg-black hover:text-white hover:border-black transition-all"
+            >
+              <svg className="w-4 h-4 fill-none stroke-current" viewBox="0 0 24 24" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M9 6 L15 12 L9 18" />
+              </svg>
+            </button>
+          </div>
         </div>
       </div>
     </section>
@@ -1428,7 +1449,6 @@ export default function Gestao() {
     <div style={PALETTE}>
       <Hero />
       <BrandsLogoBar />
-      <ParaQuemE />
       <OProblema />
       <OQueFaço />
       <Modalidades />
