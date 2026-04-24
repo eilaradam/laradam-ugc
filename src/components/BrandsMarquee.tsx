@@ -4,7 +4,7 @@ import { BRAND_LOGO_FILES } from "@/data/content";
 
 /**
  * Barra horizontal com scroll infinito das logos das marcas.
- * Duplicamos o array pra a animação continuar sem cortar ao fim.
+ * Cada logo dentro de um círculo (w/h iguais, rounded-full).
  */
 export default function BrandsMarquee() {
   const doubled = [...BRAND_LOGO_FILES, ...BRAND_LOGO_FILES];
@@ -19,19 +19,18 @@ export default function BrandsMarquee() {
         </div>
       </div>
 
-      <div className="marquee">
+      <div className="marquee-slow">
         {doubled.map((file, i) => (
           <div
             key={`${file}-${i}`}
-            className="flex-shrink-0 flex items-center justify-center h-14 md:h-20 px-6 md:px-10"
+            className="flex-shrink-0 w-20 h-20 md:w-24 md:h-24 rounded-full bg-background-alt border border-foreground/10 p-3 flex items-center justify-center shadow-sm hover:shadow-md hover:scale-105 transition-all"
           >
             <img
               src={`/logos/${encodeURI(file)}`}
               alt="Logo de marca parceira"
               loading="lazy"
-              className="max-h-full w-auto max-w-[140px] md:max-w-[180px] object-contain opacity-70 hover:opacity-100 transition-opacity"
+              className="max-w-full max-h-full object-contain"
               onError={(e) => {
-                // Se o arquivo não existir, esconde pra não mostrar ícone quebrado
                 e.currentTarget.style.display = "none";
               }}
             />

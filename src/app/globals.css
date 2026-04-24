@@ -63,6 +63,14 @@ body {
   width: max-content;
 }
 
+.marquee-slow {
+  display: flex;
+  gap: 0.75rem;
+  animation: marquee 70s linear infinite;
+  white-space: nowrap;
+  width: max-content;
+}
+
 @keyframes marquee {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
