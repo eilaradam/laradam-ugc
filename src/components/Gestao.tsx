@@ -4,38 +4,15 @@ import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import {
   ArrowRight,
-  BookOpen,
-  Calendar,
   CheckCircle2,
   ChevronDown,
-  ChevronLeft,
-  ChevronRight,
-  FlaskConical,
-  Heart,
-  ListOrdered,
-  MessageCircle,
-  Play,
   Rocket,
-  ShoppingBag,
-  Smile,
-  Sparkles,
-  Star,
-  TrendingUp,
-  Users,
-  Video,
-  Zap,
-  type LucideIcon,
 } from "lucide-react";
 import { VIDEOS, BRAND_LOGO_FILES } from "@/data/content";
 import { useVideoModal } from "./VideoModalProvider";
 
 /* ==========================================================================
-   Paleta Meu Manager — aplicada via CSS vars no root da /gestao
-   - blue: azul royal #1E3AFF
-   - orange: laranja vivo #FF5824
-   - pink: rosa claro pastel #FFCFD2
-   - pink-soft: rosa ainda mais claro #FFE5E7
-   - blue-deep: azul mais escuro pra hovers #0A1FE8
+   Paleta — fundo preto/branco, cores só em fontes, ícones e stickers
 ========================================================================== */
 const PALETTE: React.CSSProperties = {
   ["--mm-blue" as string]: "#1028B0",
@@ -46,9 +23,8 @@ const PALETTE: React.CSSProperties = {
   ["--mm-pink-soft" as string]: "#FFE5E7",
 };
 
-/* ========================== STICKERS (SVG inline) ========================== */
+/* ============================== STICKERS SVG ============================== */
 
-// Balão laranja com 3 bolinhas rosa (chat/thinking)
 function ChatBubbleSticker(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg viewBox="0 0 140 100" fill="none" {...props}>
@@ -64,7 +40,6 @@ function ChatBubbleSticker(props: React.SVGProps<SVGSVGElement>) {
   );
 }
 
-// Loading azul (círculo tracejado tipo spinner)
 function LoadingSticker(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg viewBox="0 0 100 100" fill="none" {...props}>
@@ -93,7 +68,6 @@ function LoadingSticker(props: React.SVGProps<SVGSVGElement>) {
   );
 }
 
-// Cursor pixelado azul (estilo retrô Mac)
 function CursorSticker(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg viewBox="0 0 80 100" fill="none" {...props}>
@@ -108,7 +82,6 @@ function CursorSticker(props: React.SVGProps<SVGSVGElement>) {
   );
 }
 
-// "Creator Creator Creator" sticker laranja
 function CreatorStacked({ className }: { className?: string }) {
   return (
     <div
@@ -118,7 +91,7 @@ function CreatorStacked({ className }: { className?: string }) {
       {[0, 1, 2].map((i) => (
         <span
           key={i}
-          className="font-display font-black text-white uppercase text-xl md:text-3xl leading-[0.85] tracking-tight -mt-1 first:mt-0"
+          className="font-display font-black text-white uppercase text-2xl md:text-3xl leading-[0.85] tracking-tight -mt-1 first:mt-0"
           style={{
             background: "#FF5824",
             padding: "0.15em 0.55em 0.25em 0.55em",
@@ -134,23 +107,22 @@ function CreatorStacked({ className }: { className?: string }) {
   );
 }
 
-// Pill estilo Meu Manager (pink bg + orange text)
 function MMPill({ children }: { children: React.ReactNode }) {
   return (
-    <span className="inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-[10px] md:text-xs font-bold uppercase tracking-wider bg-[var(--mm-pink)] text-[var(--mm-orange)]">
+    <span className="inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-xs md:text-sm font-bold uppercase tracking-wider bg-[var(--mm-pink)] text-[var(--mm-orange)]">
       {children}
     </span>
   );
 }
 
-/* ================================ HERO ================================ */
+/* =============================== 1. HERO =============================== */
 function Hero() {
   return (
     <section className="relative overflow-hidden bg-black text-white pt-20 md:pt-24 pb-0">
-      {/* Grid bg decorativo (pontos sutis) */}
+      {/* Pontilhado bg */}
       <div
         aria-hidden
-        className="absolute inset-0 pointer-events-none opacity-[0.12]"
+        className="absolute inset-0 pointer-events-none opacity-[0.10]"
         style={{
           backgroundImage:
             "radial-gradient(circle, #fff 1px, transparent 1px)",
@@ -159,14 +131,13 @@ function Hero() {
       />
 
       <div className="relative max-w-7xl mx-auto px-6 md:px-12 grid md:grid-cols-12 gap-8 md:gap-4 items-end pt-4 md:pt-8">
-        {/* ========== Coluna esquerda: Text block ========== */}
+        {/* Esquerda */}
         <div className="md:col-span-7 lg:col-span-7 relative pb-12 md:pb-20">
-          {/* Wordmark no topo */}
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="flex items-center gap-3 mb-8 md:mb-10"
+            className="flex items-center gap-3 mb-6 md:mb-8"
           >
             <div className="w-2.5 h-2.5 rounded-full bg-[var(--mm-orange)] animate-pulse" />
             <span className="font-display font-black text-white text-sm md:text-base tracking-widest uppercase">
@@ -174,118 +145,96 @@ function Hero() {
             </span>
           </motion.div>
 
-          {/* Pill acima do título */}
-          <motion.div
-            initial={{ opacity: 0, x: -20, rotate: -3 }}
-            animate={{ opacity: 1, x: 0, rotate: -2 }}
-            transition={{ duration: 0.7, delay: 0.15 }}
-            className="mb-6 origin-left inline-block"
+          {/* Pré-headline */}
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.7, delay: 0.1 }}
+            className="text-sm md:text-base uppercase tracking-[0.2em] text-white/70 font-semibold mb-5"
           >
-            <MMPill>✦ Menos caos, mais criação</MMPill>
-          </motion.div>
+            Para marcas que já entenderam que conteúdo é canal, não tendência.
+          </motion.p>
 
-          {/* H1 grande */}
+          {/* Headline */}
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="font-display font-black text-white text-4xl md:text-5xl lg:text-6xl leading-[0.88] tracking-tighter uppercase"
+            className="font-display font-black text-white text-3xl md:text-5xl lg:text-6xl leading-[0.95] tracking-tighter uppercase"
           >
-            UGC que vende,
-            <br />
-            <span className="text-[var(--mm-orange)]">de creator</span>
-            <br />
-            pra creator.
+            Gestão de campanhas UGC{" "}
+            <span className="text-[var(--mm-orange)]">do briefing à entrega.</span>
           </motion.h1>
 
-          {/* Descrição */}
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.35 }}
+            className="mt-4 text-base md:text-lg text-white/85 leading-snug max-w-xl"
+          >
+            Sem retrabalho, sem improviso, sem promessa de algoritmo.
+          </motion.p>
+
+          {/* Subheadline */}
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="mt-8 text-white/85 text-base md:text-lg max-w-xl leading-relaxed"
+            transition={{ duration: 0.8, delay: 0.5 }}
+            className="mt-7 text-base md:text-lg max-w-xl leading-relaxed text-white/75"
           >
-            Gestão completa de UGC —{" "}
-            <span className="font-serif-accent italic text-[var(--mm-orange)]">
-              do briefing ao viral
-            </span>
-            . Creators selecionados, roteiros validados e vídeos pensados pra
-            converter.
+            Eu cuido do processo inteiro: seleção dos creators certos, briefing
+            alinhado com seu posicionamento, roteiro revisado, produção
+            acompanhada e entrega no prazo.{" "}
+            <span className="text-white font-semibold">Você roda mídia. Eu rodo a operação.</span>
           </motion.p>
 
-          {/* CTAs */}
+          {/* CTA */}
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.55 }}
-            className="mt-10 flex flex-wrap items-center gap-3"
+            transition={{ duration: 0.7, delay: 0.65 }}
+            className="mt-8"
           >
             <a
               href="#gestao-contato"
-              className="inline-flex items-center gap-2 bg-[var(--mm-orange)] text-white px-7 py-4 rounded-full text-base font-bold uppercase tracking-wider hover:bg-[var(--mm-orange-deep)] transition-colors shadow-xl"
+              className="inline-flex items-center gap-2 bg-[var(--mm-orange)] text-white px-7 py-4 rounded-full text-base md:text-lg font-bold uppercase tracking-wider hover:bg-[var(--mm-orange-deep)] transition-colors shadow-xl"
             >
-              Falar com a Lara
-              <Rocket className="w-4 h-4" />
+              Quero conversar sobre minha campanha
+              <ArrowRight className="w-4 h-4" />
             </a>
-            <a
-              href="#cases-gestao"
-              className="inline-flex items-center gap-2 border-2 border-white/20 text-white px-6 py-4 rounded-full text-base font-bold uppercase tracking-wider hover:bg-white hover:text-[var(--mm-blue)] transition-colors"
-            >
-              Ver cases
-            </a>
+            <p className="mt-3 text-xs md:text-sm text-white/60">
+              Resposta em até 24h. Diagnóstico gratuito antes de qualquer
+              proposta.
+            </p>
           </motion.div>
 
-          {/* Stats row */}
+          {/* Prova social */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.8 }}
-            className="mt-12 flex flex-wrap items-center gap-x-8 gap-y-3 text-white/80"
+            transition={{ duration: 0.8, delay: 0.85 }}
+            className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3 text-white/85 border-t border-white/10 pt-6"
           >
-            <div className="flex items-baseline gap-2">
-              <span className="font-display font-black text-xl md:text-2xl text-white tabular-nums">
-                +500
-              </span>
-              <span className="text-xs md:text-sm uppercase tracking-wider">
-                vídeos
-              </span>
-            </div>
-            <div className="h-6 w-px bg-white/20" />
-            <div className="flex items-baseline gap-2">
-              <span className="font-display font-black text-xl md:text-2xl text-white tabular-nums">
-                +200
-              </span>
-              <span className="text-xs md:text-sm uppercase tracking-wider">
-                marcas
-              </span>
-            </div>
-            <div className="h-6 w-px bg-white/20" />
-            <div className="flex items-baseline gap-2">
-              <span className="font-display font-black text-xl md:text-2xl text-white tabular-nums">
-                100M+
-              </span>
-              <span className="text-xs md:text-sm uppercase tracking-wider">
-                views
-              </span>
-            </div>
+            <Stat value="+100" label="campanhas gerenciadas" />
+            <div className="h-6 w-px bg-white/15" />
+            <Stat value="+200" label="marcas atendidas" />
+            <div className="h-6 w-px bg-white/15" />
+            <Stat value="+1.200" label="creators em rede" />
           </motion.div>
         </div>
 
-        {/* ========== Coluna direita: Foto + stickers ========== */}
+        {/* Direita: foto + stickers */}
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
           className="md:col-span-5 lg:col-span-5 relative self-end"
         >
-          {/* Container da foto com forma orgânica */}
           <div className="relative aspect-[3/4] md:aspect-[4/5] w-full max-w-md mx-auto md:ml-auto md:mr-0">
-            {/* Shape branco ao fundo */}
             <div
               className="absolute inset-x-4 inset-y-2 bg-white rounded-[3rem]"
               aria-hidden
             />
-            {/* Foto */}
             <img
               src="/lara-fundo.png"
               alt="Lara Dam"
@@ -297,17 +246,15 @@ function Hero() {
               }}
             />
 
-            {/* Sticker: Creator Creator Creator no canto superior esquerdo */}
             <motion.div
               initial={{ opacity: 0, scale: 0.8, rotate: 20 }}
               animate={{ opacity: 1, scale: 1, rotate: -10 }}
               transition={{ duration: 0.9, delay: 0.8 }}
-              className="absolute -top-4 -left-4 md:-left-10 pointer-events-none scale-[0.65] md:scale-75 origin-top-left"
+              className="absolute -top-4 -left-4 md:-left-10 pointer-events-none scale-[0.6] md:scale-75 origin-top-left"
             >
               <CreatorStacked />
             </motion.div>
 
-            {/* Sticker: Chat bubble */}
             <motion.div
               initial={{ opacity: 0, scale: 0.8, rotate: -15 }}
               animate={{ opacity: 1, scale: 1, rotate: 8 }}
@@ -317,7 +264,6 @@ function Hero() {
               <ChatBubbleSticker className="w-full h-auto drop-shadow-lg" />
             </motion.div>
 
-            {/* Sticker: Loading giro lento */}
             <motion.div
               animate={{ rotate: 360 }}
               transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
@@ -326,7 +272,6 @@ function Hero() {
               <LoadingSticker className="w-full h-auto" />
             </motion.div>
 
-            {/* Pill "De creator para creator" */}
             <motion.div
               initial={{ opacity: 0, y: 20, rotate: 5 }}
               animate={{ opacity: 1, y: 0, rotate: -4 }}
@@ -335,21 +280,11 @@ function Hero() {
             >
               <MMPill>De creator pra creator</MMPill>
             </motion.div>
-
-            {/* Cursor pixel */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.6, delay: 1.5 }}
-              className="absolute top-1/2 -left-1 md:-left-6 w-9 md:w-12 pointer-events-none rotate-[-10deg] drop-shadow-md"
-            >
-              <CursorSticker className="w-full h-auto" />
-            </motion.div>
           </div>
         </motion.div>
       </div>
 
-      {/* Faixa laranja com tagline no rodapé do hero — animação lenta */}
+      {/* Marquee de fechamento do hero */}
       <div className="relative mt-6 md:mt-10 bg-[var(--mm-orange)] py-3 md:py-4 overflow-hidden">
         <div className="marquee-slow">
           {Array.from({ length: 10 }).map((_, i) => (
@@ -357,11 +292,11 @@ function Hero() {
               key={i}
               className="flex items-center gap-3 md:gap-5 text-xs md:text-sm uppercase tracking-[0.25em] font-bold text-white whitespace-nowrap"
             >
-              <span>Gestão inteligente</span>
+              <span>Sem retrabalho</span>
               <span className="text-white/70">✦</span>
-              <span>Creators selecionados</span>
+              <span>Sem improviso</span>
               <span className="text-white/70">✦</span>
-              <span>UGC que converte</span>
+              <span>Processo claro</span>
               <span className="text-white/70">✦</span>
             </div>
           ))}
@@ -371,56 +306,179 @@ function Hero() {
   );
 }
 
-/* ================================ BRANDS ================================ */
-function Brands() {
-  const LOGOS = BRAND_LOGO_FILES.slice(0, 10);
+function Stat({ value, label }: { value: string; label: string }) {
   return (
-    <section className="bg-white py-10 md:py-14 border-b border-[var(--mm-blue)]/5">
-      <div className="max-w-5xl mx-auto px-6 md:px-12 grid grid-cols-3 md:grid-cols-5 gap-6 md:gap-10 items-center">
-        {LOGOS.map((file) => (
-          <div
-            key={file}
-            className="flex items-center justify-center h-10 md:h-12"
-          >
-            <img
-              src={`/logo-1/${encodeURI(file)}`}
-              alt="Marca parceira"
-              loading="lazy"
-              className="max-h-full max-w-full object-contain opacity-70 hover:opacity-100 transition-opacity"
-              onError={(e) => {
-                const p = e.currentTarget.parentElement;
-                if (p) p.remove();
-              }}
-            />
+    <div className="flex items-baseline gap-2">
+      <span className="font-display font-black text-2xl md:text-3xl text-white tabular-nums">
+        {value}
+      </span>
+      <span className="text-xs md:text-sm uppercase tracking-wider text-white/70">
+        {label}
+      </span>
+    </div>
+  );
+}
+
+/* =========================== 2. BRANDS LOGO BAR =========================== */
+function BrandsLogoBar() {
+  const LOGOS = BRAND_LOGO_FILES.slice(0, 12);
+  const BRANDS_TEXT = [
+    "OLX",
+    "ZAP Imóveis",
+    "Magalu",
+    "Méliuz",
+    "Porto Seguro",
+    "Chilli Beans",
+    "Bonduelle",
+    "Bauducco",
+    "Granado",
+    "Lancôme",
+    "Carolina Herrera",
+    "Calvin Klein",
+    "Jägermeister",
+    "Bioderma",
+    "Neutrogena",
+    "YSL",
+    "Wella",
+    "Knorr",
+    "Brinox",
+    "Coza",
+    "Mont Blanc",
+    "Jean Paul Gaultier",
+    "Sebastian",
+    "Inglot",
+    "Keune",
+    "SPC",
+    "Pura Vida",
+    "Sofá na Caixa",
+    "Mei Digital",
+    "Mash",
+    "Focus",
+    "Katy Perry",
+    "David Beckham",
+  ];
+
+  return (
+    <section className="bg-white py-12 md:py-16">
+      <div className="max-w-6xl mx-auto px-6 md:px-12">
+        {/* Grid de logos */}
+        <div className="grid grid-cols-3 md:grid-cols-6 gap-6 md:gap-10 items-center mb-10 md:mb-14">
+          {LOGOS.map((file) => (
+            <div
+              key={file}
+              className="flex items-center justify-center h-10 md:h-12"
+            >
+              <img
+                src={`/logo-1/${encodeURI(file)}`}
+                alt="Marca parceira"
+                loading="lazy"
+                className="max-h-full max-w-full object-contain opacity-70 hover:opacity-100 transition-opacity"
+                onError={(e) => {
+                  const p = e.currentTarget.parentElement;
+                  if (p) p.remove();
+                }}
+              />
+            </div>
+          ))}
+        </div>
+
+        {/* Marquee de nomes */}
+        <div className="overflow-hidden border-y border-black/10 py-4">
+          <div className="marquee-slow">
+            {BRANDS_TEXT.concat(BRANDS_TEXT).map((b, i) => (
+              <div
+                key={`${b}-${i}`}
+                className="flex items-center gap-4 text-sm md:text-base font-semibold text-black whitespace-nowrap"
+              >
+                {b}
+                <span className="text-[var(--mm-orange)]">✦</span>
+              </div>
+            ))}
           </div>
-        ))}
+        </div>
       </div>
     </section>
   );
 }
 
-/* =============================== WHO FOR =============================== */
-function WhoFor() {
-  // Organizado em linhas alternadas 2-1-2-1-2 pra ficar um zigue-zague centralizado
-  const ROWS: string[][] = [
-    [
-      "Marcas que querem melhorar os resultados de campanhas de mídia paga",
-      "Marcas que desejam estourar a bolha no always-on",
-    ],
-    ["Marcas que passaram da hora de criar conteúdos com a cara do consumidor real"],
-    [
-      "Marcas que não têm pessoas pra humanizar os vídeos",
-      "Marcas que precisam aumentar engajamento e alcance orgânico",
-    ],
-    ["Gestores que querem ativar TikTok e Reels de forma estratégica"],
-    [
-      "Times de marketing sem estrutura de produção interna",
-      "Produtos que precisam de prova social pra gerar conversão",
-    ],
+/* ============================ 3. PARA QUEM É ============================ */
+function ParaQuemE() {
+  const BLOCOS = [
+    {
+      tag: "Começando",
+      body:
+        "Você sabe que precisa estar no digital, mas não sabe por onde começar com UGC. Já viu concorrente postando vídeo de creator e fez sentido. Só que entre saber o que é e botar pra rodar tem uma distância grande, e você não quer queimar verba aprendendo.",
+      precisa:
+        "Estrutura desde o zero, com creators selecionados, briefing pronto e processo claro pra primeira campanha sair certa.",
+    },
+    {
+      tag: "Testou e não funcionou",
+      body:
+        "Você já contratou creator, já produziu vídeo, já rodou campanha. E os criativos saturaram rápido, vieram entregas que não bateram com a marca, ou o que veio bonito não converteu. Você já sentiu na pele que UGC ruim custa caro.",
+      precisa:
+        "Alguém que entenda por que não funcionou da última vez e estruture a próxima com lógica, não com sorte.",
+    },
+    {
+      tag: "Validado e quer escalar",
+      body:
+        "Sua marca já roda mídia paga, já entende criativo, já tem volume. Mas seu time está no limite, você precisa de mais material por mês e não tem como gerenciar dezenas de creators internamente sem perder qualidade.",
+      precisa:
+        "Uma operação externa que entrega volume com consistência, sem te dar mais trabalho.",
+    },
   ];
 
   return (
-    <section className="relative bg-white py-14 md:py-20 overflow-hidden">
+    <section className="relative bg-white py-14 md:py-20">
+      <div className="max-w-6xl mx-auto px-6 md:px-12">
+        <h2 className="font-display font-black text-2xl md:text-4xl leading-[0.95] tracking-tighter text-black uppercase max-w-3xl mb-10 md:mb-14">
+          Você está no lugar certo se sua marca está em um destes{" "}
+          <span className="text-[var(--mm-orange)]">três momentos</span>.
+        </h2>
+
+        <div className="grid md:grid-cols-3 gap-4 md:gap-5">
+          {BLOCOS.map((b, i) => (
+            <motion.div
+              key={b.tag}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: i * 0.1 }}
+              className="rounded-2xl border-2 border-black/10 bg-white p-6 md:p-7 flex flex-col"
+            >
+              <div className="text-xs md:text-sm uppercase tracking-[0.2em] text-[var(--mm-orange)] font-bold mb-3">
+                {String(i + 1).padStart(2, "0")} / {b.tag}
+              </div>
+              <p className="text-sm md:text-base text-black leading-relaxed mb-5">
+                {b.body}
+              </p>
+              <div className="mt-auto pt-4 border-t border-black/10">
+                <div className="text-[11px] md:text-xs uppercase tracking-wider text-black/60 font-bold mb-1.5">
+                  O que você precisa
+                </div>
+                <p className="text-sm md:text-base text-black leading-relaxed">
+                  {b.precisa}
+                </p>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ============================ 4. O PROBLEMA ============================ */
+function OProblema() {
+  const PONTOS = [
+    "Você briefou, recebeu o vídeo, e o creator entendeu metade do que você pediu.",
+    "O criativo veio bonito, mas não falava com sua persona, e você não soube explicar por quê.",
+    "Você roda muitos vídeos por mês e seu time interno virou central de cobrança de creator.",
+    "Você já investiu em campanha que não trouxe retorno e ficou com a sensação de que UGC \"não funciona\" pra sua marca.",
+    "Você produz vídeo, mas não tem ideia se está testando os ângulos certos ou só repetindo o que já fez.",
+  ];
+
+  return (
+    <section className="relative bg-black text-white py-14 md:py-20 overflow-hidden">
       <motion.div
         initial={{ opacity: 0, rotate: 20 }}
         whileInView={{ opacity: 1, rotate: 8 }}
@@ -431,564 +489,520 @@ function WhoFor() {
         <ChatBubbleSticker className="w-full h-auto" />
       </motion.div>
 
-      <div className="max-w-5xl mx-auto px-6 md:px-12 text-center">
-        <h2 className="font-display font-black text-2xl md:text-4xl leading-[0.95] tracking-tighter text-black uppercase mb-10 md:mb-14">
-          Quem precisa criar{" "}
-          <span className="text-[var(--mm-orange)]">conteúdo UGC</span> comigo?
+      <div className="relative max-w-4xl mx-auto px-6 md:px-12">
+        <h2 className="font-display font-black text-2xl md:text-4xl leading-[0.95] tracking-tighter uppercase max-w-3xl">
+          Campanha de UGC não dá errado por falta de creator.{" "}
+          <span className="text-[var(--mm-orange)]">
+            Dá errado por falta de gestão.
+          </span>
         </h2>
 
-        <div className="flex flex-col gap-3 md:gap-4">
-          {ROWS.map((row, rowIdx) => (
-            <div
-              key={rowIdx}
-              className="flex flex-wrap justify-center gap-3 md:gap-4"
-            >
-              {row.map((item, i) => (
-                <motion.div
-                  key={item}
-                  initial={{ opacity: 0, y: 10 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{
-                    duration: 0.4,
-                    delay: rowIdx * 0.08 + i * 0.05,
-                  }}
-                  className="inline-flex items-center gap-2 bg-[var(--mm-pink-soft)] text-black text-sm md:text-base px-4 md:px-5 py-2.5 md:py-3 rounded-full border border-[var(--mm-pink)] leading-snug"
-                >
-                  <CheckCircle2 className="w-4 h-4 text-[var(--mm-orange)] flex-shrink-0" />
-                  <span className="text-left">{item}</span>
-                </motion.div>
-              ))}
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ======================== CONTEÚDO AUTÊNTICO (blue) ======================== */
-function AuthenticContent() {
-  const { open } = useVideoModal();
-  const FEATURES = [
-    { icon: TrendingUp, title: "Mais credibilidade com prova social" },
-    { icon: Zap, title: "Conteúdos escaláveis e de baixo custo" },
-    { icon: Sparkles, title: "Performance superior em TikTok, Reels e Shorts" },
-    { icon: Heart, title: "Diversidade de tipos de conteúdos" },
-  ];
-  const GRID_VIDEOS = VIDEOS.filter((v) => v.youtubeId).slice(0, 8);
-
-  return (
-    <section className="relative bg-black text-white py-14 md:py-20 overflow-hidden">
-      {/* Loading sticker girando decorativo */}
-      <motion.div
-        animate={{ rotate: 360 }}
-        transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-        className="hidden md:block absolute top-10 right-10 w-14 opacity-80 pointer-events-none"
-      >
-        <LoadingSticker className="w-full h-auto" />
-      </motion.div>
-
-      <div className="relative max-w-6xl mx-auto px-6 md:px-12">
-        <div className="grid md:grid-cols-2 gap-8 md:gap-12 mb-10 md:mb-14 items-end">
-          <h2 className="font-display font-black text-2xl md:text-4xl leading-[0.9] tracking-tighter uppercase">
-            Conteúdo
-            <br />
-            autêntico que{" "}
-            <span className="text-[var(--mm-orange)]">gruda</span>
-            <br />
-            na audiência
-          </h2>
-          <p className="text-white/80 text-base md:text-lg leading-relaxed">
-            UGC é o formato que mais cresce no digital: aumenta confiança,
-            retenção e impacto de campanhas. Com +500 vídeos já produzidos,
-            ativo uma rede de creators prontos pra produzir vídeos com
-            linguagem nativa e foco em performance.
+        <div className="mt-8 space-y-5 max-w-2xl text-base md:text-lg text-white/85 leading-relaxed">
+          <p>
+            Eu já vi muita marca contratar creator sem briefing claro, receber
+            vídeo genérico, achar que era problema do creator e tentar de novo.
+            E de novo. E de novo. Gastando tempo, dinheiro e paciência.
+          </p>
+          <p>
+            UGC bem feito não é sobre achar a pessoa certa. É sobre montar um
+            processo que funcione independente de quem está na frente da
+            câmera.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-[auto_1fr] gap-8 md:gap-12 items-start">
-          <ul className="space-y-3 md:space-y-4 md:max-w-[220px]">
-            {FEATURES.map((f) => (
-              <li key={f.title} className="flex items-start gap-3">
-                <span className="text-[var(--mm-orange)] mt-0.5">✦</span>
-                <span className="text-xs md:text-sm uppercase tracking-wider font-bold leading-snug">
-                  {f.title}
+        <div className="mt-10 md:mt-12 rounded-2xl border border-white/15 bg-white/[0.03] p-5 md:p-7">
+          <p className="text-sm md:text-base text-[var(--mm-orange)] font-bold uppercase tracking-wider mb-5">
+            Se você já passou por algum destes pontos, é gestão que está
+            faltando, não creator novo:
+          </p>
+          <ul className="space-y-3.5">
+            {PONTOS.map((p) => (
+              <li key={p} className="flex items-start gap-3 text-sm md:text-base text-white/90 leading-relaxed">
+                <span className="text-[var(--mm-orange)] mt-1 flex-shrink-0">
+                  ✦
                 </span>
+                <span>{p}</span>
               </li>
             ))}
           </ul>
-
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-3">
-            {GRID_VIDEOS.map((v) => (
-              <button
-                key={v.id}
-                onClick={() => open(v)}
-                data-cursor="play"
-                className="group relative aspect-[9/16] rounded-lg overflow-hidden bg-white/5 cursor-pointer"
-              >
-                <img
-                  src={`https://i.ytimg.com/vi/${v.youtubeId}/maxresdefault.jpg`}
-                  alt={v.title}
-                  loading="lazy"
-                  className="absolute inset-0 w-full h-full object-cover"
-                  onError={(e) => {
-                    e.currentTarget.src = `https://i.ytimg.com/vi/${v.youtubeId}/hqdefault.jpg`;
-                  }}
-                />
-                <div className="absolute inset-0 flex items-center justify-center opacity-90 group-hover:opacity-100 transition-opacity">
-                  <div className="w-9 h-9 md:w-11 md:h-11 rounded-full bg-[var(--mm-orange)] flex items-center justify-center">
-                    <Play className="w-3.5 h-3.5 md:w-4 md:h-4 text-white fill-white ml-0.5" />
-                  </div>
-                </div>
-              </button>
-            ))}
-          </div>
+          <p className="mt-6 text-base md:text-lg text-white font-semibold leading-relaxed">
+            Nada disso é falta de creator. É falta de quem orquestra.
+          </p>
         </div>
       </div>
     </section>
   );
 }
 
-/* =============================== MARQUEE =============================== */
-function MarqueeStripe() {
-  const items = Array.from({ length: 14 }, () => "Resultados reais · Conteúdo real");
-  return (
-    <div className="bg-black py-4 md:py-5 overflow-hidden border-y border-[var(--mm-orange)]/30">
-      <div className="marquee-slow">
-        {items.concat(items).map((s, i) => (
-          <div
-            key={i}
-            className="flex items-center gap-4 text-xs md:text-sm uppercase tracking-[0.25em] font-bold text-[var(--mm-orange)]"
-          >
-            {s}
-            <span className="text-white/70">✦</span>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-/* ============================ CONTENT TYPES ============================ */
-function ContentTypes() {
-  type T = {
-    title: string;
-    icon: LucideIcon;
-    color: "pink" | "white" | "blue" | "orange";
-  };
-  const TYPES: T[] = [
-    { title: "Reviews de produto", icon: Star, color: "white" },
-    { title: "Experiência em eventos", icon: Calendar, color: "white" },
-    { title: "Storytelling de marca", icon: BookOpen, color: "pink" },
-    { title: "POV, GRWM e Vlog", icon: Video, color: "white" },
-    { title: "Conteúdo educativo, how to e tutoriais", icon: ListOrdered, color: "pink" },
-    { title: "Conteúdo com trends/challenges", icon: TrendingUp, color: "white" },
-    { title: "Unboxing", icon: ShoppingBag, color: "white" },
-    { title: "POV, GRWM e Vlog", icon: MessageCircle, color: "blue" },
-    { title: "Antes e depois (transformação clara)", icon: FlaskConical, color: "white" },
-    { title: "POV, GRWM e Vlog", icon: Video, color: "orange" },
-    { title: "UGC para anúncios pagos", icon: Zap, color: "white" },
-    { title: "Top 3/Top 5 motivos", icon: ListOrdered, color: "pink" },
-    { title: "Review comparativo", icon: CheckCircle2, color: "white" },
-    { title: "Reação espontânea", icon: Smile, color: "white" },
-    { title: "Experiência em evento/ativação", icon: Users, color: "blue" },
-    { title: "UGC colaborativo com dois creators", icon: Users, color: "white" },
+/* ============================== 5. O QUE FAÇO ============================== */
+function OQueFaço() {
+  const ITENS = [
+    {
+      titulo: "Seleção estratégica de creators",
+      texto:
+        "Não é mandar mensagem pra qualquer um. É hunting com critério: perfil que conversa com sua persona, histórico de entrega, nicho compatível e disponibilidade real. Você recebe creators pré-aprovados, não uma lista pra você revisar.",
+    },
+    {
+      titulo: "Briefing co-criado e alinhado",
+      texto:
+        "Eu construo o briefing junto com você, traduzindo posicionamento de marca em direção criativa que o creator entende e executa. Briefing claro é metade do trabalho.",
+    },
+    {
+      titulo: "Roteiros revisados antes da gravação",
+      texto:
+        "Toda campanha minha tem roteiro revisado por mim antes do creator gravar. Esse é o ponto onde mais campanha desanda no mercado, e onde mais cuido pra que não desande na sua.",
+    },
+    {
+      titulo: "Produção acompanhada de perto",
+      texto:
+        "Acompanhamento direto com cada creator durante a produção. Cobrança de prazo, ajuste de execução, suporte técnico quando precisa. Você não vai ficar correndo atrás de ninguém.",
+    },
+    {
+      titulo: "Revisão e ajustes antes da entrega",
+      texto:
+        "Antes do material chegar em você, ele já passou por revisão. Você recebe entrega, não rascunho.",
+    },
+    {
+      titulo: "Relatório e leitura do que funcionou",
+      texto:
+        "Ao final de cada ciclo, eu te entrego leitura clara do que performou, o que saturou, e o que vamos testar no próximo ciclo. Decisão baseada em dado, não em achismo.",
+    },
   ];
-
-  const colorClasses: Record<T["color"], string> = {
-    white: "bg-white border-black/10 text-black",
-    pink: "bg-[var(--mm-pink-soft)] border-[var(--mm-pink)] text-black",
-    blue: "bg-black border-black text-white",
-    orange: "bg-[var(--mm-orange)] border-[var(--mm-orange)] text-white",
-  };
 
   return (
     <section className="bg-white py-14 md:py-20">
       <div className="max-w-6xl mx-auto px-6 md:px-12">
-        <h2 className="font-display font-black text-2xl md:text-4xl leading-[0.9] tracking-tighter uppercase text-black mb-10 md:mb-14 max-w-2xl">
-          Criamos o tipo de conteúdo UGC{" "}
-          <span className="text-[var(--mm-orange)]">certo pra sua marca</span>
+        <h2 className="font-display font-black text-2xl md:text-4xl leading-[0.95] tracking-tighter text-black uppercase max-w-3xl">
+          Gestão completa.{" "}
+          <span className="text-[var(--mm-orange)]">
+            Você não precisa montar time interno pra isso.
+          </span>
         </h2>
+        <p className="mt-4 text-base md:text-lg text-black/75 max-w-2xl leading-relaxed">
+          Eu opero a campanha de ponta a ponta. Você define o objetivo, eu
+          entrego o que vai pro ar.
+        </p>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 md:gap-3">
-          {TYPES.map((t, i) => {
-            const Icon = t.icon;
-            return (
-              <motion.div
-                key={`${t.title}-${i}`}
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: i * 0.03 }}
-                className={`aspect-[4/3] rounded-2xl border p-3.5 md:p-4 flex flex-col justify-between ${colorClasses[t.color]}`}
-              >
-                <Icon className="w-4 h-4 md:w-5 md:h-5 self-end opacity-70" strokeWidth={1.8} />
-                <div className="text-sm md:text-base font-semibold leading-snug">
-                  {t.title}
-                </div>
-              </motion.div>
-            );
-          })}
-        </div>
-
-        <div className="mt-10 text-center">
-          <a
-            href="#gestao-contato"
-            className="inline-flex items-center gap-2 bg-black text-white px-6 py-3.5 rounded-full text-sm font-bold uppercase tracking-wider hover:bg-neutral-800 transition-colors"
-          >
-            Fale comigo e comece hoje
-            <Rocket className="w-4 h-4" />
-          </a>
+        <div className="mt-10 md:mt-14 grid md:grid-cols-2 gap-4 md:gap-5">
+          {ITENS.map((it, i) => (
+            <motion.div
+              key={it.titulo}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: i * 0.06 }}
+              className="rounded-2xl border-2 border-black/10 p-6 md:p-7 hover:border-[var(--mm-orange)]/40 transition-colors"
+            >
+              <div className="font-display font-black text-[var(--mm-orange)] text-sm tracking-widest mb-2">
+                {String(i + 1).padStart(2, "0")}
+              </div>
+              <h3 className="font-display font-black text-lg md:text-xl tracking-tight mb-3 uppercase text-black">
+                {it.titulo}
+              </h3>
+              <p className="text-sm md:text-base text-black/80 leading-relaxed">
+                {it.texto}
+              </p>
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>
   );
 }
 
-/* ============================= HOW WE DO ============================= */
-function HowWeDo() {
-  type Step = { title: string; body: string; color: string };
-  const STEPS: Step[] = [
+/* ============================ 6. MODALIDADES ============================ */
+function Modalidades() {
+  type Card = {
+    name: string;
+    pitch: string;
+    bullets: string[];
+    ideal: string;
+    cta: string;
+    emphasis?: boolean;
+  };
+  const CARDS: Card[] = [
     {
-      title: "Hunting e seleção de creators",
-      body:
-        "Mapeio e seleciono UGC creators alinhados ao perfil da sua marca e do seu público-alvo. Processo de hunting considera dados demográficos, estilo de conteúdo e histórico de performance.",
-      color:
-        "bg-[var(--mm-pink-soft)] text-black border-[var(--mm-pink)]",
+      name: "Pacote Recorrente Mensal",
+      pitch: "Pra marcas que já rodam UGC com volume e querem operação contínua.",
+      bullets: [
+        "Volume mensal definido de creators e entregas",
+        "Hunting recorrente, sempre com creators novos no banco",
+        "Briefing, roteiro, produção e revisão inclusos",
+        "Reunião mensal de leitura de performance e planejamento",
+        "Suporte direto durante o mês inteiro",
+      ],
+      ideal: "Marcas que já validaram UGC e querem escalar com previsibilidade.",
+      cta: "Quero conversar sobre meu plano mensal",
+      emphasis: true,
     },
     {
-      title: "Briefing co-criado com a marca",
-      body:
-        "Alinhamos tom, objetivos e KPIs antes de qualquer câmera ligar. O briefing nasce junto com o time da marca pra o criativo já sair validado.",
-      color: "bg-black text-white border-black",
+      name: "Campanha Pontual",
+      pitch:
+        "Pra marcas que precisam de uma campanha específica, com começo, meio e fim.",
+      bullets: [
+        "Lançamento de produto, ativação sazonal, teste de novo formato",
+        "Escopo fechado de creators e entregas",
+        "Mesma estrutura completa: briefing, roteiro, produção, revisão",
+        "Entrega em prazo definido",
+      ],
+      ideal:
+        "Marcas que querem testar UGC com qualidade antes de fechar pacote, ou que têm necessidade pontual em datas específicas.",
+      cta: "Quero conversar sobre minha campanha pontual",
     },
     {
-      title: "Produção de conteúdos autênticos",
-      body:
-        "Gravação com direção, luz natural, roteiros testados em performance. Cada vídeo pensado pros 3 primeiros segundos segurarem a audiência.",
-      color: "bg-[var(--mm-orange)] text-white border-[var(--mm-orange)]",
-    },
-    {
-      title: "Aprovação e ajustes",
-      body:
-        "Você revisa, ajusta e recebe o material nos formatos certos pra cada plataforma (9:16, 1:1, 16:9) + relatório dos primeiros dias rodando.",
-      color: "bg-white text-black border-black/15",
+      name: "Consultoria Estratégica",
+      pitch:
+        "Pra marcas que já têm time interno e querem estrutura, não execução.",
+      bullets: [
+        "Diagnóstico do que está sendo feito hoje",
+        "Construção de processos de gestão de UGC pra seu time aplicar",
+        "Briefing modelo, framework de seleção, fluxo de produção",
+        "Acompanhamento de implementação",
+      ],
+      ideal:
+        "Marcas com operação interna que querem profissionalizar o que já fazem sem terceirizar.",
+      cta: "Quero conversar sobre consultoria",
     },
   ];
 
-  const [openIdx, setOpenIdx] = useState(0);
+  return (
+    <section className="bg-white py-14 md:py-20 border-t border-black/10">
+      <div className="max-w-6xl mx-auto px-6 md:px-12">
+        <h2 className="font-display font-black text-2xl md:text-4xl leading-[0.95] tracking-tighter text-black uppercase max-w-3xl">
+          Três formas de trabalhar comigo.{" "}
+          <span className="text-[var(--mm-orange)]">
+            Você escolhe a que faz sentido pro seu momento.
+          </span>
+        </h2>
+
+        <div className="mt-10 md:mt-14 grid md:grid-cols-3 gap-4 md:gap-5">
+          {CARDS.map((c, i) => (
+            <motion.div
+              key={c.name}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: i * 0.08 }}
+              className={`rounded-2xl p-6 md:p-7 flex flex-col gap-5 ${
+                c.emphasis
+                  ? "bg-black text-white border-2 border-black"
+                  : "bg-white text-black border-2 border-black/10"
+              }`}
+            >
+              <div>
+                {c.emphasis && (
+                  <div className="inline-flex items-center gap-1 text-[10px] md:text-xs font-bold uppercase tracking-wider bg-[var(--mm-orange)] text-white px-2.5 py-1 rounded-full mb-3">
+                    Mais escolhido
+                  </div>
+                )}
+                <h3 className="font-display font-black text-xl md:text-2xl tracking-tight uppercase mb-2">
+                  {c.name}
+                </h3>
+                <p
+                  className={`text-sm md:text-base leading-relaxed ${
+                    c.emphasis ? "text-white/80" : "text-black/75"
+                  }`}
+                >
+                  {c.pitch}
+                </p>
+              </div>
+
+              <ul className="space-y-2.5">
+                {c.bullets.map((b) => (
+                  <li
+                    key={b}
+                    className="flex items-start gap-2.5 text-sm leading-snug"
+                  >
+                    <CheckCircle2
+                      className={`w-4 h-4 flex-shrink-0 mt-0.5 ${
+                        c.emphasis
+                          ? "text-[var(--mm-orange)]"
+                          : "text-[var(--mm-orange)]"
+                      }`}
+                    />
+                    <span>{b}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <div
+                className={`pt-4 border-t ${
+                  c.emphasis ? "border-white/15" : "border-black/10"
+                }`}
+              >
+                <div
+                  className={`text-[11px] md:text-xs uppercase tracking-wider font-bold mb-1.5 ${
+                    c.emphasis ? "text-white/60" : "text-black/60"
+                  }`}
+                >
+                  Ideal pra
+                </div>
+                <p
+                  className={`text-sm leading-relaxed ${
+                    c.emphasis ? "text-white/85" : "text-black/80"
+                  }`}
+                >
+                  {c.ideal}
+                </p>
+              </div>
+
+              <a
+                href="#gestao-contato"
+                className={`mt-auto inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full text-xs md:text-sm font-bold uppercase tracking-wider transition-colors ${
+                  c.emphasis
+                    ? "bg-[var(--mm-orange)] text-white hover:bg-[var(--mm-orange-deep)]"
+                    : "bg-black text-white hover:bg-neutral-800"
+                }`}
+              >
+                {c.cta}
+                <ArrowRight className="w-3.5 h-3.5" />
+              </a>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ============================== 7. PROCESSO ============================== */
+function Processo() {
+  const ETAPAS = [
+    {
+      n: "01",
+      title: "Diagnóstico",
+      body:
+        "Antes de qualquer proposta, conversa de diagnóstico. Eu preciso entender seu produto, seu público, o que você já tentou e onde está hoje. Sem isso, qualquer proposta é chute.",
+    },
+    {
+      n: "02",
+      title: "Estratégia e seleção",
+      body:
+        "Definimos juntos o objetivo da campanha, os ângulos que vamos testar e o perfil de creator ideal. A partir daí, eu seleciono os creators dentro do meu banco e te apresento já filtrados.",
+    },
+    {
+      n: "03",
+      title: "Briefing e roteiro",
+      body:
+        "Briefing co-criado, roteiro revisado por mim antes da gravação. Cada creator recebe direção clara, não margem pra interpretação.",
+    },
+    {
+      n: "04",
+      title: "Produção e acompanhamento",
+      body:
+        "Os creators gravam, eu acompanho. Quando chega ajuste, é antes de você ver. Quando chega entrega na sua mão, já passou por filtro.",
+    },
+    {
+      n: "05",
+      title: "Entrega e leitura",
+      body:
+        "Material entregue dentro do prazo combinado. Ao final, leitura do que funcionou e plano pro próximo ciclo.",
+    },
+  ];
 
   return (
-    <section className="relative bg-white py-14 md:py-20 overflow-hidden">
+    <section className="relative bg-black text-white py-14 md:py-20 overflow-hidden">
       <motion.div
-        animate={{ rotate: -360 }}
+        animate={{ rotate: 360 }}
         transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
-        className="hidden md:block absolute top-16 left-10 w-12 opacity-80 pointer-events-none"
+        className="hidden md:block absolute top-16 right-12 w-12 opacity-80 pointer-events-none"
       >
         <LoadingSticker className="w-full h-auto" />
       </motion.div>
 
-      <div className="relative max-w-3xl mx-auto px-6 md:px-12">
-        <h2 className="font-display font-black text-2xl md:text-4xl leading-[0.95] tracking-tighter text-black uppercase text-center">
-          Como <span className="text-[var(--mm-orange)]">fazemos acontecer</span>
+      <div className="relative max-w-4xl mx-auto px-6 md:px-12">
+        <h2 className="font-display font-black text-2xl md:text-4xl leading-[0.95] tracking-tighter uppercase">
+          Cinco etapas.{" "}
+          <span className="text-[var(--mm-orange)]">Sem mistério, sem milagre.</span>
         </h2>
-        <p className="mt-4 text-center text-black/75 text-base md:text-lg max-w-xl mx-auto leading-relaxed">
-          Diferentes canais, objetivos distintos, a mesma qualidade e
-          resultados cada vez melhores. Escolha o canal, a Lara cuida do resto.
+        <p className="mt-4 text-base md:text-lg text-white/80 max-w-2xl leading-relaxed">
+          Esse é o processo que rodei em mais de 100 campanhas. Cada etapa
+          existe porque, sem ela, alguma coisa quebra.
         </p>
 
-        <div className="mt-10 space-y-3">
-          {STEPS.map((s, i) => {
-            const isOpen = i === openIdx;
-            return (
-              <div
-                key={s.title}
-                className={`rounded-2xl border-2 overflow-hidden transition-all ${s.color}`}
+        <div className="mt-10 md:mt-14 relative">
+          {/* linha vertical */}
+          <div className="absolute left-5 md:left-7 top-2 bottom-2 w-px bg-white/20" />
+
+          <div className="space-y-6 md:space-y-8">
+            {ETAPAS.map((e, i) => (
+              <motion.div
+                key={e.n}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.5, delay: i * 0.08 }}
+                className="relative pl-14 md:pl-20"
               >
-                <button
-                  onClick={() => setOpenIdx(isOpen ? -1 : i)}
-                  className="w-full flex items-center justify-between gap-4 px-5 md:px-6 py-4 md:py-5 text-left"
-                >
-                  <span className="font-display font-black text-base md:text-lg tracking-wide uppercase">
-                    {s.title}
-                  </span>
-                  <ChevronDown
-                    className={`w-5 h-5 flex-shrink-0 transition-transform ${
-                      isOpen ? "rotate-180" : ""
-                    }`}
-                  />
-                </button>
-                <AnimatePresence initial={false}>
-                  {isOpen && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.3 }}
-                      className="overflow-hidden"
-                    >
-                      <div className="px-5 md:px-6 pb-5 md:pb-6 text-base leading-relaxed opacity-90">
-                        {s.body}
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-            );
-          })}
+                <div className="absolute left-0 top-0 w-10 h-10 md:w-14 md:h-14 rounded-full bg-[var(--mm-orange)] text-white flex items-center justify-center font-display font-black text-sm md:text-base">
+                  {e.n}
+                </div>
+                <h3 className="font-display font-black text-lg md:text-xl tracking-tight uppercase mb-2 mt-1.5 md:mt-2.5">
+                  {e.title}
+                </h3>
+                <p className="text-sm md:text-base text-white/80 leading-relaxed">
+                  {e.body}
+                </p>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
   );
 }
 
-/* ================================ CASES ================================ */
-function CasesSection() {
-  type Case = {
-    brand: string;
-    headline: string;
-    body: string;
-    stats: { value: string; label: string }[];
-    footnote?: string;
-  };
-
-  const CASES: Case[] = [
-    {
-      brand: "InfinitePay",
-      headline: "+100M views e +30% em vendas em 3 meses",
-      body: "Vídeo UGC TikTok-first com hook testado em performance, rodando como criativo pago e orgânico.",
-      stats: [
-        { value: "+100M", label: "visualizações" },
-        { value: "+12K", label: "engajamento" },
-        { value: "+1.500%", label: "alcance" },
-        { value: "+30%", label: "em vendas" },
-      ],
-      footnote: "Case oficial TikTok for Business",
-    },
-    {
-      brand: "Méliuz",
-      headline: "+30M views e +30k seguidores em 6 meses",
-      body: "UGC creator + microinfluenciadores em estratégia TikTok-first pra humanização e conversão.",
-      stats: [
-        { value: "+30M", label: "visualizações" },
-        { value: "+30K", label: "seguidores" },
-        { value: "1.023", label: "vídeos ativos" },
-        { value: "+25K", label: "cliques no site" },
-      ],
-      footnote: "Humanização em escala com performance real",
-    },
-    {
-      brand: "Cygnuss",
-      headline: "Zero mídia paga e +140k views em 8 meses",
-      body: "Comunidade UGC no TikTok construída com conteúdo autêntico — sem investir 1 real em ads.",
-      stats: [
-        { value: "+140K", label: "visualizações" },
-        { value: "+2K", label: "seguidores" },
-        { value: "5,86%", label: "taxa de engajamento" },
-      ],
-      footnote: "UGC como motor de comunidade",
-    },
-  ];
-
-  const [idx, setIdx] = useState(0);
+/* ========================= 8. CASES E VÍDEOS ========================= */
+function CasesEVideos() {
+  const { open } = useVideoModal();
+  const VIDS = VIDEOS.filter((v) => v.youtubeId).slice(0, 6);
 
   return (
-    <section id="cases-gestao" className="relative bg-black py-14 md:py-20 overflow-hidden">
-      {/* Sticker Creator Creator Creator flutuando */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.8, rotate: 10 }}
-        whileInView={{ opacity: 1, scale: 1, rotate: -8 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.8 }}
-        className="hidden md:block absolute top-10 right-6 pointer-events-none"
-      >
-        <CreatorStacked className="scale-75" />
-      </motion.div>
-
-      <div className="relative max-w-6xl mx-auto px-6 md:px-12">
-        <h2 className="font-display font-black text-2xl md:text-4xl leading-[0.95] tracking-tighter text-white uppercase text-center">
-          Cases com UGC:{" "}
-          <span className="italic">a gente faz acontecer!</span>
+    <section
+      id="cases-gestao"
+      className="bg-white py-14 md:py-20 border-t border-black/10"
+    >
+      <div className="max-w-6xl mx-auto px-6 md:px-12">
+        <h2 className="font-display font-black text-2xl md:text-4xl leading-[0.95] tracking-tighter text-black uppercase">
+          Conteúdo real{" "}
+          <span className="text-[var(--mm-orange)]">de campanhas reais.</span>
         </h2>
-        <p className="mt-4 text-center text-white/90 text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
-          Descubra como marcas como <b>InfinitePay</b>, <b>Méliuz</b> e{" "}
-          <b>Cygnuss</b> aumentaram engajamento, seguidores e vendas com
-          estratégias de UGC no TikTok e Instagram.
+        <p className="mt-4 text-base md:text-lg text-black/75 max-w-2xl leading-relaxed">
+          Mais de 100 campanhas gerenciadas, mais de 200 marcas atendidas, mais
+          de 1.200 creators ativados. Aqui estão alguns dos vídeos.
         </p>
 
-        <div className="mt-10 hidden md:grid grid-cols-3 gap-5">
-          {CASES.map((c) => (
-            <CaseCard key={c.brand} c={c} />
+        <div className="mt-10 md:mt-14 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+          {VIDS.map((v, i) => (
+            <motion.button
+              key={v.id}
+              onClick={() => open(v)}
+              data-cursor="play"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: i * 0.05 }}
+              className="group relative aspect-[9/16] rounded-xl overflow-hidden bg-black cursor-pointer"
+            >
+              <img
+                src={`https://i.ytimg.com/vi/${v.youtubeId}/maxresdefault.jpg`}
+                alt={v.title}
+                loading="lazy"
+                className="absolute inset-0 w-full h-full object-cover"
+                onError={(e) => {
+                  e.currentTarget.src = `https://i.ytimg.com/vi/${v.youtubeId}/hqdefault.jpg`;
+                }}
+              />
+              <div className="absolute inset-0 flex items-center justify-center opacity-90 group-hover:opacity-100 transition-opacity">
+                <div className="w-9 h-9 md:w-11 md:h-11 rounded-full bg-[var(--mm-orange)] flex items-center justify-center">
+                  <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 md:w-4 md:h-4 fill-white ml-0.5">
+                    <path d="M8 5v14l11-7z" />
+                  </svg>
+                </div>
+              </div>
+              <div className="absolute bottom-2 left-2 right-2 text-[10px] md:text-xs font-bold uppercase tracking-wider text-white drop-shadow-lg truncate">
+                {v.brand}
+              </div>
+            </motion.button>
           ))}
         </div>
 
-        <div className="mt-10 md:hidden">
-          <CaseCard c={CASES[idx]} />
-          <div className="flex items-center justify-center gap-3 mt-5">
-            <button
-              onClick={() => setIdx((i) => (i - 1 + CASES.length) % CASES.length)}
-              className="w-10 h-10 rounded-full border-2 border-white/30 text-white flex items-center justify-center"
-              aria-label="Anterior"
-            >
-              <ChevronLeft className="w-4 h-4" />
-            </button>
-            <span className="text-xs text-white/80 tabular-nums">
-              {String(idx + 1).padStart(2, "0")}/
-              {String(CASES.length).padStart(2, "0")}
+        {/* Métricas */}
+        <div className="mt-10 md:mt-14 grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 border-t border-black/10 pt-8 md:pt-10">
+          {[
+            { v: "+100", l: "campanhas gerenciadas" },
+            { v: "+200", l: "marcas atendidas" },
+            { v: "+1.200", l: "creators em rede" },
+            { v: "+500", l: "vídeos produzidos" },
+          ].map((m) => (
+            <div key={m.l}>
+              <div className="font-display font-black text-3xl md:text-5xl text-black tabular-nums leading-none">
+                {m.v}
+              </div>
+              <div className="mt-2 text-xs md:text-sm uppercase tracking-wider text-black/60">
+                {m.l}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ============================== 9. QUEM SOU ============================== */
+function QuemSou() {
+  return (
+    <section className="bg-black text-white py-14 md:py-20 overflow-hidden">
+      <div className="max-w-6xl mx-auto px-6 md:px-12 grid md:grid-cols-12 gap-8 md:gap-12 items-center">
+        <div className="md:col-span-7">
+          <div className="text-xs md:text-sm uppercase tracking-[0.3em] text-[var(--mm-orange)] font-bold mb-4">
+            Eu sou
+          </div>
+          <h2 className="font-display font-black text-3xl md:text-5xl leading-[0.95] tracking-tighter uppercase">
+            Lara{" "}
+            <span className="font-serif-accent italic text-[var(--mm-orange)] normal-case">
+              Dam.
             </span>
-            <button
-              onClick={() => setIdx((i) => (i + 1) % CASES.length)}
-              className="w-10 h-10 rounded-full border-2 border-white/30 text-white flex items-center justify-center"
-              aria-label="Próximo"
-            >
-              <ChevronRight className="w-4 h-4" />
-            </button>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function CaseCard({
-  c,
-}: {
-  c: {
-    brand: string;
-    headline: string;
-    body: string;
-    stats: { value: string; label: string }[];
-    footnote?: string;
-  };
-}) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5 }}
-      className="rounded-3xl bg-neutral-900 border border-white/10 text-white p-6 md:p-7 flex flex-col gap-4"
-    >
-      <div className="text-center font-display font-black text-base md:text-lg tracking-tight border-b border-white/15 pb-4 uppercase">
-        {c.brand}
-      </div>
-      <div className="font-display font-black text-[var(--mm-orange)] text-base md:text-lg leading-tight tracking-tight text-center uppercase">
-        {c.headline}
-      </div>
-      <p className="text-sm md:text-base text-white/80 leading-relaxed text-center">
-        {c.body}
-      </p>
-      <div className="text-xs uppercase tracking-wider text-center text-white/65 mt-1 font-semibold">
-        resultado:
-      </div>
-      <div className="grid grid-cols-2 gap-2">
-        {c.stats.map((s) => (
-          <div
-            key={s.label}
-            className="rounded-xl border border-[var(--mm-orange)]/50 bg-white/5 px-3 py-3 text-center"
-          >
-            <div className="font-display font-black text-[var(--mm-orange)] text-base md:text-lg tabular-nums leading-none">
-              {s.value}
-            </div>
-            <div className="text-[11px] md:text-xs uppercase tracking-wider text-white/75 mt-1.5">
-              {s.label}
-            </div>
-          </div>
-        ))}
-      </div>
-      {c.footnote && (
-        <div className="text-xs text-center text-white/70 border-t border-white/10 pt-3">
-          {c.footnote}
-        </div>
-      )}
-      <a
-        href="#gestao-contato"
-        className="mt-2 inline-flex items-center justify-center gap-2 bg-[var(--mm-orange)] text-white px-5 py-3 rounded-full text-sm font-bold uppercase tracking-wider hover:bg-[var(--mm-orange-deep)] transition-colors"
-      >
-        Falar com a Lara
-        <Rocket className="w-3.5 h-3.5" />
-      </a>
-    </motion.div>
-  );
-}
-
-/* ============================== SCALE / TTCX ============================== */
-function ScaleSection() {
-  return (
-    <section className="relative bg-black text-white py-14 md:py-20 overflow-hidden">
-      {/* Formas decorativas */}
-      <svg
-        viewBox="0 0 1200 400"
-        className="absolute inset-0 w-full h-full opacity-50 pointer-events-none"
-        aria-hidden
-      >
-        <path
-          d="M 50 -50 L 350 350"
-          stroke="#FF5824"
-          strokeWidth="80"
-          strokeOpacity="0.5"
-          strokeLinecap="round"
-        />
-        <path
-          d="M 800 100 L 1100 -100"
-          stroke="#FFCFD2"
-          strokeWidth="40"
-          strokeOpacity="0.4"
-          strokeLinecap="round"
-        />
-        <path
-          d="M 950 350 L 1250 50"
-          stroke="#FF5824"
-          strokeWidth="30"
-          strokeOpacity="0.5"
-          strokeLinecap="round"
-        />
-      </svg>
-
-      {/* Cursor sticker */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.8 }}
-        whileInView={{ opacity: 1, scale: 1 }}
-        viewport={{ once: true }}
-        className="hidden md:block absolute top-16 right-20 w-16 pointer-events-none"
-      >
-        <CursorSticker className="w-full h-auto" />
-      </motion.div>
-
-      <div className="relative max-w-6xl mx-auto px-6 md:px-12 grid md:grid-cols-2 gap-8 md:gap-12 items-center">
-        <div>
-          <div className="text-[10px] md:text-xs uppercase tracking-[0.3em] text-[var(--mm-orange)] font-bold mb-4">
-            #TTCX
-          </div>
-          <h2 className="font-display font-black text-2xl md:text-3xl leading-[0.95] tracking-tighter mb-4 uppercase">
-            TikTok Creative Exchange
           </h2>
-          <p className="text-sm md:text-base text-white/80 leading-relaxed mb-6">
-            Como parceira na fase beta do <b>TTCX</b>, fui treinada pra
-            potencializar os resultados das marcas nas plataformas. A
-            parceria foi fundamental pra construirmos um Banco de Creators
-            que já conta com mais de 500 vídeos produzidos. Isso garante
-            velocidade na produção, testes em escala e conteúdos nativos que
-            realmente performam.
-          </p>
-          <a
-            href="#gestao-contato"
-            className="inline-flex items-center gap-2 bg-[var(--mm-orange)] text-white px-5 py-3 rounded-full text-sm md:text-base font-bold uppercase tracking-wider hover:bg-[var(--mm-orange-deep)] transition-colors"
-          >
-            Falar com a Lara
-            <Rocket className="w-3.5 h-3.5" />
-          </a>
+
+          <div className="mt-8 space-y-5 text-base md:text-lg text-white/85 leading-relaxed">
+            <p>
+              Fui uma das primeiras pessoas no Brasil a falar publicamente
+              sobre gestão de campanhas UGC. Não porque planejei. Porque já
+              estava fazendo.
+            </p>
+            <p>
+              Antes de existir nome bonito pra isso, eu já organizava creator,
+              escrevia briefing, revisava roteiro, cobrava prazo e entregava
+              campanha que funcionava. Aprendi na prática, errando, ajustando
+              e fazendo de novo. E foi assim que construí o método que rodo
+              até hoje.
+            </p>
+            <p>
+              Em mais de 100 campanhas, com marcas como{" "}
+              <b className="text-white">
+                OLX, ZAP Imóveis, Magalu, Porto Seguro, Chilli Beans
+              </b>{" "}
+              e muitas outras, uma coisa ficou clara: o que separa campanha
+              boa de campanha que dá errado não é talento isolado de creator.
+              É processo.
+            </p>
+            <p className="font-semibold text-white">
+              Eu não acredito em fórmula mágica. Acredito em fazer o básico
+              bem feito.
+            </p>
+          </div>
         </div>
 
-        <div className="text-center md:text-left">
-          <div className="font-display font-black text-5xl md:text-6xl text-[var(--mm-orange)] leading-none tracking-tighter">
-            +500
-          </div>
-          <div className="mt-3 font-display font-black text-[var(--mm-pink)] text-lg md:text-2xl leading-tight tracking-tight uppercase">
-            Creators UGC e
-            <br />
-            produção em escala
+        <div className="md:col-span-5">
+          <div className="relative aspect-[3/4] w-full max-w-sm mx-auto">
+            <div
+              className="absolute inset-x-3 inset-y-2 bg-white rounded-[2.5rem]"
+              aria-hidden
+            />
+            <img
+              src="/lara-sobre.jpg"
+              alt="Lara Dam"
+              className="relative w-full h-full object-cover rounded-[2.5rem]"
+            />
+
+            <motion.div
+              animate={{ rotate: 360 }}
+              transition={{ duration: 14, repeat: Infinity, ease: "linear" }}
+              className="absolute -bottom-3 -left-3 w-12 md:w-14 pointer-events-none"
+            >
+              <LoadingSticker className="w-full h-auto" />
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, rotate: 15 }}
+              whileInView={{ opacity: 1, rotate: -8 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="absolute -top-2 -right-2 w-20 md:w-24 pointer-events-none"
+            >
+              <ChatBubbleSticker className="w-full h-auto drop-shadow-lg" />
+            </motion.div>
           </div>
         </div>
       </div>
@@ -996,20 +1010,48 @@ function ScaleSection() {
   );
 }
 
-/* ================================== FAQ ================================== */
+/* ================================ 10. FAQ ================================ */
 function FAQ() {
   const ITEMS = [
     {
-      q: "A Lara trabalha com UGC no always e em campanhas?",
-      a: "Sim! Atuo tanto em always-on (pra sustentar presença digital) quanto em campanhas específicas, com UGC pensado pra engajamento e performance.",
+      q: "O que é UGC e por que minha marca precisa disso?",
+      a: "UGC é conteúdo produzido por pessoas reais, com cara de pessoa real. Funciona porque audiência confia em pessoa, não em propaganda. Se sua marca roda mídia paga, redes sociais ou quer presença digital constante, UGC é o formato que mais retém atenção e gera conversão hoje.",
     },
     {
-      q: "Qual a diferença entre UGC e influenciador?",
-      a: "UGC (User Generated Content) é conteúdo pensado pra rodar como criativo — você compra os direitos do vídeo e usa em anúncios/feed da marca. Influenciador publica no próprio perfil pra alcance orgânico. Trabalho com os dois modelos.",
+      q: "Como vocês selecionam os creators?",
+      a: "A partir de um banco com mais de 1.200 perfis ativos, filtramos por nicho, perfil de audiência, estilo de entrega e histórico. Você recebe creators pré-aprovados que fazem sentido pra sua marca, não uma lista genérica.",
     },
     {
-      q: "Direitos de uso e prazo de veiculação?",
-      a: "Por padrão os direitos de uso são de 6 meses, em mídia paga e orgânica, nas plataformas contratadas. Extensões e exclusividade são negociadas caso a caso.",
+      q: "Quanto tempo leva uma campanha do início à entrega?",
+      a: "Depende do escopo, mas pra te dar uma referência: campanha pontual com 3 a 5 creators leva entre 3 e 5 semanas. Pacote mensal entrega volume contínuo a partir do primeiro mês.",
+    },
+    {
+      q: "Vocês fazem só o vídeo ou cuidam da estratégia?",
+      a: "Cuidamos da estratégia também. Pra mim, vídeo solto sem direção é onde a maioria das marcas perde dinheiro. Briefing, roteiro e ângulo criativo são parte do que entrego.",
+    },
+    {
+      q: "Preciso enviar briefing pronto?",
+      a: "Não. Briefing é construído junto com você. Eu pergunto o que precisa ser perguntado pra ter direção clara, e te entrego o briefing finalizado pra você aprovar antes de qualquer creator começar.",
+    },
+    {
+      q: "Os vídeos são pra orgânico ou pra mídia paga?",
+      a: "Os dois. Eu adapto o formato e o ângulo dependendo de onde você vai usar. Vídeo pra orgânico tem lógica diferente de vídeo pra ads, e isso entra no planejamento.",
+    },
+    {
+      q: "E se uma entrega não vier do jeito que esperávamos?",
+      a: "Antes de chegar em você, eu já revisei. Se ainda assim algo precisa ajustar, ajustamos sem custo adicional dentro do escopo combinado. Faz parte do processo.",
+    },
+    {
+      q: "Vocês garantem resultado em vendas ou ROAS?",
+      a: "Não garanto venda nem ROAS, e quem garante isso na primeira campanha está te enganando. O que garanto é entrega bem feita, conteúdo com lógica e processo claro. Resultado de venda depende da sua oferta, do seu funil e do seu produto. UGC bem feito é peça do quebra-cabeça, não o quebra-cabeça inteiro.",
+    },
+    {
+      q: "Como funciona a cobrança?",
+      a: "Pacote mensal: contrato com valor fixo mensal, definido conforme volume. Campanha pontual: orçamento fechado, pago em parcelas conforme escopo. Consultoria: valor definido após diagnóstico. Tudo formalizado em contrato. Sem surpresa.",
+    },
+    {
+      q: "Como começo?",
+      a: "Clica no botão abaixo, agendamos uma conversa de diagnóstico, e a partir dali eu monto proposta sob medida pra sua marca. Conversa não tem custo.",
     },
   ];
 
@@ -1018,9 +1060,9 @@ function FAQ() {
   return (
     <section className="bg-white py-14 md:py-20">
       <div className="max-w-3xl mx-auto px-6 md:px-12">
-        <h2 className="font-display font-black text-2xl md:text-3xl leading-[0.95] tracking-tighter text-black uppercase text-center mb-10">
-          Dúvidas frequentes sobre{" "}
-          <span className="text-[var(--mm-orange)]">criação de UGC</span>
+        <h2 className="font-display font-black text-2xl md:text-4xl leading-[0.95] tracking-tighter text-black uppercase mb-10 md:mb-12">
+          Perguntas que{" "}
+          <span className="text-[var(--mm-orange)]">recebo com frequência.</span>
         </h2>
 
         <div className="space-y-3">
@@ -1029,13 +1071,13 @@ function FAQ() {
             return (
               <div
                 key={item.q}
-                className="rounded-2xl border-2 border-black/15 overflow-hidden bg-white"
+                className="rounded-2xl border-2 border-black/10 overflow-hidden bg-white"
               >
                 <button
                   onClick={() => setOpenIdx(isOpen ? -1 : i)}
                   className="w-full flex items-center justify-between gap-4 px-5 md:px-6 py-5 text-left"
                 >
-                  <span className="text-base md:text-lg font-medium text-black">
+                  <span className="text-base md:text-lg font-semibold text-black leading-snug">
                     {item.q}
                   </span>
                   <ChevronDown
@@ -1068,33 +1110,53 @@ function FAQ() {
   );
 }
 
-/* ============================== FINAL CTA ============================== */
-function FinalCTA() {
+/* ============================== 11. CTA FINAL ============================== */
+function CTAFinal() {
   return (
-    <section className="relative bg-white py-14 md:py-20 overflow-hidden border-t border-black/10">
-      <div className="relative max-w-3xl mx-auto px-6 md:px-12 text-center">
-        <h2 className="font-display font-black text-2xl md:text-4xl leading-[0.95] tracking-tighter text-black uppercase">
-          Seu próximo{" "}
-          <span className="text-[var(--mm-orange)]">case de sucesso</span>{" "}
-          começa aqui.
+    <section className="bg-black text-white py-16 md:py-24 overflow-hidden">
+      <div className="max-w-3xl mx-auto px-6 md:px-12 text-center">
+        <h2 className="font-display font-black text-2xl md:text-4xl leading-[0.95] tracking-tighter uppercase">
+          Sua marca não precisa de mais um vídeo.{" "}
+          <span className="text-[var(--mm-orange)]">
+            Precisa de uma campanha que funcione.
+          </span>
         </h2>
-        <p className="mt-4 text-black/80 text-base md:text-lg max-w-xl mx-auto leading-relaxed">
-          Integro estratégia, creators e produção <b>end-to-end</b>, do
-          briefing à biblioteca de UGC pronta pra orgânico e mídia.
-        </p>
+
+        <div className="mt-8 space-y-4 text-base md:text-lg text-white/85 leading-relaxed">
+          <p>
+            Se você chegou até aqui, é porque alguma coisa do que eu falei
+            bateu. Talvez seu time esteja sobrecarregado, talvez você já tenha
+            rodado UGC e não funcionou, talvez você só queira começar do jeito
+            certo.
+          </p>
+          <p>
+            De qualquer forma, o próximo passo é simples: a gente conversa, eu
+            entendo seu momento, e a partir dali decidimos juntos se faz
+            sentido trabalhar.
+          </p>
+          <p className="text-white font-semibold">
+            Sem proposta enlatada. Sem promessa que eu não posso cumprir.
+            Conversa real pra entender se o que eu faço é o que sua marca
+            precisa agora.
+          </p>
+        </div>
+
         <a
           href="#gestao-contato"
-          className="mt-8 inline-flex items-center gap-2 bg-black text-white px-7 py-4 rounded-full text-base md:text-lg font-bold uppercase tracking-wider hover:bg-neutral-800 transition-colors shadow-lg"
+          className="mt-10 inline-flex items-center gap-2 bg-[var(--mm-orange)] text-white px-7 py-4 rounded-full text-base md:text-lg font-bold uppercase tracking-wider hover:bg-[var(--mm-orange-deep)] transition-colors shadow-xl"
         >
-          Fale com a Lara e comece hoje
-          <Rocket className="w-4 h-4" />
+          Quero conversar sobre minha campanha
+          <ArrowRight className="w-4 h-4" />
         </a>
+        <p className="mt-3 text-xs md:text-sm text-white/60">
+          Resposta em até 24h. Diagnóstico inicial sem custo.
+        </p>
       </div>
     </section>
   );
 }
 
-/* ============================== CONTACT FORM ============================== */
+/* ============================ 12. CONTACT FORM ============================ */
 function ContactForm() {
   const [step, setStep] = useState<1 | 2>(1);
   const [data, setData] = useState<Record<string, string>>({});
@@ -1118,9 +1180,8 @@ function ContactForm() {
   return (
     <section
       id="gestao-contato"
-      className="relative bg-black text-white py-16 md:py-24 overflow-hidden"
+      className="relative bg-black text-white py-16 md:py-24 overflow-hidden border-t border-white/10"
     >
-      {/* stickers decorativos */}
       <motion.div
         initial={{ opacity: 0, rotate: 20 }}
         whileInView={{ opacity: 1, rotate: 10 }}
@@ -1129,7 +1190,6 @@ function ContactForm() {
       >
         <ChatBubbleSticker className="w-full h-auto" />
       </motion.div>
-
       <motion.div
         initial={{ opacity: 0, rotate: -15 }}
         whileInView={{ opacity: 1, rotate: -10 }}
@@ -1139,30 +1199,26 @@ function ContactForm() {
         <ChatBubbleSticker className="w-full h-auto" />
       </motion.div>
 
-      <motion.div
-        animate={{ rotate: 360 }}
-        transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-        className="hidden md:block absolute top-1/2 right-20 w-14 pointer-events-none"
-      >
-        <LoadingSticker className="w-full h-auto" />
-      </motion.div>
-
       <div className="relative max-w-2xl mx-auto px-6 md:px-12">
-        <div className="text-[10px] md:text-xs uppercase tracking-[0.3em] text-[var(--mm-orange)] font-bold text-center mb-3">
+        <div className="text-xs md:text-sm uppercase tracking-[0.3em] text-[var(--mm-orange)] font-bold text-center mb-3">
           #contato
         </div>
         <h2 className="font-display font-black text-2xl md:text-4xl leading-[0.95] tracking-tighter text-center text-white uppercase">
-          Fale comigo para fazer um{" "}
-          <span className="text-[var(--mm-orange)]">diagnóstico</span> ou
-          receber orçamento!
+          Vamos conversar sobre{" "}
+          <span className="text-[var(--mm-orange)]">sua campanha?</span>
         </h2>
+        <p className="mt-4 text-center text-white/75 text-base md:text-lg leading-relaxed max-w-xl mx-auto">
+          Diagnóstico gratuito antes de qualquer proposta. Resposta em até 24h.
+        </p>
 
         {sent ? (
           <div className="mt-10 p-8 rounded-3xl bg-white/10 border border-white/15 text-center">
             <div className="text-4xl mb-4">🚀</div>
-            <div className="font-display font-black text-lg mb-2">Enviado!</div>
-            <div className="text-white/70 text-sm">
-              Entro em contato em até 48h.
+            <div className="font-display font-black text-lg mb-2">
+              Recebido!
+            </div>
+            <div className="text-white/70 text-sm md:text-base">
+              Entro em contato em até 24h.
             </div>
           </div>
         ) : (
@@ -1194,17 +1250,22 @@ function ContactForm() {
                 />
                 <Field label="Site" name="site" required onChange={onChange("site")} />
                 <Select
-                  label="Número de funcionários"
-                  name="size"
+                  label="Modalidade de interesse"
+                  name="modality"
                   required
-                  onChange={onChange("size")}
-                  options={["1–10", "11–50", "51–200", "201–1000", "+1000"]}
+                  onChange={onChange("modality")}
+                  options={[
+                    "Pacote mensal recorrente",
+                    "Campanha pontual",
+                    "Consultoria estratégica",
+                    "Não sei ainda — quero diagnóstico",
+                  ]}
                 />
                 <div className="pt-2 text-center">
                   <button
                     type="button"
                     onClick={() => setStep(2)}
-                    className="inline-flex items-center gap-2 bg-[var(--mm-orange)] text-white px-7 py-3 rounded-full text-sm font-bold uppercase tracking-wider hover:bg-[var(--mm-orange-deep)] transition-colors"
+                    className="inline-flex items-center gap-2 bg-[var(--mm-orange)] text-white px-7 py-3 rounded-full text-sm md:text-base font-bold uppercase tracking-wider hover:bg-[var(--mm-orange-deep)] transition-colors"
                   >
                     Avançar
                     <ArrowRight className="w-4 h-4" />
@@ -1232,8 +1293,8 @@ function ContactForm() {
                   onChange={onChange("budget")}
                   options={[
                     "Até R$ 5.000",
-                    "R$ 5.000 – R$ 15.000",
-                    "R$ 15.000 – R$ 50.000",
+                    "R$ 5.000 a R$ 15.000",
+                    "R$ 15.000 a R$ 50.000",
                     "+R$ 50.000",
                     "A definir",
                   ]}
@@ -1247,20 +1308,20 @@ function ContactForm() {
                     rows={4}
                     onChange={(e) => setData((d) => ({ ...d, message: e.target.value }))}
                     className="w-full bg-white/5 border border-white/15 rounded-2xl px-4 py-3.5 text-white placeholder:text-white/40 focus:outline-none focus:border-[var(--mm-orange)] transition-colors text-base leading-relaxed resize-none"
-                    placeholder="Prazo, categoria, objetivo da campanha..."
+                    placeholder="Prazo, momento da marca, o que você já tentou..."
                   />
                 </div>
                 <div className="flex items-center justify-between pt-2">
                   <button
                     type="button"
                     onClick={() => setStep(1)}
-                    className="text-xs uppercase tracking-wider text-white/60 hover:text-white"
+                    className="text-xs md:text-sm uppercase tracking-wider text-white/60 hover:text-white"
                   >
                     ← Voltar
                   </button>
                   <button
                     type="submit"
-                    className="inline-flex items-center gap-2 bg-[var(--mm-orange)] text-white px-7 py-3 rounded-full text-sm font-bold uppercase tracking-wider hover:bg-[var(--mm-orange-deep)] transition-colors"
+                    className="inline-flex items-center gap-2 bg-[var(--mm-orange)] text-white px-7 py-3 rounded-full text-sm md:text-base font-bold uppercase tracking-wider hover:bg-[var(--mm-orange-deep)] transition-colors"
                   >
                     Enviar
                     <Rocket className="w-4 h-4" />
@@ -1366,17 +1427,16 @@ export default function Gestao() {
   return (
     <div style={PALETTE}>
       <Hero />
-      <Brands />
-      <WhoFor />
-      <AuthenticContent />
-      <MarqueeStripe />
-      <ContentTypes />
-      <MarqueeStripe />
-      <HowWeDo />
-      <CasesSection />
-      <ScaleSection />
+      <BrandsLogoBar />
+      <ParaQuemE />
+      <OProblema />
+      <OQueFaço />
+      <Modalidades />
+      <Processo />
+      <CasesEVideos />
+      <QuemSou />
       <FAQ />
-      <FinalCTA />
+      <CTAFinal />
       <ContactForm />
     </div>
   );
