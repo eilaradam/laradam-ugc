@@ -26,7 +26,7 @@ export default function BrandsMarquee() {
             className="flex-shrink-0 w-20 h-20 md:w-24 md:h-24 rounded-full bg-background-alt border border-foreground/10 p-3 flex items-center justify-center shadow-sm hover:shadow-md hover:scale-105 transition-all"
           >
             <img
-              src={`/logos/${encodeURI(file)}`}
+              src={`/logo-1/${encodeURI(file)}`}
               alt="Logo de marca parceira"
               loading="lazy"
               className="max-w-full max-h-full object-contain"

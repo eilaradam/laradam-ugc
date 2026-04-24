@@ -226,10 +226,10 @@ export const TESTIMONIALS: Testimonial[] = [
   },
 ];
 
-// Lista de arquivos de logo em /public/logos/ (usada pelo BrandsMarquee).
-// 63 logos em PNG transparente, nomeados 1.png - 63.png
+// Lista de arquivos de logo em /public/logo-1/ (usada pelo BrandsMarquee).
+// 61 logos em PNG transparente, nomeados 1.png - 61.png
 export const BRAND_LOGO_FILES: string[] = Array.from(
-  { length: 63 },
+  { length: 61 },
   (_, i) => `${i + 1}.png`
 );
 
