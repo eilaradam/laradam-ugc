@@ -32,6 +32,19 @@ export default function CategoryGallery() {
             Navegue pelos nichos. Cada linha é uma especialidade — deslize pro
             lado pra ver mais.
           </p>
+
+          {/* Pills de atalho pra cada nicho */}
+          <div className="mt-6 md:mt-8 flex flex-wrap gap-2">
+            {rows.map((cat) => (
+              <a
+                key={cat.slug}
+                href={`#cat-${cat.slug}`}
+                className="px-3.5 py-1.5 rounded-full bg-background border border-foreground/10 text-xs md:text-sm font-semibold text-foreground hover:bg-primary hover:text-primary-light hover:border-primary transition-colors"
+              >
+                {cat.name}
+              </a>
+            ))}
+          </div>
         </div>
 
         <div className="space-y-10 md:space-y-14">
@@ -81,10 +94,12 @@ function CategoryRow({ category }: { category: Category }) {
   if (videos.length === 0) {
     return (
       <motion.div
+        id={`cat-${category.slug}`}
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.5 }}
+        className="scroll-mt-24"
       >
         <CategoryHeader category={category} count={0} />
         <div className="py-12 text-muted text-sm italic">
@@ -96,11 +111,12 @@ function CategoryRow({ category }: { category: Category }) {
 
   return (
     <motion.div
+      id={`cat-${category.slug}`}
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
       transition={{ duration: 0.6 }}
-      className="group"
+      className="group scroll-mt-24"
     >
       <CategoryHeader category={category} count={videos.length}>
         <div className="flex gap-2">
