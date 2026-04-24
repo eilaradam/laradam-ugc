@@ -10,7 +10,7 @@ export default function BrandsMarquee() {
   const doubled = [...BRAND_LOGO_FILES, ...BRAND_LOGO_FILES];
 
   return (
-    <section className="py-10 md:py-14 overflow-hidden border-y border-foreground/10 bg-background">
+    <section className="py-6 md:py-8 overflow-hidden border-y border-foreground/10 bg-background">
       <div className="max-w-7xl mx-auto px-6 md:px-12 mb-6 md:mb-8">
         <div className="text-[10px] md:text-xs uppercase tracking-[0.3em] text-muted font-medium flex items-center justify-center gap-3">
           <span className="h-px w-6 md:w-8 bg-foreground/20" />
