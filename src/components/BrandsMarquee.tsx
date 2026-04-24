@@ -82,9 +82,9 @@ function LogoCircle({
 }
 
 /**
- * Lê os pixels da logo num canvas, quantiza em buckets de ~24/channel,
- * ignora transparente e quase-branco, e retorna a cor mais frequente.
- * Se só sobrar preto/cinza escuro (logo texto em fundo branco), retorna isso.
+ * Lê os pixels da logo num canvas, quantiza em buckets de 20/channel,
+ * e retorna a MAIS FREQUENTE (pura "cor de fundo" do tile da logo).
+ * Ignora só pixels transparentes e anti-aliasing de borda (semi-transparentes).
  */
 function extractDominantColor(img: HTMLImageElement): string | null {
   try {
@@ -99,21 +99,14 @@ function extractDominantColor(img: HTMLImageElement): string | null {
     const { data } = ctx.getImageData(0, 0, w, h);
 
     const buckets = new Map<string, { r: number; g: number; b: number; n: number }>();
-    const step = 24;
+    const step = 20;
 
     for (let i = 0; i < data.length; i += 4) {
       const r = data[i];
       const g = data[i + 1];
       const b = data[i + 2];
       const a = data[i + 3];
-      if (a < 128) continue; // transparente
-      const max = Math.max(r, g, b);
-      const min = Math.min(r, g, b);
-      // pula quase-branco
-      if (r > 240 && g > 240 && b > 240) continue;
-      // pula cinzas muito claros (sem saturação suficiente)
-      const sat = max === 0 ? 0 : (max - min) / max;
-      if (sat < 0.08 && (r + g + b) / 3 > 200) continue;
+      if (a < 200) continue; // transparente ou semi-transparente (aliasing)
 
       const qr = Math.round(r / step) * step;
       const qg = Math.round(g / step) * step;
@@ -132,26 +125,13 @@ function extractDominantColor(img: HTMLImageElement): string | null {
 
     if (buckets.size === 0) return null;
 
-    // Ordena por frequência, pega top 3 e escolhe o mais "colorido" deles
-    const sorted = Array.from(buckets.values()).sort((a, b) => b.n - a.n);
-    const top = sorted.slice(0, 3);
-    const best =
-      top
-        .map((c) => {
-          const r = c.r / c.n;
-          const g = c.g / c.n;
-          const b = c.b / c.n;
-          const max = Math.max(r, g, b);
-          const min = Math.min(r, g, b);
-          const sat = max === 0 ? 0 : (max - min) / max;
-          return { r, g, b, score: c.n * (1 + sat * 1.5) };
-        })
-        .sort((a, b) => b.score - a.score)[0] ?? top[0];
-
-    if (!best) return null;
-    return `rgb(${Math.round(best.r)}, ${Math.round(best.g)}, ${Math.round(
-      best.b
-    )})`;
+    // Pega simplesmente o bucket com mais pixels — é a cor dominante do tile
+    const top = Array.from(buckets.values()).sort((a, b) => b.n - a.n)[0];
+    if (!top) return null;
+    const r = Math.round(top.r / top.n);
+    const g = Math.round(top.g / top.n);
+    const b = Math.round(top.b / top.n);
+    return `rgb(${r}, ${g}, ${b})`;
   } catch {
     return null;
   }
