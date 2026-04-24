@@ -33,6 +33,18 @@ const CASES: Case[] = [
       { value: "50%", label: "Taxa de hook" },
     ],
   },
+  {
+    brand: "Méliuz",
+    brandDomain: "meliuz.com.br",
+    youtubeId: "dgQYEfEQTvQ",
+    description:
+      "O Méliuz é uma plataforma brasileira que oferece cashback e cupons de desconto para compras online e em lojas físicas. O serviço funciona como intermediário entre o consumidor e as lojas parceiras, recompensando o usuário com parte do valor gasto.",
+    stats: [
+      { value: "1.023", label: "vídeos totais" },
+      { value: "5,6M", label: "visualizações totais" },
+      { value: "66k", label: "salvamentos totais" },
+    ],
+  },
 ];
 
 export default function Cases() {
