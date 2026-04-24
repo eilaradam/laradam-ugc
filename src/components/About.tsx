@@ -33,18 +33,11 @@ export default function About() {
             Sobre mim
           </div>
 
-          <h2 className="font-display font-black text-4xl md:text-6xl text-foreground leading-[0.9] tracking-tighter mb-8">
-            {ABOUT.greeting.split(" ").map((word, i) => (
-              <span key={i} className="inline-block mr-3">
-                {word === "Lara" || word === "Dam" ? (
-                  <span className="text-primary font-serif-accent italic">
-                    {word}
-                  </span>
-                ) : (
-                  word
-                )}
-              </span>
-            ))}
+          <h2 className="font-display font-black text-3xl md:text-5xl text-foreground leading-[0.9] tracking-tighter mb-8 whitespace-nowrap">
+            Oie, eu sou a{" "}
+            <span className="text-primary font-serif-accent italic">
+              Lara Dam
+            </span>
           </h2>
 
           <p className="text-sm md:text-base text-foreground-soft leading-relaxed max-w-2xl">
