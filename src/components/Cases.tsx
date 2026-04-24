@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { ChevronLeft, ChevronRight, Play, Quote } from "lucide-react";
+import { ChevronLeft, ChevronRight, Play } from "lucide-react";
 import { useVideoModal } from "./VideoModalProvider";
 import type { Video } from "@/data/content";
 
@@ -13,7 +13,6 @@ type Case = {
   brandDomain?: string; // pro Clearbit se não tiver logoText
   brandLogoText?: string; // renderiza o nome como tipografia estilizada
   youtubeId: string;
-  // Quote-style (depoimento) OU description-style (sobre a marca/campanha)
   quote?: string;
   author?: string;
   description?: string;
@@ -66,42 +65,59 @@ export default function Cases() {
   };
 
   return (
-    <section
-      id="cases"
-      className="px-6 md:px-12 py-10 md:py-20 bg-background"
-    >
-      <div className="max-w-5xl mx-auto">
-        {/* Header */}
-        <div className="mb-8 md:mb-10 text-center">
-          <div className="text-[10px] md:text-xs uppercase tracking-[0.3em] text-primary font-medium mb-3 flex items-center justify-center gap-3">
+    <section id="cases" className="px-6 md:px-12 py-8 md:py-14 bg-background">
+      <div className="max-w-4xl mx-auto">
+        {/* Header — eyebrow + nav inline */}
+        <div className="flex items-center justify-between gap-4 mb-6 md:mb-8">
+          <div className="flex items-center gap-3">
             <span className="h-px w-6 md:w-8 bg-primary" />
-            Cases detalhados
-            <span className="h-px w-6 md:w-8 bg-primary" />
-          </div>
-          <h2 className="font-display font-black text-3xl md:text-5xl leading-[0.95] tracking-tighter max-w-3xl mx-auto">
-            Números que{" "}
-            <span className="font-serif-accent italic text-primary">
-              provam o trabalho
+            <span className="text-[10px] md:text-xs uppercase tracking-[0.3em] text-primary font-medium">
+              Cases detalhados
             </span>
-          </h2>
+          </div>
+
+          {CASES.length > 1 && (
+            <div className="flex items-center gap-2">
+              <span className="text-[10px] text-muted tabular-nums mr-1">
+                {String(idx + 1).padStart(2, "0")}{" "}
+                <span className="text-muted/50">
+                  / {String(CASES.length).padStart(2, "0")}
+                </span>
+              </span>
+              <button
+                onClick={prev}
+                aria-label="Anterior"
+                className="w-8 h-8 rounded-full border border-foreground/15 flex items-center justify-center hover:bg-foreground hover:text-background hover:border-foreground transition-all"
+              >
+                <ChevronLeft className="w-4 h-4" />
+              </button>
+              <button
+                onClick={next}
+                aria-label="Próximo"
+                className="w-8 h-8 rounded-full border border-foreground/15 flex items-center justify-center hover:bg-foreground hover:text-background hover:border-foreground transition-all"
+              >
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            </div>
+          )}
         </div>
 
-        {/* Card principal */}
+        {/* Card principal — card clarinho, estilo editorial */}
         <AnimatePresence mode="wait">
-          <motion.div
+          <motion.article
             key={current.brand}
-            initial={{ opacity: 0, x: 40 }}
+            initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -40 }}
-            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-            className="rounded-3xl bg-foreground text-background p-5 md:p-8 shadow-xl"
+            exit={{ opacity: 0, x: -20 }}
+            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            className="rounded-2xl bg-background-alt border border-foreground/10 p-5 md:p-8"
           >
-            <div className="grid md:grid-cols-2 gap-6 md:gap-10 items-center">
+            <div className="grid md:grid-cols-[220px_1fr] gap-5 md:gap-8 items-start">
               {/* Vídeo */}
               <button
                 onClick={() => open(video)}
                 data-cursor="play"
-                className="group relative w-full max-w-xs mx-auto aspect-[9/16] rounded-2xl overflow-hidden bg-background/5 cursor-pointer"
+                className="group relative w-full aspect-[9/16] rounded-xl overflow-hidden bg-foreground/5 cursor-pointer"
               >
                 {current.youtubeId ? (
                   <img
@@ -113,114 +129,77 @@ export default function Cases() {
                     }}
                   />
                 ) : (
-                  <div className="absolute inset-0 bg-gradient-to-br from-background/5 to-primary/20 flex items-center justify-center">
-                    <div className="text-background/40 text-center p-4">
-                      <Play className="w-10 h-10 mx-auto mb-2 opacity-60" />
-                      <div className="text-[10px] uppercase tracking-wider font-semibold">
-                        {current.brand}
-                      </div>
-                    </div>
+                  <div className="absolute inset-0 bg-gradient-to-br from-foreground/5 to-primary/10 flex items-center justify-center">
+                    <Play className="w-8 h-8 opacity-30" />
                   </div>
                 )}
 
-                {/* Play overlay */}
-                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                  <div className="w-14 h-14 rounded-full bg-background/15 backdrop-blur-sm flex items-center justify-center group-hover:bg-primary transition-colors">
-                    <Play className="w-5 h-5 text-background fill-background ml-0.5" />
+                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+                  <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center">
+                    <Play className="w-4 h-4 text-primary-light fill-primary-light ml-0.5" />
                   </div>
                 </div>
               </button>
 
               {/* Conteúdo */}
-              <div className="flex flex-col gap-5">
-                {/* Brand logo/name */}
+              <div className="flex flex-col gap-4 md:gap-5 min-w-0">
+                {/* Brand */}
                 <div>
                   {current.brandLogoText ? (
-                    <div className="font-display font-black text-3xl md:text-4xl tracking-tight">
+                    <div className="font-display font-black text-xl md:text-2xl tracking-tight text-foreground">
                       {current.brandLogoText}
                     </div>
                   ) : current.brandDomain ? (
                     <img
-                      src={`https://logo.clearbit.com/${current.brandDomain}?size=200`}
+                      src={`https://logo.clearbit.com/${current.brandDomain}?size=160`}
                       alt={current.brand}
-                      className="h-10 md:h-12 w-auto object-contain brightness-0 invert"
+                      className="h-7 md:h-8 w-auto object-contain"
                     />
                   ) : (
-                    <div className="font-display font-black text-3xl md:text-4xl tracking-tight">
+                    <div className="font-display font-black text-xl md:text-2xl tracking-tight text-foreground">
                       {current.brand}
                     </div>
                   )}
-                  <div className="h-px bg-background/15 mt-4" />
                 </div>
 
                 {/* Quote OU description */}
                 {current.quote ? (
-                  <div>
-                    <Quote
-                      className="w-6 h-6 text-primary mb-3"
-                      strokeWidth={2}
-                    />
-                    <p className="text-base md:text-lg leading-snug text-background">
-                      {current.quote}
+                  <div className="border-l-2 border-primary/40 pl-4 py-0.5">
+                    <p className="font-serif-accent italic text-foreground text-sm md:text-base leading-snug">
+                      &ldquo;{current.quote}&rdquo;
                     </p>
                     {current.author && (
-                      <p className="mt-3 text-xs md:text-sm text-background/60">
-                        {current.author}
+                      <p className="mt-2 text-[11px] md:text-xs text-muted">
+                        — {current.author}
                       </p>
                     )}
                   </div>
                 ) : current.description ? (
-                  <p className="text-sm md:text-base leading-relaxed text-background/85">
+                  <p className="text-xs md:text-sm leading-relaxed text-foreground-soft">
                     {current.description}
                   </p>
                 ) : null}
 
-                <div className="h-px bg-background/15" />
-
-                {/* Stats em linha */}
-                <div className="flex flex-col gap-2">
+                {/* Stats — linhas simples com divider */}
+                <dl className="divide-y divide-foreground/10 border-t border-foreground/10 mt-1">
                   {current.stats.map((s) => (
                     <div
                       key={s.label}
-                      className="flex items-center justify-between px-4 py-3 rounded-xl bg-background/5 border border-background/5"
+                      className="flex items-baseline justify-between py-2.5"
                     >
-                      <span className="font-display font-black text-xl md:text-2xl tracking-tight">
-                        {s.value}
-                      </span>
-                      <span className="text-xs md:text-sm text-background/60 text-right">
+                      <dt className="text-[11px] md:text-xs uppercase tracking-wider text-muted">
                         {s.label}
-                      </span>
+                      </dt>
+                      <dd className="font-display font-black text-lg md:text-xl tracking-tight text-foreground tabular-nums">
+                        {s.value}
+                      </dd>
                     </div>
                   ))}
-                </div>
+                </dl>
               </div>
             </div>
-          </motion.div>
+          </motion.article>
         </AnimatePresence>
-
-        {/* Nav */}
-        {CASES.length > 1 && (
-          <div className="mt-6 flex items-center justify-center gap-3">
-            <button
-              onClick={prev}
-              aria-label="Anterior"
-              className="w-11 h-11 rounded-full border border-foreground/15 flex items-center justify-center hover:bg-foreground hover:text-background hover:border-foreground transition-all"
-            >
-              <ChevronLeft className="w-5 h-5" />
-            </button>
-            <span className="text-xs text-muted tabular-nums">
-              {String(idx + 1).padStart(2, "0")} /{" "}
-              {String(CASES.length).padStart(2, "0")}
-            </span>
-            <button
-              onClick={next}
-              aria-label="Próximo"
-              className="w-11 h-11 rounded-full border border-foreground/15 flex items-center justify-center hover:bg-foreground hover:text-background hover:border-foreground transition-all"
-            >
-              <ChevronRight className="w-5 h-5" />
-            </button>
-          </div>
-        )}
       </div>
     </section>
   );
