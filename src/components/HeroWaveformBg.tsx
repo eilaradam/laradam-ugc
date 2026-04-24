@@ -20,12 +20,12 @@ export default function HeroWaveformBg() {
   return (
     <div
       aria-hidden
-      className="absolute inset-0 flex items-center justify-center gap-[3px] md:gap-1 px-4 md:px-8 pointer-events-none opacity-[0.08] md:opacity-[0.10] z-0"
+      className="absolute inset-0 flex items-center justify-center gap-[3px] md:gap-1 px-4 md:px-8 pointer-events-none opacity-40 md:opacity-50 z-0"
     >
       {HEIGHTS.map((h, i) => (
         <span
           key={i}
-          className="flex-1 rounded-full bg-primary wave-bar-bg"
+          className="flex-1 rounded-full bg-white wave-bar-bg"
           style={{
             height: `${h}%`,
             maxHeight: "45%",
