@@ -65,7 +65,7 @@ export default function Hero() {
               initial={{ opacity: 0, x: -10 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.8, duration: 0.8 }}
-              className="hidden md:block absolute -top-8 left-[18%] font-serif-accent italic text-2xl lg:text-3xl text-foreground-soft tracking-normal"
+              className="hidden md:block absolute -top-8 left-0 font-serif-accent italic text-2xl lg:text-3xl text-foreground-soft tracking-normal"
             >
               Prazer,
             </motion.span>
