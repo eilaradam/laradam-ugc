@@ -1,10 +1,33 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { Mic, Pause, Play } from "lucide-react";
 import { useVideoModal } from "./VideoModalProvider";
 import type { Video } from "@/data/content";
+
+type YtPlayer = {
+  playVideo: () => void;
+  pauseVideo: () => void;
+  unMute: () => void;
+  mute: () => void;
+  setVolume: (v: number) => void;
+  seekTo: (s: number, allowSeekAhead?: boolean) => void;
+  destroy: () => void;
+};
+
+declare global {
+  interface Window {
+    YT?: {
+      Player: new (
+        el: HTMLElement | string,
+        opts: Record<string, unknown>
+      ) => YtPlayer;
+      PlayerState: { ENDED: 0; PLAYING: 1; PAUSED: 2; BUFFERING: 3; CUED: 5 };
+    };
+    onYouTubeIframeAPIReady?: () => void;
+  }
+}
 
 type Highlight = {
   youtubeId: string;
@@ -186,44 +209,145 @@ function HighlightCard({
   );
 }
 
+// Carrega a YT IFrame API uma única vez, mesmo se múltiplos componentes usarem
+let ytApiLoader: Promise<void> | null = null;
+function loadYtApi(): Promise<void> {
+  if (typeof window === "undefined") return Promise.resolve();
+  if (window.YT && window.YT.Player) return Promise.resolve();
+  if (ytApiLoader) return ytApiLoader;
+
+  ytApiLoader = new Promise<void>((resolve) => {
+    const prev = window.onYouTubeIframeAPIReady;
+    window.onYouTubeIframeAPIReady = () => {
+      prev?.();
+      resolve();
+    };
+    if (!document.querySelector("script[data-yt-api]")) {
+      const s = document.createElement("script");
+      s.src = "https://www.youtube.com/iframe_api";
+      s.dataset.ytApi = "1";
+      s.async = true;
+      document.head.appendChild(s);
+    }
+  });
+  return ytApiLoader;
+}
+
 function AudioTestimonialCard() {
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isReady, setIsReady] = useState(false);
+  const playerRef = useRef<YtPlayer | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const hasId = Boolean(AUDIO_TESTIMONIAL.youtubeId);
+
+  // Pré-carrega o player assim que o componente entra em viewport.
+  // Usa IntersectionObserver pra não baixar o player se a pessoa nunca rolar até aqui.
+  useEffect(() => {
+    if (!hasId || !containerRef.current) return;
+    const el = containerRef.current;
+    let cancelled = false;
+
+    const init = async () => {
+      await loadYtApi();
+      if (cancelled || !containerRef.current || !window.YT) return;
+
+      playerRef.current = new window.YT.Player(containerRef.current, {
+        videoId: AUDIO_TESTIMONIAL.youtubeId,
+        playerVars: {
+          autoplay: 0,
+          controls: 0,
+          rel: 0,
+          modestbranding: 1,
+          playsinline: 1,
+          disablekb: 1,
+          iv_load_policy: 3,
+        },
+        events: {
+          onReady: (e: { target: YtPlayer }) => {
+            // pré-buffer: muta + dá play + pausa, pra forçar o YouTube a
+            // baixar os primeiros segundos, aí o play real é instantâneo
+            try {
+              e.target.mute();
+              e.target.playVideo();
+              setTimeout(() => {
+                try {
+                  e.target.pauseVideo();
+                  e.target.seekTo(0, true);
+                  e.target.unMute();
+                  e.target.setVolume(100);
+                } catch {}
+                setIsReady(true);
+              }, 400);
+            } catch {
+              setIsReady(true);
+            }
+          },
+          onStateChange: (e: { data: number }) => {
+            // 0 = ended, 1 = playing, 2 = paused
+            if (e.data === 0 || e.data === 2) setIsPlaying(false);
+            if (e.data === 1) setIsPlaying(true);
+          },
+        },
+      });
+    };
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((en) => en.isIntersecting)) {
+          init();
+          io.disconnect();
+        }
+      },
+      { rootMargin: "200px" }
+    );
+    io.observe(el);
+
+    return () => {
+      cancelled = true;
+      io.disconnect();
+      try {
+        playerRef.current?.destroy();
+      } catch {}
+    };
+  }, [hasId]);
 
   const toggle = () => {
     if (!hasId) return;
-    setIsPlaying((p) => !p);
+    const player = playerRef.current;
+    if (!player) return;
+    try {
+      if (isPlaying) {
+        player.pauseVideo();
+      } else {
+        player.unMute();
+        player.setVolume(100);
+        player.playVideo();
+      }
+    } catch {}
   };
-
-  // autoplay=1 só toca porque o click do usuário dispara o mount do iframe
-  const embedUrl = hasId
-    ? `https://www.youtube.com/embed/${AUDIO_TESTIMONIAL.youtubeId}?autoplay=1&controls=0&rel=0&modestbranding=1&playsinline=1`
-    : null;
 
   return (
     <button
       type="button"
       onClick={toggle}
-      className="w-full max-w-md relative rounded-3xl shadow-sm hover:shadow-md transition-all cursor-pointer overflow-hidden"
+      disabled={!isReady}
+      className="w-full max-w-md relative rounded-3xl shadow-sm hover:shadow-md transition-all cursor-pointer overflow-hidden disabled:cursor-wait"
     >
-      {/* iframe oculto atrás da UI — tem dimensão real pra o browser liberar autoplay */}
-      {isPlaying && embedUrl && (
-        <iframe
-          src={embedUrl}
-          title="Depoimento de cliente"
-          className="absolute inset-0 w-full h-full pointer-events-none"
-          allow="autoplay; encrypted-media"
-          aria-hidden
-          tabIndex={-1}
-        />
-      )}
+      {/* Container onde a YT API injeta o iframe. Fica atrás da UI. */}
+      <div
+        ref={containerRef}
+        className="absolute inset-0 w-full h-full pointer-events-none opacity-0"
+        aria-hidden
+      />
 
       {/* UI na frente cobre visualmente o iframe */}
       <div className="relative z-10 flex items-center gap-3 p-3 md:p-4 bg-[#e9e4db] border border-foreground/5 rounded-3xl">
         {/* Play/Pause */}
         <div
           className={`flex-shrink-0 w-11 h-11 md:w-12 md:h-12 rounded-full flex items-center justify-center transition-colors ${
-            isPlaying ? "bg-primary text-primary-light" : "bg-foreground text-background hover:bg-primary"
+            isPlaying
+              ? "bg-primary text-primary-light"
+              : "bg-foreground text-background hover:bg-primary"
           }`}
         >
           {isPlaying ? (
