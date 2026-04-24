@@ -23,7 +23,7 @@ export default function BrandsMarquee() {
         {doubled.map((file, i) => (
           <div
             key={`${file}-${i}`}
-            className="flex-shrink-0 w-20 h-20 md:w-24 md:h-24 rounded-full bg-background-alt border border-foreground/10 p-3 flex items-center justify-center shadow-sm hover:shadow-md hover:scale-105 transition-all"
+            className="flex-shrink-0 w-20 h-20 md:w-24 md:h-24 rounded-full bg-background-alt border border-foreground/10 p-1.5 flex items-center justify-center shadow-sm hover:shadow-md hover:scale-105 transition-all"
           >
             <img
               src={`/logo-1/${encodeURI(file)}`}
@@ -31,7 +31,10 @@ export default function BrandsMarquee() {
               loading="lazy"
               className="max-w-full max-h-full object-contain"
               onError={(e) => {
-                e.currentTarget.style.display = "none";
+                // Se o arquivo não existir, remove o círculo inteiro do DOM
+                // (garante que nunca fique espaço vazio no marquee)
+                const wrapper = e.currentTarget.parentElement;
+                if (wrapper) wrapper.remove();
               }}
             />
           </div>
