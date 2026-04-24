@@ -102,6 +102,7 @@ export type Video = {
   thumbnail?: string;
   featured?: boolean;
   landscape?: boolean; // abre o modal em 16:9 ao invés de 9:16 (vertical)
+  audioOnly?: boolean; // toca o áudio mas esconde o vídeo com overlay de waveform
 };
 
 export const VIDEOS: Video[] = [
@@ -154,6 +155,8 @@ export const VIDEOS: Video[] = [
   { id: "o4", title: "Smoo Sorvete", category: "food", brand: "Smoo", youtubeId: "AXzcHi_Qq_Y" },
 
   // TECH & APPS
+  { id: "t0a", title: "InfinitePay", category: "tech", brand: "InfinitePay", youtubeId: "5wf8Fv2CTa4", views: "50M", featured: true },
+  { id: "t0b", title: "Méliuz", category: "tech", brand: "Méliuz", youtubeId: "wesTfq67X9o", views: "10M", featured: true },
   { id: "t1", title: "App Decolar", category: "tech", brand: "Decolar", youtubeId: "Y8nN7CMb73U" },
   { id: "t2", title: "BV Financeiro", category: "tech", brand: "BV", youtubeId: "2NMavMHi4jM" },
   { id: "t3", title: "BV Financeiro", category: "tech", brand: "BV", youtubeId: "Q_n4uwkxiDo" },

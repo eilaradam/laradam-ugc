@@ -8,7 +8,7 @@ import {
   useState,
 } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { X } from "lucide-react";
+import { Headphones, X } from "lucide-react";
 import type { Video } from "@/data/content";
 
 type Ctx = {
@@ -84,27 +84,29 @@ export default function VideoModalProvider({
               <X className="w-5 h-5" />
             </button>
 
-            {/* Meta top-left */}
-            <div className="absolute top-4 left-4 md:top-6 md:left-6 text-white z-10 max-w-[60%]">
-              <div className="text-[10px] md:text-xs uppercase tracking-[0.2em] text-white/60">
-                {video.category}
-              </div>
-              <div className="font-display font-black text-lg md:text-xl tracking-tight mt-0.5">
-                {video.title}
-              </div>
-              <div className="flex items-center gap-2 mt-2 text-[10px] md:text-xs uppercase tracking-wider">
-                <span className="px-2 py-0.5 rounded-full bg-white/15 text-white">
-                  {video.brand}
-                </span>
-                {video.views && (
-                  <span className="px-2 py-0.5 rounded-full bg-primary text-primary-light">
-                    {video.views} views
+            {/* Meta top-left (escondido quando audioOnly) */}
+            {!video.audioOnly && (
+              <div className="absolute top-4 left-4 md:top-6 md:left-6 text-white z-10 max-w-[60%]">
+                <div className="text-[10px] md:text-xs uppercase tracking-[0.2em] text-white/60">
+                  {video.category}
+                </div>
+                <div className="font-display font-black text-lg md:text-xl tracking-tight mt-0.5">
+                  {video.title}
+                </div>
+                <div className="flex items-center gap-2 mt-2 text-[10px] md:text-xs uppercase tracking-wider">
+                  <span className="px-2 py-0.5 rounded-full bg-white/15 text-white">
+                    {video.brand}
                   </span>
-                )}
+                  {video.views && (
+                    <span className="px-2 py-0.5 rounded-full bg-primary text-primary-light">
+                      {video.views} views
+                    </span>
+                  )}
+                </div>
               </div>
-            </div>
+            )}
 
-            {/* Video container — 16:9 pra landscape (YouTube Ads), 9:16 default (Shorts/Reels) */}
+            {/* Video container — 16:9 pra landscape, áudio circular, 9:16 default */}
             <motion.div
               initial={{ scale: 0.92, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
@@ -112,19 +114,46 @@ export default function VideoModalProvider({
               transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
               onClick={(e) => e.stopPropagation()}
               className={
-                video.landscape
+                video.audioOnly
+                  ? "relative w-[min(90vw,520px)] aspect-square bg-gradient-to-br from-primary/30 via-foreground to-black rounded-3xl overflow-hidden shadow-2xl"
+                  : video.landscape
                   ? "relative w-[min(95vw,1280px)] aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl"
                   : "relative h-[min(90vh,900px)] aspect-[9/16] max-w-full bg-black rounded-2xl overflow-hidden shadow-2xl"
               }
             >
               {embedUrl ? (
-                <iframe
-                  src={embedUrl}
-                  title={video.title}
-                  className="absolute inset-0 w-full h-full"
-                  allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
-                  allowFullScreen
-                />
+                <>
+                  <iframe
+                    src={embedUrl}
+                    title={video.title}
+                    className={
+                      video.audioOnly
+                        ? "absolute -inset-20 w-[calc(100%+10rem)] h-[calc(100%+10rem)] opacity-0 pointer-events-none"
+                        : "absolute inset-0 w-full h-full"
+                    }
+                    allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
+                    allowFullScreen
+                  />
+                  {video.audioOnly && (
+                    <div className="absolute inset-0 flex flex-col items-center justify-center text-white p-10 text-center">
+                      <div className="w-24 h-24 md:w-28 md:h-28 rounded-full bg-white/10 border border-white/15 flex items-center justify-center mb-6 backdrop-blur-sm">
+                        <Headphones
+                          className="w-10 h-10 md:w-12 md:h-12 text-primary"
+                          strokeWidth={1.6}
+                        />
+                      </div>
+                      <div className="font-serif-accent italic text-white/70 text-base md:text-lg mb-1">
+                        Depoimento em áudio
+                      </div>
+                      <div className="font-display font-bold text-xl md:text-2xl tracking-tight">
+                        {video.brand}
+                      </div>
+                      <div className="mt-6 text-xs uppercase tracking-[0.2em] text-white/40">
+                        Tocando no YouTube · abaixe o volume
+                      </div>
+                    </div>
+                  )}
+                </>
               ) : (
                 <div className="absolute inset-0 flex items-center justify-center text-white/60 text-center p-8">
                   Vídeo em breve — ainda sem link do YouTube.

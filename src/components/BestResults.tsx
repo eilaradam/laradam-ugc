@@ -13,17 +13,16 @@ type Highlight = {
   platform: string; // ex: "apenas no TikTok"
 };
 
-// TODO Lara: trocar os youtubeId pelos Shorts reais do InfinitePay e Méliuz
 const HIGHLIGHTS: Highlight[] = [
   {
-    youtubeId: "",
+    youtubeId: "5wf8Fv2CTa4",
     brand: "InfinitePay",
     brandDomain: "infinitepay.io",
     metric: "+ 50 milhões de views",
     platform: "apenas no TikTok",
   },
   {
-    youtubeId: "GPcPWfWmA3A",
+    youtubeId: "wesTfq67X9o",
     brand: "Méliuz",
     brandDomain: "meliuz.com.br",
     metric: "+ 10 milhões de views",
@@ -31,9 +30,9 @@ const HIGHLIGHTS: Highlight[] = [
   },
 ];
 
-// Áudio de cliente (upload como vídeo no YouTube, aí preenche o id abaixo)
+// Áudio de cliente — abre no modal mas esconde o vídeo (audioOnly)
 const AUDIO_TESTIMONIAL = {
-  youtubeId: "", // TODO Lara: colar o id do YouTube do áudio
+  youtubeId: "rRrIpSRu90A",
   brand: "Depoimento de cliente",
   duration: "13:52",
 };
@@ -195,6 +194,7 @@ function AudioTestimonialCard() {
     category: "tech",
     brand: AUDIO_TESTIMONIAL.brand,
     youtubeId: AUDIO_TESTIMONIAL.youtubeId || undefined,
+    audioOnly: true,
   };
 
   return (
