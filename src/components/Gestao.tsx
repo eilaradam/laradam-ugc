@@ -146,7 +146,7 @@ function MMPill({ children }: { children: React.ReactNode }) {
 /* ================================ HERO ================================ */
 function Hero() {
   return (
-    <section className="relative overflow-hidden bg-[var(--mm-blue)] text-white pt-20 md:pt-24 pb-0">
+    <section className="relative overflow-hidden bg-black text-white pt-20 md:pt-24 pb-0">
       {/* Grid bg decorativo (pontos sutis) */}
       <div
         aria-hidden
@@ -280,9 +280,9 @@ function Hero() {
         >
           {/* Container da foto com forma orgânica */}
           <div className="relative aspect-[3/4] md:aspect-[4/5] w-full max-w-md mx-auto md:ml-auto md:mr-0">
-            {/* Shape laranja ao fundo */}
+            {/* Shape branco ao fundo */}
             <div
-              className="absolute inset-x-4 inset-y-2 bg-[var(--mm-orange)] rounded-[3rem]"
+              className="absolute inset-x-4 inset-y-2 bg-white rounded-[3rem]"
               aria-hidden
             />
             {/* Foto */}
@@ -349,9 +349,9 @@ function Hero() {
         </motion.div>
       </div>
 
-      {/* Faixa orange com tagline no rodapé do hero */}
+      {/* Faixa laranja com tagline no rodapé do hero — animação lenta */}
       <div className="relative mt-6 md:mt-10 bg-[var(--mm-orange)] py-3 md:py-4 overflow-hidden">
-        <div className="marquee">
+        <div className="marquee-slow">
           {Array.from({ length: 10 }).map((_, i) => (
             <div
               key={i}
@@ -401,15 +401,22 @@ function Brands() {
 
 /* =============================== WHO FOR =============================== */
 function WhoFor() {
-  const ITEMS = [
-    "Marcas que querem melhorar os resultados de campanhas de mídia paga",
-    "Marcas que desejam estourar a bolha no always-on",
-    "Marcas que passaram da hora de criar conteúdos com a cara do consumidor real",
-    "Marcas que não têm pessoas pra humanizar os vídeos",
-    "Marcas que precisam aumentar engajamento e alcance orgânico",
-    "Gestores que querem ativar TikTok e Reels de forma estratégica",
-    "Times de marketing sem estrutura de produção interna",
-    "Produtos que precisam de prova social pra gerar conversão",
+  // Organizado em linhas alternadas 2-1-2-1-2 pra ficar um zigue-zague centralizado
+  const ROWS: string[][] = [
+    [
+      "Marcas que querem melhorar os resultados de campanhas de mídia paga",
+      "Marcas que desejam estourar a bolha no always-on",
+    ],
+    ["Marcas que passaram da hora de criar conteúdos com a cara do consumidor real"],
+    [
+      "Marcas que não têm pessoas pra humanizar os vídeos",
+      "Marcas que precisam aumentar engajamento e alcance orgânico",
+    ],
+    ["Gestores que querem ativar TikTok e Reels de forma estratégica"],
+    [
+      "Times de marketing sem estrutura de produção interna",
+      "Produtos que precisam de prova social pra gerar conversão",
+    ],
   ];
 
   return (
@@ -424,25 +431,35 @@ function WhoFor() {
         <ChatBubbleSticker className="w-full h-auto" />
       </motion.div>
 
-      <div className="max-w-4xl mx-auto px-6 md:px-12 text-center">
-        <h2 className="font-display font-black text-2xl md:text-4xl leading-[0.95] tracking-tighter text-[var(--mm-blue)] uppercase mb-10 md:mb-14">
+      <div className="max-w-5xl mx-auto px-6 md:px-12 text-center">
+        <h2 className="font-display font-black text-2xl md:text-4xl leading-[0.95] tracking-tighter text-black uppercase mb-10 md:mb-14">
           Quem precisa criar{" "}
           <span className="text-[var(--mm-orange)]">conteúdo UGC</span> comigo?
         </h2>
 
-        <div className="flex flex-wrap justify-center gap-2.5 md:gap-3">
-          {ITEMS.map((item, i) => (
-            <motion.div
-              key={item}
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: i * 0.04 }}
-              className="inline-flex items-center gap-2 bg-[var(--mm-pink-soft)] text-[var(--mm-blue)] text-sm md:text-base px-4 py-2.5 rounded-full border border-[var(--mm-pink)] leading-snug"
+        <div className="flex flex-col gap-3 md:gap-4">
+          {ROWS.map((row, rowIdx) => (
+            <div
+              key={rowIdx}
+              className="flex flex-wrap justify-center gap-3 md:gap-4"
             >
-              <CheckCircle2 className="w-4 h-4 text-[var(--mm-orange)] flex-shrink-0" />
-              {item}
-            </motion.div>
+              {row.map((item, i) => (
+                <motion.div
+                  key={item}
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{
+                    duration: 0.4,
+                    delay: rowIdx * 0.08 + i * 0.05,
+                  }}
+                  className="inline-flex items-center gap-2 bg-[var(--mm-pink-soft)] text-black text-sm md:text-base px-4 md:px-5 py-2.5 md:py-3 rounded-full border border-[var(--mm-pink)] leading-snug"
+                >
+                  <CheckCircle2 className="w-4 h-4 text-[var(--mm-orange)] flex-shrink-0" />
+                  <span className="text-left">{item}</span>
+                </motion.div>
+              ))}
+            </div>
           ))}
         </div>
       </div>
@@ -462,7 +479,7 @@ function AuthenticContent() {
   const GRID_VIDEOS = VIDEOS.filter((v) => v.youtubeId).slice(0, 8);
 
   return (
-    <section className="relative bg-[var(--mm-blue)] text-white py-14 md:py-20 overflow-hidden">
+    <section className="relative bg-black text-white py-14 md:py-20 overflow-hidden">
       {/* Loading sticker girando decorativo */}
       <motion.div
         animate={{ rotate: 360 }}
@@ -537,15 +554,15 @@ function AuthenticContent() {
 function MarqueeStripe() {
   const items = Array.from({ length: 14 }, () => "Resultados reais · Conteúdo real");
   return (
-    <div className="bg-[var(--mm-orange)] py-4 md:py-5 overflow-hidden">
-      <div className="marquee">
+    <div className="bg-black py-4 md:py-5 overflow-hidden border-y border-[var(--mm-orange)]/30">
+      <div className="marquee-slow">
         {items.concat(items).map((s, i) => (
           <div
             key={i}
-            className="flex items-center gap-4 text-[11px] md:text-xs uppercase tracking-[0.25em] font-bold text-white"
+            className="flex items-center gap-4 text-xs md:text-sm uppercase tracking-[0.25em] font-bold text-[var(--mm-orange)]"
           >
             {s}
-            <span className="text-white/80">✦</span>
+            <span className="text-white/70">✦</span>
           </div>
         ))}
       </div>
@@ -580,16 +597,16 @@ function ContentTypes() {
   ];
 
   const colorClasses: Record<T["color"], string> = {
-    white: "bg-white border-[var(--mm-blue)]/10 text-[var(--mm-blue)]",
-    pink: "bg-[var(--mm-pink-soft)] border-[var(--mm-pink)] text-[var(--mm-blue)]",
-    blue: "bg-[var(--mm-blue)] border-[var(--mm-blue)] text-white",
+    white: "bg-white border-black/10 text-black",
+    pink: "bg-[var(--mm-pink-soft)] border-[var(--mm-pink)] text-black",
+    blue: "bg-black border-black text-white",
     orange: "bg-[var(--mm-orange)] border-[var(--mm-orange)] text-white",
   };
 
   return (
     <section className="bg-white py-14 md:py-20">
       <div className="max-w-6xl mx-auto px-6 md:px-12">
-        <h2 className="font-display font-black text-2xl md:text-4xl leading-[0.9] tracking-tighter uppercase text-[var(--mm-blue)] mb-10 md:mb-14 max-w-2xl">
+        <h2 className="font-display font-black text-2xl md:text-4xl leading-[0.9] tracking-tighter uppercase text-black mb-10 md:mb-14 max-w-2xl">
           Criamos o tipo de conteúdo UGC{" "}
           <span className="text-[var(--mm-orange)]">certo pra sua marca</span>
         </h2>
@@ -618,7 +635,7 @@ function ContentTypes() {
         <div className="mt-10 text-center">
           <a
             href="#gestao-contato"
-            className="inline-flex items-center gap-2 bg-[var(--mm-blue)] text-white px-6 py-3.5 rounded-full text-sm font-bold uppercase tracking-wider hover:bg-[var(--mm-blue-deep)] transition-colors"
+            className="inline-flex items-center gap-2 bg-black text-white px-6 py-3.5 rounded-full text-sm font-bold uppercase tracking-wider hover:bg-neutral-800 transition-colors"
           >
             Fale comigo e comece hoje
             <Rocket className="w-4 h-4" />
@@ -638,13 +655,13 @@ function HowWeDo() {
       body:
         "Mapeio e seleciono UGC creators alinhados ao perfil da sua marca e do seu público-alvo. Processo de hunting considera dados demográficos, estilo de conteúdo e histórico de performance.",
       color:
-        "bg-[var(--mm-pink-soft)] text-[var(--mm-blue)] border-[var(--mm-pink)]",
+        "bg-[var(--mm-pink-soft)] text-black border-[var(--mm-pink)]",
     },
     {
       title: "Briefing co-criado com a marca",
       body:
         "Alinhamos tom, objetivos e KPIs antes de qualquer câmera ligar. O briefing nasce junto com o time da marca pra o criativo já sair validado.",
-      color: "bg-[var(--mm-blue)] text-white border-[var(--mm-blue)]",
+      color: "bg-black text-white border-black",
     },
     {
       title: "Produção de conteúdos autênticos",
@@ -656,7 +673,7 @@ function HowWeDo() {
       title: "Aprovação e ajustes",
       body:
         "Você revisa, ajusta e recebe o material nos formatos certos pra cada plataforma (9:16, 1:1, 16:9) + relatório dos primeiros dias rodando.",
-      color: "bg-[var(--mm-pink)] text-[var(--mm-blue)] border-[var(--mm-pink)]",
+      color: "bg-white text-black border-black/15",
     },
   ];
 
@@ -673,10 +690,10 @@ function HowWeDo() {
       </motion.div>
 
       <div className="relative max-w-3xl mx-auto px-6 md:px-12">
-        <h2 className="font-display font-black text-2xl md:text-4xl leading-[0.95] tracking-tighter text-[var(--mm-blue)] uppercase text-center">
+        <h2 className="font-display font-black text-2xl md:text-4xl leading-[0.95] tracking-tighter text-black uppercase text-center">
           Como <span className="text-[var(--mm-orange)]">fazemos acontecer</span>
         </h2>
-        <p className="mt-4 text-center text-[var(--mm-blue)]/75 text-base md:text-lg max-w-xl mx-auto leading-relaxed">
+        <p className="mt-4 text-center text-black/75 text-base md:text-lg max-w-xl mx-auto leading-relaxed">
           Diferentes canais, objetivos distintos, a mesma qualidade e
           resultados cada vez melhores. Escolha o canal, a Lara cuida do resto.
         </p>
@@ -777,7 +794,7 @@ function CasesSection() {
   const [idx, setIdx] = useState(0);
 
   return (
-    <section className="relative bg-[var(--mm-orange)] py-14 md:py-20 overflow-hidden">
+    <section id="cases-gestao" className="relative bg-black py-14 md:py-20 overflow-hidden">
       {/* Sticker Creator Creator Creator flutuando */}
       <motion.div
         initial={{ opacity: 0, scale: 0.8, rotate: 10 }}
@@ -851,7 +868,7 @@ function CaseCard({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5 }}
-      className="rounded-3xl bg-[var(--mm-blue)] text-white p-6 md:p-7 flex flex-col gap-4"
+      className="rounded-3xl bg-neutral-900 border border-white/10 text-white p-6 md:p-7 flex flex-col gap-4"
     >
       <div className="text-center font-display font-black text-base md:text-lg tracking-tight border-b border-white/15 pb-4 uppercase">
         {c.brand}
@@ -899,30 +916,32 @@ function CaseCard({
 /* ============================== SCALE / TTCX ============================== */
 function ScaleSection() {
   return (
-    <section className="relative bg-[var(--mm-blue)] text-white py-14 md:py-20 overflow-hidden">
+    <section className="relative bg-black text-white py-14 md:py-20 overflow-hidden">
       {/* Formas decorativas */}
       <svg
         viewBox="0 0 1200 400"
-        className="absolute inset-0 w-full h-full opacity-70 pointer-events-none"
+        className="absolute inset-0 w-full h-full opacity-50 pointer-events-none"
         aria-hidden
       >
         <path
           d="M 50 -50 L 350 350"
           stroke="#FF5824"
           strokeWidth="80"
-          strokeOpacity="0.9"
+          strokeOpacity="0.5"
           strokeLinecap="round"
         />
         <path
           d="M 800 100 L 1100 -100"
           stroke="#FFCFD2"
           strokeWidth="40"
+          strokeOpacity="0.4"
           strokeLinecap="round"
         />
         <path
           d="M 950 350 L 1250 50"
           stroke="#FF5824"
           strokeWidth="30"
+          strokeOpacity="0.5"
           strokeLinecap="round"
         />
       </svg>
@@ -999,7 +1018,7 @@ function FAQ() {
   return (
     <section className="bg-white py-14 md:py-20">
       <div className="max-w-3xl mx-auto px-6 md:px-12">
-        <h2 className="font-display font-black text-2xl md:text-3xl leading-[0.95] tracking-tighter text-[var(--mm-blue)] uppercase text-center mb-10">
+        <h2 className="font-display font-black text-2xl md:text-3xl leading-[0.95] tracking-tighter text-black uppercase text-center mb-10">
           Dúvidas frequentes sobre{" "}
           <span className="text-[var(--mm-orange)]">criação de UGC</span>
         </h2>
@@ -1010,17 +1029,17 @@ function FAQ() {
             return (
               <div
                 key={item.q}
-                className="rounded-2xl border-2 border-[var(--mm-blue)]/15 overflow-hidden bg-white"
+                className="rounded-2xl border-2 border-black/15 overflow-hidden bg-white"
               >
                 <button
                   onClick={() => setOpenIdx(isOpen ? -1 : i)}
                   className="w-full flex items-center justify-between gap-4 px-5 md:px-6 py-5 text-left"
                 >
-                  <span className="text-base md:text-lg font-medium text-[var(--mm-blue)]">
+                  <span className="text-base md:text-lg font-medium text-black">
                     {item.q}
                   </span>
                   <ChevronDown
-                    className={`w-5 h-5 text-[var(--mm-blue)]/50 flex-shrink-0 transition-transform ${
+                    className={`w-5 h-5 text-black/50 flex-shrink-0 transition-transform ${
                       isOpen ? "rotate-180" : ""
                     }`}
                   />
@@ -1034,7 +1053,7 @@ function FAQ() {
                       transition={{ duration: 0.3 }}
                       className="overflow-hidden"
                     >
-                      <div className="px-5 md:px-6 pb-5 text-sm md:text-base text-[var(--mm-blue)]/80 leading-relaxed">
+                      <div className="px-5 md:px-6 pb-5 text-sm md:text-base text-black/80 leading-relaxed">
                         {item.a}
                       </div>
                     </motion.div>
@@ -1052,20 +1071,20 @@ function FAQ() {
 /* ============================== FINAL CTA ============================== */
 function FinalCTA() {
   return (
-    <section className="relative bg-[var(--mm-pink-soft)] py-14 md:py-20 overflow-hidden">
+    <section className="relative bg-white py-14 md:py-20 overflow-hidden border-t border-black/10">
       <div className="relative max-w-3xl mx-auto px-6 md:px-12 text-center">
-        <h2 className="font-display font-black text-2xl md:text-4xl leading-[0.95] tracking-tighter text-[var(--mm-blue)] uppercase">
+        <h2 className="font-display font-black text-2xl md:text-4xl leading-[0.95] tracking-tighter text-black uppercase">
           Seu próximo{" "}
           <span className="text-[var(--mm-orange)]">case de sucesso</span>{" "}
           começa aqui.
         </h2>
-        <p className="mt-4 text-[var(--mm-blue)]/80 text-base md:text-lg max-w-xl mx-auto leading-relaxed">
+        <p className="mt-4 text-black/80 text-base md:text-lg max-w-xl mx-auto leading-relaxed">
           Integro estratégia, creators e produção <b>end-to-end</b>, do
           briefing à biblioteca de UGC pronta pra orgânico e mídia.
         </p>
         <a
           href="#gestao-contato"
-          className="mt-8 inline-flex items-center gap-2 bg-[var(--mm-blue)] text-white px-7 py-4 rounded-full text-base md:text-lg font-bold uppercase tracking-wider hover:bg-[var(--mm-blue-deep)] transition-colors shadow-lg"
+          className="mt-8 inline-flex items-center gap-2 bg-black text-white px-7 py-4 rounded-full text-base md:text-lg font-bold uppercase tracking-wider hover:bg-neutral-800 transition-colors shadow-lg"
         >
           Fale com a Lara e comece hoje
           <Rocket className="w-4 h-4" />
@@ -1099,7 +1118,7 @@ function ContactForm() {
   return (
     <section
       id="gestao-contato"
-      className="relative bg-[var(--mm-blue)] text-white py-16 md:py-24 overflow-hidden"
+      className="relative bg-black text-white py-16 md:py-24 overflow-hidden"
     >
       {/* stickers decorativos */}
       <motion.div
@@ -1333,7 +1352,7 @@ function Select({
           Selecione…
         </option>
         {options.map((o) => (
-          <option key={o} value={o} className="bg-[var(--mm-blue)]">
+          <option key={o} value={o} className="bg-black">
             {o}
           </option>
         ))}
