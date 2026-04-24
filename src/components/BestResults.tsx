@@ -54,9 +54,9 @@ const HIGHLIGHTS: Highlight[] = [
   },
 ];
 
-// Áudio de cliente
+// Áudio de cliente — https://youtube.com/shorts/rRrIpSRu90A
 const AUDIO_TESTIMONIAL = {
-  youtubeId: "",
+  youtubeId: "rRrIpSRu90A",
   brand: "Depoimento de cliente",
   duration: "13:52",
 };
