@@ -8,7 +8,7 @@ export default function About() {
   return (
     <section
       id="sobre"
-      className="px-6 md:px-12 pt-14 md:pt-32 pb-6 md:pb-12 max-w-7xl mx-auto"
+      className="px-6 md:px-12 pt-8 md:pt-14 pb-6 md:pb-12 max-w-7xl mx-auto"
     >
       <div className="grid md:grid-cols-12 gap-8 md:gap-16">
         <motion.div
