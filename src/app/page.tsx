@@ -3,6 +3,7 @@ import Hero from "@/components/Hero";
 import Marquee from "@/components/Marquee";
 import Stats from "@/components/Stats";
 import About from "@/components/About";
+import BrandsMarquee from "@/components/BrandsMarquee";
 import Services from "@/components/Services";
 import BestResults from "@/components/BestResults";
 import CategoryGallery from "@/components/CategoryGallery";
@@ -19,6 +20,7 @@ export default function Home() {
       <Marquee />
       <Stats />
       <About />
+      <BrandsMarquee />
       <Services />
       <BestResults />
       <CategoryGallery />

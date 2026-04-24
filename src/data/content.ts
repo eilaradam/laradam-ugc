@@ -219,31 +219,34 @@ export const TESTIMONIALS: Testimonial[] = [
   },
 ];
 
-// Marcas reais que a Lara já trabalhou — vitrine com logos (Clearbit) + fallback
+// Marcas reais que a Lara já trabalhou
+// logo: caminho local em /public/logos/*.png (prioridade 1)
+// domain: fallback pra logo.clearbit.com se o arquivo local não existir
 export type Brand = {
   name: string;
-  domain?: string; // pra puxar logo via logo.clearbit.com
+  logo?: string; // ex: "infinitepay.png" → carregado de /logos/infinitepay.png
+  domain?: string;
 };
 
 export const BRANDS: Brand[] = [
-  { name: "InfinitePay", domain: "infinitepay.io" },
-  { name: "Méliuz", domain: "meliuz.com.br" },
-  { name: "Dolly", domain: "dolly.com.br" },
-  { name: "Decolar", domain: "decolar.com" },
-  { name: "Airbnb", domain: "airbnb.com.br" },
-  { name: "Logitech", domain: "logitech.com" },
-  { name: "L'Oréal", domain: "loreal.com" },
-  { name: "Reclame Aqui", domain: "reclameaqui.com.br" },
-  { name: "BV Financeiro", domain: "bv.com.br" },
-  { name: "Rap10", domain: "rap10.com.br" },
-  { name: "Inglot", domain: "inglot.com" },
-  { name: "Box Magenta", domain: "boxmagenta.com.br" },
-  { name: "Quintal", domain: "quintaldemanu.com.br" },
-  { name: "Bem Me Fiz", domain: "bemmefiz.com.br" },
-  { name: "DT3", domain: "dt3sports.com.br" },
-  { name: "Coza", domain: "coza.com.br" },
-  { name: "Coala", domain: "coalacolchoes.com.br" },
-  { name: "Mez Móveis", domain: "mezmoveis.com.br" },
-  { name: "OKA House", domain: "okahouse.com.br" },
-  { name: "Rituaria", domain: "rituaria.com.br" },
+  { name: "InfinitePay", logo: "infinitepay.png", domain: "infinitepay.io" },
+  { name: "Méliuz", logo: "meliuz.png", domain: "meliuz.com.br" },
+  { name: "Dolly", logo: "dolly.png", domain: "dolly.com.br" },
+  { name: "Decolar", logo: "decolar.png", domain: "decolar.com" },
+  { name: "Airbnb", logo: "airbnb.png", domain: "airbnb.com.br" },
+  { name: "Logitech", logo: "logitech.png", domain: "logitech.com" },
+  { name: "L'Oréal", logo: "loreal.png", domain: "loreal.com" },
+  { name: "Reclame Aqui", logo: "reclameaqui.png", domain: "reclameaqui.com.br" },
+  { name: "BV Financeiro", logo: "bv.png", domain: "bv.com.br" },
+  { name: "Rap10", logo: "rap10.png", domain: "rap10.com.br" },
+  { name: "Inglot", logo: "inglot.png", domain: "inglot.com" },
+  { name: "Box Magenta", logo: "boxmagenta.png", domain: "boxmagenta.com.br" },
+  { name: "Quintal", logo: "quintal.png", domain: "quintaldemanu.com.br" },
+  { name: "Bem Me Fiz", logo: "bemmefiz.png", domain: "bemmefiz.com.br" },
+  { name: "DT3", logo: "dt3.png", domain: "dt3sports.com.br" },
+  { name: "Coza", logo: "coza.png", domain: "coza.com.br" },
+  { name: "Coala", logo: "coala.png", domain: "coalacolchoes.com.br" },
+  { name: "Mez Móveis", logo: "mezmoveis.png", domain: "mezmoveis.com.br" },
+  { name: "OKA House", logo: "okahouse.png", domain: "okahouse.com.br" },
+  { name: "Rituaria", logo: "rituaria.png", domain: "rituaria.com.br" },
 ];
