@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     "Portfólio de Lara Dam: UGC Creator com +500 vídeos gravados e +200 parceiros. Criativos de alta conversão para marcas que buscam destaque.",
   openGraph: {
     title: "Lara Dam — UGC Creator",
-    description: "+500 vídeos · +200 parceiros · 60M+ views",
+    description: "+500 vídeos · +200 parceiros · 100M+ views",
     type: "website",
   },
 };

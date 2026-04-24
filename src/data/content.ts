@@ -10,7 +10,7 @@ export const SITE = {
 export const STATS = [
   { value: "500+", label: "Vídeos gravados" },
   { value: "200+", label: "Parceiros" },
-  { value: "60M+", label: "Views acumulados" },
+  { value: "100M+", label: "Views acumulados" },
   { value: "2 anos", label: "De experiência" },
 ];
 

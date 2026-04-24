@@ -117,7 +117,7 @@ export default function Hero() {
           Criando conteúdo que{" "}
           <span className="font-serif-accent italic text-primary">converte</span>{" "}
           — de hook a CTA, cada segundo pensado pra performar. +500 vídeos,
-          +200 marcas parceiras, 60M+ views.
+          +200 marcas parceiras, 100M+ views.
         </p>
 
         <div className="flex flex-wrap items-center gap-2.5 md:gap-3 md:justify-end">
