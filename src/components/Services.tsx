@@ -26,10 +26,10 @@ export default function Services() {
   return (
     <section
       id="servicos"
-      className="px-6 md:px-12 py-14 md:py-32 bg-background-alt"
+      className="px-6 md:px-12 py-10 md:py-20 bg-background-alt"
     >
       <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10 md:mb-16">
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-8 md:mb-12">
           <div>
             <div className="text-xs uppercase tracking-[0.3em] text-primary font-medium mb-6 flex items-center gap-3">
               <span className="h-px w-8 bg-primary" />
@@ -57,7 +57,7 @@ export default function Services() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="mt-10 md:mt-14 flex flex-col md:flex-row items-start md:items-center justify-between gap-5 p-6 md:p-8 rounded-3xl bg-background border border-foreground/10"
+          className="mt-8 md:mt-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-5 p-6 md:p-8 rounded-3xl bg-background border border-foreground/10"
         >
           <div>
             <div className="text-xs uppercase tracking-[0.2em] text-primary mb-2">

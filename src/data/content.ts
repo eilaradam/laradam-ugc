@@ -5,6 +5,9 @@ export const SITE = {
   email: "laradam.ugc@gmail.com",
   instagram: "@eilaradam",
   tiktok: "@eilaradam",
+  // TODO: substituir pelo número real (formato internacional sem + nem espaços)
+  whatsapp: "5513999999999",
+  whatsappLabel: "WhatsApp",
 };
 
 export const STATS = [

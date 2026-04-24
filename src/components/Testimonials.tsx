@@ -8,10 +8,10 @@ export default function Testimonials() {
   return (
     <section
       id="depoimentos"
-      className="px-6 md:px-12 py-14 md:py-32 bg-background-alt"
+      className="px-6 md:px-12 py-10 md:py-20 bg-background-alt"
     >
       <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10 md:mb-16">
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-8 md:mb-12">
           <div>
             <div className="text-xs uppercase tracking-[0.3em] text-primary font-medium mb-6 flex items-center gap-3">
               <span className="h-px w-8 bg-primary" />

@@ -8,7 +8,6 @@ import Services from "@/components/Services";
 import BestResults from "@/components/BestResults";
 import CategoryGallery from "@/components/CategoryGallery";
 import Testimonials from "@/components/Testimonials";
-import Brands from "@/components/Brands";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 
@@ -25,7 +24,6 @@ export default function Home() {
       <BestResults />
       <CategoryGallery />
       <Testimonials />
-      <Brands />
       <Contact />
       <Footer />
     </main>
