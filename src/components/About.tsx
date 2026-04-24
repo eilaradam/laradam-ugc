@@ -4,40 +4,6 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { ABOUT } from "@/data/content";
 
-// SVG de seta rabiscada apontando pra baixo-esquerda (estilo anotação à mão)
-function ScribbleArrow({
-  className,
-  flip = false,
-}: {
-  className?: string;
-  flip?: boolean;
-}) {
-  return (
-    <svg
-      viewBox="0 0 80 60"
-      fill="none"
-      className={className}
-      style={{ transform: flip ? "scaleX(-1)" : undefined }}
-    >
-      <path
-        d="M5 10 Q 30 5, 50 25 T 72 48"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        fill="none"
-      />
-      <path
-        d="M62 42 L 72 48 L 64 55"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        fill="none"
-      />
-    </svg>
-  );
-}
-
 export default function About() {
   return (
     <section
@@ -117,10 +83,56 @@ function PhotoSlot() {
               +500 vídeos <span className="not-italic">✦</span>
             </div>
           </div>
-          <ScribbleArrow
-            flip
-            className="w-12 h-9 text-primary/70 absolute -bottom-6 right-6"
-          />
+        </motion.div>
+      )}
+
+      {/* Emoji claquete — animação de "bater" (clap) */}
+      {!hasError && (
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.8 }}
+          className="absolute top-1/4 -left-4 md:-left-8 z-10 pointer-events-none text-3xl md:text-4xl"
+        >
+          <motion.span
+            animate={{ rotate: [-12, -2, -12, -2, -12] }}
+            transition={{
+              duration: 1.2,
+              repeat: Infinity,
+              repeatDelay: 2,
+              ease: "easeInOut",
+            }}
+            className="inline-block origin-bottom-left drop-shadow-md"
+          >
+            🎬
+          </motion.span>
+        </motion.div>
+      )}
+
+      {/* Emoji câmera — flutua tipo handheld */}
+      {!hasError && (
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 1 }}
+          className="absolute top-2/3 -right-3 md:-right-8 z-10 pointer-events-none text-3xl md:text-4xl"
+        >
+          <motion.span
+            animate={{
+              y: [0, -8, 0, 4, 0],
+              rotate: [0, 4, 0, -4, 0],
+            }}
+            transition={{
+              duration: 3.5,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+            className="inline-block drop-shadow-md"
+          >
+            🎥
+          </motion.span>
         </motion.div>
       )}
 

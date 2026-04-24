@@ -63,15 +63,10 @@ export default function CustomCursor() {
       }}
       transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
     >
-      <div className="w-20 h-20 rounded-full bg-primary text-primary-light flex items-center justify-center shadow-2xl backdrop-blur-sm">
-        <div className="flex items-center gap-1.5">
-          <svg viewBox="0 0 24 24" className="w-4 h-4 fill-current ml-0.5">
-            <path d="M8 5v14l11-7z" />
-          </svg>
-          <span className="text-[10px] font-bold uppercase tracking-[0.15em]">
-            Play
-          </span>
-        </div>
+      <div className="w-8 h-8 rounded-full bg-primary text-primary-light flex items-center justify-center shadow-lg">
+        <svg viewBox="0 0 24 24" className="w-3 h-3 fill-current ml-0.5">
+          <path d="M8 5v14l11-7z" />
+        </svg>
       </div>
     </motion.div>
   );
