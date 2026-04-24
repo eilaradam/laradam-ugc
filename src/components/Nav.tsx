@@ -11,6 +11,8 @@ const LINKS = [
   { href: "/#contato", label: "Contato" },
 ];
 
+const GESTAO_LINK = { href: "/gestao", label: "Gestão" };
+
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
@@ -66,7 +68,13 @@ export default function Nav() {
 
           <div className="flex items-center gap-2">
             <a
-              href="#contato"
+              href={GESTAO_LINK.href}
+              className="hidden md:inline-flex text-[11px] md:text-sm font-semibold border border-background/20 text-background px-3 md:px-4 py-1.5 md:py-2 rounded-full hover:bg-background hover:text-foreground transition-colors whitespace-nowrap"
+            >
+              {GESTAO_LINK.label}
+            </a>
+            <a
+              href="/#contato"
               className="text-[11px] md:text-sm font-semibold bg-primary text-primary-light px-3 md:px-4 py-1.5 md:py-2 rounded-full hover:bg-primary-dark transition-colors whitespace-nowrap"
             >
               Trabalhe comigo
@@ -107,7 +115,7 @@ export default function Nav() {
             </div>
 
             <nav className="flex-1 flex flex-col justify-center gap-6 px-6">
-              {LINKS.map((l, i) => (
+              {[...LINKS, GESTAO_LINK].map((l, i) => (
                 <motion.a
                   key={l.href}
                   href={l.href}
