@@ -118,7 +118,7 @@ function CreatorStacked({ className }: { className?: string }) {
       {[0, 1, 2].map((i) => (
         <span
           key={i}
-          className="font-display font-black text-white uppercase text-2xl md:text-4xl leading-[0.85] tracking-tight -mt-1 first:mt-0"
+          className="font-display font-black text-white uppercase text-xl md:text-3xl leading-[0.85] tracking-tight -mt-1 first:mt-0"
           style={{
             background: "#FF5824",
             padding: "0.15em 0.55em 0.25em 0.55em",
@@ -146,103 +146,226 @@ function MMPill({ children }: { children: React.ReactNode }) {
 /* ================================ HERO ================================ */
 function Hero() {
   return (
-    <section className="relative overflow-hidden bg-[var(--mm-blue)] text-white pt-16 md:pt-24 pb-16 md:pb-24">
-      {/* Tipografia gigante ao fundo tipo "Manager Meu Manager" repetido */}
+    <section className="relative overflow-hidden bg-[var(--mm-blue)] text-white pt-20 md:pt-24 pb-0">
+      {/* Grid bg decorativo (pontos sutis) */}
       <div
         aria-hidden
-        className="absolute inset-0 overflow-hidden pointer-events-none select-none opacity-20"
-      >
-        <div className="font-display font-black text-white text-[18vw] md:text-[12vw] leading-[0.85] tracking-tighter uppercase whitespace-nowrap">
-          Gestão Lara Gestão Lara Gestão Lara Gestão
+        className="absolute inset-0 pointer-events-none opacity-[0.12]"
+        style={{
+          backgroundImage:
+            "radial-gradient(circle, #fff 1px, transparent 1px)",
+          backgroundSize: "24px 24px",
+        }}
+      />
+
+      <div className="relative max-w-7xl mx-auto px-6 md:px-12 grid md:grid-cols-12 gap-8 md:gap-4 items-end pt-4 md:pt-8">
+        {/* ========== Coluna esquerda: Text block ========== */}
+        <div className="md:col-span-7 lg:col-span-7 relative pb-12 md:pb-20">
+          {/* Wordmark no topo */}
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="flex items-center gap-3 mb-8 md:mb-10"
+          >
+            <div className="w-2.5 h-2.5 rounded-full bg-[var(--mm-orange)] animate-pulse" />
+            <span className="font-display font-black text-white text-sm md:text-base tracking-widest uppercase">
+              laradam<span className="text-[var(--mm-orange)]">.</span>gestão
+            </span>
+          </motion.div>
+
+          {/* Pill acima do título */}
+          <motion.div
+            initial={{ opacity: 0, x: -20, rotate: -3 }}
+            animate={{ opacity: 1, x: 0, rotate: -2 }}
+            transition={{ duration: 0.7, delay: 0.15 }}
+            className="mb-6 origin-left inline-block"
+          >
+            <MMPill>✦ Menos caos, mais criação</MMPill>
+          </motion.div>
+
+          {/* H1 grande */}
+          <motion.h1
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            className="font-display font-black text-white text-4xl md:text-5xl lg:text-6xl leading-[0.88] tracking-tighter uppercase"
+          >
+            UGC que vende,
+            <br />
+            <span className="text-[var(--mm-orange)]">de creator</span>
+            <br />
+            pra creator.
+          </motion.h1>
+
+          {/* Descrição */}
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="mt-8 text-white/85 text-base md:text-lg max-w-xl leading-relaxed"
+          >
+            Gestão completa de UGC —{" "}
+            <span className="font-serif-accent italic text-[var(--mm-orange)]">
+              do briefing ao viral
+            </span>
+            . Creators selecionados, roteiros validados e vídeos pensados pra
+            converter.
+          </motion.p>
+
+          {/* CTAs */}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.55 }}
+            className="mt-10 flex flex-wrap items-center gap-3"
+          >
+            <a
+              href="#gestao-contato"
+              className="inline-flex items-center gap-2 bg-[var(--mm-orange)] text-white px-7 py-4 rounded-full text-base font-bold uppercase tracking-wider hover:bg-[var(--mm-orange-deep)] transition-colors shadow-xl"
+            >
+              Falar com a Lara
+              <Rocket className="w-4 h-4" />
+            </a>
+            <a
+              href="#cases-gestao"
+              className="inline-flex items-center gap-2 border-2 border-white/20 text-white px-6 py-4 rounded-full text-base font-bold uppercase tracking-wider hover:bg-white hover:text-[var(--mm-blue)] transition-colors"
+            >
+              Ver cases
+            </a>
+          </motion.div>
+
+          {/* Stats row */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.8 }}
+            className="mt-12 flex flex-wrap items-center gap-x-8 gap-y-3 text-white/80"
+          >
+            <div className="flex items-baseline gap-2">
+              <span className="font-display font-black text-xl md:text-2xl text-white tabular-nums">
+                +500
+              </span>
+              <span className="text-xs md:text-sm uppercase tracking-wider">
+                vídeos
+              </span>
+            </div>
+            <div className="h-6 w-px bg-white/20" />
+            <div className="flex items-baseline gap-2">
+              <span className="font-display font-black text-xl md:text-2xl text-white tabular-nums">
+                +200
+              </span>
+              <span className="text-xs md:text-sm uppercase tracking-wider">
+                marcas
+              </span>
+            </div>
+            <div className="h-6 w-px bg-white/20" />
+            <div className="flex items-baseline gap-2">
+              <span className="font-display font-black text-xl md:text-2xl text-white tabular-nums">
+                100M+
+              </span>
+              <span className="text-xs md:text-sm uppercase tracking-wider">
+                views
+              </span>
+            </div>
+          </motion.div>
         </div>
-        <div className="font-display font-black text-white text-[18vw] md:text-[12vw] leading-[0.85] tracking-tighter uppercase whitespace-nowrap -mt-2">
-          Lara Gestão Lara Gestão Lara Gestão
-        </div>
-        <div className="font-display font-black text-white text-[18vw] md:text-[12vw] leading-[0.85] tracking-tighter uppercase whitespace-nowrap -mt-2">
-          Gestão Lara Gestão Lara
-        </div>
-      </div>
 
-      {/* Stickers decorativos (desktop) */}
-      <div className="hidden md:block absolute top-14 left-6 pointer-events-none">
-        <MMPill>Menos caos, mais criação</MMPill>
-      </div>
-      <div className="hidden md:block absolute top-[40%] left-[8%] pointer-events-none rotate-[-2deg]">
-        <MMPill>Gerenciamento inteligente</MMPill>
-      </div>
-      <div className="hidden md:block absolute bottom-20 left-10 pointer-events-none rotate-[3deg]">
-        <MMPill>De creator para creator</MMPill>
-      </div>
-
-      <motion.div
-        initial={{ opacity: 0, scale: 0.8, rotate: 12 }}
-        animate={{ opacity: 1, scale: 1, rotate: -6 }}
-        transition={{ duration: 0.8, delay: 0.3 }}
-        className="hidden md:block absolute top-20 right-10 w-32 pointer-events-none"
-      >
-        <ChatBubbleSticker className="w-full h-auto" />
-      </motion.div>
-
-      <motion.div
-        initial={{ opacity: 0, rotate: 0 }}
-        animate={{ opacity: 1, rotate: -10 }}
-        transition={{ duration: 0.8, delay: 0.5 }}
-        className="hidden md:block absolute bottom-10 right-20 w-16 pointer-events-none"
-      >
-        <CursorSticker className="w-full h-auto" />
-      </motion.div>
-
-      <motion.div
-        animate={{ rotate: 360 }}
-        transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-        className="hidden md:block absolute bottom-20 right-6 w-12 pointer-events-none"
-      >
-        <LoadingSticker className="w-full h-auto" />
-      </motion.div>
-
-      <div className="relative max-w-4xl mx-auto px-6 md:px-12 text-center">
+        {/* ========== Coluna direita: Foto + stickers ========== */}
         <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="font-display font-black text-white text-2xl md:text-3xl tracking-tight mb-10 md:mb-14"
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+          className="md:col-span-5 lg:col-span-5 relative self-end"
         >
-          laradam<span className="text-[var(--mm-orange)]">.</span>gestão
+          {/* Container da foto com forma orgânica */}
+          <div className="relative aspect-[3/4] md:aspect-[4/5] w-full max-w-md mx-auto md:ml-auto md:mr-0">
+            {/* Shape laranja ao fundo */}
+            <div
+              className="absolute inset-x-4 inset-y-2 bg-[var(--mm-orange)] rounded-[3rem]"
+              aria-hidden
+            />
+            {/* Foto */}
+            <img
+              src="/lara-fundo.png"
+              alt="Lara Dam"
+              className="relative w-full h-full object-contain object-bottom drop-shadow-2xl"
+              onError={(e) => {
+                e.currentTarget.src = "/lara-sobre.jpg";
+                e.currentTarget.className =
+                  "relative w-full h-full object-cover rounded-[3rem]";
+              }}
+            />
+
+            {/* Sticker: Creator Creator Creator no canto superior esquerdo */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8, rotate: 20 }}
+              animate={{ opacity: 1, scale: 1, rotate: -10 }}
+              transition={{ duration: 0.9, delay: 0.8 }}
+              className="absolute -top-4 -left-4 md:-left-10 pointer-events-none scale-[0.65] md:scale-75 origin-top-left"
+            >
+              <CreatorStacked />
+            </motion.div>
+
+            {/* Sticker: Chat bubble */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8, rotate: -15 }}
+              animate={{ opacity: 1, scale: 1, rotate: 8 }}
+              transition={{ duration: 0.9, delay: 1.1 }}
+              className="absolute top-8 -right-2 md:-right-6 w-20 md:w-24 pointer-events-none"
+            >
+              <ChatBubbleSticker className="w-full h-auto drop-shadow-lg" />
+            </motion.div>
+
+            {/* Sticker: Loading giro lento */}
+            <motion.div
+              animate={{ rotate: 360 }}
+              transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+              className="absolute bottom-24 -left-2 md:-left-4 w-12 md:w-14 pointer-events-none drop-shadow-lg"
+            >
+              <LoadingSticker className="w-full h-auto" />
+            </motion.div>
+
+            {/* Pill "De creator para creator" */}
+            <motion.div
+              initial={{ opacity: 0, y: 20, rotate: 5 }}
+              animate={{ opacity: 1, y: 0, rotate: -4 }}
+              transition={{ duration: 0.8, delay: 1.3 }}
+              className="absolute bottom-6 -right-2 md:-right-8 pointer-events-none"
+            >
+              <MMPill>De creator pra creator</MMPill>
+            </motion.div>
+
+            {/* Cursor pixel */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 1.5 }}
+              className="absolute top-1/2 -left-1 md:-left-6 w-9 md:w-12 pointer-events-none rotate-[-10deg] drop-shadow-md"
+            >
+              <CursorSticker className="w-full h-auto" />
+            </motion.div>
+          </div>
         </motion.div>
+      </div>
 
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.1 }}
-          className="font-display font-black text-white text-4xl md:text-7xl leading-[0.9] tracking-tighter uppercase"
-        >
-          UGC que conecta.
-          <br />
-          Conteúdo real,
-          <br />
-          <span className="text-[var(--mm-orange)]">resultados reais.</span>
-        </motion.h1>
-
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-          className="mt-6 text-white/80 text-base md:text-lg max-w-lg mx-auto leading-relaxed"
-        >
-          Crio conteúdos autênticos com UGC creators pra engajar, gerar prova
-          social e aumentar conversão.
-        </motion.p>
-
-        <motion.a
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.5 }}
-          href="#gestao-contato"
-          className="mt-10 inline-flex items-center gap-2 bg-[var(--mm-orange)] text-white px-7 py-4 rounded-full text-sm md:text-base font-bold uppercase tracking-wider hover:bg-[var(--mm-orange-deep)] transition-colors shadow-lg"
-        >
-          Falar com a Lara
-          <Rocket className="w-4 h-4" />
-        </motion.a>
+      {/* Faixa orange com tagline no rodapé do hero */}
+      <div className="relative mt-6 md:mt-10 bg-[var(--mm-orange)] py-3 md:py-4 overflow-hidden">
+        <div className="marquee">
+          {Array.from({ length: 10 }).map((_, i) => (
+            <div
+              key={i}
+              className="flex items-center gap-3 md:gap-5 text-xs md:text-sm uppercase tracking-[0.25em] font-bold text-white whitespace-nowrap"
+            >
+              <span>Gestão inteligente</span>
+              <span className="text-white/70">✦</span>
+              <span>Creators selecionados</span>
+              <span className="text-white/70">✦</span>
+              <span>UGC que converte</span>
+              <span className="text-white/70">✦</span>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );
@@ -302,7 +425,7 @@ function WhoFor() {
       </motion.div>
 
       <div className="max-w-4xl mx-auto px-6 md:px-12 text-center">
-        <h2 className="font-display font-black text-3xl md:text-5xl leading-[0.95] tracking-tighter text-[var(--mm-blue)] uppercase mb-10 md:mb-14">
+        <h2 className="font-display font-black text-2xl md:text-4xl leading-[0.95] tracking-tighter text-[var(--mm-blue)] uppercase mb-10 md:mb-14">
           Quem precisa criar{" "}
           <span className="text-[var(--mm-orange)]">conteúdo UGC</span> comigo?
         </h2>
@@ -351,7 +474,7 @@ function AuthenticContent() {
 
       <div className="relative max-w-6xl mx-auto px-6 md:px-12">
         <div className="grid md:grid-cols-2 gap-8 md:gap-12 mb-10 md:mb-14 items-end">
-          <h2 className="font-display font-black text-3xl md:text-5xl leading-[0.9] tracking-tighter uppercase">
+          <h2 className="font-display font-black text-2xl md:text-4xl leading-[0.9] tracking-tighter uppercase">
             Conteúdo
             <br />
             autêntico que{" "}
@@ -466,7 +589,7 @@ function ContentTypes() {
   return (
     <section className="bg-white py-14 md:py-20">
       <div className="max-w-6xl mx-auto px-6 md:px-12">
-        <h2 className="font-display font-black text-3xl md:text-5xl leading-[0.9] tracking-tighter uppercase text-[var(--mm-blue)] mb-10 md:mb-14 max-w-2xl">
+        <h2 className="font-display font-black text-2xl md:text-4xl leading-[0.9] tracking-tighter uppercase text-[var(--mm-blue)] mb-10 md:mb-14 max-w-2xl">
           Criamos o tipo de conteúdo UGC{" "}
           <span className="text-[var(--mm-orange)]">certo pra sua marca</span>
         </h2>
@@ -550,7 +673,7 @@ function HowWeDo() {
       </motion.div>
 
       <div className="relative max-w-3xl mx-auto px-6 md:px-12">
-        <h2 className="font-display font-black text-3xl md:text-5xl leading-[0.95] tracking-tighter text-[var(--mm-blue)] uppercase text-center">
+        <h2 className="font-display font-black text-2xl md:text-4xl leading-[0.95] tracking-tighter text-[var(--mm-blue)] uppercase text-center">
           Como <span className="text-[var(--mm-orange)]">fazemos acontecer</span>
         </h2>
         <p className="mt-4 text-center text-[var(--mm-blue)]/75 text-base md:text-lg max-w-xl mx-auto leading-relaxed">
@@ -667,7 +790,7 @@ function CasesSection() {
       </motion.div>
 
       <div className="relative max-w-6xl mx-auto px-6 md:px-12">
-        <h2 className="font-display font-black text-3xl md:text-5xl leading-[0.95] tracking-tighter text-white uppercase text-center">
+        <h2 className="font-display font-black text-2xl md:text-4xl leading-[0.95] tracking-tighter text-white uppercase text-center">
           Cases com UGC:{" "}
           <span className="italic">a gente faz acontecer!</span>
         </h2>
@@ -730,7 +853,7 @@ function CaseCard({
       transition={{ duration: 0.5 }}
       className="rounded-3xl bg-[var(--mm-blue)] text-white p-6 md:p-7 flex flex-col gap-4"
     >
-      <div className="text-center font-display font-black text-lg md:text-xl tracking-tight border-b border-white/15 pb-4 uppercase">
+      <div className="text-center font-display font-black text-base md:text-lg tracking-tight border-b border-white/15 pb-4 uppercase">
         {c.brand}
       </div>
       <div className="font-display font-black text-[var(--mm-orange)] text-base md:text-lg leading-tight tracking-tight text-center uppercase">
@@ -748,7 +871,7 @@ function CaseCard({
             key={s.label}
             className="rounded-xl border border-[var(--mm-orange)]/50 bg-white/5 px-3 py-3 text-center"
           >
-            <div className="font-display font-black text-[var(--mm-orange)] text-lg md:text-xl tabular-nums leading-none">
+            <div className="font-display font-black text-[var(--mm-orange)] text-base md:text-lg tabular-nums leading-none">
               {s.value}
             </div>
             <div className="text-[11px] md:text-xs uppercase tracking-wider text-white/75 mt-1.5">
@@ -819,7 +942,7 @@ function ScaleSection() {
           <div className="text-[10px] md:text-xs uppercase tracking-[0.3em] text-[var(--mm-orange)] font-bold mb-4">
             #TTCX
           </div>
-          <h2 className="font-display font-black text-3xl md:text-4xl leading-[0.95] tracking-tighter mb-4 uppercase">
+          <h2 className="font-display font-black text-2xl md:text-3xl leading-[0.95] tracking-tighter mb-4 uppercase">
             TikTok Creative Exchange
           </h2>
           <p className="text-sm md:text-base text-white/80 leading-relaxed mb-6">
@@ -840,10 +963,10 @@ function ScaleSection() {
         </div>
 
         <div className="text-center md:text-left">
-          <div className="font-display font-black text-6xl md:text-8xl text-[var(--mm-orange)] leading-none tracking-tighter">
+          <div className="font-display font-black text-5xl md:text-6xl text-[var(--mm-orange)] leading-none tracking-tighter">
             +500
           </div>
-          <div className="mt-3 font-display font-black text-[var(--mm-pink)] text-xl md:text-3xl leading-tight tracking-tight uppercase">
+          <div className="mt-3 font-display font-black text-[var(--mm-pink)] text-lg md:text-2xl leading-tight tracking-tight uppercase">
             Creators UGC e
             <br />
             produção em escala
@@ -876,7 +999,7 @@ function FAQ() {
   return (
     <section className="bg-white py-14 md:py-20">
       <div className="max-w-3xl mx-auto px-6 md:px-12">
-        <h2 className="font-display font-black text-3xl md:text-4xl leading-[0.95] tracking-tighter text-[var(--mm-blue)] uppercase text-center mb-10">
+        <h2 className="font-display font-black text-2xl md:text-3xl leading-[0.95] tracking-tighter text-[var(--mm-blue)] uppercase text-center mb-10">
           Dúvidas frequentes sobre{" "}
           <span className="text-[var(--mm-orange)]">criação de UGC</span>
         </h2>
@@ -931,7 +1054,7 @@ function FinalCTA() {
   return (
     <section className="relative bg-[var(--mm-pink-soft)] py-14 md:py-20 overflow-hidden">
       <div className="relative max-w-3xl mx-auto px-6 md:px-12 text-center">
-        <h2 className="font-display font-black text-3xl md:text-5xl leading-[0.95] tracking-tighter text-[var(--mm-blue)] uppercase">
+        <h2 className="font-display font-black text-2xl md:text-4xl leading-[0.95] tracking-tighter text-[var(--mm-blue)] uppercase">
           Seu próximo{" "}
           <span className="text-[var(--mm-orange)]">case de sucesso</span>{" "}
           começa aqui.
@@ -1009,7 +1132,7 @@ function ContactForm() {
         <div className="text-[10px] md:text-xs uppercase tracking-[0.3em] text-[var(--mm-orange)] font-bold text-center mb-3">
           #contato
         </div>
-        <h2 className="font-display font-black text-3xl md:text-5xl leading-[0.95] tracking-tighter text-center text-white uppercase">
+        <h2 className="font-display font-black text-2xl md:text-4xl leading-[0.95] tracking-tighter text-center text-white uppercase">
           Fale comigo para fazer um{" "}
           <span className="text-[var(--mm-orange)]">diagnóstico</span> ou
           receber orçamento!
@@ -1017,8 +1140,8 @@ function ContactForm() {
 
         {sent ? (
           <div className="mt-10 p-8 rounded-3xl bg-white/10 border border-white/15 text-center">
-            <div className="text-5xl mb-4">🚀</div>
-            <div className="font-display font-black text-xl mb-2">Enviado!</div>
+            <div className="text-4xl mb-4">🚀</div>
+            <div className="font-display font-black text-lg mb-2">Enviado!</div>
             <div className="text-white/70 text-sm">
               Entro em contato em até 48h.
             </div>
