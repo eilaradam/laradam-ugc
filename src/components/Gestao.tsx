@@ -38,8 +38,8 @@ import { useVideoModal } from "./VideoModalProvider";
    - blue-deep: azul mais escuro pra hovers #0A1FE8
 ========================================================================== */
 const PALETTE: React.CSSProperties = {
-  ["--mm-blue" as string]: "#1E3AFF",
-  ["--mm-blue-deep" as string]: "#0A1FE8",
+  ["--mm-blue" as string]: "#1028B0",
+  ["--mm-blue-deep" as string]: "#081C7A",
   ["--mm-orange" as string]: "#FF5824",
   ["--mm-orange-deep" as string]: "#E0430F",
   ["--mm-pink" as string]: "#FFCFD2",
@@ -74,7 +74,7 @@ function LoadingSticker(props: React.SVGProps<SVGSVGElement>) {
         const y1 = 50 + Math.sin(angle) * 24;
         const x2 = 50 + Math.cos(angle) * 40;
         const y2 = 50 + Math.sin(angle) * 40;
-        const shades = ["#0A1FE8", "#1E3AFF", "#4A61FF", "#7D8EFF", "#C7CFFF"];
+        const shades = ["#081C7A", "#1028B0", "#3C50D8", "#7485E8", "#BCC4F0"];
         const fill = shades[i % shades.length];
         return (
           <line
@@ -99,7 +99,7 @@ function CursorSticker(props: React.SVGProps<SVGSVGElement>) {
     <svg viewBox="0 0 80 100" fill="none" {...props}>
       <path
         d="M 10 10 L 10 80 L 25 68 L 35 92 L 50 86 L 40 64 L 62 60 Z"
-        fill="#1E3AFF"
+        fill="#1028B0"
         stroke="#FFF"
         strokeWidth="6"
         strokeLinejoin="round"
