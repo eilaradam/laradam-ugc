@@ -9,12 +9,13 @@ type YtAd = {
   youtubeId: string; // id do YouTube (vídeo horizontal 16:9)
   brand: string;
   title: string;
+  views?: string; // ex: "2,3 mi"
 };
 
 // TODO Lara: trocar youtubeId pelos 4 vídeos horizontais de YouTube Ads
 const YT_ADS: YtAd[] = [
-  { youtubeId: "zZXflzISC1c", brand: "Óculos", title: "YouTube Ad — Óculos" },
-  { youtubeId: "", brand: "Sheglam", title: "YouTube Ad — Sheglam" },
+  { youtubeId: "zZXflzISC1c", brand: "Óculos", title: "YouTube Ad — Óculos", views: "2,3 mi" },
+  { youtubeId: "Lms0XrCgfnI", brand: "Sheglam", title: "YouTube Ad — Sheglam", views: "828 mil" },
   { youtubeId: "", brand: "Cygnuss", title: "YouTube Ad — Cygnuss" },
   { youtubeId: "", brand: "Cygnuss", title: "YouTube Ad — Cygnuss Sutiã" },
 ];
@@ -127,6 +128,13 @@ function YouTubeAdCard({ ad, index }: { ad: YtAd; index: number }) {
               {ad.brand}
             </div>
           </div>
+        </div>
+      )}
+
+      {/* Badge de views */}
+      {ad.views && (
+        <div className="absolute top-2 right-2 px-2 py-0.5 rounded-full bg-[#FF0000] text-white text-[10px] md:text-xs font-bold uppercase tracking-wider shadow-md">
+          {ad.views} views
         </div>
       )}
 
