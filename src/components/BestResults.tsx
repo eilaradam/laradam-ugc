@@ -1,34 +1,42 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { Mic, Play } from "lucide-react";
+import { useVideoModal } from "./VideoModalProvider";
+import type { Video } from "@/data/content";
 
-type Result = {
-  views: string;
+type Highlight = {
+  youtubeId: string;
   brand: string;
-  title: string;
-  platform?: string;
+  brandDomain: string; // usado pelo Clearbit pro logo
+  metric: string; // ex: "+ 50 milhões de views"
+  platform: string; // ex: "apenas no TikTok"
 };
 
-const RESULTS: Result[] = [
+// TODO Lara: trocar os youtubeId pelos Shorts reais do InfinitePay e Méliuz
+const HIGHLIGHTS: Highlight[] = [
   {
-    views: "50M",
+    youtubeId: "",
     brand: "InfinitePay",
-    title: "Bolsa",
-    platform: "TikTok",
+    brandDomain: "infinitepay.io",
+    metric: "+ 50 milhões de views",
+    platform: "apenas no TikTok",
   },
   {
-    views: "10M",
+    youtubeId: "GPcPWfWmA3A",
     brand: "Méliuz",
-    title: "Compras",
-    platform: "TikTok",
-  },
-  {
-    views: "1M",
-    brand: "Dolly",
-    title: "Missão Impossível",
-    platform: "TikTok",
+    brandDomain: "meliuz.com.br",
+    metric: "+ 10 milhões de views",
+    platform: "apenas no TikTok",
   },
 ];
+
+// Áudio de cliente (upload como vídeo no YouTube, aí preenche o id abaixo)
+const AUDIO_TESTIMONIAL = {
+  youtubeId: "", // TODO Lara: colar o id do YouTube do áudio
+  brand: "Depoimento de cliente",
+  duration: "13:52",
+};
 
 export default function BestResults() {
   return (
@@ -36,86 +44,214 @@ export default function BestResults() {
       id="destaques"
       className="px-6 md:px-12 py-10 md:py-20 bg-background relative overflow-hidden"
     >
-      <div className="max-w-7xl mx-auto">
-        <div className="mb-8 md:mb-12 max-w-3xl">
+      <div className="max-w-7xl mx-auto grid md:grid-cols-12 gap-10 md:gap-12 items-start">
+        {/* Coluna esquerda — título + áudio */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="md:col-span-5 md:sticky md:top-28 self-start"
+        >
           <div className="text-xs uppercase tracking-[0.3em] text-primary font-medium mb-6 flex items-center gap-3">
             <span className="h-px w-8 bg-primary" />
-            Os melhores resultados
+            Conteúdos que estouraram
           </div>
-          <h2 className="font-display font-black text-4xl md:text-6xl leading-[0.9] tracking-tighter">
-            Conteúdos que{" "}
+
+          <h2 className="font-display font-black text-4xl md:text-6xl leading-[0.9] tracking-tighter text-foreground">
+            Os melhores{" "}
             <span className="font-serif-accent italic text-primary">
-              estouraram
+              resultados
             </span>
           </h2>
-          <p className="mt-4 text-foreground-soft text-sm md:text-base max-w-lg">
-            Criativos que saíram do feed e viraram fenômeno — milhões de views,
-            milhares de compras, marcas que viraram parceiras de longo prazo.
+
+          <p className="mt-4 text-foreground-soft text-base md:text-lg max-w-md">
+            Será que você já me viu por aí? <span aria-hidden>👀</span>
           </p>
-        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-foreground/10 border border-foreground/10">
-          {RESULTS.map((r, i) => (
-            <motion.div
-              key={r.brand}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: i * 0.1 }}
-              className={`group relative p-8 md:p-10 bg-background transition-colors duration-300 ${
-                i === 0 ? "md:bg-primary md:text-primary-light" : ""
-              }`}
-            >
-              <div className="flex items-start justify-between mb-8 md:mb-16">
-                <span
-                  className={`text-[10px] uppercase tracking-wider font-semibold ${
-                    i === 0 ? "md:text-primary-light/70" : "text-muted"
-                  }`}
-                >
-                  0{i + 1} / Top 3
-                </span>
-                {r.platform && (
-                  <span
-                    className={`text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full border ${
-                      i === 0
-                        ? "md:border-primary-light/30 md:text-primary-light/80"
-                        : "border-foreground/15 text-foreground-soft"
-                    }`}
-                  >
-                    {r.platform}
-                  </span>
-                )}
-              </div>
+          <p className="mt-5 text-foreground-soft text-sm md:text-base max-w-md leading-relaxed">
+            Criei conteúdos que se destacaram e trouxeram ótimos resultados para
+            marcas parceiras.
+          </p>
 
-              <div className="flex items-baseline gap-2">
-                <span className="font-display font-black text-7xl md:text-8xl leading-none tracking-tighter">
-                  {r.views}
-                </span>
-                <span
-                  className={`text-sm md:text-base font-medium ${
-                    i === 0 ? "md:text-primary-light/80" : "text-foreground-soft"
-                  }`}
-                >
-                  views
-                </span>
-              </div>
+          <div className="mt-8 md:mt-10">
+            <AudioTestimonialCard />
+          </div>
+        </motion.div>
 
-              <div className="mt-8 md:mt-10">
-                <div
-                  className={`text-[10px] uppercase tracking-[0.2em] mb-1 ${
-                    i === 0 ? "md:text-primary-light/60" : "text-muted"
-                  }`}
-                >
-                  {r.brand}
-                </div>
-                <div className="font-display font-bold text-xl md:text-2xl tracking-tight">
-                  {r.title}
-                </div>
-              </div>
-            </motion.div>
+        {/* Coluna direita — 2 vídeos verticais */}
+        <div className="md:col-span-7 grid grid-cols-2 gap-4 md:gap-6">
+          {HIGHLIGHTS.map((h, i) => (
+            <HighlightCard key={h.brand} highlight={h} index={i} />
           ))}
         </div>
       </div>
     </section>
+  );
+}
+
+function HighlightCard({
+  highlight,
+  index,
+}: {
+  highlight: Highlight;
+  index: number;
+}) {
+  const { open } = useVideoModal();
+
+  const video: Video = {
+    id: `highlight-${highlight.brand}`,
+    title: `Case ${highlight.brand}`,
+    category: "tech",
+    brand: highlight.brand,
+    youtubeId: highlight.youtubeId || undefined,
+    views: highlight.metric.replace("+ ", "").replace(" milhões de views", "M"),
+  };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.6, delay: index * 0.1 }}
+      className="flex flex-col"
+    >
+      {/* Brand logo acima do vídeo */}
+      <div className="h-8 md:h-10 flex items-center justify-center mb-3 md:mb-4">
+        <img
+          src={`https://logo.clearbit.com/${highlight.brandDomain}?size=200`}
+          alt={highlight.brand}
+          loading="lazy"
+          className="max-h-full max-w-[140px] md:max-w-[170px] object-contain"
+          onError={(e) => {
+            const el = e.currentTarget;
+            el.style.display = "none";
+            const fallback = el.nextElementSibling as HTMLElement | null;
+            if (fallback) fallback.style.display = "block";
+          }}
+        />
+        <span className="hidden font-display font-bold text-sm md:text-base text-foreground">
+          {highlight.brand}
+        </span>
+      </div>
+
+      {/* Vídeo vertical */}
+      <button
+        onClick={() => open(video)}
+        className="group relative w-full aspect-[9/16] overflow-hidden rounded-2xl bg-foreground cursor-pointer"
+      >
+        {highlight.youtubeId ? (
+          <img
+            src={`https://i.ytimg.com/vi/${highlight.youtubeId}/maxresdefault.jpg`}
+            alt={highlight.brand}
+            className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            onError={(e) => {
+              e.currentTarget.src = `https://i.ytimg.com/vi/${highlight.youtubeId}/hqdefault.jpg`;
+            }}
+          />
+        ) : (
+          <div className="absolute inset-0 bg-gradient-to-br from-foreground via-foreground-soft to-primary/30 flex items-center justify-center">
+            <div className="text-background/50 text-center p-4">
+              <Play className="w-10 h-10 mx-auto mb-2 opacity-60" />
+              <div className="text-[10px] uppercase tracking-wider font-semibold">
+                {highlight.brand}
+              </div>
+            </div>
+          </div>
+        )}
+
+        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity" />
+
+        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+          <div className="w-12 h-12 md:w-14 md:h-14 rounded-full bg-primary/90 backdrop-blur-sm flex items-center justify-center">
+            <Play className="w-4 h-4 md:w-5 md:h-5 text-primary-light fill-primary-light ml-0.5" />
+          </div>
+        </div>
+      </button>
+
+      {/* Métrica abaixo */}
+      <div className="mt-4 md:mt-5 text-center">
+        <div className="font-display font-bold text-foreground text-base md:text-xl tracking-tight">
+          <span className="font-black">
+            {highlight.metric.split(" de ")[0]}
+          </span>
+          {" de "}
+          {highlight.metric.split(" de ")[1]}
+        </div>
+        <div className="text-sm md:text-base text-foreground-soft mt-0.5">
+          {highlight.platform}
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
+function AudioTestimonialCard() {
+  const { open } = useVideoModal();
+
+  const video: Video = {
+    id: "audio-testimonial",
+    title: AUDIO_TESTIMONIAL.brand,
+    category: "tech",
+    brand: AUDIO_TESTIMONIAL.brand,
+    youtubeId: AUDIO_TESTIMONIAL.youtubeId || undefined,
+  };
+
+  return (
+    <button
+      onClick={() => open(video)}
+      className="w-full max-w-md group relative flex items-center gap-3 p-3 md:p-4 rounded-3xl bg-[#e9e4db] border border-foreground/5 shadow-sm hover:shadow-md transition-all cursor-pointer"
+    >
+      {/* Play button */}
+      <div className="flex-shrink-0 w-11 h-11 md:w-12 md:h-12 rounded-full bg-foreground text-background flex items-center justify-center group-hover:bg-primary transition-colors">
+        <Play className="w-4 h-4 md:w-5 md:h-5 fill-current ml-0.5" />
+      </div>
+
+      {/* Waveform + metadata */}
+      <div className="flex-1 min-w-0">
+        <Waveform />
+        <div className="flex items-center justify-between mt-1.5 text-[10px] md:text-xs text-foreground/50 font-medium tabular-nums">
+          <span>0:01</span>
+          <span>{AUDIO_TESTIMONIAL.duration}</span>
+        </div>
+      </div>
+
+      {/* Velocidade + mic — decorativo (estilo WhatsApp) */}
+      <div className="flex-shrink-0 flex flex-col items-center gap-1.5">
+        <span className="text-[10px] md:text-xs font-semibold text-foreground/60 bg-background/60 rounded-full px-2 py-0.5">
+          1,5x
+        </span>
+        <Mic className="w-4 h-4 text-foreground/40" strokeWidth={2} />
+      </div>
+    </button>
+  );
+}
+
+// Waveform fake estilo WhatsApp — barras de alturas variadas
+function Waveform() {
+  // padrão pseudo-random estável
+  const HEIGHTS = [
+    30, 55, 42, 70, 50, 85, 60, 40, 72, 48, 88, 55, 65, 38, 52, 78, 45, 92,
+    60, 50, 80, 42, 68, 55, 36, 72, 58, 48, 82, 52, 40, 68, 54, 88, 62, 44,
+    76, 50, 38, 64,
+  ];
+  // progresso (só decorativo, para dar aspecto de ouvido até ali)
+  const progress = 0.15;
+
+  return (
+    <div className="flex items-center gap-[2px] h-6 md:h-7 w-full">
+      {HEIGHTS.map((h, i) => {
+        const played = i / HEIGHTS.length < progress;
+        return (
+          <span
+            key={i}
+            className={`flex-1 rounded-full ${
+              played ? "bg-primary" : "bg-foreground/35"
+            }`}
+            style={{ height: `${h}%` }}
+          />
+        );
+      })}
+    </div>
   );
 }
