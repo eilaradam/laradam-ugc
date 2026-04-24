@@ -104,14 +104,18 @@ export default function VideoModalProvider({
               </div>
             </div>
 
-            {/* Video container — formato vertical (Shorts/Reels) */}
+            {/* Video container — 16:9 pra landscape (YouTube Ads), 9:16 default (Shorts/Reels) */}
             <motion.div
               initial={{ scale: 0.92, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.92, opacity: 0 }}
               transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
               onClick={(e) => e.stopPropagation()}
-              className="relative h-[min(90vh,900px)] aspect-[9/16] max-w-full bg-black rounded-2xl overflow-hidden shadow-2xl"
+              className={
+                video.landscape
+                  ? "relative w-[min(95vw,1280px)] aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl"
+                  : "relative h-[min(90vh,900px)] aspect-[9/16] max-w-full bg-black rounded-2xl overflow-hidden shadow-2xl"
+              }
             >
               {embedUrl ? (
                 <iframe

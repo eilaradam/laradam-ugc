@@ -101,6 +101,7 @@ export type Video = {
   youtubeId?: string;
   thumbnail?: string;
   featured?: boolean;
+  landscape?: boolean; // abre o modal em 16:9 ao invés de 9:16 (vertical)
 };
 
 export const VIDEOS: Video[] = [
