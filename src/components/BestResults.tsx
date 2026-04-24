@@ -42,14 +42,14 @@ const HIGHLIGHTS: Highlight[] = [
     youtubeId: "5wf8Fv2CTa4",
     brand: "InfinitePay",
     brandDomain: "infinitepay.io",
-    metric: "+ 50 milhões de views",
+    metric: "+ 100 milhões de views",
     platform: "apenas no TikTok",
   },
   {
     youtubeId: "wesTfq67X9o",
     brand: "Méliuz",
     brandDomain: "meliuz.com.br",
-    metric: "+ 10 milhões de views",
+    metric: "+ 30 milhões de views",
     platform: "apenas no TikTok",
   },
 ];

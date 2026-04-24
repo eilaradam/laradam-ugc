@@ -155,8 +155,8 @@ export const VIDEOS: Video[] = [
   { id: "o4", title: "Smoo Sorvete", category: "food", brand: "Smoo", youtubeId: "AXzcHi_Qq_Y" },
 
   // TECH & APPS
-  { id: "t0a", title: "InfinitePay", category: "tech", brand: "InfinitePay", youtubeId: "5wf8Fv2CTa4", views: "50M", featured: true },
-  { id: "t0b", title: "Méliuz", category: "tech", brand: "Méliuz", youtubeId: "wesTfq67X9o", views: "10M", featured: true },
+  { id: "t0a", title: "InfinitePay", category: "tech", brand: "InfinitePay", youtubeId: "5wf8Fv2CTa4", views: "100M", featured: true },
+  { id: "t0b", title: "Méliuz", category: "tech", brand: "Méliuz", youtubeId: "wesTfq67X9o", views: "30M", featured: true },
   { id: "t1", title: "App Decolar", category: "tech", brand: "Decolar", youtubeId: "Y8nN7CMb73U" },
   { id: "t2", title: "BV Financeiro", category: "tech", brand: "BV", youtubeId: "2NMavMHi4jM" },
   { id: "t3", title: "BV Financeiro", category: "tech", brand: "BV", youtubeId: "Q_n4uwkxiDo" },
