@@ -16,7 +16,7 @@ type YtAd = {
 const YT_ADS: YtAd[] = [
   { youtubeId: "zZXflzISC1c", brand: "Óculos", title: "YouTube Ad — Óculos", views: "2,3 mi" },
   { youtubeId: "Lms0XrCgfnI", brand: "Sheglam", title: "YouTube Ad — Sheglam", views: "828 mil" },
-  { youtubeId: "", brand: "Cygnuss", title: "YouTube Ad — Cygnuss" },
+  { youtubeId: "adYG4nOwaIM", brand: "Cygnuss", title: "YouTube Ad — Cygnuss" },
   { youtubeId: "", brand: "Cygnuss", title: "YouTube Ad — Cygnuss Sutiã" },
 ];
 
