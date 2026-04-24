@@ -4,33 +4,36 @@ import { motion } from "framer-motion";
 import { Quote } from "lucide-react";
 import { TESTIMONIALS, type Testimonial } from "@/data/content";
 
+// Emoji de pessoa rotativo por índice (substitui foto/logo no avatar)
+const AVATAR_EMOJIS = ["👩‍💼", "🧑‍💼", "👨‍💼"];
+
 export default function Testimonials() {
   return (
     <section
       id="depoimentos"
-      className="px-6 md:px-12 py-10 md:py-20 bg-background-alt"
+      className="px-6 md:px-12 py-8 md:py-14 bg-background-alt"
     >
-      <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-8 md:mb-12">
+      <div className="max-w-4xl mx-auto">
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-6 md:mb-8">
           <div>
-            <div className="text-xs uppercase tracking-[0.3em] text-primary font-medium mb-6 flex items-center gap-3">
-              <span className="h-px w-8 bg-primary" />
+            <div className="text-[10px] md:text-xs uppercase tracking-[0.3em] text-primary font-medium mb-3 flex items-center gap-3">
+              <span className="h-px w-6 md:w-8 bg-primary" />
               Depoimentos
             </div>
-            <h2 className="font-display font-black text-4xl md:text-6xl leading-[0.9] tracking-tighter max-w-3xl">
+            <h2 className="font-display font-black text-2xl md:text-4xl leading-[0.95] tracking-tighter">
               O que dizem{" "}
               <span className="font-serif-accent italic text-primary">
                 sobre o trabalho
               </span>
             </h2>
           </div>
-          <p className="text-foreground-soft max-w-sm text-sm md:text-base">
+          <p className="text-foreground-soft max-w-xs text-xs md:text-sm">
             Feedback de marcas que viram a diferença de um UGC pensado pra
             performance.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-4 md:gap-5">
+        <div className="grid md:grid-cols-3 gap-3">
           {TESTIMONIALS.map((t, i) => (
             <TestimonialCard key={t.brand} testimonial={t} index={i} />
           ))}
@@ -47,9 +50,7 @@ function TestimonialCard({
   testimonial: Testimonial;
   index: number;
 }) {
-  const logoUrl = testimonial.brandDomain
-    ? `https://logo.clearbit.com/${testimonial.brandDomain}?size=128`
-    : null;
+  const emoji = AVATAR_EMOJIS[index % AVATAR_EMOJIS.length];
 
   return (
     <motion.div
@@ -57,51 +58,37 @@ function TestimonialCard({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
-      className="relative p-6 md:p-8 rounded-3xl bg-background border border-foreground/5 flex flex-col gap-6 group hover:border-primary/30 transition-colors"
+      className="relative p-4 md:p-5 rounded-2xl bg-background border border-foreground/5 flex flex-col gap-4 group hover:border-primary/30 transition-colors"
     >
       <Quote
-        className="w-8 h-8 text-primary/25 group-hover:text-primary/60 transition-colors"
+        className="w-5 h-5 text-primary/25 group-hover:text-primary/60 transition-colors"
         strokeWidth={1.5}
       />
 
-      <p className="text-foreground leading-relaxed text-sm md:text-base italic font-serif-accent">
-        "{testimonial.quote}"
+      <p className="text-foreground leading-snug text-xs md:text-sm italic font-serif-accent">
+        &ldquo;{testimonial.quote}&rdquo;
       </p>
 
       {testimonial.metric && (
-        <div className="flex items-baseline gap-2 pt-4 border-t border-foreground/10">
-          <span className="font-display font-black text-3xl md:text-4xl text-primary tracking-tight">
+        <div className="flex items-baseline gap-2 pt-3 border-t border-foreground/10">
+          <span className="font-display font-black text-xl md:text-2xl text-primary tracking-tight">
             {testimonial.metric.value}
           </span>
-          <span className="text-xs uppercase tracking-wider text-foreground-soft">
+          <span className="text-[10px] uppercase tracking-wider text-foreground-soft">
             {testimonial.metric.label}
           </span>
         </div>
       )}
 
-      <div className="flex items-center gap-3 mt-auto">
-        <div className="w-10 h-10 rounded-full bg-foreground/5 border border-foreground/10 flex items-center justify-center overflow-hidden flex-shrink-0">
-          {logoUrl ? (
-            <img
-              src={logoUrl}
-              alt={testimonial.brand}
-              className="w-7 h-7 object-contain"
-              loading="lazy"
-              onError={(e) => {
-                e.currentTarget.style.display = "none";
-              }}
-            />
-          ) : (
-            <span className="text-xs font-display font-bold text-foreground">
-              {testimonial.brand[0]}
-            </span>
-          )}
+      <div className="flex items-center gap-2.5 mt-auto">
+        <div className="w-8 h-8 rounded-full bg-primary-light border border-primary/15 flex items-center justify-center flex-shrink-0 text-base">
+          <span aria-hidden>{emoji}</span>
         </div>
         <div className="min-w-0">
-          <div className="text-sm font-semibold text-foreground truncate">
+          <div className="text-xs font-semibold text-foreground truncate">
             {testimonial.author}
           </div>
-          <div className="text-xs text-muted truncate">
+          <div className="text-[10px] text-muted truncate">
             {testimonial.role} · {testimonial.brand}
           </div>
         </div>

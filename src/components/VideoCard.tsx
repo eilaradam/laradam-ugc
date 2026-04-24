@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Play } from "lucide-react";
 import type { Video } from "@/data/content";
@@ -31,6 +32,11 @@ type Props = {
 
 export default function VideoCard({ video, index = 0, size = "md" }: Props) {
   const { open } = useVideoModal();
+  // Só monta o iframe do preview depois do 1º hover (evita carregar 60+
+  // iframes em background logo no load). Uma vez carregado, fica pronto
+  // pras próximas interações.
+  const [shouldLoadPreview, setShouldLoadPreview] = useState(false);
+  const [previewReady, setPreviewReady] = useState(false);
 
   // Preview no hover (mudo, em loop, sem controles — só pra dar "vida")
   const previewUrl = video.youtubeId
@@ -44,6 +50,7 @@ export default function VideoCard({ video, index = 0, size = "md" }: Props) {
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.6, delay: index * 0.05 }}
       onClick={() => open(video)}
+      onMouseEnter={() => setShouldLoadPreview(true)}
       data-cursor="play"
       className="group relative cursor-pointer"
     >
@@ -60,7 +67,7 @@ export default function VideoCard({ video, index = 0, size = "md" }: Props) {
           </div>
         )}
 
-        {/* Real embed (loads on hover via iframe) */}
+        {/* Real embed (loads on 1st hover; thumb sempre visível por trás) */}
         {video.youtubeId && (
           <>
             <img
@@ -74,15 +81,20 @@ export default function VideoCard({ video, index = 0, size = "md" }: Props) {
                 }
               }}
               alt={video.title}
-              className="absolute inset-0 w-full h-full object-cover object-center group-hover:opacity-0 transition-opacity duration-500"
+              className="absolute inset-0 w-full h-full object-cover object-center"
             />
-            <iframe
-              src={previewUrl!}
-              className="absolute inset-0 w-full h-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 scale-[1.4] pointer-events-none"
-              allow="autoplay; encrypted-media"
-              loading="lazy"
-              tabIndex={-1}
-            />
+            {shouldLoadPreview && previewUrl && (
+              <iframe
+                src={previewUrl}
+                onLoad={() => setPreviewReady(true)}
+                className={`absolute inset-0 w-full h-full opacity-0 transition-opacity duration-500 scale-[1.4] pointer-events-none ${
+                  previewReady ? "group-hover:opacity-100" : ""
+                }`}
+                allow="autoplay; encrypted-media"
+                loading="lazy"
+                tabIndex={-1}
+              />
+            )}
           </>
         )}
 
