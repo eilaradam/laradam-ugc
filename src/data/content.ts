@@ -33,49 +33,42 @@ export type Service = {
   title: string;
   description: string;
   icon: string; // nome do ícone Lucide
-  features: string[];
   tag?: string;
-  highlight?: boolean; // card em destaque (maior no bento)
+  highlight?: boolean;
 };
 
 export const SERVICES: Service[] = [
   {
     title: "UGC de Conversão",
-    description: "Vídeos autênticos que vendem — pensados pra performar em ads e orgânico.",
+    description: "Vídeos autênticos pensados pra vender.",
     icon: "Video",
-    features: ["Roteiro + captação + edição", "Pacotes de 4, 8 ou 12 vídeos", "Direitos de uso pagos"],
     tag: "Mais pedido",
     highlight: true,
   },
   {
     title: "Criativos para Tráfego",
-    description: "Roteiros e edições otimizadas pra ads no Meta, TikTok e YouTube com variações A/B.",
+    description: "Ads otimizados pro Meta, TikTok e YouTube.",
     icon: "Target",
-    features: ["Hooks testados", "Múltiplas variações", "Feedback de performance"],
   },
   {
     title: "Roteiros Estratégicos",
-    description: "Scripts validados por performance. Hooks, CTAs e storytelling com base em data.",
+    description: "Scripts validados por performance.",
     icon: "FileText",
-    features: ["Hook + desenvolvimento + CTA", "Brief estratégico", "Revisões inclusas"],
   },
   {
     title: "Fotos Lifestyle",
-    description: "Imagens para campanhas e e-commerce, com direção de arte e edição profissional.",
+    description: "Imagens com direção de arte pra campanhas.",
     icon: "Camera",
-    features: ["30+ imagens tratadas", "Cenário + produto + estilo", "Formatos verticais e horizontais"],
   },
   {
     title: "Conteúdo E-commerce",
-    description: "Pacotes mensais de conteúdo pra marcas DTC que precisam manter feed vivo.",
+    description: "Pacotes mensais pra manter o feed vivo.",
     icon: "ShoppingBag",
-    features: ["Calendário editorial", "Entrega contínua", "Relatório mensal"],
   },
   {
     title: "Consultoria UGC",
-    description: "Gestão de campanha, briefing e direção de outros creators pra escalar sua operação.",
+    description: "Briefing, curadoria e direção de creators.",
     icon: "Sparkles",
-    features: ["Briefing + seleção de creators", "Acompanhamento", "Relatório final"],
   },
 ];
 
