@@ -3,7 +3,6 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { ArrowDown, MapPin } from "lucide-react";
-import HeroWaveformBg from "./HeroWaveformBg";
 
 export default function Hero() {
   return (
@@ -11,9 +10,6 @@ export default function Hero() {
       id="top"
       className="relative flex flex-col overflow-hidden bg-background noise pt-24 md:pt-24 md:h-[calc(100vh-2.75rem)]"
     >
-      {/* Waveform de fundo pulsando — bem clarinho, não compete com o conteúdo */}
-      <HeroWaveformBg />
-
       {/* Top row: 3 infos alinhadas na mesma linha (Disponível · Eyebrow · Litoral) */}
       <div className="relative z-40 px-5 md:px-12 flex flex-col md:flex-row items-center justify-between gap-3">
         <motion.div
