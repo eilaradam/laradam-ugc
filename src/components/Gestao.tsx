@@ -6,11 +6,10 @@ import {
   ArrowRight,
   BookOpen,
   Calendar,
-  Camera,
+  CheckCircle2,
   ChevronDown,
   ChevronLeft,
   ChevronRight,
-  CheckCircle2,
   FlaskConical,
   Heart,
   ListOrdered,
@@ -30,67 +29,208 @@ import {
 import { VIDEOS, BRAND_LOGO_FILES } from "@/data/content";
 import { useVideoModal } from "./VideoModalProvider";
 
-// ========== HERO ==========
+/* ==========================================================================
+   Paleta Meu Manager — aplicada via CSS vars no root da /gestao
+   - blue: azul royal #1E3AFF
+   - orange: laranja vivo #FF5824
+   - pink: rosa claro pastel #FFCFD2
+   - pink-soft: rosa ainda mais claro #FFE5E7
+   - blue-deep: azul mais escuro pra hovers #0A1FE8
+========================================================================== */
+const PALETTE: React.CSSProperties = {
+  ["--mm-blue" as string]: "#1E3AFF",
+  ["--mm-blue-deep" as string]: "#0A1FE8",
+  ["--mm-orange" as string]: "#FF5824",
+  ["--mm-orange-deep" as string]: "#E0430F",
+  ["--mm-pink" as string]: "#FFCFD2",
+  ["--mm-pink-soft" as string]: "#FFE5E7",
+};
+
+/* ========================== STICKERS (SVG inline) ========================== */
+
+// Balão laranja com 3 bolinhas rosa (chat/thinking)
+function ChatBubbleSticker(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 140 100" fill="none" {...props}>
+      <path
+        d="M 40 10 Q 10 10 10 45 Q 10 75 35 77 L 20 92 L 48 78 L 110 78 Q 135 78 135 45 Q 135 10 105 10 Z"
+        fill="#FF5824"
+      />
+      <circle cx="55" cy="44" r="8" fill="#FFCFD2" />
+      <circle cx="77" cy="44" r="8" fill="#FFE5E7" />
+      <circle cx="99" cy="44" r="8" fill="#FFF" />
+      <circle cx="8" cy="96" r="3.5" fill="#FF5824" />
+    </svg>
+  );
+}
+
+// Loading azul (círculo tracejado tipo spinner)
+function LoadingSticker(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 100 100" fill="none" {...props}>
+      {Array.from({ length: 12 }).map((_, i) => {
+        const angle = (i / 12) * 2 * Math.PI - Math.PI / 2;
+        const x1 = 50 + Math.cos(angle) * 24;
+        const y1 = 50 + Math.sin(angle) * 24;
+        const x2 = 50 + Math.cos(angle) * 40;
+        const y2 = 50 + Math.sin(angle) * 40;
+        const shades = ["#0A1FE8", "#1E3AFF", "#4A61FF", "#7D8EFF", "#C7CFFF"];
+        const fill = shades[i % shades.length];
+        return (
+          <line
+            key={i}
+            x1={x1}
+            y1={y1}
+            x2={x2}
+            y2={y2}
+            stroke={fill}
+            strokeWidth="7"
+            strokeLinecap="round"
+          />
+        );
+      })}
+    </svg>
+  );
+}
+
+// Cursor pixelado azul (estilo retrô Mac)
+function CursorSticker(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 80 100" fill="none" {...props}>
+      <path
+        d="M 10 10 L 10 80 L 25 68 L 35 92 L 50 86 L 40 64 L 62 60 Z"
+        fill="#1E3AFF"
+        stroke="#FFF"
+        strokeWidth="6"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+// "Creator Creator Creator" sticker laranja
+function CreatorStacked({ className }: { className?: string }) {
+  return (
+    <div
+      className={`inline-flex flex-col items-start ${className ?? ""}`}
+      aria-hidden
+    >
+      {[0, 1, 2].map((i) => (
+        <span
+          key={i}
+          className="font-display font-black text-white uppercase text-2xl md:text-4xl leading-[0.85] tracking-tight -mt-1 first:mt-0"
+          style={{
+            background: "#FF5824",
+            padding: "0.15em 0.55em 0.25em 0.55em",
+            borderRadius: "0.55em",
+            boxShadow: "0 0 0 3px white, 0 0 0 6px #FF5824",
+            transform: `translateX(${i * 6}px) rotate(${i === 1 ? -2 : 0}deg)`,
+          }}
+        >
+          Creator
+        </span>
+      ))}
+    </div>
+  );
+}
+
+// Pill estilo Meu Manager (pink bg + orange text)
+function MMPill({ children }: { children: React.ReactNode }) {
+  return (
+    <span className="inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-[10px] md:text-xs font-bold uppercase tracking-wider bg-[var(--mm-pink)] text-[var(--mm-orange)]">
+      {children}
+    </span>
+  );
+}
+
+/* ================================ HERO ================================ */
 function Hero() {
   return (
-    <section className="relative overflow-hidden bg-primary-light pt-16 md:pt-20 pb-14 md:pb-20">
-      {/* Formas decorativas ao fundo */}
-      <svg
-        viewBox="0 0 1200 600"
-        className="absolute inset-0 w-full h-full opacity-60 pointer-events-none"
+    <section className="relative overflow-hidden bg-[var(--mm-blue)] text-white pt-16 md:pt-24 pb-16 md:pb-24">
+      {/* Tipografia gigante ao fundo tipo "Manager Meu Manager" repetido */}
+      <div
         aria-hidden
+        className="absolute inset-0 overflow-hidden pointer-events-none select-none opacity-20"
       >
-        <path
-          d="M -100 500 Q 200 350 500 450 T 1100 350"
-          stroke="var(--primary)"
-          strokeOpacity="0.15"
-          strokeWidth="120"
-          fill="none"
-          strokeLinecap="round"
-        />
-        <path
-          d="M -50 200 Q 300 100 600 200 T 1250 150"
-          stroke="var(--primary)"
-          strokeOpacity="0.12"
-          strokeWidth="80"
-          fill="none"
-          strokeLinecap="round"
-        />
-      </svg>
+        <div className="font-display font-black text-white text-[18vw] md:text-[12vw] leading-[0.85] tracking-tighter uppercase whitespace-nowrap">
+          Gestão Lara Gestão Lara Gestão Lara Gestão
+        </div>
+        <div className="font-display font-black text-white text-[18vw] md:text-[12vw] leading-[0.85] tracking-tighter uppercase whitespace-nowrap -mt-2">
+          Lara Gestão Lara Gestão Lara Gestão
+        </div>
+        <div className="font-display font-black text-white text-[18vw] md:text-[12vw] leading-[0.85] tracking-tighter uppercase whitespace-nowrap -mt-2">
+          Gestão Lara Gestão Lara
+        </div>
+      </div>
+
+      {/* Stickers decorativos (desktop) */}
+      <div className="hidden md:block absolute top-14 left-6 pointer-events-none">
+        <MMPill>Menos caos, mais criação</MMPill>
+      </div>
+      <div className="hidden md:block absolute top-[40%] left-[8%] pointer-events-none rotate-[-2deg]">
+        <MMPill>Gerenciamento inteligente</MMPill>
+      </div>
+      <div className="hidden md:block absolute bottom-20 left-10 pointer-events-none rotate-[3deg]">
+        <MMPill>De creator para creator</MMPill>
+      </div>
+
+      <motion.div
+        initial={{ opacity: 0, scale: 0.8, rotate: 12 }}
+        animate={{ opacity: 1, scale: 1, rotate: -6 }}
+        transition={{ duration: 0.8, delay: 0.3 }}
+        className="hidden md:block absolute top-20 right-10 w-32 pointer-events-none"
+      >
+        <ChatBubbleSticker className="w-full h-auto" />
+      </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0, rotate: 0 }}
+        animate={{ opacity: 1, rotate: -10 }}
+        transition={{ duration: 0.8, delay: 0.5 }}
+        className="hidden md:block absolute bottom-10 right-20 w-16 pointer-events-none"
+      >
+        <CursorSticker className="w-full h-auto" />
+      </motion.div>
+
+      <motion.div
+        animate={{ rotate: 360 }}
+        transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+        className="hidden md:block absolute bottom-20 right-6 w-12 pointer-events-none"
+      >
+        <LoadingSticker className="w-full h-auto" />
+      </motion.div>
 
       <div className="relative max-w-4xl mx-auto px-6 md:px-12 text-center">
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="font-display font-black text-foreground text-xl md:text-2xl tracking-tight mb-8"
+          className="font-display font-black text-white text-2xl md:text-3xl tracking-tight mb-10 md:mb-14"
         >
-          laradam<span className="text-primary">.</span>gestão
+          laradam<span className="text-[var(--mm-orange)]">.</span>gestão
         </motion.div>
 
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.1 }}
-          className="font-display font-black text-foreground text-4xl md:text-6xl leading-[0.95] tracking-tighter"
+          className="font-display font-black text-white text-4xl md:text-7xl leading-[0.9] tracking-tighter uppercase"
         >
-          UGC QUE CONECTA.
+          UGC que conecta.
           <br />
-          CONTEÚDO REAL,
+          Conteúdo real,
           <br />
-          <span className="font-serif-accent italic text-primary">
-            resultados reais.
-          </span>
+          <span className="text-[var(--mm-orange)]">resultados reais.</span>
         </motion.h1>
 
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.3 }}
-          className="mt-6 text-foreground-soft text-sm md:text-base max-w-lg mx-auto leading-relaxed"
+          className="mt-6 text-white/80 text-base md:text-lg max-w-lg mx-auto leading-relaxed"
         >
-          Criamos conteúdos autênticos com UGC creators para engajar, gerar
-          prova social e aumentar conversão.
+          Crio conteúdos autênticos com UGC creators pra engajar, gerar prova
+          social e aumentar conversão.
         </motion.p>
 
         <motion.a
@@ -98,7 +238,7 @@ function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.5 }}
           href="#gestao-contato"
-          className="mt-8 inline-flex items-center gap-2 bg-foreground text-background px-6 py-3.5 rounded-full text-sm md:text-base font-bold uppercase tracking-wider hover:bg-primary transition-colors"
+          className="mt-10 inline-flex items-center gap-2 bg-[var(--mm-orange)] text-white px-7 py-4 rounded-full text-sm md:text-base font-bold uppercase tracking-wider hover:bg-[var(--mm-orange-deep)] transition-colors shadow-lg"
         >
           Falar com a Lara
           <Rocket className="w-4 h-4" />
@@ -108,11 +248,11 @@ function Hero() {
   );
 }
 
-// ========== BRANDS ==========
+/* ================================ BRANDS ================================ */
 function Brands() {
   const LOGOS = BRAND_LOGO_FILES.slice(0, 10);
   return (
-    <section className="bg-background py-10 md:py-14 border-b border-foreground/5">
+    <section className="bg-white py-10 md:py-14 border-b border-[var(--mm-blue)]/5">
       <div className="max-w-5xl mx-auto px-6 md:px-12 grid grid-cols-3 md:grid-cols-5 gap-6 md:gap-10 items-center">
         {LOGOS.map((file) => (
           <div
@@ -136,7 +276,7 @@ function Brands() {
   );
 }
 
-// ========== QUEM PRECISA ==========
+/* =============================== WHO FOR =============================== */
 function WhoFor() {
   const ITEMS = [
     "Marcas que querem melhorar os resultados de campanhas de mídia paga",
@@ -150,14 +290,21 @@ function WhoFor() {
   ];
 
   return (
-    <section className="bg-background py-14 md:py-20">
+    <section className="relative bg-white py-14 md:py-20 overflow-hidden">
+      <motion.div
+        initial={{ opacity: 0, rotate: 20 }}
+        whileInView={{ opacity: 1, rotate: 8 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8 }}
+        className="hidden md:block absolute top-10 right-10 w-24 pointer-events-none"
+      >
+        <ChatBubbleSticker className="w-full h-auto" />
+      </motion.div>
+
       <div className="max-w-4xl mx-auto px-6 md:px-12 text-center">
-        <h2 className="font-display font-black text-3xl md:text-5xl leading-[0.95] tracking-tighter text-foreground mb-10 md:mb-14">
-          QUEM PRECISA CRIAR{" "}
-          <span className="font-serif-accent italic text-primary">
-            conteúdo UGC
-          </span>{" "}
-          COMIGO?
+        <h2 className="font-display font-black text-3xl md:text-5xl leading-[0.95] tracking-tighter text-[var(--mm-blue)] uppercase mb-10 md:mb-14">
+          Quem precisa criar{" "}
+          <span className="text-[var(--mm-orange)]">conteúdo UGC</span> comigo?
         </h2>
 
         <div className="flex flex-wrap justify-center gap-2.5 md:gap-3">
@@ -168,9 +315,9 @@ function WhoFor() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: i * 0.04 }}
-              className="inline-flex items-center gap-2 bg-primary-light border border-primary/20 text-foreground text-xs md:text-sm px-4 py-2 rounded-full"
+              className="inline-flex items-center gap-2 bg-[var(--mm-pink-soft)] text-[var(--mm-blue)] text-sm md:text-base px-4 py-2.5 rounded-full border border-[var(--mm-pink)] leading-snug"
             >
-              <CheckCircle2 className="w-4 h-4 text-primary flex-shrink-0" />
+              <CheckCircle2 className="w-4 h-4 text-[var(--mm-orange)] flex-shrink-0" />
               {item}
             </motion.div>
           ))}
@@ -180,7 +327,7 @@ function WhoFor() {
   );
 }
 
-// ========== CONTEÚDO AUTÊNTICO (dark) ==========
+/* ======================== CONTEÚDO AUTÊNTICO (blue) ======================== */
 function AuthenticContent() {
   const { open } = useVideoModal();
   const FEATURES = [
@@ -189,49 +336,56 @@ function AuthenticContent() {
     { icon: Sparkles, title: "Performance superior em TikTok, Reels e Shorts" },
     { icon: Heart, title: "Diversidade de tipos de conteúdos" },
   ];
-
   const GRID_VIDEOS = VIDEOS.filter((v) => v.youtubeId).slice(0, 8);
 
   return (
-    <section className="bg-foreground text-background py-14 md:py-20">
-      <div className="max-w-6xl mx-auto px-6 md:px-12">
+    <section className="relative bg-[var(--mm-blue)] text-white py-14 md:py-20 overflow-hidden">
+      {/* Loading sticker girando decorativo */}
+      <motion.div
+        animate={{ rotate: 360 }}
+        transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+        className="hidden md:block absolute top-10 right-10 w-14 opacity-80 pointer-events-none"
+      >
+        <LoadingSticker className="w-full h-auto" />
+      </motion.div>
+
+      <div className="relative max-w-6xl mx-auto px-6 md:px-12">
         <div className="grid md:grid-cols-2 gap-8 md:gap-12 mb-10 md:mb-14 items-end">
-          <h2 className="font-display font-black text-3xl md:text-5xl leading-[0.95] tracking-tighter">
-            CONTEÚDO
+          <h2 className="font-display font-black text-3xl md:text-5xl leading-[0.9] tracking-tighter uppercase">
+            Conteúdo
             <br />
-            AUTÊNTICO QUE{" "}
-            <span className="font-serif-accent italic text-primary">GRUDA</span>{" "}
-            NA AUDIÊNCIA
+            autêntico que{" "}
+            <span className="text-[var(--mm-orange)]">gruda</span>
+            <br />
+            na audiência
           </h2>
-          <p className="text-background/70 text-sm md:text-base leading-relaxed">
+          <p className="text-white/80 text-base md:text-lg leading-relaxed">
             UGC é o formato que mais cresce no digital: aumenta confiança,
-            retenção e impacto de campanhas. Com +500 vídeos já produzidos, eu
+            retenção e impacto de campanhas. Com +500 vídeos já produzidos,
             ativo uma rede de creators prontos pra produzir vídeos com
-            linguagem nativa e foco em performance — pra orgânico e mídia.
+            linguagem nativa e foco em performance.
           </p>
         </div>
 
         <div className="grid md:grid-cols-[auto_1fr] gap-8 md:gap-12 items-start">
-          {/* Features column */}
           <ul className="space-y-3 md:space-y-4 md:max-w-[220px]">
             {FEATURES.map((f) => (
               <li key={f.title} className="flex items-start gap-3">
-                <span className="text-primary mt-0.5">✦</span>
-                <span className="text-[11px] md:text-xs uppercase tracking-wider font-bold leading-tight">
+                <span className="text-[var(--mm-orange)] mt-0.5">✦</span>
+                <span className="text-xs md:text-sm uppercase tracking-wider font-bold leading-snug">
                   {f.title}
                 </span>
               </li>
             ))}
           </ul>
 
-          {/* Video grid 4x2 */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-3">
             {GRID_VIDEOS.map((v) => (
               <button
                 key={v.id}
                 onClick={() => open(v)}
                 data-cursor="play"
-                className="group relative aspect-[9/16] rounded-lg overflow-hidden bg-background/5 cursor-pointer"
+                className="group relative aspect-[9/16] rounded-lg overflow-hidden bg-white/5 cursor-pointer"
               >
                 <img
                   src={`https://i.ytimg.com/vi/${v.youtubeId}/maxresdefault.jpg`}
@@ -243,8 +397,8 @@ function AuthenticContent() {
                   }}
                 />
                 <div className="absolute inset-0 flex items-center justify-center opacity-90 group-hover:opacity-100 transition-opacity">
-                  <div className="w-9 h-9 md:w-11 md:h-11 rounded-full bg-primary/90 flex items-center justify-center">
-                    <Play className="w-3.5 h-3.5 md:w-4 md:h-4 text-primary-light fill-primary-light ml-0.5" />
+                  <div className="w-9 h-9 md:w-11 md:h-11 rounded-full bg-[var(--mm-orange)] flex items-center justify-center">
+                    <Play className="w-3.5 h-3.5 md:w-4 md:h-4 text-white fill-white ml-0.5" />
                   </div>
                 </div>
               </button>
@@ -256,19 +410,19 @@ function AuthenticContent() {
   );
 }
 
-// ========== MARQUEE ==========
+/* =============================== MARQUEE =============================== */
 function MarqueeStripe() {
-  const items = Array.from({ length: 12 }, () => "RESULTADOS REAIS · CONTEÚDO REAL");
+  const items = Array.from({ length: 14 }, () => "Resultados reais · Conteúdo real");
   return (
-    <div className="bg-primary-light py-4 md:py-5 overflow-hidden border-y border-primary/20">
+    <div className="bg-[var(--mm-orange)] py-4 md:py-5 overflow-hidden">
       <div className="marquee">
         {items.concat(items).map((s, i) => (
           <div
             key={i}
-            className="flex items-center gap-4 text-[11px] md:text-xs uppercase tracking-[0.25em] font-bold text-primary"
+            className="flex items-center gap-4 text-[11px] md:text-xs uppercase tracking-[0.25em] font-bold text-white"
           >
             {s}
-            <span className="text-primary/50">✦</span>
+            <span className="text-white/80">✦</span>
           </div>
         ))}
       </div>
@@ -276,47 +430,50 @@ function MarqueeStripe() {
   );
 }
 
-// ========== CONTENT TYPES ==========
+/* ============================ CONTENT TYPES ============================ */
 function ContentTypes() {
-  type T = { title: string; icon: LucideIcon; color: "light" | "primary" | "dark" };
+  type T = {
+    title: string;
+    icon: LucideIcon;
+    color: "pink" | "white" | "blue" | "orange";
+  };
   const TYPES: T[] = [
-    { title: "Reviews de produto", icon: Star, color: "light" },
-    { title: "Experiência em eventos", icon: Calendar, color: "light" },
-    { title: "Storytelling de marca", icon: BookOpen, color: "primary" },
-    { title: "POV, GRWM e Vlog", icon: Video, color: "light" },
-    { title: "Conteúdo educativo, how to e tutoriais", icon: ListOrdered, color: "primary" },
-    { title: "Conteúdo com trends/challenges", icon: TrendingUp, color: "light" },
-    { title: "Unboxing", icon: ShoppingBag, color: "light" },
-    { title: "POV, GRWM e Vlog", icon: MessageCircle, color: "dark" },
-    { title: "Antes e depois (transformação clara)", icon: FlaskConical, color: "light" },
-    { title: "POV, GRWM e Vlog", icon: Video, color: "primary" },
-    { title: "UGC para anúncios pagos", icon: Zap, color: "light" },
-    { title: "Top 3/Top 5 motivos para usar o produto", icon: ListOrdered, color: "primary" },
-    { title: "Review comparativo", icon: CheckCircle2, color: "light" },
-    { title: "Reação espontânea", icon: Smile, color: "light" },
-    { title: "Experiência em evento/ativação", icon: Users, color: "primary" },
-    { title: "UGC colaborativo com dois ou mais creators", icon: Users, color: "light" },
+    { title: "Reviews de produto", icon: Star, color: "white" },
+    { title: "Experiência em eventos", icon: Calendar, color: "white" },
+    { title: "Storytelling de marca", icon: BookOpen, color: "pink" },
+    { title: "POV, GRWM e Vlog", icon: Video, color: "white" },
+    { title: "Conteúdo educativo, how to e tutoriais", icon: ListOrdered, color: "pink" },
+    { title: "Conteúdo com trends/challenges", icon: TrendingUp, color: "white" },
+    { title: "Unboxing", icon: ShoppingBag, color: "white" },
+    { title: "POV, GRWM e Vlog", icon: MessageCircle, color: "blue" },
+    { title: "Antes e depois (transformação clara)", icon: FlaskConical, color: "white" },
+    { title: "POV, GRWM e Vlog", icon: Video, color: "orange" },
+    { title: "UGC para anúncios pagos", icon: Zap, color: "white" },
+    { title: "Top 3/Top 5 motivos", icon: ListOrdered, color: "pink" },
+    { title: "Review comparativo", icon: CheckCircle2, color: "white" },
+    { title: "Reação espontânea", icon: Smile, color: "white" },
+    { title: "Experiência em evento/ativação", icon: Users, color: "blue" },
+    { title: "UGC colaborativo com dois creators", icon: Users, color: "white" },
   ];
 
+  const colorClasses: Record<T["color"], string> = {
+    white: "bg-white border-[var(--mm-blue)]/10 text-[var(--mm-blue)]",
+    pink: "bg-[var(--mm-pink-soft)] border-[var(--mm-pink)] text-[var(--mm-blue)]",
+    blue: "bg-[var(--mm-blue)] border-[var(--mm-blue)] text-white",
+    orange: "bg-[var(--mm-orange)] border-[var(--mm-orange)] text-white",
+  };
+
   return (
-    <section className="bg-background py-14 md:py-20">
+    <section className="bg-white py-14 md:py-20">
       <div className="max-w-6xl mx-auto px-6 md:px-12">
-        <h2 className="font-display font-black text-3xl md:text-5xl leading-[0.95] tracking-tighter text-foreground mb-10 md:mb-14 max-w-2xl">
-          CRIAMOS O TIPO DE CONTEÚDO COM UGC{" "}
-          <span className="font-serif-accent italic text-primary">
-            certo pra sua marca
-          </span>
+        <h2 className="font-display font-black text-3xl md:text-5xl leading-[0.9] tracking-tighter uppercase text-[var(--mm-blue)] mb-10 md:mb-14 max-w-2xl">
+          Criamos o tipo de conteúdo UGC{" "}
+          <span className="text-[var(--mm-orange)]">certo pra sua marca</span>
         </h2>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 md:gap-3">
           {TYPES.map((t, i) => {
             const Icon = t.icon;
-            const bg =
-              t.color === "primary"
-                ? "bg-primary-light border-primary/20"
-                : t.color === "dark"
-                ? "bg-foreground text-background border-foreground"
-                : "bg-background border-foreground/10";
             return (
               <motion.div
                 key={`${t.title}-${i}`}
@@ -324,15 +481,10 @@ function ContentTypes() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: i * 0.03 }}
-                className={`aspect-[4/3] rounded-2xl border p-3 md:p-4 flex flex-col justify-between ${bg}`}
+                className={`aspect-[4/3] rounded-2xl border p-3.5 md:p-4 flex flex-col justify-between ${colorClasses[t.color]}`}
               >
-                <Icon
-                  className={`w-4 h-4 md:w-5 md:h-5 self-end ${
-                    t.color === "dark" ? "text-background/60" : "text-foreground/50"
-                  }`}
-                  strokeWidth={1.8}
-                />
-                <div className="text-xs md:text-sm font-semibold leading-tight">
+                <Icon className="w-4 h-4 md:w-5 md:h-5 self-end opacity-70" strokeWidth={1.8} />
+                <div className="text-sm md:text-base font-semibold leading-snug">
                   {t.title}
                 </div>
               </motion.div>
@@ -343,7 +495,7 @@ function ContentTypes() {
         <div className="mt-10 text-center">
           <a
             href="#gestao-contato"
-            className="inline-flex items-center gap-2 bg-primary text-primary-light px-6 py-3.5 rounded-full text-sm font-bold uppercase tracking-wider hover:bg-primary-dark transition-colors"
+            className="inline-flex items-center gap-2 bg-[var(--mm-blue)] text-white px-6 py-3.5 rounded-full text-sm font-bold uppercase tracking-wider hover:bg-[var(--mm-blue-deep)] transition-colors"
           >
             Fale comigo e comece hoje
             <Rocket className="w-4 h-4" />
@@ -354,51 +506,56 @@ function ContentTypes() {
   );
 }
 
-// ========== COMO FAZEMOS ==========
+/* ============================= HOW WE DO ============================= */
 function HowWeDo() {
   type Step = { title: string; body: string; color: string };
   const STEPS: Step[] = [
     {
       title: "Hunting e seleção de creators",
       body:
-        "Mapeamos e selecionamos UGC creators alinhados ao perfil da sua marca e do seu público-alvo. Nosso processo de hunting analisa banco de creators e considera dados demográficos, estilo de conteúdo e histórico de performance, garantindo que você tenha creators autênticos e engajados pra gerar conexão real e aumentar resultados digitais.",
-      color: "bg-primary-light text-foreground border-primary/30",
+        "Mapeio e seleciono UGC creators alinhados ao perfil da sua marca e do seu público-alvo. Processo de hunting considera dados demográficos, estilo de conteúdo e histórico de performance.",
+      color:
+        "bg-[var(--mm-pink-soft)] text-[var(--mm-blue)] border-[var(--mm-pink)]",
     },
     {
       title: "Briefing co-criado com a marca",
       body:
-        "Alinhamos tom, objetivos e KPIs antes de qualquer câmera ligar. O briefing é construído junto com o time da marca pra o criativo nascer já validado.",
-      color: "bg-foreground text-background border-foreground",
+        "Alinhamos tom, objetivos e KPIs antes de qualquer câmera ligar. O briefing nasce junto com o time da marca pra o criativo já sair validado.",
+      color: "bg-[var(--mm-blue)] text-white border-[var(--mm-blue)]",
     },
     {
       title: "Produção de conteúdos autênticos",
       body:
         "Gravação com direção, luz natural, roteiros testados em performance. Cada vídeo pensado pros 3 primeiros segundos segurarem a audiência.",
-      color: "bg-primary text-primary-light border-primary",
+      color: "bg-[var(--mm-orange)] text-white border-[var(--mm-orange)]",
     },
     {
       title: "Aprovação e ajustes",
       body:
         "Você revisa, ajusta e recebe o material nos formatos certos pra cada plataforma (9:16, 1:1, 16:9) + relatório dos primeiros dias rodando.",
-      color: "bg-background border-foreground/15 text-foreground",
+      color: "bg-[var(--mm-pink)] text-[var(--mm-blue)] border-[var(--mm-pink)]",
     },
   ];
 
   const [openIdx, setOpenIdx] = useState(0);
 
   return (
-    <section className="bg-background py-14 md:py-20">
-      <div className="max-w-3xl mx-auto px-6 md:px-12">
-        <h2 className="font-display font-black text-3xl md:text-5xl leading-[0.95] tracking-tighter text-foreground text-center">
-          COMO{" "}
-          <span className="font-serif-accent italic text-primary">
-            fazemos acontecer
-          </span>
+    <section className="relative bg-white py-14 md:py-20 overflow-hidden">
+      <motion.div
+        animate={{ rotate: -360 }}
+        transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
+        className="hidden md:block absolute top-16 left-10 w-12 opacity-80 pointer-events-none"
+      >
+        <LoadingSticker className="w-full h-auto" />
+      </motion.div>
+
+      <div className="relative max-w-3xl mx-auto px-6 md:px-12">
+        <h2 className="font-display font-black text-3xl md:text-5xl leading-[0.95] tracking-tighter text-[var(--mm-blue)] uppercase text-center">
+          Como <span className="text-[var(--mm-orange)]">fazemos acontecer</span>
         </h2>
-        <p className="mt-4 text-center text-foreground-soft text-sm md:text-base max-w-xl mx-auto leading-relaxed">
-          Diferentes canais, objetivos distintos, a mesma qualidade, respeito
-          e resultados cada vez melhores. Escolha o canal de mídia paga, a
-          Lara cuida do resto.
+        <p className="mt-4 text-center text-[var(--mm-blue)]/75 text-base md:text-lg max-w-xl mx-auto leading-relaxed">
+          Diferentes canais, objetivos distintos, a mesma qualidade e
+          resultados cada vez melhores. Escolha o canal, a Lara cuida do resto.
         </p>
 
         <div className="mt-10 space-y-3">
@@ -413,7 +570,7 @@ function HowWeDo() {
                   onClick={() => setOpenIdx(isOpen ? -1 : i)}
                   className="w-full flex items-center justify-between gap-4 px-5 md:px-6 py-4 md:py-5 text-left"
                 >
-                  <span className="font-display font-black text-sm md:text-base tracking-wide uppercase">
+                  <span className="font-display font-black text-base md:text-lg tracking-wide uppercase">
                     {s.title}
                   </span>
                   <ChevronDown
@@ -431,7 +588,7 @@ function HowWeDo() {
                       transition={{ duration: 0.3 }}
                       className="overflow-hidden"
                     >
-                      <div className="px-5 md:px-6 pb-5 md:pb-6 text-sm leading-relaxed opacity-90">
+                      <div className="px-5 md:px-6 pb-5 md:pb-6 text-base leading-relaxed opacity-90">
                         {s.body}
                       </div>
                     </motion.div>
@@ -446,7 +603,7 @@ function HowWeDo() {
   );
 }
 
-// ========== CASES (3 cards) ==========
+/* ================================ CASES ================================ */
 function CasesSection() {
   type Case = {
     brand: string;
@@ -459,7 +616,7 @@ function CasesSection() {
   const CASES: Case[] = [
     {
       brand: "InfinitePay",
-      headline: "+100M views e +30% em engajamento",
+      headline: "+100M views e +30% em vendas em 3 meses",
       body: "Vídeo UGC TikTok-first com hook testado em performance, rodando como criativo pago e orgânico.",
       stats: [
         { value: "+100M", label: "visualizações" },
@@ -471,7 +628,7 @@ function CasesSection() {
     },
     {
       brand: "Méliuz",
-      headline: "+30M views e +30K seguidores em 6 meses",
+      headline: "+30M views e +30k seguidores em 6 meses",
       body: "UGC creator + microinfluenciadores em estratégia TikTok-first pra humanização e conversão.",
       stats: [
         { value: "+30M", label: "visualizações" },
@@ -484,7 +641,7 @@ function CasesSection() {
     {
       brand: "Cygnuss",
       headline: "Zero mídia paga e +140k views em 8 meses",
-      body: "Construímos uma comunidade UGC no TikTok com conteúdo autêntico — sem investir 1 real em ads.",
+      body: "Comunidade UGC no TikTok construída com conteúdo autêntico — sem investir 1 real em ads.",
       stats: [
         { value: "+140K", label: "visualizações" },
         { value: "+2K", label: "seguidores" },
@@ -497,21 +654,29 @@ function CasesSection() {
   const [idx, setIdx] = useState(0);
 
   return (
-    <section className="bg-primary-light py-14 md:py-20">
-      <div className="max-w-6xl mx-auto px-6 md:px-12">
-        <h2 className="font-display font-black text-3xl md:text-5xl leading-[0.95] tracking-tighter text-foreground text-center">
-          CASES COM UGC:{" "}
-          <span className="font-serif-accent italic text-primary">
-            a gente faz acontecer!
-          </span>
+    <section className="relative bg-[var(--mm-orange)] py-14 md:py-20 overflow-hidden">
+      {/* Sticker Creator Creator Creator flutuando */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.8, rotate: 10 }}
+        whileInView={{ opacity: 1, scale: 1, rotate: -8 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8 }}
+        className="hidden md:block absolute top-10 right-6 pointer-events-none"
+      >
+        <CreatorStacked className="scale-75" />
+      </motion.div>
+
+      <div className="relative max-w-6xl mx-auto px-6 md:px-12">
+        <h2 className="font-display font-black text-3xl md:text-5xl leading-[0.95] tracking-tighter text-white uppercase text-center">
+          Cases com UGC:{" "}
+          <span className="italic">a gente faz acontecer!</span>
         </h2>
-        <p className="mt-4 text-center text-foreground-soft text-sm md:text-base max-w-2xl mx-auto leading-relaxed">
+        <p className="mt-4 text-center text-white/90 text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
           Descubra como marcas como <b>InfinitePay</b>, <b>Méliuz</b> e{" "}
           <b>Cygnuss</b> aumentaram engajamento, seguidores e vendas com
-          estratégias de UGC creators no TikTok e Instagram.
+          estratégias de UGC no TikTok e Instagram.
         </p>
 
-        {/* Desktop: 3 cards; Mobile: carrossel */}
         <div className="mt-10 hidden md:grid grid-cols-3 gap-5">
           {CASES.map((c) => (
             <CaseCard key={c.brand} c={c} />
@@ -523,18 +688,18 @@ function CasesSection() {
           <div className="flex items-center justify-center gap-3 mt-5">
             <button
               onClick={() => setIdx((i) => (i - 1 + CASES.length) % CASES.length)}
-              className="w-10 h-10 rounded-full border border-foreground/20 flex items-center justify-center"
+              className="w-10 h-10 rounded-full border-2 border-white/30 text-white flex items-center justify-center"
               aria-label="Anterior"
             >
               <ChevronLeft className="w-4 h-4" />
             </button>
-            <span className="text-xs text-muted tabular-nums">
+            <span className="text-xs text-white/80 tabular-nums">
               {String(idx + 1).padStart(2, "0")}/
               {String(CASES.length).padStart(2, "0")}
             </span>
             <button
               onClick={() => setIdx((i) => (i + 1) % CASES.length)}
-              className="w-10 h-10 rounded-full border border-foreground/20 flex items-center justify-center"
+              className="w-10 h-10 rounded-full border-2 border-white/30 text-white flex items-center justify-center"
               aria-label="Próximo"
             >
               <ChevronRight className="w-4 h-4" />
@@ -563,43 +728,43 @@ function CaseCard({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5 }}
-      className="rounded-3xl bg-foreground text-background p-6 md:p-7 flex flex-col gap-4"
+      className="rounded-3xl bg-[var(--mm-blue)] text-white p-6 md:p-7 flex flex-col gap-4"
     >
-      <div className="text-center font-display font-black text-lg md:text-xl tracking-tight border-b border-background/15 pb-4">
+      <div className="text-center font-display font-black text-lg md:text-xl tracking-tight border-b border-white/15 pb-4 uppercase">
         {c.brand}
       </div>
-      <div className="font-display font-black text-primary text-base md:text-lg leading-tight tracking-tight text-center">
+      <div className="font-display font-black text-[var(--mm-orange)] text-base md:text-lg leading-tight tracking-tight text-center uppercase">
         {c.headline}
       </div>
-      <p className="text-xs md:text-sm text-background/70 leading-relaxed text-center">
+      <p className="text-sm md:text-base text-white/80 leading-relaxed text-center">
         {c.body}
       </p>
-      <div className="text-[10px] uppercase tracking-wider text-center text-background/60 mt-1">
+      <div className="text-xs uppercase tracking-wider text-center text-white/65 mt-1 font-semibold">
         resultado:
       </div>
       <div className="grid grid-cols-2 gap-2">
         {c.stats.map((s) => (
           <div
             key={s.label}
-            className="rounded-xl border border-primary/40 bg-background/5 px-3 py-2.5 text-center"
+            className="rounded-xl border border-[var(--mm-orange)]/50 bg-white/5 px-3 py-3 text-center"
           >
-            <div className="font-display font-black text-primary text-base md:text-lg tabular-nums leading-none">
+            <div className="font-display font-black text-[var(--mm-orange)] text-lg md:text-xl tabular-nums leading-none">
               {s.value}
             </div>
-            <div className="text-[9px] md:text-[10px] uppercase tracking-wider text-background/60 mt-1">
+            <div className="text-[11px] md:text-xs uppercase tracking-wider text-white/75 mt-1.5">
               {s.label}
             </div>
           </div>
         ))}
       </div>
       {c.footnote && (
-        <div className="text-[10px] text-center text-background/60 border-t border-background/10 pt-3">
+        <div className="text-xs text-center text-white/70 border-t border-white/10 pt-3">
           {c.footnote}
         </div>
       )}
       <a
         href="#gestao-contato"
-        className="mt-2 inline-flex items-center justify-center gap-2 bg-primary text-primary-light px-4 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider hover:bg-primary-dark transition-colors"
+        className="mt-2 inline-flex items-center justify-center gap-2 bg-[var(--mm-orange)] text-white px-5 py-3 rounded-full text-sm font-bold uppercase tracking-wider hover:bg-[var(--mm-orange-deep)] transition-colors"
       >
         Falar com a Lara
         <Rocket className="w-3.5 h-3.5" />
@@ -608,59 +773,66 @@ function CaseCard({
   );
 }
 
-// ========== SCALE / TTCX ==========
+/* ============================== SCALE / TTCX ============================== */
 function ScaleSection() {
   return (
-    <section className="relative bg-foreground text-background py-14 md:py-20 overflow-hidden">
+    <section className="relative bg-[var(--mm-blue)] text-white py-14 md:py-20 overflow-hidden">
       {/* Formas decorativas */}
       <svg
         viewBox="0 0 1200 400"
-        className="absolute inset-0 w-full h-full opacity-40 pointer-events-none"
+        className="absolute inset-0 w-full h-full opacity-70 pointer-events-none"
         aria-hidden
       >
         <path
-          d="M 100 -50 L 350 250"
-          stroke="var(--primary)"
-          strokeWidth="50"
-          strokeOpacity="0.5"
+          d="M 50 -50 L 350 350"
+          stroke="#FF5824"
+          strokeWidth="80"
+          strokeOpacity="0.9"
           strokeLinecap="round"
         />
         <path
-          d="M 600 -50 L 900 350"
-          stroke="var(--primary)"
-          strokeWidth="50"
-          strokeOpacity="0.3"
+          d="M 800 100 L 1100 -100"
+          stroke="#FFCFD2"
+          strokeWidth="40"
           strokeLinecap="round"
         />
         <path
-          d="M 950 100 L 1250 450"
-          stroke="var(--primary-light)"
+          d="M 950 350 L 1250 50"
+          stroke="#FF5824"
           strokeWidth="30"
-          strokeOpacity="0.2"
           strokeLinecap="round"
         />
       </svg>
 
+      {/* Cursor sticker */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.8 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: true }}
+        className="hidden md:block absolute top-16 right-20 w-16 pointer-events-none"
+      >
+        <CursorSticker className="w-full h-auto" />
+      </motion.div>
+
       <div className="relative max-w-6xl mx-auto px-6 md:px-12 grid md:grid-cols-2 gap-8 md:gap-12 items-center">
         <div>
-          <div className="text-[10px] md:text-xs uppercase tracking-[0.3em] text-primary font-bold mb-4">
+          <div className="text-[10px] md:text-xs uppercase tracking-[0.3em] text-[var(--mm-orange)] font-bold mb-4">
             #TTCX
           </div>
-          <h2 className="font-display font-black text-3xl md:text-4xl leading-[0.95] tracking-tighter mb-4">
+          <h2 className="font-display font-black text-3xl md:text-4xl leading-[0.95] tracking-tighter mb-4 uppercase">
             TikTok Creative Exchange
           </h2>
-          <p className="text-xs md:text-sm text-background/70 leading-relaxed mb-6">
+          <p className="text-sm md:text-base text-white/80 leading-relaxed mb-6">
             Como parceira na fase beta do <b>TTCX</b>, fui treinada pra
             potencializar os resultados das marcas nas plataformas. A
-            parceria foi fundamental pra construirmos um Banco de Creators,
-            que já conta com mais de 500 vídeos produzidos e uma forma de
-            pensar conteúdo TikTok-first. Isso garante velocidade na
-            produção, testes em escala e conteúdos nativos que realmente
-            performam.
+            parceria foi fundamental pra construirmos um Banco de Creators
+            que já conta com mais de 500 vídeos produzidos. Isso garante
+            velocidade na produção, testes em escala e conteúdos nativos que
+            realmente performam.
           </p>
           <a
             href="#gestao-contato"
-            className="inline-flex items-center gap-2 bg-primary text-primary-light px-5 py-2.5 rounded-full text-xs md:text-sm font-bold uppercase tracking-wider hover:bg-primary-dark transition-colors"
+            className="inline-flex items-center gap-2 bg-[var(--mm-orange)] text-white px-5 py-3 rounded-full text-sm md:text-base font-bold uppercase tracking-wider hover:bg-[var(--mm-orange-deep)] transition-colors"
           >
             Falar com a Lara
             <Rocket className="w-3.5 h-3.5" />
@@ -668,11 +840,11 @@ function ScaleSection() {
         </div>
 
         <div className="text-center md:text-left">
-          <div className="font-display font-black text-6xl md:text-8xl text-primary leading-none tracking-tighter">
+          <div className="font-display font-black text-6xl md:text-8xl text-[var(--mm-orange)] leading-none tracking-tighter">
             +500
           </div>
-          <div className="mt-3 font-display font-black text-primary-light text-xl md:text-3xl leading-tight tracking-tight uppercase">
-            vídeos UGC
+          <div className="mt-3 font-display font-black text-[var(--mm-pink)] text-xl md:text-3xl leading-tight tracking-tight uppercase">
+            Creators UGC e
             <br />
             produção em escala
           </div>
@@ -682,7 +854,7 @@ function ScaleSection() {
   );
 }
 
-// ========== FAQ ==========
+/* ================================== FAQ ================================== */
 function FAQ() {
   const ITEMS = [
     {
@@ -702,13 +874,11 @@ function FAQ() {
   const [openIdx, setOpenIdx] = useState(0);
 
   return (
-    <section className="bg-background py-14 md:py-20">
+    <section className="bg-white py-14 md:py-20">
       <div className="max-w-3xl mx-auto px-6 md:px-12">
-        <h2 className="font-display font-black text-3xl md:text-4xl leading-[0.95] tracking-tighter text-foreground text-center mb-10">
-          DÚVIDAS FREQUENTES SOBRE{" "}
-          <span className="font-serif-accent italic text-primary">
-            criação de conteúdo UGC
-          </span>
+        <h2 className="font-display font-black text-3xl md:text-4xl leading-[0.95] tracking-tighter text-[var(--mm-blue)] uppercase text-center mb-10">
+          Dúvidas frequentes sobre{" "}
+          <span className="text-[var(--mm-orange)]">criação de UGC</span>
         </h2>
 
         <div className="space-y-3">
@@ -717,17 +887,17 @@ function FAQ() {
             return (
               <div
                 key={item.q}
-                className="rounded-2xl border border-foreground/15 overflow-hidden bg-background"
+                className="rounded-2xl border-2 border-[var(--mm-blue)]/15 overflow-hidden bg-white"
               >
                 <button
                   onClick={() => setOpenIdx(isOpen ? -1 : i)}
-                  className="w-full flex items-center justify-between gap-4 px-5 md:px-6 py-4 text-left"
+                  className="w-full flex items-center justify-between gap-4 px-5 md:px-6 py-5 text-left"
                 >
-                  <span className="text-sm md:text-base font-medium text-foreground">
+                  <span className="text-base md:text-lg font-medium text-[var(--mm-blue)]">
                     {item.q}
                   </span>
                   <ChevronDown
-                    className={`w-5 h-5 text-foreground/50 flex-shrink-0 transition-transform ${
+                    className={`w-5 h-5 text-[var(--mm-blue)]/50 flex-shrink-0 transition-transform ${
                       isOpen ? "rotate-180" : ""
                     }`}
                   />
@@ -741,7 +911,7 @@ function FAQ() {
                       transition={{ duration: 0.3 }}
                       className="overflow-hidden"
                     >
-                      <div className="px-5 md:px-6 pb-5 text-xs md:text-sm text-foreground-soft leading-relaxed">
+                      <div className="px-5 md:px-6 pb-5 text-sm md:text-base text-[var(--mm-blue)]/80 leading-relaxed">
                         {item.a}
                       </div>
                     </motion.div>
@@ -756,27 +926,23 @@ function FAQ() {
   );
 }
 
-// ========== FINAL CTA + CONTACT ==========
+/* ============================== FINAL CTA ============================== */
 function FinalCTA() {
   return (
-    <section className="bg-background py-14 md:py-20">
-      <div className="max-w-3xl mx-auto px-6 md:px-12 text-center">
-        <h2 className="font-display font-black text-3xl md:text-5xl leading-[0.95] tracking-tighter text-foreground">
-          SEU PRÓXIMO{" "}
-          <span className="font-serif-accent italic text-primary">
-            case de sucesso
-          </span>{" "}
-          COMEÇA AQUI.
+    <section className="relative bg-[var(--mm-pink-soft)] py-14 md:py-20 overflow-hidden">
+      <div className="relative max-w-3xl mx-auto px-6 md:px-12 text-center">
+        <h2 className="font-display font-black text-3xl md:text-5xl leading-[0.95] tracking-tighter text-[var(--mm-blue)] uppercase">
+          Seu próximo{" "}
+          <span className="text-[var(--mm-orange)]">case de sucesso</span>{" "}
+          começa aqui.
         </h2>
-        <p className="mt-4 text-foreground-soft text-sm md:text-base max-w-xl mx-auto leading-relaxed">
+        <p className="mt-4 text-[var(--mm-blue)]/80 text-base md:text-lg max-w-xl mx-auto leading-relaxed">
           Integro estratégia, creators e produção <b>end-to-end</b>, do
-          briefing à biblioteca de UGC pronta pra orgânico e mídia. Quer
-          construir um case de sucesso, otimizar resultados ou fazer
-          TikTok/Reels com cara de TikTok/Reels?
+          briefing à biblioteca de UGC pronta pra orgânico e mídia.
         </p>
         <a
           href="#gestao-contato"
-          className="mt-8 inline-flex items-center gap-2 bg-primary text-primary-light px-6 py-3.5 rounded-full text-sm md:text-base font-bold uppercase tracking-wider hover:bg-primary-dark transition-colors"
+          className="mt-8 inline-flex items-center gap-2 bg-[var(--mm-blue)] text-white px-7 py-4 rounded-full text-base md:text-lg font-bold uppercase tracking-wider hover:bg-[var(--mm-blue-deep)] transition-colors shadow-lg"
         >
           Fale com a Lara e comece hoje
           <Rocket className="w-4 h-4" />
@@ -786,7 +952,7 @@ function FinalCTA() {
   );
 }
 
-// ========== CONTACT FORM (dark) ==========
+/* ============================== CONTACT FORM ============================== */
 function ContactForm() {
   const [step, setStep] = useState<1 | 2>(1);
   const [data, setData] = useState<Record<string, string>>({});
@@ -810,45 +976,58 @@ function ContactForm() {
   return (
     <section
       id="gestao-contato"
-      className="relative bg-foreground text-background py-16 md:py-24 overflow-hidden"
+      className="relative bg-[var(--mm-blue)] text-white py-16 md:py-24 overflow-hidden"
     >
-      {/* balõezinhos decorativos */}
-      <div className="absolute top-12 left-6 text-6xl md:text-8xl opacity-30 pointer-events-none rotate-12">
-        🎈
-      </div>
-      <div className="absolute bottom-12 right-6 text-6xl md:text-8xl opacity-30 pointer-events-none -rotate-12">
-        🎈
-      </div>
-      <div className="absolute top-1/2 left-1/4 text-4xl opacity-20 pointer-events-none">
-        ✦
-      </div>
+      {/* stickers decorativos */}
+      <motion.div
+        initial={{ opacity: 0, rotate: 20 }}
+        whileInView={{ opacity: 1, rotate: 10 }}
+        viewport={{ once: true }}
+        className="hidden md:block absolute top-20 left-10 w-28 pointer-events-none"
+      >
+        <ChatBubbleSticker className="w-full h-auto" />
+      </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0, rotate: -15 }}
+        whileInView={{ opacity: 1, rotate: -10 }}
+        viewport={{ once: true }}
+        className="hidden md:block absolute bottom-20 right-10 w-24 pointer-events-none"
+      >
+        <ChatBubbleSticker className="w-full h-auto" />
+      </motion.div>
+
+      <motion.div
+        animate={{ rotate: 360 }}
+        transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+        className="hidden md:block absolute top-1/2 right-20 w-14 pointer-events-none"
+      >
+        <LoadingSticker className="w-full h-auto" />
+      </motion.div>
 
       <div className="relative max-w-2xl mx-auto px-6 md:px-12">
-        <div className="text-[10px] md:text-xs uppercase tracking-[0.3em] text-primary font-bold text-center mb-3">
+        <div className="text-[10px] md:text-xs uppercase tracking-[0.3em] text-[var(--mm-orange)] font-bold text-center mb-3">
           #contato
         </div>
-        <h2 className="font-display font-black text-3xl md:text-5xl leading-[0.95] tracking-tighter text-center text-background">
-          FALE COMIGO PARA FAZER UM{" "}
-          <span className="font-serif-accent italic text-primary">
-            diagnóstico
-          </span>{" "}
-          OU RECEBER ORÇAMENTO!
+        <h2 className="font-display font-black text-3xl md:text-5xl leading-[0.95] tracking-tighter text-center text-white uppercase">
+          Fale comigo para fazer um{" "}
+          <span className="text-[var(--mm-orange)]">diagnóstico</span> ou
+          receber orçamento!
         </h2>
 
         {sent ? (
-          <div className="mt-10 p-8 rounded-3xl bg-background/5 border border-background/10 text-center">
+          <div className="mt-10 p-8 rounded-3xl bg-white/10 border border-white/15 text-center">
             <div className="text-5xl mb-4">🚀</div>
             <div className="font-display font-black text-xl mb-2">Enviado!</div>
-            <div className="text-background/60 text-sm">
+            <div className="text-white/70 text-sm">
               Entro em contato em até 48h.
             </div>
           </div>
         ) : (
           <form onSubmit={onSubmit} className="mt-10 space-y-5">
-            {/* Step indicator */}
             <div className="flex items-center gap-3 justify-center mb-6">
               <StepDot n={1} active={step >= 1} />
-              <div className="h-px flex-1 max-w-[180px] bg-background/20" />
+              <div className="h-px flex-1 max-w-[180px] bg-white/20" />
               <StepDot n={2} active={step >= 2} />
             </div>
 
@@ -883,7 +1062,7 @@ function ContactForm() {
                   <button
                     type="button"
                     onClick={() => setStep(2)}
-                    className="inline-flex items-center gap-2 bg-primary text-primary-light px-7 py-3 rounded-full text-sm font-bold uppercase tracking-wider hover:bg-primary-dark transition-colors"
+                    className="inline-flex items-center gap-2 bg-[var(--mm-orange)] text-white px-7 py-3 rounded-full text-sm font-bold uppercase tracking-wider hover:bg-[var(--mm-orange-deep)] transition-colors"
                   >
                     Avançar
                     <ArrowRight className="w-4 h-4" />
@@ -918,14 +1097,14 @@ function ContactForm() {
                   ]}
                 />
                 <div>
-                  <label className="block text-[11px] uppercase tracking-wider text-background/60 mb-2">
+                  <label className="block text-xs md:text-sm uppercase tracking-wider text-white/70 mb-2 font-semibold">
                     Conta sobre o projeto
                   </label>
                   <textarea
                     name="message"
                     rows={4}
                     onChange={(e) => setData((d) => ({ ...d, message: e.target.value }))}
-                    className="w-full bg-background/5 border border-background/15 rounded-2xl px-4 py-3 text-background placeholder:text-background/30 focus:outline-none focus:border-primary transition-colors text-sm resize-none"
+                    className="w-full bg-white/5 border border-white/15 rounded-2xl px-4 py-3.5 text-white placeholder:text-white/40 focus:outline-none focus:border-[var(--mm-orange)] transition-colors text-base leading-relaxed resize-none"
                     placeholder="Prazo, categoria, objetivo da campanha..."
                   />
                 </div>
@@ -933,13 +1112,13 @@ function ContactForm() {
                   <button
                     type="button"
                     onClick={() => setStep(1)}
-                    className="text-xs uppercase tracking-wider text-background/60 hover:text-background"
+                    className="text-xs uppercase tracking-wider text-white/60 hover:text-white"
                   >
                     ← Voltar
                   </button>
                   <button
                     type="submit"
-                    className="inline-flex items-center gap-2 bg-primary text-primary-light px-7 py-3 rounded-full text-sm font-bold uppercase tracking-wider hover:bg-primary-dark transition-colors"
+                    className="inline-flex items-center gap-2 bg-[var(--mm-orange)] text-white px-7 py-3 rounded-full text-sm font-bold uppercase tracking-wider hover:bg-[var(--mm-orange-deep)] transition-colors"
                   >
                     Enviar
                     <Rocket className="w-4 h-4" />
@@ -959,8 +1138,8 @@ function StepDot({ n, active }: { n: number; active: boolean }) {
     <div
       className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold border-2 transition-colors ${
         active
-          ? "bg-primary text-primary-light border-primary"
-          : "bg-background/5 text-background/50 border-background/20"
+          ? "bg-[var(--mm-orange)] text-white border-[var(--mm-orange)]"
+          : "bg-white/5 text-white/50 border-white/20"
       }`}
     >
       {n}
@@ -985,9 +1164,9 @@ function Field({
 }) {
   return (
     <div>
-      <label className="block text-[11px] uppercase tracking-wider text-background/60 mb-2">
+      <label className="block text-xs md:text-sm uppercase tracking-wider text-white/70 mb-2 font-semibold">
         {label}
-        {required && <span className="text-primary"> *</span>}
+        {required && <span className="text-[var(--mm-orange)]"> *</span>}
       </label>
       <input
         name={name}
@@ -995,7 +1174,7 @@ function Field({
         required={required}
         placeholder={placeholder}
         onChange={onChange}
-        className="w-full bg-background/5 border border-background/15 rounded-2xl px-4 py-3 text-background placeholder:text-background/30 focus:outline-none focus:border-primary transition-colors text-sm"
+        className="w-full bg-white/5 border border-white/15 rounded-2xl px-4 py-3.5 text-white placeholder:text-white/40 focus:outline-none focus:border-[var(--mm-orange)] transition-colors text-base"
       />
     </div>
   );
@@ -1016,22 +1195,22 @@ function Select({
 }) {
   return (
     <div>
-      <label className="block text-[11px] uppercase tracking-wider text-background/60 mb-2">
+      <label className="block text-xs md:text-sm uppercase tracking-wider text-white/70 mb-2 font-semibold">
         {label}
-        {required && <span className="text-primary"> *</span>}
+        {required && <span className="text-[var(--mm-orange)]"> *</span>}
       </label>
       <select
         name={name}
         required={required}
         onChange={onChange}
         defaultValue=""
-        className="w-full bg-background/5 border border-background/15 rounded-2xl px-4 py-3 text-background focus:outline-none focus:border-primary transition-colors text-sm appearance-none"
+        className="w-full bg-white/5 border border-white/15 rounded-2xl px-4 py-3.5 text-white focus:outline-none focus:border-[var(--mm-orange)] transition-colors text-base appearance-none cursor-pointer"
       >
         <option value="" disabled>
           Selecione…
         </option>
         {options.map((o) => (
-          <option key={o} value={o} className="bg-foreground">
+          <option key={o} value={o} className="bg-[var(--mm-blue)]">
             {o}
           </option>
         ))}
@@ -1040,10 +1219,10 @@ function Select({
   );
 }
 
-// ========== EXPORT ==========
+/* ================================ EXPORT ================================ */
 export default function Gestao() {
   return (
-    <>
+    <div style={PALETTE}>
       <Hero />
       <Brands />
       <WhoFor />
@@ -1057,6 +1236,6 @@ export default function Gestao() {
       <FAQ />
       <FinalCTA />
       <ContactForm />
-    </>
+    </div>
   );
 }
