@@ -111,7 +111,7 @@ export default function Hero() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.9, duration: 0.7 }}
-        className="relative z-40 px-5 md:px-12 pt-4 md:pt-6 pb-10 md:pb-16 max-w-7xl mx-auto w-full grid md:grid-cols-2 gap-5 md:gap-8 items-end"
+        className="relative z-40 px-5 md:px-12 pt-4 md:pt-6 pb-16 md:pb-24 max-w-7xl mx-auto w-full grid md:grid-cols-2 gap-5 md:gap-8 items-end"
       >
         <p className="text-foreground-soft text-sm md:text-base max-w-md leading-relaxed">
           Criando conteúdo que{" "}
