@@ -1,13 +1,13 @@
 "use client";
 
-import { BRANDS, type Brand } from "@/data/content";
+import { BRAND_LOGO_FILES } from "@/data/content";
 
 /**
  * Barra horizontal com scroll infinito das logos das marcas.
  * Duplicamos o array pra a animação continuar sem cortar ao fim.
  */
 export default function BrandsMarquee() {
-  const doubled = [...BRANDS, ...BRANDS];
+  const doubled = [...BRAND_LOGO_FILES, ...BRAND_LOGO_FILES];
 
   return (
     <section className="py-10 md:py-14 overflow-hidden border-y border-foreground/10 bg-background">
@@ -20,52 +20,24 @@ export default function BrandsMarquee() {
       </div>
 
       <div className="marquee">
-        {doubled.map((brand, i) => (
-          <BrandLogo key={`${brand.name}-${i}`} brand={brand} />
+        {doubled.map((file, i) => (
+          <div
+            key={`${file}-${i}`}
+            className="flex-shrink-0 flex items-center justify-center h-14 md:h-20 px-6 md:px-10"
+          >
+            <img
+              src={`/logos/${encodeURI(file)}`}
+              alt="Logo de marca parceira"
+              loading="lazy"
+              className="max-h-full w-auto max-w-[140px] md:max-w-[180px] object-contain opacity-70 hover:opacity-100 transition-opacity"
+              onError={(e) => {
+                // Se o arquivo não existir, esconde pra não mostrar ícone quebrado
+                e.currentTarget.style.display = "none";
+              }}
+            />
+          </div>
         ))}
       </div>
     </section>
-  );
-}
-
-function BrandLogo({ brand }: { brand: Brand }) {
-  // Cascata de fontes: arquivo local → Clearbit → nome estilizado
-  const localSrc = brand.logo ? `/logos/${brand.logo}` : null;
-  const clearbitSrc = brand.domain
-    ? `https://logo.clearbit.com/${brand.domain}?size=200`
-    : null;
-
-  return (
-    <div
-      className="flex-shrink-0 flex items-center justify-center h-12 md:h-16 px-6 md:px-10 opacity-60 hover:opacity-100 transition-opacity"
-      title={brand.name}
-    >
-      {localSrc ? (
-        <img
-          src={localSrc}
-          alt={brand.name}
-          className="max-h-full max-w-[140px] md:max-w-[160px] object-contain grayscale hover:grayscale-0 transition-all"
-          onError={(e) => {
-            // Se não tem arquivo local, tenta Clearbit
-            const img = e.currentTarget;
-            if (clearbitSrc && img.src !== clearbitSrc) {
-              img.src = clearbitSrc;
-            } else {
-              // Fallback final: esconde imagem e mostra o span de texto
-              img.style.display = "none";
-              const fallback = img.nextElementSibling as HTMLElement | null;
-              if (fallback) fallback.style.display = "inline";
-            }
-          }}
-        />
-      ) : null}
-      <span
-        className={`font-display font-bold text-base md:text-lg text-foreground/70 whitespace-nowrap ${
-          localSrc ? "hidden" : ""
-        }`}
-      >
-        {brand.name}
-      </span>
-    </div>
   );
 }

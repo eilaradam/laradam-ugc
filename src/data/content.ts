@@ -219,12 +219,51 @@ export const TESTIMONIALS: Testimonial[] = [
   },
 ];
 
-// Marcas reais que a Lara já trabalhou
+// Lista de arquivos de logo em /public/logos/ (usada pelo BrandsMarquee).
+// Basta adicionar o filename do arquivo que você subir na pasta.
+export const BRAND_LOGO_FILES: string[] = [
+  "Garnier-Logo.png",
+  "Share_wella_Artboard-1.png",
+  "chilli-beans-logo_1704894362.png",
+  "sofanacaixa-logo.png",
+  "logo-otica_1710441283.png",
+  "logo_lura-design-e-decor_UHwRyY.png",
+  "logo_meu-mei-digital_Goo6lO.png",
+  "logo_polpa-norte_gG5SGL.png",
+  "logo-1360244066119.png",
+  "Logo-china_in_china.jpg",
+  "galiotto.jpg",
+  "WhatsApp.svg.png",
+  "ZAP.png",
+  "41be4d_8d713d3c5f624b0ea8e77bccedce0dbb~mv2.png",
+  "a4c774_129514036e87418a98dd461ffe030990~mv2.png",
+  "cb9f46dc44e5bcd78fc2640f9920aff3-2.png",
+  "download (1).png",
+  "image.png",
+  "image (1).png",
+  "image (2).png",
+  "image (4).png",
+  "image (5).png",
+  "image (6).png",
+  "image (7).png",
+  "image (9).png",
+  "image (10).png",
+  "image (11).png",
+  "image (13).png",
+  "image (14).png",
+  "images.png",
+  "images.jpg",
+  "images-2.jpg",
+  "images-3.png",
+  "images-3.jpg",
+];
+
+// Marcas reais que a Lara já trabalhou (usada na seção Brands — vitrine em grid)
 // logo: caminho local em /public/logos/*.png (prioridade 1)
 // domain: fallback pra logo.clearbit.com se o arquivo local não existir
 export type Brand = {
   name: string;
-  logo?: string; // ex: "infinitepay.png" → carregado de /logos/infinitepay.png
+  logo?: string;
   domain?: string;
 };
 
