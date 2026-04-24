@@ -54,9 +54,9 @@ const HIGHLIGHTS: Highlight[] = [
   },
 ];
 
-// Áudio de cliente — abre no modal mas esconde o vídeo (audioOnly)
+// Áudio de cliente
 const AUDIO_TESTIMONIAL = {
-  youtubeId: "rRrIpSRu90A",
+  youtubeId: "",
   brand: "Depoimento de cliente",
   duration: "13:52",
 };
