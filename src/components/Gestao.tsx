@@ -559,12 +559,11 @@ function Modalidades() {
   const CARDS: Card[] = [
     {
       name: "Pacote Recorrente Mensal",
-      pitch: "Pra marcas que já rodam UGC com volume e querem operação contínua.",
+      pitch: "Operação contínua pra quem já roda UGC com volume.",
       bullets: [
-        "Volume mensal definido de creators e entregas",
-        "Hunting recorrente, sempre com creators novos no banco",
+        "Volume mensal definido",
+        "Entrega recorrente, sempre com creators novos no banco",
         "Briefing, roteiro, produção e revisão inclusos",
-        "Reunião mensal de leitura de performance e planejamento",
         "Suporte direto durante o mês inteiro",
       ],
       ideal: "Marcas que já validaram UGC e querem escalar com previsibilidade.",
@@ -573,30 +572,28 @@ function Modalidades() {
     },
     {
       name: "Campanha Pontual",
-      pitch:
-        "Pra marcas que precisam de uma campanha específica, com começo, meio e fim.",
+      pitch: "Campanha com começo, meio e fim — escopo fechado.",
       bullets: [
-        "Lançamento de produto, ativação sazonal, teste de novo formato",
+        "Lançamento, ativação sazonal ou teste pontual",
         "Escopo fechado de creators e entregas",
-        "Mesma estrutura completa: briefing, roteiro, produção, revisão",
+        "Briefing, roteiro, produção e revisão",
         "Entrega em prazo definido",
       ],
       ideal:
-        "Marcas que querem testar UGC com qualidade antes de fechar pacote, ou que têm necessidade pontual em datas específicas.",
+        "Marcas que querem testar UGC com qualidade ou têm necessidade pontual em datas específicas.",
       cta: "Quero conversar sobre minha campanha pontual",
     },
     {
       name: "Consultoria Estratégica",
-      pitch:
-        "Pra marcas que já têm time interno e querem estrutura, não execução.",
+      pitch: "Estrutura pro seu time aplicar — sem terceirizar a execução.",
       bullets: [
-        "Diagnóstico do que está sendo feito hoje",
-        "Construção de processos de gestão de UGC pra seu time aplicar",
-        "Briefing modelo, framework de seleção, fluxo de produção",
+        "Diagnóstico do que já é feito hoje",
+        "Processos de gestão de UGC pro seu time",
+        "Briefing modelo + framework de seleção",
         "Acompanhamento de implementação",
       ],
       ideal:
-        "Marcas com operação interna que querem profissionalizar o que já fazem sem terceirizar.",
+        "Marcas com operação interna que querem profissionalizar o que já fazem.",
       cta: "Quero conversar sobre consultoria",
     },
   ];
@@ -605,10 +602,8 @@ function Modalidades() {
     <section className="bg-white py-14 md:py-20 border-t border-black/10">
       <div className="max-w-6xl mx-auto px-6 md:px-12">
         <h2 className="font-display font-black text-2xl md:text-4xl leading-[0.95] tracking-tighter text-black uppercase max-w-3xl">
-          Três formas de trabalhar comigo.{" "}
-          <span className="text-[var(--mm-orange)]">
-            Você escolhe a que faz sentido pro seu momento.
-          </span>
+          Três formas de trabalhar.{" "}
+          <span className="text-[var(--mm-orange)]">Você escolhe.</span>
         </h2>
 
         <div className="mt-10 md:mt-14 grid md:grid-cols-3 gap-4 md:gap-5">
