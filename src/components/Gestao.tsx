@@ -1359,10 +1359,10 @@ export default function Gestao() {
     <div style={PALETTE}>
       <Hero />
       <BrandsLogoBar />
+      <CasesEVideos />
       <OQueFaço />
       <Modalidades />
       <Processo />
-      <CasesEVideos />
       <QuemSou />
       <FAQ />
       <CTAFinal />
