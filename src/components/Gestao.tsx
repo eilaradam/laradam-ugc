@@ -145,16 +145,6 @@ function Hero() {
             </span>
           </motion.div>
 
-          {/* Pré-headline */}
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.7, delay: 0.1 }}
-            className="text-sm md:text-base uppercase tracking-[0.2em] text-white/70 font-semibold mb-5"
-          >
-            Para marcas que já entenderam que conteúdo é canal, não tendência.
-          </motion.p>
-
           {/* Headline */}
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
@@ -166,26 +156,19 @@ function Hero() {
             <span className="text-[var(--mm-orange)]">do briefing à entrega.</span>
           </motion.h1>
 
-          <motion.p
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.35 }}
-            className="mt-4 text-base md:text-lg text-white/85 leading-snug max-w-xl"
-          >
-            Sem retrabalho, sem improviso, sem promessa de algoritmo.
-          </motion.p>
-
           {/* Subheadline */}
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.5 }}
-            className="mt-7 text-base md:text-lg max-w-xl leading-relaxed text-white/75"
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="mt-7 text-base md:text-lg max-w-xl leading-relaxed text-white/80"
           >
-            Eu cuido do processo inteiro: seleção dos creators certos, briefing
-            alinhado com seu posicionamento, roteiro revisado, produção
-            acompanhada e entrega no prazo.{" "}
-            <span className="text-white font-semibold">Você roda mídia. Eu rodo a operação.</span>
+            Cuidamos de todo o processo pra sua empresa: seleção dos creators
+            certos, briefing alinhado com seu posicionamento, roteiro
+            revisado, produção acompanhada e entrega no prazo.{" "}
+            <span className="text-white font-semibold">
+              Você roda mídia. Eu rodo a operação.
+            </span>
           </motion.p>
 
           {/* CTA */}
@@ -354,7 +337,6 @@ function BrandsLogoBar() {
     "Mei Digital",
     "Mash",
     "Focus",
-    "Katy Perry",
     "David Beckham",
   ];
 
@@ -395,73 +377,6 @@ function BrandsLogoBar() {
               </div>
             ))}
           </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ============================ 4. O PROBLEMA ============================ */
-function OProblema() {
-  const PONTOS = [
-    "Você briefou, recebeu o vídeo, e o creator entendeu metade do que você pediu.",
-    "O criativo veio bonito, mas não falava com sua persona, e você não soube explicar por quê.",
-    "Você roda muitos vídeos por mês e seu time interno virou central de cobrança de creator.",
-    "Você já investiu em campanha que não trouxe retorno e ficou com a sensação de que UGC \"não funciona\" pra sua marca.",
-    "Você produz vídeo, mas não tem ideia se está testando os ângulos certos ou só repetindo o que já fez.",
-  ];
-
-  return (
-    <section className="relative bg-white text-black py-14 md:py-20 overflow-hidden border-t border-black/10">
-      <motion.div
-        initial={{ opacity: 0, rotate: 20 }}
-        whileInView={{ opacity: 1, rotate: 8 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.8 }}
-        className="hidden md:block absolute top-10 right-10 w-24 pointer-events-none"
-      >
-        <ChatBubbleSticker className="w-full h-auto" />
-      </motion.div>
-
-      <div className="relative max-w-4xl mx-auto px-6 md:px-12">
-        <h2 className="font-display font-black text-2xl md:text-4xl leading-[0.95] tracking-tighter uppercase max-w-3xl text-black">
-          Campanha de UGC não dá errado por falta de creator.{" "}
-          <span className="text-[var(--mm-orange)]">
-            Dá errado por falta de gestão.
-          </span>
-        </h2>
-
-        <div className="mt-8 space-y-5 max-w-2xl text-base md:text-lg text-black/80 leading-relaxed">
-          <p>
-            Eu já vi muita marca contratar creator sem briefing claro, receber
-            vídeo genérico, achar que era problema do creator e tentar de novo.
-            E de novo. E de novo. Gastando tempo, dinheiro e paciência.
-          </p>
-          <p>
-            UGC bem feito não é sobre achar a pessoa certa. É sobre montar um
-            processo que funcione independente de quem está na frente da
-            câmera.
-          </p>
-        </div>
-
-        <div className="mt-10 md:mt-12 rounded-2xl border-2 border-black/10 bg-[var(--mm-pink-soft)]/40 p-5 md:p-7">
-          <p className="text-sm md:text-base text-[var(--mm-orange)] font-bold uppercase tracking-wider mb-5">
-            Se você já passou por algum destes pontos, é gestão que está
-            faltando, não creator novo:
-          </p>
-          <ul className="space-y-3.5">
-            {PONTOS.map((p) => (
-              <li key={p} className="flex items-start gap-3 text-sm md:text-base text-black/85 leading-relaxed">
-                <span className="text-[var(--mm-orange)] mt-1 flex-shrink-0">
-                  ✦
-                </span>
-                <span>{p}</span>
-              </li>
-            ))}
-          </ul>
-          <p className="mt-6 text-base md:text-lg text-black font-semibold leading-relaxed">
-            Nada disso é falta de creator. É falta de quem orquestra.
-          </p>
         </div>
       </div>
     </section>
@@ -1449,7 +1364,6 @@ export default function Gestao() {
     <div style={PALETTE}>
       <Hero />
       <BrandsLogoBar />
-      <OProblema />
       <OQueFaço />
       <Modalidades />
       <Processo />
