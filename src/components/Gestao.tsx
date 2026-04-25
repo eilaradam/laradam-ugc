@@ -412,7 +412,7 @@ function OProblema() {
   ];
 
   return (
-    <section className="relative bg-black text-white py-14 md:py-20 overflow-hidden">
+    <section className="relative bg-white text-black py-14 md:py-20 overflow-hidden border-t border-black/10">
       <motion.div
         initial={{ opacity: 0, rotate: 20 }}
         whileInView={{ opacity: 1, rotate: 8 }}
@@ -424,14 +424,14 @@ function OProblema() {
       </motion.div>
 
       <div className="relative max-w-4xl mx-auto px-6 md:px-12">
-        <h2 className="font-display font-black text-2xl md:text-4xl leading-[0.95] tracking-tighter uppercase max-w-3xl">
+        <h2 className="font-display font-black text-2xl md:text-4xl leading-[0.95] tracking-tighter uppercase max-w-3xl text-black">
           Campanha de UGC não dá errado por falta de creator.{" "}
           <span className="text-[var(--mm-orange)]">
             Dá errado por falta de gestão.
           </span>
         </h2>
 
-        <div className="mt-8 space-y-5 max-w-2xl text-base md:text-lg text-white/85 leading-relaxed">
+        <div className="mt-8 space-y-5 max-w-2xl text-base md:text-lg text-black/80 leading-relaxed">
           <p>
             Eu já vi muita marca contratar creator sem briefing claro, receber
             vídeo genérico, achar que era problema do creator e tentar de novo.
@@ -444,14 +444,14 @@ function OProblema() {
           </p>
         </div>
 
-        <div className="mt-10 md:mt-12 rounded-2xl border border-white/15 bg-white/[0.03] p-5 md:p-7">
+        <div className="mt-10 md:mt-12 rounded-2xl border-2 border-black/10 bg-[var(--mm-pink-soft)]/40 p-5 md:p-7">
           <p className="text-sm md:text-base text-[var(--mm-orange)] font-bold uppercase tracking-wider mb-5">
             Se você já passou por algum destes pontos, é gestão que está
             faltando, não creator novo:
           </p>
           <ul className="space-y-3.5">
             {PONTOS.map((p) => (
-              <li key={p} className="flex items-start gap-3 text-sm md:text-base text-white/90 leading-relaxed">
+              <li key={p} className="flex items-start gap-3 text-sm md:text-base text-black/85 leading-relaxed">
                 <span className="text-[var(--mm-orange)] mt-1 flex-shrink-0">
                   ✦
                 </span>
@@ -459,7 +459,7 @@ function OProblema() {
               </li>
             ))}
           </ul>
-          <p className="mt-6 text-base md:text-lg text-white font-semibold leading-relaxed">
+          <p className="mt-6 text-base md:text-lg text-black font-semibold leading-relaxed">
             Nada disso é falta de creator. É falta de quem orquestra.
           </p>
         </div>
@@ -822,7 +822,7 @@ function Processo() {
   ];
 
   return (
-    <section className="relative bg-black text-white py-14 md:py-20 overflow-hidden">
+    <section className="relative bg-white text-black py-14 md:py-20 overflow-hidden border-t border-black/10">
       <motion.div
         animate={{ rotate: 360 }}
         transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
@@ -832,18 +832,18 @@ function Processo() {
       </motion.div>
 
       <div className="relative max-w-4xl mx-auto px-6 md:px-12">
-        <h2 className="font-display font-black text-2xl md:text-4xl leading-[0.95] tracking-tighter uppercase">
+        <h2 className="font-display font-black text-2xl md:text-4xl leading-[0.95] tracking-tighter uppercase text-black">
           Cinco etapas.{" "}
           <span className="text-[var(--mm-orange)]">Sem mistério, sem milagre.</span>
         </h2>
-        <p className="mt-4 text-base md:text-lg text-white/80 max-w-2xl leading-relaxed">
+        <p className="mt-4 text-base md:text-lg text-black/75 max-w-2xl leading-relaxed">
           Esse é o processo que rodei em mais de 100 campanhas. Cada etapa
           existe porque, sem ela, alguma coisa quebra.
         </p>
 
         <div className="mt-10 md:mt-14 relative">
           {/* linha vertical */}
-          <div className="absolute left-5 md:left-7 top-2 bottom-2 w-px bg-white/20" />
+          <div className="absolute left-5 md:left-7 top-2 bottom-2 w-px bg-black/15" />
 
           <div className="space-y-6 md:space-y-8">
             {ETAPAS.map((e, i) => (
@@ -855,13 +855,13 @@ function Processo() {
                 transition={{ duration: 0.5, delay: i * 0.08 }}
                 className="relative pl-14 md:pl-20"
               >
-                <div className="absolute left-0 top-0 w-10 h-10 md:w-14 md:h-14 rounded-full bg-[var(--mm-orange)] text-white flex items-center justify-center font-display font-black text-sm md:text-base">
+                <div className="absolute left-0 top-0 w-10 h-10 md:w-14 md:h-14 rounded-full bg-[var(--mm-orange)] text-white flex items-center justify-center font-display font-black text-sm md:text-base shadow-lg">
                   {e.n}
                 </div>
-                <h3 className="font-display font-black text-lg md:text-xl tracking-tight uppercase mb-2 mt-1.5 md:mt-2.5">
+                <h3 className="font-display font-black text-lg md:text-xl tracking-tight uppercase mb-2 mt-1.5 md:mt-2.5 text-black">
                   {e.title}
                 </h3>
-                <p className="text-sm md:text-base text-white/80 leading-relaxed">
+                <p className="text-sm md:text-base text-black/75 leading-relaxed">
                   {e.body}
                 </p>
               </motion.div>
@@ -954,20 +954,20 @@ function CasesEVideos() {
 /* ============================== 9. QUEM SOU ============================== */
 function QuemSou() {
   return (
-    <section className="bg-black text-white py-14 md:py-20 overflow-hidden">
+    <section className="bg-white text-black py-14 md:py-20 overflow-hidden border-t border-black/10">
       <div className="max-w-6xl mx-auto px-6 md:px-12 grid md:grid-cols-12 gap-8 md:gap-12 items-center">
         <div className="md:col-span-7">
           <div className="text-xs md:text-sm uppercase tracking-[0.3em] text-[var(--mm-orange)] font-bold mb-4">
             Eu sou
           </div>
-          <h2 className="font-display font-black text-3xl md:text-5xl leading-[0.95] tracking-tighter uppercase">
+          <h2 className="font-display font-black text-3xl md:text-5xl leading-[0.95] tracking-tighter uppercase text-black">
             Lara{" "}
             <span className="font-serif-accent italic text-[var(--mm-orange)] normal-case">
               Dam.
             </span>
           </h2>
 
-          <div className="mt-8 space-y-5 text-base md:text-lg text-white/85 leading-relaxed">
+          <div className="mt-8 space-y-5 text-base md:text-lg text-black/80 leading-relaxed">
             <p>
               Fui uma das primeiras pessoas no Brasil a falar publicamente
               sobre gestão de campanhas UGC. Não porque planejei. Porque já
@@ -982,14 +982,14 @@ function QuemSou() {
             </p>
             <p>
               Em mais de 100 campanhas, com marcas como{" "}
-              <b className="text-white">
+              <b className="text-black">
                 OLX, ZAP Imóveis, Magalu, Porto Seguro, Chilli Beans
               </b>{" "}
               e muitas outras, uma coisa ficou clara: o que separa campanha
               boa de campanha que dá errado não é talento isolado de creator.
               É processo.
             </p>
-            <p className="font-semibold text-white">
+            <p className="font-semibold text-black">
               Eu não acredito em fórmula mágica. Acredito em fazer o básico
               bem feito.
             </p>
@@ -999,7 +999,7 @@ function QuemSou() {
         <div className="md:col-span-5">
           <div className="relative aspect-[3/4] w-full max-w-sm mx-auto">
             <div
-              className="absolute inset-x-3 inset-y-2 bg-white rounded-[2.5rem]"
+              className="absolute inset-x-3 inset-y-2 bg-[var(--mm-pink-soft)] rounded-[2.5rem]"
               aria-hidden
             />
             <img
@@ -1134,16 +1134,16 @@ function FAQ() {
 /* ============================== 11. CTA FINAL ============================== */
 function CTAFinal() {
   return (
-    <section className="bg-black text-white py-16 md:py-24 overflow-hidden">
+    <section className="bg-white text-black py-16 md:py-24 overflow-hidden border-t border-black/10">
       <div className="max-w-3xl mx-auto px-6 md:px-12 text-center">
-        <h2 className="font-display font-black text-2xl md:text-4xl leading-[0.95] tracking-tighter uppercase">
+        <h2 className="font-display font-black text-2xl md:text-4xl leading-[0.95] tracking-tighter uppercase text-black">
           Sua marca não precisa de mais um vídeo.{" "}
           <span className="text-[var(--mm-orange)]">
             Precisa de uma campanha que funcione.
           </span>
         </h2>
 
-        <div className="mt-8 space-y-4 text-base md:text-lg text-white/85 leading-relaxed">
+        <div className="mt-8 space-y-4 text-base md:text-lg text-black/80 leading-relaxed">
           <p>
             Se você chegou até aqui, é porque alguma coisa do que eu falei
             bateu. Talvez seu time esteja sobrecarregado, talvez você já tenha
@@ -1155,7 +1155,7 @@ function CTAFinal() {
             entendo seu momento, e a partir dali decidimos juntos se faz
             sentido trabalhar.
           </p>
-          <p className="text-white font-semibold">
+          <p className="text-black font-semibold">
             Sem proposta enlatada. Sem promessa que eu não posso cumprir.
             Conversa real pra entender se o que eu faço é o que sua marca
             precisa agora.
@@ -1169,7 +1169,7 @@ function CTAFinal() {
           Quero conversar sobre minha campanha
           <ArrowRight className="w-4 h-4" />
         </a>
-        <p className="mt-3 text-xs md:text-sm text-white/60">
+        <p className="mt-3 text-xs md:text-sm text-black/60">
           Resposta em até 24h. Diagnóstico inicial sem custo.
         </p>
       </div>
