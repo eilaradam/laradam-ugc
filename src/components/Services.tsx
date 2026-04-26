@@ -96,48 +96,48 @@ export default function Services() {
             </h2>
           </div>
 
-          <div className="md:pt-4 flex flex-col justify-between gap-6">
+          <div className="md:pt-4">
             <p className="text-sm md:text-base uppercase tracking-wider text-foreground-soft leading-relaxed font-medium">
               Conheça os formatos em que minha gestão de campanhas UGC pode
               ajudar sua marca a conquistar mais clientes e gerar resultado
               de verdade.
             </p>
-
-            {/* Setas de navegação inline */}
-            <div className="flex items-center gap-2 self-start md:self-end">
-              <button
-                onClick={() => scrollByPage(-1)}
-                disabled={!canPrev}
-                aria-label="Anterior"
-                className="w-11 h-11 rounded-full border-2 border-foreground/15 flex items-center justify-center hover:bg-foreground hover:text-background hover:border-foreground disabled:opacity-30 disabled:cursor-not-allowed transition-all"
-              >
-                <ChevronLeft className="w-5 h-5" />
-              </button>
-              <button
-                onClick={() => scrollByPage(1)}
-                disabled={!canNext}
-                aria-label="Próximo"
-                className="w-11 h-11 rounded-full border-2 border-foreground/15 flex items-center justify-center hover:bg-foreground hover:text-background hover:border-foreground disabled:opacity-30 disabled:cursor-not-allowed transition-all"
-              >
-                <ChevronRight className="w-5 h-5" />
-              </button>
-            </div>
           </div>
         </div>
 
-        {/* Carrossel horizontal — 3 visíveis no desktop, 2 no tablet, 1 no mobile */}
-        <div
-          ref={scrollerRef}
-          className="flex gap-5 md:gap-6 overflow-x-auto overflow-y-hidden scroll-smooth snap-x snap-mandatory scrollbar-hide -mx-6 md:-mx-12 px-6 md:px-12"
-        >
-          {SERVICES.map((s, i) => (
-            <div
-              key={s.title}
-              className="flex-shrink-0 snap-start w-[85%] sm:w-[calc((100%-1.25rem)/2)] lg:w-[calc((100%-3rem)/3)]"
-            >
-              <ServiceCard service={s} index={i} />
-            </div>
-          ))}
+        {/* Carrossel horizontal com setas laterais — 4 visíveis no desktop, 3 no tablet, 1.2 no mobile */}
+        <div className="relative">
+          <div
+            ref={scrollerRef}
+            className="flex gap-4 md:gap-5 overflow-x-auto overflow-y-hidden scroll-smooth snap-x snap-mandatory scrollbar-hide -mx-6 md:-mx-12 px-6 md:px-12"
+          >
+            {SERVICES.map((s, i) => (
+              <div
+                key={s.title}
+                className="flex-shrink-0 snap-start w-[78%] sm:w-[calc((100%-1rem)/2)] md:w-[calc((100%-2rem)/3)] lg:w-[calc((100%-3rem)/4)]"
+              >
+                <ServiceCard service={s} index={i} />
+              </div>
+            ))}
+          </div>
+
+          {/* Setas laterais sobrepostas */}
+          <button
+            onClick={() => scrollByPage(-1)}
+            disabled={!canPrev}
+            aria-label="Anterior"
+            className="hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 z-10 w-12 h-12 rounded-full bg-background border-2 border-foreground/15 items-center justify-center hover:bg-foreground hover:text-background hover:border-foreground disabled:opacity-0 disabled:pointer-events-none transition-all shadow-md"
+          >
+            <ChevronLeft className="w-5 h-5" />
+          </button>
+          <button
+            onClick={() => scrollByPage(1)}
+            disabled={!canNext}
+            aria-label="Próximo"
+            className="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 z-10 w-12 h-12 rounded-full bg-background border-2 border-foreground/15 items-center justify-center hover:bg-foreground hover:text-background hover:border-foreground disabled:opacity-0 disabled:pointer-events-none transition-all shadow-md"
+          >
+            <ChevronRight className="w-5 h-5" />
+          </button>
         </div>
 
         {/* Dica de scroll no mobile */}
@@ -161,30 +161,30 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-40px" }}
       transition={{ duration: 0.5, delay: index * 0.06 }}
-      className="group h-full flex flex-col bg-background border border-foreground/10 rounded-3xl p-6 md:p-8 hover:border-primary/40 hover:shadow-lg transition-all"
+      className="group h-full flex flex-col bg-background border border-foreground/10 rounded-2xl p-5 md:p-6 hover:border-primary/40 hover:shadow-lg transition-all"
     >
-      <div className="mb-6">
-        <div className="w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-primary-light flex items-center justify-center">
+      <div className="mb-4">
+        <div className="w-11 h-11 md:w-12 md:h-12 rounded-xl bg-primary-light flex items-center justify-center">
           <Icon
-            className="w-7 h-7 md:w-8 md:h-8 text-primary"
-            strokeWidth={1.5}
+            className="w-5 h-5 md:w-6 md:h-6 text-primary"
+            strokeWidth={1.75}
           />
         </div>
       </div>
 
-      <h3 className="font-display font-black text-foreground text-xl md:text-2xl leading-tight tracking-tight mb-3">
+      <h3 className="font-display font-black text-foreground text-base md:text-lg leading-tight tracking-tight mb-2">
         {service.title}
       </h3>
 
-      <p className="text-foreground-soft text-sm md:text-base leading-relaxed mb-6">
+      <p className="text-foreground-soft text-xs md:text-sm leading-relaxed mb-5">
         {service.description}
       </p>
 
       <a
         href="#contato"
-        className="mt-auto inline-flex items-center gap-2.5 text-primary font-bold uppercase tracking-wider text-xs md:text-sm hover:gap-3 transition-all"
+        className="mt-auto inline-flex items-center gap-2 text-primary font-bold uppercase tracking-wider text-[10px] md:text-xs hover:gap-2.5 transition-all"
       >
-        <WhatsAppIcon className="w-5 h-5 flex-shrink-0" />
+        <WhatsAppIcon className="w-4 h-4 flex-shrink-0" />
         <span>{cta}</span>
       </a>
     </motion.div>
