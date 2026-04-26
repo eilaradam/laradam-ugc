@@ -29,12 +29,15 @@ declare global {
   }
 }
 
+type Stat = { value: string; label: string };
+
 type Highlight = {
   youtubeId: string;
   brand: string;
   brandDomain: string; // usado pelo Clearbit pro logo
   metric: string; // ex: "+ 50 milhões de views"
   platform: string; // ex: "apenas no TikTok"
+  stats?: Stat[]; // se presente, substitui metric/platform por lista vertical
 };
 
 const HIGHLIGHTS: Highlight[] = [
@@ -65,6 +68,11 @@ const HIGHLIGHTS: Highlight[] = [
     brandDomain: "meliuz.com.br",
     metric: "1.023 vídeos",
     platform: "campanha 360°",
+    stats: [
+      { value: "1.023", label: "vídeos totais" },
+      { value: "5,6M", label: "visualizações totais" },
+      { value: "66k", label: "salvamentos totais" },
+    ],
   },
 ];
 
@@ -385,19 +393,41 @@ function HighlightCard({
         </div>
       </button>
 
-      {/* Métrica abaixo */}
-      <div className="mt-4 md:mt-5 text-center">
-        <div className="font-display font-bold text-foreground text-base md:text-xl tracking-tight">
-          <span className="font-black">
-            {highlight.metric.split(" de ")[0]}
-          </span>
-          {" de "}
-          {highlight.metric.split(" de ")[1]}
+      {/* Métricas abaixo — lista vertical se tiver stats[], senão métrica única */}
+      {highlight.stats && highlight.stats.length > 0 ? (
+        <dl className="mt-4 md:mt-5 divide-y divide-foreground/10 border-t border-foreground/10">
+          {highlight.stats.map((s) => (
+            <div
+              key={s.label}
+              className="flex items-baseline justify-between py-2"
+            >
+              <dt className="text-[11px] md:text-xs uppercase tracking-wider text-muted">
+                {s.label}
+              </dt>
+              <dd className="font-display font-black text-base md:text-lg tracking-tight text-foreground tabular-nums">
+                {s.value}
+              </dd>
+            </div>
+          ))}
+        </dl>
+      ) : (
+        <div className="mt-4 md:mt-5 text-center">
+          <div className="font-display font-bold text-foreground text-base md:text-xl tracking-tight">
+            <span className="font-black">
+              {highlight.metric.split(" de ")[0]}
+            </span>
+            {highlight.metric.includes(" de ") && (
+              <>
+                {" de "}
+                {highlight.metric.split(" de ")[1]}
+              </>
+            )}
+          </div>
+          <div className="text-sm md:text-base text-foreground-soft mt-0.5">
+            {highlight.platform}
+          </div>
         </div>
-        <div className="text-sm md:text-base text-foreground-soft mt-0.5">
-          {highlight.platform}
-        </div>
-      </div>
+      )}
     </motion.div>
   );
 }
