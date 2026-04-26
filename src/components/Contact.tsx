@@ -83,7 +83,7 @@ export default function Contact() {
           <h2 className="font-display font-black text-4xl md:text-6xl leading-[0.9] tracking-tighter mb-8">
             Vamos criar algo{" "}
             <span className="font-serif-accent italic text-primary">
-              memorável
+              juntos
             </span>
             ?
           </h2>
