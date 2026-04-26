@@ -200,6 +200,7 @@ export const TESTIMONIALS: Testimonial[] = [
       "A Lara entrega muito além do que a gente pede. Ela entende de performance e o vídeo veio pronto pra rodar como criativo, bateu recorde de CTR no Meta.",
     brand: "InfinitePay",
     logoFile: "59.png",
+    role: "Vídeo recorde no Meta",
     metric: { value: "50M", label: "views em 1 vídeo" },
   },
   {
@@ -207,6 +208,7 @@ export const TESTIMONIALS: Testimonial[] = [
       "Trabalho com vários creators e a Lara é a que mais converte. Roteiro afiado, entrega rápida e ela pega direção de brief no primeiro review.",
     brand: "Méliuz",
     logoFile: "35.png",
+    role: "Roteiro + criativo pra growth",
     metric: { value: "10M", label: "views · campanha mercado" },
   },
   {
@@ -214,12 +216,14 @@ export const TESTIMONIALS: Testimonial[] = [
       "Já fechamos 4 campanhas e cada uma performou melhor que a anterior. A Lara virou parte do nosso playbook de criativo.",
     brand: "DT3",
     logoFile: "61.png",
+    role: "Playbook de criativo recorrente",
     metric: { value: "4+", label: "campanhas ativas" },
   },
   {
     quote:
       "Lara foi incrível na criação do conteúdo para nossa campanha. Muito criativa, excelente comunicação e de uma sensibilidade ímpar. Amamos!",
     brand: "Essence in Brows",
+    role: "UGC pra marca de beleza",
   },
   {
     quote:

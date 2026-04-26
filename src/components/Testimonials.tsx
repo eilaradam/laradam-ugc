@@ -71,7 +71,7 @@ export default function Testimonials() {
     };
   }, []);
 
-  const scrollByPage = (direction: 1 | -1) => {
+  const scrollByCard = (direction: 1 | -1) => {
     const el = scrollerRef.current;
     if (!el) return;
     const oneCopyWidth = el.scrollWidth / 3;
@@ -88,18 +88,21 @@ export default function Testimonials() {
         requestAnimationFrame(() => { isJumping.current = false; });
       });
     }
-    el.scrollBy({ left: el.clientWidth * direction * 0.85, behavior: "smooth" });
+    // Avança/volta a largura de UM card (não a página inteira)
+    const firstCard = el.firstElementChild as HTMLElement | null;
+    const cardWidth = firstCard?.offsetWidth ?? el.clientWidth * 0.25;
+    const gap = parseFloat(getComputedStyle(el).columnGap || getComputedStyle(el).gap || "16") || 16;
+    el.scrollBy({ left: (cardWidth + gap) * direction, behavior: "smooth" });
   };
 
-  // Autoplay
+  // Autoplay — avança 1 card por vez
   useEffect(() => {
     const interval = setInterval(() => {
       if (isPaused.current) return;
       const el = scrollerRef.current;
       if (!el) return;
-      // Se o usuário não está vendo a tela, não rola (economia de cpu)
       if (document.hidden) return;
-      scrollByPage(1);
+      scrollByCard(1);
     }, AUTOPLAY_INTERVAL);
     return () => clearInterval(interval);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -153,14 +156,14 @@ export default function Testimonials() {
           </div>
 
           <button
-            onClick={() => scrollByPage(-1)}
+            onClick={() => scrollByCard(-1)}
             aria-label="Anterior"
             className="hidden md:flex absolute left-2 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-background border-2 border-foreground/15 items-center justify-center hover:bg-foreground hover:text-background hover:border-foreground transition-all shadow-md"
           >
             <ChevronLeft className="w-5 h-5" />
           </button>
           <button
-            onClick={() => scrollByPage(1)}
+            onClick={() => scrollByCard(1)}
             aria-label="Próximo"
             className="hidden md:flex absolute right-2 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-background border-2 border-foreground/15 items-center justify-center hover:bg-foreground hover:text-background hover:border-foreground transition-all shadow-md"
           >
