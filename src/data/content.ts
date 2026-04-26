@@ -225,13 +225,14 @@ export const TESTIMONIALS: Testimonial[] = [
     quote:
       "A Lara desempenhou um trabalho incrível. Amamos o resultado do vídeo criado, além da qualidade e toda a atenção para entender a demanda. Super recomendamos.",
     brand: "Tropical Especiarias",
-    role: "Gastronomia · Unboxing",
+    logoFile: "27.png",
+    role: "Criativos pra tráfego pago",
   },
   {
     quote:
       "O trabalho da Lara foi incrível. Ela fez a cobertura completa do evento, filmou cada detalhe e isso agregou DEMAIS pras marcas. Foi a creator que mais gerou conteúdo pra BF em 2024 — converteram muito!",
     brand: "Beauty Fair",
-    role: "Evento · Cobertura completa",
+    role: "Conteúdo em evento presencial",
   },
   {
     quote:
@@ -243,7 +244,8 @@ export const TESTIMONIALS: Testimonial[] = [
     quote:
       "Alto nível de domínio em UGC: roteiro coeso, narrativa clara, performance natural na frente da câmera e edição precisa. Comunicação fluida em todas as etapas. Uma parceria que agrega valor real.",
     brand: "Velds",
-    role: "Casa Inteligente",
+    logoFile: "28.png",
+    role: "Conteúdo pra e-commerce",
   },
 ];
 
