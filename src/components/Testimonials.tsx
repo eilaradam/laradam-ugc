@@ -1,17 +1,116 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { Star } from "lucide-react";
+import { ChevronLeft, ChevronRight, Star } from "lucide-react";
 import { TESTIMONIALS, type Testimonial } from "@/data/content";
 
+// Triplica pra ilusão de loop infinito
+const LOOPED_TESTIMONIALS = [...TESTIMONIALS, ...TESTIMONIALS, ...TESTIMONIALS];
+
+const AUTOPLAY_INTERVAL = 4500; // ms
+
 export default function Testimonials() {
+  const scrollerRef = useRef<HTMLDivElement>(null);
+  const isJumping = useRef(false);
+  const isPaused = useRef(false);
+
+  const jumpBy = (el: HTMLDivElement, delta: number) => {
+    const prev = el.style.scrollBehavior;
+    el.style.scrollBehavior = "auto";
+    el.scrollLeft = el.scrollLeft + delta;
+    void el.offsetHeight;
+    el.style.scrollBehavior = prev;
+  };
+
+  // Centraliza no bloco do meio ao montar
+  useEffect(() => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    const oneCopyWidth = el.scrollWidth / 3;
+    const prev = el.style.scrollBehavior;
+    el.style.scrollBehavior = "auto";
+    el.scrollLeft = oneCopyWidth;
+    void el.offsetHeight;
+    el.style.scrollBehavior = prev;
+  }, []);
+
+  // Detecta fim do scroll e teleporta se passou do limite
+  useEffect(() => {
+    const el = scrollerRef.current;
+    if (!el) return;
+
+    let timeout: ReturnType<typeof setTimeout> | null = null;
+    const checkLoop = () => {
+      if (isJumping.current) return;
+      const oneCopyWidth = el.scrollWidth / 3;
+      if (el.scrollLeft < oneCopyWidth * 0.5) {
+        isJumping.current = true;
+        jumpBy(el, oneCopyWidth);
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => { isJumping.current = false; });
+        });
+      } else if (el.scrollLeft > oneCopyWidth * 1.5) {
+        isJumping.current = true;
+        jumpBy(el, -oneCopyWidth);
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => { isJumping.current = false; });
+        });
+      }
+    };
+
+    const onScroll = () => {
+      if (timeout) clearTimeout(timeout);
+      timeout = setTimeout(checkLoop, 180);
+    };
+
+    el.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      el.removeEventListener("scroll", onScroll);
+      if (timeout) clearTimeout(timeout);
+    };
+  }, []);
+
+  const scrollByPage = (direction: 1 | -1) => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    const oneCopyWidth = el.scrollWidth / 3;
+    if (direction === 1 && el.scrollLeft > oneCopyWidth * 1.5) {
+      isJumping.current = true;
+      jumpBy(el, -oneCopyWidth);
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => { isJumping.current = false; });
+      });
+    } else if (direction === -1 && el.scrollLeft < oneCopyWidth * 0.5) {
+      isJumping.current = true;
+      jumpBy(el, oneCopyWidth);
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => { isJumping.current = false; });
+      });
+    }
+    el.scrollBy({ left: el.clientWidth * direction * 0.85, behavior: "smooth" });
+  };
+
+  // Autoplay
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (isPaused.current) return;
+      const el = scrollerRef.current;
+      if (!el) return;
+      // Se o usuário não está vendo a tela, não rola (economia de cpu)
+      if (document.hidden) return;
+      scrollByPage(1);
+    }, AUTOPLAY_INTERVAL);
+    return () => clearInterval(interval);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <section
       id="depoimentos"
       className="px-6 md:px-12 py-8 md:py-14 bg-background-alt"
     >
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-6 md:mb-8">
           <div>
             <div className="text-[10px] md:text-xs uppercase tracking-[0.3em] text-primary font-medium mb-3 flex items-center gap-3">
@@ -31,13 +130,42 @@ export default function Testimonials() {
           </p>
         </div>
 
-        {/* Masonry: cards fluem em colunas, respeitando altura variável */}
-        <div className="columns-1 md:columns-2 lg:columns-3 gap-3">
-          {TESTIMONIALS.map((t, i) => (
-            <div key={t.brand} className="break-inside-avoid mb-3">
-              <TestimonialCard testimonial={t} index={i} />
-            </div>
-          ))}
+        {/* Carrossel infinito com autoplay */}
+        <div
+          className="relative"
+          onMouseEnter={() => { isPaused.current = true; }}
+          onMouseLeave={() => { isPaused.current = false; }}
+          onTouchStart={() => { isPaused.current = true; }}
+          onTouchEnd={() => { isPaused.current = false; }}
+        >
+          <div
+            ref={scrollerRef}
+            className="flex gap-4 md:gap-5 overflow-x-auto overflow-y-hidden scroll-smooth snap-x snap-mandatory scrollbar-hide services-fade py-2 items-stretch"
+          >
+            {LOOPED_TESTIMONIALS.map((t, i) => (
+              <div
+                key={`${t.brand}-${i}`}
+                className="flex-shrink-0 snap-center w-[78%] sm:w-[calc((100%-1rem)/2)] md:w-[calc((100%-2rem)/3)] lg:w-[calc((100%-3rem)/4)] flex"
+              >
+                <TestimonialCard testimonial={t} index={i} />
+              </div>
+            ))}
+          </div>
+
+          <button
+            onClick={() => scrollByPage(-1)}
+            aria-label="Anterior"
+            className="hidden md:flex absolute left-2 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-background border-2 border-foreground/15 items-center justify-center hover:bg-foreground hover:text-background hover:border-foreground transition-all shadow-md"
+          >
+            <ChevronLeft className="w-5 h-5" />
+          </button>
+          <button
+            onClick={() => scrollByPage(1)}
+            aria-label="Próximo"
+            className="hidden md:flex absolute right-2 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-background border-2 border-foreground/15 items-center justify-center hover:bg-foreground hover:text-background hover:border-foreground transition-all shadow-md"
+          >
+            <ChevronRight className="w-5 h-5" />
+          </button>
         </div>
       </div>
     </section>
@@ -104,8 +232,8 @@ function TestimonialCard({
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.5, delay: (index % 6) * 0.08 }}
-      className="relative p-5 rounded-2xl bg-background border border-foreground/5 flex flex-col gap-4 group hover:border-primary/30 transition-colors"
+      transition={{ duration: 0.5, delay: (index % TESTIMONIALS.length) * 0.06 }}
+      className="relative w-full p-5 rounded-2xl bg-background border border-foreground/5 flex flex-col gap-4 group hover:border-primary/30 transition-colors"
     >
       <div className="flex items-center gap-3">
         <BrandLogo
@@ -136,12 +264,12 @@ function TestimonialCard({
         </div>
       </div>
 
-      <p className="text-foreground-soft leading-relaxed text-xs md:text-sm">
+      <p className="text-foreground-soft leading-relaxed text-xs md:text-sm flex-1">
         {testimonial.quote}
       </p>
 
       {testimonial.metric && (
-        <div className="flex items-baseline gap-2 pt-3 border-t border-foreground/10 mt-auto">
+        <div className="flex items-baseline gap-2 pt-3 border-t border-foreground/10">
           <span className="font-display font-black text-xl text-primary tracking-tight">
             {testimonial.metric.value}
           </span>
