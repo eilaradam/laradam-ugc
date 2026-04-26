@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { Mic, Pause, Play } from "lucide-react";
+import { ChevronLeft, ChevronRight, Mic, Pause, Play } from "lucide-react";
 import { useVideoModal } from "./VideoModalProvider";
 import type { Video } from "@/data/content";
 
@@ -52,7 +52,25 @@ const HIGHLIGHTS: Highlight[] = [
     metric: "+ 30 milhões de views",
     platform: "apenas no TikTok",
   },
+  {
+    youtubeId: "GPcPWfWmA3A",
+    brand: "Méliuz App",
+    brandDomain: "meliuz.com.br",
+    metric: "+ 8 milhões de views",
+    platform: "TikTok + Reels",
+  },
+  {
+    // TODO: substituir pelo YouTube ID real da Bready
+    youtubeId: "",
+    brand: "Bready",
+    brandDomain: "bready.com.br",
+    metric: "+ 2 milhões de views",
+    platform: "Reels orgânico",
+  },
 ];
+
+const LOOPED_HIGHLIGHTS = [...HIGHLIGHTS, ...HIGHLIGHTS, ...HIGHLIGHTS];
+const AUTOPLAY_INTERVAL = 5000;
 
 // Áudio de cliente — https://youtube.com/shorts/rRrIpSRu90A
 const AUDIO_TESTIMONIAL = {
@@ -93,8 +111,11 @@ export default function BestResults() {
           </p>
 
           <p className="mt-5 text-foreground-soft text-sm md:text-base max-w-md leading-relaxed">
-            Criei conteúdos que se destacaram e trouxeram ótimos resultados para
-            marcas parceiras.
+            Mais de <span className="font-bold text-foreground">140M de views</span> em
+            campanhas — recorde de CTR no Meta, CPA reduzido em até{" "}
+            <span className="font-bold text-foreground">38%</span> e ROAS de{" "}
+            <span className="font-bold text-foreground">2.4x</span>. Conteúdo que
+            virou playbook de criativo pra marcas como InfinitePay, Méliuz e DT3.
           </p>
 
           <div className="mt-8 md:mt-10">
@@ -102,14 +123,150 @@ export default function BestResults() {
           </div>
         </motion.div>
 
-        {/* Coluna direita — 2 vídeos verticais */}
-        <div className="md:col-span-7 grid grid-cols-2 gap-4 md:gap-6">
-          {HIGHLIGHTS.map((h, i) => (
-            <HighlightCard key={h.brand} highlight={h} index={i} />
-          ))}
+        {/* Coluna direita — carrossel de vídeos verticais com autoplay */}
+        <div className="md:col-span-7">
+          <HighlightsCarousel />
         </div>
       </div>
     </section>
+  );
+}
+
+function HighlightsCarousel() {
+  const scrollerRef = useRef<HTMLDivElement>(null);
+  const isJumping = useRef(false);
+  const isPaused = useRef(false);
+
+  const jumpBy = (el: HTMLDivElement, delta: number) => {
+    const prev = el.style.scrollBehavior;
+    el.style.scrollBehavior = "auto";
+    el.scrollLeft = el.scrollLeft + delta;
+    void el.offsetHeight;
+    el.style.scrollBehavior = prev;
+  };
+
+  // Centraliza no bloco do meio ao montar
+  useEffect(() => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    const oneCopyWidth = el.scrollWidth / 3;
+    const prev = el.style.scrollBehavior;
+    el.style.scrollBehavior = "auto";
+    el.scrollLeft = oneCopyWidth;
+    void el.offsetHeight;
+    el.style.scrollBehavior = prev;
+  }, []);
+
+  // Detecta fim do scroll e teleporta se passou do limite
+  useEffect(() => {
+    const el = scrollerRef.current;
+    if (!el) return;
+
+    let timeout: ReturnType<typeof setTimeout> | null = null;
+    const checkLoop = () => {
+      if (isJumping.current) return;
+      const oneCopyWidth = el.scrollWidth / 3;
+      if (el.scrollLeft < oneCopyWidth * 0.5) {
+        isJumping.current = true;
+        jumpBy(el, oneCopyWidth);
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => { isJumping.current = false; });
+        });
+      } else if (el.scrollLeft > oneCopyWidth * 1.5) {
+        isJumping.current = true;
+        jumpBy(el, -oneCopyWidth);
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => { isJumping.current = false; });
+        });
+      }
+    };
+
+    const onScroll = () => {
+      if (timeout) clearTimeout(timeout);
+      timeout = setTimeout(checkLoop, 180);
+    };
+
+    el.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      el.removeEventListener("scroll", onScroll);
+      if (timeout) clearTimeout(timeout);
+    };
+  }, []);
+
+  const scrollByCard = (direction: 1 | -1) => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    const oneCopyWidth = el.scrollWidth / 3;
+    if (direction === 1 && el.scrollLeft > oneCopyWidth * 1.5) {
+      isJumping.current = true;
+      jumpBy(el, -oneCopyWidth);
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => { isJumping.current = false; });
+      });
+    } else if (direction === -1 && el.scrollLeft < oneCopyWidth * 0.5) {
+      isJumping.current = true;
+      jumpBy(el, oneCopyWidth);
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => { isJumping.current = false; });
+      });
+    }
+    const firstCard = el.firstElementChild as HTMLElement | null;
+    const cardWidth = firstCard?.offsetWidth ?? el.clientWidth * 0.5;
+    const gap = parseFloat(getComputedStyle(el).columnGap || getComputedStyle(el).gap || "16") || 16;
+    el.scrollBy({ left: (cardWidth + gap) * direction, behavior: "smooth" });
+  };
+
+  // Autoplay
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (isPaused.current) return;
+      const el = scrollerRef.current;
+      if (!el) return;
+      if (document.hidden) return;
+      scrollByCard(1);
+    }, AUTOPLAY_INTERVAL);
+    return () => clearInterval(interval);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  return (
+    <div
+      className="relative"
+      onMouseEnter={() => { isPaused.current = true; }}
+      onMouseLeave={() => { isPaused.current = false; }}
+      onTouchStart={() => { isPaused.current = true; }}
+      onTouchEnd={() => { isPaused.current = false; }}
+    >
+      <div
+        ref={scrollerRef}
+        className="flex gap-4 md:gap-6 overflow-x-auto overflow-y-hidden scroll-smooth snap-x snap-mandatory scrollbar-hide services-fade py-2 items-stretch"
+      >
+        {LOOPED_HIGHLIGHTS.map((h, i) => (
+          <div
+            key={`${h.brand}-${i}`}
+            className="flex-shrink-0 snap-center w-[78%] sm:w-[calc((100%-1rem)/2)] flex"
+          >
+            <HighlightCard highlight={h} index={i} />
+          </div>
+        ))}
+      </div>
+
+      {/* Setas discretas */}
+      <button
+        onClick={() => scrollByCard(-1)}
+        aria-label="Anterior"
+        className="hidden md:flex absolute left-1 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-background/80 backdrop-blur border border-foreground/10 items-center justify-center text-foreground/60 hover:text-primary hover:border-primary/40 hover:bg-background transition-all"
+      >
+        <ChevronLeft className="w-4 h-4" strokeWidth={2.5} />
+      </button>
+      <button
+        onClick={() => scrollByCard(1)}
+        aria-label="Próximo"
+        className="hidden md:flex absolute right-1 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-background/80 backdrop-blur border border-foreground/10 items-center justify-center text-foreground/60 hover:text-primary hover:border-primary/40 hover:bg-background transition-all"
+      >
+        <ChevronRight className="w-4 h-4" strokeWidth={2.5} />
+      </button>
+    </div>
   );
 }
 
@@ -136,8 +293,8 @@ function HighlightCard({
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.6, delay: index * 0.1 }}
-      className="flex flex-col"
+      transition={{ duration: 0.6, delay: (index % HIGHLIGHTS.length) * 0.08 }}
+      className="flex flex-col w-full"
     >
       {/* Brand "logo" — texto estilizado em display font (mais confiável que Clearbit) */}
       <div className="h-8 md:h-10 flex items-center justify-center mb-3 md:mb-4">
