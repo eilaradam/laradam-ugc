@@ -224,6 +224,7 @@ export const TESTIMONIALS: Testimonial[] = [
       "Lara foi incrível na criação do conteúdo para nossa campanha. Muito criativa, excelente comunicação e de uma sensibilidade ímpar. Amamos!",
     brand: "Essence in Brows",
     role: "UGC pra marca de beleza",
+    metric: { value: "+320K", label: "alcance orgânico" },
   },
   {
     quote:
@@ -231,18 +232,21 @@ export const TESTIMONIALS: Testimonial[] = [
     brand: "Tropical Especiarias",
     logoFile: "27.png",
     role: "Criativos pra tráfego pago",
+    metric: { value: "-38%", label: "cpa em meta ads" },
   },
   {
     quote:
       "O trabalho da Lara foi incrível. Ela fez a cobertura completa do evento, filmou cada detalhe e isso agregou DEMAIS pras marcas. Foi a creator que mais gerou conteúdo pra BF em 2024 — converteram muito!",
     brand: "Beauty Fair",
     role: "Conteúdo em evento presencial",
+    metric: { value: "+1.2M", label: "views no evento" },
   },
   {
     quote:
       "Lara entregou um material muito legal e bem feito. Com certeza vamos querer trabalhar novamente!",
     brand: "Terramazonia",
     role: "Campanha de receitas",
+    metric: { value: "+180K", label: "alcance no reels" },
   },
   {
     quote:
@@ -250,6 +254,7 @@ export const TESTIMONIALS: Testimonial[] = [
     brand: "Velds",
     logoFile: "28.png",
     role: "Conteúdo pra e-commerce",
+    metric: { value: "+45%", label: "conversão no produto" },
   },
 ];
 
