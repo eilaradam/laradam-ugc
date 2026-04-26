@@ -139,21 +139,9 @@ function HighlightCard({
       transition={{ duration: 0.6, delay: index * 0.1 }}
       className="flex flex-col"
     >
-      {/* Brand logo acima do vídeo */}
+      {/* Brand "logo" — texto estilizado em display font (mais confiável que Clearbit) */}
       <div className="h-8 md:h-10 flex items-center justify-center mb-3 md:mb-4">
-        <img
-          src={`https://logo.clearbit.com/${highlight.brandDomain}?size=200`}
-          alt={highlight.brand}
-          loading="lazy"
-          className="max-h-full max-w-[140px] md:max-w-[170px] object-contain"
-          onError={(e) => {
-            const el = e.currentTarget;
-            el.style.display = "none";
-            const fallback = el.nextElementSibling as HTMLElement | null;
-            if (fallback) fallback.style.display = "block";
-          }}
-        />
-        <span className="hidden font-display font-bold text-sm md:text-base text-foreground">
+        <span className="font-display font-black text-foreground text-lg md:text-xl tracking-tight uppercase">
           {highlight.brand}
         </span>
       </div>

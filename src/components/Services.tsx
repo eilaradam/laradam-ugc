@@ -1,9 +1,12 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import {
   ArrowRight,
   Camera,
+  ChevronLeft,
+  ChevronRight,
   FileText,
   ShoppingBag,
   Sparkles,
@@ -22,7 +25,6 @@ const ICONS: Record<string, LucideIcon> = {
   Sparkles,
 };
 
-// CTAs específicos por serviço (mapeados pelo título)
 const SERVICE_CTAS: Record<string, string> = {
   "UGC de Conversão": "Quero UGC que converte",
   "Criativos para Tráfego": "Quero criar anúncios",
@@ -41,14 +43,43 @@ function WhatsAppIcon(props: React.SVGProps<SVGSVGElement>) {
 }
 
 export default function Services() {
+  const scrollerRef = useRef<HTMLDivElement>(null);
+  const [canPrev, setCanPrev] = useState(false);
+  const [canNext, setCanNext] = useState(false);
+
+  const updateArrows = () => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    setCanPrev(el.scrollLeft > 4);
+    setCanNext(el.scrollLeft + el.clientWidth < el.scrollWidth - 4);
+  };
+
+  useEffect(() => {
+    updateArrows();
+    const el = scrollerRef.current;
+    if (!el) return;
+    el.addEventListener("scroll", updateArrows, { passive: true });
+    window.addEventListener("resize", updateArrows);
+    return () => {
+      el.removeEventListener("scroll", updateArrows);
+      window.removeEventListener("resize", updateArrows);
+    };
+  }, []);
+
+  const scrollByPage = (direction: 1 | -1) => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    el.scrollBy({ left: el.clientWidth * direction, behavior: "smooth" });
+  };
+
   return (
     <section
       id="servicos"
       className="px-6 md:px-12 py-14 md:py-24 bg-background-alt"
     >
       <div className="max-w-7xl mx-auto">
-        {/* Header dividido: título grande à esquerda, descrição à direita */}
-        <div className="grid md:grid-cols-2 gap-8 md:gap-12 mb-14 md:mb-20">
+        {/* Header em 2 colunas */}
+        <div className="grid md:grid-cols-2 gap-8 md:gap-12 mb-10 md:mb-14">
           <div>
             <div className="text-xs uppercase tracking-[0.3em] text-primary font-bold mb-5 flex items-center gap-3">
               Serviços
@@ -65,20 +96,55 @@ export default function Services() {
             </h2>
           </div>
 
-          <div className="md:pt-4">
+          <div className="md:pt-4 flex flex-col justify-between gap-6">
             <p className="text-sm md:text-base uppercase tracking-wider text-foreground-soft leading-relaxed font-medium">
               Conheça os formatos em que minha gestão de campanhas UGC pode
               ajudar sua marca a conquistar mais clientes e gerar resultado
               de verdade.
             </p>
+
+            {/* Setas de navegação inline */}
+            <div className="flex items-center gap-2 self-start md:self-end">
+              <button
+                onClick={() => scrollByPage(-1)}
+                disabled={!canPrev}
+                aria-label="Anterior"
+                className="w-11 h-11 rounded-full border-2 border-foreground/15 flex items-center justify-center hover:bg-foreground hover:text-background hover:border-foreground disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+              >
+                <ChevronLeft className="w-5 h-5" />
+              </button>
+              <button
+                onClick={() => scrollByPage(1)}
+                disabled={!canNext}
+                aria-label="Próximo"
+                className="w-11 h-11 rounded-full border-2 border-foreground/15 flex items-center justify-center hover:bg-foreground hover:text-background hover:border-foreground disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+              >
+                <ChevronRight className="w-5 h-5" />
+              </button>
+            </div>
           </div>
         </div>
 
-        {/* Grid 3 colunas */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-12 md:gap-y-16">
+        {/* Carrossel horizontal — 3 visíveis no desktop, 2 no tablet, 1 no mobile */}
+        <div
+          ref={scrollerRef}
+          className="flex gap-5 md:gap-6 overflow-x-auto overflow-y-hidden scroll-smooth snap-x snap-mandatory scrollbar-hide -mx-6 md:-mx-12 px-6 md:px-12"
+        >
           {SERVICES.map((s, i) => (
-            <ServiceCard key={s.title} service={s} index={i} />
+            <div
+              key={s.title}
+              className="flex-shrink-0 snap-start w-[85%] sm:w-[calc((100%-1.25rem)/2)] lg:w-[calc((100%-3rem)/3)]"
+            >
+              <ServiceCard service={s} index={i} />
+            </div>
           ))}
+        </div>
+
+        {/* Dica de scroll no mobile */}
+        <div className="mt-6 text-center md:hidden">
+          <span className="text-xs uppercase tracking-[0.2em] text-muted">
+            Deslize pro lado →
+          </span>
         </div>
       </div>
     </section>
@@ -91,31 +157,29 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 30 }}
+      initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-40px" }}
-      transition={{ duration: 0.6, delay: index * 0.08 }}
-      className="group flex flex-col"
+      transition={{ duration: 0.5, delay: index * 0.06 }}
+      className="group h-full flex flex-col bg-background border border-foreground/10 rounded-3xl p-6 md:p-8 hover:border-primary/40 hover:shadow-lg transition-all"
     >
-      {/* Ícone grande */}
       <div className="mb-6">
-        <Icon
-          className="w-12 h-12 md:w-14 md:h-14 text-primary"
-          strokeWidth={1.5}
-        />
+        <div className="w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-primary-light flex items-center justify-center">
+          <Icon
+            className="w-7 h-7 md:w-8 md:h-8 text-primary"
+            strokeWidth={1.5}
+          />
+        </div>
       </div>
 
-      {/* Título grande */}
       <h3 className="font-display font-black text-foreground text-xl md:text-2xl leading-tight tracking-tight mb-3">
         {service.title}
       </h3>
 
-      {/* Descrição */}
       <p className="text-foreground-soft text-sm md:text-base leading-relaxed mb-6">
         {service.description}
       </p>
 
-      {/* CTA com WhatsApp */}
       <a
         href="#contato"
         className="mt-auto inline-flex items-center gap-2.5 text-primary font-bold uppercase tracking-wider text-xs md:text-sm hover:gap-3 transition-all"
