@@ -53,19 +53,18 @@ const HIGHLIGHTS: Highlight[] = [
     platform: "apenas no TikTok",
   },
   {
-    youtubeId: "GPcPWfWmA3A",
-    brand: "Méliuz App",
-    brandDomain: "meliuz.com.br",
-    metric: "+ 8 milhões de views",
-    platform: "TikTok + Reels",
-  },
-  {
-    // TODO: substituir pelo YouTube ID real da Bready
-    youtubeId: "",
+    youtubeId: "2s6BI893C74",
     brand: "Bready",
     brandDomain: "bready.com.br",
-    metric: "+ 2 milhões de views",
-    platform: "Reels orgânico",
+    metric: "5,94x de ROAS",
+    platform: "anúncios de performance",
+  },
+  {
+    youtubeId: "dgQYEfEQTvQ",
+    brand: "Méliuz Cashback",
+    brandDomain: "meliuz.com.br",
+    metric: "1.023 vídeos",
+    platform: "campanha 360°",
   },
 ];
 
@@ -239,15 +238,15 @@ function HighlightsCarousel() {
     >
       <div
         ref={scrollerRef}
-        className="flex gap-4 md:gap-6 overflow-x-auto overflow-y-hidden scroll-smooth snap-x snap-mandatory scrollbar-hide services-fade py-2 items-stretch"
+        className="flex gap-4 md:gap-6 overflow-x-auto overflow-y-hidden scroll-smooth snap-x snap-mandatory scrollbar-hide py-2 items-stretch"
       >
         {LOOPED_HIGHLIGHTS.map((h, i) => (
-          <div
+          <CarouselSlide
             key={`${h.brand}-${i}`}
-            className="flex-shrink-0 snap-center w-[78%] sm:w-[calc((100%-1rem)/2)] flex"
-          >
-            <HighlightCard highlight={h} index={i} />
-          </div>
+            highlight={h}
+            index={i}
+            scrollerRef={scrollerRef}
+          />
         ))}
       </div>
 
@@ -266,6 +265,54 @@ function HighlightsCarousel() {
       >
         <ChevronRight className="w-4 h-4" strokeWidth={2.5} />
       </button>
+    </div>
+  );
+}
+
+// Slide com detecção de "card central" via IntersectionObserver:
+// quando >85% visível dentro do scroller → ativo (sem blur), senão → opacidade baixa + blur sutil
+function CarouselSlide({
+  highlight,
+  index,
+  scrollerRef,
+}: {
+  highlight: Highlight;
+  index: number;
+  scrollerRef: React.RefObject<HTMLDivElement | null>;
+}) {
+  const slideRef = useRef<HTMLDivElement>(null);
+  const [isActive, setIsActive] = useState(false);
+
+  useEffect(() => {
+    const el = slideRef.current;
+    const root = scrollerRef.current;
+    if (!el || !root) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          setIsActive(entry.intersectionRatio > 0.85);
+        }
+      },
+      {
+        root,
+        threshold: [0, 0.5, 0.85, 0.95, 1],
+      }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [scrollerRef]);
+
+  return (
+    <div
+      ref={slideRef}
+      className={`flex-shrink-0 snap-center w-[80%] sm:w-[60%] md:w-[55%] lg:w-[50%] flex transition-all duration-500 ${
+        isActive
+          ? "opacity-100 blur-0 scale-100"
+          : "opacity-30 blur-[2px] scale-95"
+      }`}
+    >
+      <HighlightCard highlight={highlight} index={index} />
     </div>
   );
 }
