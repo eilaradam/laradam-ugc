@@ -1,11 +1,9 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { Quote } from "lucide-react";
+import { Star } from "lucide-react";
 import { TESTIMONIALS, type Testimonial } from "@/data/content";
-
-// Emoji de pessoa rotativo por índice (substitui foto/logo no avatar)
-const AVATAR_EMOJIS = ["👩‍💼", "🧑‍💼", "👨‍💼"];
 
 export default function Testimonials() {
   return (
@@ -43,6 +41,46 @@ export default function Testimonials() {
   );
 }
 
+function BrandLogo({
+  brand,
+  domain,
+}: {
+  brand: string;
+  domain?: string;
+}) {
+  const [errored, setErrored] = useState(false);
+  const initials = brand
+    .replace(/[^A-Za-z0-9 ]/g, "")
+    .split(" ")
+    .map((w) => w[0])
+    .filter(Boolean)
+    .slice(0, 2)
+    .join("")
+    .toUpperCase();
+
+  if (!domain || errored) {
+    return (
+      <div className="w-10 h-10 rounded-full bg-foreground text-background flex items-center justify-center flex-shrink-0 font-display font-black text-xs tracking-tight">
+        {initials}
+      </div>
+    );
+  }
+
+  return (
+    <div className="w-10 h-10 rounded-full bg-background border border-foreground/10 flex items-center justify-center flex-shrink-0 overflow-hidden">
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={`https://logo.clearbit.com/${domain}`}
+        alt={brand}
+        width={40}
+        height={40}
+        className="w-full h-full object-contain"
+        onError={() => setErrored(true)}
+      />
+    </div>
+  );
+}
+
 function TestimonialCard({
   testimonial,
   index,
@@ -50,28 +88,39 @@ function TestimonialCard({
   testimonial: Testimonial;
   index: number;
 }) {
-  const emoji = AVATAR_EMOJIS[index % AVATAR_EMOJIS.length];
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
-      className="relative p-4 md:p-5 rounded-2xl bg-background border border-foreground/5 flex flex-col gap-4 group hover:border-primary/30 transition-colors"
+      className="relative p-5 rounded-2xl bg-background border border-foreground/5 flex flex-col gap-4 group hover:border-primary/30 transition-colors"
     >
-      <Quote
-        className="w-5 h-5 text-primary/25 group-hover:text-primary/60 transition-colors"
-        strokeWidth={1.5}
-      />
+      <div className="flex items-center gap-3">
+        <BrandLogo brand={testimonial.brand} domain={testimonial.brandDomain} />
+        <div className="min-w-0 flex-1">
+          <div className="font-display font-black text-foreground text-sm tracking-tight truncate">
+            {testimonial.brand}
+          </div>
+          <div className="flex items-center gap-1 mt-0.5">
+            {Array.from({ length: 5 }).map((_, i) => (
+              <Star
+                key={i}
+                className="w-3 h-3 fill-primary text-primary"
+                strokeWidth={0}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
 
-      <p className="text-foreground leading-snug text-xs md:text-sm italic font-serif-accent">
-        &ldquo;{testimonial.quote}&rdquo;
+      <p className="text-foreground-soft leading-relaxed text-xs md:text-sm">
+        {testimonial.quote}
       </p>
 
       {testimonial.metric && (
-        <div className="flex items-baseline gap-2 pt-3 border-t border-foreground/10">
-          <span className="font-display font-black text-xl md:text-2xl text-primary tracking-tight">
+        <div className="flex items-baseline gap-2 pt-3 border-t border-foreground/10 mt-auto">
+          <span className="font-display font-black text-xl text-primary tracking-tight">
             {testimonial.metric.value}
           </span>
           <span className="text-[10px] uppercase tracking-wider text-foreground-soft">
@@ -79,20 +128,6 @@ function TestimonialCard({
           </span>
         </div>
       )}
-
-      <div className="flex items-center gap-2.5 mt-auto">
-        <div className="w-8 h-8 rounded-full bg-primary-light border border-primary/15 flex items-center justify-center flex-shrink-0 text-base">
-          <span aria-hidden>{emoji}</span>
-        </div>
-        <div className="min-w-0">
-          <div className="text-xs font-semibold text-foreground truncate">
-            {testimonial.author}
-          </div>
-          <div className="text-[10px] text-muted truncate">
-            {testimonial.role} · {testimonial.brand}
-          </div>
-        </div>
-      </div>
     </motion.div>
   );
 }
