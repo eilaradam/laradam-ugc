@@ -49,15 +49,29 @@ export default function Services() {
   const scrollerRef = useRef<HTMLDivElement>(null);
   const isJumping = useRef(false);
 
+  // Teleporte instantâneo, ignorando scroll-behavior: smooth
+  const jumpBy = (el: HTMLDivElement, delta: number) => {
+    const prev = el.style.scrollBehavior;
+    el.style.scrollBehavior = "auto";
+    el.scrollLeft = el.scrollLeft + delta;
+    // Força reflow antes de devolver o behavior pra evitar animação residual
+    void el.offsetHeight;
+    el.style.scrollBehavior = prev;
+  };
+
   // Centraliza no bloco do meio ao montar
   useEffect(() => {
     const el = scrollerRef.current;
     if (!el) return;
     const oneCopyWidth = el.scrollWidth / 3;
+    const prev = el.style.scrollBehavior;
+    el.style.scrollBehavior = "auto";
     el.scrollLeft = oneCopyWidth;
+    void el.offsetHeight;
+    el.style.scrollBehavior = prev;
   }, []);
 
-  // Detecta quando passou do limite e teleporta pro bloco do meio
+  // Detecta fim do scroll e teleporta se passou do limite
   useEffect(() => {
     const el = scrollerRef.current;
     if (!el) return;
@@ -66,20 +80,28 @@ export default function Services() {
     const checkLoop = () => {
       if (isJumping.current) return;
       const oneCopyWidth = el.scrollWidth / 3;
-      if (el.scrollLeft < oneCopyWidth * 0.3) {
+      if (el.scrollLeft < oneCopyWidth * 0.5) {
         isJumping.current = true;
-        el.scrollTo({ left: el.scrollLeft + oneCopyWidth, behavior: "instant" as ScrollBehavior });
-        setTimeout(() => { isJumping.current = false; }, 30);
-      } else if (el.scrollLeft > oneCopyWidth * 1.7) {
+        jumpBy(el, oneCopyWidth);
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            isJumping.current = false;
+          });
+        });
+      } else if (el.scrollLeft > oneCopyWidth * 1.5) {
         isJumping.current = true;
-        el.scrollTo({ left: el.scrollLeft - oneCopyWidth, behavior: "instant" as ScrollBehavior });
-        setTimeout(() => { isJumping.current = false; }, 30);
+        jumpBy(el, -oneCopyWidth);
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            isJumping.current = false;
+          });
+        });
       }
     };
 
     const onScroll = () => {
       if (timeout) clearTimeout(timeout);
-      timeout = setTimeout(checkLoop, 120);
+      timeout = setTimeout(checkLoop, 180);
     };
 
     el.addEventListener("scroll", onScroll, { passive: true });
@@ -92,6 +114,27 @@ export default function Services() {
   const scrollByPage = (direction: 1 | -1) => {
     const el = scrollerRef.current;
     if (!el) return;
+
+    // Se já está perto da borda, teleporta antes pra ter "espaço" e o smooth scroll fica natural
+    const oneCopyWidth = el.scrollWidth / 3;
+    if (direction === 1 && el.scrollLeft > oneCopyWidth * 1.5) {
+      isJumping.current = true;
+      jumpBy(el, -oneCopyWidth);
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          isJumping.current = false;
+        });
+      });
+    } else if (direction === -1 && el.scrollLeft < oneCopyWidth * 0.5) {
+      isJumping.current = true;
+      jumpBy(el, oneCopyWidth);
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          isJumping.current = false;
+        });
+      });
+    }
+
     el.scrollBy({ left: el.clientWidth * direction * 0.85, behavior: "smooth" });
   };
 
