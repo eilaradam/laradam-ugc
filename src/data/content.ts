@@ -186,43 +186,64 @@ export const VIDEOS: Video[] = [
 
 export type Testimonial = {
   quote: string;
-  author: string;
-  role: string;
+  author?: string;
+  role?: string;
   brand: string;
-  brandDomain?: string; // logo do cliente no card
+  brandDomain?: string; // logo do cliente no card via Clearbit (fallback)
+  logoFile?: string; // arquivo local em /public/logo-1/ (preferido)
   metric?: { value: string; label: string }; // ex: "3.2M views" / "Primeira campanha"
 };
 
-// Depoimentos — substituir pelos reais quando Lara passar os textos/prints.
-// Se quiser usar prints do WhatsApp/DM, pode subir em /public/depoimentos/
-// e trocar esse componente pra mostrar imagens.
 export const TESTIMONIALS: Testimonial[] = [
   {
     quote:
       "A Lara entrega muito além do que a gente pede. Ela entende de performance e o vídeo veio pronto pra rodar como criativo, bateu recorde de CTR no Meta.",
-    author: "Em breve",
-    role: "Marketing",
     brand: "InfinitePay",
-    brandDomain: "infinitepay.io",
+    logoFile: "59.png",
     metric: { value: "50M", label: "views em 1 vídeo" },
   },
   {
     quote:
       "Trabalho com vários creators e a Lara é a que mais converte. Roteiro afiado, entrega rápida e ela pega direção de brief no primeiro review.",
-    author: "Em breve",
-    role: "Head de Growth",
     brand: "Méliuz",
-    brandDomain: "meliuz.com.br",
+    logoFile: "35.png",
     metric: { value: "10M", label: "views · campanha mercado" },
   },
   {
     quote:
       "Já fechamos 4 campanhas e cada uma performou melhor que a anterior. A Lara virou parte do nosso playbook de criativo.",
-    author: "Em breve",
-    role: "Social Media",
     brand: "DT3",
-    brandDomain: "dt3sports.com.br",
+    logoFile: "61.png",
     metric: { value: "4+", label: "campanhas ativas" },
+  },
+  {
+    quote:
+      "Lara foi incrível na criação do conteúdo para nossa campanha. Muito criativa, excelente comunicação e de uma sensibilidade ímpar. Amamos!",
+    brand: "Essence in Brows",
+  },
+  {
+    quote:
+      "A Lara desempenhou um trabalho incrível. Amamos o resultado do vídeo criado, além da qualidade e toda a atenção para entender a demanda. Super recomendamos.",
+    brand: "Tropical Especiarias",
+    role: "Gastronomia · Unboxing",
+  },
+  {
+    quote:
+      "O trabalho da Lara foi incrível. Ela fez a cobertura completa do evento, filmou cada detalhe e isso agregou DEMAIS pras marcas. Foi a creator que mais gerou conteúdo pra BF em 2024 — converteram muito!",
+    brand: "Beauty Fair",
+    role: "Evento · Cobertura completa",
+  },
+  {
+    quote:
+      "Lara entregou um material muito legal e bem feito. Com certeza vamos querer trabalhar novamente!",
+    brand: "Terramazonia",
+    role: "Campanha de receitas",
+  },
+  {
+    quote:
+      "Alto nível de domínio em UGC: roteiro coeso, narrativa clara, performance natural na frente da câmera e edição precisa. Comunicação fluida em todas as etapas. Uma parceria que agrega valor real.",
+    brand: "Velds",
+    role: "Casa Inteligente",
   },
 ];
 

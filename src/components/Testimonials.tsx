@@ -11,7 +11,7 @@ export default function Testimonials() {
       id="depoimentos"
       className="px-6 md:px-12 py-8 md:py-14 bg-background-alt"
     >
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-5xl mx-auto">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-6 md:mb-8">
           <div>
             <div className="text-[10px] md:text-xs uppercase tracking-[0.3em] text-primary font-medium mb-3 flex items-center gap-3">
@@ -31,9 +31,12 @@ export default function Testimonials() {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-3">
+        {/* Masonry: cards fluem em colunas, respeitando altura variável */}
+        <div className="columns-1 md:columns-2 lg:columns-3 gap-3">
           {TESTIMONIALS.map((t, i) => (
-            <TestimonialCard key={t.brand} testimonial={t} index={i} />
+            <div key={t.brand} className="break-inside-avoid mb-3">
+              <TestimonialCard testimonial={t} index={i} />
+            </div>
           ))}
         </div>
       </div>
@@ -43,9 +46,11 @@ export default function Testimonials() {
 
 function BrandLogo({
   brand,
+  logoFile,
   domain,
 }: {
   brand: string;
+  logoFile?: string;
   domain?: string;
 }) {
   const [errored, setErrored] = useState(false);
@@ -58,7 +63,13 @@ function BrandLogo({
     .join("")
     .toUpperCase();
 
-  if (!domain || errored) {
+  const src = logoFile
+    ? `/logo-1/${logoFile}`
+    : domain
+    ? `https://logo.clearbit.com/${domain}`
+    : null;
+
+  if (!src || errored) {
     return (
       <div className="w-10 h-10 rounded-full bg-foreground text-background flex items-center justify-center flex-shrink-0 font-display font-black text-xs tracking-tight">
         {initials}
@@ -70,7 +81,7 @@ function BrandLogo({
     <div className="w-10 h-10 rounded-full bg-background border border-foreground/10 flex items-center justify-center flex-shrink-0 overflow-hidden">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
-        src={`https://logo.clearbit.com/${domain}`}
+        src={src}
         alt={brand}
         width={40}
         height={40}
@@ -93,23 +104,34 @@ function TestimonialCard({
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
+      transition={{ duration: 0.5, delay: (index % 6) * 0.08 }}
       className="relative p-5 rounded-2xl bg-background border border-foreground/5 flex flex-col gap-4 group hover:border-primary/30 transition-colors"
     >
       <div className="flex items-center gap-3">
-        <BrandLogo brand={testimonial.brand} domain={testimonial.brandDomain} />
+        <BrandLogo
+          brand={testimonial.brand}
+          logoFile={testimonial.logoFile}
+          domain={testimonial.brandDomain}
+        />
         <div className="min-w-0 flex-1">
           <div className="font-display font-black text-foreground text-sm tracking-tight truncate">
             {testimonial.brand}
           </div>
-          <div className="flex items-center gap-1 mt-0.5">
-            {Array.from({ length: 5 }).map((_, i) => (
-              <Star
-                key={i}
-                className="w-3 h-3 fill-primary text-primary"
-                strokeWidth={0}
-              />
-            ))}
+          <div className="flex items-center gap-1.5 mt-0.5">
+            <div className="flex items-center gap-0.5">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <Star
+                  key={i}
+                  className="w-3 h-3 fill-primary text-primary"
+                  strokeWidth={0}
+                />
+              ))}
+            </div>
+            {testimonial.role && (
+              <span className="text-[10px] text-muted truncate">
+                · {testimonial.role}
+              </span>
+            )}
           </div>
         </div>
       </div>
