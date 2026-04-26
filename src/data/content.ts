@@ -86,7 +86,7 @@ export const CATEGORIES: Category[] = [
   { slug: "beleza", name: "Beleza", tagline: "Produtos que viram ritual" },
   { slug: "casa", name: "Casa & Deco", tagline: "Ambientes que inspiram" },
   { slug: "gastronomia", name: "Gastronomia", tagline: "Comida que dá água na boca" },
-  { slug: "food", name: "Food & Bebidas", tagline: "Mercado, cafés e sabores" },
+  { slug: "food", name: "Drinks e Sobremesas", tagline: "Bebidas, doces e sabores que viram desejo" },
   { slug: "tech", name: "Tech & Apps", tagline: "Apps e gadgets em linguagem humana" },
   { slug: "moda", name: "Moda", tagline: "Outfits que contam história" },
   { slug: "viagem", name: "Viagem", tagline: "Experiências & destinos" },
@@ -112,7 +112,7 @@ export const VIDEOS: Video[] = [
   { id: "g3", title: "Rap10", category: "gastronomia", brand: "Rap10", youtubeId: "orhbzi_XYiA" },
   { id: "g4", title: "Rap10", category: "gastronomia", brand: "Rap10", youtubeId: "It7GiFzsOe0" },
   { id: "g5", title: "Copacol", category: "gastronomia", brand: "Copacol", youtubeId: "Kq93tU1dYuA" },
-  { id: "g6", title: "Tropical", category: "gastronomia", brand: "Tropical", youtubeId: "QgCK-EJKTm0" },
+  { id: "g6", title: "Tropical", category: "food", brand: "Tropical", youtubeId: "QgCK-EJKTm0" },
 
   // BELEZA
   { id: "b1", title: "Skincare noturno", category: "beleza", brand: "L'Oréal", views: "500k", youtubeId: "6kvtFKsPQPw" },
