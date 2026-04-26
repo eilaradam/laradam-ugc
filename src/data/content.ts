@@ -231,15 +231,15 @@ export const TESTIMONIALS: Testimonial[] = [
       "A Lara desempenhou um trabalho incrível. Amamos o resultado do vídeo criado, além da qualidade e toda a atenção para entender a demanda. Super recomendamos.",
     brand: "Tropical Especiarias",
     logoFile: "27.png",
-    role: "Criativos pra tráfego pago",
-    metric: { value: "-38%", label: "cpa em meta ads" },
+    role: "Conteúdo pra e-commerce + ads",
+    metric: { value: "+2.4x", label: "ROAS · e-commerce com ads" },
   },
   {
     quote:
       "O trabalho da Lara foi incrível. Ela fez a cobertura completa do evento, filmou cada detalhe e isso agregou DEMAIS pras marcas. Foi a creator que mais gerou conteúdo pra BF em 2024 — converteram muito!",
     brand: "Beauty Fair",
     role: "Conteúdo em evento presencial",
-    metric: { value: "+1.2M", label: "views no evento" },
+    metric: { value: "+30", label: "vídeos durante o evento BF" },
   },
   {
     quote:
@@ -253,8 +253,8 @@ export const TESTIMONIALS: Testimonial[] = [
       "Alto nível de domínio em UGC: roteiro coeso, narrativa clara, performance natural na frente da câmera e edição precisa. Comunicação fluida em todas as etapas. Uma parceria que agrega valor real.",
     brand: "Velds",
     logoFile: "28.png",
-    role: "Conteúdo pra e-commerce",
-    metric: { value: "+45%", label: "conversão no produto" },
+    role: "Conteúdo pra e-commerce + ads",
+    metric: { value: "+45%", label: "vendas no e-commerce com ads" },
   },
 ];
 
