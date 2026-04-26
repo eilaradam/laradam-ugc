@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import {
   ArrowRight,
@@ -34,6 +34,9 @@ const SERVICE_CTAS: Record<string, string> = {
   "Consultoria UGC": "Quero uma consultoria",
 };
 
+// Triplica os serviços pra criar a ilusão de loop infinito
+const LOOPED_SERVICES = [...SERVICES, ...SERVICES, ...SERVICES];
+
 function WhatsAppIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
@@ -44,32 +47,52 @@ function WhatsAppIcon(props: React.SVGProps<SVGSVGElement>) {
 
 export default function Services() {
   const scrollerRef = useRef<HTMLDivElement>(null);
-  const [canPrev, setCanPrev] = useState(false);
-  const [canNext, setCanNext] = useState(false);
+  const isJumping = useRef(false);
 
-  const updateArrows = () => {
-    const el = scrollerRef.current;
-    if (!el) return;
-    setCanPrev(el.scrollLeft > 4);
-    setCanNext(el.scrollLeft + el.clientWidth < el.scrollWidth - 4);
-  };
-
+  // Centraliza no bloco do meio ao montar
   useEffect(() => {
-    updateArrows();
     const el = scrollerRef.current;
     if (!el) return;
-    el.addEventListener("scroll", updateArrows, { passive: true });
-    window.addEventListener("resize", updateArrows);
+    const oneCopyWidth = el.scrollWidth / 3;
+    el.scrollLeft = oneCopyWidth;
+  }, []);
+
+  // Detecta quando passou do limite e teleporta pro bloco do meio
+  useEffect(() => {
+    const el = scrollerRef.current;
+    if (!el) return;
+
+    let timeout: ReturnType<typeof setTimeout> | null = null;
+    const checkLoop = () => {
+      if (isJumping.current) return;
+      const oneCopyWidth = el.scrollWidth / 3;
+      if (el.scrollLeft < oneCopyWidth * 0.3) {
+        isJumping.current = true;
+        el.scrollTo({ left: el.scrollLeft + oneCopyWidth, behavior: "instant" as ScrollBehavior });
+        setTimeout(() => { isJumping.current = false; }, 30);
+      } else if (el.scrollLeft > oneCopyWidth * 1.7) {
+        isJumping.current = true;
+        el.scrollTo({ left: el.scrollLeft - oneCopyWidth, behavior: "instant" as ScrollBehavior });
+        setTimeout(() => { isJumping.current = false; }, 30);
+      }
+    };
+
+    const onScroll = () => {
+      if (timeout) clearTimeout(timeout);
+      timeout = setTimeout(checkLoop, 120);
+    };
+
+    el.addEventListener("scroll", onScroll, { passive: true });
     return () => {
-      el.removeEventListener("scroll", updateArrows);
-      window.removeEventListener("resize", updateArrows);
+      el.removeEventListener("scroll", onScroll);
+      if (timeout) clearTimeout(timeout);
     };
   }, []);
 
   const scrollByPage = (direction: 1 | -1) => {
     const el = scrollerRef.current;
     if (!el) return;
-    el.scrollBy({ left: el.clientWidth * direction, behavior: "smooth" });
+    el.scrollBy({ left: el.clientWidth * direction * 0.85, behavior: "smooth" });
   };
 
   return (
@@ -105,15 +128,15 @@ export default function Services() {
           </div>
         </div>
 
-        {/* Carrossel horizontal com setas laterais e fade nas pontas */}
+        {/* Carrossel infinito com setas laterais e fade nas pontas */}
         <div className="relative">
           <div
             ref={scrollerRef}
             className="flex gap-4 md:gap-5 overflow-x-auto overflow-y-hidden scroll-smooth snap-x snap-mandatory scrollbar-hide services-fade py-2"
           >
-            {SERVICES.map((s, i) => (
+            {LOOPED_SERVICES.map((s, i) => (
               <div
-                key={s.title}
+                key={`${s.title}-${i}`}
                 className="flex-shrink-0 snap-center w-[78%] sm:w-[calc((100%-1rem)/2)] md:w-[calc((100%-2rem)/3)] lg:w-[calc((100%-3rem)/4)]"
               >
                 <ServiceCard service={s} index={i} />
@@ -124,17 +147,15 @@ export default function Services() {
           {/* Setas laterais sobrepostas */}
           <button
             onClick={() => scrollByPage(-1)}
-            disabled={!canPrev}
             aria-label="Anterior"
-            className="hidden md:flex absolute left-2 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-background border-2 border-foreground/15 items-center justify-center hover:bg-foreground hover:text-background hover:border-foreground disabled:opacity-0 disabled:pointer-events-none transition-all shadow-md"
+            className="hidden md:flex absolute left-2 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-background border-2 border-foreground/15 items-center justify-center hover:bg-foreground hover:text-background hover:border-foreground transition-all shadow-md"
           >
             <ChevronLeft className="w-5 h-5" />
           </button>
           <button
             onClick={() => scrollByPage(1)}
-            disabled={!canNext}
             aria-label="Próximo"
-            className="hidden md:flex absolute right-2 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-background border-2 border-foreground/15 items-center justify-center hover:bg-foreground hover:text-background hover:border-foreground disabled:opacity-0 disabled:pointer-events-none transition-all shadow-md"
+            className="hidden md:flex absolute right-2 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-background border-2 border-foreground/15 items-center justify-center hover:bg-foreground hover:text-background hover:border-foreground transition-all shadow-md"
           >
             <ChevronRight className="w-5 h-5" />
           </button>
@@ -160,7 +181,7 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-40px" }}
-      transition={{ duration: 0.5, delay: index * 0.06 }}
+      transition={{ duration: 0.5, delay: (index % SERVICES.length) * 0.06 }}
       className="group h-full flex flex-col bg-background border border-foreground/10 rounded-2xl p-5 md:p-6 hover:border-primary/40 hover:shadow-lg transition-all"
     >
       <div className="mb-4">
