@@ -69,7 +69,6 @@ const HIGHLIGHTS: Highlight[] = [
     metric: "1.023 vídeos",
     platform: "campanha 360°",
     stats: [
-      { value: "1.023", label: "vídeos totais" },
       { value: "5,6M", label: "visualizações totais" },
       { value: "66k", label: "salvamentos totais" },
     ],
