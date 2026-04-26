@@ -105,16 +105,16 @@ export default function Services() {
           </div>
         </div>
 
-        {/* Carrossel horizontal com setas laterais — 4 visíveis no desktop, 3 no tablet, 1.2 no mobile */}
+        {/* Carrossel horizontal com setas laterais e fade nas pontas */}
         <div className="relative">
           <div
             ref={scrollerRef}
-            className="flex gap-4 md:gap-5 overflow-x-auto overflow-y-hidden scroll-smooth snap-x snap-mandatory scrollbar-hide -mx-6 md:-mx-12 px-6 md:px-12"
+            className="flex gap-4 md:gap-5 overflow-x-auto overflow-y-hidden scroll-smooth snap-x snap-mandatory scrollbar-hide services-fade py-2"
           >
             {SERVICES.map((s, i) => (
               <div
                 key={s.title}
-                className="flex-shrink-0 snap-start w-[78%] sm:w-[calc((100%-1rem)/2)] md:w-[calc((100%-2rem)/3)] lg:w-[calc((100%-3rem)/4)]"
+                className="flex-shrink-0 snap-center w-[78%] sm:w-[calc((100%-1rem)/2)] md:w-[calc((100%-2rem)/3)] lg:w-[calc((100%-3rem)/4)]"
               >
                 <ServiceCard service={s} index={i} />
               </div>
@@ -126,7 +126,7 @@ export default function Services() {
             onClick={() => scrollByPage(-1)}
             disabled={!canPrev}
             aria-label="Anterior"
-            className="hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 z-10 w-12 h-12 rounded-full bg-background border-2 border-foreground/15 items-center justify-center hover:bg-foreground hover:text-background hover:border-foreground disabled:opacity-0 disabled:pointer-events-none transition-all shadow-md"
+            className="hidden md:flex absolute left-2 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-background border-2 border-foreground/15 items-center justify-center hover:bg-foreground hover:text-background hover:border-foreground disabled:opacity-0 disabled:pointer-events-none transition-all shadow-md"
           >
             <ChevronLeft className="w-5 h-5" />
           </button>
@@ -134,7 +134,7 @@ export default function Services() {
             onClick={() => scrollByPage(1)}
             disabled={!canNext}
             aria-label="Próximo"
-            className="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 z-10 w-12 h-12 rounded-full bg-background border-2 border-foreground/15 items-center justify-center hover:bg-foreground hover:text-background hover:border-foreground disabled:opacity-0 disabled:pointer-events-none transition-all shadow-md"
+            className="hidden md:flex absolute right-2 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-background border-2 border-foreground/15 items-center justify-center hover:bg-foreground hover:text-background hover:border-foreground disabled:opacity-0 disabled:pointer-events-none transition-all shadow-md"
           >
             <ChevronRight className="w-5 h-5" />
           </button>
