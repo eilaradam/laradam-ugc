@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import {
-  ArrowUpRight,
+  ArrowRight,
   Camera,
   FileText,
   ShoppingBag,
@@ -22,59 +22,64 @@ const ICONS: Record<string, LucideIcon> = {
   Sparkles,
 };
 
+// CTAs específicos por serviço (mapeados pelo título)
+const SERVICE_CTAS: Record<string, string> = {
+  "UGC de Conversão": "Quero UGC que converte",
+  "Criativos para Tráfego": "Quero criar anúncios",
+  "Roteiros Estratégicos": "Quero roteiros performáticos",
+  "Fotos Lifestyle": "Quero fotos da minha marca",
+  "Conteúdo E-commerce": "Quero conteúdo recorrente",
+  "Consultoria UGC": "Quero uma consultoria",
+};
+
+function WhatsAppIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.002-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z" />
+    </svg>
+  );
+}
+
 export default function Services() {
   return (
     <section
       id="servicos"
-      className="px-6 md:px-12 py-8 md:py-14 bg-background-alt"
+      className="px-6 md:px-12 py-14 md:py-24 bg-background-alt"
     >
       <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-6 md:mb-8">
+        {/* Header dividido: título grande à esquerda, descrição à direita */}
+        <div className="grid md:grid-cols-2 gap-8 md:gap-12 mb-14 md:mb-20">
           <div>
-            <div className="text-[10px] md:text-xs uppercase tracking-[0.3em] text-primary font-medium mb-3 flex items-center gap-3">
-              <span className="h-px w-6 md:w-8 bg-primary" />
+            <div className="text-xs uppercase tracking-[0.3em] text-primary font-bold mb-5 flex items-center gap-3">
               Serviços
+              <ArrowRight className="w-4 h-4" strokeWidth={2.5} />
             </div>
-            <h2 className="font-display font-black text-3xl md:text-5xl leading-[0.9] tracking-tighter max-w-3xl text-foreground">
-              O que podemos criar{" "}
-              <span className="font-serif-accent italic text-primary">juntos</span>
+            <h2 className="font-display font-black uppercase tracking-tighter leading-[0.9] text-foreground text-4xl sm:text-5xl md:text-6xl lg:text-7xl">
+              O que podemos
+              <br />
+              criar{" "}
+              <span className="font-serif-accent italic text-primary normal-case lowercase">
+                juntos
+              </span>
+              :
             </h2>
           </div>
-          <p className="text-foreground-soft max-w-sm text-xs md:text-sm">
-            Pacotes flexíveis pra marcas que querem autoridade, conversão e um
-            conteúdo que não parece anúncio.
-          </p>
+
+          <div className="md:pt-4">
+            <p className="text-sm md:text-base uppercase tracking-wider text-foreground-soft leading-relaxed font-medium">
+              Conheça os formatos em que minha gestão de campanhas UGC pode
+              ajudar sua marca a conquistar mais clientes e gerar resultado
+              de verdade.
+            </p>
+          </div>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+        {/* Grid 3 colunas */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-12 md:gap-y-16">
           {SERVICES.map((s, i) => (
             <ServiceCard key={s.title} service={s} index={i} />
           ))}
         </div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="mt-5 md:mt-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 p-4 md:p-5 rounded-2xl bg-background border border-foreground/10"
-        >
-          <div>
-            <div className="text-[10px] md:text-xs uppercase tracking-[0.2em] text-primary mb-1">
-              Pacote custom
-            </div>
-            <div className="font-display font-bold text-sm md:text-base leading-snug tracking-tight max-w-xl text-foreground">
-              Tem uma ideia fora da caixa? Montamos o pacote do zero.
-            </div>
-          </div>
-          <a
-            href="#contato"
-            className="inline-flex items-center gap-2 px-4 py-2 bg-primary text-primary-light rounded-full text-xs md:text-sm font-semibold hover:bg-primary-dark transition-colors whitespace-nowrap"
-          >
-            Conversar
-            <ArrowUpRight className="w-3.5 h-3.5" />
-          </a>
-        </motion.div>
       </div>
     </section>
   );
@@ -82,53 +87,42 @@ export default function Services() {
 
 function ServiceCard({ service, index }: { service: Service; index: number }) {
   const Icon = ICONS[service.icon] ?? Sparkles;
-  const isHighlight = service.highlight;
+  const cta = SERVICE_CTAS[service.title] ?? "Quero saber mais";
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5, delay: index * 0.06 }}
-      className={`relative rounded-2xl p-4 md:p-5 transition-all group ${
-        isHighlight
-          ? "bg-primary text-primary-light"
-          : "bg-background border border-foreground/10 text-foreground hover:border-primary/40"
-      }`}
+      viewport={{ once: true, margin: "-40px" }}
+      transition={{ duration: 0.6, delay: index * 0.08 }}
+      className="group flex flex-col"
     >
-      {service.tag && (
-        <div
-          className={`absolute top-2.5 right-2.5 text-[8px] uppercase tracking-[0.15em] font-semibold px-1.5 py-0.5 rounded-full ${
-            isHighlight
-              ? "bg-primary-light/15 text-primary-light"
-              : "bg-primary/10 text-primary"
-          }`}
-        >
-          {service.tag}
-        </div>
-      )}
-
-      <div
-        className={`w-8 h-8 md:w-9 md:h-9 rounded-xl flex items-center justify-center mb-3 ${
-          isHighlight
-            ? "bg-primary-light/15 text-primary-light"
-            : "bg-primary/10 text-primary"
-        }`}
-      >
-        <Icon className="w-4 h-4" strokeWidth={1.8} />
+      {/* Ícone grande */}
+      <div className="mb-6">
+        <Icon
+          className="w-12 h-12 md:w-14 md:h-14 text-primary"
+          strokeWidth={1.5}
+        />
       </div>
 
-      <h3 className="font-display font-bold text-sm md:text-base tracking-tight mb-1">
+      {/* Título grande */}
+      <h3 className="font-display font-black text-foreground text-xl md:text-2xl leading-tight tracking-tight mb-3">
         {service.title}
       </h3>
 
-      <p
-        className={`text-xs md:text-[13px] leading-snug ${
-          isHighlight ? "text-primary-light/85" : "text-foreground-soft"
-        }`}
-      >
+      {/* Descrição */}
+      <p className="text-foreground-soft text-sm md:text-base leading-relaxed mb-6">
         {service.description}
       </p>
+
+      {/* CTA com WhatsApp */}
+      <a
+        href="#contato"
+        className="mt-auto inline-flex items-center gap-2.5 text-primary font-bold uppercase tracking-wider text-xs md:text-sm hover:gap-3 transition-all"
+      >
+        <WhatsAppIcon className="w-5 h-5 flex-shrink-0" />
+        <span>{cta}</span>
+      </a>
     </motion.div>
   );
 }
