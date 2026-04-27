@@ -236,7 +236,7 @@ export const TESTIMONIALS: Testimonial[] = [
   },
   {
     quote:
-      "O trabalho da Lara foi incrível. Ela fez a cobertura completa do evento, filmou cada detalhe e isso agregou DEMAIS pras marcas. Foi a creator que mais gerou conteúdo pra BF em 2024 — converteram muito!",
+      "O trabalho da Lara foi incrível. Ela fez a cobertura total do evento, filmou cada detalhe e agregou DEMAIS pras marcas. Foi a creator que mais gerou conteúdo pra BF em 2024.",
     brand: "Beauty Fair",
     role: "Conteúdo em evento presencial",
     metric: { value: "+30", label: "vídeos durante o evento BF" },
