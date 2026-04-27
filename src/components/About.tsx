@@ -32,7 +32,7 @@ export default function About() {
           {/* Brown card com a foto (frente, offset pra esquerda+cima) */}
           <div
             style={{ backgroundColor: BROWN }}
-            className="absolute top-0 left-0 w-[78%] h-[88%] rounded-3xl overflow-hidden"
+            className="absolute top-0 left-0 w-[78%] h-[88%] rounded-3xl overflow-hidden shadow-[0_20px_50px_-10px_rgba(0,0,0,0.35)]"
           >
             {/* Textura granulada — polka dots sutis */}
             <div
