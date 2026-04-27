@@ -12,16 +12,16 @@ export default function About() {
   return (
     <section
       id="sobre"
-      className="px-6 md:px-12 pt-12 md:pt-20 pb-12 md:pb-20 max-w-7xl mx-auto"
+      className="px-6 md:px-12 pt-4 md:pt-8 pb-4 md:pb-8 max-w-7xl mx-auto"
     >
-      <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
+      <div className="grid md:grid-cols-2 gap-10 md:gap-12 items-center">
         {/* LEFT: photo with backdrops + bubbles + curved line */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
-          className="relative aspect-[4/5] max-w-md mx-auto md:mx-0 w-full"
+          className="relative aspect-[4/5] max-w-[340px] mx-auto md:mx-0 w-full"
         >
           {/* Cream backdrop (atrás, offset pra direita+baixo) */}
           <div
