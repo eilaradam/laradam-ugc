@@ -58,30 +58,13 @@ export default function About() {
             />
           </div>
 
-          {/* Linha da jornada — mistura reta + curva conectando os 3 pontos */}
-          <svg
-            className="absolute inset-0 w-full h-full pointer-events-none z-10"
-            viewBox="0 0 400 500"
-            preserveAspectRatio="none"
-            fill="none"
-          >
-            {/* Bubble 1 (Primeiro Contato) → Bubble 2 (Criação) → Bubble 3 (Entrega) */}
-            <path
-              d="M 95 135 L 95 195 C 95 240, 200 230, 245 270 L 275 285 C 320 305, 320 360, 295 405 L 295 430"
-              stroke="white"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-              strokeDasharray="0 1"
-            />
-          </svg>
-
-          {/* Bubble 1: Primeiro Contato — TOPO ESQUERDA (origem) */}
+          {/* Bubble 1: Primeiro Contato — TOPO DIREITA (origem) */}
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.4, duration: 0.6 }}
-            className="absolute top-4 left-0 md:left-2 z-20 bg-white shadow-xl rounded-2xl px-3 py-2.5 flex items-center gap-2.5 border border-foreground/5"
+            className="absolute -top-2 right-0 md:-right-4 z-20 bg-white shadow-xl rounded-2xl px-3 py-2.5 flex items-center gap-2.5 border border-foreground/5"
           >
             <span
               style={{ backgroundColor: ACCENT }}
@@ -102,13 +85,13 @@ export default function About() {
             </div>
           </motion.div>
 
-          {/* Bubble 2: Criação — MEIO DIREITA (processo, ícone pequeno) */}
+          {/* Bubble 2: Criação — MEIO ESQUERDA (processo) */}
           <motion.div
             initial={{ opacity: 0, scale: 0.7 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ delay: 0.7, duration: 0.6 }}
-            className="absolute top-[52%] right-0 md:right-2 z-20 bg-white shadow-xl rounded-xl p-2.5 border border-foreground/5"
+            className="absolute top-[42%] -left-2 md:-left-6 z-20 bg-white shadow-xl rounded-2xl p-2.5 border border-foreground/5"
           >
             <div className="flex items-center gap-2">
               <span
@@ -129,13 +112,13 @@ export default function About() {
             </div>
           </motion.div>
 
-          {/* Bubble 3: Entrega — EMBAIXO (destino) */}
+          {/* Bubble 3: Entrega — EMBAIXO DIREITA (destino) */}
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 1, duration: 0.6 }}
-            className="absolute bottom-2 right-2 md:right-6 z-20 bg-white shadow-xl rounded-2xl px-3 py-2.5 flex items-center gap-2.5 border border-foreground/5"
+            className="absolute bottom-6 right-0 md:-right-4 z-20 bg-white shadow-xl rounded-2xl px-3 py-2.5 flex items-center gap-2.5 border border-foreground/5"
           >
             <span
               style={{ backgroundColor: ACCENT }}
