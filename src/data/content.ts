@@ -221,13 +221,6 @@ export const TESTIMONIALS: Testimonial[] = [
   },
   {
     quote:
-      "Lara foi incrível na criação do conteúdo para nossa campanha. Muito criativa, excelente comunicação e de uma sensibilidade ímpar. Amamos!",
-    brand: "Essence in Brows",
-    role: "UGC pra marca de beleza",
-    metric: { value: "+320K", label: "alcance orgânico" },
-  },
-  {
-    quote:
       "A Lara desempenhou um trabalho incrível. Amamos o resultado do vídeo criado, além da qualidade e toda a atenção para entender a demanda. Super recomendamos.",
     brand: "Tropical Especiarias",
     logoFile: "27.png",
