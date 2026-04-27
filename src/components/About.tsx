@@ -5,7 +5,7 @@ import { Check, MessageCircle, Sparkles } from "lucide-react";
 import { ABOUT } from "@/data/content";
 
 const ACCENT = "#d13939";
-const BROWN = "#d13939";
+const BROWN = "#e77f7f";
 const CREAM = "#E8DFD3";
 
 export default function About() {

@@ -7,6 +7,7 @@ import { HeroPhoto } from "./_shared";
 // Cor de destaque verde-oliva da referência (one-off, não muda o tema global)
 const ACCENT = "#d13939";
 const ACCENT_DARK = "#A02525";
+const ACCENT_LIGHT = "#e77f7f";
 
 export default function HeroOption6() {
   return (
@@ -91,7 +92,7 @@ export default function HeroOption6() {
             className="absolute inset-0 flex items-center justify-center pointer-events-none"
           >
             <span
-              style={{ color: ACCENT }}
+              style={{ color: ACCENT_LIGHT }}
               className="font-display font-black text-[35vw] md:text-[22vw] lg:text-[20vw] leading-none tracking-[-0.06em] select-none -mt-10 md:-mt-16"
             >
               UGC
