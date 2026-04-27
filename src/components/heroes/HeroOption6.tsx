@@ -100,20 +100,35 @@ export default function HeroOption6() {
 
           {/* Foto */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.96 }}
-            animate={{ opacity: 1, scale: 1 }}
+            initial={{ opacity: 0, scale: 0.86 }}
+            animate={{ opacity: 1, scale: 0.9 }}
             transition={{ delay: 0.4, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-            className="relative z-10 flex items-end justify-center"
+            className="relative z-10 flex items-end justify-center origin-bottom"
           >
             <HeroPhoto className="w-auto h-[55vh] md:h-[72vh] max-w-full object-bottom" />
           </motion.div>
 
-          {/* Bubble 1 — direita */}
+          {/* Bubble 1 — direita (flutua devagar pra cima/baixo, zoom no hover) */}
           <motion.div
-            initial={{ opacity: 0, x: 20, y: -10 }}
-            animate={{ opacity: 1, x: 0, y: 0 }}
-            transition={{ delay: 0.9, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className="absolute z-20 right-1 md:right-3 top-[35%] md:top-[38%] bg-white shadow-xl rounded-2xl p-3 md:p-3.5 flex items-center gap-3 max-w-[220px] border border-foreground/5"
+            initial={{ opacity: 0, x: 20 }}
+            animate={{
+              opacity: 1,
+              x: 0,
+              y: [0, -8, 0],
+            }}
+            transition={{
+              opacity: { delay: 0.9, duration: 0.7 },
+              x: { delay: 0.9, duration: 0.7, ease: [0.16, 1, 0.3, 1] },
+              y: {
+                delay: 1.6,
+                duration: 4.5,
+                ease: "easeInOut",
+                repeat: Infinity,
+                repeatType: "loop",
+              },
+            }}
+            whileHover={{ scale: 1.06, transition: { duration: 0.25, ease: "easeOut" } }}
+            className="absolute z-20 right-1 md:right-3 top-[35%] md:top-[38%] bg-white shadow-xl rounded-2xl p-3 md:p-3.5 flex items-center gap-3 max-w-[220px] border border-foreground/5 cursor-default"
           >
             <span
               style={{ backgroundColor: ACCENT }}
@@ -127,12 +142,27 @@ export default function HeroOption6() {
             </div>
           </motion.div>
 
-          {/* Bubble 2 — esquerda */}
+          {/* Bubble 2 — esquerda (flutua em fase oposta) */}
           <motion.div
-            initial={{ opacity: 0, x: -20, y: 10 }}
-            animate={{ opacity: 1, x: 0, y: 0 }}
-            transition={{ delay: 1.1, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className="absolute z-20 left-1 md:left-3 top-[58%] md:top-[60%] bg-white shadow-xl rounded-2xl p-3 md:p-3.5 flex items-center gap-3 max-w-[230px] border border-foreground/5"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{
+              opacity: 1,
+              x: 0,
+              y: [0, 8, 0],
+            }}
+            transition={{
+              opacity: { delay: 1.1, duration: 0.7 },
+              x: { delay: 1.1, duration: 0.7, ease: [0.16, 1, 0.3, 1] },
+              y: {
+                delay: 1.8,
+                duration: 5.2,
+                ease: "easeInOut",
+                repeat: Infinity,
+                repeatType: "loop",
+              },
+            }}
+            whileHover={{ scale: 1.06, transition: { duration: 0.25, ease: "easeOut" } }}
+            className="absolute z-20 left-1 md:left-3 top-[58%] md:top-[60%] bg-white shadow-xl rounded-2xl p-3 md:p-3.5 flex items-center gap-3 max-w-[230px] border border-foreground/5 cursor-default"
           >
             <span
               style={{ backgroundColor: ACCENT }}
