@@ -105,7 +105,7 @@ export default function HeroOption6() {
             transition={{ delay: 0.4, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
             className="relative z-10 flex items-end justify-center origin-bottom"
           >
-            <HeroPhoto className="w-auto h-[62vh] md:h-[72vh] max-w-full object-bottom" />
+            <HeroPhoto className="w-auto h-[70vh] md:h-[80vh] max-w-full object-bottom" />
           </motion.div>
 
           {/* Bubble 1 — direita (flutua devagar pra cima/baixo, zoom no hover) */}
