@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Check } from "lucide-react";
+import { Check, MessageCircle, Sparkles } from "lucide-react";
 import { ABOUT } from "@/data/content";
 
 const ACCENT = "#d17d39";
@@ -15,7 +15,7 @@ export default function About() {
       className="px-6 md:px-12 pt-4 md:pt-8 pb-4 md:pb-8 max-w-7xl mx-auto"
     >
       <div className="grid md:grid-cols-2 gap-10 md:gap-12 items-center">
-        {/* LEFT: photo with backdrops + bubbles + curved line */}
+        {/* LEFT: photo + jornada (primeiro contato → criação → entrega) */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -43,7 +43,6 @@ export default function About() {
                 backgroundSize: "10px 10px",
               }}
             />
-            {/* Grão fino adicional */}
             <div
               className="absolute inset-0 opacity-30 mix-blend-soft-light pointer-events-none"
               style={{
@@ -59,78 +58,96 @@ export default function About() {
             />
           </div>
 
-          {/* Linha curva decorativa branca conectando os bubbles */}
+          {/* Linha da jornada — mistura reta + curva conectando os 3 pontos */}
           <svg
             className="absolute inset-0 w-full h-full pointer-events-none z-10"
             viewBox="0 0 400 500"
             preserveAspectRatio="none"
             fill="none"
           >
+            {/* Bubble 1 (Primeiro Contato) → Bubble 2 (Criação) → Bubble 3 (Entrega) */}
             <path
-              d="M 90 175 C 60 220, 110 280, 140 320 S 220 400, 260 410"
+              d="M 95 135 L 95 195 C 95 240, 200 230, 245 270 L 275 285 C 320 305, 320 360, 295 405 L 295 430"
               stroke="white"
               strokeWidth="2.5"
               strokeLinecap="round"
+              strokeDasharray="0 1"
             />
           </svg>
 
-          {/* Bubble 1: A entrega foi perfeita — topo direito */}
+          {/* Bubble 1: Primeiro Contato — TOPO ESQUERDA (origem) */}
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.5, duration: 0.6 }}
-            animate={{ y: [0, -6, 0] }}
-            style={{
-              animationDelay: "1s",
-            }}
-            className="absolute -top-2 right-4 md:right-8 z-20 bg-white shadow-xl rounded-2xl px-3 py-2.5 flex items-center gap-2.5 border border-foreground/5"
+            transition={{ delay: 0.4, duration: 0.6 }}
+            className="absolute top-4 left-0 md:left-2 z-20 bg-white shadow-xl rounded-2xl px-3 py-2.5 flex items-center gap-2.5 border border-foreground/5"
           >
             <span
               style={{ backgroundColor: ACCENT }}
-              className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0"
+              className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0"
             >
-              <Check className="w-3 h-3 text-foreground" strokeWidth={3} />
+              <MessageCircle
+                className="w-3.5 h-3.5 text-white"
+                strokeWidth={2.5}
+              />
             </span>
             <div className="text-[12px] leading-tight">
-              <div className="font-semibold text-foreground">
-                A entrega foi perfeita!
+              <div className="text-foreground-soft text-[10px] uppercase tracking-wider">
+                Etapa 1
               </div>
-              <div className="text-foreground-soft">Super alinhada</div>
+              <div className="font-semibold text-foreground">
+                Primeiro contato
+              </div>
             </div>
           </motion.div>
 
-          {/* Bubble 2: Primeiro Contato — meio esquerda */}
+          {/* Bubble 2: Criação — MEIO DIREITA (processo, ícone pequeno) */}
           <motion.div
-            initial={{ opacity: 0, x: -10 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, scale: 0.7 }}
+            whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ delay: 0.7, duration: 0.6 }}
-            className="absolute top-[28%] -left-2 md:left-2 z-20 bg-white shadow-xl rounded-2xl px-3 py-2.5 flex items-center gap-2.5 border border-foreground/5"
+            className="absolute top-[52%] right-0 md:right-2 z-20 bg-white shadow-xl rounded-xl p-2.5 border border-foreground/5"
           >
-            <span
-              style={{ backgroundColor: ACCENT }}
-              className="w-6 h-6 rounded-full flex-shrink-0"
-            />
-            <div className="text-[12px] font-semibold text-foreground">
-              Primeiro Contato
+            <div className="flex items-center gap-2">
+              <span
+                style={{ backgroundColor: ACCENT }}
+                className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0"
+              >
+                <Sparkles
+                  className="w-3.5 h-3.5 text-white"
+                  strokeWidth={2.5}
+                />
+              </span>
+              <div className="text-[12px] leading-tight pr-1">
+                <div className="text-foreground-soft text-[10px] uppercase tracking-wider">
+                  Etapa 2
+                </div>
+                <div className="font-semibold text-foreground">Criação</div>
+              </div>
             </div>
           </motion.div>
 
-          {/* Bubble 3: Resultados para a sua marca — embaixo direita */}
+          {/* Bubble 3: Entrega — EMBAIXO (destino) */}
           <motion.div
-            initial={{ opacity: 0, x: 10 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.9, duration: 0.6 }}
-            className="absolute bottom-[10%] right-2 md:right-4 z-20 bg-white shadow-xl rounded-2xl px-3 py-2.5 flex items-center gap-2.5 border border-foreground/5 max-w-[170px]"
+            transition={{ delay: 1, duration: 0.6 }}
+            className="absolute bottom-2 right-2 md:right-6 z-20 bg-white shadow-xl rounded-2xl px-3 py-2.5 flex items-center gap-2.5 border border-foreground/5"
           >
             <span
               style={{ backgroundColor: ACCENT }}
-              className="w-6 h-6 rounded-full flex-shrink-0"
-            />
-            <div className="text-[12px] leading-tight font-semibold text-foreground">
-              Resultados para a sua marca
+              className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0"
+            >
+              <Check className="w-3.5 h-3.5 text-white" strokeWidth={3} />
+            </span>
+            <div className="text-[12px] leading-tight">
+              <div className="text-foreground-soft text-[10px] uppercase tracking-wider">
+                Etapa 3
+              </div>
+              <div className="font-semibold text-foreground">Entrega</div>
             </div>
           </motion.div>
         </motion.div>
