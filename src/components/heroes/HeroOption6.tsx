@@ -55,7 +55,7 @@ export default function HeroOption6() {
             De hook a CTA, cada segundo pensado pra performar.
             <br />
             <strong className="font-semibold text-foreground">
-              +500 vídeos, +200 marcas parceiras, 100M+ views.
+              +500 vídeos &nbsp;|&nbsp; +200 marcas parceiras &nbsp;|&nbsp; 100M+ views.
             </strong>
           </motion.p>
 
