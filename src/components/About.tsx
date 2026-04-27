@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { Check } from "lucide-react";
 import { ABOUT } from "@/data/content";
 
-const ACCENT = "#B0BB47";
+const ACCENT = "#d17d39";
 const BROWN = "#5C3A1F";
 const CREAM = "#E8DFD3";
 

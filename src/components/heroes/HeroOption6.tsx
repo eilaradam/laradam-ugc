@@ -5,8 +5,8 @@ import { Check } from "lucide-react";
 import { HeroPhoto } from "./_shared";
 
 // Cor de destaque verde-oliva da referência (one-off, não muda o tema global)
-const ACCENT = "#B0BB47";
-const ACCENT_DARK = "#909A36";
+const ACCENT = "#d17d39";
+const ACCENT_DARK = "#A8621D";
 
 export default function HeroOption6() {
   return (
