@@ -4,8 +4,8 @@ import { motion } from "framer-motion";
 import { Check, MessageCircle, Sparkles } from "lucide-react";
 import { ABOUT } from "@/data/content";
 
-const ACCENT = "#d17d39";
-const BROWN = "#d17d39";
+const ACCENT = "#d13939";
+const BROWN = "#d13939";
 const CREAM = "#E8DFD3";
 
 export default function About() {
