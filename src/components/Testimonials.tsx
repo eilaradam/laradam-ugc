@@ -3,14 +3,39 @@
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { ChevronLeft, ChevronRight, Star } from "lucide-react";
-import { TESTIMONIALS, type Testimonial } from "@/data/content";
-
-// Triplica pra ilusão de loop infinito
-const LOOPED_TESTIMONIALS = [...TESTIMONIALS, ...TESTIMONIALS, ...TESTIMONIALS];
+import { TESTIMONIALS } from "@/data/content";
+import { useT } from "@/lib/i18n";
 
 const AUTOPLAY_INTERVAL = 4500; // ms
 
+type LocalTestimonial = {
+  quote: string;
+  brand: string;
+  instagram?: string;
+  logoFile?: string;
+  brandDomain?: string;
+  role?: string;
+  metric?: { value: string; label: string };
+};
+
 export default function Testimonials() {
+  const t = useT();
+
+  // Funde texto traduzido com brand/instagram/logo (que não traduzem)
+  const localized: LocalTestimonial[] = t.testimonials.quotes.map((q, i) => ({
+    quote: q.quote,
+    brand: TESTIMONIALS[i]?.brand ?? "",
+    instagram: TESTIMONIALS[i]?.instagram,
+    logoFile: TESTIMONIALS[i]?.logoFile,
+    brandDomain: TESTIMONIALS[i]?.brandDomain,
+    role: q.role,
+    metric: TESTIMONIALS[i]?.metric
+      ? { value: TESTIMONIALS[i]!.metric!.value, label: q.metricLabel }
+      : undefined,
+  }));
+
+  const looped = [...localized, ...localized, ...localized];
+
   const scrollerRef = useRef<HTMLDivElement>(null);
   const isJumping = useRef(false);
   const isPaused = useRef(false);
@@ -118,18 +143,17 @@ export default function Testimonials() {
           <div>
             <div className="text-[10px] md:text-xs uppercase tracking-[0.3em] text-primary font-medium mb-3 flex items-center gap-3">
               <span className="h-px w-6 md:w-8 bg-primary" />
-              Depoimentos
+              {t.testimonials.tag}
             </div>
             <h2 className="font-display font-black text-2xl md:text-4xl leading-[0.95] tracking-tighter">
-              O que dizem{" "}
+              {t.testimonials.title1}{" "}
               <span className="font-serif-accent italic text-primary">
-                sobre o trabalho
+                {t.testimonials.titleAccent}
               </span>
             </h2>
           </div>
           <p className="text-foreground-soft max-w-xs text-xs md:text-sm">
-            Feedback de marcas que viram a diferença de um UGC pensado pra
-            performance.
+            {t.testimonials.intro}
           </p>
         </div>
 
@@ -145,12 +169,12 @@ export default function Testimonials() {
             ref={scrollerRef}
             className="flex gap-4 md:gap-5 overflow-x-auto overflow-y-hidden scroll-smooth snap-x snap-mandatory scrollbar-hide services-fade py-2 items-stretch"
           >
-            {LOOPED_TESTIMONIALS.map((t, i) => (
+            {looped.map((item, i) => (
               <div
-                key={`${t.brand}-${i}`}
+                key={`${item.brand}-${i}`}
                 className="flex-shrink-0 snap-center w-[78%] sm:w-[calc((100%-1rem)/2)] md:w-[calc((100%-2rem)/3)] flex"
               >
-                <TestimonialCard testimonial={t} index={i} />
+                <TestimonialCard testimonial={item} index={i} />
               </div>
             ))}
           </div>
@@ -227,7 +251,7 @@ function TestimonialCard({
   testimonial,
   index,
 }: {
-  testimonial: Testimonial;
+  testimonial: LocalTestimonial;
   index: number;
 }) {
   return (
@@ -235,7 +259,7 @@ function TestimonialCard({
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.5, delay: (index % TESTIMONIALS.length) * 0.06 }}
+      transition={{ duration: 0.5, delay: (index % 7) * 0.06 }}
       className="relative w-full pt-10 pb-4 px-5 md:px-6 rounded-2xl bg-background border border-foreground/5 flex flex-col items-center text-center gap-2 group hover:border-primary/30 transition-colors mt-9 md:mt-10"
     >
       {/* Logo: posicionado overflow no topo */}

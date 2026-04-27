@@ -1,12 +1,10 @@
 "use client";
 
 import { BRAND_LOGO_FILES } from "@/data/content";
+import { useT } from "@/lib/i18n";
 
-/**
- * Barra horizontal com scroll infinito das logos das marcas.
- * Cada logo dentro de um círculo (w/h iguais, rounded-full).
- */
 export default function BrandsMarquee() {
+  const t = useT();
   const doubled = [...BRAND_LOGO_FILES, ...BRAND_LOGO_FILES];
 
   return (
@@ -14,7 +12,7 @@ export default function BrandsMarquee() {
       <div className="max-w-7xl mx-auto px-6 md:px-12 mb-6 md:mb-8">
         <div className="text-[10px] md:text-xs uppercase tracking-[0.3em] text-muted font-medium flex items-center justify-center gap-3">
           <span className="h-px w-6 md:w-8 bg-foreground/20" />
-          Marcas que confiam no meu trabalho
+          {t.brandsMarquee.title}
           <span className="h-px w-6 md:w-8 bg-foreground/20" />
         </div>
       </div>

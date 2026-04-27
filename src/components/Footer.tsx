@@ -1,6 +1,10 @@
+"use client";
+
 import { SITE } from "@/data/content";
+import { useT } from "@/lib/i18n";
 
 export default function Footer() {
+  const t = useT();
   const year = new Date().getFullYear();
   return (
     <footer className="bg-foreground text-background border-t border-background/10 px-6 md:px-12 py-10">
@@ -10,7 +14,7 @@ export default function Footer() {
             LARA DAM<span className="text-primary">.</span>
           </div>
           <div className="text-xs uppercase tracking-wider text-background/50 mt-1">
-            {SITE.role}
+            {t.footer.role}
           </div>
         </div>
 

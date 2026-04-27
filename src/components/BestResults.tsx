@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { ChevronLeft, ChevronRight, Mic, Pause, Play } from "lucide-react";
 import { useVideoModal } from "./VideoModalProvider";
 import type { Video } from "@/data/content";
+import { useT } from "@/lib/i18n";
 
 type YtPlayer = {
   playVideo: () => void;
@@ -40,52 +41,40 @@ type Highlight = {
   stats?: Stat[]; // se presente, substitui metric/platform por lista vertical
 };
 
-const HIGHLIGHTS: Highlight[] = [
+// Dados estruturais (não traduzem) — id, brand, domain
+const HIGHLIGHTS_BASE = [
   {
     youtubeId: "5wf8Fv2CTa4",
     brand: "InfinitePay",
     brandDomain: "infinitepay.io",
-    metric: "+ 100 milhões de views",
-    platform: "apenas no TikTok",
   },
   {
     youtubeId: "wesTfq67X9o",
     brand: "Méliuz",
     brandDomain: "meliuz.com.br",
-    metric: "+ 30 milhões de views",
-    platform: "apenas no TikTok",
   },
   {
     youtubeId: "2s6BI893C74",
     brand: "Bready",
     brandDomain: "bready.com.br",
-    metric: "5,94x de ROAS",
-    platform: "anúncios de performance",
   },
   {
     youtubeId: "dgQYEfEQTvQ",
     brand: "Méliuz Cashback",
     brandDomain: "meliuz.com.br",
-    metric: "1.023 vídeos",
-    platform: "campanha 360°",
-    stats: [
-      { value: "5,6M", label: "visualizações totais" },
-      { value: "66k", label: "salvamentos totais" },
-    ],
   },
 ];
 
-const LOOPED_HIGHLIGHTS = [...HIGHLIGHTS, ...HIGHLIGHTS, ...HIGHLIGHTS];
 const AUTOPLAY_INTERVAL = 5000;
 
 // Áudio de cliente — https://youtube.com/shorts/rRrIpSRu90A
 const AUDIO_TESTIMONIAL = {
   youtubeId: "rRrIpSRu90A",
-  brand: "Depoimento de cliente",
   duration: "13:52",
 };
 
 export default function BestResults() {
+  const t = useT();
   return (
     <section
       id="destaques"
@@ -102,26 +91,34 @@ export default function BestResults() {
         >
           <div className="text-xs uppercase tracking-[0.3em] text-primary font-medium mb-6 flex items-center gap-3">
             <span className="h-px w-8 bg-primary" />
-            Conteúdos que estouraram
+            {t.bestResults.tag}
           </div>
 
           <h2 className="font-display font-black text-4xl md:text-6xl leading-[0.9] tracking-tighter text-foreground">
-            Os melhores{" "}
+            {t.bestResults.title1}{" "}
             <span className="font-serif-accent italic text-primary">
-              resultados
+              {t.bestResults.titleAccent}
             </span>
           </h2>
 
           <p className="mt-4 text-foreground-soft text-base md:text-lg max-w-md">
-            Será que você já me viu por aí? <span aria-hidden>👀</span>
+            {t.bestResults.eyeline}
           </p>
 
           <p className="mt-5 text-foreground-soft text-sm md:text-base max-w-md leading-relaxed">
-            Mais de <span className="font-bold text-foreground">140M de views</span> em
-            campanhas — recorde de CTR no Meta, CPA reduzido em até{" "}
-            <span className="font-bold text-foreground">38%</span> e ROAS de{" "}
-            <span className="font-bold text-foreground">2.4x</span>. Conteúdo que
-            virou playbook de criativo pra marcas como InfinitePay, Méliuz e DT3.
+            {t.bestResults.body1Pre}
+            <span className="font-bold text-foreground">
+              {t.bestResults.body1ViewsHi}
+            </span>
+            {t.bestResults.body1Mid}
+            <span className="font-bold text-foreground">
+              {t.bestResults.body1Cpa}
+            </span>
+            {t.bestResults.body1Mid2}
+            <span className="font-bold text-foreground">
+              {t.bestResults.body1Roas}
+            </span>
+            {t.bestResults.body1End}
           </p>
 
           <div className="mt-8 md:mt-10">
@@ -139,6 +136,21 @@ export default function BestResults() {
 }
 
 function HighlightsCarousel() {
+  const t = useT();
+
+  // Funde a parte estrutural com o texto traduzido (metric/platform/stats)
+  const localized: Highlight[] = HIGHLIGHTS_BASE.map((h, i) => {
+    const tx = t.bestResults.highlights[i];
+    return {
+      ...h,
+      metric: tx?.metric ?? "",
+      platform: tx?.platform ?? "",
+      stats: tx?.stats,
+    };
+  });
+
+  const looped = [...localized, ...localized, ...localized];
+
   const scrollerRef = useRef<HTMLDivElement>(null);
   const isJumping = useRef(false);
   const isPaused = useRef(false);
@@ -247,7 +259,7 @@ function HighlightsCarousel() {
         ref={scrollerRef}
         className="flex gap-4 md:gap-6 overflow-x-auto overflow-y-hidden scroll-smooth snap-x snap-mandatory scrollbar-hide py-2 items-stretch"
       >
-        {LOOPED_HIGHLIGHTS.map((h, i) => (
+        {looped.map((h, i) => (
           <CarouselSlide
             key={`${h.brand}-${i}`}
             highlight={h}
@@ -347,7 +359,7 @@ function HighlightCard({
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.6, delay: (index % HIGHLIGHTS.length) * 0.08 }}
+      transition={{ duration: 0.6, delay: (index % 4) * 0.08 }}
       className="flex flex-col w-full"
     >
       {/* Brand "logo" — texto estilizado em display font (mais confiável que Clearbit) */}
@@ -456,6 +468,7 @@ function loadYtApi(): Promise<void> {
 }
 
 function AudioTestimonialCard() {
+  const t = useT();
   const [isPlaying, setIsPlaying] = useState(false);
   const [isReady, setIsReady] = useState(false);
   const playerRef = useRef<YtPlayer | null>(null);
@@ -583,7 +596,7 @@ function AudioTestimonialCard() {
         <div className="flex-1 min-w-0">
           <Waveform playing={isPlaying} />
           <div className="flex items-center justify-between mt-1.5 text-[10px] md:text-xs text-foreground/50 font-medium tabular-nums">
-            <span>{isPlaying ? "agora" : "0:01"}</span>
+            <span>{isPlaying ? t.bestResults.audioCardNow : "0:01"}</span>
             <span>{AUDIO_TESTIMONIAL.duration}</span>
           </div>
         </div>

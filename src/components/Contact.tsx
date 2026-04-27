@@ -30,8 +30,10 @@ function WhatsAppIcon(props: React.SVGProps<SVGSVGElement>) {
   );
 }
 import { SITE } from "@/data/content";
+import { useT } from "@/lib/i18n";
 
 export default function Contact() {
+  const t = useT();
   const [sent, setSent] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -78,18 +80,17 @@ export default function Contact() {
         >
           <div className="text-xs uppercase tracking-[0.3em] text-primary font-medium mb-6 flex items-center gap-3">
             <span className="h-px w-8 bg-primary" />
-            Contato
+            {t.contact.tag}
           </div>
           <h2 className="font-display font-black text-4xl md:text-6xl leading-[0.9] tracking-tighter mb-8">
-            Vamos criar algo{" "}
+            {t.contact.title1}{" "}
             <span className="font-serif-accent italic text-primary">
-              juntos
+              {t.contact.titleAccent}
             </span>
-            ?
+            {t.contact.titleEnd}
           </h2>
           <p className="text-background/60 text-lg leading-relaxed mb-10 max-w-md">
-            Conta um pouco sobre sua marca e o que você quer alcançar. Respondo
-            em até 48h.
+            {t.contact.body}
           </p>
 
           <div className="space-y-4">
@@ -142,30 +143,30 @@ export default function Contact() {
           className="md:col-span-7 space-y-5"
         >
           <div className="grid md:grid-cols-2 gap-5">
-            <Field name="name" label="Nome" placeholder="Seu nome" required />
+            <Field name="name" label={t.contact.name} placeholder={t.contact.namePh} required />
             <Field
               name="email"
               type="email"
-              label="E-mail"
-              placeholder="voce@marca.com"
+              label={t.contact.email}
+              placeholder={t.contact.emailPh}
               required
             />
           </div>
-          <Field name="brand" label="Marca / Empresa" placeholder="Nome da marca" />
+          <Field name="brand" label={t.contact.brand} placeholder={t.contact.brandPh} />
           <Field
             name="budget"
-            label="Orçamento estimado"
-            placeholder="Ex: R$ 5.000 – R$ 15.000"
+            label={t.contact.budget}
+            placeholder={t.contact.budgetPh}
           />
           <div>
             <label className="block text-xs uppercase tracking-wider text-background/60 mb-2">
-              Conta sobre o projeto
+              {t.contact.message}
             </label>
             <textarea
               name="message"
               rows={5}
               required
-              placeholder="Categoria, formato, prazo, objetivo da campanha..."
+              placeholder={t.contact.messagePh}
               className="w-full bg-background/5 border border-background/10 rounded-2xl px-4 py-3 text-background placeholder:text-background/30 focus:outline-none focus:border-primary focus:bg-background/10 transition-colors resize-none"
             />
           </div>
@@ -175,7 +176,7 @@ export default function Contact() {
             disabled={loading || sent}
             className="w-full md:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 bg-primary text-primary-light rounded-full text-sm font-semibold hover:bg-primary-dark transition-colors disabled:opacity-60"
           >
-            {sent ? "Enviado! Respondo em breve." : loading ? "Enviando..." : "Enviar mensagem"}
+            {sent ? t.contact.sent : loading ? t.contact.sending : t.contact.send}
             {!sent && !loading && <ArrowUpRight className="w-4 h-4" />}
           </button>
         </motion.form>

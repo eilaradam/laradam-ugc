@@ -3,12 +3,15 @@
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { CATEGORIES, VIDEOS, type Category } from "@/data/content";
+import { VIDEOS } from "@/data/content";
 import VideoCard from "./VideoCard";
+import { useT } from "@/lib/i18n";
+
+type LocalCategory = { slug: string; name: string; tagline: string };
 
 export default function CategoryGallery() {
-  // todas as categorias menos "all"
-  const rows = CATEGORIES.filter((c) => c.slug !== "all");
+  const t = useT();
+  const rows: LocalCategory[] = t.categories.items;
 
   return (
     <section
@@ -19,18 +22,17 @@ export default function CategoryGallery() {
         <div className="mb-8 md:mb-12">
           <div className="text-xs uppercase tracking-[0.3em] text-primary font-medium mb-6 flex items-center gap-3">
             <span className="h-px w-8 bg-primary" />
-            Categorias
+            {t.categories.tag}
           </div>
           <h2 className="font-display font-black text-4xl md:text-6xl leading-[0.9] tracking-tighter max-w-4xl">
-            Que tipo de{" "}
+            {t.categories.title1}{" "}
             <span className="font-serif-accent italic text-primary">
-              conteúdo
+              {t.categories.titleAccent}
             </span>{" "}
-            você precisa?
+            {t.categories.title2}
           </h2>
           <p className="mt-4 text-foreground-soft max-w-xl">
-            Navegue pelos nichos. Cada linha é uma especialidade — deslize pro
-            lado pra ver mais.
+            {t.categories.intro}
           </p>
 
           {/* Pills de atalho pra cada nicho */}
@@ -57,7 +59,8 @@ export default function CategoryGallery() {
   );
 }
 
-function CategoryRow({ category }: { category: Category }) {
+function CategoryRow({ category }: { category: LocalCategory }) {
+  const t = useT();
   const scrollerRef = useRef<HTMLDivElement>(null);
   const [canPrev, setCanPrev] = useState(false);
   const [canNext, setCanNext] = useState(false);
@@ -103,7 +106,7 @@ function CategoryRow({ category }: { category: Category }) {
       >
         <CategoryHeader category={category} count={0} />
         <div className="py-12 text-muted text-sm italic">
-          Em breve nessa categoria.
+          {t.categories.comingSoon}
         </div>
       </motion.div>
     );
@@ -161,7 +164,7 @@ function CategoryHeader({
   count,
   children,
 }: {
-  category: Category;
+  category: LocalCategory;
   count: number;
   children?: React.ReactNode;
 }) {

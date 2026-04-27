@@ -14,7 +14,8 @@ import {
   Video,
   type LucideIcon,
 } from "lucide-react";
-import { SERVICES, type Service } from "@/data/content";
+import { SERVICES } from "@/data/content";
+import { useT } from "@/lib/i18n";
 
 const ICONS: Record<string, LucideIcon> = {
   Video,
@@ -25,17 +26,14 @@ const ICONS: Record<string, LucideIcon> = {
   Sparkles,
 };
 
-const SERVICE_CTAS: Record<string, string> = {
-  "UGC de Conversão": "Quero UGC que converte",
-  "Criativos para Tráfego": "Quero criar anúncios",
-  "Roteiros Estratégicos": "Quero roteiros performáticos",
-  "Fotos Lifestyle": "Quero fotos da minha marca",
-  "Conteúdo E-commerce": "Quero conteúdo recorrente",
-  "Consultoria UGC": "Quero uma consultoria",
+type LocalService = {
+  title: string;
+  description: string;
+  cta: string;
+  icon: string;
+  highlight?: boolean;
+  tag?: string;
 };
-
-// Triplica os serviços pra criar a ilusão de loop infinito
-const LOOPED_SERVICES = [...SERVICES, ...SERVICES, ...SERVICES];
 
 function WhatsAppIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
@@ -46,8 +44,25 @@ function WhatsAppIcon(props: React.SVGProps<SVGSVGElement>) {
 }
 
 export default function Services() {
+  const t = useT();
   const scrollerRef = useRef<HTMLDivElement>(null);
   const isJumping = useRef(false);
+
+  // Junta cada item traduzido com o ícone original (mantém o ícone, traduz texto)
+  const localizedServices: LocalService[] = t.services.items.map((item, i) => ({
+    title: item.title,
+    description: item.description,
+    cta: item.cta,
+    icon: SERVICES[i]?.icon ?? "Sparkles",
+    highlight: SERVICES[i]?.highlight,
+    tag: SERVICES[i]?.tag,
+  }));
+
+  const loopedServices = [
+    ...localizedServices,
+    ...localizedServices,
+    ...localizedServices,
+  ];
 
   // Teleporte instantâneo, ignorando scroll-behavior: smooth
   const jumpBy = (el: HTMLDivElement, delta: number) => {
@@ -148,15 +163,15 @@ export default function Services() {
         <div className="grid md:grid-cols-2 gap-8 md:gap-12 mb-10 md:mb-14">
           <div>
             <div className="text-xs uppercase tracking-[0.3em] text-primary font-bold mb-5 flex items-center gap-3">
-              Serviços
+              {t.services.tag}
               <ArrowRight className="w-4 h-4" strokeWidth={2.5} />
             </div>
             <h2 className="font-display font-black uppercase tracking-tighter leading-[0.9] text-foreground text-4xl sm:text-5xl md:text-6xl lg:text-7xl">
-              O que podemos
+              {t.services.title1}
               <br />
-              criar{" "}
+              {t.services.title2}{" "}
               <span className="font-serif-accent italic text-primary normal-case lowercase">
-                juntos
+                {t.services.titleAccent}
               </span>
               :
             </h2>
@@ -164,9 +179,7 @@ export default function Services() {
 
           <div className="md:pt-4">
             <p className="text-sm md:text-base uppercase tracking-wider text-foreground-soft leading-relaxed font-medium">
-              Conheça os formatos em que minha gestão de campanhas UGC pode
-              ajudar sua marca a conquistar mais clientes e gerar resultado
-              de verdade.
+              {t.services.intro}
             </p>
           </div>
         </div>
@@ -177,7 +190,7 @@ export default function Services() {
             ref={scrollerRef}
             className="flex gap-4 md:gap-5 overflow-x-auto overflow-y-hidden scroll-smooth snap-x snap-mandatory scrollbar-hide services-fade py-2"
           >
-            {LOOPED_SERVICES.map((s, i) => (
+            {loopedServices.map((s, i) => (
               <div
                 key={`${s.title}-${i}`}
                 className="flex-shrink-0 snap-center w-[78%] sm:w-[calc((100%-1rem)/2)] md:w-[calc((100%-2rem)/3)] lg:w-[calc((100%-3rem)/4)]"
@@ -207,7 +220,7 @@ export default function Services() {
         {/* Dica de scroll no mobile */}
         <div className="mt-6 text-center md:hidden">
           <span className="text-xs uppercase tracking-[0.2em] text-muted">
-            Deslize pro lado →
+            {t.services.scrollHint}
           </span>
         </div>
       </div>
@@ -215,16 +228,21 @@ export default function Services() {
   );
 }
 
-function ServiceCard({ service, index }: { service: Service; index: number }) {
+function ServiceCard({
+  service,
+  index,
+}: {
+  service: LocalService;
+  index: number;
+}) {
   const Icon = ICONS[service.icon] ?? Sparkles;
-  const cta = SERVICE_CTAS[service.title] ?? "Quero saber mais";
 
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-40px" }}
-      transition={{ duration: 0.5, delay: (index % SERVICES.length) * 0.06 }}
+      transition={{ duration: 0.5, delay: (index % 6) * 0.06 }}
       className="group h-full flex flex-col bg-background border border-foreground/10 rounded-2xl p-5 md:p-6 hover:border-primary/40 hover:shadow-lg transition-all"
     >
       <div className="mb-4">
@@ -249,7 +267,7 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
         className="mt-auto inline-flex items-center gap-2 text-primary font-bold uppercase tracking-wider text-[10px] md:text-xs hover:gap-2.5 transition-all"
       >
         <WhatsAppIcon className="w-4 h-4 flex-shrink-0" />
-        <span>{cta}</span>
+        <span>{service.cta}</span>
       </a>
     </motion.div>
   );

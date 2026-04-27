@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { Play } from "lucide-react";
 import { useVideoModal } from "./VideoModalProvider";
 import type { Video } from "@/data/content";
+import { useT } from "@/lib/i18n";
 
 type YtAd = {
   youtubeId: string; // id do YouTube (vídeo horizontal 16:9)
@@ -33,6 +34,7 @@ function YouTubeIcon(props: React.SVGProps<SVGSVGElement>) {
 }
 
 export default function YouTubeAds() {
+  const t = useT();
   return (
     <section
       id="youtube"
@@ -49,32 +51,32 @@ export default function YouTubeAds() {
         >
           <div className="text-xs uppercase tracking-[0.3em] text-primary font-medium mb-6 flex items-center gap-3">
             <span className="h-px w-8 bg-primary" />
-            YouTube Ads
+            {t.youtubeAds.tag}
           </div>
 
           <h2 className="font-display font-black text-4xl md:text-6xl leading-[0.9] tracking-tighter text-foreground">
-            Sua marca no
+            {t.youtubeAds.title1}
             <br />
             <span className="inline-flex items-center gap-3 md:gap-4 flex-wrap">
-              YouTube
+              {t.youtubeAds.title2}
               <YouTubeIcon className="h-8 md:h-12 w-auto" />
             </span>
           </h2>
 
           <p className="mt-6 text-foreground-soft text-base md:text-lg leading-snug">
-            Mais visibilidade,
+            {t.youtubeAds.subline1}
             <br />
-            mais estratégia,
+            {t.youtubeAds.subline2}
             <br />
-            mais resultado!
+            {t.youtubeAds.subline3}
           </p>
 
           <p className="mt-6 text-foreground-soft text-sm md:text-base max-w-md leading-relaxed">
-            Tudo isso com vídeos pensados para o{" "}
+            {t.youtubeAds.bodyPre}
             <span className="font-serif-accent italic text-primary">
-              YouTube Ads
+              {t.youtubeAds.bodyAccent}
             </span>
-            .
+            {t.youtubeAds.bodyEnd}
           </p>
         </motion.div>
 
@@ -91,6 +93,7 @@ export default function YouTubeAds() {
 
 function YouTubeAdCard({ ad, index }: { ad: YtAd; index: number }) {
   const { open } = useVideoModal();
+  const t = useT();
 
   const video: Video = {
     id: `yt-ad-${index}`,
@@ -135,7 +138,7 @@ function YouTubeAdCard({ ad, index }: { ad: YtAd; index: number }) {
       {/* Badge de views */}
       {ad.views && (
         <div className="absolute top-2 right-2 px-2 py-0.5 rounded-full bg-[#FF0000] text-white text-[10px] md:text-xs font-bold uppercase tracking-wider shadow-md">
-          {ad.views} views
+          {ad.views} {t.youtubeAds.viewsLabel}
         </div>
       )}
 
