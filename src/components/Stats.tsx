@@ -1,10 +1,11 @@
 "use client";
 
 import { animate, motion } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
-import { STATS } from "@/data/content";
+import { useEffect, useState } from "react";
+import { useT } from "@/lib/i18n";
 
 export default function Stats() {
+  const t = useT();
   return (
     <section className="px-6 md:px-12 py-6 md:py-8 max-w-7xl mx-auto">
       <motion.div
@@ -13,7 +14,7 @@ export default function Stats() {
         transition={{ duration: 0.6 }}
         className="grid grid-cols-2 md:grid-cols-4 gap-y-6 gap-x-4 md:gap-x-8 md:divide-x md:divide-foreground/10"
       >
-        {STATS.map((s, i) => (
+        {t.stats.map((s, i) => (
           <motion.div
             key={s.label}
             initial={{ opacity: 0, y: 10 }}

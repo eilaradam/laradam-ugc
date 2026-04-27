@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { Check } from "lucide-react";
 import { HeroPhoto } from "./_shared";
+import { useT } from "@/lib/i18n";
 
 // Cor de destaque verde-oliva da referência (one-off, não muda o tema global)
 const ACCENT = "#d46928";
@@ -10,6 +11,7 @@ const ACCENT_DARK = "#c75925";
 const ACCENT_LIGHT = "#e3725a";
 
 export default function HeroOption6() {
+  const t = useT();
   return (
     <section
       id="top"
@@ -29,7 +31,7 @@ export default function HeroOption6() {
               <Check className="w-3.5 h-3.5 md:w-4 md:h-4 text-background" strokeWidth={3} />
             </span>
             <span className="text-xs md:text-sm font-semibold text-foreground/80">
-              UGC Creator & Content Strategist · Disponível 2026
+              {t.hero.badge}
             </span>
           </motion.div>
 
@@ -40,9 +42,10 @@ export default function HeroOption6() {
             transition={{ delay: 0.2, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
             className="font-display font-black text-foreground leading-[0.95] tracking-tighter text-5xl md:text-6xl lg:text-7xl"
           >
-            Criando conteúdo
+            {t.hero.title1}
             <br />
-            que <span style={{ color: ACCENT_DARK }}>converte</span>
+            {t.hero.title2}{" "}
+            <span style={{ color: ACCENT_DARK }}>{t.hero.titleAccent}</span>
           </motion.h1>
 
           {/* Descrição */}
@@ -52,10 +55,10 @@ export default function HeroOption6() {
             transition={{ delay: 0.4, duration: 0.7 }}
             className="mt-5 md:mt-6 text-foreground-soft text-sm md:text-base leading-relaxed max-w-md"
           >
-            De hook a CTA, cada segundo pensado pra performar.
+            {t.hero.body1}
             <br />
             <strong className="font-semibold text-foreground">
-              +500 vídeos &nbsp;|&nbsp; +200 marcas parceiras &nbsp;|&nbsp; 100M+ views.
+              {t.hero.metrics}
             </strong>
           </motion.p>
 
@@ -71,13 +74,13 @@ export default function HeroOption6() {
               style={{ backgroundColor: ACCENT }}
               className="inline-flex items-center justify-center px-8 md:px-10 py-3.5 md:py-4 rounded-2xl text-sm md:text-base font-bold text-white hover:opacity-90 transition-opacity"
             >
-              Quero criar com a Lara
+              {t.hero.cta}
             </a>
             <a
               href="#categorias"
               className="text-sm md:text-base font-semibold text-foreground-soft hover:text-foreground transition-colors"
             >
-              Saiba mais →
+              {t.hero.saibaMais}
             </a>
           </motion.div>
         </div>
@@ -138,8 +141,8 @@ export default function HeroOption6() {
               <Check className="w-3.5 h-3.5 text-foreground" strokeWidth={3} />
             </span>
             <div className="text-xs md:text-[13px] leading-tight">
-              <div className="font-semibold text-foreground">A entrega foi perfeita!</div>
-              <div className="text-foreground-soft">Super alinhada</div>
+              <div className="font-semibold text-foreground">{t.hero.bubble1Title}</div>
+              <div className="text-foreground-soft">{t.hero.bubble1Sub}</div>
             </div>
           </motion.div>
 
@@ -172,8 +175,8 @@ export default function HeroOption6() {
               <Check className="w-3.5 h-3.5 text-foreground" strokeWidth={3} />
             </span>
             <div className="text-xs md:text-[13px] leading-tight">
-              <div className="font-semibold text-foreground">Recorde de CTR no Meta</div>
-              <div className="text-foreground-soft">+100M views · InfinitePay</div>
+              <div className="font-semibold text-foreground">{t.hero.bubble2Title}</div>
+              <div className="text-foreground-soft">{t.hero.bubble2Sub}</div>
             </div>
           </motion.div>
         </div>

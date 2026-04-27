@@ -3,19 +3,22 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
-
-const LINKS = [
-  { href: "/#sobre", label: "Sobre" },
-  { href: "/#servicos", label: "Serviços" },
-  { href: "/#categorias", label: "Categorias" },
-  { href: "/#contato", label: "Contato" },
-];
-
-const GESTAO_LINK = { href: "/gestao", label: "Gestão" };
+import { useLang, useT } from "@/lib/i18n";
 
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const t = useT();
+  const { lang, setLang } = useLang();
+
+  const LINKS = [
+    { href: "/#sobre", label: t.nav.sobre },
+    { href: "/#servicos", label: t.nav.servicos },
+    { href: "/#categorias", label: t.nav.categorias },
+    { href: "/#contato", label: t.nav.contato },
+  ];
+
+  const GESTAO_LINK = { href: "/gestao", label: t.nav.gestao };
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -71,11 +74,34 @@ export default function Nav() {
             >
               {GESTAO_LINK.label}
             </a>
+            {/* Toggle PT/EN */}
+            <div className="flex items-center text-[10px] md:text-xs font-bold uppercase tracking-wider border border-foreground/15 rounded-full overflow-hidden">
+              <button
+                onClick={() => setLang("pt")}
+                className={`px-2 py-1 transition-colors ${
+                  lang === "pt"
+                    ? "bg-foreground text-background"
+                    : "text-foreground/60 hover:text-foreground"
+                }`}
+              >
+                PT
+              </button>
+              <button
+                onClick={() => setLang("en")}
+                className={`px-2 py-1 transition-colors ${
+                  lang === "en"
+                    ? "bg-foreground text-background"
+                    : "text-foreground/60 hover:text-foreground"
+                }`}
+              >
+                EN
+              </button>
+            </div>
             <a
               href="/#contato"
               className="text-[11px] md:text-xs font-semibold bg-foreground text-background px-4 md:px-5 py-2 md:py-2.5 hover:bg-primary transition-colors whitespace-nowrap"
             >
-              Trabalhe comigo
+              {t.nav.trabalheComigo}
             </a>
             {/* Mobile menu button */}
             <button
@@ -134,8 +160,30 @@ export default function Nav() {
                 onClick={() => setOpen(false)}
                 className="block w-full text-center bg-primary text-primary-light px-6 py-4 rounded-full font-semibold"
               >
-                Trabalhe comigo
+                {t.nav.trabalheComigo}
               </a>
+              <div className="flex items-center justify-center gap-2 text-[10px] font-bold uppercase tracking-wider">
+                <button
+                  onClick={() => setLang("pt")}
+                  className={`px-3 py-1 rounded-full transition-colors ${
+                    lang === "pt"
+                      ? "bg-background text-foreground"
+                      : "text-background/60"
+                  }`}
+                >
+                  PT
+                </button>
+                <button
+                  onClick={() => setLang("en")}
+                  className={`px-3 py-1 rounded-full transition-colors ${
+                    lang === "en"
+                      ? "bg-background text-foreground"
+                      : "text-background/60"
+                  }`}
+                >
+                  EN
+                </button>
+              </div>
               <div className="text-xs uppercase tracking-wider text-background/40 text-center">
                 laradam.ugc@gmail.com · @eilaradam
               </div>

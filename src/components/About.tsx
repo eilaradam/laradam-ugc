@@ -2,13 +2,14 @@
 
 import { motion } from "framer-motion";
 import { Check, MessageCircle, Sparkles } from "lucide-react";
-import { ABOUT } from "@/data/content";
+import { useT } from "@/lib/i18n";
 
 const ACCENT = "#d46928";
 const BROWN = "#e3725a";
 const CREAM = "#E8DFD3";
 
 export default function About() {
+  const t = useT();
   return (
     <section
       id="sobre"
@@ -77,10 +78,10 @@ export default function About() {
             </span>
             <div className="text-[12px] leading-tight">
               <div className="text-foreground-soft text-[10px] uppercase tracking-wider">
-                Etapa 1
+                {t.about.etapa} 1
               </div>
               <div className="font-semibold text-foreground">
-                Primeiro contato
+                {t.about.primeiroContato}
               </div>
             </div>
           </motion.div>
@@ -105,9 +106,9 @@ export default function About() {
               </span>
               <div className="text-[12px] leading-tight pr-1">
                 <div className="text-foreground-soft text-[10px] uppercase tracking-wider">
-                  Etapa 2
+                  {t.about.etapa} 2
                 </div>
-                <div className="font-semibold text-foreground">Criação</div>
+                <div className="font-semibold text-foreground">{t.about.criacao}</div>
               </div>
             </div>
           </motion.div>
@@ -128,9 +129,9 @@ export default function About() {
             </span>
             <div className="text-[12px] leading-tight">
               <div className="text-foreground-soft text-[10px] uppercase tracking-wider">
-                Etapa 3
+                {t.about.etapa} 3
               </div>
-              <div className="font-semibold text-foreground">Entrega</div>
+              <div className="font-semibold text-foreground">{t.about.entrega}</div>
             </div>
           </motion.div>
         </motion.div>
@@ -144,33 +145,33 @@ export default function About() {
         >
           <div className="text-xs uppercase tracking-[0.3em] text-primary font-medium mb-6 flex items-center gap-3">
             <span className="h-px w-8 bg-primary" />
-            Sobre mim
+            {t.about.tag}
           </div>
 
           <h2 className="font-display font-black text-3xl md:text-5xl text-foreground leading-[0.95] tracking-tighter mb-6">
-            Oie, eu sou a{" "}
+            {t.about.greeting1}{" "}
             <span className="text-primary font-serif-accent italic">
-              Lara Dam
+              {t.about.greetingName}
             </span>
           </h2>
 
           <p className="text-sm md:text-base text-foreground-soft leading-relaxed max-w-xl">
-            {ABOUT.body}
+            {t.about.body1}
           </p>
 
           <p className="mt-4 text-sm md:text-base text-foreground-soft leading-relaxed max-w-xl">
-            {ABOUT.body2}
+            {t.about.body2}
           </p>
 
           <div className="mt-8 flex flex-wrap gap-3">
             <div className="px-5 py-3 rounded-full bg-primary-light border border-primary/20">
               <span className="text-sm font-semibold text-primary">
-                +200 marcas parceiras
+                {t.about.pillBrands}
               </span>
             </div>
             <div className="px-5 py-3 rounded-full bg-foreground/5 border border-foreground/10">
               <span className="text-sm font-semibold text-foreground">
-                Litoral de SP · Brasil
+                {t.about.pillLocation}
               </span>
             </div>
           </div>

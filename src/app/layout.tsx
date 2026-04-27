@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Be_Vietnam_Pro, DM_Sans, Fraunces } from "next/font/google";
 import VideoModalProvider from "@/components/VideoModalProvider";
 import CustomCursor from "@/components/CustomCursor";
+import { LanguageProvider } from "@/lib/i18n";
 import "./globals.css";
 
 const beVietnam = Be_Vietnam_Pro({
@@ -45,8 +46,10 @@ export default function RootLayout({
       className={`${beVietnam.variable} ${dmSans.variable} ${fraunces.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <CustomCursor />
-        <VideoModalProvider>{children}</VideoModalProvider>
+        <LanguageProvider>
+          <CustomCursor />
+          <VideoModalProvider>{children}</VideoModalProvider>
+        </LanguageProvider>
       </body>
     </html>
   );

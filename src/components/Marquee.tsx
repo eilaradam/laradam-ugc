@@ -1,7 +1,10 @@
-import { MARQUEE_ITEMS } from "@/data/content";
+"use client";
+
+import { useT } from "@/lib/i18n";
 
 export default function Marquee() {
-  const doubled = [...MARQUEE_ITEMS, ...MARQUEE_ITEMS];
+  const t = useT();
+  const doubled = [...t.marquee, ...t.marquee];
   return (
     <div className="relative z-30 -mt-2 md:-mt-3 bg-foreground text-background py-2.5 overflow-hidden border-y border-foreground/10">
       <div className="marquee">
