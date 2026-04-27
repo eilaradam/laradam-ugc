@@ -34,6 +34,24 @@ export default function About() {
             style={{ backgroundColor: BROWN }}
             className="absolute top-0 left-0 w-[78%] h-[88%] rounded-3xl overflow-hidden"
           >
+            {/* Textura granulada — polka dots sutis */}
+            <div
+              className="absolute inset-0 opacity-40 mix-blend-overlay"
+              style={{
+                backgroundImage:
+                  "radial-gradient(circle, rgba(255,255,255,0.5) 1px, transparent 1.2px)",
+                backgroundSize: "10px 10px",
+              }}
+            />
+            {/* Grão fino adicional */}
+            <div
+              className="absolute inset-0 opacity-30 mix-blend-soft-light pointer-events-none"
+              style={{
+                backgroundImage:
+                  "radial-gradient(circle, rgba(255,255,255,0.8) 0.5px, transparent 0.8px)",
+                backgroundSize: "4px 4px",
+              }}
+            />
             <img
               src="/lara-sobre1.png"
               alt="Lara Dam"
