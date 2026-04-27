@@ -37,45 +37,43 @@ export default function Nav() {
         initial={{ y: -40, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-        className="fixed top-0 left-0 right-0 z-50 px-3 md:px-8 pt-3 md:pt-4"
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+          scrolled
+            ? "bg-background/85 backdrop-blur-lg border-b border-foreground/10"
+            : "bg-background/60 backdrop-blur-md"
+        }`}
       >
-        <div
-          className={`max-w-7xl mx-auto flex items-center justify-between gap-3 md:gap-6 px-3 md:px-6 py-2.5 md:py-3 rounded-full transition-all duration-300 ${
-            scrolled
-              ? "bg-foreground/95 backdrop-blur-lg border border-foreground/10 shadow-lg"
-              : "bg-foreground/80 backdrop-blur-md"
-          }`}
-        >
+        <div className="max-w-7xl mx-auto flex items-center justify-between gap-3 md:gap-6 px-5 md:px-8 py-3 md:py-3.5">
           <a
             href="#top"
-            className="font-display font-black text-background text-sm md:text-base tracking-tight"
+            className="font-display font-black text-foreground text-sm md:text-base tracking-tight"
           >
             LARA DAM<span className="text-primary">.</span>
           </a>
 
           {/* Desktop links */}
-          <div className="hidden md:flex items-center gap-6">
+          <div className="hidden md:flex items-center gap-7">
             {LINKS.map((l) => (
               <a
                 key={l.href}
                 href={l.href}
-                className="text-xs uppercase tracking-[0.15em] text-background/80 hover:text-primary transition-colors font-medium"
+                className="text-xs uppercase tracking-[0.15em] text-foreground/70 hover:text-primary transition-colors font-medium"
               >
                 {l.label}
               </a>
             ))}
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3 md:gap-4">
             <a
               href={GESTAO_LINK.href}
-              className="hidden md:inline-flex text-[11px] md:text-sm font-semibold border border-background/20 text-background px-3 md:px-4 py-1.5 md:py-2 rounded-full hover:bg-background hover:text-foreground transition-colors whitespace-nowrap"
+              className="hidden md:inline-flex text-xs uppercase tracking-[0.15em] font-medium text-foreground/70 hover:text-primary transition-colors"
             >
               {GESTAO_LINK.label}
             </a>
             <a
               href="/#contato"
-              className="text-[11px] md:text-sm font-semibold bg-primary text-primary-light px-3 md:px-4 py-1.5 md:py-2 rounded-full hover:bg-primary-dark transition-colors whitespace-nowrap"
+              className="text-[11px] md:text-xs font-semibold bg-foreground text-background px-4 md:px-5 py-2 md:py-2.5 hover:bg-primary transition-colors whitespace-nowrap"
             >
               Trabalhe comigo
             </a>
@@ -83,9 +81,9 @@ export default function Nav() {
             <button
               onClick={() => setOpen(true)}
               aria-label="Menu"
-              className="md:hidden w-9 h-9 rounded-full border border-background/15 text-background flex items-center justify-center hover:bg-background hover:text-foreground transition-colors"
+              className="md:hidden w-9 h-9 text-foreground flex items-center justify-center hover:text-primary transition-colors"
             >
-              <Menu className="w-4 h-4" />
+              <Menu className="w-5 h-5" />
             </button>
           </div>
         </div>
