@@ -231,6 +231,7 @@ export const TESTIMONIALS: Testimonial[] = [
     quote:
       "O trabalho da Lara foi incrível. Ela fez a cobertura total do evento, filmou cada detalhe e agregou DEMAIS pras marcas. Foi a creator que mais gerou conteúdo pra BF em 2024.",
     brand: "Beauty Fair",
+    logoFile: "62.png",
     role: "Conteúdo em evento presencial",
     metric: { value: "+30", label: "vídeos durante o evento BF" },
   },
@@ -238,6 +239,7 @@ export const TESTIMONIALS: Testimonial[] = [
     quote:
       "Lara entregou um material muito legal e bem feito. Com certeza vamos querer trabalhar novamente!",
     brand: "Terramazonia",
+    logoFile: "63.png",
     role: "Campanha de receitas",
     metric: { value: "+180K", label: "alcance no reels" },
   },
