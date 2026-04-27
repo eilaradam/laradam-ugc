@@ -202,21 +202,21 @@ function BrandLogo({
 
   if (!src || errored) {
     return (
-      <div className="w-16 h-16 md:w-[72px] md:h-[72px] rounded-full bg-foreground text-background flex items-center justify-center flex-shrink-0 font-display font-black text-base tracking-tight shadow-md ring-4 ring-background">
+      <div className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-foreground text-background flex items-center justify-center flex-shrink-0 font-display font-black text-sm tracking-tight shadow-md ring-4 ring-background">
         {initials}
       </div>
     );
   }
 
   return (
-    <div className="w-16 h-16 md:w-[72px] md:h-[72px] rounded-full bg-background flex items-center justify-center flex-shrink-0 overflow-hidden shadow-md ring-4 ring-background">
+    <div className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-white flex items-center justify-center flex-shrink-0 overflow-hidden shadow-md ring-4 ring-background">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={src}
         alt={brand}
-        width={72}
-        height={72}
-        className="w-full h-full object-contain"
+        width={64}
+        height={64}
+        className="w-full h-full object-contain p-1"
         onError={() => setErrored(true)}
       />
     </div>
@@ -236,10 +236,10 @@ function TestimonialCard({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5, delay: (index % TESTIMONIALS.length) * 0.06 }}
-      className="relative w-full pt-12 md:pt-14 pb-6 px-5 md:px-6 rounded-2xl bg-background border border-foreground/5 flex flex-col items-center text-center gap-3 group hover:border-primary/30 transition-colors mt-8 md:mt-9"
+      className="relative w-full pt-10 md:pt-11 pb-5 px-4 md:px-5 rounded-2xl bg-background border border-foreground/5 flex flex-col items-center text-center gap-2.5 group hover:border-primary/30 transition-colors mt-7 md:mt-8"
     >
       {/* Logo: posicionado overflow no topo */}
-      <div className="absolute -top-8 md:-top-9 left-1/2 -translate-x-1/2">
+      <div className="absolute -top-7 md:-top-8 left-1/2 -translate-x-1/2">
         <BrandLogo
           brand={testimonial.brand}
           logoFile={testimonial.logoFile}
@@ -248,7 +248,7 @@ function TestimonialCard({
       </div>
 
       {/* Nome da marca */}
-      <div className="font-display font-black text-foreground text-sm md:text-base tracking-tight">
+      <div className="font-display font-black text-foreground text-xs md:text-sm tracking-tight">
         {testimonial.brand}
       </div>
 
@@ -257,7 +257,7 @@ function TestimonialCard({
         {Array.from({ length: 5 }).map((_, i) => (
           <Star
             key={i}
-            className="w-4 h-4 fill-primary text-primary"
+            className="w-3.5 h-3.5 fill-primary text-primary"
             strokeWidth={0}
           />
         ))}
@@ -265,23 +265,23 @@ function TestimonialCard({
 
       {/* Role opcional */}
       {testimonial.role && (
-        <div className="text-[10px] uppercase tracking-wider text-muted -mt-1">
+        <div className="text-[9px] uppercase tracking-wider text-muted -mt-0.5">
           {testimonial.role}
         </div>
       )}
 
       {/* Comentário */}
-      <p className="text-foreground-soft leading-relaxed text-xs md:text-sm flex-1 mt-1">
+      <p className="text-foreground-soft leading-relaxed text-[11px] md:text-[13px] flex-1 mt-0.5">
         {testimonial.quote}
       </p>
 
       {/* Resultado / métrica */}
       {testimonial.metric && (
-        <div className="flex flex-col items-center gap-0.5 pt-3 border-t border-foreground/10 w-full mt-2">
-          <span className="font-display font-black text-xl md:text-2xl text-primary tracking-tight">
+        <div className="flex flex-col items-center gap-0.5 pt-2.5 border-t border-foreground/10 w-full mt-1.5">
+          <span className="font-display font-black text-lg md:text-xl text-primary tracking-tight">
             {testimonial.metric.value}
           </span>
-          <span className="text-[10px] uppercase tracking-wider text-foreground-soft">
+          <span className="text-[9px] uppercase tracking-wider text-foreground-soft">
             {testimonial.metric.label}
           </span>
         </div>
