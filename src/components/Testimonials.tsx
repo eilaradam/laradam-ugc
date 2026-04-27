@@ -202,14 +202,14 @@ function BrandLogo({
 
   if (!src || errored) {
     return (
-      <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-foreground text-background flex items-center justify-center flex-shrink-0 font-display font-black text-base tracking-tight shadow-md ring-4 ring-background">
+      <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-foreground text-background flex items-center justify-center flex-shrink-0 font-display font-black text-base tracking-tight ring-4 ring-background shadow-[0_0_0_1px_rgba(0,0,0,0.08),0_4px_8px_-2px_rgba(0,0,0,0.12)]">
         {initials}
       </div>
     );
   }
 
   return (
-    <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-white flex items-center justify-center flex-shrink-0 overflow-hidden shadow-md ring-4 ring-background">
+    <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-white flex items-center justify-center flex-shrink-0 overflow-hidden ring-4 ring-background shadow-[0_0_0_1px_rgba(0,0,0,0.08),0_4px_8px_-2px_rgba(0,0,0,0.12)]">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={src}
