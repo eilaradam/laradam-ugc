@@ -236,7 +236,7 @@ function TestimonialCard({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5, delay: (index % TESTIMONIALS.length) * 0.06 }}
-      className="relative w-full pt-10 md:pt-11 pb-5 px-4 md:px-5 rounded-2xl bg-background border border-foreground/5 flex flex-col items-center text-center gap-2.5 group hover:border-primary/30 transition-colors mt-7 md:mt-8"
+      className="relative w-full pt-8 pb-3 px-4 md:px-5 rounded-2xl bg-background border border-foreground/5 flex flex-col items-center text-center gap-1 group hover:border-primary/30 transition-colors mt-7 md:mt-8"
     >
       {/* Logo: posicionado overflow no topo */}
       <div className="absolute -top-7 md:-top-8 left-1/2 -translate-x-1/2">
@@ -248,7 +248,7 @@ function TestimonialCard({
       </div>
 
       {/* Nome da marca */}
-      <div className="font-display font-black text-foreground text-xs md:text-sm tracking-tight">
+      <div className="font-display font-black text-foreground text-[12px] tracking-tight">
         {testimonial.brand}
       </div>
 
@@ -257,7 +257,7 @@ function TestimonialCard({
         {Array.from({ length: 5 }).map((_, i) => (
           <Star
             key={i}
-            className="w-3.5 h-3.5 fill-primary text-primary"
+            className="w-2.5 h-2.5 fill-primary text-primary"
             strokeWidth={0}
           />
         ))}
@@ -265,23 +265,23 @@ function TestimonialCard({
 
       {/* Role opcional */}
       {testimonial.role && (
-        <div className="text-[9px] uppercase tracking-wider text-muted -mt-0.5">
+        <div className="text-[8px] uppercase tracking-wider text-muted">
           {testimonial.role}
         </div>
       )}
 
       {/* Comentário */}
-      <p className="text-foreground-soft leading-relaxed text-[11px] md:text-[13px] flex-1 mt-0.5">
+      <p className="text-foreground-soft leading-snug text-[9px] flex-1 mt-0.5">
         {testimonial.quote}
       </p>
 
       {/* Resultado / métrica */}
       {testimonial.metric && (
-        <div className="flex flex-col items-center gap-0.5 pt-2.5 border-t border-foreground/10 w-full mt-1.5">
-          <span className="font-display font-black text-lg md:text-xl text-primary tracking-tight">
+        <div className="flex flex-col items-center pt-1.5 border-t border-foreground/10 w-full mt-1">
+          <span className="font-display font-black text-[12px] text-primary tracking-tight leading-tight">
             {testimonial.metric.value}
           </span>
-          <span className="text-[9px] uppercase tracking-wider text-foreground-soft">
+          <span className="text-[8px] uppercase tracking-wider text-foreground-soft">
             {testimonial.metric.label}
           </span>
         </div>
