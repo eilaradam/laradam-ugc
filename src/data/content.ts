@@ -250,7 +250,7 @@ export const TESTIMONIALS: Testimonial[] = [
   },
   {
     quote:
-      "Alto nível de domínio em UGC: roteiro coeso, narrativa clara, performance natural na frente da câmera e edição precisa. Comunicação fluida em todas as etapas. Uma parceria que agrega valor real.",
+      "Alto nível de domínio em UGC: roteiro, narrativa, performance natural na frente da câmera e edição. Comunicação fluida em todas as etapas!",
     brand: "Velds",
     logoFile: "28.png",
     role: "Conteúdo pra e-commerce + ads",
