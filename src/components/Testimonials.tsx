@@ -148,7 +148,7 @@ export default function Testimonials() {
             {LOOPED_TESTIMONIALS.map((t, i) => (
               <div
                 key={`${t.brand}-${i}`}
-                className="flex-shrink-0 snap-center w-[78%] sm:w-[calc((100%-1rem)/2)] md:w-[calc((100%-2rem)/3)] lg:w-[calc((100%-3rem)/4)] flex"
+                className="flex-shrink-0 snap-center w-[78%] sm:w-[calc((100%-1rem)/2)] md:w-[calc((100%-2rem)/3)] flex"
               >
                 <TestimonialCard testimonial={t} index={i} />
               </div>
@@ -202,20 +202,20 @@ function BrandLogo({
 
   if (!src || errored) {
     return (
-      <div className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-foreground text-background flex items-center justify-center flex-shrink-0 font-display font-black text-sm tracking-tight shadow-md ring-4 ring-background">
+      <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-foreground text-background flex items-center justify-center flex-shrink-0 font-display font-black text-base tracking-tight shadow-md ring-4 ring-background">
         {initials}
       </div>
     );
   }
 
   return (
-    <div className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-white flex items-center justify-center flex-shrink-0 overflow-hidden shadow-md ring-4 ring-background">
+    <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-white flex items-center justify-center flex-shrink-0 overflow-hidden shadow-md ring-4 ring-background">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={src}
         alt={brand}
-        width={64}
-        height={64}
+        width={80}
+        height={80}
         className="w-full h-full object-contain p-1"
         onError={() => setErrored(true)}
       />
@@ -236,10 +236,10 @@ function TestimonialCard({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5, delay: (index % TESTIMONIALS.length) * 0.06 }}
-      className="relative w-full pt-8 pb-3 px-4 md:px-5 rounded-2xl bg-background border border-foreground/5 flex flex-col items-center text-center gap-1 group hover:border-primary/30 transition-colors mt-7 md:mt-8"
+      className="relative w-full pt-10 pb-4 px-5 md:px-6 rounded-2xl bg-background border border-foreground/5 flex flex-col items-center text-center gap-2 group hover:border-primary/30 transition-colors mt-9 md:mt-10"
     >
       {/* Logo: posicionado overflow no topo */}
-      <div className="absolute -top-7 md:-top-8 left-1/2 -translate-x-1/2">
+      <div className="absolute -top-9 md:-top-10 left-1/2 -translate-x-1/2">
         <BrandLogo
           brand={testimonial.brand}
           logoFile={testimonial.logoFile}
@@ -248,7 +248,7 @@ function TestimonialCard({
       </div>
 
       {/* Nome da marca */}
-      <div className="font-display font-black text-foreground text-[12px] tracking-tight">
+      <div className="font-display font-black text-foreground text-[14px] tracking-tight">
         {testimonial.brand}
       </div>
 
@@ -257,7 +257,7 @@ function TestimonialCard({
         {Array.from({ length: 5 }).map((_, i) => (
           <Star
             key={i}
-            className="w-2.5 h-2.5 fill-primary text-primary"
+            className="w-3 h-3 fill-primary text-primary"
             strokeWidth={0}
           />
         ))}
@@ -265,23 +265,23 @@ function TestimonialCard({
 
       {/* Role opcional */}
       {testimonial.role && (
-        <div className="text-[8px] uppercase tracking-wider text-muted">
+        <div className="text-[10px] uppercase tracking-wider text-muted">
           {testimonial.role}
         </div>
       )}
 
       {/* Comentário */}
-      <p className="text-foreground-soft leading-snug text-[9px] flex-1 mt-0.5">
+      <p className="text-foreground-soft leading-snug text-[11px] flex-1 mt-1">
         {testimonial.quote}
       </p>
 
       {/* Resultado / métrica */}
       {testimonial.metric && (
-        <div className="flex flex-col items-center pt-1.5 border-t border-foreground/10 w-full mt-1">
-          <span className="font-display font-black text-[12px] text-primary tracking-tight leading-tight">
+        <div className="flex flex-col items-center pt-2 border-t border-foreground/10 w-full mt-1.5">
+          <span className="font-display font-black text-[14px] text-primary tracking-tight leading-tight">
             {testimonial.metric.value}
           </span>
-          <span className="text-[8px] uppercase tracking-wider text-foreground-soft">
+          <span className="text-[10px] uppercase tracking-wider text-foreground-soft">
             {testimonial.metric.label}
           </span>
         </div>
