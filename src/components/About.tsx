@@ -158,6 +158,10 @@ export default function About() {
             {ABOUT.body}
           </p>
 
+          <p className="mt-4 text-sm md:text-base text-foreground-soft leading-relaxed max-w-xl">
+            {ABOUT.body2}
+          </p>
+
           <div className="mt-8 flex flex-wrap gap-3">
             <div className="px-5 py-3 rounded-full bg-primary-light border border-primary/20">
               <span className="text-sm font-semibold text-primary">
