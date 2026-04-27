@@ -36,7 +36,7 @@ export default function YouTubeAds() {
   return (
     <section
       id="youtube"
-      className="px-6 md:px-12 py-10 md:py-20 bg-background"
+      className="px-6 md:px-12 py-6 md:py-10 bg-background"
     >
       <div className="max-w-7xl mx-auto grid md:grid-cols-12 gap-10 md:gap-12 items-center">
         {/* Coluna esquerda — título + descrição */}

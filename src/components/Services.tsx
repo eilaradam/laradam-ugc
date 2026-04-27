@@ -141,7 +141,7 @@ export default function Services() {
   return (
     <section
       id="servicos"
-      className="px-6 md:px-12 py-14 md:py-24 bg-background-alt"
+      className="px-6 md:px-12 py-6 md:py-10 bg-background-alt"
     >
       <div className="max-w-7xl mx-auto">
         {/* Header em 2 colunas */}

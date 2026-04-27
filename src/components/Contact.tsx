@@ -59,7 +59,7 @@ export default function Contact() {
   return (
     <section
       id="contato"
-      className="px-6 md:px-12 py-10 md:py-20 bg-foreground text-background relative overflow-hidden"
+      className="px-6 md:px-12 py-6 md:py-10 bg-foreground text-background relative overflow-hidden"
     >
       {/* Big background type */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none opacity-[0.04]">

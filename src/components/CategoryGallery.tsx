@@ -13,7 +13,7 @@ export default function CategoryGallery() {
   return (
     <section
       id="categorias"
-      className="px-6 md:px-12 py-10 md:py-20 bg-background-alt"
+      className="px-6 md:px-12 py-6 md:py-10 bg-background-alt"
     >
       <div className="max-w-7xl mx-auto">
         <div className="mb-8 md:mb-12">

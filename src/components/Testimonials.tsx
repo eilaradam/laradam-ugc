@@ -111,7 +111,7 @@ export default function Testimonials() {
   return (
     <section
       id="depoimentos"
-      className="px-6 md:px-12 py-8 md:py-14 bg-background-alt"
+      className="px-6 md:px-12 py-6 md:py-10 bg-background-alt"
     >
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-6 md:mb-8">

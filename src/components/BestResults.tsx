@@ -89,7 +89,7 @@ export default function BestResults() {
   return (
     <section
       id="destaques"
-      className="px-6 md:px-12 py-10 md:py-20 bg-background relative overflow-hidden"
+      className="px-6 md:px-12 py-6 md:py-10 bg-background relative overflow-hidden"
     >
       <div className="max-w-7xl mx-auto grid md:grid-cols-12 gap-10 md:gap-12 items-start">
         {/* Coluna esquerda — título + áudio */}
