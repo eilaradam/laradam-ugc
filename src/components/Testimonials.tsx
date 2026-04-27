@@ -247,10 +247,21 @@ function TestimonialCard({
         />
       </div>
 
-      {/* Nome da marca */}
-      <div className="font-display font-black text-foreground text-[14px] tracking-tight">
-        {testimonial.brand}
-      </div>
+      {/* @ do Instagram (ou nome da marca como fallback) */}
+      {testimonial.instagram ? (
+        <a
+          href={`https://instagram.com/${testimonial.instagram}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="font-display font-black text-foreground text-[14px] tracking-tight hover:text-primary transition-colors"
+        >
+          @{testimonial.instagram}
+        </a>
+      ) : (
+        <div className="font-display font-black text-foreground text-[14px] tracking-tight">
+          {testimonial.brand}
+        </div>
+      )}
 
       {/* Estrelas */}
       <div className="flex items-center gap-0.5">

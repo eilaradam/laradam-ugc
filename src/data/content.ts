@@ -189,6 +189,7 @@ export type Testimonial = {
   author?: string;
   role?: string;
   brand: string;
+  instagram?: string; // @handle do Instagram (sem o @) — exibido no card e linkado pro perfil
   brandDomain?: string; // logo do cliente no card via Clearbit (fallback)
   logoFile?: string; // arquivo local em /public/logo-1/ (preferido)
   metric?: { value: string; label: string }; // ex: "3.2M views" / "Primeira campanha"
@@ -199,6 +200,7 @@ export const TESTIMONIALS: Testimonial[] = [
     quote:
       "A Lara entrega muito além do que a gente pede. Ela entende de performance e o vídeo veio pronto pra rodar como criativo, bateu recorde de CTR no Meta.",
     brand: "InfinitePay",
+    instagram: "infinitepay",
     logoFile: "59.png",
     role: "Vídeo recorde no Meta",
     metric: { value: "50M", label: "views em 1 vídeo" },
@@ -207,6 +209,7 @@ export const TESTIMONIALS: Testimonial[] = [
     quote:
       "Trabalho com vários creators e a Lara é a que mais converte. Roteiro afiado, entrega rápida e ela pega direção de brief no primeiro review.",
     brand: "Méliuz",
+    instagram: "meliuzoficial",
     logoFile: "35.png",
     role: "Roteiro + criativo pra growth",
     metric: { value: "10M", label: "views · campanha mercado" },
@@ -215,6 +218,7 @@ export const TESTIMONIALS: Testimonial[] = [
     quote:
       "Já fechamos 4 campanhas e cada uma performou melhor que a anterior. A Lara virou parte do nosso playbook de criativo.",
     brand: "DT3",
+    instagram: "dt3office",
     logoFile: "61.png",
     role: "Playbook de criativo recorrente",
     metric: { value: "4+", label: "campanhas ativas" },
@@ -223,6 +227,7 @@ export const TESTIMONIALS: Testimonial[] = [
     quote:
       "A Lara desempenhou um trabalho incrível. Amamos o resultado do vídeo criado, além da qualidade e toda a atenção para entender a demanda. Super recomendamos.",
     brand: "Tropical Especiarias",
+    instagram: "tropicalespeciarias",
     logoFile: "27.png",
     role: "Conteúdo pra e-commerce + ads",
     metric: { value: "+2.4x", label: "ROAS · e-commerce com ads" },
@@ -231,6 +236,7 @@ export const TESTIMONIALS: Testimonial[] = [
     quote:
       "O trabalho da Lara foi incrível. Ela fez a cobertura total do evento, filmou cada detalhe e agregou DEMAIS pras marcas. Foi a creator que mais gerou conteúdo pra BF em 2024.",
     brand: "Beauty Fair",
+    instagram: "beautyfairprofissional",
     logoFile: "62.png",
     role: "Conteúdo em evento presencial",
     metric: { value: "+30", label: "vídeos durante o evento BF" },
@@ -239,6 +245,7 @@ export const TESTIMONIALS: Testimonial[] = [
     quote:
       "Lara entregou um material muito legal e bem feito. Com certeza vamos querer trabalhar novamente!",
     brand: "Terramazonia",
+    instagram: "terramazonia_",
     logoFile: "63.png",
     role: "Campanha de receitas",
     metric: { value: "+180K", label: "alcance no reels" },
@@ -247,6 +254,7 @@ export const TESTIMONIALS: Testimonial[] = [
     quote:
       "Alto nível de domínio em UGC: roteiro, narrativa, performance natural na frente da câmera e edição. Comunicação fluida em todas as etapas!",
     brand: "Velds",
+    instagram: "veldsbrasil",
     logoFile: "28.png",
     role: "Conteúdo pra e-commerce + ads",
     metric: { value: "+45%", label: "vendas no e-commerce com ads" },
