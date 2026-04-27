@@ -21,7 +21,7 @@ export default function About() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
-          className="relative aspect-[4/5] max-w-[400px] mx-auto md:ml-auto md:mr-0 w-full"
+          className="relative aspect-[4/5] max-w-[400px] mx-auto md:ml-auto md:mr-12 w-full"
         >
           {/* Cream backdrop (atrás, offset pra direita+baixo) */}
           <div
