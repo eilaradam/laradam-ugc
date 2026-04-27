@@ -5,7 +5,7 @@ import { Check } from "lucide-react";
 import { ABOUT } from "@/data/content";
 
 const ACCENT = "#d17d39";
-const BROWN = "#5C3A1F";
+const BROWN = "#d17d39";
 const CREAM = "#E8DFD3";
 
 export default function About() {
