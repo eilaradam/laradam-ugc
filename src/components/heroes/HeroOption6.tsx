@@ -69,7 +69,7 @@ export default function HeroOption6() {
             <a
               href="#contato"
               style={{ backgroundColor: ACCENT }}
-              className="inline-flex items-center justify-center px-8 md:px-10 py-3.5 md:py-4 rounded-2xl text-sm md:text-base font-bold text-foreground hover:opacity-90 transition-opacity"
+              className="inline-flex items-center justify-center px-8 md:px-10 py-3.5 md:py-4 rounded-2xl text-sm md:text-base font-bold text-white hover:opacity-90 transition-opacity"
             >
               Quero criar com a Lara
             </a>
