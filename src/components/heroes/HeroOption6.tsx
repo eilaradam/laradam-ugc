@@ -12,7 +12,7 @@ export default function HeroOption6() {
   return (
     <section
       id="top"
-      className="relative bg-white pt-12 md:pt-14 pb-0 overflow-hidden"
+      className="relative bg-white pt-4 md:pt-6 pb-0 overflow-hidden"
     >
       <div className="max-w-7xl mx-auto px-5 md:px-8 grid md:grid-cols-2 gap-10 md:gap-12 items-center w-full">
         {/* LEFT: texto */}
