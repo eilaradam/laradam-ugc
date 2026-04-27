@@ -12,7 +12,7 @@ export default function HeroOption6() {
   return (
     <section
       id="top"
-      className="relative bg-white pt-12 md:pt-14 pb-8 md:pb-10 overflow-hidden"
+      className="relative bg-white pt-12 md:pt-14 pb-0 overflow-hidden"
     >
       <div className="max-w-7xl mx-auto px-5 md:px-8 grid md:grid-cols-2 gap-10 md:gap-12 items-center w-full">
         {/* LEFT: texto */}
@@ -82,7 +82,7 @@ export default function HeroOption6() {
         </div>
 
         {/* RIGHT: foto + UGC backdrop + bubbles */}
-        <div className="relative h-full min-h-[460px] md:min-h-[600px] flex items-end justify-center">
+        <div className="relative flex items-end justify-center self-end">
           {/* UGC backdrop gigante */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
@@ -105,7 +105,7 @@ export default function HeroOption6() {
             transition={{ delay: 0.4, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
             className="relative z-10 flex items-end justify-center origin-bottom"
           >
-            <HeroPhoto className="w-auto h-[55vh] md:h-[72vh] max-w-full object-bottom" />
+            <HeroPhoto className="w-auto h-[48vh] md:h-[58vh] max-w-full object-bottom" />
           </motion.div>
 
           {/* Bubble 1 — direita (flutua devagar pra cima/baixo, zoom no hover) */}

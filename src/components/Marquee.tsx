@@ -3,7 +3,7 @@ import { MARQUEE_ITEMS } from "@/data/content";
 export default function Marquee() {
   const doubled = [...MARQUEE_ITEMS, ...MARQUEE_ITEMS];
   return (
-    <div className="bg-foreground text-background py-2.5 overflow-hidden border-y border-foreground/10">
+    <div className="relative z-30 -mt-10 md:-mt-12 bg-foreground text-background py-2.5 overflow-hidden border-y border-foreground/10">
       <div className="marquee">
         {doubled.map((item, i) => (
           <span
