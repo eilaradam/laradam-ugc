@@ -1,6 +1,6 @@
 "use client";
 
-import { animate, motion, useInView } from "framer-motion";
+import { animate, motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { STATS } from "@/data/content";
 
@@ -9,8 +9,7 @@ export default function Stats() {
     <section className="px-6 md:px-12 py-6 md:py-8 max-w-7xl mx-auto">
       <motion.div
         initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
+        animate={{ opacity: 1 }}
         transition={{ duration: 0.6 }}
         className="grid grid-cols-2 md:grid-cols-4 gap-y-6 gap-x-4 md:gap-x-8 md:divide-x md:divide-foreground/10"
       >
@@ -18,8 +17,7 @@ export default function Stats() {
           <motion.div
             key={s.label}
             initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: i * 0.06 }}
             className="flex flex-col md:pl-6 first:md:pl-0"
           >
@@ -41,14 +39,11 @@ export default function Stats() {
  * preservando o sufixo. Dispara quando entra no viewport.
  */
 function AnimatedValue({ value }: { value: string }) {
-  const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-20% 0px" });
   const [display, setDisplay] = useState("0");
 
   const parsed = parseStatValue(value);
 
   useEffect(() => {
-    if (!inView) return;
     if (parsed.target === null) {
       setDisplay(value);
       return;
@@ -62,13 +57,9 @@ function AnimatedValue({ value }: { value: string }) {
       },
     });
     return () => controls.stop();
-  }, [inView, parsed.target, parsed.prefix, parsed.suffix, value]);
+  }, [parsed.target, parsed.prefix, parsed.suffix, value]);
 
-  return (
-    <span ref={ref} className="tabular-nums">
-      {display}
-    </span>
-  );
+  return <span className="tabular-nums">{display}</span>;
 }
 
 /**
