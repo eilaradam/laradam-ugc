@@ -6,6 +6,7 @@ const OPTIONS = [
   { slug: "capa-3", name: "Capa 3 — Bento Grid", desc: "Cells modulares: foto + título + stats + CTA" },
   { slug: "capa-4", name: "Capa 4 — Brutalist Bold", desc: "Tipografia massiva, bordas duras, alto contraste" },
   { slug: "capa-5", name: "Capa 5 — Minimal Centered", desc: "Centralizado, foto circular, serif elegante, whitespace" },
+  { slug: "capa-6", name: "Capa 6 — Split com UGC backdrop", desc: "Split screen, 'UGC' gigante atrás da foto, bubbles flutuantes, CTA verde-oliva" },
 ];
 
 export default function CapasIndex() {
