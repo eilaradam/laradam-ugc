@@ -11,6 +11,7 @@ import YouTubeAds from "@/components/YouTubeAds";
 import Testimonials from "@/components/Testimonials";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
+import LeadCapturePopup from "@/components/LeadCapturePopup";
 
 export default function Home() {
   return (
@@ -28,6 +29,7 @@ export default function Home() {
       <Testimonials />
       <Contact />
       <Footer />
+      <LeadCapturePopup />
     </main>
   );
 }

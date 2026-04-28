@@ -188,6 +188,20 @@ export type Dict = {
   footer: {
     role: string;
   };
+  popup: {
+    tag: string;
+    title: string;
+    body: string;
+    name: string;
+    email: string;
+    phone: string;
+    cta: string;
+    sending: string;
+    privacy: string;
+    successTitle: string;
+    successBody: string;
+    error: string;
+  };
 };
 
 const dict: Record<Lang, Dict> = {
@@ -440,6 +454,20 @@ const dict: Record<Lang, Dict> = {
       sent: "Enviado! Respondo em breve.",
     },
     footer: { role: "UGC Creator & Content Strategist" },
+    popup: {
+      tag: "Vamos conversar?",
+      title: "Curtindo o portfolio?",
+      body: "Deixa seu contato e eu mando ideias de conteúdo personalizadas pra sua marca.",
+      name: "Seu nome",
+      email: "Seu email",
+      phone: "Telefone (opcional)",
+      cta: "Quero receber",
+      sending: "Enviando...",
+      privacy: "Sem spam, prometo. Só conteúdo relevante.",
+      successTitle: "Recebido!",
+      successBody: "Vou te mandar novidades em breve.",
+      error: "Algo deu errado, tenta de novo?",
+    },
   },
   en: {
     nav: {
@@ -699,6 +727,20 @@ const dict: Record<Lang, Dict> = {
       sent: "Sent! I'll get back to you soon.",
     },
     footer: { role: "UGC Creator & Content Strategist" },
+    popup: {
+      tag: "Let's chat?",
+      title: "Enjoying the portfolio?",
+      body: "Drop your contact and I'll send tailored content ideas for your brand.",
+      name: "Your name",
+      email: "Your email",
+      phone: "Phone (optional)",
+      cta: "Send me ideas",
+      sending: "Sending...",
+      privacy: "No spam, promise. Just relevant content.",
+      successTitle: "Got it!",
+      successBody: "I'll be in touch soon.",
+      error: "Something went wrong, try again?",
+    },
   },
 };
 
