@@ -55,6 +55,7 @@ export default function Nav() {
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-3 md:gap-6 px-5 md:px-8 py-3 md:py-3.5">
           <a
             href="#top"
+            data-track="nav_logo"
             className="font-display font-black text-foreground text-sm md:text-base tracking-tight"
           >
             LARA DAM<span className="text-primary">.</span>
@@ -66,6 +67,7 @@ export default function Nav() {
               <a
                 key={l.href}
                 href={l.href}
+                data-track={`nav_link_${l.href.replace(/[^a-z0-9]+/gi, "_").replace(/^_|_$/g, "")}`}
                 className="text-xs uppercase tracking-[0.15em] text-foreground/70 hover:text-primary transition-colors font-medium"
               >
                 {l.label}
@@ -77,6 +79,7 @@ export default function Nav() {
             <button
               type="button"
               onClick={showGestaoNotice}
+              data-track="nav_gestao"
               className="hidden md:inline-flex text-xs uppercase tracking-[0.15em] font-medium text-foreground/70 hover:text-primary transition-colors cursor-pointer"
             >
               {GESTAO_LINK.label}
@@ -85,6 +88,7 @@ export default function Nav() {
             <div className="flex items-center text-[10px] md:text-xs font-bold uppercase tracking-wider border border-foreground/15 rounded-full overflow-hidden">
               <button
                 onClick={() => setLang("pt")}
+                data-track="lang_pt"
                 className={`px-2 py-1 transition-colors ${
                   lang === "pt"
                     ? "bg-foreground text-background"
@@ -95,6 +99,7 @@ export default function Nav() {
               </button>
               <button
                 onClick={() => setLang("en")}
+                data-track="lang_en"
                 className={`px-2 py-1 transition-colors ${
                   lang === "en"
                     ? "bg-foreground text-background"
@@ -106,6 +111,7 @@ export default function Nav() {
             </div>
             <a
               href="/#contato"
+              data-track="nav_trabalhe_comigo"
               className="text-[11px] md:text-xs font-semibold bg-foreground text-background px-4 md:px-5 py-2 md:py-2.5 hover:bg-primary transition-colors whitespace-nowrap"
             >
               {t.nav.trabalheComigo}
@@ -114,6 +120,7 @@ export default function Nav() {
             <button
               onClick={() => setOpen(true)}
               aria-label="Menu"
+              data-track="mobile_menu_open"
               className="md:hidden w-9 h-9 text-foreground flex items-center justify-center hover:text-primary transition-colors"
             >
               <Menu className="w-5 h-5" />
@@ -168,6 +175,7 @@ export default function Nav() {
                   key={l.href}
                   href={l.href}
                   onClick={() => setOpen(false)}
+                  data-track={`mobile_nav_${l.href.replace(/[^a-z0-9]+/gi, "_").replace(/^_|_$/g, "")}`}
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.05 + i * 0.05 }}
@@ -182,6 +190,7 @@ export default function Nav() {
                   setOpen(false);
                   showGestaoNotice();
                 }}
+                data-track="mobile_nav_gestao"
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.05 + LINKS.length * 0.05 }}
@@ -195,6 +204,7 @@ export default function Nav() {
               <a
                 href="#contato"
                 onClick={() => setOpen(false)}
+                data-track="mobile_trabalhe_comigo"
                 className="block w-full text-center bg-primary text-primary-light px-6 py-4 rounded-full font-semibold"
               >
                 {t.nav.trabalheComigo}

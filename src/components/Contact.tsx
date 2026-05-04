@@ -96,6 +96,7 @@ export default function Contact() {
           <div className="space-y-4">
             <a
               href={`mailto:${SITE.email}`}
+              data-track="contact_email"
               className="flex items-center gap-3 group"
             >
               <div className="w-10 h-10 rounded-full border border-background/20 flex items-center justify-center group-hover:bg-primary group-hover:border-primary transition-colors">
@@ -109,6 +110,7 @@ export default function Contact() {
               href={`https://instagram.com/${SITE.instagram.replace("@", "")}`}
               target="_blank"
               rel="noopener"
+              data-track="contact_instagram"
               className="flex items-center gap-3 group"
             >
               <div className="w-10 h-10 rounded-full border border-background/20 flex items-center justify-center group-hover:bg-primary group-hover:border-primary transition-colors">
@@ -122,6 +124,7 @@ export default function Contact() {
               href={`https://wa.me/${SITE.whatsapp}`}
               target="_blank"
               rel="noopener"
+              data-track="contact_whatsapp"
               className="flex items-center gap-3 group"
             >
               <div className="w-10 h-10 rounded-full border border-background/20 flex items-center justify-center group-hover:bg-primary group-hover:border-primary transition-colors">
@@ -174,6 +177,7 @@ export default function Contact() {
           <button
             type="submit"
             disabled={loading || sent}
+            data-track="contact_form_submit"
             className="w-full md:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 bg-primary text-primary-light rounded-full text-sm font-semibold hover:bg-primary-dark transition-colors disabled:opacity-60"
           >
             {sent ? t.contact.sent : loading ? t.contact.sending : t.contact.send}

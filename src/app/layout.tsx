@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Be_Vietnam_Pro, DM_Sans, Fraunces } from "next/font/google";
 import VideoModalProvider from "@/components/VideoModalProvider";
 import CustomCursor from "@/components/CustomCursor";
+import AnalyticsTracker from "@/components/AnalyticsTracker";
 import { LanguageProvider } from "@/lib/i18n";
 import "./globals.css";
 
@@ -47,6 +48,7 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         <LanguageProvider>
+          <AnalyticsTracker />
           <CustomCursor />
           <VideoModalProvider>{children}</VideoModalProvider>
         </LanguageProvider>

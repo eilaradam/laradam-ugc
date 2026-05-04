@@ -21,6 +21,17 @@ export default function LeadCapturePopup() {
   useEffect(() => {
     if (typeof window === "undefined") return;
 
+    // Track quando o popup aparece (impressão)
+    if (open) {
+      import("@/lib/tracking").then(({ track }) =>
+        track("button_click", "popup_shown")
+      );
+    }
+  }, [open]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
     // Já enviou alguma vez? Não mostra mais.
     if (localStorage.getItem(SUBMITTED_KEY)) return;
 
@@ -106,6 +117,7 @@ export default function LeadCapturePopup() {
             <button
               onClick={dismiss}
               aria-label="Fechar"
+              data-track="popup_close"
               className="absolute top-3 right-3 w-8 h-8 rounded-full flex items-center justify-center text-foreground/40 hover:text-foreground hover:bg-foreground/5 transition-colors"
             >
               <X className="w-4 h-4" />
@@ -151,6 +163,7 @@ export default function LeadCapturePopup() {
                   <button
                     type="submit"
                     disabled={submitting}
+                    data-track="popup_submit"
                     className="w-full bg-primary text-primary-light py-2.5 rounded-xl text-sm font-bold hover:bg-primary-dark transition-colors disabled:opacity-60"
                   >
                     {submitting ? t.popup.sending : t.popup.cta}

@@ -19,7 +19,7 @@ export default function Footer() {
         </div>
 
         <div className="flex flex-wrap gap-x-6 gap-y-2 text-xs uppercase tracking-wider text-background/50">
-          <a href={`mailto:${SITE.email}`} className="hover:text-primary">
+          <a href={`mailto:${SITE.email}`} data-track="footer_email" className="hover:text-primary">
             {SITE.email}
           </a>
           <span>·</span>
@@ -27,6 +27,7 @@ export default function Footer() {
             href={`https://instagram.com/${SITE.instagram.replace("@", "")}`}
             target="_blank"
             rel="noopener"
+            data-track="footer_instagram"
             className="hover:text-primary"
           >
             Instagram

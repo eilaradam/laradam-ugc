@@ -10,6 +10,7 @@ import {
 import { AnimatePresence, motion } from "framer-motion";
 import { Headphones, X } from "lucide-react";
 import type { Video } from "@/data/content";
+import { track } from "@/lib/tracking";
 
 type Ctx = {
   open: (video: Video) => void;
@@ -35,6 +36,11 @@ export default function VideoModalProvider({
   const open = useCallback((v: Video) => {
     setVideo(v);
     document.body.style.overflow = "hidden";
+    track("video_view", v.youtubeId || v.title || "unknown", {
+      title: v.title,
+      brand: v.brand,
+      category: v.category,
+    });
   }, []);
 
   const close = useCallback(() => {

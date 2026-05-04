@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { getSupabase, type Lead } from "@/lib/supabase";
+import { useEffect, useMemo, useState } from "react";
+import { getSupabase, type Lead, type EventRow } from "@/lib/supabase";
 import type { Session } from "@supabase/supabase-js";
 
 const ALLOWED_EMAIL = "laradam.ugc@gmail.com";
@@ -136,21 +136,32 @@ function Login() {
   );
 }
 
+type Tab = "overview" | "leads" | "buttons" | "videos";
+
 function Dashboard({ email }: { email: string }) {
   const [leads, setLeads] = useState<Lead[]>([]);
+  const [events, setEvents] = useState<EventRow[]>([]);
   const [loading, setLoading] = useState(true);
-  const [filter, setFilter] = useState<"all" | "popup" | "contact">("all");
+  const [tab, setTab] = useState<Tab>("overview");
+  const [days, setDays] = useState<7 | 30 | 90 | 0>(30); // 0 = all
 
   useEffect(() => {
     let active = true;
     (async () => {
-      const { data, error } = await getSupabase()
-        .from("leads")
-        .select("*")
-        .order("created_at", { ascending: false });
+      const sb = getSupabase();
+      const [leadsRes, eventsRes] = await Promise.all([
+        sb.from("leads").select("*").order("created_at", { ascending: false }),
+        sb
+          .from("events")
+          .select("*")
+          .order("created_at", { ascending: false })
+          .limit(20000),
+      ]);
       if (!active) return;
-      if (error) console.error(error);
-      setLeads((data as Lead[]) ?? []);
+      if (leadsRes.error) console.error(leadsRes.error);
+      if (eventsRes.error) console.error(eventsRes.error);
+      setLeads((leadsRes.data as Lead[]) ?? []);
+      setEvents((eventsRes.data as EventRow[]) ?? []);
       setLoading(false);
     })();
     return () => {
@@ -158,15 +169,91 @@ function Dashboard({ email }: { email: string }) {
     };
   }, []);
 
-  const filtered = filter === "all" ? leads : leads.filter((l) => l.source === filter);
+  const filteredEvents = useMemo(() => {
+    if (days === 0) return events;
+    const cutoff = Date.now() - days * 86400_000;
+    return events.filter((e) => new Date(e.created_at).getTime() >= cutoff);
+  }, [events, days]);
+
+  const filteredLeads = useMemo(() => {
+    if (days === 0) return leads;
+    const cutoff = Date.now() - days * 86400_000;
+    return leads.filter((l) => new Date(l.created_at).getTime() >= cutoff);
+  }, [leads, days]);
+
+  const stats = useMemo(() => {
+    const pageViews = filteredEvents.filter((e) => e.event_type === "page_view");
+    const uniqueSessions = new Set(
+      pageViews.map((e) => e.session_id).filter(Boolean)
+    ).size;
+    const buttonClicks = filteredEvents.filter(
+      (e) => e.event_type === "button_click"
+    );
+    const videoViews = filteredEvents.filter((e) => e.event_type === "video_view");
+
+    return {
+      pageViews: pageViews.length,
+      uniqueVisitors: uniqueSessions,
+      buttonClicks: buttonClicks.length,
+      videoViews: videoViews.length,
+      leads: filteredLeads.length,
+    };
+  }, [filteredEvents, filteredLeads]);
+
+  const buttonAgg = useMemo(() => {
+    const map = new Map<string, number>();
+    for (const e of filteredEvents) {
+      if (e.event_type !== "button_click") continue;
+      map.set(e.event_name, (map.get(e.event_name) ?? 0) + 1);
+    }
+    return [...map.entries()].sort((a, b) => b[1] - a[1]);
+  }, [filteredEvents]);
+
+  const videoAgg = useMemo(() => {
+    const map = new Map<
+      string,
+      { count: number; title?: string; brand?: string; category?: string }
+    >();
+    for (const e of filteredEvents) {
+      if (e.event_type !== "video_view") continue;
+      const cur = map.get(e.event_name) ?? { count: 0 };
+      cur.count += 1;
+      const m = e.metadata as Record<string, unknown> | null;
+      if (m && typeof m === "object") {
+        if (typeof m.title === "string") cur.title = m.title;
+        if (typeof m.brand === "string") cur.brand = m.brand;
+        if (typeof m.category === "string") cur.category = m.category;
+      }
+      map.set(e.event_name, cur);
+    }
+    return [...map.entries()].sort((a, b) => b[1].count - a[1].count);
+  }, [filteredEvents]);
+
+  const dailyViews = useMemo(() => {
+    const days = 14;
+    const buckets: { date: string; count: number }[] = [];
+    const now = new Date();
+    now.setHours(0, 0, 0, 0);
+    for (let i = days - 1; i >= 0; i--) {
+      const d = new Date(now.getTime() - i * 86400_000);
+      buckets.push({ date: d.toISOString().slice(0, 10), count: 0 });
+    }
+    for (const e of filteredEvents) {
+      if (e.event_type !== "page_view") continue;
+      const day = e.created_at.slice(0, 10);
+      const b = buckets.find((x) => x.date === day);
+      if (b) b.count++;
+    }
+    return buckets;
+  }, [filteredEvents]);
 
   return (
-    <div className="min-h-screen px-4 md:px-8 py-6 md:py-10">
+    <div className="min-h-screen px-4 md:px-8 py-6 md:py-10 bg-background">
       <div className="max-w-6xl mx-auto">
-        <header className="flex items-center justify-between mb-8">
+        <header className="flex items-center justify-between mb-6">
           <div>
             <div className="font-display font-black text-xl mb-0.5">
-              LARA DAM<span className="text-primary">.</span> · Leads
+              LARA DAM<span className="text-primary">.</span> · Admin
             </div>
             <div className="text-xs text-foreground-soft">{email}</div>
           </div>
@@ -178,40 +265,273 @@ function Dashboard({ email }: { email: string }) {
           </button>
         </header>
 
-        <div className="flex items-center gap-2 mb-5 text-xs">
-          {(["all", "popup", "contact"] as const).map((f) => (
+        {/* Tabs + range */}
+        <div className="flex flex-wrap items-center gap-2 mb-6 text-xs">
+          {(["overview", "leads", "buttons", "videos"] as Tab[]).map((t) => (
             <button
-              key={f}
-              onClick={() => setFilter(f)}
+              key={t}
+              onClick={() => setTab(t)}
               className={`px-3 py-1.5 rounded-full uppercase tracking-wider font-bold transition-colors ${
-                filter === f
+                tab === t
                   ? "bg-foreground text-background"
                   : "bg-foreground/5 text-foreground-soft hover:bg-foreground/10"
               }`}
             >
-              {f === "all" ? "Todos" : f === "popup" ? "Popup" : "Form"}
+              {tabLabel(t)}
             </button>
           ))}
-          <span className="ml-auto text-foreground-soft">
-            {filtered.length} {filtered.length === 1 ? "lead" : "leads"}
+          <span className="ml-auto flex items-center gap-1.5">
+            {([7, 30, 90, 0] as const).map((d) => (
+              <button
+                key={d}
+                onClick={() => setDays(d)}
+                className={`px-2.5 py-1 rounded-full uppercase tracking-wider font-bold text-[10px] transition-colors ${
+                  days === d
+                    ? "bg-primary text-primary-light"
+                    : "bg-foreground/5 text-foreground-soft hover:bg-foreground/10"
+                }`}
+              >
+                {d === 0 ? "Tudo" : `${d}d`}
+              </button>
+            ))}
           </span>
         </div>
 
         {loading ? (
-          <div className="py-20 text-center text-foreground-soft">Carregando leads...</div>
-        ) : filtered.length === 0 ? (
-          <div className="py-20 text-center text-foreground-soft">
-            Nenhum lead ainda. 🌱
-          </div>
+          <div className="py-20 text-center text-foreground-soft">Carregando...</div>
         ) : (
-          <div className="space-y-2">
-            {filtered.map((l) => (
-              <LeadRow key={l.id} lead={l} />
-            ))}
-          </div>
+          <>
+            {tab === "overview" && (
+              <Overview stats={stats} dailyViews={dailyViews} />
+            )}
+            {tab === "leads" && <LeadsList leads={filteredLeads} />}
+            {tab === "buttons" && <ButtonsList items={buttonAgg} />}
+            {tab === "videos" && <VideosList items={videoAgg} />}
+          </>
         )}
       </div>
     </div>
+  );
+}
+
+function tabLabel(t: Tab) {
+  switch (t) {
+    case "overview":
+      return "Visão geral";
+    case "leads":
+      return "Leads";
+    case "buttons":
+      return "Botões";
+    case "videos":
+      return "Vídeos";
+  }
+}
+
+function Overview({
+  stats,
+  dailyViews,
+}: {
+  stats: {
+    pageViews: number;
+    uniqueVisitors: number;
+    buttonClicks: number;
+    videoViews: number;
+    leads: number;
+  };
+  dailyViews: { date: string; count: number }[];
+}) {
+  const max = Math.max(1, ...dailyViews.map((d) => d.count));
+  return (
+    <div className="space-y-6">
+      <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
+        <StatCard label="Visitas" value={stats.pageViews} />
+        <StatCard label="Visitantes únicos" value={stats.uniqueVisitors} />
+        <StatCard label="Cliques em botões" value={stats.buttonClicks} />
+        <StatCard label="Vídeos vistos" value={stats.videoViews} />
+        <StatCard label="Leads" value={stats.leads} accent />
+      </div>
+
+      <div className="rounded-2xl border border-foreground/10 p-5">
+        <div className="text-xs uppercase tracking-wider text-foreground-soft mb-4">
+          Visitas — últimos 14 dias
+        </div>
+        <div className="flex items-end gap-1.5 h-32">
+          {dailyViews.map((d) => (
+            <div
+              key={d.date}
+              className="flex-1 flex flex-col items-center gap-1 group"
+              title={`${d.date}: ${d.count}`}
+            >
+              <div
+                className="w-full bg-primary rounded-t transition-all group-hover:bg-primary-dark"
+                style={{ height: `${(d.count / max) * 100}%`, minHeight: 2 }}
+              />
+              <div className="text-[9px] text-foreground-soft">
+                {d.date.slice(8, 10)}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function StatCard({
+  label,
+  value,
+  accent,
+}: {
+  label: string;
+  value: number;
+  accent?: boolean;
+}) {
+  return (
+    <div
+      className={`rounded-2xl p-4 border ${
+        accent
+          ? "bg-primary text-primary-light border-primary"
+          : "border-foreground/10"
+      }`}
+    >
+      <div
+        className={`text-[10px] uppercase tracking-wider ${
+          accent ? "text-primary-light/80" : "text-foreground-soft"
+        }`}
+      >
+        {label}
+      </div>
+      <div className="font-display font-black text-3xl mt-1">{value}</div>
+    </div>
+  );
+}
+
+function ButtonsList({ items }: { items: [string, number][] }) {
+  if (items.length === 0)
+    return (
+      <div className="py-20 text-center text-foreground-soft">
+        Nenhum clique registrado ainda.
+      </div>
+    );
+  const max = items[0][1];
+  return (
+    <div className="space-y-2">
+      {items.map(([name, count]) => (
+        <div
+          key={name}
+          className="rounded-xl border border-foreground/10 p-4 flex items-center gap-4"
+        >
+          <div className="flex-1 min-w-0">
+            <div className="font-mono text-xs text-foreground truncate">{name}</div>
+            <div className="mt-1.5 h-1.5 rounded-full bg-foreground/5 overflow-hidden">
+              <div
+                className="h-full bg-primary rounded-full"
+                style={{ width: `${(count / max) * 100}%` }}
+              />
+            </div>
+          </div>
+          <div className="font-display font-black text-2xl tabular-nums">
+            {count}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function VideosList({
+  items,
+}: {
+  items: [
+    string,
+    { count: number; title?: string; brand?: string; category?: string }
+  ][];
+}) {
+  if (items.length === 0)
+    return (
+      <div className="py-20 text-center text-foreground-soft">
+        Nenhum vídeo visualizado ainda.
+      </div>
+    );
+  const max = items[0][1].count;
+  return (
+    <div className="space-y-2">
+      {items.map(([id, info]) => (
+        <div
+          key={id}
+          className="rounded-xl border border-foreground/10 p-3 flex items-center gap-3"
+        >
+          <a
+            href={`https://www.youtube.com/watch?v=${id}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex-shrink-0"
+          >
+            <img
+              src={`https://i.ytimg.com/vi/${id}/mqdefault.jpg`}
+              alt={info.title ?? id}
+              className="w-24 h-14 object-cover rounded-md bg-foreground/5"
+            />
+          </a>
+          <div className="flex-1 min-w-0">
+            <div className="text-sm font-semibold text-foreground truncate">
+              {info.title ?? id}
+            </div>
+            <div className="text-xs text-foreground-soft truncate">
+              {[info.brand, info.category].filter(Boolean).join(" · ") || id}
+            </div>
+            <div className="mt-1.5 h-1.5 rounded-full bg-foreground/5 overflow-hidden">
+              <div
+                className="h-full bg-primary rounded-full"
+                style={{ width: `${(info.count / max) * 100}%` }}
+              />
+            </div>
+          </div>
+          <div className="font-display font-black text-2xl tabular-nums flex-shrink-0">
+            {info.count}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function LeadsList({ leads }: { leads: Lead[] }) {
+  const [filter, setFilter] = useState<"all" | "popup" | "contact">("all");
+  const filtered = filter === "all" ? leads : leads.filter((l) => l.source === filter);
+  return (
+    <>
+      <div className="flex items-center gap-2 mb-5 text-xs">
+        {(["all", "popup", "contact"] as const).map((f) => (
+          <button
+            key={f}
+            onClick={() => setFilter(f)}
+            className={`px-3 py-1.5 rounded-full uppercase tracking-wider font-bold transition-colors ${
+              filter === f
+                ? "bg-foreground text-background"
+                : "bg-foreground/5 text-foreground-soft hover:bg-foreground/10"
+            }`}
+          >
+            {f === "all" ? "Todos" : f === "popup" ? "Popup" : "Form"}
+          </button>
+        ))}
+        <span className="ml-auto text-foreground-soft">
+          {filtered.length} {filtered.length === 1 ? "lead" : "leads"}
+        </span>
+      </div>
+
+      {filtered.length === 0 ? (
+        <div className="py-20 text-center text-foreground-soft">
+          Nenhum lead nesse período. 🌱
+        </div>
+      ) : (
+        <div className="space-y-2">
+          {filtered.map((l) => (
+            <LeadRow key={l.id} lead={l} />
+          ))}
+        </div>
+      )}
+    </>
   );
 }
 

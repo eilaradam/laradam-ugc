@@ -35,3 +35,15 @@ export type Lead = {
   source: "popup" | "contact";
   created_at: string;
 };
+
+export type EventRow = {
+  id: string;
+  created_at: string;
+  event_type: "page_view" | "button_click" | "video_view";
+  event_name: string;
+  session_id: string | null;
+  page_path: string | null;
+  user_agent: string | null;
+  referrer: string | null;
+  metadata: Record<string, unknown>;
+};

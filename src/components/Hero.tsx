@@ -123,6 +123,7 @@ export default function Hero() {
         <div className="flex flex-wrap items-center gap-2.5 md:gap-3 md:justify-end">
           <a
             href="#categorias"
+            data-track="hero_ver_portfolio"
             className="group inline-flex items-center gap-2 px-5 md:px-6 py-2.5 md:py-3 bg-foreground text-background rounded-full text-xs md:text-sm font-semibold hover:bg-primary transition-colors"
           >
             Ver portfólio
@@ -130,6 +131,7 @@ export default function Hero() {
           </a>
           <a
             href="#contato"
+            data-track="hero_fale_com_lara"
             className="inline-flex items-center gap-2 px-5 md:px-6 py-2.5 md:py-3 border border-foreground/20 rounded-full text-xs md:text-sm font-semibold hover:bg-foreground hover:text-background transition-colors"
           >
             Fale com a Lara
