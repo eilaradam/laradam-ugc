@@ -24,8 +24,24 @@ export const viewport: Viewport = {
 export default function Home() {
   return (
     <>
-      {/* Aumenta tipografia global em 25% só na home (rem-based) */}
-      <style dangerouslySetInnerHTML={{ __html: 'html { font-size: 20px; }' }} />
+      {/* Mobile-only overrides — só em dispositivos de toque (celular/tablet)
+          Desktop (mouse) fica intacto. */}
+      <style dangerouslySetInnerHTML={{ __html: `
+        @media (pointer: coarse) {
+          html { font-size: 20px; }
+          .lara-hero-grid { padding-top: 60px !important; }
+          .lara-hero-photo { height: 640px !important; }
+          .lara-popup {
+            top: 50% !important;
+            left: 50% !important;
+            right: auto !important;
+            bottom: auto !important;
+            transform: translate(-50%, -50%) !important;
+            width: 420px !important;
+            inset-inline: auto !important;
+          }
+        }
+      ` }} />
       <main className="flex-1">
         <Nav />
       <Hero />

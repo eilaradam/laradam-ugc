@@ -17,7 +17,7 @@ export default function HeroOption6() {
       id="top"
       className="relative bg-white pt-4 md:pt-6 pb-0 overflow-hidden"
     >
-      <div className="max-w-7xl mx-auto px-5 md:px-8 grid md:grid-cols-2 gap-6 md:gap-12 items-center w-full pt-[60px] md:pt-[40px]">
+      <div className="lara-hero-grid max-w-7xl mx-auto px-5 md:px-8 grid md:grid-cols-2 gap-6 md:gap-12 items-center w-full">
         {/* LEFT: texto */}
         <div className="flex flex-col">
           {/* Badge com check */}
@@ -109,7 +109,7 @@ export default function HeroOption6() {
             transition={{ delay: 0.4, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
             className="relative z-10 flex items-end justify-center origin-bottom"
           >
-            <HeroPhoto className="w-auto h-[50vh] sm:h-[60vh] md:h-[640px] max-w-full object-bottom" />
+            <HeroPhoto className="lara-hero-photo w-auto h-[50vh] sm:h-[60vh] md:h-[80vh] max-w-full object-bottom" />
           </motion.div>
 
           {/* Bubble 1 — direita (flutua devagar pra cima/baixo, zoom no hover) */}
