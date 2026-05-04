@@ -213,7 +213,7 @@ function Hero() {
             <div className="h-6 w-px bg-white/15" />
             <Stat value="+200" label="marcas atendidas" />
             <div className="h-6 w-px bg-white/15" />
-            <Stat value="+1.200" label="creators em rede" small />
+            <Stat value="+1.200" label="creators em rede" />
           </motion.div>
         </div>
 
