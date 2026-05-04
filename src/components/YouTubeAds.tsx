@@ -13,12 +13,9 @@ type YtAd = {
   views?: string; // ex: "2,3 mi"
 };
 
-// TODO Lara: trocar youtubeId pelos 4 vídeos horizontais de YouTube Ads
 const YT_ADS: YtAd[] = [
   { youtubeId: "zZXflzISC1c", brand: "Óculos", title: "YouTube Ad — Óculos", views: "2,3 mi" },
-  { youtubeId: "Lms0XrCgfnI", brand: "Sheglam", title: "YouTube Ad — Sheglam", views: "828 mil" },
   { youtubeId: "4CZl_YwPgWo", brand: "Cygnuss", title: "YouTube Ad — Cygnuss", views: "48 mil" },
-  { youtubeId: "", brand: "Cygnuss", title: "YouTube Ad — Cygnuss Sutiã" },
 ];
 
 function YouTubeIcon(props: React.SVGProps<SVGSVGElement>) {
