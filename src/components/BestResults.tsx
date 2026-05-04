@@ -325,7 +325,7 @@ function CarouselSlide({
   return (
     <div
       ref={slideRef}
-      className={`flex-shrink-0 snap-center w-[80%] sm:w-[60%] md:w-[55%] lg:w-[50%] flex transition-all duration-500 ${
+      className={`flex-shrink-0 snap-center w-[55%] sm:w-[45%] md:w-[55%] lg:w-[50%] flex transition-all duration-500 ${
         isActive
           ? "opacity-100 blur-0 scale-100"
           : "opacity-30 blur-[2px] scale-95"
