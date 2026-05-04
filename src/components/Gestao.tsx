@@ -1,14 +1,16 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import {
   ArrowRight,
   CheckCircle2,
   ChevronDown,
+  ChevronLeft,
+  ChevronRight,
   Rocket,
 } from "lucide-react";
-import { VIDEOS, BRAND_LOGO_FILES } from "@/data/content";
+import { BRAND_LOGO_FILES } from "@/data/content";
 import { useVideoModal } from "./VideoModalProvider";
 
 /* ==========================================================================
@@ -152,9 +154,18 @@ function Hero() {
             transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
             className="font-display font-black text-white text-3xl md:text-5xl lg:text-6xl leading-[0.95] tracking-tighter uppercase"
           >
-            Gestão de campanhas UGC{" "}
-            <span className="text-[var(--mm-orange)]">do briefing à entrega.</span>
+            Gestão de campanhas UGC
           </motion.h1>
+
+          {/* Linha complementar abaixo do título */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            className="mt-3 md:mt-4 font-display font-bold text-[var(--mm-orange)] text-xl md:text-2xl lg:text-3xl tracking-tight"
+          >
+            do briefing à entrega.
+          </motion.div>
 
           {/* Subheadline */}
           <motion.p
@@ -167,7 +178,7 @@ function Hero() {
             certos, briefing alinhado com seu posicionamento, roteiro
             revisado, produção acompanhada e entrega no prazo.{" "}
             <span className="text-white font-semibold">
-              Você roda mídia. Eu rodo a operação.
+              Você roda mídia. Nós rodamos a operação.
             </span>
           </motion.p>
 
@@ -202,7 +213,7 @@ function Hero() {
             <div className="h-6 w-px bg-white/15" />
             <Stat value="+200" label="marcas atendidas" />
             <div className="h-6 w-px bg-white/15" />
-            <Stat value="+1.200" label="creators em rede" />
+            <Stat value="+1.200" label="creators em rede" small />
           </motion.div>
         </div>
 
@@ -289,13 +300,21 @@ function Hero() {
   );
 }
 
-function Stat({ value, label }: { value: string; label: string }) {
+function Stat({ value, label, small }: { value: string; label: string; small?: boolean }) {
   return (
     <div className="flex items-baseline gap-2">
-      <span className="font-display font-black text-2xl md:text-3xl text-white tabular-nums">
+      <span
+        className={`font-display font-black text-white tabular-nums ${
+          small ? "text-base md:text-lg" : "text-2xl md:text-3xl"
+        }`}
+      >
         {value}
       </span>
-      <span className="text-xs md:text-sm uppercase tracking-wider text-white/70">
+      <span
+        className={`uppercase tracking-wider text-white/70 ${
+          small ? "text-[10px] md:text-xs" : "text-xs md:text-sm"
+        }`}
+      >
         {label}
       </span>
     </div>
@@ -784,9 +803,46 @@ function Processo() {
 }
 
 /* ========================= 8. CASES E VÍDEOS ========================= */
+// TODO Lara: substituir os youtubeId em branco pelos IDs dos novos vídeos
+const GESTAO_VIDEOS: { youtubeId: string; brand: string }[] = [
+  { youtubeId: "", brand: "" },
+  { youtubeId: "", brand: "" },
+  { youtubeId: "", brand: "" },
+  { youtubeId: "", brand: "" },
+  { youtubeId: "", brand: "" },
+  { youtubeId: "", brand: "" },
+];
+
 function CasesEVideos() {
   const { open } = useVideoModal();
-  const VIDS = VIDEOS.filter((v) => v.youtubeId).slice(0, 6);
+  const scrollerRef = useRef<HTMLDivElement>(null);
+  const [canPrev, setCanPrev] = useState(false);
+  const [canNext, setCanNext] = useState(true);
+
+  const updateArrows = () => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    setCanPrev(el.scrollLeft > 4);
+    setCanNext(el.scrollLeft + el.clientWidth < el.scrollWidth - 4);
+  };
+
+  useEffect(() => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    updateArrows();
+    el.addEventListener("scroll", updateArrows, { passive: true });
+    window.addEventListener("resize", updateArrows);
+    return () => {
+      el.removeEventListener("scroll", updateArrows);
+      window.removeEventListener("resize", updateArrows);
+    };
+  }, []);
+
+  const scrollByPage = (dir: 1 | -1) => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    el.scrollBy({ left: el.clientWidth * dir, behavior: "smooth" });
+  };
 
   return (
     <section
@@ -795,56 +851,110 @@ function CasesEVideos() {
     >
       <div className="max-w-6xl mx-auto px-6 md:px-12">
         <h2 className="font-display font-black text-2xl md:text-4xl leading-[0.95] tracking-tighter text-black uppercase">
-          Conteúdo real{" "}
-          <span className="text-[var(--mm-orange)]">de campanhas reais.</span>
+          Conteúdos gerenciados{" "}
+          <span className="text-[var(--mm-orange)]">pelo nosso time.</span>
         </h2>
         <p className="mt-4 text-base md:text-lg text-black/75 max-w-2xl leading-relaxed">
-          Mais de 100 campanhas gerenciadas, mais de 200 marcas atendidas, mais
-          de 1.200 creators ativados. Aqui estão alguns dos vídeos.
+          Conheça algumas creators que poderão criar para a sua marca.
         </p>
 
-        <div className="mt-10 md:mt-14 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
-          {VIDS.map((v, i) => (
-            <motion.button
-              key={v.id}
-              onClick={() => open(v)}
-              data-cursor="play"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: i * 0.05 }}
-              className="group relative aspect-[9/16] rounded-xl overflow-hidden bg-black cursor-pointer"
-            >
-              <img
-                src={`https://i.ytimg.com/vi/${v.youtubeId}/maxresdefault.jpg`}
-                alt={v.title}
-                loading="lazy"
-                className="absolute inset-0 w-full h-full object-cover"
-                onError={(e) => {
-                  e.currentTarget.src = `https://i.ytimg.com/vi/${v.youtubeId}/hqdefault.jpg`;
-                }}
-              />
-              <div className="absolute inset-0 flex items-center justify-center opacity-90 group-hover:opacity-100 transition-opacity">
-                <div className="w-9 h-9 md:w-11 md:h-11 rounded-full bg-[var(--mm-orange)] flex items-center justify-center">
-                  <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 md:w-4 md:h-4 fill-white ml-0.5">
-                    <path d="M8 5v14l11-7z" />
-                  </svg>
-                </div>
-              </div>
-              <div className="absolute bottom-2 left-2 right-2 text-[10px] md:text-xs font-bold uppercase tracking-wider text-white drop-shadow-lg truncate">
-                {v.brand}
-              </div>
-            </motion.button>
-          ))}
+        {/* Carrossel com setas */}
+        <div className="relative mt-10 md:mt-14">
+          {/* Botão anterior */}
+          <button
+            type="button"
+            aria-label="Anterior"
+            onClick={() => scrollByPage(-1)}
+            disabled={!canPrev}
+            className="absolute left-0 md:-left-5 top-1/2 -translate-y-1/2 z-10 w-10 h-10 md:w-12 md:h-12 rounded-full bg-black text-white shadow-lg flex items-center justify-center hover:bg-[var(--mm-orange)] disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+          >
+            <ChevronLeft className="w-5 h-5" />
+          </button>
+
+          {/* Botão próximo */}
+          <button
+            type="button"
+            aria-label="Próximo"
+            onClick={() => scrollByPage(1)}
+            disabled={!canNext}
+            className="absolute right-0 md:-right-5 top-1/2 -translate-y-1/2 z-10 w-10 h-10 md:w-12 md:h-12 rounded-full bg-black text-white shadow-lg flex items-center justify-center hover:bg-[var(--mm-orange)] disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+          >
+            <ChevronRight className="w-5 h-5" />
+          </button>
+
+          {/* Trilho de cards (scroll horizontal) */}
+          <div
+            ref={scrollerRef}
+            className="flex gap-3 md:gap-4 overflow-x-auto scroll-smooth snap-x snap-mandatory scrollbar-hide px-2"
+          >
+            {GESTAO_VIDEOS.map((v, i) => {
+              const hasVideo = !!v.youtubeId;
+              const Cmp = hasVideo ? motion.button : motion.div;
+              return (
+                <Cmp
+                  key={i}
+                  {...(hasVideo
+                    ? {
+                        onClick: () =>
+                          open({
+                            id: `gestao-${i}`,
+                            youtubeId: v.youtubeId,
+                            title: v.brand,
+                            brand: v.brand,
+                            category: "gestao",
+                          }),
+                        "data-cursor": "play",
+                      }
+                    : {})}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: i * 0.05 }}
+                  className={`flex-shrink-0 snap-start w-[44%] sm:w-[30%] md:w-[22%] lg:w-[16%] aspect-[9/16] rounded-xl overflow-hidden ${
+                    hasVideo ? "bg-black cursor-pointer group relative" : "bg-black/5 border-2 border-dashed border-black/15 flex items-center justify-center"
+                  }`}
+                >
+                  {hasVideo ? (
+                    <>
+                      <img
+                        src={`https://i.ytimg.com/vi/${v.youtubeId}/maxresdefault.jpg`}
+                        alt={v.brand}
+                        loading="lazy"
+                        className="absolute inset-0 w-full h-full object-cover"
+                        onError={(e) => {
+                          e.currentTarget.src = `https://i.ytimg.com/vi/${v.youtubeId}/hqdefault.jpg`;
+                        }}
+                      />
+                      <div className="absolute inset-0 flex items-center justify-center opacity-90 group-hover:opacity-100 transition-opacity">
+                        <div className="w-9 h-9 md:w-11 md:h-11 rounded-full bg-[var(--mm-orange)] flex items-center justify-center">
+                          <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 md:w-4 md:h-4 fill-white ml-0.5">
+                            <path d="M8 5v14l11-7z" />
+                          </svg>
+                        </div>
+                      </div>
+                      <div className="absolute bottom-2 left-2 right-2 text-[10px] md:text-xs font-bold uppercase tracking-wider text-white drop-shadow-lg truncate">
+                        {v.brand}
+                      </div>
+                    </>
+                  ) : (
+                    <div className="text-center px-3">
+                      <div className="text-[10px] md:text-xs uppercase tracking-wider text-black/40 font-semibold">
+                        Em breve
+                      </div>
+                    </div>
+                  )}
+                </Cmp>
+              );
+            })}
+          </div>
         </div>
 
         {/* Métricas */}
-        <div className="mt-10 md:mt-14 grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 border-t border-black/10 pt-8 md:pt-10">
+        <div className="mt-10 md:mt-14 grid grid-cols-3 gap-4 md:gap-6 border-t border-black/10 pt-8 md:pt-10">
           {[
             { v: "+100", l: "campanhas gerenciadas" },
-            { v: "+200", l: "marcas atendidas" },
             { v: "+1.200", l: "creators em rede" },
-            { v: "+500", l: "vídeos produzidos" },
+            { v: "+1000", l: "vídeos produzidos" },
           ].map((m) => (
             <div key={m.l}>
               <div className="font-display font-black text-3xl md:text-5xl text-black tabular-nums leading-none">
