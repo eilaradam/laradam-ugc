@@ -24,8 +24,8 @@ export const viewport: Viewport = {
 export default function Home() {
   return (
     <>
-      {/* Aumenta tipografia global em 20% só na home (rem-based) */}
-      <style dangerouslySetInnerHTML={{ __html: 'html { font-size: 19.2px; }' }} />
+      {/* Aumenta tipografia global em 30% só na home (rem-based) */}
+      <style dangerouslySetInnerHTML={{ __html: 'html { font-size: 20.8px; }' }} />
       <main className="flex-1">
         <Nav />
       <Hero />
