@@ -78,6 +78,7 @@ export type Dict = {
     categorias: string;
     contato: string;
     gestao: string;
+    gestaoComingSoon: string;
     trabalheComigo: string;
   };
   hero: {
@@ -212,6 +213,7 @@ const dict: Record<Lang, Dict> = {
       categorias: "Categorias",
       contato: "Contato",
       gestao: "Gestão",
+      gestaoComingSoon: "Disponível em breve",
       trabalheComigo: "Trabalhe comigo",
     },
     hero: {
@@ -476,6 +478,7 @@ const dict: Record<Lang, Dict> = {
       categorias: "Categories",
       contato: "Contact",
       gestao: "Management",
+      gestaoComingSoon: "Coming soon",
       trabalheComigo: "Work with me",
     },
     hero: {
