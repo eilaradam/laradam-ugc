@@ -150,9 +150,9 @@ function Dashboard({ email }: { email: string }) {
     (async () => {
       const sb = getSupabase();
       const [leadsRes, eventsRes] = await Promise.all([
-        sb.from("leads").select("*").order("created_at", { ascending: false }),
+        sb.from("portfolio_leads").select("*").order("created_at", { ascending: false }),
         sb
-          .from("events")
+          .from("portfolio_events")
           .select("*")
           .order("created_at", { ascending: false })
           .limit(20000),

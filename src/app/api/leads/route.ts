@@ -21,7 +21,7 @@ export async function POST(req: Request) {
   try {
     if (process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {
       const sb = supabaseAdmin();
-      const { error } = await sb.from("leads").insert(lead);
+      const { error } = await sb.from("portfolio_leads").insert(lead);
       if (error) console.error("[leads] supabase insert error", error);
     } else {
       console.warn("[leads] Supabase não configurado — lead não persistido");

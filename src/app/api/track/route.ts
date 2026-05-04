@@ -28,7 +28,7 @@ export async function POST(req: Request) {
       process.env.SUPABASE_SERVICE_ROLE_KEY
     ) {
       const sb = supabaseAdmin();
-      const { error } = await sb.from("events").insert({
+      const { error } = await sb.from("portfolio_events").insert({
         event_type: eventType,
         event_name: eventName,
         session_id:
