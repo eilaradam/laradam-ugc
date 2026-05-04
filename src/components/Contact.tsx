@@ -161,6 +161,17 @@ export default function Contact() {
             label={t.contact.budget}
             placeholder={t.contact.budgetPh}
           />
+          <div>
+            <label className="block text-xs uppercase tracking-wider text-background/60 mb-2">
+              {t.contact.message}
+            </label>
+            <textarea
+              name="message"
+              rows={5}
+              placeholder={t.contact.messagePh}
+              className="w-full bg-background/5 border border-background/10 rounded-2xl px-4 py-3 text-background placeholder:text-background/30 focus:outline-none focus:border-primary focus:bg-background/10 transition-colors resize-none"
+            />
+          </div>
 
           <button
             type="submit"
