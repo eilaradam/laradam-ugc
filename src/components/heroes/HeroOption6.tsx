@@ -17,7 +17,7 @@ export default function HeroOption6() {
       id="top"
       className="relative bg-white pt-4 md:pt-6 pb-0 overflow-hidden"
     >
-      <div className="max-w-7xl mx-auto px-5 md:px-8 grid md:grid-cols-2 gap-10 md:gap-12 items-center w-full">
+      <div className="max-w-7xl mx-auto px-5 md:px-8 grid grid-cols-[1.1fr_1fr] md:grid-cols-2 gap-4 md:gap-12 items-center w-full">
         {/* LEFT: texto */}
         <div className="flex flex-col">
           {/* Badge com check */}
@@ -40,7 +40,7 @@ export default function HeroOption6() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-            className="font-display font-black text-foreground leading-[0.95] tracking-tighter text-5xl md:text-6xl lg:text-7xl"
+            className="font-display font-black text-foreground leading-[0.95] tracking-tighter text-3xl sm:text-4xl md:text-6xl lg:text-7xl"
           >
             {t.hero.title1}
             <br />
@@ -72,13 +72,13 @@ export default function HeroOption6() {
             <a
               href="#contato"
               style={{ backgroundColor: ACCENT }}
-              className="inline-flex items-center justify-center px-8 md:px-10 py-3.5 md:py-4 rounded-2xl text-sm md:text-base font-bold text-white hover:opacity-90 transition-opacity"
+              className="inline-flex items-center justify-center px-5 md:px-10 py-2.5 md:py-4 rounded-xl md:rounded-2xl text-xs md:text-base font-bold text-white hover:opacity-90 transition-opacity whitespace-nowrap"
             >
               {t.hero.cta}
             </a>
             <a
               href="#categorias"
-              className="text-sm md:text-base font-semibold text-foreground-soft hover:text-foreground transition-colors"
+              className="text-xs md:text-base font-semibold text-foreground-soft hover:text-foreground transition-colors whitespace-nowrap"
             >
               {t.hero.saibaMais}
             </a>
@@ -96,7 +96,7 @@ export default function HeroOption6() {
           >
             <span
               style={{ color: ACCENT_LIGHT }}
-              className="font-display font-black text-[35vw] md:text-[22vw] lg:text-[20vw] leading-none tracking-[-0.06em] select-none -mt-10 md:-mt-16"
+              className="font-display font-black text-[18vw] md:text-[22vw] lg:text-[20vw] leading-none tracking-[-0.06em] select-none -mt-4 md:-mt-16"
             >
               UGC
             </span>
@@ -109,7 +109,7 @@ export default function HeroOption6() {
             transition={{ delay: 0.4, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
             className="relative z-10 flex items-end justify-center origin-bottom"
           >
-            <HeroPhoto className="w-auto h-[70vh] md:h-[80vh] max-w-full object-bottom" />
+            <HeroPhoto className="w-auto h-[42vh] sm:h-[55vh] md:h-[80vh] max-w-full object-bottom" />
           </motion.div>
 
           {/* Bubble 1 — direita (flutua devagar pra cima/baixo, zoom no hover) */}
@@ -132,7 +132,7 @@ export default function HeroOption6() {
               },
             }}
             whileHover={{ scale: 1.06, transition: { duration: 0.25, ease: "easeOut" } }}
-            className="absolute z-20 right-1 md:right-3 top-[35%] md:top-[38%] bg-white shadow-xl rounded-2xl p-3 md:p-3.5 flex items-center gap-3 max-w-[220px] border border-foreground/5 cursor-default"
+            className="hidden md:flex absolute z-20 right-1 md:right-3 top-[35%] md:top-[38%] bg-white shadow-xl rounded-2xl p-3 md:p-3.5 items-center gap-3 max-w-[220px] border border-foreground/5 cursor-default"
           >
             <span
               style={{ backgroundColor: ACCENT }}
@@ -166,7 +166,7 @@ export default function HeroOption6() {
               },
             }}
             whileHover={{ scale: 1.06, transition: { duration: 0.25, ease: "easeOut" } }}
-            className="absolute z-20 left-1 md:left-3 top-[58%] md:top-[60%] bg-white shadow-xl rounded-2xl p-3 md:p-3.5 flex items-center gap-3 max-w-[230px] border border-foreground/5 cursor-default"
+            className="hidden md:flex absolute z-20 left-1 md:left-3 top-[58%] md:top-[60%] bg-white shadow-xl rounded-2xl p-3 md:p-3.5 items-center gap-3 max-w-[230px] border border-foreground/5 cursor-default"
           >
             <span
               style={{ backgroundColor: ACCENT }}
