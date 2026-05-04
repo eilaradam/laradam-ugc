@@ -9,7 +9,7 @@ const DISMISS_KEY = "lead-popup-dismissed-at";
 const SUBMITTED_KEY = "lead-popup-submitted";
 const DISMISS_DAYS = 7;
 const SCROLL_THRESHOLD = 0.35; // 35% de scroll
-const TIME_THRESHOLD_MS = 25_000; // 25 segundos
+const TIME_THRESHOLD_MS = 10_000; // 10 segundos
 
 export default function LeadCapturePopup() {
   const t = useT();
