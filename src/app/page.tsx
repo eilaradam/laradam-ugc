@@ -31,15 +31,6 @@ export default function Home() {
           html { font-size: 20px; }
           .lara-hero-grid { padding-top: 60px !important; }
           .lara-hero-photo { height: 640px !important; }
-          .lara-popup {
-            top: 50% !important;
-            left: 50% !important;
-            right: auto !important;
-            bottom: auto !important;
-            transform: translate(-50%, -50%) !important;
-            width: 420px !important;
-            inset-inline: auto !important;
-          }
         }
       ` }} />
       <main className="flex-1">
