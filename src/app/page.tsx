@@ -18,6 +18,7 @@ import LeadCapturePopup from "@/components/LeadCapturePopup";
 // renderizada a 1280px, encolhida pra caber. Visitante pode pinch-zoom.
 export const viewport: Viewport = {
   width: 1280,
+  initialScale: 0.32,
 };
 
 export default function Home() {
