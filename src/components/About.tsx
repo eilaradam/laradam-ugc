@@ -1,12 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Check, MessageCircle, Sparkles } from "lucide-react";
 import { useT } from "@/lib/i18n";
-
-const ACCENT = "#d46928";
-const BROWN = "#e3725a";
-const CREAM = "#E8DFD3";
 
 export default function About() {
   const t = useT();
@@ -16,7 +11,7 @@ export default function About() {
       className="px-6 md:px-12 pt-4 md:pt-8 pb-4 md:pb-8 max-w-7xl mx-auto"
     >
       <div className="grid md:grid-cols-2 gap-10 md:gap-12 items-center">
-        {/* LEFT: photo + jornada (primeiro contato → criação → entrega) */}
+        {/* LEFT: foto limpa */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -24,116 +19,11 @@ export default function About() {
           transition={{ duration: 0.7 }}
           className="relative aspect-[4/5] max-w-[400px] mx-auto md:ml-auto md:mr-12 w-full"
         >
-          {/* Cream backdrop (atrás, offset pra direita+baixo) */}
-          <div
-            style={{ backgroundColor: CREAM }}
-            className="absolute top-8 right-0 w-[78%] h-[88%] rounded-3xl"
+          <img
+            src="/2.png"
+            alt="Lara Dam"
+            className="w-full h-full object-cover object-center rounded-3xl"
           />
-
-          {/* Brown card com a foto (frente, offset pra esquerda+cima) */}
-          <div
-            style={{ backgroundColor: BROWN }}
-            className="absolute top-0 left-0 w-[78%] h-[88%] rounded-3xl overflow-hidden shadow-[0_20px_50px_-10px_rgba(0,0,0,0.35)]"
-          >
-            {/* Textura granulada — polka dots sutis */}
-            <div
-              className="absolute inset-0 opacity-40 mix-blend-overlay"
-              style={{
-                backgroundImage:
-                  "radial-gradient(circle, rgba(255,255,255,0.5) 1px, transparent 1.2px)",
-                backgroundSize: "10px 10px",
-              }}
-            />
-            <div
-              className="absolute inset-0 opacity-30 mix-blend-soft-light pointer-events-none"
-              style={{
-                backgroundImage:
-                  "radial-gradient(circle, rgba(255,255,255,0.8) 0.5px, transparent 0.8px)",
-                backgroundSize: "4px 4px",
-              }}
-            />
-            <img
-              src="/lara-sobre1.png"
-              alt="Lara Dam"
-              className="absolute inset-0 w-full h-full object-cover object-bottom"
-            />
-          </div>
-
-          {/* Bubble 1: Primeiro Contato — TOPO DIREITA (origem) */}
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.4, duration: 0.6 }}
-            className="absolute -top-2 right-0 md:-right-4 z-20 bg-white shadow-xl rounded-2xl px-3 py-2.5 flex items-center gap-2.5 border border-foreground/5"
-          >
-            <span
-              style={{ backgroundColor: ACCENT }}
-              className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0"
-            >
-              <MessageCircle
-                className="w-3.5 h-3.5 text-white"
-                strokeWidth={2.5}
-              />
-            </span>
-            <div className="text-[12px] leading-tight">
-              <div className="text-foreground-soft text-[10px] uppercase tracking-wider">
-                {t.about.etapa} 1
-              </div>
-              <div className="font-semibold text-foreground">
-                {t.about.primeiroContato}
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Bubble 2: Criação — MEIO ESQUERDA (processo) */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.7 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.7, duration: 0.6 }}
-            className="absolute top-[42%] -left-2 md:-left-6 z-20 bg-white shadow-xl rounded-2xl p-2.5 border border-foreground/5"
-          >
-            <div className="flex items-center gap-2">
-              <span
-                style={{ backgroundColor: ACCENT }}
-                className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0"
-              >
-                <Sparkles
-                  className="w-3.5 h-3.5 text-white"
-                  strokeWidth={2.5}
-                />
-              </span>
-              <div className="text-[12px] leading-tight pr-1">
-                <div className="text-foreground-soft text-[10px] uppercase tracking-wider">
-                  {t.about.etapa} 2
-                </div>
-                <div className="font-semibold text-foreground">{t.about.criacao}</div>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Bubble 3: Entrega — EMBAIXO DIREITA (destino) */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 1, duration: 0.6 }}
-            className="absolute bottom-6 right-0 md:-right-4 z-20 bg-white shadow-xl rounded-2xl px-3 py-2.5 flex items-center gap-2.5 border border-foreground/5"
-          >
-            <span
-              style={{ backgroundColor: ACCENT }}
-              className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0"
-            >
-              <Check className="w-3.5 h-3.5 text-white" strokeWidth={3} />
-            </span>
-            <div className="text-[12px] leading-tight">
-              <div className="text-foreground-soft text-[10px] uppercase tracking-wider">
-                {t.about.etapa} 3
-              </div>
-              <div className="font-semibold text-foreground">{t.about.entrega}</div>
-            </div>
-          </motion.div>
         </motion.div>
 
         {/* RIGHT: texto */}
