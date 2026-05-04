@@ -112,7 +112,7 @@ export default function LeadCapturePopup() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 30, scale: 0.95 }}
             transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed inset-x-4 bottom-4 md:inset-x-auto md:right-6 md:bottom-6 md:w-[380px] z-[81] bg-background rounded-3xl shadow-2xl border border-foreground/10 p-5 md:p-6"
+            className="fixed inset-x-4 bottom-4 md:inset-x-auto md:left-1/2 md:top-1/2 md:bottom-auto md:-translate-x-1/2 md:-translate-y-1/2 md:w-[420px] z-[81] bg-background rounded-3xl shadow-2xl border border-foreground/10 p-5 md:p-7"
           >
             <button
               onClick={dismiss}
