@@ -4,7 +4,7 @@ import { sendLeadNotification } from "@/lib/resend";
 
 export async function POST(req: Request) {
   const body = await req.json().catch(() => null);
-  if (!body?.email || !body?.message) {
+  if (!body?.email) {
     return NextResponse.json({ error: "Missing fields" }, { status: 400 });
   }
 

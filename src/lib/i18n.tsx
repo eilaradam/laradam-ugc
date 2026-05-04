@@ -448,7 +448,7 @@ const dict: Record<Lang, Dict> = {
       brand: "Marca / Empresa",
       brandPh: "Nome da marca",
       budget: "Orçamento estimado",
-      budgetPh: "Ex: R$ 5.000 – R$ 15.000",
+      budgetPh: "Ex: R$ 1.000 – R$ 5.000",
       message: "Conta sobre o projeto",
       messagePh: "Categoria, formato, prazo, objetivo da campanha...",
       send: "Enviar mensagem",
