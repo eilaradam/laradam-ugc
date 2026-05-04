@@ -17,7 +17,7 @@ export default function HeroOption6() {
       id="top"
       className="relative bg-white pt-4 md:pt-6 pb-0 overflow-hidden"
     >
-      <div className="max-w-7xl mx-auto px-5 md:px-8 grid md:grid-cols-2 gap-6 md:gap-12 items-center w-full">
+      <div className="max-w-7xl mx-auto px-5 md:px-8 grid md:grid-cols-2 gap-6 md:gap-12 items-center w-full pt-[60px] md:pt-[40px]">
         {/* LEFT: texto */}
         <div className="flex flex-col">
           {/* Badge com check */}
