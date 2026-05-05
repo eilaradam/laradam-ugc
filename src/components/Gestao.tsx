@@ -1257,10 +1257,10 @@ function ContactForm() {
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      await fetch("/api/contact", {
+      await fetch("/api/gestao-leads", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...data, source: "gestao" }),
+        body: JSON.stringify(data),
       });
       setSent(true);
     } catch {}
