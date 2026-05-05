@@ -225,12 +225,12 @@ export default function BioPage() {
           style={{ aspectRatio: "1920 / 800" }}
         >
           <Image
-            src="/lara-sobre.jpg"
+            src="/fotobio.png"
             alt="Lara Dam"
             fill
             sizes="(max-width: 480px) 100vw, 440px"
             className="object-cover"
-            style={{ objectPosition: "center 25%" }}
+            style={{ objectPosition: "center" }}
             priority
           />
         </div>
