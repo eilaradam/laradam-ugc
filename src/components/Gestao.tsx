@@ -895,10 +895,10 @@ function CasesEVideos() {
             <ChevronRight className="w-5 h-5" />
           </button>
 
-          {/* Trilho de cards (scroll horizontal) */}
+          {/* Trilho de cards (scroll só horizontal) */}
           <div
             ref={scrollerRef}
-            className="flex gap-3 md:gap-4 overflow-x-auto scroll-smooth snap-x snap-mandatory scrollbar-hide px-2"
+            className="flex gap-3 md:gap-4 overflow-x-auto overflow-y-hidden overscroll-x-contain touch-pan-x scroll-smooth snap-x snap-mandatory scrollbar-hide px-2 py-3"
           >
             {GESTAO_VIDEOS.map((v, i) => {
               const hasVideo = !!v.youtubeId;
