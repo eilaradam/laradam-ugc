@@ -804,26 +804,30 @@ function Processo() {
 
 /* ========================= 8. CASES E VÍDEOS ========================= */
 const GESTAO_VIDEOS: { youtubeId: string; brand: string }[] = [
+  // Round 1: 1 de cada marca
   { youtubeId: "i62BOlzvQlo", brand: "Sebastian" },
-  { youtubeId: "15nOoGJ872g", brand: "Wella" },
-  { youtubeId: "ATz4wOA_mAc", brand: "Neutrogena" },
-  { youtubeId: "3qKBJccHlg8", brand: "Zap Imóveis" },
-  { youtubeId: "pqUrs6-l8Lg", brand: "Zap Imóveis" },
-  { youtubeId: "q4RDtGGGcDc", brand: "Zap Imóveis" },
-  { youtubeId: "8y0eXGsfHv4", brand: "Zap Imóveis" },
   { youtubeId: "ukZSk1h_Y2Q", brand: "OLX" },
-  { youtubeId: "_76b4s5tOZQ", brand: "OLX" },
-  { youtubeId: "Dc9D0nj7n3U", brand: "OLX" },
-  { youtubeId: "bg-wyhCzVkQ", brand: "OLX" },
-  { youtubeId: "H5nVICmwGog", brand: "Brinox" },
-  { youtubeId: "XhDRsx2Q2MM", brand: "Brinox" },
-  { youtubeId: "fDjZz6kMjMY", brand: "Trisanti" },
-  { youtubeId: "SNAvEW9DO7M", brand: "Trisanti" },
   { youtubeId: "9WjJTAbJsms", brand: "Frooty" },
-  { youtubeId: "ij5dOFY29ZI", brand: "Frooty" },
+  { youtubeId: "3qKBJccHlg8", brand: "Zap Imóveis" },
+  { youtubeId: "H5nVICmwGog", brand: "Brinox" },
+  { youtubeId: "15nOoGJ872g", brand: "Wella" },
+  { youtubeId: "fDjZz6kMjMY", brand: "Trisanti" },
   { youtubeId: "sb9PHTUVBvc", brand: "Rap10" },
-  { youtubeId: "lvxaMi4GaVc", brand: "Rap10" },
+  { youtubeId: "ATz4wOA_mAc", brand: "Neutrogena" },
   { youtubeId: "ZnoQzWTTSHM", brand: "Automotivo" },
+  // Round 2
+  { youtubeId: "_76b4s5tOZQ", brand: "OLX" },
+  { youtubeId: "ij5dOFY29ZI", brand: "Frooty" },
+  { youtubeId: "pqUrs6-l8Lg", brand: "Zap Imóveis" },
+  { youtubeId: "XhDRsx2Q2MM", brand: "Brinox" },
+  { youtubeId: "SNAvEW9DO7M", brand: "Trisanti" },
+  { youtubeId: "lvxaMi4GaVc", brand: "Rap10" },
+  // Round 3
+  { youtubeId: "Dc9D0nj7n3U", brand: "OLX" },
+  { youtubeId: "q4RDtGGGcDc", brand: "Zap Imóveis" },
+  // Round 4
+  { youtubeId: "bg-wyhCzVkQ", brand: "OLX" },
+  { youtubeId: "8y0eXGsfHv4", brand: "Zap Imóveis" },
 ];
 
 function CasesEVideos() {
@@ -930,41 +934,23 @@ function CasesEVideos() {
                   {hasVideo ? (
                     <>
                       <img
-                        src={`https://i.ytimg.com/vi/${v.youtubeId}/oardefault.jpg`}
+                        src={`https://i.ytimg.com/vi/${v.youtubeId}/maxresdefault.jpg`}
                         alt={v.brand}
                         loading="lazy"
                         data-thumb-idx="0"
                         className="absolute inset-0 w-full h-full object-cover"
                         onError={(e) => {
-                          const FALLBACKS = [
-                            "oar2.jpg",
-                            "maxresdefault.jpg",
-                            "sddefault.jpg",
-                            "hqdefault.jpg",
-                            "mqdefault.jpg",
-                          ];
+                          const FALLBACKS = ["sddefault.jpg", "hqdefault.jpg", "mqdefault.jpg"];
                           const idx = Number(e.currentTarget.dataset.thumbIdx ?? "0");
                           if (idx >= FALLBACKS.length) return;
                           e.currentTarget.dataset.thumbIdx = String(idx + 1);
                           e.currentTarget.src = `https://i.ytimg.com/vi/${v.youtubeId}/${FALLBACKS[idx]}`;
                         }}
                         onLoad={(e) => {
-                          const w = e.currentTarget.naturalWidth;
-                          const h = e.currentTarget.naturalHeight;
+                          // YouTube devolve placeholder 120x90 quando endpoint não tem
+                          if (e.currentTarget.naturalWidth > 120) return;
+                          const FALLBACKS = ["sddefault.jpg", "hqdefault.jpg", "mqdefault.jpg"];
                           const idx = Number(e.currentTarget.dataset.thumbIdx ?? "0");
-                          // 9:16 (oardefault/oar2) deve ser vertical. Se vier 16:9
-                          // (placeholder do YouTube), fallback. Mas nos endpoints
-                          // 16:9 (idx >= 2) aceita normal.
-                          const isVerticalEndpoint = idx < 2;
-                          const isPlaceholder = w <= 120 || (isVerticalEndpoint && w >= h);
-                          if (!isPlaceholder) return;
-                          const FALLBACKS = [
-                            "oar2.jpg",
-                            "maxresdefault.jpg",
-                            "sddefault.jpg",
-                            "hqdefault.jpg",
-                            "mqdefault.jpg",
-                          ];
                           if (idx >= FALLBACKS.length) return;
                           e.currentTarget.dataset.thumbIdx = String(idx + 1);
                           e.currentTarget.src = `https://i.ytimg.com/vi/${v.youtubeId}/${FALLBACKS[idx]}`;
