@@ -131,8 +131,8 @@ const CREATOR_LINKS: LinkCard[] = [
   {
     label: "MeuManager",
     description: "Dashboard pra gerenciar suas parcerias",
-    href: "https://meumanager.com.br",
-    logo: { src: "/bio/meumanager.png", alt: "MeuManager", bg: "#FFFFFF" },
+    href: "https://meumanager.com/login",
+    logo: { src: "/logo-meumanager.png", alt: "MeuManager", bg: "#FFFFFF" },
     external: true,
   },
   {
