@@ -228,12 +228,12 @@ function Hero() {
           </motion.div>
         </div>
 
-        {/* Direita: foto + stickers (subido pra alinhar com o topo do conteúdo) */}
+        {/* Direita: foto + stickers (centralizado verticalmente com o conteúdo esquerdo) */}
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-          className="md:col-span-5 lg:col-span-5 relative md:self-start md:-mt-4"
+          className="md:col-span-5 lg:col-span-5 relative md:self-center md:mt-4"
         >
           <div className="relative aspect-[3/4] md:aspect-[4/5] w-full max-w-[260px] md:max-w-[320px] mx-auto md:ml-auto md:mr-0">
             <div
