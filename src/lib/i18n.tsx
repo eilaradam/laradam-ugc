@@ -251,9 +251,9 @@ const dict: Record<Lang, Dict> = {
       greeting1: "Oie, eu sou a",
       greetingName: "Lara Dam",
       body1:
-        "Tenho 27 anos e sou UGC Creator e estrategista de conteúdo no Litoral de SP. Com 2 anos de experiência, meu trabalho é focado em criar conexões reais e estratégias de alta conversão para marcas que buscam destaque. Com uma bagagem sólida de mais de 500 vídeos gravados e parcerias com mais de 200 parceiros, utilizo meu olhar analítico para transformar produtos em desejos de consumo, garantindo autoridade e resultados concretos através de um conteúdo autêntico e humano.",
+        "Tenho **27 anos**, sou **UGC Creator e estrategista de conteúdo** no Litoral de SP. Em **2 anos**, gravei mais de **500 vídeos** e trabalhei com mais de **200 marcas**, criando conexões reais e estratégias de alta conversão. Meu olhar analítico transforma produto em desejo de consumo, com **conteúdo autêntico** que gera autoridade e resultado.",
       body2:
-        "Mais de 140M de views em campanhas, recorde de CTR no Meta, CPA reduzido em até 38% e ROAS de 2.4x. Conteúdo que virou playbook de criativo pra marcas como InfinitePay, Méliuz e DT3.",
+        "Mais de **140M de views** em campanhas, **recorde de CTR no Meta**, **CPA reduzido em até 38%** e **ROAS de 2.4x**. Conteúdo que virou playbook de criativo pra marcas como **InfinitePay**, **Méliuz** e **DT3**.",
       pillBrands: "+200 marcas parceiras",
       pillLocation: "Litoral de SP · Brasil",
       etapa: "Etapa",
@@ -516,9 +516,9 @@ const dict: Record<Lang, Dict> = {
       greeting1: "Hi, I'm",
       greetingName: "Lara Dam",
       body1:
-        "I'm 27 years old, a UGC Creator and content strategist based on the coast of São Paulo, Brazil. With 2 years of experience, my work is focused on building real connections and high-conversion strategies for brands that want to stand out. With a solid track record of 500+ videos and partnerships with 200+ brands, I use an analytical eye to turn products into desire — delivering authority and concrete results through authentic, human content.",
+        "I'm **27**, a **UGC Creator and content strategist** based on the coast of São Paulo. In **2 years**, I've shot **500+ videos** and worked with **200+ brands**, building real connections and high-conversion strategies. My analytical eye turns product into desire, with **authentic content** that drives authority and results.",
       body2:
-        "Over 140M views in campaigns, CTR records on Meta, CPA reduced by up to 38% and 2.4x ROAS. Content that became a creative playbook for brands like InfinitePay, Méliuz and DT3.",
+        "Over **140M views** in campaigns, **CTR records on Meta**, **CPA reduced by up to 38%** and **2.4x ROAS**. Content that became a creative playbook for brands like **InfinitePay**, **Méliuz** and **DT3**.",
       pillBrands: "200+ brand partners",
       pillLocation: "Coast of SP · Brazil",
       etapa: "Step",

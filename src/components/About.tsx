@@ -3,6 +3,21 @@
 import { motion } from "framer-motion";
 import { useT } from "@/lib/i18n";
 
+// Renderiza **trecho** como <strong>
+function renderBold(text: string) {
+  const parts = text.split(/(\*\*[^*]+\*\*)/g);
+  return parts.map((part, i) => {
+    if (part.startsWith("**") && part.endsWith("**")) {
+      return (
+        <strong key={i} className="font-semibold text-foreground">
+          {part.slice(2, -2)}
+        </strong>
+      );
+    }
+    return <span key={i}>{part}</span>;
+  });
+}
+
 export default function About() {
   const t = useT();
   return (
@@ -46,11 +61,11 @@ export default function About() {
           </h2>
 
           <p className="text-sm md:text-base text-foreground-soft leading-relaxed max-w-xl">
-            {t.about.body1}
+            {renderBold(t.about.body1)}
           </p>
 
           <p className="mt-3 md:mt-4 text-sm md:text-base text-foreground-soft leading-relaxed max-w-xl">
-            {t.about.body2}
+            {renderBold(t.about.body2)}
           </p>
 
           <div className="mt-6 md:mt-8 flex flex-wrap gap-2 md:gap-3">
