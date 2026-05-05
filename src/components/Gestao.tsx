@@ -120,7 +120,7 @@ function MMPill({ children }: { children: React.ReactNode }) {
 /* =============================== 1. HERO =============================== */
 function Hero() {
   return (
-    <section className="relative overflow-hidden bg-[#FAF8F4] text-black pt-20 md:pt-24 pb-0">
+    <section className="relative overflow-hidden bg-[#FAF8F4] text-black pt-14 md:pt-16 pb-0">
       {/* Grid quadriculado fininho */}
       <div
         aria-hidden
@@ -142,17 +142,17 @@ function Hero() {
         }}
       />
 
-      <div className="relative max-w-7xl mx-auto px-6 md:px-12 grid md:grid-cols-12 gap-8 md:gap-4 items-end pt-4 md:pt-8">
+      <div className="relative max-w-6xl mx-auto px-6 md:px-12 grid md:grid-cols-12 gap-6 md:gap-4 items-end pt-2 md:pt-4">
         {/* Esquerda */}
-        <div className="md:col-span-7 lg:col-span-7 relative pb-12 md:pb-20">
+        <div className="md:col-span-7 lg:col-span-7 relative pb-8 md:pb-12">
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="flex items-center gap-3 mb-6 md:mb-8"
+            className="flex items-center gap-2.5 mb-4 md:mb-5"
           >
-            <div className="w-2.5 h-2.5 rounded-full bg-[var(--mm-orange)] animate-pulse" />
-            <span className="font-display font-black text-black text-sm md:text-base tracking-widest uppercase">
+            <div className="w-2 h-2 rounded-full bg-[var(--mm-orange)] animate-pulse" />
+            <span className="font-display font-black text-black text-xs md:text-sm tracking-widest uppercase">
               laradam<span className="text-[var(--mm-orange)]">.</span>gestão
             </span>
           </motion.div>
@@ -162,7 +162,7 @@ function Hero() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="font-display font-black text-black text-3xl md:text-5xl lg:text-6xl leading-[0.95] tracking-tighter uppercase"
+            className="font-display font-black text-black text-2xl md:text-4xl lg:text-5xl leading-[0.95] tracking-tighter uppercase"
           >
             Gestão de campanhas UGC
           </motion.h1>
@@ -172,7 +172,7 @@ function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="mt-3 md:mt-4 font-display font-bold text-[var(--mm-orange)] text-xl md:text-2xl lg:text-3xl tracking-tight"
+            className="mt-2 md:mt-3 font-display font-bold text-[var(--mm-orange)] text-base md:text-lg lg:text-xl tracking-tight"
           >
             do briefing à entrega.
           </motion.div>
@@ -182,7 +182,7 @@ function Hero() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="mt-7 text-base md:text-lg max-w-xl leading-relaxed text-black/75"
+            className="mt-4 text-sm md:text-base max-w-xl leading-relaxed text-black/75"
           >
             Cuidamos de todo o processo pra sua empresa: seleção dos creators
             certos, briefing alinhado com seu posicionamento, roteiro
@@ -197,16 +197,16 @@ function Hero() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.65 }}
-            className="mt-8"
+            className="mt-5"
           >
             <a
               href="#gestao-contato"
-              className="inline-flex items-center gap-2 bg-[var(--mm-orange)] text-white px-7 py-4 rounded-full text-base md:text-lg font-bold uppercase tracking-wider hover:bg-[var(--mm-orange-deep)] transition-colors shadow-xl"
+              className="inline-flex items-center gap-2 bg-[var(--mm-orange)] text-white px-5 py-2.5 rounded-full text-xs md:text-sm font-bold uppercase tracking-wider hover:bg-[var(--mm-orange-deep)] transition-colors shadow-xl"
             >
               Quero conversar sobre minha campanha
-              <ArrowRight className="w-4 h-4" />
+              <ArrowRight className="w-3.5 h-3.5" />
             </a>
-            <p className="mt-3 text-xs md:text-sm text-black/55">
+            <p className="mt-2 text-[11px] md:text-xs text-black/55">
               Resposta em até 24h. Diagnóstico gratuito antes de qualquer
               proposta.
             </p>
@@ -217,7 +217,7 @@ function Hero() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.85 }}
-            className="mt-10 flex flex-nowrap items-center gap-x-3 md:gap-x-5 text-black/70 border-t border-black/10 pt-5 overflow-x-auto whitespace-nowrap"
+            className="mt-6 flex flex-nowrap items-center gap-x-3 text-black/70 border-t border-black/10 pt-3 overflow-x-auto whitespace-nowrap"
           >
             <Stat value="+100" label="campanhas gerenciadas" small />
             <span className="text-black/20">|</span>
@@ -234,9 +234,9 @@ function Hero() {
           transition={{ duration: 1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
           className="md:col-span-5 lg:col-span-5 relative md:self-start md:-mt-4"
         >
-          <div className="relative aspect-[3/4] md:aspect-[4/5] w-full max-w-md mx-auto md:ml-auto md:mr-0">
+          <div className="relative aspect-[3/4] md:aspect-[4/5] w-full max-w-[260px] md:max-w-[320px] mx-auto md:ml-auto md:mr-0">
             <div
-              className="absolute inset-x-4 inset-y-2 bg-white border border-black/5 rounded-[3rem] shadow-lg"
+              className="absolute inset-x-3 inset-y-2 bg-white border border-black/5 rounded-[2rem] shadow-lg"
               aria-hidden
             />
             <img
@@ -312,17 +312,17 @@ function Hero() {
 
 function Stat({ value, label, small }: { value: string; label: string; small?: boolean }) {
   return (
-    <div className="flex items-baseline gap-2">
+    <div className="flex items-baseline gap-1.5">
       <span
         className={`font-display font-black text-black tabular-nums ${
-          small ? "text-base md:text-lg" : "text-2xl md:text-3xl"
+          small ? "text-sm md:text-base" : "text-xl md:text-2xl"
         }`}
       >
         {value}
       </span>
       <span
         className={`uppercase tracking-wider text-black/60 ${
-          small ? "text-[10px] md:text-xs" : "text-xs md:text-sm"
+          small ? "text-[9px] md:text-[10px]" : "text-[10px] md:text-xs"
         }`}
       >
         {label}
