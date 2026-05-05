@@ -930,12 +930,39 @@ function CasesEVideos() {
                   {hasVideo ? (
                     <>
                       <img
-                        src={`https://i.ytimg.com/vi/${v.youtubeId}/maxresdefault.jpg`}
+                        src={`https://i.ytimg.com/vi/${v.youtubeId}/oardefault.jpg`}
                         alt={v.brand}
                         loading="lazy"
+                        data-thumb-idx="0"
                         className="absolute inset-0 w-full h-full object-cover"
                         onError={(e) => {
-                          e.currentTarget.src = `https://i.ytimg.com/vi/${v.youtubeId}/hqdefault.jpg`;
+                          const FALLBACKS = [
+                            "oar2.jpg",
+                            "maxresdefault.jpg",
+                            "sddefault.jpg",
+                            "hqdefault.jpg",
+                            "mqdefault.jpg",
+                          ];
+                          const idx = Number(e.currentTarget.dataset.thumbIdx ?? "0");
+                          if (idx >= FALLBACKS.length) return;
+                          e.currentTarget.dataset.thumbIdx = String(idx + 1);
+                          e.currentTarget.src = `https://i.ytimg.com/vi/${v.youtubeId}/${FALLBACKS[idx]}`;
+                        }}
+                        onLoad={(e) => {
+                          // YouTube devolve 120x90 quando thumbnail pedido não existe
+                          if (e.currentTarget.naturalWidth <= 120) {
+                            const FALLBACKS = [
+                              "oar2.jpg",
+                              "maxresdefault.jpg",
+                              "sddefault.jpg",
+                              "hqdefault.jpg",
+                              "mqdefault.jpg",
+                            ];
+                            const idx = Number(e.currentTarget.dataset.thumbIdx ?? "0");
+                            if (idx >= FALLBACKS.length) return;
+                            e.currentTarget.dataset.thumbIdx = String(idx + 1);
+                            e.currentTarget.src = `https://i.ytimg.com/vi/${v.youtubeId}/${FALLBACKS[idx]}`;
+                          }
                         }}
                       />
                       <div className="absolute inset-0 flex items-center justify-center opacity-90 group-hover:opacity-100 transition-opacity">
