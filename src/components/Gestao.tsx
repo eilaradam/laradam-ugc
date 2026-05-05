@@ -807,6 +807,12 @@ const GESTAO_VIDEOS: { youtubeId: string; brand: string }[] = [
   { youtubeId: "i62BOlzvQlo", brand: "Sebastian" },
   { youtubeId: "15nOoGJ872g", brand: "Wella" },
   { youtubeId: "ATz4wOA_mAc", brand: "Neutrogena" },
+  { youtubeId: "3qKBJccHlg8", brand: "Zap Imóveis" },
+  { youtubeId: "pqUrs6-l8Lg", brand: "Zap Imóveis" },
+  { youtubeId: "q4RDtGGGcDc", brand: "Zap Imóveis" },
+  { youtubeId: "ukZSk1h_Y2Q", brand: "OLX" },
+  { youtubeId: "_76b4s5tOZQ", brand: "OLX" },
+  { youtubeId: "Dc9D0nj7n3U", brand: "OLX" },
 ];
 
 function CasesEVideos() {
