@@ -166,7 +166,7 @@ export default function HeroOption6() {
               },
             }}
             whileHover={{ scale: 1.06, transition: { duration: 0.25, ease: "easeOut" } }}
-            className="hidden md:flex absolute z-20 left-1 md:left-3 top-[58%] md:top-[60%] bg-white shadow-xl rounded-2xl p-3 md:p-3.5 items-center gap-3 max-w-[230px] border border-foreground/5 cursor-default"
+            className="hidden md:flex absolute z-20 left-1 md:left-3 top-[78%] md:top-[80%] bg-white shadow-xl rounded-2xl p-3 md:p-3.5 items-center gap-3 max-w-[230px] border border-foreground/5 cursor-default"
           >
             <span
               style={{ backgroundColor: ACCENT }}
