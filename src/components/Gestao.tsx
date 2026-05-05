@@ -803,14 +803,10 @@ function Processo() {
 }
 
 /* ========================= 8. CASES E VÍDEOS ========================= */
-// TODO Lara: substituir os youtubeId em branco pelos IDs dos novos vídeos
 const GESTAO_VIDEOS: { youtubeId: string; brand: string }[] = [
-  { youtubeId: "", brand: "" },
-  { youtubeId: "", brand: "" },
-  { youtubeId: "", brand: "" },
-  { youtubeId: "", brand: "" },
-  { youtubeId: "", brand: "" },
-  { youtubeId: "", brand: "" },
+  { youtubeId: "i62BOlzvQlo", brand: "Sebastian" },
+  { youtubeId: "15nOoGJ872g", brand: "Wella" },
+  { youtubeId: "ATz4wOA_mAc", brand: "Neutrogena" },
 ];
 
 function CasesEVideos() {
