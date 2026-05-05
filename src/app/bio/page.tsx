@@ -73,6 +73,7 @@ type LinkCard = {
   label: string;
   description: string;
   href: string;
+  eyebrow?: string;
   highlight?: boolean;
   external?: boolean;
   comingSoon?: boolean;
@@ -121,6 +122,7 @@ const MARCA_LINKS: LinkCard[] = [
 
 const CREATOR_LINKS: LinkCard[] = [
   {
+    eyebrow: "Curso UGC Manager",
     label: "Manager Club",
     description: "A formação completa pra nova geração de UGC Manager",
     href: "https://managerclub.com.br",
@@ -367,8 +369,21 @@ export default function BioPage() {
               <>
                 {renderIcon()}
                 <span className="flex-1 min-w-0">
+                  {card.eyebrow && (
+                    <span
+                      className={`block text-[10px] font-semibold uppercase tracking-[0.18em] ${
+                        card.highlight ? "text-background/60" : "text-muted"
+                      }`}
+                    >
+                      {card.eyebrow}
+                    </span>
+                  )}
                   <span className="flex items-center gap-1.5">
-                    <span className="font-display text-[15px] font-bold leading-tight">
+                    <span
+                      className={`font-display font-bold leading-tight ${
+                        card.eyebrow ? "text-[17px]" : "text-[15px]"
+                      }`}
+                    >
                       {card.label}
                     </span>
                     {card.comingSoon && (
