@@ -120,15 +120,25 @@ function MMPill({ children }: { children: React.ReactNode }) {
 /* =============================== 1. HERO =============================== */
 function Hero() {
   return (
-    <section className="relative overflow-hidden bg-black text-white pt-20 md:pt-24 pb-0">
-      {/* Pontilhado bg */}
+    <section className="relative overflow-hidden bg-[#FAF8F4] text-black pt-20 md:pt-24 pb-0">
+      {/* Grid quadriculado fininho */}
       <div
         aria-hidden
-        className="absolute inset-0 pointer-events-none opacity-[0.10]"
+        className="absolute inset-0 pointer-events-none"
         style={{
           backgroundImage:
-            "radial-gradient(circle, #fff 1px, transparent 1px)",
-          backgroundSize: "24px 24px",
+            "linear-gradient(to right, rgba(0,0,0,0.06) 1px, transparent 1px), linear-gradient(to bottom, rgba(0,0,0,0.06) 1px, transparent 1px)",
+          backgroundSize: "44px 44px",
+        }}
+      />
+
+      {/* Glow laranja sutil atrás do conteúdo (estilo da referência) */}
+      <div
+        aria-hidden
+        className="absolute -top-40 -left-40 w-[600px] h-[600px] rounded-full pointer-events-none opacity-30"
+        style={{
+          background:
+            "radial-gradient(circle, rgba(255,88,36,0.18) 0%, transparent 70%)",
         }}
       />
 
@@ -142,7 +152,7 @@ function Hero() {
             className="flex items-center gap-3 mb-6 md:mb-8"
           >
             <div className="w-2.5 h-2.5 rounded-full bg-[var(--mm-orange)] animate-pulse" />
-            <span className="font-display font-black text-white text-sm md:text-base tracking-widest uppercase">
+            <span className="font-display font-black text-black text-sm md:text-base tracking-widest uppercase">
               laradam<span className="text-[var(--mm-orange)]">.</span>gestão
             </span>
           </motion.div>
@@ -152,7 +162,7 @@ function Hero() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="font-display font-black text-white text-3xl md:text-5xl lg:text-6xl leading-[0.95] tracking-tighter uppercase"
+            className="font-display font-black text-black text-3xl md:text-5xl lg:text-6xl leading-[0.95] tracking-tighter uppercase"
           >
             Gestão de campanhas UGC
           </motion.h1>
@@ -172,12 +182,12 @@ function Hero() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="mt-7 text-base md:text-lg max-w-xl leading-relaxed text-white/80"
+            className="mt-7 text-base md:text-lg max-w-xl leading-relaxed text-black/75"
           >
             Cuidamos de todo o processo pra sua empresa: seleção dos creators
             certos, briefing alinhado com seu posicionamento, roteiro
             revisado, produção acompanhada e entrega no prazo.{" "}
-            <span className="text-white font-semibold">
+            <span className="text-black font-semibold">
               Você roda mídia. Nós rodamos a operação.
             </span>
           </motion.p>
@@ -196,7 +206,7 @@ function Hero() {
               Quero conversar sobre minha campanha
               <ArrowRight className="w-4 h-4" />
             </a>
-            <p className="mt-3 text-xs md:text-sm text-white/60">
+            <p className="mt-3 text-xs md:text-sm text-black/55">
               Resposta em até 24h. Diagnóstico gratuito antes de qualquer
               proposta.
             </p>
@@ -207,12 +217,12 @@ function Hero() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.85 }}
-            className="mt-10 flex flex-nowrap items-center gap-x-3 md:gap-x-5 text-white/75 border-t border-white/10 pt-5 overflow-x-auto whitespace-nowrap"
+            className="mt-10 flex flex-nowrap items-center gap-x-3 md:gap-x-5 text-black/70 border-t border-black/10 pt-5 overflow-x-auto whitespace-nowrap"
           >
             <Stat value="+100" label="campanhas gerenciadas" small />
-            <span className="text-white/20">|</span>
+            <span className="text-black/20">|</span>
             <Stat value="+200" label="marcas atendidas" small />
-            <span className="text-white/20">|</span>
+            <span className="text-black/20">|</span>
             <Stat value="+1.200" label="creators em rede" small />
           </motion.div>
         </div>
@@ -226,7 +236,7 @@ function Hero() {
         >
           <div className="relative aspect-[3/4] md:aspect-[4/5] w-full max-w-md mx-auto md:ml-auto md:mr-0">
             <div
-              className="absolute inset-x-4 inset-y-2 bg-white rounded-[3rem]"
+              className="absolute inset-x-4 inset-y-2 bg-white border border-black/5 rounded-[3rem] shadow-lg"
               aria-hidden
             />
             <img
@@ -304,14 +314,14 @@ function Stat({ value, label, small }: { value: string; label: string; small?: b
   return (
     <div className="flex items-baseline gap-2">
       <span
-        className={`font-display font-black text-white tabular-nums ${
+        className={`font-display font-black text-black tabular-nums ${
           small ? "text-base md:text-lg" : "text-2xl md:text-3xl"
         }`}
       >
         {value}
       </span>
       <span
-        className={`uppercase tracking-wider text-white/70 ${
+        className={`uppercase tracking-wider text-black/60 ${
           small ? "text-[10px] md:text-xs" : "text-xs md:text-sm"
         }`}
       >
