@@ -404,36 +404,37 @@ function HighlightCard({
         </div>
       </button>
 
-      {/* Métricas abaixo — destaque em card laranja claro */}
+      {/* Métricas abaixo — lista vertical se tiver stats[], senão métrica única */}
       {highlight.stats && highlight.stats.length > 0 ? (
-        <div className="mt-4 md:mt-5 bg-primary-light border border-primary/20 rounded-2xl px-3 py-3 md:py-4">
-          <dl className="divide-y divide-primary/15">
-            {highlight.stats.map((s) => (
-              <div
-                key={s.label}
-                className="flex items-baseline justify-between py-2 first:pt-0 last:pb-0"
-              >
-                <dt className="text-[11px] md:text-xs uppercase tracking-wider font-semibold text-foreground/70">
-                  {s.label}
-                </dt>
-                <dd className="font-display font-black text-lg md:text-xl tracking-tight text-primary tabular-nums">
-                  {s.value}
-                </dd>
-              </div>
-            ))}
-          </dl>
-        </div>
-      ) : (
-        <div className="mt-4 md:mt-5 bg-primary-light border border-primary/20 rounded-2xl px-3 py-3 md:py-4 text-center">
-          <div className="font-display font-black text-primary text-2xl md:text-3xl tracking-tight tabular-nums leading-none">
-            {highlight.metric.split(" de ")[0]}
-          </div>
-          {highlight.metric.includes(" de ") && (
-            <div className="mt-1 font-display font-bold text-foreground text-xs md:text-sm uppercase tracking-wider">
-              de {highlight.metric.split(" de ")[1]}
+        <dl className="mt-4 md:mt-5 divide-y divide-foreground/10 border-t border-foreground/10">
+          {highlight.stats.map((s) => (
+            <div
+              key={s.label}
+              className="flex items-baseline justify-between py-2"
+            >
+              <dt className="text-[11px] md:text-xs uppercase tracking-wider text-muted">
+                {s.label}
+              </dt>
+              <dd className="font-display font-black text-base md:text-lg tracking-tight text-foreground tabular-nums">
+                {s.value}
+              </dd>
             </div>
-          )}
-          <div className="text-[11px] md:text-xs text-foreground-soft mt-1.5 uppercase tracking-wider">
+          ))}
+        </dl>
+      ) : (
+        <div className="mt-4 md:mt-5 text-center">
+          <div className="font-display font-bold text-foreground text-base md:text-xl tracking-tight">
+            <span className="font-black">
+              {highlight.metric.split(" de ")[0]}
+            </span>
+            {highlight.metric.includes(" de ") && (
+              <>
+                {" de "}
+                {highlight.metric.split(" de ")[1]}
+              </>
+            )}
+          </div>
+          <div className="text-sm md:text-base text-foreground-soft mt-0.5">
             {highlight.platform}
           </div>
         </div>
