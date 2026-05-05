@@ -230,7 +230,7 @@ export default function BioPage() {
             fill
             sizes="(max-width: 480px) 100vw, 440px"
             className="object-cover"
-            style={{ objectPosition: "center" }}
+            style={{ objectPosition: "center 30%" }}
             priority
           />
         </div>
