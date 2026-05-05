@@ -234,7 +234,7 @@ function Hero() {
           transition={{ duration: 1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
           className="md:col-span-5 lg:col-span-5 relative md:self-center md:mt-4"
         >
-          <div className="relative aspect-[3/4] md:aspect-[4/5] w-full max-w-[260px] md:max-w-[320px] mx-auto md:ml-auto md:mr-0">
+          <div className="relative aspect-[3/4] md:aspect-[4/5] w-full max-w-[320px] md:max-w-[420px] mx-auto md:ml-auto md:mr-0">
             <div
               className="absolute inset-x-3 inset-y-2 bg-white border border-black/5 rounded-[2rem] shadow-lg"
               aria-hidden
@@ -254,7 +254,7 @@ function Hero() {
               initial={{ opacity: 0, scale: 0.8, rotate: 20 }}
               animate={{ opacity: 1, scale: 1, rotate: -10 }}
               transition={{ duration: 0.9, delay: 0.8 }}
-              className="absolute -top-4 -left-4 md:-left-10 pointer-events-none scale-[0.6] md:scale-75 origin-top-left"
+              className="absolute -top-2 -left-2 md:-left-6 pointer-events-none scale-[0.4] md:scale-[0.5] origin-top-left"
             >
               <CreatorStacked />
             </motion.div>
@@ -263,7 +263,7 @@ function Hero() {
               initial={{ opacity: 0, scale: 0.8, rotate: -15 }}
               animate={{ opacity: 1, scale: 1, rotate: 8 }}
               transition={{ duration: 0.9, delay: 1.1 }}
-              className="absolute top-8 -right-2 md:-right-6 w-20 md:w-24 pointer-events-none"
+              className="absolute top-6 -right-1 md:-right-4 w-14 md:w-16 pointer-events-none"
             >
               <ChatBubbleSticker className="w-full h-auto drop-shadow-lg" />
             </motion.div>
@@ -271,7 +271,7 @@ function Hero() {
             <motion.div
               animate={{ rotate: 360 }}
               transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-              className="absolute bottom-24 -left-2 md:-left-4 w-12 md:w-14 pointer-events-none drop-shadow-lg"
+              className="absolute bottom-24 -left-1 md:-left-3 w-9 md:w-10 pointer-events-none drop-shadow-lg"
             >
               <LoadingSticker className="w-full h-auto" />
             </motion.div>
@@ -280,7 +280,7 @@ function Hero() {
               initial={{ opacity: 0, y: 20, rotate: 5 }}
               animate={{ opacity: 1, y: 0, rotate: -4 }}
               transition={{ duration: 0.8, delay: 1.3 }}
-              className="absolute bottom-6 -right-2 md:-right-8 pointer-events-none"
+              className="absolute bottom-4 -right-1 md:-right-5 pointer-events-none scale-[0.85]"
             >
               <MMPill>{t.gestao.hero.bubble}</MMPill>
             </motion.div>
