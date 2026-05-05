@@ -1516,8 +1516,8 @@ export default function Gestao() {
   return (
     <div style={PALETTE}>
       <Hero />
-      <BrandsLogoBar />
       <CasesEVideos />
+      <BrandsLogoBar />
       <Modalidades />
       <Processo />
       <QuemSou />
