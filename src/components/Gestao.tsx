@@ -202,27 +202,27 @@ function Hero() {
             </p>
           </motion.div>
 
-          {/* Prova social */}
+          {/* Prova social — discreta, info complementar numa linha só */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.85 }}
-            className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3 text-white/85 border-t border-white/10 pt-6"
+            className="mt-10 flex flex-nowrap items-center gap-x-3 md:gap-x-5 text-white/75 border-t border-white/10 pt-5 overflow-x-auto whitespace-nowrap"
           >
-            <Stat value="+100" label="campanhas gerenciadas" />
-            <div className="h-6 w-px bg-white/15" />
-            <Stat value="+200" label="marcas atendidas" />
-            <div className="h-6 w-px bg-white/15" />
-            <Stat value="+1.200" label="creators em rede" />
+            <Stat value="+100" label="campanhas gerenciadas" small />
+            <span className="text-white/20">|</span>
+            <Stat value="+200" label="marcas atendidas" small />
+            <span className="text-white/20">|</span>
+            <Stat value="+1.200" label="creators em rede" small />
           </motion.div>
         </div>
 
-        {/* Direita: foto + stickers */}
+        {/* Direita: foto + stickers (subido pra alinhar com o topo do conteúdo) */}
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-          className="md:col-span-5 lg:col-span-5 relative self-end"
+          className="md:col-span-5 lg:col-span-5 relative md:self-start md:-mt-4"
         >
           <div className="relative aspect-[3/4] md:aspect-[4/5] w-full max-w-md mx-auto md:ml-auto md:mr-0">
             <div
@@ -403,12 +403,41 @@ function BrandsLogoBar() {
 }
 
 /* ============================== 5. O QUE FAÇO ============================== */
+function ProcessImage({
+  src,
+  emoji,
+  alt,
+}: {
+  src: string;
+  emoji: string;
+  alt: string;
+}) {
+  const [failed, setFailed] = useState(false);
+  if (failed) {
+    return (
+      <div className="text-7xl md:text-9xl select-none" aria-label={alt}>
+        {emoji}
+      </div>
+    );
+  }
+  return (
+    /* eslint-disable-next-line @next/next/no-img-element */
+    <img
+      src={src}
+      alt={alt}
+      onError={() => setFailed(true)}
+      className="w-32 h-32 md:w-48 md:h-48 object-cover rounded-2xl shadow-lg"
+    />
+  );
+}
+
 function OQueFaço() {
   const ITENS = [
     {
       titulo: "Seleção de creators",
       tagShort: "Seleção",
       emoji: "🎯",
+      image: "/processo/01-selecao.png",
       texto:
         "Hunting com critério, não mensagem em massa. Perfil alinhado com sua persona, histórico de entrega, nicho compatível e disponibilidade real. Você recebe creators pré-aprovados.",
     },
@@ -416,6 +445,7 @@ function OQueFaço() {
       titulo: "Briefing co-criado",
       tagShort: "Briefing",
       emoji: "📋",
+      image: "/processo/02-briefing.png",
       texto:
         "Construído junto com você, traduzindo posicionamento de marca em direção criativa que o creator entende e executa. Briefing claro é metade do trabalho.",
     },
@@ -423,6 +453,7 @@ function OQueFaço() {
       titulo: "Roteiros revisados",
       tagShort: "Roteiro",
       emoji: "✍️",
+      image: "/processo/03-roteiro.png",
       texto:
         "Toda campanha minha tem roteiro revisado por mim antes do creator gravar. É onde mais campanha desanda no mercado, e onde mais cuido pra não desandar a sua.",
     },
@@ -430,6 +461,7 @@ function OQueFaço() {
       titulo: "Produção acompanhada",
       tagShort: "Produção",
       emoji: "🎬",
+      image: "/processo/04-producao.png",
       texto:
         "Acompanhamento direto com cada creator. Cobrança de prazo, ajuste de execução, suporte técnico. Você não vai ficar correndo atrás de ninguém.",
     },
@@ -437,6 +469,7 @@ function OQueFaço() {
       titulo: "Revisão antes da entrega",
       tagShort: "Revisão",
       emoji: "✓",
+      image: "/processo/05-revisao.png",
       texto:
         "Antes do material chegar em você, ele já passou por revisão. Você recebe entrega, não rascunho.",
     },
@@ -444,6 +477,7 @@ function OQueFaço() {
       titulo: "Relatório e leitura",
       tagShort: "Relatório",
       emoji: "📊",
+      image: "/processo/06-relatorio.png",
       texto:
         "Leitura clara do que performou, o que saturou e o que vamos testar no próximo ciclo. Decisão baseada em dado, não em achismo.",
     },
@@ -506,13 +540,15 @@ function OQueFaço() {
               transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
               className="grid md:grid-cols-12 gap-6 md:gap-10 items-center rounded-3xl bg-black text-white p-6 md:p-12 min-h-[280px]"
             >
-              {/* Emoji/visual gigante */}
+              {/* Foto da etapa (fallback pro emoji se foto não existir) */}
               <div className="md:col-span-4 flex items-center justify-center">
                 <div className="relative">
-                  <div className="text-7xl md:text-9xl select-none">
-                    {current.emoji}
-                  </div>
-                  <div className="absolute -top-3 -right-3 md:-top-4 md:-right-4 font-display font-black text-[var(--mm-orange)] text-3xl md:text-5xl tabular-nums">
+                  <ProcessImage
+                    src={current.image}
+                    emoji={current.emoji}
+                    alt={current.titulo}
+                  />
+                  <div className="absolute -top-3 -right-3 md:-top-4 md:-right-4 font-display font-black text-[var(--mm-orange)] text-3xl md:text-5xl tabular-nums z-10">
                     {String(active + 1).padStart(2, "0")}
                   </div>
                 </div>
@@ -994,20 +1030,23 @@ function CasesEVideos() {
           </div>
         </div>
 
-        {/* Métricas */}
-        <div className="mt-10 md:mt-14 grid grid-cols-3 gap-4 md:gap-6 border-t border-black/10 pt-8 md:pt-10">
+        {/* Métricas — info complementar, centralizada e discreta */}
+        <div className="mt-8 md:mt-12 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 border-t border-black/10 pt-6 md:pt-8 text-black/70">
           {[
             { v: "+100", l: "campanhas gerenciadas" },
             { v: "+1.200", l: "creators em rede" },
-            { v: "+1000", l: "vídeos produzidos" },
-          ].map((m) => (
-            <div key={m.l}>
-              <div className="font-display font-black text-3xl md:text-5xl text-black tabular-nums leading-none">
-                {m.v}
+            { v: "+1.000", l: "vídeos produzidos" },
+          ].map((m, i, arr) => (
+            <div key={m.l} className="flex items-center gap-3">
+              <div className="flex items-baseline gap-1.5">
+                <span className="font-display font-bold text-base md:text-lg tabular-nums text-black">
+                  {m.v}
+                </span>
+                <span className="text-xs uppercase tracking-wider text-black/55">
+                  {m.l}
+                </span>
               </div>
-              <div className="mt-2 text-xs md:text-sm uppercase tracking-wider text-black/60">
-                {m.l}
-              </div>
+              {i < arr.length - 1 && <span className="text-black/15 text-sm">|</span>}
             </div>
           ))}
         </div>
