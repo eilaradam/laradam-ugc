@@ -5,9 +5,7 @@ import Link from "next/link";
 import { useState } from "react";
 import {
   Mail,
-  MessageCircle,
   ArrowUpRight,
-  Sparkles,
   Briefcase,
   Camera,
   Users,
@@ -56,14 +54,31 @@ function YoutubeIcon({ className }: IconProps) {
   );
 }
 
+function WhatsAppIcon({ className }: IconProps) {
+  return (
+    <svg viewBox="0 0 32 32" className={className} aria-hidden="true">
+      <path
+        fill="#25D366"
+        d="M16 .4C7.4.4.4 7.4.4 16c0 2.7.7 5.4 2.1 7.7L.3 31.6l8.1-2.1c2.3 1.2 4.9 1.9 7.6 1.9C24.6 31.4 31.6 24.4 31.6 15.8 31.6 11.6 30 7.7 27.1 4.8 24.2 1.9 20.2.4 16 .4z"
+      />
+      <path
+        fill="#FFF"
+        d="M16 28.7c-2.4 0-4.7-.6-6.8-1.8l-.5-.3-5 1.3 1.3-4.9-.3-.5c-1.3-2.1-2-4.5-2-7C2.7 8.7 8.7 2.7 16 2.7c3.5 0 6.9 1.4 9.4 3.9 2.5 2.5 3.9 5.9 3.9 9.4 0 7.3-6 12.7-13.3 12.7zm7.4-9.5c-.4-.2-2.4-1.2-2.7-1.3-.4-.1-.6-.2-.9.2-.3.4-1 1.3-1.2 1.5-.2.3-.4.3-.8.1-.4-.2-1.7-.6-3.2-2-1.2-1.1-2-2.4-2.2-2.8-.2-.4 0-.6.2-.8.2-.2.4-.5.6-.7.2-.2.3-.4.4-.7.1-.3 0-.5-.1-.7-.1-.2-.9-2.2-1.2-3-.3-.8-.7-.7-.9-.7h-.8c-.3 0-.7.1-1.1.5-.4.4-1.4 1.4-1.4 3.4 0 2 1.5 3.9 1.7 4.2.2.3 2.9 4.4 7 6.2 1 .4 1.7.7 2.3.9.9.3 1.8.2 2.5.1.8-.1 2.4-1 2.7-1.9.3-1 .3-1.8.2-1.9-.1-.2-.4-.3-.8-.5z"
+      />
+    </svg>
+  );
+}
+
 type LinkCard = {
   label: string;
   description: string;
   href: string;
-  icon: React.ComponentType<{ className?: string }>;
   highlight?: boolean;
   external?: boolean;
   comingSoon?: boolean;
+  // Visual: ou logo (imagem em /public) ou ícone Lucide/SVG
+  logo?: { src: string; alt: string; bg?: string };
+  icon?: React.ComponentType<{ className?: string }>;
 };
 
 const MARCA_LINKS: LinkCard[] = [
@@ -80,7 +95,7 @@ const MARCA_LINKS: LinkCard[] = [
     href: `https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent(
       "Oi Lara! Vim pelo seu Instagram e quero falar sobre um projeto."
     )}`,
-    icon: MessageCircle,
+    icon: WhatsAppIcon,
     external: true,
   },
   {
@@ -106,10 +121,10 @@ const MARCA_LINKS: LinkCard[] = [
 
 const CREATOR_LINKS: LinkCard[] = [
   {
-    label: "Banco de Creators",
-    description: "Vagas e oportunidades pra creators",
-    href: "https://ugcmanager.com.br",
-    icon: Users,
+    label: "Manager Club",
+    description: "A formação completa pra nova geração de UGC Manager",
+    href: "https://managerclub.com.br",
+    logo: { src: "/bio/managerclub.png", alt: "Manager Club", bg: "#F5E8D8" },
     highlight: true,
     external: true,
   },
@@ -117,7 +132,14 @@ const CREATOR_LINKS: LinkCard[] = [
     label: "MeuManager",
     description: "Dashboard pra gerenciar suas parcerias",
     href: "https://meumanager.com.br",
-    icon: Sparkles,
+    logo: { src: "/bio/meumanager.png", alt: "MeuManager", bg: "#FFFFFF" },
+    external: true,
+  },
+  {
+    label: "Banco de Creators",
+    description: "Vagas e oportunidades pra creators",
+    href: "https://ugcmanager.com.br",
+    icon: Users,
     external: true,
   },
   {
@@ -131,22 +153,12 @@ const CREATOR_LINKS: LinkCard[] = [
     comingSoon: true,
   },
   {
-    label: "Curso de UGC",
-    description: "Em breve — avisamos quando abrir",
-    href: `https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent(
-      "Oi Lara! Quero saber quando o Curso de UGC abrir."
-    )}`,
-    icon: GraduationCap,
-    external: true,
-    comingSoon: true,
-  },
-  {
     label: "Falar comigo",
     description: "WhatsApp direto",
     href: `https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent(
       "Oi Lara! Sou creator e queria trocar uma ideia com você."
     )}`,
-    icon: MessageCircle,
+    icon: WhatsAppIcon,
     external: true,
   },
 ];
@@ -168,6 +180,11 @@ const SOCIALS = [
     icon: YoutubeIcon,
   },
   {
+    label: "WhatsApp",
+    href: `https://wa.me/${SITE.whatsapp}`,
+    icon: WhatsAppIcon,
+  },
+  {
     label: "Email",
     href: `mailto:${SITE.email}`,
     icon: Mail,
@@ -179,12 +196,33 @@ export default function BioPage() {
   const links = audience === "marca" ? MARCA_LINKS : CREATOR_LINKS;
 
   return (
-    <main className="min-h-screen bg-[#FFF7F2] px-5 pt-10 pb-16 text-foreground">
-      <div className="mx-auto flex w-full max-w-[440px] flex-col items-center">
+    <main className="relative min-h-screen overflow-hidden bg-[#FAF8F4] px-5 pt-10 pb-16 text-foreground">
+      {/* Grid quadriculado fininho — mesmo padrão da home */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0"
+        style={{
+          backgroundImage:
+            "linear-gradient(to right, rgba(0,0,0,0.06) 1px, transparent 1px), linear-gradient(to bottom, rgba(0,0,0,0.06) 1px, transparent 1px)",
+          backgroundSize: "44px 44px",
+        }}
+      />
+
+      {/* Glow laranja sutil no topo */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -top-40 left-1/2 h-[600px] w-[600px] -translate-x-1/2 rounded-full opacity-30"
+        style={{
+          background:
+            "radial-gradient(circle, rgba(255,88,36,0.22) 0%, transparent 70%)",
+        }}
+      />
+
+      <div className="relative mx-auto flex w-full max-w-[440px] flex-col items-center">
         {/* Avatar */}
         <div className="relative h-32 w-32 overflow-hidden rounded-full ring-4 ring-white shadow-[0_10px_30px_-10px_rgba(212,105,40,0.45)]">
           <Image
-            src="/lara-fundo.png"
+            src="/lara-sobre.jpg"
             alt="Lara Dam"
             fill
             sizes="128px"
@@ -278,24 +316,52 @@ export default function BioPage() {
         <div className="mt-4 flex w-full flex-col gap-2.5">
           {links.map((card) => {
             const isExternal = card.external ?? card.href.startsWith("http");
-            const Icon = card.icon;
             const baseClasses =
               "group relative flex items-center gap-3 rounded-2xl px-4 py-4 transition-all";
             const styleClasses = card.highlight
               ? "bg-foreground text-background shadow-[0_8px_24px_-8px_rgba(27,27,27,0.4)] hover:bg-primary"
               : "bg-white text-foreground ring-1 ring-border hover:-translate-y-0.5 hover:shadow-md";
 
+            const iconWrapBase =
+              "flex h-11 w-11 shrink-0 items-center justify-center rounded-xl overflow-hidden";
+
+            const renderIcon = () => {
+              if (card.logo) {
+                return (
+                  <span
+                    className={`${iconWrapBase} ring-1 ring-black/5`}
+                    style={{ background: card.logo.bg ?? "#FFFFFF" }}
+                  >
+                    <Image
+                      src={card.logo.src}
+                      alt={card.logo.alt}
+                      width={44}
+                      height={44}
+                      className="h-9 w-9 object-contain"
+                    />
+                  </span>
+                );
+              }
+              if (card.icon) {
+                const Icon = card.icon;
+                return (
+                  <span
+                    className={`${iconWrapBase} ${
+                      card.highlight
+                        ? "bg-white/15 text-background"
+                        : "bg-primary-light text-primary"
+                    }`}
+                  >
+                    <Icon className="h-5 w-5" />
+                  </span>
+                );
+              }
+              return null;
+            };
+
             const inner = (
               <>
-                <span
-                  className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${
-                    card.highlight
-                      ? "bg-white/15 text-background"
-                      : "bg-primary-light text-primary"
-                  }`}
-                >
-                  <Icon className="h-5 w-5" />
-                </span>
+                {renderIcon()}
                 <span className="flex-1 min-w-0">
                   <span className="flex items-center gap-1.5">
                     <span className="font-display text-[15px] font-bold leading-tight">
