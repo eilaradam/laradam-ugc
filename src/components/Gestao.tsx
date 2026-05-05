@@ -120,7 +120,7 @@ function MMPill({ children }: { children: React.ReactNode }) {
 /* =============================== 1. HERO =============================== */
 function Hero() {
   return (
-    <section className="relative overflow-hidden bg-[#FAF8F4] text-black pt-14 md:pt-16 pb-0">
+    <section className="relative overflow-hidden bg-[#FAF8F4] text-black pt-24 md:pt-28 pb-0">
       {/* Grid quadriculado fininho */}
       <div
         aria-hidden
