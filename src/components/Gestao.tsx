@@ -384,7 +384,7 @@ function BrandsLogoBar() {
                 src={`/logo-1/${encodeURI(file)}`}
                 alt="Marca parceira"
                 loading="lazy"
-                className="max-h-full max-w-full object-contain opacity-70 hover:opacity-100 transition-opacity"
+                className="max-h-full max-w-full object-contain hover:scale-110 transition-transform"
                 onError={(e) => {
                   const p = e.currentTarget.parentElement;
                   if (p) p.remove();
