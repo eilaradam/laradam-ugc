@@ -371,7 +371,7 @@ function BrandsLogoBar() {
   ];
 
   return (
-    <section className="bg-white py-12 md:py-16">
+    <section id="parceiros-gestao" className="bg-white py-12 md:py-16 scroll-mt-24">
       <div className="max-w-6xl mx-auto px-6 md:px-12">
         {/* Grid de logos */}
         <div className="grid grid-cols-3 md:grid-cols-6 gap-6 md:gap-10 items-center mb-10 md:mb-14">
@@ -751,7 +751,7 @@ function Processo() {
   ];
 
   return (
-    <section className="relative bg-white text-black py-14 md:py-20 overflow-hidden border-t border-black/10">
+    <section id="etapas-gestao" className="relative bg-white text-black py-14 md:py-20 overflow-hidden border-t border-black/10 scroll-mt-24">
       <motion.div
         animate={{ rotate: 360 }}
         transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
@@ -860,7 +860,7 @@ function CasesEVideos() {
   return (
     <section
       id="cases-gestao"
-      className="bg-white py-14 md:py-20 border-t border-black/10"
+      className="bg-white py-14 md:py-20 border-t border-black/10 scroll-mt-24"
     >
       <div className="max-w-6xl mx-auto px-6 md:px-12">
         <h2 className="font-display font-black text-2xl md:text-4xl leading-[0.95] tracking-tighter text-black uppercase">
@@ -1147,7 +1147,7 @@ function FAQ() {
   const [openIdx, setOpenIdx] = useState(0);
 
   return (
-    <section className="bg-white py-14 md:py-20">
+    <section id="duvidas-gestao" className="bg-white py-14 md:py-20 scroll-mt-24">
       <div className="max-w-3xl mx-auto px-6 md:px-12">
         <h2 className="font-display font-black text-2xl md:text-4xl leading-[0.95] tracking-tighter text-black uppercase mb-10 md:mb-12">
           Perguntas que{" "}
@@ -1269,7 +1269,7 @@ function ContactForm() {
   return (
     <section
       id="gestao-contato"
-      className="relative bg-black text-white py-16 md:py-24 overflow-hidden border-t border-white/10"
+      className="relative bg-black text-white py-16 md:py-24 overflow-hidden border-t border-white/10 scroll-mt-24"
     >
       <motion.div
         initial={{ opacity: 0, rotate: 20 }}

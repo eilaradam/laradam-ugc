@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { useLang, useT } from "@/lib/i18n";
@@ -8,17 +9,30 @@ import { useLang, useT } from "@/lib/i18n";
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
   const t = useT();
   const { lang, setLang } = useLang();
 
-  const LINKS = [
-    { href: "/#sobre", label: t.nav.sobre },
-    { href: "/#servicos", label: t.nav.servicos },
-    { href: "/#categorias", label: t.nav.categorias },
-    { href: "/#contato", label: t.nav.contato },
-  ];
+  const isGestao = pathname?.startsWith("/gestao") ?? false;
 
-  const GESTAO_LINK = { href: "/gestao", label: t.nav.gestao };
+  const LINKS = isGestao
+    ? [
+        { href: "/gestao#cases-gestao", label: "Conteúdos" },
+        { href: "/gestao#parceiros-gestao", label: "Parceiros" },
+        { href: "/gestao#etapas-gestao", label: "Etapas" },
+        { href: "/gestao#duvidas-gestao", label: "Dúvidas" },
+        { href: "/gestao#gestao-contato", label: "Contato" },
+      ]
+    : [
+        { href: "/#sobre", label: t.nav.sobre },
+        { href: "/#servicos", label: t.nav.servicos },
+        { href: "/#categorias", label: t.nav.categorias },
+        { href: "/#contato", label: t.nav.contato },
+      ];
+
+  const GESTAO_LINK = isGestao
+    ? { href: "/", label: "Portfolio" }
+    : { href: "/gestao", label: t.nav.gestao };
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -103,7 +117,7 @@ export default function Nav() {
               </button>
             </div>
             <a
-              href="/#contato"
+              href={isGestao ? "/gestao#gestao-contato" : "/#contato"}
               data-track="nav_trabalhe_comigo"
               className="text-[11px] md:text-xs font-semibold bg-foreground text-background px-4 md:px-5 py-2 md:py-2.5 hover:bg-primary transition-colors whitespace-nowrap"
             >
@@ -175,7 +189,7 @@ export default function Nav() {
 
             <div className="px-6 pb-10 space-y-4">
               <a
-                href="#contato"
+                href={isGestao ? "/gestao#gestao-contato" : "/#contato"}
                 onClick={() => setOpen(false)}
                 data-track="mobile_trabalhe_comigo"
                 className="block w-full text-center bg-primary text-primary-light px-6 py-4 rounded-full font-semibold"
