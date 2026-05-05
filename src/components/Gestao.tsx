@@ -923,7 +923,7 @@ function CasesEVideos() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.4, delay: i * 0.05 }}
-                  className={`flex-shrink-0 snap-start w-[44%] sm:w-[30%] md:w-[22%] lg:w-[16%] aspect-[9/16] rounded-xl overflow-hidden ${
+                  className={`flex-shrink-0 snap-start w-[48%] sm:w-[32%] md:w-[24%] lg:w-[19%] aspect-[9/16] rounded-xl overflow-hidden ${
                     hasVideo ? "bg-black cursor-pointer group relative" : "bg-black/5 border-2 border-dashed border-black/15 flex items-center justify-center"
                   }`}
                 >
