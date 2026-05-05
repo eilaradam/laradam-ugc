@@ -1507,7 +1507,6 @@ export default function Gestao() {
       <Hero />
       <BrandsLogoBar />
       <CasesEVideos />
-      <OQueFaço />
       <Modalidades />
       <Processo />
       <QuemSou />
