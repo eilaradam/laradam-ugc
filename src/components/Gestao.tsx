@@ -403,81 +403,41 @@ function BrandsLogoBar() {
 }
 
 /* ============================== 5. O QUE FAÇO ============================== */
-function ProcessImage({
-  src,
-  emoji,
-  alt,
-}: {
-  src: string;
-  emoji: string;
-  alt: string;
-}) {
-  const [failed, setFailed] = useState(false);
-  if (failed) {
-    return (
-      <div className="text-7xl md:text-9xl select-none" aria-label={alt}>
-        {emoji}
-      </div>
-    );
-  }
-  return (
-    /* eslint-disable-next-line @next/next/no-img-element */
-    <img
-      src={src}
-      alt={alt}
-      onError={() => setFailed(true)}
-      className="w-32 h-32 md:w-48 md:h-48 object-cover rounded-2xl shadow-lg"
-    />
-  );
-}
-
 function OQueFaço() {
   const ITENS = [
     {
       titulo: "Seleção de creators",
       tagShort: "Seleção",
-      emoji: "🎯",
-      image: "/processo/01-selecao.png",
       texto:
         "Hunting com critério, não mensagem em massa. Perfil alinhado com sua persona, histórico de entrega, nicho compatível e disponibilidade real. Você recebe creators pré-aprovados.",
     },
     {
       titulo: "Briefing co-criado",
       tagShort: "Briefing",
-      emoji: "📋",
-      image: "/processo/02-briefing.png",
       texto:
         "Construído junto com você, traduzindo posicionamento de marca em direção criativa que o creator entende e executa. Briefing claro é metade do trabalho.",
     },
     {
       titulo: "Roteiros revisados",
       tagShort: "Roteiro",
-      emoji: "✍️",
-      image: "/processo/03-roteiro.png",
       texto:
         "Toda campanha minha tem roteiro revisado por mim antes do creator gravar. É onde mais campanha desanda no mercado, e onde mais cuido pra não desandar a sua.",
     },
     {
       titulo: "Produção acompanhada",
       tagShort: "Produção",
-      emoji: "🎬",
-      image: "/processo/04-producao.png",
       texto:
         "Acompanhamento direto com cada creator. Cobrança de prazo, ajuste de execução, suporte técnico. Você não vai ficar correndo atrás de ninguém.",
     },
     {
       titulo: "Revisão antes da entrega",
       tagShort: "Revisão",
-      emoji: "✓",
-      image: "/processo/05-revisao.png",
       texto:
         "Antes do material chegar em você, ele já passou por revisão. Você recebe entrega, não rascunho.",
     },
     {
       titulo: "Relatório e leitura",
       tagShort: "Relatório",
-      emoji: "📊",
-      image: "/processo/06-relatorio.png",
       texto:
         "Leitura clara do que performou, o que saturou e o que vamos testar no próximo ciclo. Decisão baseada em dado, não em achismo.",
     },
@@ -540,17 +500,10 @@ function OQueFaço() {
               transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
               className="grid md:grid-cols-12 gap-6 md:gap-10 items-center rounded-3xl bg-black text-white p-6 md:p-12 min-h-[280px]"
             >
-              {/* Foto da etapa (fallback pro emoji se foto não existir) */}
+              {/* Número gigante da etapa */}
               <div className="md:col-span-4 flex items-center justify-center">
-                <div className="relative">
-                  <ProcessImage
-                    src={current.image}
-                    emoji={current.emoji}
-                    alt={current.titulo}
-                  />
-                  <div className="absolute -top-3 -right-3 md:-top-4 md:-right-4 font-display font-black text-[var(--mm-orange)] text-3xl md:text-5xl tabular-nums z-10">
-                    {String(active + 1).padStart(2, "0")}
-                  </div>
+                <div className="font-display font-black text-[var(--mm-orange)] text-[7rem] md:text-[14rem] leading-none tabular-nums tracking-tighter select-none">
+                  {String(active + 1).padStart(2, "0")}
                 </div>
               </div>
 
