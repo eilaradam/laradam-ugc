@@ -203,6 +203,105 @@ export type Dict = {
     successBody: string;
     error: string;
   };
+  gestao: {
+    hero: {
+      tag: string;
+      titleLine1: string;
+      titleLine2: string;
+      subtitle: string;
+      body: string;
+      bodyBold: string;
+      cta: string;
+      ctaSub: string;
+      stats: { campanhas: string; marcas: string; creators: string };
+      bubble: string;
+    };
+    marquee: { item1: string; item2: string; item3: string };
+    cases: {
+      title1: string;
+      title2: string;
+      subtitle: string;
+      stats: { campanhas: string; creators: string; videos: string };
+      emBreve: string;
+    };
+    oQueFaco: {
+      title1: string;
+      title2: string;
+      body: string;
+      etapa: string;
+      de: string;
+      items: { titulo: string; tagShort: string; texto: string }[];
+    };
+    modalidades: {
+      title1: string;
+      title2: string;
+      maisEscolhido: string;
+      idealPara: string;
+      cards: {
+        name: string;
+        pitch: string;
+        bullets: string[];
+        ideal: string;
+        cta: string;
+      }[];
+    };
+    processo: {
+      title1: string;
+      title2: string;
+      body: string;
+      etapas: { n: string; title: string; body: string }[];
+    };
+    quemSou: {
+      eyebrow: string;
+      title: string;
+      titleAccent: string;
+      paragraphs: string[];
+      brandsHighlight: string;
+    };
+    faq: {
+      title1: string;
+      title2: string;
+      items: { q: string; a: string }[];
+    };
+    ctaFinal: {
+      title1: string;
+      title2: string;
+      paragraphs: string[];
+      cta: string;
+      ctaSub: string;
+    };
+    contactForm: {
+      tag: string;
+      title1: string;
+      title2: string;
+      subtitle: string;
+      successEmoji: string;
+      successTitle: string;
+      successBody: string;
+      labels: {
+        name: string;
+        email: string;
+        whatsapp: string;
+        company: string;
+        role: string;
+        site: string;
+        modality: string;
+        goal: string;
+        budget: string;
+        message: string;
+      };
+      placeholders: { whatsapp: string; message: string };
+      options: {
+        roles: string[];
+        modalities: string[];
+        goals: string[];
+        budgets: string[];
+      };
+      next: string;
+      back: string;
+      submit: string;
+    };
+  };
 };
 
 const dict: Record<Lang, Dict> = {
@@ -469,6 +568,228 @@ const dict: Record<Lang, Dict> = {
       successTitle: "Recebido!",
       successBody: "Vou te mandar novidades em breve.",
       error: "Algo deu errado, tenta de novo?",
+    },
+    gestao: {
+      hero: {
+        tag: "laradam.gestão",
+        titleLine1: "Gestão de",
+        titleLine2: "Campanhas UGC",
+        subtitle: "do briefing à entrega.",
+        body: "Cuidamos de todo o processo pra sua empresa: seleção dos creators certos, briefing alinhado com seu posicionamento, roteiro revisado, produção acompanhada e entrega no prazo.",
+        bodyBold: "Você roda mídia. Nós rodamos a operação.",
+        cta: "Quero conversar sobre minha campanha",
+        ctaSub: "Resposta em até 24h. Diagnóstico gratuito antes de qualquer proposta.",
+        stats: {
+          campanhas: "campanhas gerenciadas",
+          marcas: "marcas atendidas",
+          creators: "creators em rede",
+        },
+        bubble: "De creator pra creator",
+      },
+      marquee: {
+        item1: "Sem retrabalho",
+        item2: "Sem improviso",
+        item3: "Processo claro",
+      },
+      cases: {
+        title1: "Conteúdos gerenciados",
+        title2: "pelo nosso time.",
+        subtitle: "Conheça algumas creators que poderão criar para a sua marca.",
+        stats: {
+          campanhas: "campanhas gerenciadas",
+          creators: "creators em rede",
+          videos: "vídeos produzidos",
+        },
+        emBreve: "Em breve",
+      },
+      oQueFaco: {
+        title1: "Gestão completa.",
+        title2: "Sem montar time interno.",
+        body: "Eu opero a campanha de ponta a ponta. Você define o objetivo, eu entrego o que vai pro ar.",
+        etapa: "Etapa",
+        de: "de",
+        items: [
+          {
+            titulo: "Seleção de creators",
+            tagShort: "Seleção",
+            texto: "Hunting com critério, não mensagem em massa. Perfil alinhado com sua persona, histórico de entrega, nicho compatível e disponibilidade real. Você recebe creators pré-aprovados.",
+          },
+          {
+            titulo: "Briefing co-criado",
+            tagShort: "Briefing",
+            texto: "Construído junto com você, traduzindo posicionamento de marca em direção criativa que o creator entende e executa. Briefing claro é metade do trabalho.",
+          },
+          {
+            titulo: "Roteiros revisados",
+            tagShort: "Roteiro",
+            texto: "Toda campanha minha tem roteiro revisado por mim antes do creator gravar. É onde mais campanha desanda no mercado, e onde mais cuido pra não desandar a sua.",
+          },
+          {
+            titulo: "Produção acompanhada",
+            tagShort: "Produção",
+            texto: "Acompanhamento direto com cada creator. Cobrança de prazo, ajuste de execução, suporte técnico. Você não vai ficar correndo atrás de ninguém.",
+          },
+          {
+            titulo: "Revisão antes da entrega",
+            tagShort: "Revisão",
+            texto: "Antes do material chegar em você, ele já passou por revisão. Você recebe entrega, não rascunho.",
+          },
+          {
+            titulo: "Relatório e leitura",
+            tagShort: "Relatório",
+            texto: "Leitura clara do que performou, o que saturou e o que vamos testar no próximo ciclo. Decisão baseada em dado, não em achismo.",
+          },
+        ],
+      },
+      modalidades: {
+        title1: "Três formas de trabalhar.",
+        title2: "Você escolhe.",
+        maisEscolhido: "Mais escolhido",
+        idealPara: "Ideal pra",
+        cards: [
+          {
+            name: "Pacote Recorrente Mensal",
+            pitch: "Operação contínua pra quem já roda UGC com volume.",
+            bullets: [
+              "Volume mensal definido",
+              "Entrega recorrente, sempre com creators novos no banco",
+              "Briefing, roteiro, produção e revisão inclusos",
+              "Suporte direto durante o mês inteiro",
+            ],
+            ideal: "Marcas que já validaram UGC e querem escalar com previsibilidade.",
+            cta: "Quero conversar sobre meu plano mensal",
+          },
+          {
+            name: "Campanha Pontual",
+            pitch: "Campanha com começo, meio e fim, escopo fechado.",
+            bullets: [
+              "Lançamento, ativação sazonal ou teste pontual",
+              "Escopo fechado de creators e entregas",
+              "Briefing, roteiro, produção e revisão",
+              "Entrega em prazo definido",
+            ],
+            ideal: "Marcas que querem testar UGC com qualidade ou têm necessidade pontual em datas específicas.",
+            cta: "Quero conversar sobre minha campanha pontual",
+          },
+          {
+            name: "Consultoria Estratégica",
+            pitch: "Estrutura pro seu time aplicar, sem terceirizar a execução.",
+            bullets: [
+              "Diagnóstico do que já é feito hoje",
+              "Processos de gestão de UGC pro seu time",
+              "Briefing modelo + framework de seleção",
+              "Acompanhamento de implementação",
+            ],
+            ideal: "Marcas com operação interna que querem profissionalizar o que já fazem.",
+            cta: "Quero conversar sobre consultoria",
+          },
+        ],
+      },
+      processo: {
+        title1: "Cinco etapas.",
+        title2: "Sem mistério, sem milagre.",
+        body: "Esse é o processo que rodei em mais de 100 campanhas. Cada etapa existe porque, sem ela, alguma coisa quebra.",
+        etapas: [
+          {
+            n: "01",
+            title: "Diagnóstico",
+            body: "Antes de qualquer proposta, conversa de diagnóstico. Eu preciso entender seu produto, seu público, o que você já tentou e onde está hoje. Sem isso, qualquer proposta é chute.",
+          },
+          {
+            n: "02",
+            title: "Estratégia e seleção",
+            body: "Definimos juntos o objetivo da campanha, os ângulos que vamos testar e o perfil de creator ideal. A partir daí, eu seleciono os creators dentro do meu banco e te apresento já filtrados.",
+          },
+          {
+            n: "03",
+            title: "Briefing e roteiro",
+            body: "Briefing co-criado, roteiro revisado por mim antes da gravação. Cada creator recebe direção clara, não margem pra interpretação.",
+          },
+          {
+            n: "04",
+            title: "Produção e acompanhamento",
+            body: "Os creators gravam, eu acompanho. Quando chega ajuste, é antes de você ver. Quando chega entrega na sua mão, já passou por filtro.",
+          },
+          {
+            n: "05",
+            title: "Entrega e leitura",
+            body: "Material entregue dentro do prazo combinado. Ao final, leitura do que funcionou e plano pro próximo ciclo.",
+          },
+        ],
+      },
+      quemSou: {
+        eyebrow: "Eu sou",
+        title: "Lara",
+        titleAccent: "Dam.",
+        paragraphs: [
+          "Fui uma das primeiras pessoas no Brasil a falar publicamente sobre gestão de campanhas UGC. Não porque planejei. Porque já estava fazendo.",
+          "Antes de existir nome bonito pra isso, eu já organizava creator, escrevia briefing, revisava roteiro, cobrava prazo e entregava campanha que funcionava. Aprendi na prática, errando, ajustando e fazendo de novo. E foi assim que construí o método que rodo até hoje.",
+          "Em mais de 100 campanhas, com marcas como **OLX, ZAP Imóveis, Magalu, Porto Seguro, Chilli Beans** e muitas outras, uma coisa ficou clara: o que separa campanha boa de campanha que dá errado não é talento isolado de creator. É processo.",
+          "Eu não acredito em fórmula mágica. Acredito em fazer o básico bem feito.",
+        ],
+        brandsHighlight: "OLX, ZAP Imóveis, Magalu, Porto Seguro, Chilli Beans",
+      },
+      faq: {
+        title1: "Perguntas que",
+        title2: "recebo com frequência.",
+        items: [
+          { q: "O que é UGC e por que minha marca precisa disso?", a: "UGC é conteúdo produzido por pessoas reais, com cara de pessoa real. Funciona porque audiência confia em pessoa, não em propaganda. Se sua marca roda mídia paga, redes sociais ou quer presença digital constante, UGC é o formato que mais retém atenção e gera conversão hoje." },
+          { q: "Como vocês selecionam os creators?", a: "A partir de um banco com mais de 1.200 perfis ativos, filtramos por nicho, perfil de audiência, estilo de entrega e histórico. Você recebe creators pré-aprovados que fazem sentido pra sua marca, não uma lista genérica." },
+          { q: "Quanto tempo leva uma campanha do início à entrega?", a: "Depende do escopo, mas pra te dar uma referência: campanha pontual com 3 a 5 creators leva entre 3 e 5 semanas. Pacote mensal entrega volume contínuo a partir do primeiro mês." },
+          { q: "Vocês fazem só o vídeo ou cuidam da estratégia?", a: "Cuidamos da estratégia também. Pra mim, vídeo solto sem direção é onde a maioria das marcas perde dinheiro. Briefing, roteiro e ângulo criativo são parte do que entrego." },
+          { q: "Preciso enviar briefing pronto?", a: "Não. Briefing é construído junto com você. Eu pergunto o que precisa ser perguntado pra ter direção clara, e te entrego o briefing finalizado pra você aprovar antes de qualquer creator começar." },
+          { q: "Os vídeos são pra orgânico ou pra mídia paga?", a: "Os dois. Eu adapto o formato e o ângulo dependendo de onde você vai usar. Vídeo pra orgânico tem lógica diferente de vídeo pra ads, e isso entra no planejamento." },
+          { q: "E se uma entrega não vier do jeito que esperávamos?", a: "Antes de chegar em você, eu já revisei. Se ainda assim algo precisa ajustar, ajustamos sem custo adicional dentro do escopo combinado. Faz parte do processo." },
+          { q: "Vocês garantem resultado em vendas ou ROAS?", a: "Não garanto venda nem ROAS, e quem garante isso na primeira campanha está te enganando. O que garanto é entrega bem feita, conteúdo com lógica e processo claro. Resultado de venda depende da sua oferta, do seu funil e do seu produto. UGC bem feito é peça do quebra-cabeça, não o quebra-cabeça inteiro." },
+          { q: "Como funciona a cobrança?", a: "Pacote mensal: contrato com valor fixo mensal, definido conforme volume. Campanha pontual: orçamento fechado, pago em parcelas conforme escopo. Consultoria: valor definido após diagnóstico. Tudo formalizado em contrato. Sem surpresa." },
+          { q: "Como começo?", a: "Clica no botão abaixo, agendamos uma conversa de diagnóstico, e a partir dali eu monto proposta sob medida pra sua marca. Conversa não tem custo." },
+        ],
+      },
+      ctaFinal: {
+        title1: "Sua marca não precisa de mais um vídeo.",
+        title2: "Precisa de uma campanha que funcione.",
+        paragraphs: [
+          "Se você chegou até aqui, é porque alguma coisa do que eu falei bateu. Talvez seu time esteja sobrecarregado, talvez você já tenha rodado UGC e não funcionou, talvez você só queira começar do jeito certo.",
+          "De qualquer forma, o próximo passo é simples: a gente conversa, eu entendo seu momento, e a partir dali decidimos juntos se faz sentido trabalhar.",
+          "Sem proposta enlatada. Sem promessa que eu não posso cumprir. Conversa real pra entender se o que eu faço é o que sua marca precisa agora.",
+        ],
+        cta: "Quero conversar sobre minha campanha",
+        ctaSub: "Resposta em até 24h. Diagnóstico inicial sem custo.",
+      },
+      contactForm: {
+        tag: "#contato",
+        title1: "Vamos conversar sobre",
+        title2: "sua campanha?",
+        subtitle: "Diagnóstico gratuito antes de qualquer proposta. Resposta em até 24h.",
+        successEmoji: "🚀",
+        successTitle: "Recebido!",
+        successBody: "Entro em contato em até 24h.",
+        labels: {
+          name: "Nome completo",
+          email: "E-mail",
+          whatsapp: "Whatsapp",
+          company: "Empresa",
+          role: "Cargo",
+          site: "Site",
+          modality: "Modalidade de interesse",
+          goal: "Objetivo principal",
+          budget: "Orçamento estimado",
+          message: "Conta sobre o projeto",
+        },
+        placeholders: {
+          whatsapp: "(   )",
+          message: "Prazo, momento da marca, o que você já tentou...",
+        },
+        options: {
+          roles: ["Marketing", "Growth / Performance", "Founder / C-level", "Social Media", "Outro"],
+          modalities: ["Pacote mensal recorrente", "Campanha pontual", "Consultoria estratégica", "Não sei ainda — quero diagnóstico"],
+          goals: ["Conteúdo pra mídia paga", "Always-on no TikTok/Instagram", "Lançamento de campanha", "Presença digital da marca"],
+          budgets: ["Até R$ 5.000", "R$ 5.000 a R$ 15.000", "R$ 15.000 a R$ 50.000", "+R$ 50.000", "A definir"],
+        },
+        next: "Avançar",
+        back: "← Voltar",
+        submit: "Enviar",
+      },
     },
   },
   en: {
@@ -743,6 +1064,228 @@ const dict: Record<Lang, Dict> = {
       successTitle: "Got it!",
       successBody: "I'll be in touch soon.",
       error: "Something went wrong, try again?",
+    },
+    gestao: {
+      hero: {
+        tag: "laradam.management",
+        titleLine1: "UGC campaign",
+        titleLine2: "management",
+        subtitle: "from briefing to delivery.",
+        body: "We handle the full process for your company: selecting the right creators, briefing aligned with your positioning, scripts reviewed, production tracked, delivery on time.",
+        bodyBold: "You run media. We run the operation.",
+        cta: "Let's talk about my campaign",
+        ctaSub: "Reply within 24h. Free diagnosis before any proposal.",
+        stats: {
+          campanhas: "campaigns managed",
+          marcas: "brands served",
+          creators: "creators in network",
+        },
+        bubble: "Creator to creator",
+      },
+      marquee: {
+        item1: "No rework",
+        item2: "No improv",
+        item3: "Clear process",
+      },
+      cases: {
+        title1: "Content managed",
+        title2: "by our team.",
+        subtitle: "Meet some of the creators who could make content for your brand.",
+        stats: {
+          campanhas: "campaigns managed",
+          creators: "creators in network",
+          videos: "videos produced",
+        },
+        emBreve: "Coming soon",
+      },
+      oQueFaco: {
+        title1: "End-to-end management.",
+        title2: "Without building an in-house team.",
+        body: "I run the campaign from start to finish. You set the goal, I deliver what goes live.",
+        etapa: "Step",
+        de: "of",
+        items: [
+          {
+            titulo: "Creator selection",
+            tagShort: "Selection",
+            texto: "Hunting with criteria, not mass messaging. Profile aligned with your persona, delivery track record, niche fit and real availability. You get pre-approved creators.",
+          },
+          {
+            titulo: "Co-built briefing",
+            tagShort: "Briefing",
+            texto: "Built with you, translating brand positioning into creative direction the creator understands and executes. A clear briefing is half the work.",
+          },
+          {
+            titulo: "Reviewed scripts",
+            tagShort: "Script",
+            texto: "Every campaign I run has the script reviewed by me before the creator records. It's where most campaigns derail in the market, and where I focus the most so yours doesn't.",
+          },
+          {
+            titulo: "Tracked production",
+            tagShort: "Production",
+            texto: "Direct follow-up with each creator. Deadline tracking, execution adjustments, technical support. You won't be chasing anyone.",
+          },
+          {
+            titulo: "Pre-delivery review",
+            tagShort: "Review",
+            texto: "Before the material reaches you, it's already been reviewed. You get a delivery, not a draft.",
+          },
+          {
+            titulo: "Reporting and analysis",
+            tagShort: "Report",
+            texto: "Clear read on what performed, what saturated, and what we'll test in the next cycle. Decisions based on data, not guesses.",
+          },
+        ],
+      },
+      modalidades: {
+        title1: "Three ways to work together.",
+        title2: "You choose.",
+        maisEscolhido: "Most chosen",
+        idealPara: "Ideal for",
+        cards: [
+          {
+            name: "Monthly Recurring Package",
+            pitch: "Continuous operation for those already running UGC at volume.",
+            bullets: [
+              "Defined monthly volume",
+              "Recurring delivery, always with new creators from the database",
+              "Briefing, script, production and review included",
+              "Direct support throughout the month",
+            ],
+            ideal: "Brands that have validated UGC and want to scale predictably.",
+            cta: "Let's talk about my monthly plan",
+          },
+          {
+            name: "One-off Campaign",
+            pitch: "Campaign with start, middle and end, fixed scope.",
+            bullets: [
+              "Launch, seasonal activation or specific test",
+              "Closed scope of creators and deliverables",
+              "Briefing, script, production and review",
+              "Delivery in defined timeframe",
+            ],
+            ideal: "Brands that want to test UGC with quality or have specific needs on key dates.",
+            cta: "Let's talk about my one-off campaign",
+          },
+          {
+            name: "Strategic Consulting",
+            pitch: "Structure for your team to apply, without outsourcing execution.",
+            bullets: [
+              "Diagnosis of what's done today",
+              "UGC management processes for your team",
+              "Briefing template + selection framework",
+              "Implementation follow-up",
+            ],
+            ideal: "Brands with internal operations that want to professionalize what they already do.",
+            cta: "Let's talk about consulting",
+          },
+        ],
+      },
+      processo: {
+        title1: "Five steps.",
+        title2: "No mystery, no miracle.",
+        body: "This is the process I've run in over 100 campaigns. Each step exists because, without it, something breaks.",
+        etapas: [
+          {
+            n: "01",
+            title: "Diagnosis",
+            body: "Before any proposal, a diagnosis call. I need to understand your product, your audience, what you've already tried and where you are today. Without that, any proposal is a guess.",
+          },
+          {
+            n: "02",
+            title: "Strategy and selection",
+            body: "Together we define the campaign goal, the angles to test and the ideal creator profile. From there, I select creators from my database and present them already filtered.",
+          },
+          {
+            n: "03",
+            title: "Briefing and script",
+            body: "Co-built briefing, script reviewed by me before recording. Each creator gets clear direction, no margin for interpretation.",
+          },
+          {
+            n: "04",
+            title: "Production and follow-up",
+            body: "Creators record, I follow up. When adjustments are needed, it happens before you see it. When the delivery reaches you, it's already been filtered.",
+          },
+          {
+            n: "05",
+            title: "Delivery and analysis",
+            body: "Material delivered within the agreed timeline. At the end, a read on what worked and a plan for the next cycle.",
+          },
+        ],
+      },
+      quemSou: {
+        eyebrow: "I am",
+        title: "Lara",
+        titleAccent: "Dam.",
+        paragraphs: [
+          "I was one of the first people in Brazil to publicly talk about UGC campaign management. Not because I planned it. Because I was already doing it.",
+          "Before there was a fancy name for it, I was already organizing creators, writing briefings, reviewing scripts, chasing deadlines and delivering campaigns that worked. I learned in practice, by failing, adjusting and doing it again. That's how I built the method I run today.",
+          "In over 100 campaigns, with brands like **OLX, ZAP Imóveis, Magalu, Porto Seguro, Chilli Beans** and many others, one thing became clear: what separates a good campaign from one that flops isn't isolated creator talent. It's process.",
+          "I don't believe in magic formulas. I believe in doing the basics well.",
+        ],
+        brandsHighlight: "OLX, ZAP Imóveis, Magalu, Porto Seguro, Chilli Beans",
+      },
+      faq: {
+        title1: "Questions I get",
+        title2: "all the time.",
+        items: [
+          { q: "What is UGC and why does my brand need it?", a: "UGC is content produced by real people, looking like real people. It works because audiences trust people, not advertising. If your brand runs paid media, social or wants consistent digital presence, UGC is the format that grabs attention and converts most today." },
+          { q: "How do you select the creators?", a: "From a database with over 1,200 active profiles, we filter by niche, audience profile, delivery style and history. You get pre-approved creators that fit your brand, not a generic list." },
+          { q: "How long does a campaign take from start to delivery?", a: "Depends on scope, but as a reference: a one-off campaign with 3 to 5 creators takes 3 to 5 weeks. Monthly package delivers continuous volume from the first month." },
+          { q: "Do you only do the video or also handle strategy?", a: "We handle strategy too. To me, a video without direction is where most brands lose money. Briefing, script and creative angle are part of what I deliver." },
+          { q: "Do I need to provide a complete briefing?", a: "No. Briefing is built together with you. I ask what needs to be asked to get clear direction, and deliver the finalized briefing for you to approve before any creator starts." },
+          { q: "Are videos for organic or paid media?", a: "Both. I adapt format and angle depending on where you'll use it. Organic video has a different logic than ad video, and that's part of the planning." },
+          { q: "What if a delivery doesn't come out as expected?", a: "Before reaching you, I've already reviewed it. If something still needs adjusting, we adjust at no additional cost within the agreed scope. It's part of the process." },
+          { q: "Do you guarantee sales or ROAS results?", a: "I don't guarantee sales or ROAS, and anyone guaranteeing that on the first campaign is misleading you. What I guarantee is well-done delivery, content with logic and clear process. Sales results depend on your offer, funnel and product. Well-done UGC is part of the puzzle, not the whole puzzle." },
+          { q: "How does billing work?", a: "Monthly package: contract with a fixed monthly value, defined by volume. One-off campaign: closed budget, paid in installments based on scope. Consulting: value defined after diagnosis. Everything formalized in contract. No surprises." },
+          { q: "How do I get started?", a: "Click the button below, we schedule a diagnosis call, and from there I build a tailored proposal for your brand. The conversation is free." },
+        ],
+      },
+      ctaFinal: {
+        title1: "Your brand doesn't need another video.",
+        title2: "It needs a campaign that works.",
+        paragraphs: [
+          "If you've made it this far, something I said resonated. Maybe your team is overloaded, maybe you've already run UGC and it didn't work, maybe you just want to start the right way.",
+          "Either way, the next step is simple: we talk, I understand your moment, and from there we decide together if it makes sense to work together.",
+          "No canned proposal. No promise I can't keep. A real conversation to figure out if what I do is what your brand needs right now.",
+        ],
+        cta: "Let's talk about my campaign",
+        ctaSub: "Reply within 24h. Initial diagnosis at no cost.",
+      },
+      contactForm: {
+        tag: "#contact",
+        title1: "Let's talk about",
+        title2: "your campaign?",
+        subtitle: "Free diagnosis before any proposal. Reply within 24h.",
+        successEmoji: "🚀",
+        successTitle: "Got it!",
+        successBody: "I'll be in touch within 24h.",
+        labels: {
+          name: "Full name",
+          email: "Email",
+          whatsapp: "WhatsApp",
+          company: "Company",
+          role: "Role",
+          site: "Website",
+          modality: "Interested in",
+          goal: "Main goal",
+          budget: "Estimated budget",
+          message: "Tell me about the project",
+        },
+        placeholders: {
+          whatsapp: "(   )",
+          message: "Timeline, brand moment, what you've already tried...",
+        },
+        options: {
+          roles: ["Marketing", "Growth / Performance", "Founder / C-level", "Social Media", "Other"],
+          modalities: ["Monthly recurring package", "One-off campaign", "Strategic consulting", "Not sure yet — want diagnosis"],
+          goals: ["Content for paid media", "Always-on on TikTok/Instagram", "Campaign launch", "Brand digital presence"],
+          budgets: ["Up to $1,000", "$1,000 to $3,000", "$3,000 to $10,000", "+$10,000", "TBD"],
+        },
+        next: "Next",
+        back: "← Back",
+        submit: "Send",
+      },
     },
   },
 };

@@ -11,6 +11,7 @@ import {
   Rocket,
 } from "lucide-react";
 import { BRAND_LOGO_FILES } from "@/data/content";
+import { useT } from "@/lib/i18n";
 import { useVideoModal } from "./VideoModalProvider";
 
 /* ==========================================================================
@@ -119,6 +120,7 @@ function MMPill({ children }: { children: React.ReactNode }) {
 
 /* =============================== 1. HERO =============================== */
 function Hero() {
+  const t = useT();
   return (
     <section className="relative overflow-hidden bg-[#FAF8F4] text-black pt-24 md:pt-28 pb-0">
       {/* Grid quadriculado fininho */}
@@ -153,7 +155,7 @@ function Hero() {
           >
             <div className="w-2 h-2 rounded-full bg-[var(--mm-orange)] animate-pulse" />
             <span className="font-display font-black text-black text-xs md:text-sm tracking-widest uppercase">
-              laradam<span className="text-[var(--mm-orange)]">.</span>gestão
+              {t.gestao.hero.tag.split(".")[0]}<span className="text-[var(--mm-orange)]">.</span>{t.gestao.hero.tag.split(".")[1]}
             </span>
           </motion.div>
 
@@ -164,8 +166,8 @@ function Hero() {
             transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
             className="font-display font-black text-black text-3xl md:text-5xl lg:text-6xl leading-[0.95] tracking-tighter uppercase"
           >
-            <span className="block text-[1.2em]">Gestão de</span>
-            <span className="block">Campanhas UGC</span>
+            <span className="block text-[1.2em]">{t.gestao.hero.titleLine1}</span>
+            <span className="block">{t.gestao.hero.titleLine2}</span>
           </motion.h1>
 
           {/* Linha complementar abaixo do título */}
@@ -175,7 +177,7 @@ function Hero() {
             transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
             className="mt-2 md:mt-3 font-display font-bold text-[var(--mm-orange)] text-base md:text-lg lg:text-xl tracking-tight"
           >
-            do briefing à entrega.
+            {t.gestao.hero.subtitle}
           </motion.div>
 
           {/* Subheadline */}
@@ -185,11 +187,9 @@ function Hero() {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="mt-4 text-sm md:text-base max-w-xl leading-relaxed text-black/75"
           >
-            Cuidamos de todo o processo pra sua empresa: seleção dos creators
-            certos, briefing alinhado com seu posicionamento, roteiro
-            revisado, produção acompanhada e entrega no prazo.{" "}
+            {t.gestao.hero.body}{" "}
             <span className="text-black font-semibold">
-              Você roda mídia. Nós rodamos a operação.
+              {t.gestao.hero.bodyBold}
             </span>
           </motion.p>
 
@@ -204,12 +204,11 @@ function Hero() {
               href="#gestao-contato"
               className="inline-flex items-center gap-2 bg-[var(--mm-orange)] text-white px-5 py-2.5 rounded-full text-xs md:text-sm font-bold uppercase tracking-wider hover:bg-[var(--mm-orange-deep)] transition-colors shadow-xl"
             >
-              Quero conversar sobre minha campanha
+              {t.gestao.hero.cta}
               <ArrowRight className="w-3.5 h-3.5" />
             </a>
             <p className="mt-2 text-[11px] md:text-xs text-black/55">
-              Resposta em até 24h. Diagnóstico gratuito antes de qualquer
-              proposta.
+              {t.gestao.hero.ctaSub}
             </p>
           </motion.div>
 
@@ -220,11 +219,11 @@ function Hero() {
             transition={{ duration: 0.8, delay: 0.85 }}
             className="mt-6 flex flex-nowrap items-center gap-x-3 text-black/70 border-t border-black/10 pt-3 overflow-x-auto whitespace-nowrap"
           >
-            <Stat value="+100" label="campanhas gerenciadas" small />
+            <Stat value="+100" label={t.gestao.hero.stats.campanhas} small />
             <span className="text-black/20">|</span>
-            <Stat value="+200" label="marcas atendidas" small />
+            <Stat value="+200" label={t.gestao.hero.stats.marcas} small />
             <span className="text-black/20">|</span>
-            <Stat value="+1.200" label="creators em rede" small />
+            <Stat value="+1.200" label={t.gestao.hero.stats.creators} small />
           </motion.div>
         </div>
 
@@ -283,7 +282,7 @@ function Hero() {
               transition={{ duration: 0.8, delay: 1.3 }}
               className="absolute bottom-6 -right-2 md:-right-8 pointer-events-none"
             >
-              <MMPill>De creator pra creator</MMPill>
+              <MMPill>{t.gestao.hero.bubble}</MMPill>
             </motion.div>
           </div>
         </motion.div>
@@ -297,11 +296,11 @@ function Hero() {
               key={i}
               className="flex items-center gap-3 md:gap-5 text-xs md:text-sm uppercase tracking-[0.25em] font-bold text-white whitespace-nowrap"
             >
-              <span>Sem retrabalho</span>
+              <span>{t.gestao.marquee.item1}</span>
               <span className="text-white/70">✦</span>
-              <span>Sem improviso</span>
+              <span>{t.gestao.marquee.item2}</span>
               <span className="text-white/70">✦</span>
-              <span>Processo claro</span>
+              <span>{t.gestao.marquee.item3}</span>
               <span className="text-white/70">✦</span>
             </div>
           ))}
@@ -415,45 +414,8 @@ function BrandsLogoBar() {
 
 /* ============================== 5. O QUE FAÇO ============================== */
 function OQueFaço() {
-  const ITENS = [
-    {
-      titulo: "Seleção de creators",
-      tagShort: "Seleção",
-      texto:
-        "Hunting com critério, não mensagem em massa. Perfil alinhado com sua persona, histórico de entrega, nicho compatível e disponibilidade real. Você recebe creators pré-aprovados.",
-    },
-    {
-      titulo: "Briefing co-criado",
-      tagShort: "Briefing",
-      texto:
-        "Construído junto com você, traduzindo posicionamento de marca em direção criativa que o creator entende e executa. Briefing claro é metade do trabalho.",
-    },
-    {
-      titulo: "Roteiros revisados",
-      tagShort: "Roteiro",
-      texto:
-        "Toda campanha minha tem roteiro revisado por mim antes do creator gravar. É onde mais campanha desanda no mercado, e onde mais cuido pra não desandar a sua.",
-    },
-    {
-      titulo: "Produção acompanhada",
-      tagShort: "Produção",
-      texto:
-        "Acompanhamento direto com cada creator. Cobrança de prazo, ajuste de execução, suporte técnico. Você não vai ficar correndo atrás de ninguém.",
-    },
-    {
-      titulo: "Revisão antes da entrega",
-      tagShort: "Revisão",
-      texto:
-        "Antes do material chegar em você, ele já passou por revisão. Você recebe entrega, não rascunho.",
-    },
-    {
-      titulo: "Relatório e leitura",
-      tagShort: "Relatório",
-      texto:
-        "Leitura clara do que performou, o que saturou e o que vamos testar no próximo ciclo. Decisão baseada em dado, não em achismo.",
-    },
-  ];
-
+  const t = useT();
+  const ITENS = t.gestao.oQueFaco.items;
   const [active, setActive] = useState(0);
   const current = ITENS[active];
 
@@ -465,14 +427,13 @@ function OQueFaço() {
       <div className="max-w-6xl mx-auto px-6 md:px-12">
         <div className="text-center max-w-3xl mx-auto">
           <h2 className="font-display font-black text-2xl md:text-4xl leading-[0.95] tracking-tighter text-black uppercase">
-            Gestão completa.{" "}
+            {t.gestao.oQueFaco.title1}{" "}
             <span className="text-[var(--mm-orange)]">
-              Sem montar time interno.
+              {t.gestao.oQueFaco.title2}
             </span>
           </h2>
           <p className="mt-4 text-base md:text-lg text-black/75 leading-relaxed">
-            Eu opero a campanha de ponta a ponta. Você define o objetivo, eu
-            entrego o que vai pro ar.
+            {t.gestao.oQueFaco.body}
           </p>
         </div>
 
@@ -521,7 +482,7 @@ function OQueFaço() {
               {/* Texto */}
               <div className="md:col-span-8">
                 <div className="text-xs md:text-sm uppercase tracking-[0.3em] text-[var(--mm-orange)] font-bold mb-3">
-                  Etapa {String(active + 1).padStart(2, "0")} de{" "}
+                  {t.gestao.oQueFaco.etapa} {String(active + 1).padStart(2, "0")} {t.gestao.oQueFaco.de}{" "}
                   {String(ITENS.length).padStart(2, "0")}
                 </div>
                 <h3 className="font-display font-black text-2xl md:text-4xl tracking-tight uppercase mb-4 leading-tight">
@@ -567,62 +528,19 @@ function OQueFaço() {
 
 /* ============================ 6. MODALIDADES ============================ */
 function Modalidades() {
-  type Card = {
-    name: string;
-    pitch: string;
-    bullets: string[];
-    ideal: string;
-    cta: string;
-    emphasis?: boolean;
-  };
-  const CARDS: Card[] = [
-    {
-      name: "Pacote Recorrente Mensal",
-      pitch: "Operação contínua pra quem já roda UGC com volume.",
-      bullets: [
-        "Volume mensal definido",
-        "Entrega recorrente, sempre com creators novos no banco",
-        "Briefing, roteiro, produção e revisão inclusos",
-        "Suporte direto durante o mês inteiro",
-      ],
-      ideal: "Marcas que já validaram UGC e querem escalar com previsibilidade.",
-      cta: "Quero conversar sobre meu plano mensal",
-      emphasis: true,
-    },
-    {
-      name: "Campanha Pontual",
-      pitch: "Campanha com começo, meio e fim — escopo fechado.",
-      bullets: [
-        "Lançamento, ativação sazonal ou teste pontual",
-        "Escopo fechado de creators e entregas",
-        "Briefing, roteiro, produção e revisão",
-        "Entrega em prazo definido",
-      ],
-      ideal:
-        "Marcas que querem testar UGC com qualidade ou têm necessidade pontual em datas específicas.",
-      cta: "Quero conversar sobre minha campanha pontual",
-    },
-    {
-      name: "Consultoria Estratégica",
-      pitch: "Estrutura pro seu time aplicar — sem terceirizar a execução.",
-      bullets: [
-        "Diagnóstico do que já é feito hoje",
-        "Processos de gestão de UGC pro seu time",
-        "Briefing modelo + framework de seleção",
-        "Acompanhamento de implementação",
-      ],
-      ideal:
-        "Marcas com operação interna que querem profissionalizar o que já fazem.",
-      cta: "Quero conversar sobre consultoria",
-    },
-  ];
+  const t = useT();
+  // Primeiro card é o destaque (emphasis: true)
+  const CARDS = t.gestao.modalidades.cards.map((c, i) => ({
+    ...c,
+    emphasis: i === 0,
+  }));
 
   return (
     <section className="bg-white py-14 md:py-20 border-t border-black/10">
       <div className="max-w-6xl mx-auto px-6 md:px-12">
         <h2 className="font-display font-black text-2xl md:text-4xl leading-[0.95] tracking-tighter text-black uppercase max-w-3xl">
-          Três formas de trabalhar.{" "}
-          <span className="text-[var(--mm-orange)]">Você escolhe.</span>
+          {t.gestao.modalidades.title1}{" "}
+          <span className="text-[var(--mm-orange)]">{t.gestao.modalidades.title2}</span>
         </h2>
 
         <div className="mt-10 md:mt-14 grid md:grid-cols-3 gap-4 md:gap-5">
@@ -642,7 +560,7 @@ function Modalidades() {
               <div>
                 {c.emphasis && (
                   <div className="inline-flex items-center gap-1 text-[10px] md:text-xs font-bold uppercase tracking-wider bg-[var(--mm-orange)] text-white px-2.5 py-1 rounded-full mb-3">
-                    Mais escolhido
+                    {t.gestao.modalidades.maisEscolhido}
                   </div>
                 )}
                 <h3 className="font-display font-black text-xl md:text-2xl tracking-tight uppercase mb-2">
@@ -685,7 +603,7 @@ function Modalidades() {
                     c.emphasis ? "text-white/60" : "text-black/60"
                   }`}
                 >
-                  Ideal pra
+                  {t.gestao.modalidades.idealPara}
                 </div>
                 <p
                   className={`text-sm leading-relaxed ${
@@ -717,38 +635,8 @@ function Modalidades() {
 
 /* ============================== 7. PROCESSO ============================== */
 function Processo() {
-  const ETAPAS = [
-    {
-      n: "01",
-      title: "Diagnóstico",
-      body:
-        "Antes de qualquer proposta, conversa de diagnóstico. Eu preciso entender seu produto, seu público, o que você já tentou e onde está hoje. Sem isso, qualquer proposta é chute.",
-    },
-    {
-      n: "02",
-      title: "Estratégia e seleção",
-      body:
-        "Definimos juntos o objetivo da campanha, os ângulos que vamos testar e o perfil de creator ideal. A partir daí, eu seleciono os creators dentro do meu banco e te apresento já filtrados.",
-    },
-    {
-      n: "03",
-      title: "Briefing e roteiro",
-      body:
-        "Briefing co-criado, roteiro revisado por mim antes da gravação. Cada creator recebe direção clara, não margem pra interpretação.",
-    },
-    {
-      n: "04",
-      title: "Produção e acompanhamento",
-      body:
-        "Os creators gravam, eu acompanho. Quando chega ajuste, é antes de você ver. Quando chega entrega na sua mão, já passou por filtro.",
-    },
-    {
-      n: "05",
-      title: "Entrega e leitura",
-      body:
-        "Material entregue dentro do prazo combinado. Ao final, leitura do que funcionou e plano pro próximo ciclo.",
-    },
-  ];
+  const t = useT();
+  const ETAPAS = t.gestao.processo.etapas;
 
   return (
     <section id="etapas-gestao" className="relative bg-white text-black py-14 md:py-20 overflow-hidden border-t border-black/10 scroll-mt-24">
@@ -762,12 +650,11 @@ function Processo() {
 
       <div className="relative max-w-4xl mx-auto px-6 md:px-12">
         <h2 className="font-display font-black text-2xl md:text-4xl leading-[0.95] tracking-tighter uppercase text-black">
-          Cinco etapas.{" "}
-          <span className="text-[var(--mm-orange)]">Sem mistério, sem milagre.</span>
+          {t.gestao.processo.title1}{" "}
+          <span className="text-[var(--mm-orange)]">{t.gestao.processo.title2}</span>
         </h2>
         <p className="mt-4 text-base md:text-lg text-black/75 max-w-2xl leading-relaxed">
-          Esse é o processo que rodei em mais de 100 campanhas. Cada etapa
-          existe porque, sem ela, alguma coisa quebra.
+          {t.gestao.processo.body}
         </p>
 
         <div className="mt-10 md:mt-14 relative">
@@ -831,6 +718,7 @@ const GESTAO_VIDEOS: { youtubeId: string; brand: string }[] = [
 ];
 
 function CasesEVideos() {
+  const t = useT();
   const { open } = useVideoModal();
   const scrollerRef = useRef<HTMLDivElement>(null);
   const [canPrev, setCanPrev] = useState(false);
@@ -868,11 +756,11 @@ function CasesEVideos() {
     >
       <div className="max-w-6xl mx-auto px-6 md:px-12">
         <h2 className="font-display font-black text-2xl md:text-4xl leading-[0.95] tracking-tighter text-black uppercase">
-          Conteúdos gerenciados{" "}
-          <span className="text-[var(--mm-orange)]">pelo nosso time.</span>
+          {t.gestao.cases.title1}{" "}
+          <span className="text-[var(--mm-orange)]">{t.gestao.cases.title2}</span>
         </h2>
         <p className="mt-4 text-base md:text-lg text-black/75 max-w-2xl leading-relaxed">
-          Conheça algumas creators que poderão criar para a sua marca.
+          {t.gestao.cases.subtitle}
         </p>
 
         {/* Carrossel com setas */}
@@ -970,7 +858,7 @@ function CasesEVideos() {
                   ) : (
                     <div className="text-center px-3">
                       <div className="text-[10px] md:text-xs uppercase tracking-wider text-black/40 font-semibold">
-                        Em breve
+                        {t.gestao.cases.emBreve}
                       </div>
                     </div>
                   )}
@@ -983,9 +871,9 @@ function CasesEVideos() {
         {/* Métricas — info complementar, centralizada e discreta */}
         <div className="mt-8 md:mt-12 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 border-t border-black/10 pt-6 md:pt-8 text-black/70">
           {[
-            { v: "+100", l: "campanhas gerenciadas" },
-            { v: "+1.200", l: "creators em rede" },
-            { v: "+1.000", l: "vídeos produzidos" },
+            { v: "+100", l: t.gestao.cases.stats.campanhas },
+            { v: "+1.200", l: t.gestao.cases.stats.creators },
+            { v: "+1.000", l: t.gestao.cases.stats.videos },
           ].map((m, i, arr) => (
             <div key={m.l} className="flex items-center gap-3">
               <div className="flex items-baseline gap-1.5">
@@ -1007,46 +895,37 @@ function CasesEVideos() {
 
 /* ============================== 9. QUEM SOU ============================== */
 function QuemSou() {
+  const t = useT();
+  // Renderiza **trecho** como <b>
+  const renderBold = (text: string) =>
+    text.split(/(\*\*[^*]+\*\*)/g).map((part, i) =>
+      part.startsWith("**") && part.endsWith("**") ? (
+        <b key={i} className="text-black">{part.slice(2, -2)}</b>
+      ) : (
+        <span key={i}>{part}</span>
+      )
+    );
+
   return (
     <section className="bg-white text-black py-14 md:py-20 overflow-hidden border-t border-black/10">
       <div className="max-w-6xl mx-auto px-6 md:px-12 grid md:grid-cols-12 gap-8 md:gap-12 items-center">
         <div className="md:col-span-7">
           <div className="text-xs md:text-sm uppercase tracking-[0.3em] text-[var(--mm-orange)] font-bold mb-4">
-            Eu sou
+            {t.gestao.quemSou.eyebrow}
           </div>
           <h2 className="font-display font-black text-3xl md:text-5xl leading-[0.95] tracking-tighter uppercase text-black">
-            Lara{" "}
+            {t.gestao.quemSou.title}{" "}
             <span className="font-serif-accent italic text-[var(--mm-orange)] normal-case">
-              Dam.
+              {t.gestao.quemSou.titleAccent}
             </span>
           </h2>
 
           <div className="mt-8 space-y-5 text-base md:text-lg text-black/80 leading-relaxed">
-            <p>
-              Fui uma das primeiras pessoas no Brasil a falar publicamente
-              sobre gestão de campanhas UGC. Não porque planejei. Porque já
-              estava fazendo.
-            </p>
-            <p>
-              Antes de existir nome bonito pra isso, eu já organizava creator,
-              escrevia briefing, revisava roteiro, cobrava prazo e entregava
-              campanha que funcionava. Aprendi na prática, errando, ajustando
-              e fazendo de novo. E foi assim que construí o método que rodo
-              até hoje.
-            </p>
-            <p>
-              Em mais de 100 campanhas, com marcas como{" "}
-              <b className="text-black">
-                OLX, ZAP Imóveis, Magalu, Porto Seguro, Chilli Beans
-              </b>{" "}
-              e muitas outras, uma coisa ficou clara: o que separa campanha
-              boa de campanha que dá errado não é talento isolado de creator.
-              É processo.
-            </p>
-            <p className="font-semibold text-black">
-              Eu não acredito em fórmula mágica. Acredito em fazer o básico
-              bem feito.
-            </p>
+            {t.gestao.quemSou.paragraphs.map((p, i) => (
+              <p key={i} className={i === t.gestao.quemSou.paragraphs.length - 1 ? "font-semibold text-black" : ""}>
+                {renderBold(p)}
+              </p>
+            ))}
           </div>
         </div>
 
@@ -1087,48 +966,8 @@ function QuemSou() {
 
 /* ================================ 10. FAQ ================================ */
 function FAQ() {
-  const ITEMS = [
-    {
-      q: "O que é UGC e por que minha marca precisa disso?",
-      a: "UGC é conteúdo produzido por pessoas reais, com cara de pessoa real. Funciona porque audiência confia em pessoa, não em propaganda. Se sua marca roda mídia paga, redes sociais ou quer presença digital constante, UGC é o formato que mais retém atenção e gera conversão hoje.",
-    },
-    {
-      q: "Como vocês selecionam os creators?",
-      a: "A partir de um banco com mais de 1.200 perfis ativos, filtramos por nicho, perfil de audiência, estilo de entrega e histórico. Você recebe creators pré-aprovados que fazem sentido pra sua marca, não uma lista genérica.",
-    },
-    {
-      q: "Quanto tempo leva uma campanha do início à entrega?",
-      a: "Depende do escopo, mas pra te dar uma referência: campanha pontual com 3 a 5 creators leva entre 3 e 5 semanas. Pacote mensal entrega volume contínuo a partir do primeiro mês.",
-    },
-    {
-      q: "Vocês fazem só o vídeo ou cuidam da estratégia?",
-      a: "Cuidamos da estratégia também. Pra mim, vídeo solto sem direção é onde a maioria das marcas perde dinheiro. Briefing, roteiro e ângulo criativo são parte do que entrego.",
-    },
-    {
-      q: "Preciso enviar briefing pronto?",
-      a: "Não. Briefing é construído junto com você. Eu pergunto o que precisa ser perguntado pra ter direção clara, e te entrego o briefing finalizado pra você aprovar antes de qualquer creator começar.",
-    },
-    {
-      q: "Os vídeos são pra orgânico ou pra mídia paga?",
-      a: "Os dois. Eu adapto o formato e o ângulo dependendo de onde você vai usar. Vídeo pra orgânico tem lógica diferente de vídeo pra ads, e isso entra no planejamento.",
-    },
-    {
-      q: "E se uma entrega não vier do jeito que esperávamos?",
-      a: "Antes de chegar em você, eu já revisei. Se ainda assim algo precisa ajustar, ajustamos sem custo adicional dentro do escopo combinado. Faz parte do processo.",
-    },
-    {
-      q: "Vocês garantem resultado em vendas ou ROAS?",
-      a: "Não garanto venda nem ROAS, e quem garante isso na primeira campanha está te enganando. O que garanto é entrega bem feita, conteúdo com lógica e processo claro. Resultado de venda depende da sua oferta, do seu funil e do seu produto. UGC bem feito é peça do quebra-cabeça, não o quebra-cabeça inteiro.",
-    },
-    {
-      q: "Como funciona a cobrança?",
-      a: "Pacote mensal: contrato com valor fixo mensal, definido conforme volume. Campanha pontual: orçamento fechado, pago em parcelas conforme escopo. Consultoria: valor definido após diagnóstico. Tudo formalizado em contrato. Sem surpresa.",
-    },
-    {
-      q: "Como começo?",
-      a: "Clica no botão abaixo, agendamos uma conversa de diagnóstico, e a partir dali eu monto proposta sob medida pra sua marca. Conversa não tem custo.",
-    },
-  ];
+  const t = useT();
+  const ITEMS = t.gestao.faq.items;
 
   const [openIdx, setOpenIdx] = useState(0);
 
@@ -1136,8 +975,8 @@ function FAQ() {
     <section id="duvidas-gestao" className="bg-white py-14 md:py-20 scroll-mt-24">
       <div className="max-w-3xl mx-auto px-6 md:px-12">
         <h2 className="font-display font-black text-2xl md:text-4xl leading-[0.95] tracking-tighter text-black uppercase mb-10 md:mb-12">
-          Perguntas que{" "}
-          <span className="text-[var(--mm-orange)]">recebo com frequência.</span>
+          {t.gestao.faq.title1}{" "}
+          <span className="text-[var(--mm-orange)]">{t.gestao.faq.title2}</span>
         </h2>
 
         <div className="space-y-3">
@@ -1187,44 +1026,34 @@ function FAQ() {
 
 /* ============================== 11. CTA FINAL ============================== */
 function CTAFinal() {
+  const t = useT();
   return (
     <section className="bg-white text-black py-16 md:py-24 overflow-hidden border-t border-black/10">
       <div className="max-w-3xl mx-auto px-6 md:px-12 text-center">
         <h2 className="font-display font-black text-2xl md:text-4xl leading-[0.95] tracking-tighter uppercase text-black">
-          Sua marca não precisa de mais um vídeo.{" "}
+          {t.gestao.ctaFinal.title1}{" "}
           <span className="text-[var(--mm-orange)]">
-            Precisa de uma campanha que funcione.
+            {t.gestao.ctaFinal.title2}
           </span>
         </h2>
 
         <div className="mt-8 space-y-4 text-base md:text-lg text-black/80 leading-relaxed">
-          <p>
-            Se você chegou até aqui, é porque alguma coisa do que eu falei
-            bateu. Talvez seu time esteja sobrecarregado, talvez você já tenha
-            rodado UGC e não funcionou, talvez você só queira começar do jeito
-            certo.
-          </p>
-          <p>
-            De qualquer forma, o próximo passo é simples: a gente conversa, eu
-            entendo seu momento, e a partir dali decidimos juntos se faz
-            sentido trabalhar.
-          </p>
-          <p className="text-black font-semibold">
-            Sem proposta enlatada. Sem promessa que eu não posso cumprir.
-            Conversa real pra entender se o que eu faço é o que sua marca
-            precisa agora.
-          </p>
+          {t.gestao.ctaFinal.paragraphs.map((p, i) => (
+            <p key={i} className={i === t.gestao.ctaFinal.paragraphs.length - 1 ? "text-black font-semibold" : ""}>
+              {p}
+            </p>
+          ))}
         </div>
 
         <a
           href="#gestao-contato"
           className="mt-10 inline-flex items-center gap-2 bg-[var(--mm-orange)] text-white px-7 py-4 rounded-full text-base md:text-lg font-bold uppercase tracking-wider hover:bg-[var(--mm-orange-deep)] transition-colors shadow-xl"
         >
-          Quero conversar sobre minha campanha
+          {t.gestao.ctaFinal.cta}
           <ArrowRight className="w-4 h-4" />
         </a>
         <p className="mt-3 text-xs md:text-sm text-black/60">
-          Resposta em até 24h. Diagnóstico inicial sem custo.
+          {t.gestao.ctaFinal.ctaSub}
         </p>
       </div>
     </section>
@@ -1233,6 +1062,7 @@ function CTAFinal() {
 
 /* ============================ 12. CONTACT FORM ============================ */
 function ContactForm() {
+  const t = useT();
   const [step, setStep] = useState<1 | 2>(1);
   const [data, setData] = useState<Record<string, string>>({});
   const [sent, setSent] = useState(false);
@@ -1276,24 +1106,24 @@ function ContactForm() {
 
       <div className="relative max-w-2xl mx-auto px-6 md:px-12">
         <div className="text-xs md:text-sm uppercase tracking-[0.3em] text-[var(--mm-orange)] font-bold text-center mb-3">
-          #contato
+          {t.gestao.contactForm.tag}
         </div>
         <h2 className="font-display font-black text-2xl md:text-4xl leading-[0.95] tracking-tighter text-center text-white uppercase">
-          Vamos conversar sobre{" "}
-          <span className="text-[var(--mm-orange)]">sua campanha?</span>
+          {t.gestao.contactForm.title1}{" "}
+          <span className="text-[var(--mm-orange)]">{t.gestao.contactForm.title2}</span>
         </h2>
         <p className="mt-4 text-center text-white/75 text-base md:text-lg leading-relaxed max-w-xl mx-auto">
-          Diagnóstico gratuito antes de qualquer proposta. Resposta em até 24h.
+          {t.gestao.contactForm.subtitle}
         </p>
 
         {sent ? (
           <div className="mt-10 p-8 rounded-3xl bg-white/10 border border-white/15 text-center">
-            <div className="text-4xl mb-4">🚀</div>
+            <div className="text-4xl mb-4">{t.gestao.contactForm.successEmoji}</div>
             <div className="font-display font-black text-lg mb-2">
-              Recebido!
+              {t.gestao.contactForm.successTitle}
             </div>
             <div className="text-white/70 text-sm md:text-base">
-              Entro em contato em até 24h.
+              {t.gestao.contactForm.successBody}
             </div>
           </div>
         ) : (
@@ -1306,35 +1136,24 @@ function ContactForm() {
 
             {step === 1 ? (
               <>
-                <Field label="Nome completo" name="name" required onChange={onChange("name")} />
-                <Field label="E-mail" name="email" type="email" required onChange={onChange("email")} />
-                <Field label="Whatsapp" name="whatsapp" placeholder="(   )" onChange={onChange("whatsapp")} />
-                <Field label="Empresa" name="company" onChange={onChange("company")} />
+                <Field label={t.gestao.contactForm.labels.name} name="name" required onChange={onChange("name")} />
+                <Field label={t.gestao.contactForm.labels.email} name="email" type="email" required onChange={onChange("email")} />
+                <Field label={t.gestao.contactForm.labels.whatsapp} name="whatsapp" placeholder={t.gestao.contactForm.placeholders.whatsapp} onChange={onChange("whatsapp")} />
+                <Field label={t.gestao.contactForm.labels.company} name="company" onChange={onChange("company")} />
                 <Select
-                  label="Cargo"
+                  label={t.gestao.contactForm.labels.role}
                   name="role"
                   required
                   onChange={onChange("role")}
-                  options={[
-                    "Marketing",
-                    "Growth / Performance",
-                    "Founder / C-level",
-                    "Social Media",
-                    "Outro",
-                  ]}
+                  options={t.gestao.contactForm.options.roles}
                 />
-                <Field label="Site" name="site" required onChange={onChange("site")} />
+                <Field label={t.gestao.contactForm.labels.site} name="site" required onChange={onChange("site")} />
                 <Select
-                  label="Modalidade de interesse"
+                  label={t.gestao.contactForm.labels.modality}
                   name="modality"
                   required
                   onChange={onChange("modality")}
-                  options={[
-                    "Pacote mensal recorrente",
-                    "Campanha pontual",
-                    "Consultoria estratégica",
-                    "Não sei ainda — quero diagnóstico",
-                  ]}
+                  options={t.gestao.contactForm.options.modalities}
                 />
                 <div className="pt-2 text-center">
                   <button
@@ -1342,7 +1161,7 @@ function ContactForm() {
                     onClick={() => setStep(2)}
                     className="inline-flex items-center gap-2 bg-[var(--mm-orange)] text-white px-7 py-3 rounded-full text-sm md:text-base font-bold uppercase tracking-wider hover:bg-[var(--mm-orange-deep)] transition-colors"
                   >
-                    Avançar
+                    {t.gestao.contactForm.next}
                     <ArrowRight className="w-4 h-4" />
                   </button>
                 </div>
@@ -1350,40 +1169,29 @@ function ContactForm() {
             ) : (
               <>
                 <Select
-                  label="Objetivo principal"
+                  label={t.gestao.contactForm.labels.goal}
                   name="goal"
                   required
                   onChange={onChange("goal")}
-                  options={[
-                    "Conteúdo pra mídia paga",
-                    "Always-on no TikTok/Instagram",
-                    "Lançamento de campanha",
-                    "Presença digital da marca",
-                  ]}
+                  options={t.gestao.contactForm.options.goals}
                 />
                 <Select
-                  label="Orçamento estimado"
+                  label={t.gestao.contactForm.labels.budget}
                   name="budget"
                   required
                   onChange={onChange("budget")}
-                  options={[
-                    "Até R$ 5.000",
-                    "R$ 5.000 a R$ 15.000",
-                    "R$ 15.000 a R$ 50.000",
-                    "+R$ 50.000",
-                    "A definir",
-                  ]}
+                  options={t.gestao.contactForm.options.budgets}
                 />
                 <div>
                   <label className="block text-xs md:text-sm uppercase tracking-wider text-white/70 mb-2 font-semibold">
-                    Conta sobre o projeto
+                    {t.gestao.contactForm.labels.message}
                   </label>
                   <textarea
                     name="message"
                     rows={4}
                     onChange={(e) => setData((d) => ({ ...d, message: e.target.value }))}
                     className="w-full bg-white/5 border border-white/15 rounded-2xl px-4 py-3.5 text-white placeholder:text-white/40 focus:outline-none focus:border-[var(--mm-orange)] transition-colors text-base leading-relaxed resize-none"
-                    placeholder="Prazo, momento da marca, o que você já tentou..."
+                    placeholder={t.gestao.contactForm.placeholders.message}
                   />
                 </div>
                 <div className="flex items-center justify-between pt-2">
@@ -1392,13 +1200,13 @@ function ContactForm() {
                     onClick={() => setStep(1)}
                     className="text-xs md:text-sm uppercase tracking-wider text-white/60 hover:text-white"
                   >
-                    ← Voltar
+                    {t.gestao.contactForm.back}
                   </button>
                   <button
                     type="submit"
                     className="inline-flex items-center gap-2 bg-[var(--mm-orange)] text-white px-7 py-3 rounded-full text-sm md:text-base font-bold uppercase tracking-wider hover:bg-[var(--mm-orange-deep)] transition-colors"
                   >
-                    Enviar
+                    {t.gestao.contactForm.submit}
                     <Rocket className="w-4 h-4" />
                   </button>
                 </div>
