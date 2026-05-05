@@ -162,9 +162,10 @@ function Hero() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="font-display font-black text-black text-2xl md:text-4xl lg:text-5xl leading-[0.95] tracking-tighter uppercase"
+            className="font-display font-black text-black text-3xl md:text-5xl lg:text-6xl leading-[0.95] tracking-tighter uppercase"
           >
-            Gestão de campanhas UGC
+            <span className="block text-[1.2em]">Gestão de</span>
+            <span className="block">Campanhas UGC</span>
           </motion.h1>
 
           {/* Linha complementar abaixo do título */}
