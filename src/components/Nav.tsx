@@ -8,7 +8,6 @@ import { useLang, useT } from "@/lib/i18n";
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-  const [gestaoNotice, setGestaoNotice] = useState(false);
   const t = useT();
   const { lang, setLang } = useLang();
 
@@ -20,11 +19,6 @@ export default function Nav() {
   ];
 
   const GESTAO_LINK = { href: "/gestao", label: t.nav.gestao };
-
-  const showGestaoNotice = () => {
-    setGestaoNotice(true);
-    window.setTimeout(() => setGestaoNotice(false), 2400);
-  };
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -76,14 +70,13 @@ export default function Nav() {
           </div>
 
           <div className="flex items-center gap-3 md:gap-4">
-            <button
-              type="button"
-              onClick={showGestaoNotice}
+            <a
+              href={GESTAO_LINK.href}
               data-track="nav_gestao"
-              className="hidden md:inline-flex text-xs uppercase tracking-[0.15em] font-medium text-foreground/70 hover:text-primary transition-colors cursor-pointer"
+              className="hidden md:inline-flex text-xs uppercase tracking-[0.15em] font-medium text-foreground/70 hover:text-primary transition-colors"
             >
               {GESTAO_LINK.label}
-            </button>
+            </a>
             {/* Toggle PT/EN */}
             <div className="flex items-center text-[10px] md:text-xs font-bold uppercase tracking-wider border border-foreground/15 rounded-full overflow-hidden">
               <button
@@ -129,23 +122,6 @@ export default function Nav() {
         </div>
       </motion.nav>
 
-      {/* Gestão coming soon notice */}
-      <AnimatePresence>
-        {gestaoNotice && (
-          <motion.div
-            initial={{ opacity: 0, y: -16 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -16 }}
-            transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed top-20 md:top-24 left-1/2 -translate-x-1/2 z-[70] pointer-events-none"
-          >
-            <div className="bg-foreground text-background text-xs md:text-sm font-semibold uppercase tracking-[0.18em] px-5 py-3 shadow-lg whitespace-nowrap">
-              {t.nav.gestaoComingSoon}<span className="text-primary">.</span>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
       {/* Mobile fullscreen menu */}
       <AnimatePresence>
         {open && (
@@ -184,20 +160,17 @@ export default function Nav() {
                   {l.label}
                 </motion.a>
               ))}
-              <motion.button
-                type="button"
-                onClick={() => {
-                  setOpen(false);
-                  showGestaoNotice();
-                }}
+              <motion.a
+                href={GESTAO_LINK.href}
+                onClick={() => setOpen(false)}
                 data-track="mobile_nav_gestao"
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.05 + LINKS.length * 0.05 }}
-                className="font-display font-black text-4xl tracking-tight hover:text-primary transition-colors text-left cursor-pointer"
+                className="font-display font-black text-4xl tracking-tight hover:text-primary transition-colors"
               >
                 {GESTAO_LINK.label}
-              </motion.button>
+              </motion.a>
             </nav>
 
             <div className="px-6 pb-10 space-y-4">
