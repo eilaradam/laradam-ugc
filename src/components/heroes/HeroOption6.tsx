@@ -15,9 +15,30 @@ export default function HeroOption6() {
   return (
     <section
       id="top"
-      className="relative bg-white pt-4 md:pt-6 pb-0 overflow-hidden"
+      className="relative bg-[#FAF8F4] pt-4 md:pt-6 pb-0 overflow-hidden"
     >
-      <div className="lara-hero-grid max-w-7xl mx-auto px-5 md:px-8 grid md:grid-cols-2 gap-6 md:gap-12 items-center w-full">
+      {/* Grid quadriculado fininho */}
+      <div
+        aria-hidden
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage:
+            "linear-gradient(to right, rgba(0,0,0,0.06) 1px, transparent 1px), linear-gradient(to bottom, rgba(0,0,0,0.06) 1px, transparent 1px)",
+          backgroundSize: "44px 44px",
+        }}
+      />
+
+      {/* Glow laranja sutil no canto */}
+      <div
+        aria-hidden
+        className="absolute -top-40 -left-40 w-[600px] h-[600px] rounded-full pointer-events-none opacity-25"
+        style={{
+          background:
+            "radial-gradient(circle, rgba(255,88,36,0.18) 0%, transparent 70%)",
+        }}
+      />
+
+      <div className="lara-hero-grid relative max-w-7xl mx-auto px-5 md:px-8 grid md:grid-cols-2 gap-6 md:gap-12 items-center w-full">
         {/* LEFT: texto */}
         <div className="flex flex-col">
           {/* Badge com check */}
