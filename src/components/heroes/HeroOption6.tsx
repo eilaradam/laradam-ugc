@@ -108,21 +108,6 @@ export default function HeroOption6() {
 
         {/* RIGHT: foto + UGC backdrop + bubbles */}
         <div className="relative flex items-end justify-center self-end">
-          {/* UGC backdrop gigante */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 0.4, scale: 1 }}
-            transition={{ delay: 0.3, duration: 0.9 }}
-            className="absolute inset-0 flex items-center justify-center pointer-events-none"
-          >
-            <span
-              style={{ color: ACCENT_LIGHT }}
-              className="font-display font-black text-[43vw] md:text-[23vw] lg:text-[22vw] leading-none tracking-[-0.06em] select-none -mt-4 md:-mt-16"
-            >
-              UGC
-            </span>
-          </motion.div>
-
           {/* Foto */}
           <motion.div
             initial={{ opacity: 0, scale: 0.86 }}
