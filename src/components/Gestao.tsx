@@ -1518,8 +1518,8 @@ export default function Gestao() {
       <Hero />
       <CasesEVideos />
       <BrandsLogoBar />
-      <Modalidades />
       <Processo />
+      <Modalidades />
       <QuemSou />
       <FAQ />
       <CTAFinal />
