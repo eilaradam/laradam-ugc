@@ -949,20 +949,25 @@ function CasesEVideos() {
                           e.currentTarget.src = `https://i.ytimg.com/vi/${v.youtubeId}/${FALLBACKS[idx]}`;
                         }}
                         onLoad={(e) => {
-                          // YouTube devolve 120x90 quando thumbnail pedido não existe
-                          if (e.currentTarget.naturalWidth <= 120) {
-                            const FALLBACKS = [
-                              "oar2.jpg",
-                              "maxresdefault.jpg",
-                              "sddefault.jpg",
-                              "hqdefault.jpg",
-                              "mqdefault.jpg",
-                            ];
-                            const idx = Number(e.currentTarget.dataset.thumbIdx ?? "0");
-                            if (idx >= FALLBACKS.length) return;
-                            e.currentTarget.dataset.thumbIdx = String(idx + 1);
-                            e.currentTarget.src = `https://i.ytimg.com/vi/${v.youtubeId}/${FALLBACKS[idx]}`;
-                          }
+                          const w = e.currentTarget.naturalWidth;
+                          const h = e.currentTarget.naturalHeight;
+                          const idx = Number(e.currentTarget.dataset.thumbIdx ?? "0");
+                          // 9:16 (oardefault/oar2) deve ser vertical. Se vier 16:9
+                          // (placeholder do YouTube), fallback. Mas nos endpoints
+                          // 16:9 (idx >= 2) aceita normal.
+                          const isVerticalEndpoint = idx < 2;
+                          const isPlaceholder = w <= 120 || (isVerticalEndpoint && w >= h);
+                          if (!isPlaceholder) return;
+                          const FALLBACKS = [
+                            "oar2.jpg",
+                            "maxresdefault.jpg",
+                            "sddefault.jpg",
+                            "hqdefault.jpg",
+                            "mqdefault.jpg",
+                          ];
+                          if (idx >= FALLBACKS.length) return;
+                          e.currentTarget.dataset.thumbIdx = String(idx + 1);
+                          e.currentTarget.src = `https://i.ytimg.com/vi/${v.youtubeId}/${FALLBACKS[idx]}`;
                         }}
                       />
                       <div className="absolute inset-0 flex items-center justify-center opacity-90 group-hover:opacity-100 transition-opacity">
