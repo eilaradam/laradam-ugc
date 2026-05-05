@@ -1066,20 +1066,32 @@ function ContactForm() {
   const [step, setStep] = useState<1 | 2>(1);
   const [data, setData] = useState<Record<string, string>>({});
   const [sent, setSent] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   const onChange = (k: string) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
     setData((d) => ({ ...d, [k]: e.target.value }));
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setSubmitting(true);
+    setErrorMsg(null);
     try {
-      await fetch("/api/gestao-leads", {
+      const res = await fetch("/api/gestao-leads", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err?.error || `Erro ${res.status}`);
+      }
       setSent(true);
-    } catch {}
+    } catch (e) {
+      setErrorMsg(e instanceof Error ? e.message : "Erro ao enviar. Tenta de novo?");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -1194,6 +1206,11 @@ function ContactForm() {
                     placeholder={t.gestao.contactForm.placeholders.message}
                   />
                 </div>
+                {errorMsg && (
+                  <div className="rounded-2xl bg-red-500/10 border border-red-500/30 px-4 py-3 text-sm text-red-300">
+                    {errorMsg}
+                  </div>
+                )}
                 <div className="flex items-center justify-between pt-2">
                   <button
                     type="button"
@@ -1204,10 +1221,11 @@ function ContactForm() {
                   </button>
                   <button
                     type="submit"
-                    className="inline-flex items-center gap-2 bg-[var(--mm-orange)] text-white px-7 py-3 rounded-full text-sm md:text-base font-bold uppercase tracking-wider hover:bg-[var(--mm-orange-deep)] transition-colors"
+                    disabled={submitting}
+                    className="inline-flex items-center gap-2 bg-[var(--mm-orange)] text-white px-7 py-3 rounded-full text-sm md:text-base font-bold uppercase tracking-wider hover:bg-[var(--mm-orange-deep)] transition-colors disabled:opacity-60"
                   >
-                    {t.gestao.contactForm.submit}
-                    <Rocket className="w-4 h-4" />
+                    {submitting ? "Enviando..." : t.gestao.contactForm.submit}
+                    {!submitting && <Rocket className="w-4 h-4" />}
                   </button>
                 </div>
               </>
