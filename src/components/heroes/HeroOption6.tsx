@@ -40,7 +40,7 @@ export default function HeroOption6() {
 
       <div className="lara-hero-grid relative max-w-7xl mx-auto px-5 md:px-8 grid md:grid-cols-2 gap-6 md:gap-12 items-center w-full">
         {/* LEFT: texto */}
-        <div className="flex flex-col">
+        <div className="flex flex-col md:pl-10 lg:pl-16">
           {/* Badge com check */}
           <motion.div
             initial={{ opacity: 0, y: -10 }}
