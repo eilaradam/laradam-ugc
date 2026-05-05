@@ -196,7 +196,7 @@ export default function BioPage() {
   const links = audience === "marca" ? MARCA_LINKS : CREATOR_LINKS;
 
   return (
-    <main className="relative min-h-screen overflow-hidden bg-[#FAF8F4] px-5 pt-10 pb-16 text-foreground">
+    <main className="relative min-h-screen overflow-hidden bg-[#FAF8F4] pb-16 text-foreground">
       {/* Grid quadriculado fininho — mesmo padrão da home */}
       <div
         aria-hidden
@@ -218,21 +218,36 @@ export default function BioPage() {
         }}
       />
 
-      <div className="relative mx-auto flex w-full max-w-[440px] flex-col items-center">
-        {/* Avatar */}
-        <div className="relative h-32 w-32 overflow-hidden rounded-full ring-4 ring-white shadow-[0_10px_30px_-10px_rgba(212,105,40,0.45)]">
+      {/* Banner horizontal — capa estilo 1920x800 */}
+      <div className="relative w-full bg-foreground">
+        <div
+          className="relative w-full overflow-hidden"
+          style={{ aspectRatio: "1920 / 800" }}
+        >
           <Image
             src="/lara-sobre.jpg"
             alt="Lara Dam"
             fill
-            sizes="128px"
+            sizes="100vw"
             className="object-cover"
+            style={{ objectPosition: "center 25%" }}
             priority
           />
+          {/* Fade pro fundo da página, criando transição suave */}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-x-0 bottom-0 h-24"
+            style={{
+              background:
+                "linear-gradient(to bottom, transparent 0%, #FAF8F4 100%)",
+            }}
+          />
         </div>
+      </div>
 
+      <div className="relative mx-auto flex w-full max-w-[440px] flex-col items-center px-5 pt-2">
         {/* Identity */}
-        <h1 className="mt-5 font-display text-3xl font-extrabold tracking-tight">
+        <h1 className="mt-3 font-display text-3xl font-extrabold tracking-tight">
           Lara Dam
         </h1>
         <p className="mt-1 text-sm font-medium text-foreground-soft">
