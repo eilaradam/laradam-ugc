@@ -140,7 +140,7 @@ const CREATOR_LINKS: LinkCard[] = [
   {
     label: "Banco de Creators",
     description: "Vagas e oportunidades pra creators",
-    href: "https://ugcmanager.com.br",
+    href: "https://creators.laradam.com/cadastro/",
     icon: Clapperboard,
     external: true,
   },
