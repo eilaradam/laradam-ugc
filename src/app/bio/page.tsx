@@ -7,7 +7,6 @@ import {
   Mail,
   ArrowUpRight,
   Briefcase,
-  Camera,
   Clapperboard,
   GraduationCap,
   Star,
@@ -115,12 +114,6 @@ const MARCA_LINKS: LinkCard[] = [
     icon: Users,
     external: true,
     comingSoon: true,
-  },
-  {
-    label: "Serviços",
-    description: "UGC, criativos, roteiros, fotos lifestyle",
-    href: "/#services",
-    icon: Camera,
   },
   {
     label: "Enviar email",
