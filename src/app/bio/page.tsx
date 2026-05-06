@@ -156,9 +156,8 @@ const CREATOR_LINKS: LinkCard[] = [
     external: true,
   },
   {
-    eyebrow: "Mentoria UGC",
-    label: "Entrar para lista de espera",
-    description: "Te aviso quando abrir",
+    label: "Mentoria UGC",
+    description: "Entrar para lista de espera",
     href: `https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent(
       "Oi Lara! Quero entrar na lista de espera da Mentoria UGC."
     )}`,
