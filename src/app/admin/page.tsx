@@ -136,7 +136,7 @@ function Login() {
   );
 }
 
-type Tab = "overview" | "leads" | "buttons" | "videos";
+type Tab = "overview" | "bio" | "leads" | "buttons" | "videos";
 
 function Dashboard({ email }: { email: string }) {
   const [leads, setLeads] = useState<Lead[]>([]);
@@ -247,6 +247,68 @@ function Dashboard({ email }: { email: string }) {
     return buckets;
   }, [filteredEvents]);
 
+  // Stats específicos da página /bio
+  const bioData = useMemo(() => {
+    const bioPageViews = filteredEvents.filter(
+      (e) => e.event_type === "page_view" && e.page_path === "/bio"
+    );
+    const bioClicks = filteredEvents.filter(
+      (e) =>
+        e.event_type === "button_click" && e.event_name.startsWith("bio_")
+    );
+    const uniqueSessions = new Set(
+      bioPageViews.map((e) => e.session_id).filter(Boolean)
+    ).size;
+
+    const clickMap = new Map<string, number>();
+    for (const e of bioClicks) {
+      clickMap.set(e.event_name, (clickMap.get(e.event_name) ?? 0) + 1);
+    }
+    const clicksByButton = [...clickMap.entries()].sort(
+      (a, b) => b[1] - a[1]
+    );
+
+    // Visitas diárias últimos 14 dias
+    const dailyBio: { date: string; count: number }[] = [];
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    for (let i = 13; i >= 0; i--) {
+      const d = new Date(today.getTime() - i * 86400_000);
+      dailyBio.push({ date: d.toISOString().slice(0, 10), count: 0 });
+    }
+    for (const e of bioPageViews) {
+      const day = e.created_at.slice(0, 10);
+      const b = dailyBio.find((x) => x.date === day);
+      if (b) b.count++;
+    }
+
+    // Clique-por-aba (creator vs marca)
+    const creatorClicks = bioClicks.filter((e) =>
+      e.event_name.startsWith("bio_creator_")
+    ).length;
+    const marcaClicks = bioClicks.filter((e) =>
+      e.event_name.startsWith("bio_marca_")
+    ).length;
+    const toggleCreator = bioClicks.filter(
+      (e) => e.event_name === "bio_toggle_creator"
+    ).length;
+    const toggleMarca = bioClicks.filter(
+      (e) => e.event_name === "bio_toggle_marca"
+    ).length;
+
+    return {
+      pageViews: bioPageViews.length,
+      uniqueVisitors: uniqueSessions,
+      totalClicks: bioClicks.length,
+      clicksByButton,
+      dailyBio,
+      creatorClicks,
+      marcaClicks,
+      toggleCreator,
+      toggleMarca,
+    };
+  }, [filteredEvents]);
+
   return (
     <div className="min-h-screen px-4 md:px-8 py-6 md:py-10 bg-background">
       <div className="max-w-6xl mx-auto">
@@ -267,7 +329,7 @@ function Dashboard({ email }: { email: string }) {
 
         {/* Tabs + range */}
         <div className="flex flex-wrap items-center gap-2 mb-6 text-xs">
-          {(["overview", "leads", "buttons", "videos"] as Tab[]).map((t) => (
+          {(["overview", "bio", "leads", "buttons", "videos"] as Tab[]).map((t) => (
             <button
               key={t}
               onClick={() => setTab(t)}
@@ -304,6 +366,7 @@ function Dashboard({ email }: { email: string }) {
             {tab === "overview" && (
               <Overview stats={stats} dailyViews={dailyViews} />
             )}
+            {tab === "bio" && <BioStats data={bioData} />}
             {tab === "leads" && <LeadsList leads={filteredLeads} />}
             {tab === "buttons" && <ButtonsList items={buttonAgg} />}
             {tab === "videos" && <VideosList items={videoAgg} />}
@@ -318,6 +381,8 @@ function tabLabel(t: Tab) {
   switch (t) {
     case "overview":
       return "Visão geral";
+    case "bio":
+      return "Bio (/bio)";
     case "leads":
       return "Leads";
     case "buttons":
@@ -377,13 +442,165 @@ function Overview({
   );
 }
 
+function BioStats({
+  data,
+}: {
+  data: {
+    pageViews: number;
+    uniqueVisitors: number;
+    totalClicks: number;
+    clicksByButton: [string, number][];
+    dailyBio: { date: string; count: number }[];
+    creatorClicks: number;
+    marcaClicks: number;
+    toggleCreator: number;
+    toggleMarca: number;
+  };
+}) {
+  const max = Math.max(1, ...data.dailyBio.map((d) => d.count));
+  const conversionRate =
+    data.pageViews > 0
+      ? ((data.totalClicks / data.pageViews) * 100).toFixed(1)
+      : "0.0";
+
+  return (
+    <div className="space-y-6">
+      {/* Cards principais */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+        <StatCard label="Visitas /bio" value={data.pageViews} />
+        <StatCard label="Visitantes únicos" value={data.uniqueVisitors} />
+        <StatCard label="Cliques nos cards" value={data.totalClicks} />
+        <StatCard
+          label="Taxa de clique"
+          value={data.pageViews > 0 ? `${conversionRate}%` : "—"}
+          accent
+        />
+      </div>
+
+      {/* Gráfico diário */}
+      <div className="rounded-2xl border border-foreground/10 p-5">
+        <div className="text-xs uppercase tracking-wider text-foreground-soft mb-4">
+          Visitas em /bio — últimos 14 dias
+        </div>
+        <div className="flex items-end gap-1.5 h-32">
+          {data.dailyBio.map((d) => (
+            <div
+              key={d.date}
+              className="flex-1 flex flex-col items-center gap-1 group"
+              title={`${d.date}: ${d.count}`}
+            >
+              <div
+                className="w-full bg-primary rounded-t transition-all group-hover:bg-primary-dark"
+                style={{ height: `${(d.count / max) * 100}%`, minHeight: 2 }}
+              />
+              <div className="text-[9px] text-foreground-soft">
+                {d.date.slice(8, 10)}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Aba escolhida (Creator vs Marca) */}
+      <div className="rounded-2xl border border-foreground/10 p-5">
+        <div className="text-xs uppercase tracking-wider text-foreground-soft mb-4">
+          Qual público é mais clicado
+        </div>
+        <div className="grid grid-cols-2 gap-3">
+          <AudienceBlock
+            label="Sou Creator"
+            toggleClicks={data.toggleCreator}
+            cardClicks={data.creatorClicks}
+          />
+          <AudienceBlock
+            label="Sou Marca"
+            toggleClicks={data.toggleMarca}
+            cardClicks={data.marcaClicks}
+          />
+        </div>
+      </div>
+
+      {/* Cliques por botão */}
+      <div className="rounded-2xl border border-foreground/10 p-5">
+        <div className="text-xs uppercase tracking-wider text-foreground-soft mb-4">
+          Cliques por card
+        </div>
+        {data.clicksByButton.length === 0 ? (
+          <div className="py-8 text-center text-foreground-soft text-sm">
+            Nenhum clique registrado ainda.
+          </div>
+        ) : (
+          <div className="space-y-2">
+            {data.clicksByButton.map(([name, count]) => {
+              const cardMax = data.clicksByButton[0][1];
+              return (
+                <div
+                  key={name}
+                  className="flex items-center gap-4 rounded-xl border border-foreground/5 bg-foreground/[0.02] p-3"
+                >
+                  <div className="flex-1 min-w-0">
+                    <div className="font-mono text-xs text-foreground truncate">
+                      {name.replace(/^bio_/, "")}
+                    </div>
+                    <div className="mt-1.5 h-1.5 rounded-full bg-foreground/5 overflow-hidden">
+                      <div
+                        className="h-full bg-primary rounded-full"
+                        style={{ width: `${(count / cardMax) * 100}%` }}
+                      />
+                    </div>
+                  </div>
+                  <div className="font-display font-black text-xl tabular-nums">
+                    {count}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function AudienceBlock({
+  label,
+  toggleClicks,
+  cardClicks,
+}: {
+  label: string;
+  toggleClicks: number;
+  cardClicks: number;
+}) {
+  return (
+    <div className="rounded-xl bg-foreground/[0.03] p-4">
+      <div className="text-[11px] uppercase tracking-wider text-foreground-soft mb-2">
+        {label}
+      </div>
+      <div className="flex items-end gap-4">
+        <div>
+          <div className="font-display font-black text-2xl">{toggleClicks}</div>
+          <div className="text-[10px] text-foreground-soft uppercase tracking-wider">
+            Toggle
+          </div>
+        </div>
+        <div>
+          <div className="font-display font-black text-2xl">{cardClicks}</div>
+          <div className="text-[10px] text-foreground-soft uppercase tracking-wider">
+            Cliques nos cards
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function StatCard({
   label,
   value,
   accent,
 }: {
   label: string;
-  value: number;
+  value: number | string;
   accent?: boolean;
 }) {
   return (
