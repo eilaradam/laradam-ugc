@@ -8,7 +8,7 @@ import {
   ArrowUpRight,
   Briefcase,
   Camera,
-  Users,
+  Clapperboard,
   GraduationCap,
   Star,
   MapPin,
@@ -84,7 +84,7 @@ type LinkCard = {
 
 const MARCA_LINKS: LinkCard[] = [
   {
-    label: "Portfólio completo",
+    label: "Portfólio UGC",
     description: "+500 vídeos, +200 parceiros, 100M+ views",
     href: "/",
     icon: Star,
@@ -100,8 +100,8 @@ const MARCA_LINKS: LinkCard[] = [
     external: true,
   },
   {
-    label: "Cases & resultados",
-    description: "InfinitePay, Méliuz, DT3 e outros",
+    label: "Agência UGC",
+    description: "Gestão de campanhas e creators pra marcas",
     href: "/#results",
     icon: Briefcase,
   },
@@ -131,17 +131,17 @@ const CREATOR_LINKS: LinkCard[] = [
     external: true,
   },
   {
-    label: "MeuManager",
-    description: "Dashboard pra gerenciar suas parcerias",
+    label: "Meu Manager",
+    description: "App de organização para criadores de conteúdo",
     href: "https://meumanager.com/login",
-    logo: { src: "/logo-meumanager.png", alt: "MeuManager", bg: "#FFFFFF" },
+    logo: { src: "/logo-meumanager.png", alt: "Meu Manager", bg: "#FFFFFF" },
     external: true,
   },
   {
     label: "Banco de Creators",
     description: "Vagas e oportunidades pra creators",
     href: "https://ugcmanager.com.br",
-    icon: Users,
+    icon: Clapperboard,
     external: true,
   },
   {
@@ -194,7 +194,7 @@ const SOCIALS = [
 ];
 
 export default function BioPage() {
-  const [audience, setAudience] = useState<Audience>("marca");
+  const [audience, setAudience] = useState<Audience>("creator");
   const links = audience === "marca" ? MARCA_LINKS : CREATOR_LINKS;
 
   return (
@@ -284,20 +284,6 @@ export default function BioPage() {
           <button
             type="button"
             role="tab"
-            aria-selected={audience === "marca"}
-            onClick={() => setAudience("marca")}
-            data-track="bio_toggle_marca"
-            className={`rounded-full px-4 py-2.5 text-sm font-semibold transition-all ${
-              audience === "marca"
-                ? "bg-primary text-white shadow-md"
-                : "text-foreground-soft hover:text-foreground"
-            }`}
-          >
-            Sou Marca
-          </button>
-          <button
-            type="button"
-            role="tab"
             aria-selected={audience === "creator"}
             onClick={() => setAudience("creator")}
             data-track="bio_toggle_creator"
@@ -308,6 +294,20 @@ export default function BioPage() {
             }`}
           >
             Sou Creator
+          </button>
+          <button
+            type="button"
+            role="tab"
+            aria-selected={audience === "marca"}
+            onClick={() => setAudience("marca")}
+            data-track="bio_toggle_marca"
+            className={`rounded-full px-4 py-2.5 text-sm font-semibold transition-all ${
+              audience === "marca"
+                ? "bg-primary text-white shadow-md"
+                : "text-foreground-soft hover:text-foreground"
+            }`}
+          >
+            Sou Marca
           </button>
         </div>
 

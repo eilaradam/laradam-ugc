@@ -4,7 +4,7 @@ export const SITE = {
   location: "Litoral de SP, Brasil",
   email: "laradam.ugc@gmail.com",
   instagram: "@eilaradam",
-  tiktok: "@eilaradam",
+  tiktok: "@eularadam",
   whatsapp: "5512988729264",
   whatsappLabel: "(12) 98872-9264",
 };
