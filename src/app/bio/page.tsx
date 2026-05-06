@@ -381,7 +381,7 @@ export default function BioPage() {
                       {card.eyebrow}
                     </span>
                   )}
-                  <span className="flex items-center gap-1.5">
+                  <span className="flex flex-wrap items-center gap-x-2 gap-y-1">
                     <span
                       className={`font-display font-bold leading-tight ${
                         card.eyebrow ? "text-[17px]" : "text-[15px]"
@@ -390,7 +390,7 @@ export default function BioPage() {
                       {card.label}
                     </span>
                     {card.comingSoon && (
-                      <span className="rounded-full bg-primary/15 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-primary">
+                      <span className="shrink-0 whitespace-nowrap rounded-full bg-primary/15 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-primary">
                         Em breve
                       </span>
                     )}
