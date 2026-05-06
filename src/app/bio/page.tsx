@@ -12,6 +12,7 @@ import {
   GraduationCap,
   Star,
   MapPin,
+  Users,
 } from "lucide-react";
 import { SITE } from "@/data/content";
 
@@ -101,9 +102,19 @@ const MARCA_LINKS: LinkCard[] = [
   },
   {
     label: "Agência UGC",
-    description: "Gestão de campanhas e creators pra marcas",
+    description: "Campanhas com creators gerenciadas do início ao fim",
     href: "/gestao",
     icon: Briefcase,
+  },
+  {
+    label: "Consultoria UGC para Marcas",
+    description: "Treinamento de equipe interna para UGC",
+    href: `https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent(
+      "Oi Lara! Quero saber mais sobre a Consultoria UGC pra marcas."
+    )}`,
+    icon: Users,
+    external: true,
+    comingSoon: true,
   },
   {
     label: "Serviços",
