@@ -102,7 +102,7 @@ const MARCA_LINKS: LinkCard[] = [
   {
     label: "Agência UGC",
     description: "Gestão de campanhas e creators pra marcas",
-    href: "/#results",
+    href: "/gestao",
     icon: Briefcase,
   },
   {
