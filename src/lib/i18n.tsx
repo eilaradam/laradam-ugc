@@ -459,6 +459,11 @@ const dict: Record<Lang, Dict> = {
           tagline: "Bebidas, doces e sabores que viram desejo",
         },
         {
+          slug: "saude",
+          name: "Saúde & Fitness",
+          tagline: "Suplementos e bem-estar que viram rotina",
+        },
+        {
           slug: "tech",
           name: "Tech & Apps",
           tagline: "Apps e gadgets em linguagem humana",
@@ -949,6 +954,11 @@ const dict: Record<Lang, Dict> = {
           slug: "food",
           name: "Drinks & Desserts",
           tagline: "Drinks, sweets and flavors that turn into desire",
+        },
+        {
+          slug: "saude",
+          name: "Health & Fitness",
+          tagline: "Supplements and wellness that become routine",
         },
         {
           slug: "tech",
