@@ -137,6 +137,7 @@ export const VIDEOS: Video[] = [
   { id: "b16", title: "Botox", category: "beleza", brand: "Botox", youtubeId: "YOmm3Zi87PE" },
 
   // CASA & DECO
+  { id: "d-coza2", title: "Coza", category: "casa", brand: "Coza", youtubeId: "nbq1HzdlPJE" },
   { id: "d1", title: "DT3", category: "casa", brand: "DT3", youtubeId: "Imt3HZDlCXU" },
   { id: "d2", title: "DT3", category: "casa", brand: "DT3", youtubeId: "JwblS_1IReM" },
   { id: "d3", title: "DT3", category: "casa", brand: "DT3", youtubeId: "RPNeR2ANyrM" },
