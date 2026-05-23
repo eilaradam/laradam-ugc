@@ -168,7 +168,6 @@ export const VIDEOS: Video[] = [
   { id: "t1", title: "App Decolar", category: "tech", brand: "Decolar", youtubeId: "Y8nN7CMb73U" },
   { id: "t2", title: "BV Financeiro", category: "tech", brand: "BV", youtubeId: "2NMavMHi4jM" },
   { id: "t3", title: "BV Financeiro", category: "tech", brand: "BV", youtubeId: "Q_n4uwkxiDo" },
-  { id: "t4", title: "Voy Saúde", category: "tech", brand: "Voy", youtubeId: "sIqDyvDsaZA" },
   { id: "t5", title: "Méliuz App", category: "tech", brand: "Méliuz", youtubeId: "GPcPWfWmA3A" },
   { id: "t6", title: "Focus", category: "tech", brand: "Focus", youtubeId: "GvLjL_Ru19U" },
   { id: "t7", title: "Logitech", category: "tech", brand: "Logitech", youtubeId: "sspAuh3TFqw" },
