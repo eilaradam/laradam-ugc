@@ -89,6 +89,7 @@ export const CATEGORIES: Category[] = [
   { slug: "gastronomia", name: "Gastronomia", tagline: "Comida que dá água na boca" },
   { slug: "food", name: "Drinks e Sobremesas", tagline: "Bebidas, doces e sabores que viram desejo" },
   { slug: "saude", name: "Saúde & Fitness", tagline: "Suplementos e bem-estar que viram rotina" },
+  { slug: "financas", name: "Finanças", tagline: "Dinheiro e fintech sem complicação" },
   { slug: "tech", name: "Tech & Apps", tagline: "Apps e gadgets em linguagem humana" },
   { slug: "moda", name: "Moda", tagline: "Outfits que contam história" },
   { slug: "viagem", name: "Viagem", tagline: "Experiências & destinos" },
@@ -162,16 +163,17 @@ export const VIDEOS: Video[] = [
   { id: "s-pharma-creatina", title: "Pharmapele Creatina", category: "saude", brand: "Pharmapele", youtubeId: "_6sCm4K8DRE" },
   { id: "s-pharma", title: "Pharmapele", category: "saude", brand: "Pharmapele", youtubeId: "Eul1uuQhU7g" },
   { id: "s-pharma-emagrece", title: "Pharmapele Emagrecimento", category: "saude", brand: "Pharmapele", youtubeId: "K31BzOy3qt0" },
+  { id: "t-voy2", title: "Voy Emagrecimento", category: "saude", brand: "Voy", youtubeId: "ZVNvzvdz4Ow" },
+
+  // FINANÇAS
+  { id: "t0a", title: "InfinitePay", category: "financas", brand: "InfinitePay", youtubeId: "5wf8Fv2CTa4", views: "100M", featured: true },
+  { id: "t0b", title: "Méliuz", category: "financas", brand: "Méliuz", youtubeId: "wesTfq67X9o", views: "30M", featured: true },
+  { id: "t5", title: "Méliuz App", category: "financas", brand: "Méliuz", youtubeId: "GPcPWfWmA3A" },
+  { id: "t2", title: "BV Financeiro", category: "financas", brand: "BV", youtubeId: "2NMavMHi4jM" },
+  { id: "t3", title: "BV Financeiro", category: "financas", brand: "BV", youtubeId: "Q_n4uwkxiDo" },
 
   // TECH & APPS
-  { id: "t0a", title: "InfinitePay", category: "tech", brand: "InfinitePay", youtubeId: "5wf8Fv2CTa4", views: "100M", featured: true },
-  { id: "t0b", title: "Méliuz", category: "tech", brand: "Méliuz", youtubeId: "wesTfq67X9o", views: "30M", featured: true },
   { id: "t-vero", title: "Vero", category: "tech", brand: "Vero", youtubeId: "8QRM5LPK5M8" },
-  { id: "t-voy2", title: "Voy", category: "tech", brand: "Voy", youtubeId: "ZVNvzvdz4Ow" },
-  { id: "t1", title: "App Decolar", category: "tech", brand: "Decolar", youtubeId: "Y8nN7CMb73U" },
-  { id: "t2", title: "BV Financeiro", category: "tech", brand: "BV", youtubeId: "2NMavMHi4jM" },
-  { id: "t3", title: "BV Financeiro", category: "tech", brand: "BV", youtubeId: "Q_n4uwkxiDo" },
-  { id: "t5", title: "Méliuz App", category: "tech", brand: "Méliuz", youtubeId: "GPcPWfWmA3A" },
   { id: "t6", title: "Focus", category: "tech", brand: "Focus", youtubeId: "GvLjL_Ru19U" },
   { id: "t7", title: "Logitech", category: "tech", brand: "Logitech", youtubeId: "sspAuh3TFqw" },
   { id: "t8", title: "Logitech", category: "tech", brand: "Logitech", youtubeId: "xyaWdRi9pK4" },
@@ -191,6 +193,7 @@ export const VIDEOS: Video[] = [
   { id: "va2", title: "OKA House", category: "viagem", brand: "OKA House", youtubeId: "DzIWctdbjgg" },
   { id: "va3", title: "Airbnb", category: "viagem", brand: "Airbnb", youtubeId: "s5iwpfzgxbI" },
   { id: "va4", title: "Airbnb", category: "viagem", brand: "Airbnb", youtubeId: "wUxGOQ3QwFw" },
+  { id: "t1", title: "App Decolar", category: "viagem", brand: "Decolar", youtubeId: "Y8nN7CMb73U" },
 
 ];
 

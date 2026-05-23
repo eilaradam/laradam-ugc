@@ -464,6 +464,11 @@ const dict: Record<Lang, Dict> = {
           tagline: "Suplementos e bem-estar que viram rotina",
         },
         {
+          slug: "financas",
+          name: "Finanças",
+          tagline: "Dinheiro e fintech sem complicação",
+        },
+        {
           slug: "tech",
           name: "Tech & Apps",
           tagline: "Apps e gadgets em linguagem humana",
@@ -959,6 +964,11 @@ const dict: Record<Lang, Dict> = {
           slug: "saude",
           name: "Health & Fitness",
           tagline: "Supplements and wellness that become routine",
+        },
+        {
+          slug: "financas",
+          name: "Finance",
+          tagline: "Money and fintech, no jargon",
         },
         {
           slug: "tech",
