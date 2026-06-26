@@ -56,8 +56,8 @@ export default function Nav() {
         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 shadow-[0_4px_10px_0_rgba(0,0,0,0.3)] ${
           scrolled
-            ? "bg-background/85 backdrop-blur-lg border-b border-foreground/10"
-            : "bg-background/60 backdrop-blur-md"
+            ? "bg-background/95 border-b border-foreground/10"
+            : "bg-background/80"
         }`}
       >
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-3 md:gap-6 px-5 md:px-8 py-3 md:py-3.5">
