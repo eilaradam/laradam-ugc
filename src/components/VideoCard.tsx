@@ -103,7 +103,7 @@ export default function VideoCard({ video, index = 0, size = "md" }: Props) {
 
         {/* Top badge */}
         <div className="absolute top-3 left-3 flex items-center gap-2">
-          <div className="px-2.5 py-1 rounded-full bg-background/90 backdrop-blur-sm text-[10px] font-bold uppercase tracking-wider text-foreground">
+          <div className="px-2.5 py-1 rounded-full bg-background/95 text-[10px] font-bold uppercase tracking-wider text-foreground">
             {video.brand}
           </div>
           {video.views && (
@@ -125,7 +125,7 @@ export default function VideoCard({ video, index = 0, size = "md" }: Props) {
 
         {/* Play button */}
         <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
-          <div className="w-14 h-14 rounded-full bg-primary/90 backdrop-blur-sm flex items-center justify-center">
+          <div className="w-14 h-14 rounded-full bg-primary flex items-center justify-center">
             <Play className="w-5 h-5 text-primary-light fill-primary-light ml-0.5" />
           </div>
         </div>
