@@ -14,8 +14,8 @@ type YtAd = {
 };
 
 const YT_ADS: YtAd[] = [
-  { youtubeId: "zZXflzISC1c", brand: "Óculos", title: "YouTube Ad — Óculos", views: "2,3 mi" },
-  { youtubeId: "4CZl_YwPgWo", brand: "Cygnuss", title: "YouTube Ad — Cygnuss", views: "48 mil" },
+  { youtubeId: "zZXflzISC1c", brand: "Óculos", title: "YouTube Ad · Óculos", views: "2,3 mi" },
+  { youtubeId: "4CZl_YwPgWo", brand: "Cygnuss", title: "YouTube Ad · Cygnuss", views: "48 mil" },
 ];
 
 function YouTubeIcon(props: React.SVGProps<SVGSVGElement>) {

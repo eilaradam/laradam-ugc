@@ -411,7 +411,7 @@ const dict: Record<Lang, Dict> = {
       eyeline: "Será que você já me viu por aí? 👀",
       body1Pre: "Mais de ",
       body1ViewsHi: "140M de views",
-      body1Mid: " em campanhas — recorde de CTR no Meta, CPA reduzido em até ",
+      body1Mid: " em campanhas, com recorde de CTR no Meta, CPA reduzido em até ",
       body1Cpa: "38%",
       body1Mid2: " e ROAS de ",
       body1Roas: "2.4x",
@@ -439,7 +439,7 @@ const dict: Record<Lang, Dict> = {
       titleAccent: "conteúdo",
       title2: "você precisa?",
       intro:
-        "Navegue pelos nichos. Cada linha é uma especialidade — deslize pro lado pra ver mais.",
+        "Navegue pelos nichos. Cada linha é uma especialidade. Deslize pro lado pra ver mais.",
       comingSoon: "Em breve nessa categoria.",
       items: [
         {
@@ -557,7 +557,7 @@ const dict: Record<Lang, Dict> = {
       brand: "Marca / Empresa",
       brandPh: "Nome da marca",
       budget: "Orçamento estimado",
-      budgetPh: "Ex: R$ 1.000 – R$ 5.000",
+      budgetPh: "Ex: R$ 1.000 a R$ 5.000",
       message: "Conta sobre o projeto",
       messagePh: "Categoria, formato, prazo, objetivo da campanha...",
       send: "Enviar mensagem",
@@ -792,7 +792,7 @@ const dict: Record<Lang, Dict> = {
         },
         options: {
           roles: ["Marketing", "Growth / Performance", "Founder / C-level", "Social Media", "Outro"],
-          modalities: ["Pacote mensal recorrente", "Campanha pontual", "Consultoria estratégica", "Não sei ainda — quero diagnóstico"],
+          modalities: ["Pacote mensal recorrente", "Campanha pontual", "Consultoria estratégica", "Não sei ainda, quero diagnóstico"],
           goals: ["Conteúdo pra mídia paga", "Always-on no TikTok/Instagram", "Lançamento de campanha", "Presença digital da marca"],
           budgets: ["Até R$ 5.000", "R$ 5.000 a R$ 15.000", "R$ 15.000 a R$ 50.000", "+R$ 50.000", "A definir"],
         },
@@ -909,7 +909,7 @@ const dict: Record<Lang, Dict> = {
       body1Pre: "Over ",
       body1ViewsHi: "140M views",
       body1Mid:
-        " in campaigns — CTR records on Meta, CPA reduced by up to ",
+        " in campaigns, with CTR records on Meta, CPA reduced by up to ",
       body1Cpa: "38%",
       body1Mid2: " and ROAS of ",
       body1Roas: "2.4x",
@@ -937,7 +937,7 @@ const dict: Record<Lang, Dict> = {
       titleAccent: "content",
       title2: "do you need?",
       intro:
-        "Browse by niche. Each row is a specialty — swipe sideways to see more.",
+        "Browse by niche. Each row is a specialty. Swipe sideways to see more.",
       comingSoon: "Coming soon in this category.",
       items: [
         {
@@ -1008,7 +1008,7 @@ const dict: Record<Lang, Dict> = {
       quotes: [
         {
           quote:
-            "Lara delivers way beyond what we ask for. She gets performance and the video came ready to run as a creative — it broke the CTR record on Meta.",
+            "Lara delivers way beyond what we ask for. She gets performance and the video came ready to run as a creative, and it broke the CTR record on Meta.",
           role: "Record-breaking video on Meta",
           metricLabel: "views on 1 video",
         },
@@ -1063,7 +1063,7 @@ const dict: Record<Lang, Dict> = {
       brand: "Brand / Company",
       brandPh: "Brand name",
       budget: "Estimated budget",
-      budgetPh: "e.g.: $1,000 – $3,000",
+      budgetPh: "e.g.: $1,000 to $3,000",
       message: "Tell me about the project",
       messagePh: "Category, format, deadline, campaign goal...",
       send: "Send message",
@@ -1298,7 +1298,7 @@ const dict: Record<Lang, Dict> = {
         },
         options: {
           roles: ["Marketing", "Growth / Performance", "Founder / C-level", "Social Media", "Other"],
-          modalities: ["Monthly recurring package", "One-off campaign", "Strategic consulting", "Not sure yet — want diagnosis"],
+          modalities: ["Monthly recurring package", "One-off campaign", "Strategic consulting", "Not sure yet, want diagnosis"],
           goals: ["Content for paid media", "Always-on on TikTok/Instagram", "Campaign launch", "Brand digital presence"],
           budgets: ["Up to $1,000", "$1,000 to $3,000", "$3,000 to $10,000", "+$10,000", "TBD"],
         },
