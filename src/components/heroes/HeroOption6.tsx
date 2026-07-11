@@ -15,23 +15,23 @@ export default function HeroOption6() {
   return (
     <section
       id="top"
-      className="relative bg-[#FAF8F4] pt-4 md:pt-6 pb-0 overflow-hidden"
+      className="relative bg-[#FDFDFB] pt-4 md:pt-6 pb-0 overflow-hidden"
     >
-      {/* Grid quadriculado fininho */}
+      {/* Xadrez verde claro com traço de pincel */}
       <div
         aria-hidden
         className="absolute inset-0 pointer-events-none"
         style={{
-          backgroundImage:
-            "linear-gradient(to right, rgba(0,0,0,0.06) 1px, transparent 1px), linear-gradient(to bottom, rgba(0,0,0,0.06) 1px, transparent 1px)",
-          backgroundSize: "44px 44px",
+          backgroundImage: "url('/xadrez-verde.svg')",
+          backgroundSize: "240px 240px",
+          backgroundRepeat: "repeat",
         }}
       />
 
       {/* Glow verde sutil no canto */}
       <div
         aria-hidden
-        className="absolute -top-40 -left-40 w-[600px] h-[600px] rounded-full pointer-events-none opacity-25"
+        className="absolute -top-40 -left-40 w-[600px] h-[600px] rounded-full pointer-events-none opacity-15"
         style={{
           background:
             "radial-gradient(circle, rgba(92,122,61,0.18) 0%, transparent 70%)",
