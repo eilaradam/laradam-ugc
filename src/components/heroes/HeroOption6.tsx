@@ -6,9 +6,9 @@ import { HeroPhoto } from "./_shared";
 import { useT } from "@/lib/i18n";
 
 // Cor de destaque verde-oliva da referência (one-off, não muda o tema global)
-const ACCENT = "#24476E";
-const ACCENT_DARK = "#1E3A5F";
-const ACCENT_LIGHT = "#3A6394";
+const ACCENT = "#d46928";
+const ACCENT_DARK = "#c75925";
+const ACCENT_LIGHT = "#e3725a";
 
 export default function HeroOption6() {
   const t = useT();
