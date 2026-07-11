@@ -63,9 +63,7 @@ export default function HeroOption6() {
             transition={{ delay: 0.2, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
             className="font-display font-black text-foreground leading-[0.95] tracking-tighter text-4xl sm:text-5xl md:text-6xl lg:text-7xl"
           >
-            {t.hero.title1}
-            <br />
-            {t.hero.title2}{" "}
+            {t.hero.title1}{" "}
             <span style={{ color: ACCENT_DARK }}>{t.hero.titleAccent}</span>
           </motion.h1>
 

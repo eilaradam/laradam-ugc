@@ -84,7 +84,6 @@ export type Dict = {
   hero: {
     badge: string;
     title1: string;
-    title2: string;
     titleAccent: string;
     body1: string;
     metrics: string;
@@ -317,9 +316,8 @@ const dict: Record<Lang, Dict> = {
     },
     hero: {
       badge: "UGC Creator & Content Strategist · Disponível 2026",
-      title1: "Criando conteúdo",
-      title2: "que",
-      titleAccent: "converte",
+      title1: "Lara",
+      titleAccent: "Dam",
       body1: "De hook a CTA, cada segundo pensado pra performar.",
       metrics:
         "+500 vídeos  |  +200 marcas parceiras  |  100M+ views.",
@@ -814,9 +812,8 @@ const dict: Record<Lang, Dict> = {
     },
     hero: {
       badge: "UGC Creator & Content Strategist · Available 2026",
-      title1: "Creating content",
-      title2: "that",
-      titleAccent: "converts",
+      title1: "Lara",
+      titleAccent: "Dam",
       body1: "From hook to CTA, every second built to perform.",
       metrics:
         "500+ videos  |  200+ brand partners  |  100M+ views.",
