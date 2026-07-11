@@ -6,9 +6,9 @@ import { HeroPhoto } from "./_shared";
 import { useT } from "@/lib/i18n";
 
 // Cor de destaque verde-oliva da referência (one-off, não muda o tema global)
-const ACCENT = "#d46928";
-const ACCENT_DARK = "#c75925";
-const ACCENT_LIGHT = "#e3725a";
+const ACCENT = "#5C7A3D";
+const ACCENT_DARK = "#4A6531";
+const ACCENT_LIGHT = "#7C9B55";
 
 export default function HeroOption6() {
   const t = useT();
@@ -28,13 +28,13 @@ export default function HeroOption6() {
         }}
       />
 
-      {/* Glow laranja sutil no canto */}
+      {/* Glow verde sutil no canto */}
       <div
         aria-hidden
         className="absolute -top-40 -left-40 w-[600px] h-[600px] rounded-full pointer-events-none opacity-25"
         style={{
           background:
-            "radial-gradient(circle, rgba(255,88,36,0.18) 0%, transparent 70%)",
+            "radial-gradient(circle, rgba(92,122,61,0.18) 0%, transparent 70%)",
         }}
       />
 

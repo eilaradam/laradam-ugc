@@ -213,13 +213,13 @@ export default function BioPage() {
         }}
       />
 
-      {/* Glow laranja sutil no topo */}
+      {/* Glow verde sutil no topo */}
       <div
         aria-hidden
         className="pointer-events-none absolute -top-40 left-1/2 h-[600px] w-[600px] -translate-x-1/2 rounded-full opacity-30"
         style={{
           background:
-            "radial-gradient(circle, rgba(255,88,36,0.22) 0%, transparent 70%)",
+            "radial-gradient(circle, rgba(92,122,61,0.22) 0%, transparent 70%)",
         }}
       />
 
