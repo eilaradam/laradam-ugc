@@ -166,7 +166,7 @@ function render() {
   const igCar = el("div", "carousel reveal");
   ig.posts.forEach(p => {
     const post = el("a", "ig-post");
-    post.href = ig.url; post.target = "_blank"; post.rel = "noopener";
+    post.href = p.link || ig.url; post.target = "_blank"; post.rel = "noopener";
     post.style.cssText = p.imagem ? `background-image:url('${p.imagem}')` : `background:linear-gradient(160deg, ${p.cor}, ${p.cor}77)`;
     post.innerHTML = `
       <span class="ig-badge">${ICONS.instagram}</span>
@@ -377,7 +377,7 @@ const ChatEngine = {
         <div class="cl-title">Quase la! Deixa seu contato</div>
         <input class="cl-in" data-k="nome" placeholder="Seu nome" autocomplete="name">
         <input class="cl-in" data-k="whatsapp" placeholder="Seu WhatsApp" inputmode="tel" autocomplete="tel">
-        <input class="cl-in" data-k="instagram" placeholder="Seu @instagram">
+        <input class="cl-in" data-k="email" type="email" placeholder="Seu e-mail" autocomplete="email">
         <div class="cl-err"></div>
         <button class="cl-btn">Ver minha recomendacao ${ICONS.arrow}</button>`;
       const btn = $(".cl-btn", box);
@@ -385,7 +385,7 @@ const ChatEngine = {
       const enviar = async () => {
         const nome = $('[data-k="nome"]', box).value.trim();
         const whatsapp = $('[data-k="whatsapp"]', box).value.trim();
-        const instagram = $('[data-k="instagram"]', box).value.trim();
+        const email = $('[data-k="email"]', box).value.trim();
         if (!nome || !whatsapp) { err.textContent = "Preenche pelo menos nome e WhatsApp :)"; return; }
         err.textContent = "";
         btn.disabled = true; btn.textContent = "Enviando...";
@@ -394,7 +394,7 @@ const ChatEngine = {
           await fetch("/api/bio-lead", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ nome, whatsapp, instagram, respostas: { tags: this.tags }, produto: produto ? produto.titulo : "" }),
+            body: JSON.stringify({ nome, whatsapp, email, respostas: { tags: this.tags }, produto: produto ? produto.titulo : "" }),
           });
         } catch {}
         Analytics.track("chat_lead");

@@ -21,7 +21,7 @@ window.BIO_DEFAULT = {
   /* ---------- REDES SOCIAIS (linha de icones) ---------- */
   redes: [
     { rede: "instagram", url: "https://instagram.com/eilaradam" },
-    { rede: "tiktok",    url: "https://tiktok.com/@eilaradam" },
+    { rede: "tiktok",    url: "https://www.tiktok.com/@eularadam" },
     { rede: "youtube",   url: "https://youtube.com/@eilaradam" },
     { rede: "linkedin",  url: "https://linkedin.com/in/laradam" },
   ],
@@ -147,8 +147,8 @@ window.BIO_DEFAULT = {
 
   /* ---------- 4. LINK EXTERNO SIMPLES (ex: livro na Amazon) ---------- */
   linkExterno: {
-    titulo: "O livro que mudou meu negocio",
-    descricao: "A leitura que todo creator deveria fazer antes de cobrar sua primeira publi.",
+    titulo: "Produtos que uso na criacao de conteudo",
+    descricao: "Camera, luz, apps e os gadgets que uso pra gravar todo dia. Minha lista testada e aprovada.",
     thumbCor: "#C9A227",
     imagem: "",
     url: "https://amazon.com.br",
@@ -166,18 +166,11 @@ window.BIO_DEFAULT = {
   /* ---------- 7. WHATSAPP ---------- */
   whatsapp: [
     {
-      categoria: "Publicidade e palestras",
-      numero: "5511999999999",           // so numeros, com DDI+DDD
-      numeroExibicao: "+55 11 99999-9999",
-      mensagem: "Oi Lara! Vim pelo seu link na bio e quero falar sobre publi/palestra.",
+      categoria: "Publicidade, UGC e Palestras",
+      numero: "5512988729264",           // so numeros, com DDI+DDD
+      numeroExibicao: "(12) 98872-9264",
+      mensagem: "Oi Lara! Vim pelo seu link na bio e quero falar sobre publi, UGC ou palestra.",
       cor: "#128C7E",
-    },
-    {
-      categoria: "Suporte MeuManager",
-      numero: "5511988888888",
-      numeroExibicao: "+55 11 98888-8888",
-      mensagem: "Oi! Preciso de ajuda com o MeuManager.",
-      cor: "#25D366",
     },
   ],
 

@@ -19,8 +19,8 @@ export async function POST(req: Request) {
   if (!nome || !whatsapp) {
     return NextResponse.json({ error: "nome e whatsapp obrigatórios" }, { status: 400 });
   }
-  const instagram =
-    typeof body.instagram === "string" ? body.instagram.trim().slice(0, 80) : null;
+  const email =
+    typeof body.email === "string" ? body.email.trim().slice(0, 120) : null;
   const respostas =
     body.respostas && typeof body.respostas === "object" ? body.respostas : {};
   const produto = typeof body.produto === "string" ? body.produto.slice(0, 120) : null;
@@ -33,7 +33,7 @@ export async function POST(req: Request) {
       const sb = supabaseAdmin();
       const { error } = await sb
         .from("bio_leads")
-        .insert({ nome, whatsapp, instagram, respostas, produto });
+        .insert({ nome, whatsapp, email, respostas, produto });
       if (error) {
         console.error("[bio-lead] insert error", error);
         return NextResponse.json({ error: "falha ao salvar" }, { status: 500 });
