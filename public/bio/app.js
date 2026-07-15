@@ -65,8 +65,7 @@ function render() {
   const C = CONFIG;
   document.title = C.perfil.nome + " | Link na bio";
 
-  // fundo desfocado a partir da foto
-  $("#bg").style.backgroundImage = `url('${C.perfil.foto}')`;
+  // fundo escuro liso e neutro (definido no CSS, sem foto)
 
   const frag = document.createDocumentFragment();
 
