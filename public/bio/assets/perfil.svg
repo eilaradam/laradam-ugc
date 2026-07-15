@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="500" height="500" viewBox="0 0 500 500">
+  <defs>
+    <radialGradient id="g1" cx="30%" cy="25%" r="80%">
+      <stop offset="0%" stop-color="#FF8FA3"/>
+      <stop offset="45%" stop-color="#FF5A4D"/>
+      <stop offset="100%" stop-color="#7A1E2B"/>
+    </radialGradient>
+    <radialGradient id="g2" cx="80%" cy="80%" r="70%">
+      <stop offset="0%" stop-color="#F4B942" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#F4B942" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="g3" cx="75%" cy="15%" r="55%">
+      <stop offset="0%" stop-color="#FFD9C2" stop-opacity="0.7"/>
+      <stop offset="100%" stop-color="#FFD9C2" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="500" height="500" fill="url(#g1)"/>
+  <rect width="500" height="500" fill="url(#g2)"/>
+  <rect width="500" height="500" fill="url(#g3)"/>
+  <text x="50%" y="50%" text-anchor="middle" dominant-baseline="central"
+        font-family="Georgia, 'Times New Roman', serif" font-size="230" font-weight="700"
+        fill="#FFF6EE" fill-opacity="0.92" letter-spacing="-6">L</text>
+</svg>
