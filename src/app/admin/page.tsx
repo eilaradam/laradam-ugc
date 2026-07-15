@@ -3,7 +3,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { getSupabase, type Lead, type EventRow } from "@/lib/supabase";
 import type { Session } from "@supabase/supabase-js";
-import BioEditor from "./BioEditor";
 
 const ALLOWED_EMAIL = "laradam.ugc@gmail.com";
 
@@ -137,7 +136,7 @@ function Login() {
   );
 }
 
-type Tab = "overview" | "editar" | "bio" | "leads" | "buttons" | "videos";
+type Tab = "overview" | "bio" | "leads" | "buttons" | "videos";
 
 function Dashboard({ email }: { email: string }) {
   const [leads, setLeads] = useState<Lead[]>([]);
@@ -330,7 +329,7 @@ function Dashboard({ email }: { email: string }) {
 
         {/* Tabs + range */}
         <div className="flex flex-wrap items-center gap-2 mb-6 text-xs">
-          {(["overview", "editar", "bio", "leads", "buttons", "videos"] as Tab[]).map((t) => (
+          {(["overview", "bio", "leads", "buttons", "videos"] as Tab[]).map((t) => (
             <button
               key={t}
               onClick={() => setTab(t)}
@@ -360,9 +359,7 @@ function Dashboard({ email }: { email: string }) {
           </span>
         </div>
 
-        {tab === "editar" ? (
-          <BioEditor />
-        ) : loading ? (
+        {loading ? (
           <div className="py-20 text-center text-foreground-soft">Carregando...</div>
         ) : (
           <>
@@ -384,8 +381,6 @@ function tabLabel(t: Tab) {
   switch (t) {
     case "overview":
       return "Visão geral";
-    case "editar":
-      return "Editar Bio";
     case "bio":
       return "Bio (/bio)";
     case "leads":
