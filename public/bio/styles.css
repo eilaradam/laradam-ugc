@@ -409,6 +409,25 @@ body {
 .chat-input input:focus { border-color: var(--accent); }
 .chat-input button { width: 46px; height: 46px; flex: none; border: 0; border-radius: 50%; background: var(--accent); color: #fff; cursor: pointer; display: grid; place-items: center; }
 
+/* formulario de captura de contato (gate antes da recomendacao) */
+.chat-lead {
+  align-self: stretch; margin: 4px 0 2px;
+  background: linear-gradient(135deg, rgba(255,90,77,.12), #241c18);
+  border: 1px solid rgba(255,90,77,.35); border-radius: 18px;
+  padding: 18px 16px; display: flex; flex-direction: column; gap: 10px;
+  animation: pop .35s var(--ease);
+}
+.chat-lead .cl-lock { width: 44px; height: 44px; border-radius: 50%; background: var(--surface-2); display: grid; place-items: center; margin: 2px auto 0; color: var(--accent); }
+.chat-lead .cl-lock svg { width: 22px; height: 22px; }
+.chat-lead .cl-title { text-align: center; font-family: var(--font-display); font-weight: 700; font-size: 16px; margin-bottom: 2px; }
+.chat-lead .cl-in { width: 100%; background: #14100e; border: 1px solid var(--border-2); color: var(--text); padding: 13px 16px; border-radius: 14px; font-family: var(--font-body); font-size: 14.5px; outline: none; }
+.chat-lead .cl-in:focus { border-color: var(--accent); }
+.chat-lead .cl-in::placeholder { color: var(--muted); }
+.chat-lead .cl-err { color: #ff8f7f; font-size: 12.5px; min-height: 0; text-align: center; }
+.chat-lead .cl-btn { margin-top: 2px; border: 0; border-radius: 14px; background: var(--accent); color: #fff; padding: 14px; font-family: var(--font-display); font-weight: 700; font-size: 15px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 10px 26px -10px rgba(255,90,77,.6); }
+.chat-lead .cl-btn:hover { filter: brightness(1.05); }
+.chat-lead .cl-btn:disabled { opacity: .7; cursor: default; }
+
 /* card de recomendacao dentro do chat */
 .reco {
   align-self: flex-start; max-width: 90%;

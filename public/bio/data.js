@@ -64,15 +64,15 @@ window.BIO_DEFAULT = {
         tipo: "escolha",
         texto: "Ultima! Quanto voce quer investir pra dar esse passo?",
         opcoes: [
-          { label: "Algo gratuito ou de baixo custo", tags: ["low"], proximo: "nome" },
-          { label: "Posso investir num curso", tags: ["mid"], proximo: "nome" },
-          { label: "Quero a solucao completa", tags: ["high"], proximo: "nome" },
+          { label: "Algo gratuito ou de baixo custo", tags: ["low"], proximo: "lead" },
+          { label: "Posso investir num curso", tags: ["mid"], proximo: "lead" },
+          { label: "Quero a solucao completa", tags: ["high"], proximo: "lead" },
         ],
       },
-      nome: {
-        tipo: "texto",
-        texto: "Adorei! Como voce se chama? (assim eu personalizo a indicacao)",
-        placeholder: "Digite seu nome",
+      // passo "lead": trava a recomendacao ate a pessoa deixar o contato
+      lead: {
+        tipo: "lead",
+        texto: "Sua recomendacao esta pronta! Deixe seu contato aqui embaixo pra ver o que separei pra voce.",
         proximo: "recomendar",
       },
       recomendar: {

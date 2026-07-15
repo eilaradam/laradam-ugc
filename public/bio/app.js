@@ -22,6 +22,7 @@ const ICONS = {
   bookmark: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3h12v18l-6-4-6 4z"/></svg>',
   send: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>',
   close: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>',
+  lock: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4.5" y="10.5" width="15" height="10" rx="2.5"/><path d="M8 10.5V7a4 4 0 018 0v3.5"/></svg>',
 };
 
 /* ---------- Conteudo: vem do banco via /api/bio-config (fallback em data.js) ---------- */
@@ -366,6 +367,46 @@ const ChatEngine = {
       };
       this.sendBtn.onclick = enviar;
       this.input.onkeydown = (e) => { if (e.key === "Enter") enviar(); };
+
+    } else if (step.tipo === "lead") {
+      // trava a recomendacao ate a pessoa deixar o contato
+      await this.botSay(step.texto);
+      const box = el("div", "chat-lead");
+      box.innerHTML = `
+        <div class="cl-lock">${ICONS.lock}</div>
+        <div class="cl-title">Quase la! Deixa seu contato</div>
+        <input class="cl-in" data-k="nome" placeholder="Seu nome" autocomplete="name">
+        <input class="cl-in" data-k="whatsapp" placeholder="Seu WhatsApp" inputmode="tel" autocomplete="tel">
+        <input class="cl-in" data-k="instagram" placeholder="Seu @instagram">
+        <div class="cl-err"></div>
+        <button class="cl-btn">Ver minha recomendacao ${ICONS.arrow}</button>`;
+      const btn = $(".cl-btn", box);
+      const err = $(".cl-err", box);
+      const enviar = async () => {
+        const nome = $('[data-k="nome"]', box).value.trim();
+        const whatsapp = $('[data-k="whatsapp"]', box).value.trim();
+        const instagram = $('[data-k="instagram"]', box).value.trim();
+        if (!nome || !whatsapp) { err.textContent = "Preenche pelo menos nome e WhatsApp :)"; return; }
+        err.textContent = "";
+        btn.disabled = true; btn.textContent = "Enviando...";
+        const produto = this.melhorProduto();
+        try {
+          await fetch("/api/bio-lead", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ nome, whatsapp, instagram, respostas: { tags: this.tags }, produto: produto ? produto.titulo : "" }),
+          });
+        } catch {}
+        Analytics.track("chat_lead");
+        this.nome = nome;
+        box.remove();
+        this.meSay(nome);
+        this.run(step.proximo);
+      };
+      btn.onclick = enviar;
+      this.body.appendChild(box);
+      this.scroll();
+      const n = $('[data-k="nome"]', box); if (n) n.focus();
 
     } else if (step.tipo === "recomendar") {
       const produto = this.melhorProduto();
