@@ -24,18 +24,47 @@ const ICONS = {
   close: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>',
 };
 
-/* ---------- Analytics simples (conta cliques) ----------
-   Guarda no navegador e mostra no console. Pra ligar num
-   analytics de verdade, e so trocar o corpo da funcao track().
-*/
+/* ---------- Conteudo: vem do banco via /api/bio-config (fallback em data.js) ---------- */
+let CONFIG = (typeof window !== "undefined" && window.BIO_DEFAULT) || {};
+
+/* ---------- Analytics: contador local + envia pro painel /admin ---------- */
 const Analytics = {
+  sid() {
+    let s = localStorage.getItem("bio_sid");
+    if (!s) {
+      s = "b" + Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+      localStorage.setItem("bio_sid", s);
+    }
+    return s;
+  },
+  send(type, name, metadata = {}) {
+    try {
+      fetch("/api/track", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        keepalive: true,
+        body: JSON.stringify({
+          event_type: type,
+          event_name: String(name).slice(0, 190),
+          session_id: this.sid(),
+          page_path: "/bio",
+          user_agent: navigator.userAgent,
+          referrer: document.referrer,
+          metadata,
+        }),
+      });
+    } catch {}
+  },
+  pageview() {
+    this.send("page_view", "page_view");
+  },
   track(evento, dados = {}) {
     const store = JSON.parse(localStorage.getItem("bio_analytics") || "{}");
-    const chave = evento + (dados.id ? ":" + dados.id : "");
+    const chave = evento + (dados.id != null ? ":" + dados.id : "");
     store[chave] = (store[chave] || 0) + 1;
     localStorage.setItem("bio_analytics", JSON.stringify(store));
-    console.log("[analytics]", evento, dados, "-> total:", store[chave]);
-    // window.verAnalytics() no console mostra o resumo
+    const name = "bio_" + evento + (dados.id != null ? "_" + String(dados.id) : "");
+    this.send("button_click", name, dados);
   },
 };
 window.verAnalytics = () => JSON.parse(localStorage.getItem("bio_analytics") || "{}");
@@ -385,4 +414,15 @@ function observarReveal() {
 }
 
 /* ---------- Start ---------- */
-document.addEventListener("DOMContentLoaded", render);
+async function boot() {
+  try {
+    const r = await fetch("/api/bio-config", { cache: "no-store" });
+    if (r.ok) {
+      const cfg = await r.json();
+      if (cfg && cfg.perfil) CONFIG = cfg; // usa o do banco; senao mantem o fallback
+    }
+  } catch {}
+  render();
+  Analytics.pageview();
+}
+document.addEventListener("DOMContentLoaded", boot);

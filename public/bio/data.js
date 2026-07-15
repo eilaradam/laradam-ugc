@@ -1,12 +1,13 @@
 /* =============================================================
-   CONTEUDO DO SEU SITE  ->  EDITE SO ESTE ARQUIVO
+   CONTEUDO PADRAO (FALLBACK) DO /bio
    -------------------------------------------------------------
-   Tudo que aparece na pagina sai daqui. Voce nao precisa mexer
-   em nenhum outro arquivo. Troque textos, precos, links e imagens
-   abaixo. Depois de salvar, e so atualizar a pagina (F5).
+   O conteudo de verdade agora vem do banco (Supabase) e voce edita
+   pelo admin em /admin (aba "Editar Bio"). Este arquivo so e usado
+   como reserva, caso o banco fique indisponivel, pra pagina nunca
+   ficar vazia.
    ============================================================= */
 
-const CONFIG = {
+window.BIO_DEFAULT = {
 
   /* ---------- 1. PERFIL / CABECALHO ---------- */
   perfil: {
