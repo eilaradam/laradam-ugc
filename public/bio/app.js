@@ -104,11 +104,11 @@ function render() {
   hero.innerHTML = `
     <img class="avatar" src="${C.perfil.foto}" alt="${esc(C.perfil.nome)}">
     <h1>${esc(C.perfil.nome)}</h1>
-    <p>${esc(C.perfil.subtitulo)}</p>
-    <div class="scroll-hint">${ICONS.chevronDown}</div>
     <nav class="socials" aria-label="Redes sociais">
       ${C.redes.map(r => `<a href="${r.url}" target="_blank" rel="noopener" aria-label="${r.rede}" data-track="social:${r.rede}">${ICONS[r.rede] || ICONS.external}</a>`).join("")}
-    </nav>`;
+    </nav>
+    <p>${esc(C.perfil.subtitulo)}</p>
+    <div class="scroll-hint">${ICONS.chevronDown}</div>`;
   frag.appendChild(hero);
 
   /* 2. CHATBOT CARD */

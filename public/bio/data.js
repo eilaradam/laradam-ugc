@@ -12,7 +12,7 @@ window.BIO_DEFAULT = {
   /* ---------- 1. PERFIL / CABECALHO ---------- */
   perfil: {
     nome: "Lara Dam",
-    subtitulo: "Responda 3 perguntinhas e descubra o melhor caminho pra voce",
+    subtitulo: "Use o chat e descubra o melhor caminho para você!",
     // Troque pela sua foto: coloque um arquivo em  assets/perfil.jpg
     // (a mesma foto vira o fundo desfocado da pagina automaticamente)
     foto: "assets/perfil.svg",
@@ -200,7 +200,7 @@ window.BIO_DEFAULT = {
 
   /* ---------- TITULOS DAS SECOES (mude se quiser) ---------- */
   textos: {
-    tituloCarrossel: "Comeca por aqui",
+    tituloCarrossel: "Comece por aqui",
     tituloCatalogo: "Todos os meus produtos",
   },
 };
