@@ -259,11 +259,10 @@ window.BIO_DEFAULT = {
     usuario: "@eilaradam",
     url: "https://instagram.com/eilaradam",
     posts: [
-      { cor: "#FF5A4D", imagem: "", legenda: "Bastidores de uma publi" },
-      { cor: "#FF8FA3", imagem: "", legenda: "Dica de portfolio" },
-      { cor: "#F4B942", imagem: "", legenda: "Antes e depois" },
-      { cor: "#7C6CE0", imagem: "", legenda: "Rotina de creator" },
-      { cor: "#2FBF71", imagem: "", legenda: "Como precificar" },
+      { cor: "#FF5A4D", imagem: "assets/ig1.jpg", legenda: "Portfolio UGC",             link: "https://www.instagram.com/p/DatP5-FvQTu/" },
+      { cor: "#FF8FA3", imagem: "assets/ig2.jpg", legenda: "Onde comecou tudo",          link: "https://www.instagram.com/p/DaiOGEzobvd/" },
+      { cor: "#F4B942", imagem: "assets/ig3.jpg", legenda: "Skills do meu Claudinho",    link: "https://www.instagram.com/p/DaQk5QJEbN4/?img_index=1" },
+      { cor: "#7C6CE0", imagem: "assets/ig4.jpg", legenda: "Tipos de creators que marcas contratam", link: "https://www.instagram.com/p/DZ8lALHEcCC/?img_index=1" },
     ],
   },
 
