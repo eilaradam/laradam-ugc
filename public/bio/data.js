@@ -145,7 +145,7 @@ window.BIO_DEFAULT = {
     },
     {
       id: "portfolio-claude",
-      titulo: "Portfolio com Claude",
+      titulo: "Portfolio com Claude (gravação)",
       capaCor: "#FF8FA3",
       imagem: "",
       preco: "R$ 197",
