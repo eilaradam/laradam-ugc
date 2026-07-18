@@ -146,9 +146,9 @@ function render() {
   chatCard.onclick = openChat;
   frag.appendChild(chatCard);
 
-  /* 3. CARROSSEL DE PRODUTOS (destaques) */
+  /* 3. CARROSSEL DE PRODUTOS (todos, secao unica) */
   frag.appendChild(el("h2", "section-title reveal", esc(C.textos.tituloCarrossel)));
-  frag.appendChild(carrossel(C.produtos.slice(0, 3)));
+  frag.appendChild(carrossel(C.produtos));
 
   /* 4. LINK EXTERNO SIMPLES */
   const L = C.linkExterno;
@@ -200,10 +200,6 @@ function render() {
     igCar.appendChild(post);
   });
   frag.appendChild(igCar);
-
-  /* 9. CATALOGO COMPLETO */
-  frag.appendChild(el("h2", "section-title reveal", esc(C.textos.tituloCatalogo)));
-  frag.appendChild(carrossel(C.produtos));
 
   /* 10. RODAPE */
   const foot = el("footer", "foot reveal");
