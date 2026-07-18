@@ -14,6 +14,7 @@ const ICONS = {
   chevronDown: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>',
   external: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 5h5v5M19 5l-8 8M18 13v6H5V6h6"/></svg>',
   cart: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="20" r="1.3"/><circle cx="18" cy="20" r="1.3"/><path d="M2 3h2.2l2 12h11l2-8H6"/></svg>',
+  bag: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 8h13l-.9 11.2a1.8 1.8 0 01-1.8 1.6H8.2a1.8 1.8 0 01-1.8-1.6L5.5 8z"/><path d="M9 8V6.2a3 3 0 016 0V8"/></svg>',
   spotify: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm4.5 14.4a.75.75 0 01-1 .25c-2.8-1.7-6.3-2.1-10.4-1.15a.75.75 0 11-.33-1.46c4.5-1 8.4-.6 11.5 1.3.35.2.46.66.23 1.06zm1.2-2.8a.94.94 0 01-1.28.3c-3.2-2-8-2.5-11.8-1.35a.94.94 0 11-.54-1.8c4.3-1.3 9.6-.7 13.3 1.55.44.27.58.85.32 1.3zm.1-2.9C14.3 8.4 8 8.2 4.4 9.3a1.12 1.12 0 11-.65-2.15C7.9 5.9 14.8 6.1 19 8.6a1.12 1.12 0 11-1.15 1.92z"/></svg>',
   whatsapp: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 00-8.5 15.2L2 22l4.9-1.5A10 10 0 1012 2zm0 1.8a8.2 8.2 0 016.9 12.6l.2.3-.8 2.9-3-.8.3.2A8.2 8.2 0 1112 3.8zm-3.3 4c-.2 0-.5.1-.7.3-.3.3-1 1-1 2.3s1 2.7 1.1 2.9c.1.2 2 3.1 4.9 4.3 2.4 1 2.9.8 3.4.8.5 0 1.6-.7 1.9-1.3.2-.6.2-1.2.2-1.3-.1-.1-.3-.2-.6-.3l-2-1c-.3-.1-.5-.2-.7.1l-.7.9c-.1.2-.3.2-.5.1-.3-.1-1.2-.5-2.3-1.4-.8-.7-1.4-1.6-1.6-1.9-.1-.3 0-.4.1-.5l.5-.5c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.9-2.1c-.2-.5-.4-.4-.6-.5h-.5z"/></svg>',
   heart: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3 1.2 4 2.5 1-1.3 2-2.5 4-2.5 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg>',
@@ -153,7 +154,7 @@ function render() {
   const L = C.linkExterno;
   const linkExt = el("button", "card link-ext reveal");
   linkExt.innerHTML = `
-    <span class="thumb" style="${L.imagem ? `background-image:url('${L.imagem}')` : `background:linear-gradient(135deg,${L.thumbCor},${L.thumbCor}99)`}"></span>
+    <span class="thumb" style="${L.imagem ? `background-image:url('${L.imagem}')` : `background:linear-gradient(135deg,${L.thumbCor},${L.thumbCor}99)`}">${L.imagem ? "" : ICONS.bag}</span>
     <span class="info"><strong>${esc(L.titulo)}</strong><small>${esc(L.descricao)}</small></span>
     <span class="out">${ICONS.external}</span>`;
   linkExt.onclick = () => { Analytics.track("link_externo", { id: "livro" }); window.open(L.url, "_blank", "noopener"); };

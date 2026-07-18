@@ -230,11 +230,11 @@ window.BIO_DEFAULT = {
 
   /* ---------- 4. LINK EXTERNO SIMPLES ---------- */
   linkExterno: {
-    titulo: "Produtos que uso na criacao de conteudo",
-    descricao: "Camera, luz, apps e os gadgets que uso pra gravar todo dia. Minha lista testada e aprovada.",
+    titulo: "Produtos que uso na criação de conteúdo",
+    descricao: "Câmera, luz, apps e os gadgets que uso pra gravar todo dia. Minha lista testada e aprovada.",
     thumbCor: "#C9A227",
     imagem: "",
-    url: "https://amazon.com.br",
+    url: "https://collshp.com/laradam?view=storefront",
   },
 
   /* ---------- 6. SPOTIFY (podcast) ---------- */
