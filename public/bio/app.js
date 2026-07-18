@@ -79,6 +79,30 @@ const capa = (p) => p.imagem
   ? `background-image:url('${p.imagem}')`
   : `background:linear-gradient(150deg, ${p.capaCor}, ${p.capaCor}88)`;
 
+// monta a mensagem de WhatsApp de uma oferta ({nome}, {oferta}, {contexto})
+function montaWaMsg(p, ctx = {}) {
+  const nome = (ctx.nome || "").trim();
+  const saud = nome ? `Oi Lara! Aqui é ${nome}.` : "Oi Lara!";
+  let body = (p.waMsg || "Quero saber mais sobre o {oferta}.")
+    .replace(/\{oferta\}/g, p.titulo)
+    .replace(/\{contexto\}/g, (ctx.contexto || "").trim());
+  body = body.replace(/\s+/g, " ").trim();
+  return `${saud} Vim pelo seu link na bio. ${body}`;
+}
+
+// destino do botao de uma oferta: tem checkout -> abre o checkout;
+// senao -> WhatsApp com a mensagem pronta (pra nao ficar link morto)
+function ctaFor(p, ctx = {}) {
+  if (p.checkout) return { url: p.checkout, label: p.cta || "Acessar" };
+  const num = p.numero
+    || (CONFIG.whatsapp && CONFIG.whatsapp[0] && CONFIG.whatsapp[0].numero)
+    || "5512988729264";
+  return {
+    url: `https://wa.me/${num}?text=${encodeURIComponent(montaWaMsg(p, ctx))}`,
+    label: p.ctaWhats || "Falar no WhatsApp",
+  };
+}
+
 function spotifyEmbed(url) {
   try {
     const u = new URL(url);
@@ -246,6 +270,7 @@ function botaoX() {
 /* ---------- Modal de PRODUTO ---------- */
 function openProduto(p) {
   Analytics.track("produto_ver", { id: p.id });
+  const cta = ctaFor(p);
   const m = el("div", "modal");
   m.style.position = "relative";
   m.innerHTML = `
@@ -256,12 +281,12 @@ function openProduto(p) {
       <p>${esc(p.descricao)}</p>
     </div>
     <div class="pm-foot">
-      <button class="btn-primary">${ICONS.cart}${esc(p.cta)}</button>
+      <button class="btn-primary">${ICONS.cart}${esc(cta.label)}</button>
     </div>`;
   m.appendChild(botaoX());
   $(".btn-primary", m).onclick = () => {
     Analytics.track("produto_comprar", { id: p.id });
-    window.open(p.checkout, "_blank", "noopener");
+    window.open(cta.url, "_blank", "noopener");
   };
   abrirOverlay(m);
 }
@@ -298,6 +323,8 @@ const ChatEngine = {
     this.sendBtn = $(".chat-input button", m);
     this.tags = [];
     this.nome = "";
+    this.produtoId = null;
+    this.contexto = "";
 
     // tela de boas-vindas
     const welcome = el("div", "chat-welcome");
@@ -326,16 +353,19 @@ const ChatEngine = {
     this.scroll();
   },
 
+  // troca {nome} pelo nome digitado em qualquer texto do fluxo
+  fmt(t) { return String(t == null ? "" : t).replace(/\{nome\}/g, this.nome || "você"); },
+
   async run(id) {
     const step = CONFIG.chat.passos[id];
     if (!step) return;
 
     if (step.tipo === "bot") {
-      await this.botSay(step.texto);
+      await this.botSay(this.fmt(step.texto));
       if (step.proximo) this.run(step.proximo);
 
     } else if (step.tipo === "escolha") {
-      await this.botSay(step.texto);
+      await this.botSay(this.fmt(step.texto));
       const box = el("div", "chat-options");
       step.opcoes.forEach(op => {
         const b = el("button", null, esc(op.label));
@@ -343,6 +373,8 @@ const ChatEngine = {
           box.remove();
           this.meSay(op.label);
           (op.tags || []).forEach(t => this.tags.push(t));
+          if (op.produto) this.produtoId = op.produto;
+          if (op.contexto) this.contexto = op.contexto;
           Analytics.track("chat_escolha", { id: op.label });
           this.run(op.proximo);
         };
@@ -352,7 +384,7 @@ const ChatEngine = {
       this.scroll();
 
     } else if (step.tipo === "texto") {
-      await this.botSay(step.texto);
+      await this.botSay(this.fmt(step.texto));
       this.inputWrap.style.display = "flex";
       this.input.placeholder = step.placeholder || "Digite aqui...";
       this.input.focus();
@@ -370,16 +402,16 @@ const ChatEngine = {
 
     } else if (step.tipo === "lead") {
       // trava a recomendacao ate a pessoa deixar o contato
-      await this.botSay(step.texto);
+      await this.botSay(this.fmt(step.texto));
       const box = el("div", "chat-lead");
       box.innerHTML = `
         <div class="cl-lock">${ICONS.lock}</div>
-        <div class="cl-title">Quase la! Deixa seu contato</div>
-        <input class="cl-in" data-k="nome" placeholder="Seu nome" autocomplete="name">
+        <div class="cl-title">Só falta seu contato 💛</div>
+        <input class="cl-in" data-k="nome" placeholder="Seu nome" autocomplete="name" value="${esc(this.nome || "")}">
         <input class="cl-in" data-k="whatsapp" placeholder="Seu WhatsApp" inputmode="tel" autocomplete="tel">
         <input class="cl-in" data-k="email" type="email" placeholder="Seu e-mail" autocomplete="email">
         <div class="cl-err"></div>
-        <button class="cl-btn">Ver minha recomendacao ${ICONS.arrow}</button>`;
+        <button class="cl-btn">Ver minha recomendação ${ICONS.arrow}</button>`;
       const btn = $(".cl-btn", box);
       const err = $(".cl-err", box);
       const enviar = async () => {
@@ -389,12 +421,12 @@ const ChatEngine = {
         if (!nome || !whatsapp) { err.textContent = "Preenche pelo menos nome e WhatsApp :)"; return; }
         err.textContent = "";
         btn.disabled = true; btn.textContent = "Enviando...";
-        const produto = this.melhorProduto();
+        const produto = this.resolverProduto();
         try {
           await fetch("/api/bio-lead", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ nome, whatsapp, email, respostas: { tags: this.tags }, produto: produto ? produto.titulo : "" }),
+            body: JSON.stringify({ nome, whatsapp, email, respostas: { tags: this.tags, contexto: this.contexto, produto_id: this.produtoId }, produto: produto ? produto.titulo : "" }),
           });
         } catch {}
         Analytics.track("chat_lead");
@@ -409,8 +441,8 @@ const ChatEngine = {
       const n = $('[data-k="nome"]', box); if (n) n.focus();
 
     } else if (step.tipo === "recomendar") {
-      const produto = this.melhorProduto();
-      const texto = step.texto.replace("{nome}", this.nome || "Ei");
+      const produto = this.resolverProduto();
+      const texto = this.fmt(step.texto);
       await this.botSay(texto);
       await delay(300);
       this.mostrarReco(produto);
@@ -418,7 +450,23 @@ const ChatEngine = {
     }
   },
 
-  // escolhe o produto com mais "tags" em comum com as respostas
+  // busca uma oferta (curso OU servico) pelo id
+  acharOferta(id) {
+    const all = [...(CONFIG.produtos || []), ...(CONFIG.servicos || [])];
+    return all.find(p => p.id === id);
+  },
+
+  // no funil ramificado a oferta ja vem definida pela escolha (produtoId);
+  // se por algum motivo nao vier, cai no match por tags (fallback)
+  resolverProduto() {
+    if (this.produtoId) {
+      const p = this.acharOferta(this.produtoId);
+      if (p) return p;
+    }
+    return this.melhorProduto();
+  },
+
+  // fallback: produto (curso) com mais "tags" em comum com as respostas
   melhorProduto() {
     let melhor = CONFIG.produtos[0], max = -1;
     CONFIG.produtos.forEach(p => {
@@ -430,12 +478,13 @@ const ChatEngine = {
 
   mostrarReco(p) {
     const reco = el("div", "reco");
+    const cta = ctaFor(p, { nome: this.nome, contexto: this.contexto });
     reco.innerHTML = `
       <div class="reco-cover" style="${capa(p)}"><span>${esc(p.titulo)}</span></div>
       <div class="reco-body">
         <h4>${esc(p.titulo)}</h4>
         <div class="price">${esc(p.preco)}</div>
-        <a href="${p.checkout}" target="_blank" rel="noopener">${esc(p.cta)} ${ICONS.arrow}</a>
+        <a href="${cta.url}" target="_blank" rel="noopener">${esc(cta.label)} ${ICONS.arrow}</a>
       </div>`;
     $("a", reco).onclick = () => Analytics.track("chat_cta", { id: p.id });
     this.body.appendChild(reco);
