@@ -139,7 +139,7 @@ window.BIO_DEFAULT = {
       descricao: "A plataforma que organiza sua vida de creator num lugar só: contratos, prazos, propostas, pagamentos e briefings. Pare de perder publi por desorganização e escale sem virar refém da planilha.",
       cta: "Assinar agora",
       ctaWhats: "Quero saber mais",
-      checkout: "https://meumanager.com.br",
+      checkout: "https://meumanager.com/login",
       waMsg: "Quero saber mais sobre o {oferta}.",
       tags: ["creator", "gestao", "escalar"],
     },
