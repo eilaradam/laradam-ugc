@@ -271,7 +271,7 @@ window.BIO_DEFAULT = {
   plataforma: {
     nome: "MeuManager",
     descricao: "Pagina montada com a plataforma pra creators",
-    url: "https://meumanager.com.br",
+    url: "https://meumanager.com",
     atribuicao: "Feito com carinho por Lara Dam",
   },
 
