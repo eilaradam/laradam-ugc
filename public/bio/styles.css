@@ -433,7 +433,7 @@ body {
 
 /* card de recomendacao dentro do chat */
 .reco {
-  align-self: flex-start; max-width: 90%;
+  align-self: flex-start; max-width: 90%; flex-shrink: 0;
   background: linear-gradient(135deg, rgba(255,90,77,.14), #241c18);
   border: 1px solid rgba(255,90,77,.35); border-radius: 18px; overflow: hidden;
   animation: pop .4s var(--ease);
