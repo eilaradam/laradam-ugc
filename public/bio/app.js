@@ -79,6 +79,9 @@ const delay = (ms) => new Promise(r => setTimeout(r, ms));
 const capa = (p) => p.imagem
   ? `background-image:url('${p.imagem}')`
   : `background:linear-gradient(150deg, ${p.capaCor}, ${p.capaCor}88)`;
+// titulo escrito sobre a capa: some quando tituloNaCapa === false
+// (ex.: quando a imagem ja tem o nome do curso embutido). undefined = mostra.
+const capaTitulo = (p) => p.tituloNaCapa === false ? "" : `<span>${esc(p.titulo)}</span>`;
 
 // monta a mensagem de WhatsApp de uma oferta ({nome}, {oferta}, {contexto})
 function montaWaMsg(p, ctx = {}) {
@@ -216,7 +219,7 @@ function carrossel(produtos) {
   produtos.forEach(p => {
     const card = el("article", "product");
     card.innerHTML = `
-      <div class="cover" style="${capa(p)}"><span>${esc(p.titulo)}</span></div>
+      <div class="cover" style="${capa(p)}">${capaTitulo(p)}</div>
       <div class="body">
         <h3>${esc(p.titulo)}</h3>
         <span class="price">${esc(p.preco)}</span>
@@ -271,7 +274,7 @@ function openProduto(p) {
   const m = el("div", "modal");
   m.style.position = "relative";
   m.innerHTML = `
-    <div class="pm-cover" style="${capa(p)}"><span>${esc(p.titulo)}</span></div>
+    <div class="pm-cover" style="${capa(p)}">${capaTitulo(p)}</div>
     <div class="pm-body">
       <h2>${esc(p.titulo)}</h2>
       <div class="pm-price">${esc(p.preco)}</div>

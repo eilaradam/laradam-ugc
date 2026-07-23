@@ -128,6 +128,9 @@ window.BIO_DEFAULT = {
      checkout: link da pagina de venda. ENQUANTO estiver vazio, o botao
      leva pro WhatsApp ("quero saber mais") pra nao ficar link morto.
      waMsg: corpo da mensagem de WhatsApp ({oferta} vira o titulo).
+     tituloNaCapa: mostra (ou nao) o nome do curso escrito por cima da capa.
+       Deixe false quando a imagem ja tem o nome embutido, senao fica repetido.
+       Ausente ou true = mostra. Editavel pelo olhinho no admin do creators.
   */
   produtos: [
     {
@@ -135,6 +138,7 @@ window.BIO_DEFAULT = {
       titulo: "MeuManager",
       capaCor: "#FF5A4D",
       imagem: "",
+      tituloNaCapa: true,
       preco: "R$ 47/mês",
       descricao: "A plataforma que organiza sua vida de creator num lugar só: contratos, prazos, propostas, pagamentos e briefings. Pare de perder publi por desorganização e escale sem virar refém da planilha.",
       cta: "Assinar agora",
@@ -148,6 +152,7 @@ window.BIO_DEFAULT = {
       titulo: "Portfolio com Claude (gravação)",
       capaCor: "#FF8FA3",
       imagem: "",
+      tituloNaCapa: true,
       preco: "R$ 197",
       descricao: "A gravação da imersão onde você monta, do zero, um portfólio de UGC que fecha marca, usando a Claude como sua parceira de criação. Assista no seu tempo, quantas vezes quiser.",
       cta: "Quero minha vaga",
@@ -161,6 +166,7 @@ window.BIO_DEFAULT = {
       titulo: "Seja uma UGC Manager",
       capaCor: "#7C6CE0",
       imagem: "",
+      tituloNaCapa: true,
       preco: "R$ 697",
       descricao: "O treinamento pra você sair de creator e virar UGC Manager: aprenda a montar um time, captar marcas e gerenciar campanhas de creators do início ao fim.",
       cta: "Quero entrar",
@@ -174,6 +180,7 @@ window.BIO_DEFAULT = {
       titulo: "UGC do Zero",
       capaCor: "#F4B942",
       imagem: "",
+      tituloNaCapa: true,
       preco: "R$ 197",
       descricao: "O curso pra quem nunca gravou nada e quer entrar na UGC com o pé direito. Do primeiro vídeo até a primeira publi paga, sem enrolação e com exemplos reais.",
       cta: "Quero começar",
@@ -187,6 +194,7 @@ window.BIO_DEFAULT = {
       titulo: "Automação Instagram com Claude",
       capaCor: "#2FBF71",
       imagem: "",
+      tituloNaCapa: true,
       preco: "R$ 297",
       descricao: "Aprenda a automatizar seu Instagram com a Claude: respostas de DM, comentários e captação de leads no piloto automático, sem parecer robô e sem depender de ferramenta cara.",
       cta: "Quero automatizar",
