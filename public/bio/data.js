@@ -240,7 +240,7 @@ window.BIO_DEFAULT = {
   linkExterno: {
     titulo: "Produtos que uso na criação de conteúdo",
     descricao: "Câmera, luz, apps e os gadgets que uso pra gravar todo dia. Minha lista testada e aprovada.",
-    thumbCor: "#C9A227",
+    thumbCor: "#FFFFFF",
     imagem: "",
     url: "https://collshp.com/laradam?view=storefront",
   },
@@ -277,7 +277,7 @@ window.BIO_DEFAULT = {
   /* ---------- 5 e 10. MARCA DA PLATAFORMA (powered by) ---------- */
   plataforma: {
     nome: "MeuManager",
-    descricao: "Pagina montada com a plataforma pra creators",
+    descricao: "App de organização pra creators: financeiro, calendário de conteúdo, trabalhos e leads.",
     url: "https://meumanager.com",
     atribuicao: "Feito com carinho por Lara Dam",
     logo: "meumanager.png", // logo no lugar da inicial "M"; vazio = mostra a inicial. Trocavel pelo admin.
