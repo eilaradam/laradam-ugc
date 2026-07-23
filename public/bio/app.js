@@ -143,7 +143,7 @@ function render() {
   const chatCard = el("button", "card chat-card reveal");
   chatCard.setAttribute("aria-label", "Abrir chat");
   chatCard.innerHTML = `
-    <span class="bolt">${ICONS.bolt}</span>
+    <span class="bolt">💬</span>
     <span class="txt"><small>Concierge de IA</small><strong>${esc(C.chat.tituloCard)}</strong></span>
     <span class="arrow">${ICONS.arrow}</span>`;
   chatCard.onclick = openChat;
@@ -157,7 +157,7 @@ function render() {
   const L = C.linkExterno;
   const linkExt = el("button", "card link-ext reveal");
   linkExt.innerHTML = `
-    <span class="thumb" style="${L.imagem ? `background-image:url('${L.imagem}')` : `background:linear-gradient(135deg,${L.thumbCor},${L.thumbCor}99)`}">${L.imagem ? "" : ICONS.bag}</span>
+    <span class="thumb" style="${L.imagem ? `background-image:url('${L.imagem}')` : `background:linear-gradient(135deg,${L.thumbCor},${L.thumbCor}99)`}">${L.imagem ? "" : "🛒"}</span>
     <span class="info"><strong>${esc(L.titulo)}</strong><small>${esc(L.descricao)}</small></span>
     <span class="out">${ICONS.external}</span>`;
   linkExt.onclick = () => { Analytics.track("link_externo", { id: "livro" }); window.open(L.url, "_blank", "noopener"); };
@@ -235,7 +235,7 @@ function carrossel(produtos) {
 function poweredBy(pf) {
   const c = el("button", "card powered reveal");
   c.innerHTML = `
-    <span class="logo">${esc(pf.nome[0])}</span>
+    <span class="logo">${pf.logo ? `<img src="${pf.logo}" alt="${esc(pf.nome)}">` : esc(pf.nome[0])}</span>
     <span class="p-txt"><strong>${esc(pf.nome)}</strong><small>${esc(pf.descricao)}</small></span>
     <span class="out">${ICONS.external}</span>`;
   c.onclick = () => { Analytics.track("plataforma"); window.open(pf.url, "_blank", "noopener"); };

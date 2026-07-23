@@ -280,6 +280,7 @@ window.BIO_DEFAULT = {
     descricao: "Pagina montada com a plataforma pra creators",
     url: "https://meumanager.com",
     atribuicao: "Feito com carinho por Lara Dam",
+    logo: "meumanager.png", // logo no lugar da inicial "M"; vazio = mostra a inicial. Trocavel pelo admin.
   },
 
   /* ---------- TITULOS DAS SECOES ---------- */
