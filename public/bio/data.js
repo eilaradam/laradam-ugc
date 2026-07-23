@@ -291,7 +291,7 @@ window.BIO_DEFAULT = {
   /* ---------- TITULOS DAS SECOES ---------- */
   textos: {
     tituloCarrossel: "Meus cursos",
-    tituloCarrossel2: "Feito com Claude",
+    tituloCarrossel2: "Com a Claude",
     tituloCatalogo: "Todos os meus produtos",
   },
 };
