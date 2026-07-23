@@ -248,7 +248,7 @@ window.BIO_DEFAULT = {
   /* ---------- 6. SPOTIFY (podcast) ---------- */
   spotify: {
     nome: "Pra criar no foco",
-    url: "https://open.spotify.com/playlist/37i9dQZF1DWWQRwui0ExPn",
+    url: "https://open.spotify.com/artist/1eDIWVJt7ZWKsrXw5WVNsN",
   },
 
   /* ---------- 7. WHATSAPP ---------- */

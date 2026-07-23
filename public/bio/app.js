@@ -110,8 +110,10 @@ function ctaFor(p, ctx = {}) {
 function spotifyEmbed(url) {
   try {
     const u = new URL(url);
-    if (!u.pathname.startsWith("/embed")) u.pathname = "/embed" + u.pathname;
-    return "https://open.spotify.com" + u.pathname + "?utm_source=generator&theme=0";
+    // tira prefixo de idioma que o app do Spotify coloca (ex: /intl-pt/) e ignora o ?si
+    let p = u.pathname.replace(/^\/intl-[a-z-]+\//i, "/");
+    if (!p.startsWith("/embed")) p = "/embed" + p;
+    return "https://open.spotify.com" + p + "?utm_source=generator&theme=0";
   } catch { return url; }
 }
 
