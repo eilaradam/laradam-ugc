@@ -134,26 +134,26 @@ body {
   text-align: left;
   width: 100%;
   color: var(--text);
-  background: linear-gradient(135deg, rgba(255,90,77,.16), var(--surface-2));
-  border: 1px solid rgba(255,90,77,.28);
-  transition: transform .25s var(--ease), box-shadow .25s;
+  background: rgba(24,23,26,.55);
+  border: 1px solid var(--border-2);
+  transition: transform .25s var(--ease), box-shadow .25s, border-color .25s;
 }
-.chat-card:hover { transform: translateY(-2px); box-shadow: 0 26px 60px -22px rgba(255,90,77,.4); }
+.chat-card:hover { transform: translateY(-2px); box-shadow: 0 26px 55px -26px rgba(0,0,0,.6); border-color: rgba(255,245,235,.26); }
 .chat-card .bolt {
   flex: none;
   width: 46px; height: 46px;
   border-radius: 14px;
   display: grid; place-items: center;
-  background: var(--accent);
-  color: #fff;
-  box-shadow: 0 8px 20px -6px rgba(255,90,77,.7);
-  font-size: 24px; line-height: 1;
+  background: transparent;
+  border: 1px solid var(--border-2);
+  color: var(--accent-2);
+  font-size: 21px; line-height: 1;
 }
 .chat-card .bolt svg { width: 24px; height: 24px; }
 .chat-card .txt { flex: 1; }
-.chat-card .txt small { color: var(--muted); font-size: 12.5px; display: block; }
-.chat-card .txt strong { font-family: var(--font-display); font-size: 18px; font-weight: 700; letter-spacing: -.01em; }
-.chat-card .arrow { color: var(--accent); }
+.chat-card .txt small { color: #857c72; font-size: 10.5px; letter-spacing: .16em; text-transform: uppercase; display: block; margin-bottom: 3px; }
+.chat-card .txt strong { font-family: var(--font-display); font-size: 18px; font-weight: 600; letter-spacing: -.01em; }
+.chat-card .arrow { color: var(--muted); }
 
 /* =================== TITULOS DE SECAO =================== */
 .section-title {

@@ -143,7 +143,7 @@ function render() {
   const chatCard = el("button", "card chat-card reveal");
   chatCard.setAttribute("aria-label", "Abrir chat");
   chatCard.innerHTML = `
-    <span class="bolt">💬</span>
+    <span class="bolt">✦</span>
     <span class="txt"><small>Concierge de IA</small><strong>${esc(C.chat.tituloCard)}</strong></span>
     <span class="arrow">${ICONS.arrow}</span>`;
   chatCard.onclick = openChat;
