@@ -135,6 +135,7 @@ window.BIO_DEFAULT = {
   produtos: [
     {
       id: "automacao-ig",
+      grupo: "claude",
       titulo: "Direct no Automático",
       capaCor: "#2FBF71",
       imagem: "",
@@ -149,6 +150,7 @@ window.BIO_DEFAULT = {
     },
     {
       id: "meumanager",
+      grupo: "gerais",
       titulo: "MeuManager",
       capaCor: "#FF5A4D",
       imagem: "",
@@ -163,7 +165,8 @@ window.BIO_DEFAULT = {
     },
     {
       id: "portfolio-claude",
-      titulo: "Portfolio com Claude (gravação)",
+      grupo: "claude",
+      titulo: "Imersão gravada",
       capaCor: "#FF8FA3",
       imagem: "",
       tituloNaCapa: true,
@@ -177,6 +180,7 @@ window.BIO_DEFAULT = {
     },
     {
       id: "ugc-manager",
+      grupo: "gerais",
       titulo: "Seja uma UGC Manager",
       capaCor: "#7C6CE0",
       imagem: "",
@@ -191,6 +195,7 @@ window.BIO_DEFAULT = {
     },
     {
       id: "ugc-zero",
+      grupo: "gerais",
       titulo: "UGC do Zero",
       capaCor: "#F4B942",
       imagem: "",
@@ -286,6 +291,7 @@ window.BIO_DEFAULT = {
   /* ---------- TITULOS DAS SECOES ---------- */
   textos: {
     tituloCarrossel: "Meus cursos",
+    tituloCarrossel2: "Feito com Claude",
     tituloCatalogo: "Todos os meus produtos",
   },
 };

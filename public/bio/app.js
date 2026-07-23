@@ -151,9 +151,17 @@ function render() {
   chatCard.onclick = openChat;
   frag.appendChild(chatCard);
 
-  /* 3. CARROSSEL DE PRODUTOS (todos, secao unica) */
-  frag.appendChild(el("h2", "section-title reveal", esc(C.textos.tituloCarrossel)));
-  frag.appendChild(carrossel(C.produtos));
+  /* 3. CURSOS: dois carrosseis por grupo (gerais + treinamento com Claude) */
+  const prodGerais = (C.produtos || []).filter(p => (p.grupo || "gerais") === "gerais");
+  const prodClaude = (C.produtos || []).filter(p => p.grupo === "claude");
+  if (prodGerais.length) {
+    frag.appendChild(el("h2", "section-title reveal", esc(C.textos.tituloCarrossel)));
+    frag.appendChild(carrossel(prodGerais));
+  }
+  if (prodClaude.length) {
+    frag.appendChild(el("h2", "section-title reveal", esc(C.textos.tituloCarrossel2 || "Treinamento com Claude")));
+    frag.appendChild(carrossel(prodClaude));
+  }
 
   /* 4. LINK EXTERNO SIMPLES */
   const L = C.linkExterno;
