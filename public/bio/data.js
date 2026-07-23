@@ -134,6 +134,20 @@ window.BIO_DEFAULT = {
   */
   produtos: [
     {
+      id: "automacao-ig",
+      titulo: "Direct no Automático",
+      capaCor: "#2FBF71",
+      imagem: "",
+      tituloNaCapa: true,
+      preco: "R$ 297",
+      descricao: "Aprenda a automatizar seu Instagram com a Claude: respostas de DM, comentários e captação de leads no piloto automático, sem parecer robô e sem depender de ferramenta cara.",
+      cta: "Quero automatizar",
+      ctaWhats: "Quero saber mais",
+      checkout: "https://pay.kiwify.com.br/P4X2IfL",
+      waMsg: "Quero automatizar meu Instagram e me interessei no {oferta}.",
+      tags: ["creator", "automacao", "escalar"],
+    },
+    {
       id: "meumanager",
       titulo: "MeuManager",
       capaCor: "#FF5A4D",
@@ -188,20 +202,6 @@ window.BIO_DEFAULT = {
       checkout: "",
       waMsg: "Quero começar na UGC e me interessei no {oferta}.",
       tags: ["creator", "iniciante"],
-    },
-    {
-      id: "automacao-ig",
-      titulo: "Automação Instagram com Claude",
-      capaCor: "#2FBF71",
-      imagem: "",
-      tituloNaCapa: true,
-      preco: "R$ 297",
-      descricao: "Aprenda a automatizar seu Instagram com a Claude: respostas de DM, comentários e captação de leads no piloto automático, sem parecer robô e sem depender de ferramenta cara.",
-      cta: "Quero automatizar",
-      ctaWhats: "Quero saber mais",
-      checkout: "https://pay.kiwify.com.br/P4X2IfL",
-      waMsg: "Quero automatizar meu Instagram e me interessei no {oferta}.",
-      tags: ["creator", "automacao", "escalar"],
     },
   ],
 
