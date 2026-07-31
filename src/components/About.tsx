@@ -35,7 +35,7 @@ export default function About() {
           className="relative aspect-[4/5] max-w-[280px] md:max-w-[400px] mx-auto md:ml-auto md:mr-12 w-full"
         >
           <img
-            src="/2.png"
+            src="/sobre-circle.png"
             alt="Lara Dam"
             className="w-full h-full object-cover object-center rounded-2xl md:rounded-3xl"
           />
