@@ -119,7 +119,6 @@ export const VIDEOS: Video[] = [
 
   // BELEZA
   { id: "b-anethun", title: "Anethun", category: "beleza", brand: "Anethun", youtubeId: "YwEt7sa0zAE" },
-  { id: "b-ds", title: "DS", category: "beleza", brand: "DS", youtubeId: "CxJeyu75qQc" },
   { id: "b-noma", title: "Noma", category: "beleza", brand: "Noma", youtubeId: "TbRE2_mezCg" },
   { id: "b1", title: "Skincare noturno", category: "beleza", brand: "L'Oréal", views: "500k", youtubeId: "6kvtFKsPQPw" },
   { id: "b2", title: "Inglot", category: "beleza", brand: "Inglot", youtubeId: "0g1pFDhxi-4" },
@@ -192,6 +191,7 @@ export const VIDEOS: Video[] = [
   { id: "t10", title: "Gamma", category: "tech", brand: "Gamma", youtubeId: "nZQoMA114MA" },
 
   // MODA
+  { id: "b-ds", title: "DS", category: "moda", brand: "DS", youtubeId: "CxJeyu75qQc" },
   { id: "m1", title: "Outfit do dia", category: "moda", brand: "Lust", youtubeId: "nV1oWxv_J_4" },
   { id: "m2", title: "Midas Time", category: "moda", brand: "Midas Time", youtubeId: "wZgUdGFouNA" },
   { id: "m3", title: "Midas Time", category: "moda", brand: "Midas Time", youtubeId: "t2aysMm2INg" },

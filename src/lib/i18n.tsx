@@ -449,6 +449,16 @@ const dict: Record<Lang, Dict> = {
         },
         { slug: "casa", name: "Casa & Deco", tagline: "Ambientes que inspiram" },
         {
+          slug: "tech",
+          name: "Tech & Apps",
+          tagline: "Apps e gadgets em linguagem humana",
+        },
+        {
+          slug: "financas",
+          name: "Finanças",
+          tagline: "Dinheiro e fintech sem complicação",
+        },
+        {
           slug: "gastronomia",
           name: "Gastronomia",
           tagline: "Comida que dá água na boca",
@@ -462,16 +472,6 @@ const dict: Record<Lang, Dict> = {
           slug: "saude",
           name: "Saúde & Fitness",
           tagline: "Suplementos e bem-estar que viram rotina",
-        },
-        {
-          slug: "financas",
-          name: "Finanças",
-          tagline: "Dinheiro e fintech sem complicação",
-        },
-        {
-          slug: "tech",
-          name: "Tech & Apps",
-          tagline: "Apps e gadgets em linguagem humana",
         },
         { slug: "moda", name: "Moda", tagline: "Outfits que contam história" },
         {
@@ -951,6 +951,16 @@ const dict: Record<Lang, Dict> = {
           tagline: "Spaces that inspire",
         },
         {
+          slug: "tech",
+          name: "Tech & Apps",
+          tagline: "Apps and gadgets in human language",
+        },
+        {
+          slug: "financas",
+          name: "Finance",
+          tagline: "Money and fintech, no jargon",
+        },
+        {
           slug: "gastronomia",
           name: "Gastronomy",
           tagline: "Food that makes your mouth water",
@@ -964,16 +974,6 @@ const dict: Record<Lang, Dict> = {
           slug: "saude",
           name: "Health & Fitness",
           tagline: "Supplements and wellness that become routine",
-        },
-        {
-          slug: "financas",
-          name: "Finance",
-          tagline: "Money and fintech, no jargon",
-        },
-        {
-          slug: "tech",
-          name: "Tech & Apps",
-          tagline: "Apps and gadgets in human language",
         },
         {
           slug: "moda",
