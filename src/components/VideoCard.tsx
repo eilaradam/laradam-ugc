@@ -71,12 +71,18 @@ export default function VideoCard({ video, index = 0, size = "md" }: Props) {
         {video.youtubeId && (
           <>
             <img
-              src={`https://i.ytimg.com/vi/${video.youtubeId}/maxresdefault.jpg`}
-              onError={(e) => bumpThumb(e.currentTarget, video.youtubeId!)}
+              src={
+                video.thumbnail ??
+                `https://i.ytimg.com/vi/${video.youtubeId}/maxresdefault.jpg`
+              }
+              onError={(e) => {
+                // Capa customizada não usa a cascata do YouTube.
+                if (!video.thumbnail) bumpThumb(e.currentTarget, video.youtubeId!);
+              }}
               onLoad={(e) => {
                 // YouTube devolve imagem 120x90 quando a thumbnail pedida não existe —
                 // detectamos isso pra cair pro próximo fallback.
-                if (e.currentTarget.naturalWidth <= 120) {
+                if (!video.thumbnail && e.currentTarget.naturalWidth <= 120) {
                   bumpThumb(e.currentTarget, video.youtubeId!);
                 }
               }}
