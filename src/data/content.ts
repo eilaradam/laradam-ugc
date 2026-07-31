@@ -118,6 +118,8 @@ export const VIDEOS: Video[] = [
   { id: "g6", title: "Tropical", category: "food", brand: "Tropical", youtubeId: "QgCK-EJKTm0" },
 
   // BELEZA
+  { id: "b-anethun", title: "Anethun", category: "beleza", brand: "Anethun", youtubeId: "YwEt7sa0zAE" },
+  { id: "b-ds", title: "DS", category: "beleza", brand: "DS", youtubeId: "CxJeyu75qQc" },
   { id: "b-noma", title: "Noma", category: "beleza", brand: "Noma", youtubeId: "TbRE2_mezCg" },
   { id: "b1", title: "Skincare noturno", category: "beleza", brand: "L'Oréal", views: "500k", youtubeId: "6kvtFKsPQPw" },
   { id: "b2", title: "Inglot", category: "beleza", brand: "Inglot", youtubeId: "0g1pFDhxi-4" },
@@ -169,11 +171,19 @@ export const VIDEOS: Video[] = [
   // FINANÇAS
   { id: "t0a", title: "InfinitePay", category: "financas", brand: "InfinitePay", youtubeId: "5wf8Fv2CTa4", views: "100M", featured: true },
   { id: "t0b", title: "Méliuz", category: "financas", brand: "Méliuz", youtubeId: "wesTfq67X9o", views: "30M", featured: true },
+  { id: "f-bv3", title: "Banco BV", category: "financas", brand: "BV", youtubeId: "-Znut2F7-kI" },
+  { id: "f-lemon1", title: "Lemon Bank", category: "financas", brand: "Lemon Bank", youtubeId: "HyErhMy2F_8" },
+  { id: "f-bv4", title: "Banco BV", category: "financas", brand: "BV", youtubeId: "RLdPGs8EZlc" },
+  { id: "f-lemon2", title: "Lemon Bank", category: "financas", brand: "Lemon Bank", youtubeId: "XczFsjLCIUU" },
+  { id: "f-curso", title: "Curso de Finanças", category: "financas", brand: "Finanças", youtubeId: "lmIRlTUsie0" },
   { id: "t5", title: "Méliuz App", category: "financas", brand: "Méliuz", youtubeId: "GPcPWfWmA3A" },
   { id: "t2", title: "BV Financeiro", category: "financas", brand: "BV", youtubeId: "2NMavMHi4jM" },
   { id: "t3", title: "BV Financeiro", category: "financas", brand: "BV", youtubeId: "Q_n4uwkxiDo" },
 
   // TECH & APPS
+  { id: "t-reforma100", title: "Reforma100", category: "tech", brand: "Reforma100", youtubeId: "XWnvZbTcHJw" },
+  { id: "t-proton", title: "Proton VPN", category: "tech", brand: "Proton VPN", youtubeId: "PkDuP91RErg" },
+  { id: "t-decolar", title: "Decolar", category: "tech", brand: "Decolar", youtubeId: "J7_OQ-y0v0g" },
   { id: "t-vero", title: "Vero", category: "tech", brand: "Vero", youtubeId: "8QRM5LPK5M8" },
   { id: "t6", title: "Focus", category: "tech", brand: "Focus", youtubeId: "GvLjL_Ru19U" },
   { id: "t7", title: "Logitech", category: "tech", brand: "Logitech", youtubeId: "sspAuh3TFqw" },
