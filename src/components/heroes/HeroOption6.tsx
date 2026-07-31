@@ -15,28 +15,33 @@ export default function HeroOption6() {
   return (
     <section
       id="top"
-      className="relative bg-[#FAF8F4] pt-4 md:pt-6 pb-0 overflow-hidden"
+      className="relative bg-[#FAF8F4] pt-4 md:pt-6 pb-3 md:pb-6"
     >
-      {/* Grid quadriculado fininho */}
+      {/* Camadas de fundo (grid + glow) — clipadas aqui pra não vazar,
+          sem cortar a foto que fica no fluxo normal acima delas. */}
       <div
         aria-hidden
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          backgroundImage:
-            "linear-gradient(to right, rgba(0,0,0,0.06) 1px, transparent 1px), linear-gradient(to bottom, rgba(0,0,0,0.06) 1px, transparent 1px)",
-          backgroundSize: "44px 44px",
-        }}
-      />
+        className="absolute inset-0 overflow-hidden pointer-events-none"
+      >
+        {/* Grid quadriculado fininho */}
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage:
+              "linear-gradient(to right, rgba(0,0,0,0.06) 1px, transparent 1px), linear-gradient(to bottom, rgba(0,0,0,0.06) 1px, transparent 1px)",
+            backgroundSize: "44px 44px",
+          }}
+        />
 
-      {/* Glow laranja sutil no canto */}
-      <div
-        aria-hidden
-        className="absolute -top-40 -left-40 w-[600px] h-[600px] rounded-full pointer-events-none opacity-25"
-        style={{
-          background:
-            "radial-gradient(circle, rgba(255,88,36,0.18) 0%, transparent 70%)",
-        }}
-      />
+        {/* Glow laranja sutil no canto */}
+        <div
+          className="absolute -top-40 -left-40 w-[600px] h-[600px] rounded-full opacity-25"
+          style={{
+            background:
+              "radial-gradient(circle, rgba(255,88,36,0.18) 0%, transparent 70%)",
+          }}
+        />
+      </div>
 
       <div className="lara-hero-grid relative max-w-7xl mx-auto px-5 md:px-8 grid md:grid-cols-2 gap-6 md:gap-12 items-center w-full">
         {/* LEFT: texto */}
@@ -115,7 +120,7 @@ export default function HeroOption6() {
             transition={{ delay: 0.4, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
             className="relative z-10 flex items-end justify-center origin-bottom"
           >
-            <HeroPhoto className="lara-hero-photo w-auto h-[50vh] sm:h-[60vh] md:h-[80vh] max-w-full object-bottom" />
+            <HeroPhoto className="lara-hero-photo w-auto h-[46vh] sm:h-[56vh] md:h-[74vh] max-w-full object-contain object-bottom" />
           </motion.div>
 
           {/* Bubble 1 — direita (flutua devagar pra cima/baixo, zoom no hover) */}
