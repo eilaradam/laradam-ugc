@@ -89,7 +89,7 @@ function CategoryRow({ category }: { category: LocalCategory }) {
   const scrollByPage = (direction: 1 | -1) => {
     const el = scrollerRef.current;
     if (!el) return;
-    // avança 1 página inteira (largura visível = ~4 cards no desktop)
+    // avança 1 página inteira (largura visível = ~5 cards no desktop)
     const amount = el.clientWidth * direction;
     el.scrollBy({ left: amount, behavior: "smooth" });
   };
@@ -149,7 +149,7 @@ function CategoryRow({ category }: { category: LocalCategory }) {
         {videos.map((v, i) => (
           <div
             key={v.id}
-            className="flex-shrink-0 snap-start w-[calc((100%-1rem)/2)] sm:w-[calc((100%-2rem)/3)] lg:w-[calc((100%-4.5rem)/4)]"
+            className="flex-shrink-0 snap-start w-[calc((100%-1rem)/2)] sm:w-[calc((100%-2rem)/3)] lg:w-[calc((100%-6rem)/5)]"
           >
             <VideoCard video={v} index={i} />
           </div>
