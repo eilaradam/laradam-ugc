@@ -63,13 +63,6 @@ export default function Contact() {
       id="contato"
       className="px-6 md:px-12 py-6 md:py-10 bg-foreground text-background relative overflow-hidden"
     >
-      {/* Big background type */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none opacity-[0.04]">
-        <div className="font-display font-black text-[24vw] leading-none text-accent-on-dark tracking-tighter">
-          HELLO
-        </div>
-      </div>
-
       <div className="relative max-w-7xl mx-auto grid md:grid-cols-12 gap-12">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
