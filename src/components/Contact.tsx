@@ -65,7 +65,7 @@ export default function Contact() {
     >
       {/* Big background type */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none opacity-[0.04]">
-        <div className="font-display font-black text-[24vw] leading-none text-primary tracking-tighter">
+        <div className="font-display font-black text-[24vw] leading-none text-accent-on-dark tracking-tighter">
           HELLO
         </div>
       </div>
@@ -78,13 +78,13 @@ export default function Contact() {
           transition={{ duration: 0.7 }}
           className="md:col-span-5"
         >
-          <div className="text-xs uppercase tracking-[0.3em] text-primary font-medium mb-6 flex items-center gap-3">
-            <span className="h-px w-8 bg-primary" />
+          <div className="text-xs uppercase tracking-[0.3em] text-accent-on-dark font-medium mb-6 flex items-center gap-3">
+            <span className="h-px w-8 bg-accent-on-dark" />
             {t.contact.tag}
           </div>
           <h2 className="font-display font-black text-4xl md:text-6xl leading-[0.9] tracking-tighter mb-8">
             {t.contact.title1}{" "}
-            <span className="font-serif-accent italic text-primary">
+            <span className="font-serif-accent italic text-accent-on-dark">
               {t.contact.titleAccent}
             </span>
             {t.contact.titleEnd}
@@ -177,7 +177,7 @@ export default function Contact() {
             type="submit"
             disabled={loading || sent}
             data-track="contact_form_submit"
-            className="w-full md:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 bg-primary text-primary-light rounded-full text-sm font-semibold hover:bg-primary-dark transition-colors disabled:opacity-60"
+            className="w-full md:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 bg-accent-on-dark text-foreground rounded-full text-sm font-bold hover:opacity-90 transition-opacity disabled:opacity-60"
           >
             {sent ? t.contact.sent : loading ? t.contact.sending : t.contact.send}
             {!sent && !loading && <ArrowUpRight className="w-4 h-4" />}

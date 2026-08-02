@@ -5,17 +5,17 @@ import { Check } from "lucide-react";
 import { HeroPhoto } from "./_shared";
 import { useT } from "@/lib/i18n";
 
-// Cor de destaque verde-oliva da referência (one-off, não muda o tema global)
-const ACCENT = "#d46928";
-const ACCENT_DARK = "#c75925";
-const ACCENT_LIGHT = "#e3725a";
+// Acento da marca (rebranding: petróleo/teal)
+const ACCENT = "#1C5D63";
+const ACCENT_DARK = "#174C51";
+const ACCENT_LIGHT = "#7FC4C0";
 
 export default function HeroOption6() {
   const t = useT();
   return (
     <section
       id="top"
-      className="relative bg-[#FAF8F4] pt-4 md:pt-6 pb-3 md:pb-6"
+      className="relative bg-[#F4F4EF] pt-4 md:pt-6 pb-3 md:pb-6"
     >
       {/* Camadas de fundo (grid + glow) — clipadas aqui pra não vazar,
           sem cortar a foto que fica no fluxo normal acima delas. */}
@@ -38,7 +38,7 @@ export default function HeroOption6() {
           className="absolute -top-40 -left-40 w-[600px] h-[600px] rounded-full opacity-25"
           style={{
             background:
-              "radial-gradient(circle, rgba(255,88,36,0.18) 0%, transparent 70%)",
+              "radial-gradient(circle, rgba(28,93,99,0.16) 0%, transparent 70%)",
           }}
         />
       </div>

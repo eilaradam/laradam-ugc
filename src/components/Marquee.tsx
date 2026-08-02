@@ -14,7 +14,7 @@ export default function Marquee() {
             className="font-display font-bold text-xs md:text-sm uppercase tracking-[0.15em] flex items-center gap-4"
           >
             {item}
-            <span className="text-primary">◆</span>
+            <span className="text-accent-on-dark">◆</span>
           </span>
         ))}
       </div>

@@ -11,7 +11,7 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
         <div>
           <div className="font-display font-black text-xl">
-            LARA DAM<span className="text-primary">.</span>
+            LARA DAM<span className="text-accent-on-dark">.</span>
           </div>
           <div className="text-xs uppercase tracking-wider text-background/50 mt-1">
             {t.footer.role}
@@ -19,7 +19,7 @@ export default function Footer() {
         </div>
 
         <div className="flex flex-wrap gap-x-6 gap-y-2 text-xs uppercase tracking-wider text-background/50">
-          <a href={`mailto:${SITE.email}`} data-track="footer_email" className="hover:text-primary">
+          <a href={`mailto:${SITE.email}`} data-track="footer_email" className="hover:text-accent-on-dark">
             {SITE.email}
           </a>
           <span>·</span>
@@ -28,7 +28,7 @@ export default function Footer() {
             target="_blank"
             rel="noopener"
             data-track="footer_instagram"
-            className="hover:text-primary"
+            className="hover:text-accent-on-dark"
           >
             Instagram
           </a>

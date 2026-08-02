@@ -23,8 +23,8 @@ const SERVICES = [
   },
 ];
 
-const ORANGE = "#C8441A";
-const INK = "#1b1b1b";
+const ORANGE = "#1C5D63"; // acento da marca (petróleo/teal)
+const INK = "#1E2A44"; // navy (contornos/sticker)
 
 // Washi tape: faixa inclinada com o texto repetido
 function Tape({
@@ -106,7 +106,7 @@ export default function ServicesScrapbook() {
   return (
     <section
       id="servicos"
-      className="relative bg-[#FBF9F6] px-6 md:px-12 pt-24 md:pt-28 pb-16 md:pb-24 overflow-hidden"
+      className="relative bg-[#F4F4EF] px-6 md:px-12 pt-24 md:pt-28 pb-16 md:pb-24 overflow-hidden"
     >
       {/* Washi tape cruzada no topo */}
       <Tape text="@eilaradam • ugc creator" variant="white" rotate={-5} top="26px" z={1} />

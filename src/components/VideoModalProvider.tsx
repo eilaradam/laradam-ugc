@@ -144,7 +144,7 @@ export default function VideoModalProvider({
                     <div className="absolute inset-0 flex flex-col items-center justify-center text-white p-10 text-center">
                       <div className="w-24 h-24 md:w-28 md:h-28 rounded-full bg-white/10 border border-white/15 flex items-center justify-center mb-6 backdrop-blur-sm">
                         <Headphones
-                          className="w-10 h-10 md:w-12 md:h-12 text-primary"
+                          className="w-10 h-10 md:w-12 md:h-12 text-accent-on-dark"
                           strokeWidth={1.6}
                         />
                       </div>

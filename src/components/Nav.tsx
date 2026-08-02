@@ -148,7 +148,7 @@ export default function Nav() {
           >
             <div className="flex items-center justify-between px-6 pt-6">
               <span className="font-display font-black text-base tracking-tight">
-                LARA DAM<span className="text-primary">.</span>
+                LARA DAM<span className="text-accent-on-dark">.</span>
               </span>
               <button
                 onClick={() => setOpen(false)}
@@ -169,7 +169,7 @@ export default function Nav() {
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.05 + i * 0.05 }}
-                  className="font-display font-black text-4xl tracking-tight hover:text-primary transition-colors"
+                  className="font-display font-black text-4xl tracking-tight hover:text-accent-on-dark transition-colors"
                 >
                   {l.label}
                 </motion.a>

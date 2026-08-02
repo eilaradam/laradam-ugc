@@ -1,28 +1,25 @@
 import type { Metadata } from "next";
-import { Be_Vietnam_Pro, DM_Sans, Fraunces } from "next/font/google";
+import { Newsreader, Hanken_Grotesk } from "next/font/google";
 import VideoModalProvider from "@/components/VideoModalProvider";
 import CustomCursor from "@/components/CustomCursor";
 import AnalyticsTracker from "@/components/AnalyticsTracker";
 import { LanguageProvider } from "@/lib/i18n";
 import "./globals.css";
 
-const beVietnam = Be_Vietnam_Pro({
+// Rebranding: display serifado Newsreader + corpo Hanken Grotesk.
+// Mantém os nomes de variável (--font-be-vietnam / --font-dm-sans) pra
+// não precisar mexer nas classes .font-display / font-sans do globals.
+const beVietnam = Newsreader({
   variable: "--font-be-vietnam",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800", "900"],
+  weight: ["400", "500", "600", "700", "800"],
+  style: ["normal", "italic"],
 });
 
-const dmSans = DM_Sans({
+const dmSans = Hanken_Grotesk({
   variable: "--font-dm-sans",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-});
-
-const fraunces = Fraunces({
-  variable: "--font-fraunces",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  style: ["italic", "normal"],
+  weight: ["400", "500", "600", "700", "800"],
 });
 
 export const metadata: Metadata = {
@@ -44,7 +41,7 @@ export default function RootLayout({
   return (
     <html
       lang="pt-BR"
-      className={`${beVietnam.variable} ${dmSans.variable} ${fraunces.variable} h-full antialiased`}
+      className={`${beVietnam.variable} ${dmSans.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <LanguageProvider>
