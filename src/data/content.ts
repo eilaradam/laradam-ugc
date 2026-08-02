@@ -180,6 +180,7 @@ export const VIDEOS: Video[] = [
   { id: "t3", title: "BV Financeiro", category: "financas", brand: "BV", youtubeId: "Q_n4uwkxiDo" },
 
   // TECH & APPS
+  { id: "t-infinitepay", title: "InfinitePay Tap", category: "tech", brand: "InfinitePay", views: "4M", youtubeId: "40q0gv_b9AM" },
   { id: "t-reforma100", title: "Reforma100", category: "tech", brand: "Reforma100", youtubeId: "XWnvZbTcHJw" },
   { id: "t-proton", title: "Proton VPN", category: "tech", brand: "Proton VPN", youtubeId: "PkDuP91RErg" },
   { id: "t-decolar", title: "Decolar", category: "tech", brand: "Decolar", youtubeId: "J7_OQ-y0v0g" },
