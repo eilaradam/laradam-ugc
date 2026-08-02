@@ -39,8 +39,8 @@ export default function Home() {
       <Marquee />
       <Stats />
       <About />
-      <BrandsMarquee />
       <Services />
+      <BrandsMarquee />
       <BestResults />
       <CategoryGallery />
       <YouTubeAds />
