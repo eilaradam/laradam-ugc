@@ -36,6 +36,7 @@ type Highlight = {
   youtubeId: string;
   brand: string;
   brandDomain: string; // usado pelo Clearbit pro logo
+  cover?: string; // capa customizada (frame escolhido). Se ausente, usa a do YouTube.
   metric: string; // ex: "+ 50 milhões de views"
   platform: string; // ex: "apenas no TikTok"
   stats?: Stat[]; // se presente, substitui metric/platform por lista vertical
@@ -47,21 +48,25 @@ const HIGHLIGHTS_BASE = [
     youtubeId: "5wf8Fv2CTa4",
     brand: "InfinitePay",
     brandDomain: "infinitepay.io",
+    cover: "/best-infinitepay.jpg",
   },
   {
     youtubeId: "wesTfq67X9o",
     brand: "Méliuz",
     brandDomain: "meliuz.com.br",
+    cover: "/best-meliuz.jpg",
   },
   {
     youtubeId: "2s6BI893C74",
     brand: "Bready",
     brandDomain: "bready.com.br",
+    cover: "/best-bready.jpg",
   },
   {
     youtubeId: "dgQYEfEQTvQ",
     brand: "Méliuz Cashback",
     brandDomain: "meliuz.com.br",
+    cover: "/best-meliuz-cashback.jpg",
   },
 ];
 
@@ -377,11 +382,17 @@ function HighlightCard({
       >
         {highlight.youtubeId ? (
           <img
-            src={`https://i.ytimg.com/vi/${highlight.youtubeId}/maxresdefault.jpg`}
+            src={
+              highlight.cover ||
+              `https://i.ytimg.com/vi/${highlight.youtubeId}/maxresdefault.jpg`
+            }
             alt={highlight.brand}
             className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
             onError={(e) => {
-              e.currentTarget.src = `https://i.ytimg.com/vi/${highlight.youtubeId}/hqdefault.jpg`;
+              // Capa customizada não cai pro fallback do YouTube.
+              if (!highlight.cover) {
+                e.currentTarget.src = `https://i.ytimg.com/vi/${highlight.youtubeId}/hqdefault.jpg`;
+              }
             }}
           />
         ) : (
