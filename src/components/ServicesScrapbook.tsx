@@ -111,14 +111,6 @@ export default function ServicesScrapbook() {
       {/* Washi tape cruzada no topo */}
       <Tape text="@eilaradam • ugc creator" variant="white" rotate={-5} top="26px" z={1} />
       <Tape text="ugc creator • @eilaradam" variant="orange" rotate={4} top="46px" z={2} />
-      {/* Selo estrela na direita */}
-      <div
-        aria-hidden
-        className="absolute right-[8%] top-[10px] z-[3] w-16 h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center border-[3px]"
-        style={{ backgroundColor: ORANGE, borderColor: INK }}
-      >
-        <span className="text-2xl md:text-3xl text-white">★</span>
-      </div>
 
       <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 md:gap-16 items-center mt-8 md:mt-10">
         {/* Esquerda — clipe + título + texto + cta */}
