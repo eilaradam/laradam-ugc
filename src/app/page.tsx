@@ -39,11 +39,11 @@ export default function Home() {
       <Marquee />
       <Stats />
       <About />
-      <Services />
       <BrandsMarquee />
       <BestResults />
       <CategoryGallery />
       <YouTubeAds />
+      <Services />
       <Testimonials />
       <Contact />
       <Footer />
