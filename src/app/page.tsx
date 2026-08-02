@@ -5,7 +5,7 @@ import Marquee from "@/components/Marquee";
 import Stats from "@/components/Stats";
 import About from "@/components/About";
 import BrandsMarquee from "@/components/BrandsMarquee";
-import Services from "@/components/Services";
+import Services from "@/components/ServicesScrapbook";
 import BestResults from "@/components/BestResults";
 import CategoryGallery from "@/components/CategoryGallery";
 import YouTubeAds from "@/components/YouTubeAds";
