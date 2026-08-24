@@ -49,7 +49,7 @@ export const metadata: Metadata = {
 
 export default function ProjetoPage() {
   return (
-    <main className={`${archivo.variable} font-pj flex-1 bg-pj-bg text-pj-ink`}>
+    <main className={`${archivo.variable} font-pj pj-escala flex-1 bg-pj-bg text-pj-ink`}>
       <ProjetoNav />
       <ProjetoHero />
       <ProjetoSobre />

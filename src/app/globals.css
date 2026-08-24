@@ -184,3 +184,15 @@ body {
   letter-spacing: 0.18em;
   text-transform: uppercase;
 }
+
+/* Escala geral da pagina /projeto: mesma diagramacao, tudo um pouco menor
+   (efeito de "tirar o zoom" pedido pela Lara). */
+.pj-escala {
+  zoom: 0.94;
+}
+
+@media (min-width: 640px) {
+  .pj-escala {
+    zoom: 0.88;
+  }
+}
