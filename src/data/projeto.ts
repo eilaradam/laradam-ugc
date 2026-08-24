@@ -97,12 +97,12 @@ export const PROJETO_AMBIENTES: Ambiente[] = [
     resumo:
       "Ilha central, bancada em pedra, pia e marcenaria sob medida. O ambiente que mais gravo.",
     itens: [
-      "Ilha central com bancada",
+      "Ilha com bancada e banquetas",
       "Pedra da bancada e da pia",
       "Cuba, pia e torneira",
-      "Marcenaria sob medida",
+      "Marcenaria ripada sob medida",
       "Eletrodomésticos e cooktop",
-      "Iluminação e pendentes",
+      "Iluminação, pendentes e fita de LED",
     ],
   },
   {
@@ -174,6 +174,9 @@ export const PROJETO_BUSCA: BuscaItem[] = [
   { categoria: "Câmera, tripé e microfone", ambiente: "Ambiente de gravação", status: "aberto" },
   { categoria: "Mesa, cadeira e home office", ambiente: "Ambiente de gravação", status: "aberto" },
   { categoria: "Móveis e estofados", ambiente: "Casa toda", status: "aberto" },
+  { categoria: "Mesa, cadeiras e banquetas", ambiente: "Sala e cozinha", status: "aberto" },
+  { categoria: "Espelhos", ambiente: "Sala e banheiro", status: "aberto" },
+  { categoria: "Piso laminado ou vinílico", ambiente: "Casa toda", status: "aberto" },
   { categoria: "Tapetes, cortinas e têxteis", ambiente: "Casa toda", status: "aberto" },
   { categoria: "Decoração, quadros e vasos", ambiente: "Casa toda", status: "aberto" },
   { categoria: "Climatização e smart home", ambiente: "Casa toda", status: "aberto" },
@@ -265,6 +268,15 @@ export const PROJETO_CRONOGRAMA = [
   },
 ];
 
+// Paleta e materiais do projeto (tirados dos renders da arquiteta).
+export const PROJETO_PALETA = [
+  { cor: "#93A06C", nome: "Verde oliva", onde: "Parede da cozinha" },
+  { cor: "#E8DEC9", nome: "Bege ripado", onde: "Painel da sala" },
+  { cor: "#6A4630", nome: "Madeira nogueira", onde: "Marcenaria e bancada" },
+  { cor: "#F1F0E8", nome: "Granilite branco", onde: "Tampo da bancada" },
+  { cor: "#B4654A", nome: "Terracota", onde: "Espelho arco e detalhes" },
+];
+
 // Quem assina o projeto (foto + recado pra marca).
 export const PROJETO_SOBRE = {
   foto: "/lara-sobre.jpg",
@@ -308,13 +320,13 @@ export type AntesDepois = {
 export const PROJETO_ANTES_DEPOIS: AntesDepois[] = [
   {
     ambiente: "Cozinha",
-    legenda: "Como está hoje e o projeto da arquiteta com a ilha central.",
+    legenda: "Como está hoje e o projeto: ilha com bancada, marcenaria ripada e parede verde oliva.",
     antes: "",
     depois: "",
   },
   {
     ambiente: "Ambiente de gravação",
-    legenda: "O canto que vira estúdio.",
+    legenda: "O canto da sala que vira estúdio, com o painel ripado de fundo.",
     antes: "",
     depois: "",
   },

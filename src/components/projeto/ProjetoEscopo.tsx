@@ -9,6 +9,7 @@ import {
   PROJETO_AMBIENTES,
   PROJETO_ANTES_DEPOIS,
   PROJETO_CRONOGRAMA,
+  PROJETO_PALETA,
   type AntesDepois,
 } from "@/data/projeto";
 
@@ -142,6 +143,35 @@ export default function ProjetoEscopo() {
               </motion.div>
             ))}
           </div>
+
+          {/* paleta e materiais do projeto */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.5 }}
+            className="mt-12 rounded-3xl border border-border bg-background p-7 sm:p-9"
+          >
+            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-primary">
+              Paleta e materiais
+            </p>
+            <div className="mt-7 grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-5">
+              {PROJETO_PALETA.map((c) => (
+                <div key={c.nome} className="flex items-center gap-3">
+                  <span
+                    className="h-11 w-11 shrink-0 rounded-full ring-1 ring-foreground/10"
+                    style={{ backgroundColor: c.cor }}
+                  />
+                  <span className="min-w-0 leading-tight">
+                    <span className="block text-sm font-semibold text-foreground">
+                      {c.nome}
+                    </span>
+                    <span className="block text-[12px] text-muted">{c.onde}</span>
+                  </span>
+                </div>
+              ))}
+            </div>
+          </motion.div>
         </div>
       </section>
 
