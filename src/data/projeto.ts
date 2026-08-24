@@ -288,7 +288,7 @@ export const PROJETO_TOUR = {
 
 // Quem assina o projeto (foto + recado pra marca).
 export const PROJETO_SOBRE = {
-  foto: "/projeto/lara.webp",
+  foto: "/projeto/lara-sobre.webp",
   fotoAlt: "Lara Dam",
   nome: "Lara Dam",
   cargo: "UGC Creator e estrategista de conteúdo",
