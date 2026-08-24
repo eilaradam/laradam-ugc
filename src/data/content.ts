@@ -138,6 +138,7 @@ export const VIDEOS: Video[] = [
   { id: "b16", title: "Botox", category: "beleza", brand: "Botox", youtubeId: "YOmm3Zi87PE" },
 
   // CASA & DECO
+  { id: "d-unipega", title: "Unipega", category: "casa", brand: "Unipega", youtubeId: "rkdMNa32XhY" },
   { id: "d-coza2", title: "Coza", category: "casa", brand: "Coza", youtubeId: "nbq1HzdlPJE", thumbnail: "/coza-organizadores-capa.jpg" },
   { id: "d1", title: "DT3", category: "casa", brand: "DT3", youtubeId: "Imt3HZDlCXU" },
   { id: "d2", title: "DT3", category: "casa", brand: "DT3", youtubeId: "JwblS_1IReM" },
