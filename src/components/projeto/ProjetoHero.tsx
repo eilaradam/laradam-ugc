@@ -2,12 +2,16 @@
 
 import { motion } from "framer-motion";
 import { ArrowRight, MessageCircle } from "lucide-react";
-import { PROJETO, PROJETO_NUMEROS } from "@/data/projeto";
+import { PROJETO, PROJETO_GALERIA, PROJETO_NUMEROS } from "@/data/projeto";
+import ProjetoGaleria from "./ProjetoGaleria";
 
 export const waLink = (msg = PROJETO.whatsappMensagem) =>
   `https://wa.me/${PROJETO.whatsapp}?text=${encodeURIComponent(msg)}`;
 
 export default function ProjetoHero() {
+  // Com imagens do projeto o topo vira duas colunas (texto + painel).
+  const temGaleria = PROJETO_GALERIA.length > 0;
+
   return (
     <section className="relative overflow-hidden bg-foreground text-white">
       {/* textura de fundo */}
@@ -21,69 +25,100 @@ export default function ProjetoHero() {
       />
 
       <div className="relative mx-auto max-w-6xl px-5 pb-20 pt-14 sm:px-8 sm:pb-28 sm:pt-20">
-        <motion.p
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="text-[11px] font-semibold uppercase tracking-[0.22em] text-accent-on-dark sm:text-xs"
+        <div
+          className={
+            temGaleria
+              ? "grid items-center gap-10 lg:grid-cols-[1fr_1.05fr] lg:gap-14"
+              : ""
+          }
         >
-          {PROJETO.eyebrow}
-        </motion.p>
+          {/* titulo (no celular vem antes do painel) */}
+          <div className="lg:col-start-1 lg:row-start-1">
+            <motion.p
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="text-[11px] font-semibold uppercase tracking-[0.22em] text-accent-on-dark sm:text-xs"
+            >
+              {PROJETO.eyebrow}
+            </motion.p>
 
-        <motion.h1
-          initial={{ opacity: 0, y: 18 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.05 }}
-          className="font-display mt-5 text-[2.6rem] leading-[1.03] tracking-tight sm:text-7xl lg:text-[5.5rem]"
-        >
-          Projeto{" "}
-          <span className="font-serif-accent text-accent-on-dark">
-            {PROJETO.nome}
-          </span>
-        </motion.h1>
+            <motion.h1
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.05 }}
+              className={`font-display mt-5 leading-[1.03] tracking-tight ${
+                temGaleria
+                  ? "text-[2.5rem] sm:text-6xl"
+                  : "text-[2.6rem] sm:text-7xl lg:text-[5.5rem]"
+              }`}
+            >
+              Projeto{" "}
+              <span className="font-serif-accent text-accent-on-dark">
+                {PROJETO.nome}
+              </span>
+            </motion.h1>
 
-        <motion.p
-          initial={{ opacity: 0, y: 18 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.12 }}
-          className="mt-6 max-w-2xl text-lg leading-snug text-white/80 sm:text-2xl"
-        >
-          {PROJETO.subtitulo}
-        </motion.p>
+            <motion.p
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.12 }}
+              className="mt-6 max-w-2xl text-lg leading-snug text-white/80 sm:text-2xl"
+            >
+              {PROJETO.subtitulo}
+            </motion.p>
 
-        <motion.div
-          initial={{ opacity: 0, y: 18 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.18 }}
-          className="mt-9 max-w-2xl space-y-4 text-[15px] leading-relaxed text-white/65 sm:text-base"
-        >
-          <p>{PROJETO.intro}</p>
-          <p className="text-white/85">{PROJETO.intro2}</p>
-        </motion.div>
+          </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 18 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.24 }}
-          className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center"
-        >
-          <a
-            href={waLink()}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group inline-flex items-center justify-center gap-2 rounded-full bg-accent-on-dark px-7 py-4 text-sm font-semibold text-foreground transition hover:bg-white sm:text-base"
-          >
-            <MessageCircle className="h-[18px] w-[18px]" />
-            Quero ser parceiro
-            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-          </a>
-          <a
-            href="#procuro"
-            className="inline-flex items-center justify-center gap-2 rounded-full border border-white/25 px-7 py-4 text-sm font-semibold text-white transition hover:border-white/60 sm:text-base"
-          >
-            Ver o que estou procurando
-          </a>
-        </motion.div>
+          {/* painel com as imagens do projeto */}
+          {temGaleria && (
+            <motion.div
+              initial={{ opacity: 0, y: 26 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.15 }}
+              className="lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:self-center"
+            >
+              <ProjetoGaleria />
+            </motion.div>
+          )}
+
+          {/* texto e botoes */}
+          <div className="lg:col-start-1 lg:row-start-2">
+            <motion.div
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.18 }}
+              className="max-w-2xl space-y-4 text-[15px] leading-relaxed text-white/65 sm:text-base"
+            >
+              <p>{PROJETO.intro}</p>
+              <p className="text-white/85">{PROJETO.intro2}</p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.24 }}
+              className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center"
+            >
+              <a
+                href={waLink()}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex items-center justify-center gap-2 rounded-full bg-accent-on-dark whitespace-nowrap px-7 py-4 text-sm font-semibold text-foreground transition hover:bg-white sm:text-base"
+              >
+                <MessageCircle className="h-[18px] w-[18px]" />
+                Quero ser parceiro
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+              </a>
+              <a
+                href="#procuro"
+                className="inline-flex items-center justify-center gap-2 rounded-full border border-white/25 whitespace-nowrap px-7 py-4 text-sm font-semibold text-white transition hover:border-white/60 sm:text-base"
+              >
+                Ver o que estou procurando
+              </a>
+            </motion.div>
+          </div>
+        </div>
 
         <motion.div
           initial={{ opacity: 0 }}

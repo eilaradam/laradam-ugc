@@ -265,6 +265,19 @@ export const PROJETO_CRONOGRAMA = [
   },
 ];
 
+// GALERIA "COMO VAI FICAR" (o painel/carrossel do topo da página).
+// Coloque as imagens em public/projeto/galeria/ e liste aqui na ordem que quer mostrar.
+// Enquanto a lista estiver vazia, o topo da página fica só com o texto.
+export type Render = {
+  src: string; // ex: "/projeto/galeria/cozinha-01.jpg"
+  titulo: string;
+  legenda?: string;
+};
+
+export const PROJETO_GALERIA: Render[] = [
+  // { src: "/projeto/galeria/cozinha-01.jpg", titulo: "Cozinha com ilha", legenda: "Bancada em pedra e marcenaria sob medida" },
+];
+
 // Antes e depois. Coloque as imagens em public/projeto/ e escreva o caminho aqui.
 // Enquanto os dois campos estiverem vazios, o card não aparece na página.
 // Se a seção inteira estiver vazia, ela some do site.
