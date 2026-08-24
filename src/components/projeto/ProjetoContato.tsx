@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { ArrowRight, AtSign, ChevronDown, Mail, MessageCircle } from "lucide-react";
 import { PROJETO, PROJETO_FAQ } from "@/data/projeto";
+import Cabecalho from "./Cabecalho";
 import { waLink } from "./ProjetoHero";
 
 function Pergunta({ q, a }: { q: string; a: string }) {
@@ -35,13 +36,12 @@ export default function ProjetoContato() {
       {/* FAQ */}
       <section className="bg-background px-5 py-20 sm:px-8 sm:py-28">
         <div className="mx-auto max-w-3xl">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-primary sm:text-xs">
-            Dúvidas comuns
-          </p>
-          <h2 className="font-display mt-4 text-3xl leading-[1.1] tracking-tight sm:text-5xl">
-            O que as marcas costumam perguntar.
-          </h2>
-          <div className="mt-10">
+          <Cabecalho
+            n="09"
+            chapeu="Dúvidas comuns"
+            titulo="O que as marcas costumam perguntar."
+          />
+          <div className="mt-12">
             {PROJETO_FAQ.map((f) => (
               <Pergunta key={f.q} q={f.q} a={f.a} />
             ))}

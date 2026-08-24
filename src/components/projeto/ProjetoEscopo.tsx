@@ -3,6 +3,7 @@
 import { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { MoveHorizontal } from "lucide-react";
+import Cabecalho from "./Cabecalho";
 import {
   PROJETO,
   PROJETO_AMBIENTES,
@@ -100,22 +101,16 @@ export default function ProjetoEscopo() {
       {/* O projeto, ambiente por ambiente */}
       <section id="projeto" className="bg-background-alt px-5 py-20 sm:px-8 sm:py-28">
         <div className="mx-auto max-w-6xl">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-primary sm:text-xs">
-            O projeto
-          </p>
-          <h2 className="font-display mt-4 max-w-3xl text-3xl leading-[1.1] tracking-tight sm:text-5xl">
-            Quatro frentes, uma casa inteira virando conteúdo.
-          </h2>
-          <p className="mt-5 max-w-2xl text-[15px] leading-relaxed text-foreground-soft sm:text-base">
-            A obra tem projeto de arquitetura pronto, começa em{" "}
-            <strong className="font-semibold text-foreground">
-              {PROJETO.inicioObra.toLowerCase()}
-            </strong>{" "}
-            e vai ser documentada do início ao fim.
-            {PROJETO.arquiteta.nome ? ` Assinatura de ${PROJETO.arquiteta.nome}.` : ""}
-          </p>
+          <Cabecalho
+            n="05"
+            chapeu="O projeto"
+            titulo="Quatro frentes, uma casa inteira virando conteúdo."
+            sub={`Projeto de arquitetura pronto, obra começando em ${PROJETO.inicioObra.toLowerCase()}, documentada do primeiro dia ao tour final.${
+              PROJETO.arquiteta.nome ? ` Assinatura de ${PROJETO.arquiteta.nome}.` : ""
+            }`}
+          />
 
-          <div className="mt-12 grid gap-5 lg:grid-cols-2">
+          <div className="mt-14 grid gap-5 lg:grid-cols-2">
             {PROJETO_AMBIENTES.map((amb, i) => (
               <motion.div
                 key={amb.slug}
@@ -157,7 +152,7 @@ export default function ProjetoEscopo() {
             <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-primary sm:text-xs">
               Antes e depois
             </p>
-            <h2 className="font-display mt-4 max-w-3xl text-3xl leading-[1.1] tracking-tight sm:text-5xl">
+            <h2 className="font-display mt-5 max-w-3xl text-[2.15rem] leading-[1.05] tracking-tight sm:text-[3.4rem]">
               Como está hoje e como vai ficar.
             </h2>
 
@@ -185,12 +180,12 @@ export default function ProjetoEscopo() {
       {/* Cronograma */}
       <section className="bg-foreground px-5 py-20 text-white sm:px-8 sm:py-28">
         <div className="mx-auto max-w-6xl">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-accent-on-dark sm:text-xs">
-            Cronograma
-          </p>
-          <h2 className="font-display mt-4 max-w-3xl text-3xl leading-[1.1] tracking-tight sm:text-5xl">
-            {PROJETO.janelaFechamento}
-          </h2>
+          <Cabecalho
+            n="06"
+            chapeu="Cronograma"
+            dark
+            titulo={PROJETO.janelaFechamento}
+          />
 
           <div className="mt-14 grid gap-10 sm:grid-cols-2 lg:grid-cols-5 lg:gap-6">
             {PROJETO_CRONOGRAMA.map((f, i) => (

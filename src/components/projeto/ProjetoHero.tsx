@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { ArrowRight, MessageCircle } from "lucide-react";
-import { PROJETO, PROJETO_GALERIA, PROJETO_NUMEROS } from "@/data/projeto";
+import { PROJETO, PROJETO_GALERIA, PROJETO_NUMEROS, PROJETO_SOBRE } from "@/data/projeto";
 import ProjetoGaleria from "./ProjetoGaleria";
 
 export const waLink = (msg = PROJETO.whatsappMensagem) =>
@@ -34,20 +34,38 @@ export default function ProjetoHero() {
         >
           {/* titulo (no celular vem antes do painel) */}
           <div className="lg:col-start-1 lg:row-start-1">
-            <motion.p
+            <motion.div
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="text-[11px] font-semibold uppercase tracking-[0.22em] text-accent-on-dark sm:text-xs"
+              className="flex flex-wrap items-center gap-4"
             >
-              {PROJETO.eyebrow}
-            </motion.p>
+              <div className="flex items-center gap-3">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={PROJETO_SOBRE.foto}
+                  alt={PROJETO_SOBRE.fotoAlt}
+                  className="h-12 w-12 rounded-full object-cover object-top ring-1 ring-white/25"
+                />
+                <div className="leading-tight">
+                  <p className="text-sm font-semibold text-white">
+                    {PROJETO_SOBRE.nome}
+                  </p>
+                  <p className="text-[12px] text-white/55">
+                    UGC Creator · @{PROJETO.instagram}
+                  </p>
+                </div>
+              </div>
+              <span className="rounded-full border border-white/20 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-accent-on-dark">
+                {PROJETO.eyebrow}
+              </span>
+            </motion.div>
 
             <motion.h1
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.05 }}
-              className={`font-display mt-5 leading-[1.03] tracking-tight ${
+              className={`font-display mt-7 leading-[1.03] tracking-tight ${
                 temGaleria
                   ? "text-[2.5rem] sm:text-6xl"
                   : "text-[2.6rem] sm:text-7xl lg:text-[5.5rem]"
@@ -83,7 +101,7 @@ export default function ProjetoHero() {
           )}
 
           {/* texto e botoes */}
-          <div className="lg:col-start-1 lg:row-start-2">
+          <div className={temGaleria ? "lg:col-start-1 lg:row-start-2" : "mt-9"}>
             <motion.div
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}

@@ -9,6 +9,8 @@ import {
   PROJETO_RESULTADOS,
   PROJETO_VIDEOS_IDS,
 } from "@/data/projeto";
+import Cabecalho from "./Cabecalho";
+import { ProjetoDepoimentos } from "./ProjetoMarcas";
 
 function Icon({ name, className }: { name: string; className?: string }) {
   const C = (Icons as unknown as Record<string, React.ComponentType<{ className?: string }>>)[name];
@@ -23,16 +25,20 @@ export default function ProjetoProva() {
   return (
     <>
       {/* Por que entrar no projeto */}
-      <section className="bg-background px-5 py-20 sm:px-8 sm:py-28">
+      <section className="bg-background-alt px-5 py-20 sm:px-8 sm:py-28">
         <div className="mx-auto max-w-6xl">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-primary sm:text-xs">
-            Por que entrar nesse projeto
-          </p>
-          <h2 className="font-display mt-4 max-w-3xl text-3xl leading-[1.1] tracking-tight sm:text-5xl">
-            Uma reforma é o melhor contexto que existe pra mostrar um produto de casa.
-          </h2>
+          <Cabecalho
+            n="02"
+            chapeu="Por que entrar"
+            titulo={
+              <>
+                Uma reforma é o melhor lugar do mundo pra mostrar um produto de
+                casa.
+              </>
+            }
+          />
 
-          <div className="mt-12 grid gap-5 sm:grid-cols-2">
+          <div className="mt-14 grid gap-px overflow-hidden rounded-3xl bg-border sm:grid-cols-2">
             {PROJETO_ARGUMENTOS.map((a, i) => (
               <motion.div
                 key={a.title}
@@ -40,12 +46,14 @@ export default function ProjetoProva() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-60px" }}
                 transition={{ duration: 0.5, delay: i * 0.06 }}
-                className="rounded-3xl border border-border bg-white/60 p-7 sm:p-8"
+                className="bg-background p-8 sm:p-10"
               >
                 <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-primary-light">
                   <Icon name={a.icon} className="h-5 w-5 text-primary" />
                 </div>
-                <h3 className="font-display mt-5 text-xl sm:text-2xl">{a.title}</h3>
+                <h3 className="font-display mt-6 text-2xl leading-tight sm:text-[1.7rem]">
+                  {a.title}
+                </h3>
                 <p className="mt-3 text-[15px] leading-relaxed text-foreground-soft">
                   {a.body}
                 </p>
@@ -55,17 +63,22 @@ export default function ProjetoProva() {
         </div>
       </section>
 
-      {/* Resultados já entregues */}
-      <section className="bg-background-alt px-5 py-20 sm:px-8 sm:py-28">
+      {/* Resultados e depoimentos */}
+      <section className="bg-background px-5 py-20 sm:px-8 sm:py-28">
         <div className="mx-auto max-w-6xl">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-primary sm:text-xs">
-            Resultados que já entreguei
-          </p>
-          <h2 className="font-display mt-4 max-w-3xl text-3xl leading-[1.1] tracking-tight sm:text-5xl">
-            Não é teste. É o que as marcas já colheram comigo.
-          </h2>
+          <Cabecalho
+            n="03"
+            chapeu="Resultados"
+            titulo={
+              <>
+                Não é teste. É o que as marcas{" "}
+                <span className="font-serif-accent text-primary">já colheram</span>{" "}
+                comigo.
+              </>
+            }
+          />
 
-          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {PROJETO_RESULTADOS.map((r, i) => (
               <motion.div
                 key={r.brand + r.metric}
@@ -75,11 +88,13 @@ export default function ProjetoProva() {
                 transition={{ duration: 0.5, delay: i * 0.06 }}
                 className="flex flex-col rounded-3xl bg-foreground p-7 text-white"
               >
-                <p className="font-display text-4xl text-accent-on-dark sm:text-5xl">
+                <p className="font-display text-[2.75rem] leading-none text-accent-on-dark">
                   {r.metric}
                 </p>
-                <p className="mt-2 text-sm leading-tight text-white/70">{r.label}</p>
-                <div className="mt-auto pt-6">
+                <p className="mt-3 text-sm leading-tight text-white/70">
+                  {r.label}
+                </p>
+                <div className="mt-auto pt-8">
                   <p className="text-sm font-semibold">{r.brand}</p>
                   <p className="mt-1 text-[13px] leading-snug text-white/55">
                     {r.note}
@@ -88,24 +103,22 @@ export default function ProjetoProva() {
               </motion.div>
             ))}
           </div>
+
+          <ProjetoDepoimentos />
         </div>
       </section>
 
       {/* Vídeos de casa e deco */}
-      <section className="bg-background px-5 py-20 sm:px-8 sm:py-28">
+      <section className="bg-background-alt px-5 py-20 sm:px-8 sm:py-28">
         <div className="mx-auto max-w-6xl">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-primary sm:text-xs">
-            Casa e decoração
-          </p>
-          <h2 className="font-display mt-4 max-w-3xl text-3xl leading-[1.1] tracking-tight sm:text-5xl">
-            Esse nicho já é o meu terreno.
-          </h2>
-          <p className="mt-5 max-w-2xl text-[15px] leading-relaxed text-foreground-soft sm:text-base">
-            Alguns dos vídeos que já produzi pra marcas de casa, móveis, organização e
-            decoração. Clique pra assistir.
-          </p>
+          <Cabecalho
+            n="04"
+            chapeu="Casa e decoração"
+            titulo="Esse nicho já é o meu terreno."
+            sub="Vídeos que já produzi pra marcas de casa, móveis, organização e decoração. Clique pra assistir."
+          />
 
-          <div className="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-4 sm:gap-5">
+          <div className="mt-14 grid grid-cols-2 gap-4 sm:grid-cols-4 sm:gap-5">
             {videos.map((v, i) => (
               <VideoCard key={v.id} video={v} index={i} />
             ))}

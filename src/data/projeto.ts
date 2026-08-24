@@ -8,9 +8,9 @@ export const PROJETO = {
   subtitulo:
     "Uma reforma inteira documentada, do vazio ao ambiente pronto de gravação.",
   intro:
-    "Sou a Lara Dam, UGC creator e estrategista de conteúdo. Nos últimos 2 anos gravei mais de 500 vídeos para mais de 200 marcas e acumulei mais de 100 milhões de views. Agora estou reformando a minha casa com projeto de arquitetura e transformando cada etapa em conteúdo: cozinha nova com ilha, um ambiente próprio de gravação e a reforma completa do banheiro.",
+    "Cozinha nova com ilha, um ambiente próprio de gravação e o banheiro refeito do zero. Tudo com projeto de arquitetura e documentado em vídeo, do primeiro dia de obra ao tour final.",
   intro2:
-    "Estou procurando marcas parceiras para construir esse projeto comigo. Quem entra, entra na história inteira: a escolha, a chegada, a instalação, o resultado e a rotina depois de pronto.",
+    "Procuro marcas parceiras pra construir esse projeto comigo. Quem entra, entra na história inteira.",
   inicioObra: "Setembro de 2026",
   janelaFechamento: "Estou fechando as parcerias até o fim de agosto de 2026.",
   whatsapp: "5512988729264",
@@ -63,22 +63,22 @@ export const PROJETO_ARGUMENTOS = [
   {
     icon: "Home",
     title: "O produto aparece em uso real",
-    body: "Não é fundo branco nem mesa de estúdio. É a minha casa, a minha rotina e o produto sendo usado todo dia depois da obra.",
+    body: "Não é fundo branco nem mesa de estúdio. É a minha casa e a minha rotina, todo dia, depois da obra.",
   },
   {
     icon: "Clapperboard",
     title: "Série com começo, meio e fim",
-    body: "Reforma prende audiência. Quem vê a demolição volta pra ver a instalação e volta de novo pro resultado final. A marca pega as três ondas.",
+    body: "Quem vê a demolição volta pra instalação e volta de novo pro resultado. Sua marca pega as três ondas.",
   },
   {
     icon: "TrendingUp",
     title: "Conteúdo feito pra converter",
-    body: "Roteiro, gancho e formato validados em campanhas que já bateram recorde de CTR e ROAS de 2.4x. O vídeo nasce pronto pra rodar como criativo.",
+    body: "Roteiro e formato validados em campanha: recorde de CTR no Meta e ROAS de 2.4x. Nasce pronto pra rodar como anúncio.",
   },
   {
     icon: "Infinity",
     title: "Vida longa depois da obra",
-    body: "O ambiente pronto vira cenário fixo dos meus conteúdos. Sua marca continua aparecendo meses depois da entrega, sem custo novo.",
+    body: "O ambiente pronto vira meu cenário fixo. Sua marca segue aparecendo meses depois, sem campanha nova.",
   },
 ];
 
@@ -95,7 +95,7 @@ export const PROJETO_AMBIENTES: Ambiente[] = [
     slug: "cozinha",
     nome: "Cozinha com ilha",
     resumo:
-      "O coração do projeto e o ambiente que mais gravo. Ilha central nova, bancada em pedra, pia e marcenaria sob medida.",
+      "Ilha central, bancada em pedra, pia e marcenaria sob medida. O ambiente que mais gravo.",
     itens: [
       "Ilha central com bancada",
       "Pedra da bancada e da pia",
@@ -109,7 +109,7 @@ export const PROJETO_AMBIENTES: Ambiente[] = [
     slug: "estudio",
     nome: "Ambiente de gravação",
     resumo:
-      "Um cantinho da casa virando estúdio de verdade: luz, fundo e organização pensados pra gravar todo dia.",
+      "Luz, fundo e organização pra gravar todo dia sem improviso.",
     itens: [
       "Iluminação profissional",
       "Fundo cênico e painéis",
@@ -123,7 +123,7 @@ export const PROJETO_AMBIENTES: Ambiente[] = [
     slug: "banheiro",
     nome: "Banheiro completo",
     resumo:
-      "Reforma do zero: revestimento, louça, metais, box e bancada. Ambiente de rotina, ótimo pra beleza e cuidados pessoais.",
+      "Reforma do zero: revestimento, louça, metais, box e bancada.",
     itens: [
       "Louças e cuba",
       "Metais e chuveiro",
@@ -137,7 +137,7 @@ export const PROJETO_AMBIENTES: Ambiente[] = [
     slug: "geral",
     nome: "Acabamento e decoração",
     resumo:
-      "O que amarra a casa inteira e aparece no fundo de todo vídeo: cor, textura, móveis e os detalhes.",
+      "O que aparece no fundo de todo vídeo: cor, textura, móveis e os detalhes.",
     itens: [
       "Tinta e pintura",
       "Piso e revestimento",
@@ -193,7 +193,7 @@ export const PROJETO_PLANOS: Plano[] = [
     nome: "Parceiro do Projeto",
     chamada: "Uma marca por categoria",
     descricao:
-      "Pra quem quer assinar o projeto junto comigo, do primeiro vídeo ao tour final. Formato com exclusividade na categoria.",
+      "Assina o projeto comigo, do primeiro vídeo ao tour final, com exclusividade na sua categoria.",
     destaque: true,
     entregas: [
       "Exclusividade na sua categoria durante toda a obra",
@@ -210,7 +210,7 @@ export const PROJETO_PLANOS: Plano[] = [
     nome: "Parceiro de Ambiente",
     chamada: "Cozinha, estúdio ou banheiro",
     descricao:
-      "A marca assume um ambiente inteiro e aparece como responsável pela transformação daquele espaço.",
+      "A marca assume um ambiente inteiro e responde pela transformação dele.",
     entregas: [
       "2 a 3 conteúdos dedicados ao ambiente",
       "Stories da chegada e da instalação",
@@ -223,7 +223,7 @@ export const PROJETO_PLANOS: Plano[] = [
     nome: "Parceiro de Produto",
     chamada: "Permuta item a item",
     descricao:
-      "A marca envia o produto e recebe conteúdo. O jeito mais simples de entrar no projeto.",
+      "Produto por conteúdo. O jeito mais simples de entrar.",
     entregas: [
       "1 reel dedicado ou integração no conteúdo da obra",
       "Sequência de stories com link",
@@ -234,7 +234,7 @@ export const PROJETO_PLANOS: Plano[] = [
 ];
 
 export const PROJETO_FORMATOS_TEXTO =
-  "Trabalho com permuta (produto por conteúdo), patrocínio em dinheiro e condições especiais de compra com contrapartida em conteúdo. Dá pra combinar os três. Me conta o que faz sentido pra sua marca e eu monto a proposta.";
+  "Permuta, patrocínio em dinheiro ou condição especial de compra. Dá pra combinar os três: me conta o que funciona pra sua marca.";
 
 // Cronograma da obra.
 export const PROJETO_CRONOGRAMA = [
@@ -264,6 +264,23 @@ export const PROJETO_CRONOGRAMA = [
     body: "A casa vira meu cenário fixo. Sua marca segue aparecendo na rotina, sem campanha nova.",
   },
 ];
+
+// Quem assina o projeto (foto + recado pra marca).
+export const PROJETO_SOBRE = {
+  foto: "/lara-sobre.jpg",
+  fotoAlt: "Lara Dam",
+  nome: "Lara Dam",
+  cargo: "UGC Creator e estrategista de conteúdo",
+  local: "Litoral de SP",
+  bullets: [
+    "2 anos gravando pra marca todo dia",
+    "Roteiro, gravação, edição e entrega, tudo comigo",
+    "Casa e decoração é um dos meus nichos fortes",
+  ],
+  recado:
+    "Essa reforma é a minha casa de verdade, não um cenário alugado. É onde eu gravo, onde eu vivo e onde os produtos vão ser usados todo dia depois que a obra acabar. Quem entrar agora não aparece num vídeo solto: aparece na história inteira, e continua aparecendo depois.",
+  assinatura: "Lara",
+};
 
 // GALERIA "COMO VAI FICAR" (o painel/carrossel do topo da página).
 // Coloque as imagens em public/projeto/galeria/ e liste aqui na ordem que quer mostrar.

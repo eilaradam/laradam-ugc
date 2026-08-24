@@ -8,6 +8,7 @@ import {
   PROJETO_PLANOS,
   type BuscaItem,
 } from "@/data/projeto";
+import Cabecalho from "./Cabecalho";
 import { waLink } from "./ProjetoHero";
 
 const STATUS: Record<BuscaItem["status"], { label: string; cls: string; dot: string }> = {
@@ -36,18 +37,14 @@ export default function ProjetoParceria() {
       {/* O que estou procurando */}
       <section id="procuro" className="bg-background px-5 py-20 sm:px-8 sm:py-28">
         <div className="mx-auto max-w-6xl">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-primary sm:text-xs">
-            O que estou procurando
-          </p>
-          <h2 className="font-display mt-4 max-w-3xl text-3xl leading-[1.1] tracking-tight sm:text-5xl">
-            {abertas} categorias de parceiro ainda abertas.
-          </h2>
-          <p className="mt-5 max-w-2xl text-[15px] leading-relaxed text-foreground-soft sm:text-base">
-            Se a sua marca se encaixa em alguma delas, é só me chamar. Se não estiver na
-            lista e fizer sentido pra obra, me chama do mesmo jeito.
-          </p>
+          <Cabecalho
+            n="07"
+            chapeu="O que estou procurando"
+            titulo={`${abertas} categorias de parceiro ainda abertas.`}
+            sub="Se a sua marca se encaixa em alguma delas, me chama. Se não estiver na lista e fizer sentido pra obra, me chama do mesmo jeito."
+          />
 
-          <div className="mt-12 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-14 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {PROJETO_BUSCA.map((b, i) => {
               const s = STATUS[b.status];
               return (
@@ -83,17 +80,14 @@ export default function ProjetoParceria() {
       {/* Formatos de parceria */}
       <section id="parceria" className="bg-background-alt px-5 py-20 sm:px-8 sm:py-28">
         <div className="mx-auto max-w-6xl">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-primary sm:text-xs">
-            Formatos de parceria
-          </p>
-          <h2 className="font-display mt-4 max-w-3xl text-3xl leading-[1.1] tracking-tight sm:text-5xl">
-            Três jeitos de entrar. Escolha o tamanho.
-          </h2>
-          <p className="mt-5 max-w-3xl text-[15px] leading-relaxed text-foreground-soft sm:text-base">
-            {PROJETO_FORMATOS_TEXTO}
-          </p>
+          <Cabecalho
+            n="08"
+            chapeu="Formatos de parceria"
+            titulo="Três jeitos de entrar. Escolha o tamanho."
+            sub={PROJETO_FORMATOS_TEXTO}
+          />
 
-          <div className="mt-12 grid gap-5 lg:grid-cols-3">
+          <div className="mt-14 grid gap-5 lg:grid-cols-3">
             {PROJETO_PLANOS.map((p, i) => (
               <motion.div
                 key={p.nome}

@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import ProjetoHero from "@/components/projeto/ProjetoHero";
+import { ProjetoLogos } from "@/components/projeto/ProjetoMarcas";
+import ProjetoSobre from "@/components/projeto/ProjetoSobre";
 import ProjetoProva from "@/components/projeto/ProjetoProva";
 import ProjetoEscopo from "@/components/projeto/ProjetoEscopo";
 import ProjetoParceria from "@/components/projeto/ProjetoParceria";
@@ -24,6 +26,8 @@ export default function ProjetoPage() {
   return (
     <main className="flex-1">
       <ProjetoHero />
+      <ProjetoLogos />
+      <ProjetoSobre />
       <ProjetoProva />
       <ProjetoEscopo />
       <ProjetoParceria />
