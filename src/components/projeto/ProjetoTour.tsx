@@ -17,8 +17,8 @@ export default function ProjetoTour() {
   return (
     <section id="tour" className="bg-pj-bg px-5 py-20 sm:px-10 sm:py-28">
       <div className="mx-auto max-w-[1400px]">
-        <div className="flex flex-wrap items-end justify-between gap-6">
-          <Cabecalho n="03" chapeu="Tour 3D" titulo={PROJETO_TOUR.titulo} />
+        <div className="flex flex-col items-center gap-6">
+          <Cabecalho n="03" chapeu="Tour 3D" centro titulo={PROJETO_TOUR.titulo} />
           <a
             href={PROJETO_TOUR.url}
             target="_blank"
@@ -30,7 +30,7 @@ export default function ProjetoTour() {
           </a>
         </div>
 
-        <p className="mt-6 max-w-2xl text-[15px] leading-relaxed text-pj-muted sm:text-[17px]">
+        <p className="mx-auto mt-6 max-w-2xl text-center text-[15px] leading-relaxed text-pj-muted sm:text-[17px]">
           {PROJETO_TOUR.texto}
         </p>
 

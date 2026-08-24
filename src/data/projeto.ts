@@ -23,6 +23,10 @@ export const PROJETO = {
   arquiteta: { nome: "", instagram: "" },
 };
 
+// Frase da faixa corrida do topo.
+export const PROJETO_MARQUEE =
+  "Reforma documentada do primeiro dia ao tour final";
+
 // Números que já foram entregues. Mesmos dados do portfólio principal.
 export const PROJETO_NUMEROS = [
   { value: "500+", label: "Vídeos gravados" },

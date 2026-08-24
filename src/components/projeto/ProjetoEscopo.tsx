@@ -101,6 +101,8 @@ export default function ProjetoEscopo() {
           <Cabecalho
             n="07"
             chapeu="Paleta e materiais"
+            centro
+            className="mx-auto"
             titulo="A cara do projeto, escolha por escolha."
           />
 
@@ -162,6 +164,8 @@ export default function ProjetoEscopo() {
             n="08"
             chapeu="Cronograma"
             dark
+            centro
+            className="mx-auto"
             titulo={PROJETO.janelaFechamento}
           />
 
@@ -173,7 +177,7 @@ export default function ProjetoEscopo() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-60px" }}
                 transition={{ duration: 0.5, delay: i * 0.06 }}
-                className="border-t border-pj-bg/25 pt-6"
+                className="rounded-3xl bg-pj-bg/10 p-6"
               >
                 <p className="pj-label text-pj-olive-soft">{f.quando}</p>
                 <h3 className="pj-display mt-3 text-[1.5rem]">{f.titulo}</h3>

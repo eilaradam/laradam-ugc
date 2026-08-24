@@ -38,7 +38,7 @@ export function ProjetoLogos() {
 /** Depoimentos de marcas, em colunas com filete. */
 export function ProjetoDepoimentos() {
   return (
-    <div className="mt-16 grid gap-10 lg:grid-cols-3 lg:gap-14">
+    <div className="mt-16 grid gap-4 lg:grid-cols-3">
       {depoimentos.map((d, i) => (
         <motion.figure
           key={d.brand}
@@ -46,7 +46,7 @@ export function ProjetoDepoimentos() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.5, delay: i * 0.07 }}
-          className="border-t border-pj-line pt-6"
+          className="rounded-3xl border border-pj-line bg-pj-paper p-7 sm:p-8"
         >
           <blockquote className="text-[16px] leading-relaxed sm:text-[17px]">
             {d.quote}

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Archivo } from "next/font/google";
+import ProjetoNav from "@/components/projeto/ProjetoNav";
 import ProjetoHero from "@/components/projeto/ProjetoHero";
 import ProjetoSobre from "@/components/projeto/ProjetoSobre";
 import ProjetoAmbientes from "@/components/projeto/ProjetoAmbientes";
@@ -49,6 +50,7 @@ export const metadata: Metadata = {
 export default function ProjetoPage() {
   return (
     <main className={`${archivo.variable} font-pj flex-1 bg-pj-bg text-pj-ink`}>
+      <ProjetoNav />
       <ProjetoHero />
       <ProjetoSobre />
       <ProjetoAmbientes />

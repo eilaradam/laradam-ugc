@@ -35,10 +35,12 @@ export default function ProjetoContato() {
     <>
       {/* Dúvidas */}
       <section className="bg-pj-bg px-5 py-20 sm:px-10 sm:py-28">
-        <div className="mx-auto max-w-[1400px]">
+        <div className="mx-auto max-w-[900px]">
           <Cabecalho
             n="11"
             chapeu="Dúvidas comuns"
+            centro
+            className="mx-auto"
             titulo="O que as marcas costumam perguntar."
           />
           <div className="mt-12">

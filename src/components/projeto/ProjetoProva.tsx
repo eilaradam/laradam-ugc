@@ -24,10 +24,12 @@ export default function ProjetoProva() {
           <Cabecalho
             n="04"
             chapeu="Por que entrar"
+            centro
             titulo="Uma reforma é o melhor lugar pra mostrar um produto de casa."
+            className="mx-auto"
           />
 
-          <div className="mt-14 grid gap-x-14 gap-y-10 sm:grid-cols-2">
+          <div className="mt-14 grid gap-4 sm:grid-cols-2">
             {PROJETO_ARGUMENTOS.map((a, i) => (
               <motion.div
                 key={a.title}
@@ -35,7 +37,7 @@ export default function ProjetoProva() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-60px" }}
                 transition={{ duration: 0.5, delay: i * 0.06 }}
-                className="border-t border-pj-line pt-6"
+                className="rounded-3xl border border-pj-line bg-pj-paper p-7 sm:p-9"
               >
                 <span className="pj-label text-pj-terra">
                   {String(i + 1).padStart(2, "0")}
@@ -58,10 +60,12 @@ export default function ProjetoProva() {
           <Cabecalho
             n="05"
             chapeu="Resultados"
+            centro
             titulo="Não é teste. É o que as marcas já colheram comigo."
+            className="mx-auto"
           />
 
-          <div className="mt-14 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {PROJETO_RESULTADOS.map((r, i) => (
               <motion.div
                 key={r.brand + r.metric}
@@ -69,7 +73,7 @@ export default function ProjetoProva() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-60px" }}
                 transition={{ duration: 0.5, delay: i * 0.06 }}
-                className="border-t border-pj-line pt-6"
+                className="rounded-3xl bg-pj-paper p-7"
               >
                 <p className="pj-display text-[3rem] text-pj-olive sm:text-[3.6rem]">
                   {r.metric}
@@ -97,6 +101,8 @@ export default function ProjetoProva() {
           <Cabecalho
             n="06"
             chapeu="Casa e decoração"
+            centro
+            className="mx-auto"
             titulo="Esse nicho já é o meu terreno."
             sub="Vídeos que já produzi pra marcas de casa, móveis, organização e decoração. Clique pra assistir."
           />

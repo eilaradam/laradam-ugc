@@ -2,97 +2,91 @@
 
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
-import { PROJETO, PROJETO_SOBRE } from "@/data/projeto";
+import { PROJETO, PROJETO_MARQUEE } from "@/data/projeto";
 import ProjetoGaleria from "./ProjetoGaleria";
+import Ornamento from "./Ornamento";
+import { waLink } from "./ProjetoNav";
 
-export const waLink = (msg = PROJETO.whatsappMensagem) =>
-  `https://wa.me/${PROJETO.whatsapp}?text=${encodeURIComponent(msg)}`;
+export { waLink };
 
 export default function ProjetoHero() {
   return (
-    <section className="bg-pj-bg">
-      {/* barra do topo */}
-      <div className="mx-auto flex max-w-[1400px] items-center justify-between gap-4 px-5 py-6 sm:px-10">
-        <div className="flex items-center gap-3">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={PROJETO_SOBRE.foto}
-            alt={PROJETO_SOBRE.fotoAlt}
-            className="h-10 w-10 rounded-full object-cover object-top"
-          />
-          <span className="leading-tight">
-            <span className="block text-sm font-semibold">
-              {PROJETO_SOBRE.nome}
-            </span>
-            <span className="block text-[12px] text-pj-muted">
-              @{PROJETO.instagram}
-            </span>
-          </span>
-        </div>
+    <section id="topo" className="bg-pj-bg">
+      <div className="mx-auto max-w-[1100px] px-5 pb-14 pt-10 text-center sm:px-10 sm:pb-20 sm:pt-16">
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="flex items-center justify-center gap-3"
+        >
+          <Ornamento className="h-8 w-8 text-pj-olive-soft" />
+          <span className="pj-label text-pj-muted">{PROJETO.eyebrow}</span>
+          <Ornamento className="h-8 w-8 text-pj-terra" />
+        </motion.div>
 
-        <div className="flex items-center gap-4">
-          <span className="pj-label hidden text-pj-muted sm:block">
-            {PROJETO.eyebrow}
+        <motion.h1
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.05 }}
+          className="pj-display mx-auto mt-8 text-[2.6rem] sm:text-[4.4rem] lg:text-[5.2rem]"
+        >
+          Uma reforma inteira
+          <br />
+          <span className="mt-1 inline-block bg-pj-olive-soft/45 px-3 py-1">
+            virando conteúdo
           </span>
+        </motion.h1>
+
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.12 }}
+          className="mx-auto mt-8 max-w-2xl text-[16px] leading-relaxed text-pj-muted sm:text-[18px]"
+        >
+          {PROJETO.intro} {PROJETO.intro2}
+        </motion.p>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.18 }}
+          className="mt-10 flex flex-wrap items-center justify-center gap-3"
+        >
           <a
             href={waLink()}
             target="_blank"
             rel="noopener noreferrer"
-            className="rounded-full bg-pj-ink px-5 py-2.5 text-[13px] font-semibold text-pj-bg transition hover:bg-pj-olive"
+            className="group inline-flex items-center gap-2 rounded-full bg-pj-terra px-7 py-3.5 text-sm font-semibold text-pj-paper transition hover:bg-pj-ink"
           >
-            Falar comigo
+            Quero ser parceiro
+            <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
           </a>
-        </div>
-      </div>
-
-      {/* titulo gigante + resumo */}
-      <div className="mx-auto max-w-[1400px] px-5 pb-12 pt-6 sm:px-10 sm:pb-16 sm:pt-12">
-        <div className="grid gap-10 lg:grid-cols-[1.2fr_1fr] lg:items-end lg:gap-16">
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="pj-display text-[3.4rem] uppercase sm:text-[5.6rem] lg:text-[7.2rem]"
+          <a
+            href="#procuro"
+            className="inline-flex items-center gap-2 rounded-full border border-pj-line bg-pj-paper px-7 py-3.5 text-sm font-semibold transition hover:border-pj-ink"
           >
-            Casa
-            <br />
-            Estúdio
-          </motion.h1>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-          >
-            <p className="text-[17px] leading-snug sm:text-[19px]">
-              {PROJETO.subtitulo}
-            </p>
-            <p className="mt-5 max-w-md text-[15px] leading-relaxed text-pj-muted">
-              {PROJETO.intro2}
-            </p>
-            <div className="mt-8 flex flex-wrap items-center gap-3">
-              <a
-                href={waLink()}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group inline-flex items-center gap-2 rounded-full bg-pj-terra px-7 py-3.5 text-sm font-semibold text-pj-paper transition hover:bg-pj-ink"
-              >
-                Quero ser parceiro
-                <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-              </a>
-              <a
-                href="#procuro"
-                className="inline-flex items-center gap-2 rounded-full border border-pj-line px-7 py-3.5 text-sm font-semibold transition hover:border-pj-ink"
-              >
-                Ver o que estou procurando
-              </a>
-            </div>
-          </motion.div>
-        </div>
+            Ver o que estou procurando
+          </a>
+        </motion.div>
       </div>
 
       {/* faixa de imagem ocupando a largura toda */}
       <ProjetoGaleria />
+
+      {/* faixa corrida */}
+      <div className="overflow-hidden bg-pj-ink py-3.5 text-pj-bg">
+        <div className="marquee">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <span
+              key={i}
+              className="pj-label flex items-center gap-8 whitespace-nowrap"
+            >
+              {PROJETO_MARQUEE}
+              <Ornamento className="h-3.5 w-3.5 text-pj-olive-soft" />
+            </span>
+          ))}
+        </div>
+      </div>
     </section>
   );
 }

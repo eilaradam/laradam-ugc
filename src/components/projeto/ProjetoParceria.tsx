@@ -28,6 +28,8 @@ export default function ProjetoParceria() {
           <Cabecalho
             n="09"
             chapeu="O que estou procurando"
+            centro
+            className="mx-auto"
             titulo={`${abertas} categorias de parceiro ainda abertas.`}
             sub="Se a sua marca se encaixa em alguma delas, me chama. Se não estiver na lista e fizer sentido pra obra, me chama do mesmo jeito."
           />
@@ -61,11 +63,14 @@ export default function ProjetoParceria() {
       </section>
 
       {/* Formatos de parceria */}
-      <section id="parceria" className="bg-pj-bg2 px-5 py-20 sm:px-10 sm:py-28">
+      <section id="parceria" className="bg-pj-ink px-5 py-20 text-pj-bg sm:px-10 sm:py-28">
         <div className="mx-auto max-w-[1400px]">
           <Cabecalho
             n="10"
             chapeu="Formatos de parceria"
+            dark
+            centro
+            className="mx-auto"
             titulo="Três jeitos de entrar. Escolha o tamanho."
             sub={PROJETO_FORMATOS_TEXTO}
           />
@@ -78,10 +83,8 @@ export default function ProjetoParceria() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-60px" }}
                 transition={{ duration: 0.5, delay: i * 0.07 }}
-                className={`flex flex-col rounded-2xl p-8 sm:p-10 ${
-                  p.destaque
-                    ? "bg-pj-olive text-pj-bg"
-                    : "border border-pj-line bg-pj-bg"
+                className={`flex flex-col rounded-3xl p-8 sm:p-10 ${
+                  p.destaque ? "bg-pj-olive text-pj-bg" : "bg-pj-bg text-pj-ink"
                 }`}
               >
                 <div className="flex items-start justify-between gap-4">
