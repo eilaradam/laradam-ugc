@@ -304,7 +304,21 @@ export type Render = {
 };
 
 export const PROJETO_GALERIA: Render[] = [
-  // { src: "/projeto/galeria/cozinha-01.jpg", titulo: "Cozinha com ilha", legenda: "Bancada em pedra e marcenaria sob medida" },
+  {
+    src: "/projeto/galeria/01-integrado.jpg",
+    titulo: "Sala, jantar e cozinha integradas",
+    legenda: "Piso de madeira, marcenaria ripada e a parede verde oliva ao fundo.",
+  },
+  {
+    src: "/projeto/galeria/02-cozinha.jpg",
+    titulo: "Cozinha com ilha",
+    legenda: "Bancada em granilite, marcenaria ripada e banquetas pro café da manhã.",
+  },
+  {
+    src: "/projeto/galeria/03-estar.jpg",
+    titulo: "Estar e painel ripado",
+    legenda: "O canto que vira ambiente de gravação: painel bege, espelho arco e plantas.",
+  },
 ];
 
 // Antes e depois. Coloque as imagens em public/projeto/ e escreva o caminho aqui.

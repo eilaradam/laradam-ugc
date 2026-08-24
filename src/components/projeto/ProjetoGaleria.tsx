@@ -44,7 +44,7 @@ export default function ProjetoGaleria({ itens = PROJETO_GALERIA }: { itens?: Re
     <>
       <div className="w-full">
         {/* painel principal */}
-        <div className="relative aspect-[4/3] w-full overflow-hidden rounded-[28px] bg-white/5 ring-1 ring-white/15">
+        <div className="relative aspect-[16/9] w-full overflow-hidden rounded-[28px] bg-white/5 ring-1 ring-white/15">
           <AnimatePresence mode="wait">
             <motion.div
               key={atual.src}
