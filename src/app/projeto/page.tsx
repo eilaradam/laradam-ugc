@@ -1,14 +1,22 @@
 import type { Metadata } from "next";
+import { Archivo } from "next/font/google";
 import ProjetoHero from "@/components/projeto/ProjetoHero";
-import { ProjetoLogos } from "@/components/projeto/ProjetoMarcas";
 import ProjetoSobre from "@/components/projeto/ProjetoSobre";
+import ProjetoAmbientes from "@/components/projeto/ProjetoAmbientes";
 import ProjetoProva from "@/components/projeto/ProjetoProva";
 import ProjetoEscopo from "@/components/projeto/ProjetoEscopo";
 import ProjetoParceria from "@/components/projeto/ProjetoParceria";
 import ProjetoContato from "@/components/projeto/ProjetoContato";
 
-// Página de proposta pra marcas. Fora do menu e fora do Google:
-// o acesso é pelo link que a Lara manda direto pra marca.
+// Tipografia so desta pagina (o resto do site segue Newsreader + Hanken).
+const archivo = Archivo({
+  variable: "--font-archivo",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
+});
+
+// Pagina de proposta pra marcas. Fora do menu e fora do Google:
+// o acesso e pelo link que a Lara manda direto pra marca.
 export const metadata: Metadata = {
   title: "Projeto Casa Estúdio · Proposta de parceria · Lara Dam",
   description:
@@ -39,10 +47,10 @@ export const metadata: Metadata = {
 
 export default function ProjetoPage() {
   return (
-    <main className="flex-1">
+    <main className={`${archivo.variable} font-pj flex-1 bg-pj-bg text-pj-ink`}>
       <ProjetoHero />
-      <ProjetoLogos />
       <ProjetoSobre />
+      <ProjetoAmbientes />
       <ProjetoProva />
       <ProjetoEscopo />
       <ProjetoParceria />

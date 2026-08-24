@@ -3,19 +3,21 @@
 import { motion } from "framer-motion";
 import type { ReactNode } from "react";
 
-/** Cabeçalho editorial das seções: número, filete, chapéu e título grande. */
+/** Cabeçalho das seções: etiqueta com número e título grande em bold. */
 export default function Cabecalho({
   n,
   chapeu,
   titulo,
   sub,
   dark = false,
+  className = "",
 }: {
   n: string;
   chapeu: string;
   titulo: ReactNode;
   sub?: string;
   dark?: boolean;
+  className?: string;
 }) {
   return (
     <motion.div
@@ -23,30 +25,27 @@ export default function Cabecalho({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-80px" }}
       transition={{ duration: 0.55 }}
+      className={className}
     >
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-3">
         <span
-          className={`font-display text-sm ${
-            dark ? "text-accent-on-dark" : "text-primary"
-          }`}
+          className={`pj-label ${dark ? "text-pj-olive-soft" : "text-pj-terra"}`}
         >
           {n}
         </span>
         <span
-          className={`text-[11px] font-semibold uppercase tracking-[0.22em] ${
-            dark ? "text-accent-on-dark" : "text-primary"
-          }`}
+          className={`pj-label ${dark ? "text-pj-bg/70" : "text-pj-muted"}`}
         >
           {chapeu}
         </span>
         <span
-          className={`h-px flex-1 ${dark ? "bg-white/20" : "bg-foreground/15"}`}
+          className={`h-px flex-1 ${dark ? "bg-pj-bg/25" : "bg-pj-line"}`}
         />
       </div>
 
       <h2
-        className={`font-display mt-7 max-w-4xl text-[2.15rem] leading-[1.05] tracking-tight sm:text-[3.4rem] ${
-          dark ? "text-white" : "text-foreground"
+        className={`pj-display mt-6 max-w-[16ch] text-[2.4rem] sm:text-[3.6rem] lg:text-[4.4rem] ${
+          dark ? "text-pj-bg" : "text-pj-ink"
         }`}
       >
         {titulo}
@@ -54,8 +53,8 @@ export default function Cabecalho({
 
       {sub && (
         <p
-          className={`mt-5 max-w-2xl text-[15px] leading-relaxed sm:text-base ${
-            dark ? "text-white/65" : "text-foreground-soft"
+          className={`mt-6 max-w-xl text-[15px] leading-relaxed sm:text-[17px] ${
+            dark ? "text-pj-bg/70" : "text-pj-muted"
           }`}
         >
           {sub}

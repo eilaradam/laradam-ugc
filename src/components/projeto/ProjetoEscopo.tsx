@@ -3,15 +3,14 @@
 import { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { MoveHorizontal } from "lucide-react";
-import Cabecalho from "./Cabecalho";
 import {
   PROJETO,
-  PROJETO_AMBIENTES,
   PROJETO_ANTES_DEPOIS,
   PROJETO_CRONOGRAMA,
   PROJETO_PALETA,
   type AntesDepois,
 } from "@/data/projeto";
+import Cabecalho from "./Cabecalho";
 
 /** Comparador arrastável: foto de hoje x projeto da arquiteta. */
 function Comparador({ item }: { item: AntesDepois }) {
@@ -22,8 +21,7 @@ function Comparador({ item }: { item: AntesDepois }) {
   const move = (clientX: number) => {
     const box = ref.current?.getBoundingClientRect();
     if (!box) return;
-    const pct = ((clientX - box.left) / box.width) * 100;
-    setPos(Math.min(100, Math.max(0, pct)));
+    setPos(Math.min(100, Math.max(0, ((clientX - box.left) / box.width) * 100)));
   };
 
   return (
@@ -37,9 +35,8 @@ function Comparador({ item }: { item: AntesDepois }) {
       onPointerMove={(e) => dragging.current && move(e.clientX)}
       onPointerUp={() => (dragging.current = false)}
       onPointerCancel={() => (dragging.current = false)}
-      className="relative aspect-[4/3] w-full cursor-ew-resize select-none overflow-hidden rounded-3xl bg-foreground"
+      className="relative aspect-[4/3] w-full cursor-ew-resize select-none overflow-hidden rounded-2xl bg-pj-bg2"
     >
-      {/* depois (base) */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={item.depois}
@@ -47,7 +44,6 @@ function Comparador({ item }: { item: AntesDepois }) {
         draggable={false}
         className="absolute inset-0 h-full w-full object-cover"
       />
-      {/* antes (recortado pelo clip, sem distorcer a foto) */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={item.antes}
@@ -57,19 +53,19 @@ function Comparador({ item }: { item: AntesDepois }) {
         className="absolute inset-0 h-full w-full object-cover"
       />
 
-      <span className="pointer-events-none absolute left-4 top-4 rounded-full bg-foreground/80 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-white">
+      <span className="pj-label pointer-events-none absolute left-4 top-4 rounded-full bg-pj-ink/85 px-3 py-1.5 text-pj-bg">
         Antes
       </span>
-      <span className="pointer-events-none absolute right-4 top-4 rounded-full bg-accent-on-dark px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-foreground">
+      <span className="pj-label pointer-events-none absolute right-4 top-4 rounded-full bg-pj-terra px-3 py-1.5 text-pj-paper">
         Depois
       </span>
 
       <div
-        className="pointer-events-none absolute inset-y-0 w-[2px] bg-white/90"
+        className="pointer-events-none absolute inset-y-0 w-[2px] bg-pj-paper"
         style={{ left: `${pos}%` }}
       >
-        <div className="absolute top-1/2 flex h-10 w-10 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-white shadow-lg">
-          <MoveHorizontal className="h-4 w-4 text-foreground" />
+        <div className="absolute top-1/2 flex h-10 w-10 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-pj-paper shadow-lg">
+          <MoveHorizontal className="h-4 w-4 text-pj-ink" />
         </div>
       </div>
     </div>
@@ -80,14 +76,14 @@ function CardImagem({ item }: { item: AntesDepois }) {
   const unica = item.depois || item.antes;
   const label = item.depois ? "Projeto" : "Como está hoje";
   return (
-    <div className="relative aspect-[4/3] w-full overflow-hidden rounded-3xl bg-foreground">
+    <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl bg-pj-bg2">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={unica}
         alt={`${item.ambiente} ${label}`}
         className="h-full w-full object-cover"
       />
-      <span className="absolute left-4 top-4 rounded-full bg-foreground/80 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-white">
+      <span className="pj-label absolute left-4 top-4 rounded-full bg-pj-ink/85 px-3 py-1.5 text-pj-bg">
         {label}
       </span>
     </div>
@@ -99,140 +95,89 @@ export default function ProjetoEscopo() {
 
   return (
     <>
-      {/* O projeto, ambiente por ambiente */}
-      <section id="projeto" className="bg-background-alt px-5 py-20 sm:px-8 sm:py-28">
-        <div className="mx-auto max-w-6xl">
+      {/* Paleta + antes e depois */}
+      <section className="bg-pj-bg px-5 py-20 sm:px-10 sm:py-28">
+        <div className="mx-auto max-w-[1400px]">
           <Cabecalho
-            n="05"
-            chapeu="O projeto"
-            titulo="Quatro frentes, uma casa inteira virando conteúdo."
-            sub={`Projeto de arquitetura pronto, obra começando em ${PROJETO.inicioObra.toLowerCase()}, documentada do primeiro dia ao tour final.${
-              PROJETO.arquiteta.nome ? ` Assinatura de ${PROJETO.arquiteta.nome}.` : ""
-            }`}
+            n="06"
+            chapeu="Paleta e materiais"
+            titulo="A cara do projeto, escolha por escolha."
           />
 
-          <div className="mt-14 grid gap-5 lg:grid-cols-2">
-            {PROJETO_AMBIENTES.map((amb, i) => (
+          <div className="mt-12 grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-3 lg:grid-cols-5">
+            {PROJETO_PALETA.map((c, i) => (
               <motion.div
-                key={amb.slug}
-                initial={{ opacity: 0, y: 24 }}
+                key={c.nome}
+                initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-60px" }}
-                transition={{ duration: 0.5, delay: i * 0.06 }}
-                className="rounded-3xl border border-border bg-background p-7 sm:p-9"
+                transition={{ duration: 0.45, delay: i * 0.05 }}
               >
-                <div className="flex items-baseline gap-3">
-                  <span className="font-display text-sm text-primary">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <h3 className="font-display text-2xl sm:text-3xl">{amb.nome}</h3>
-                </div>
-                <p className="mt-4 text-[15px] leading-relaxed text-foreground-soft">
-                  {amb.resumo}
-                </p>
-                <ul className="mt-6 flex flex-wrap gap-2">
-                  {amb.itens.map((it) => (
-                    <li
-                      key={it}
-                      className="rounded-full bg-primary-light px-3 py-1.5 text-[13px] font-medium text-primary-dark"
-                    >
-                      {it}
-                    </li>
-                  ))}
-                </ul>
+                <span
+                  className="block aspect-[4/3] w-full rounded-xl"
+                  style={{ backgroundColor: c.cor }}
+                />
+                <p className="mt-3 text-sm font-semibold">{c.nome}</p>
+                <p className="text-[13px] text-pj-muted">{c.onde}</p>
               </motion.div>
             ))}
           </div>
 
-          {/* paleta e materiais do projeto */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-60px" }}
-            transition={{ duration: 0.5 }}
-            className="mt-12 rounded-3xl border border-border bg-background p-7 sm:p-9"
-          >
-            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-primary">
-              Paleta e materiais
-            </p>
-            <div className="mt-7 grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-5">
-              {PROJETO_PALETA.map((c) => (
-                <div key={c.nome} className="flex items-center gap-3">
-                  <span
-                    className="h-11 w-11 shrink-0 rounded-full ring-1 ring-foreground/10"
-                    style={{ backgroundColor: c.cor }}
-                  />
-                  <span className="min-w-0 leading-tight">
-                    <span className="block text-sm font-semibold text-foreground">
-                      {c.nome}
-                    </span>
-                    <span className="block text-[12px] text-muted">{c.onde}</span>
-                  </span>
-                </div>
-              ))}
+          {comImagem.length > 0 && (
+            <div className="mt-20">
+              <div className="flex items-center gap-3">
+                <span className="pj-label text-pj-terra">Antes e depois</span>
+                <span className="h-px flex-1 bg-pj-line" />
+              </div>
+              <h3 className="pj-display mt-6 max-w-[16ch] text-[2rem] sm:text-[3rem]">
+                Como está hoje e como vai ficar.
+              </h3>
+
+              <div className="mt-12 grid gap-10 lg:grid-cols-2">
+                {comImagem.map((item) => (
+                  <div key={item.ambiente}>
+                    {item.antes && item.depois ? (
+                      <Comparador item={item} />
+                    ) : (
+                      <CardImagem item={item} />
+                    )}
+                    <h4 className="pj-display mt-5 text-[1.4rem]">
+                      {item.ambiente}
+                    </h4>
+                    <p className="mt-2 text-[15px] leading-relaxed text-pj-muted">
+                      {item.legenda}
+                    </p>
+                  </div>
+                ))}
+              </div>
             </div>
-          </motion.div>
+          )}
         </div>
       </section>
 
-      {/* Antes e depois (só aparece quando tem imagem) */}
-      {comImagem.length > 0 && (
-        <section className="bg-background px-5 py-20 sm:px-8 sm:py-28">
-          <div className="mx-auto max-w-6xl">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-primary sm:text-xs">
-              Antes e depois
-            </p>
-            <h2 className="font-display mt-5 max-w-3xl text-[2.15rem] leading-[1.05] tracking-tight sm:text-[3.4rem]">
-              Como está hoje e como vai ficar.
-            </h2>
-
-            <div className="mt-12 grid gap-8 lg:grid-cols-2">
-              {comImagem.map((item) => (
-                <div key={item.ambiente}>
-                  {item.antes && item.depois ? (
-                    <Comparador item={item} />
-                  ) : (
-                    <CardImagem item={item} />
-                  )}
-                  <h3 className="font-display mt-5 text-xl sm:text-2xl">
-                    {item.ambiente}
-                  </h3>
-                  <p className="mt-2 text-[15px] leading-relaxed text-foreground-soft">
-                    {item.legenda}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
       {/* Cronograma */}
-      <section className="bg-foreground px-5 py-20 text-white sm:px-8 sm:py-28">
-        <div className="mx-auto max-w-6xl">
+      <section className="bg-pj-olive px-5 py-20 text-pj-bg sm:px-10 sm:py-28">
+        <div className="mx-auto max-w-[1400px]">
           <Cabecalho
-            n="06"
+            n="07"
             chapeu="Cronograma"
             dark
             titulo={PROJETO.janelaFechamento}
           />
 
-          <div className="mt-14 grid gap-10 sm:grid-cols-2 lg:grid-cols-5 lg:gap-6">
+          <div className="mt-16 grid gap-10 sm:grid-cols-2 lg:grid-cols-5 lg:gap-8">
             {PROJETO_CRONOGRAMA.map((f, i) => (
               <motion.div
                 key={f.quando}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 18 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-60px" }}
                 transition={{ duration: 0.5, delay: i * 0.06 }}
-                className="relative border-t border-white/20 pt-6"
+                className="border-t border-pj-bg/25 pt-6"
               >
-                <span className="absolute -top-[5px] left-0 h-[9px] w-[9px] rounded-full bg-accent-on-dark" />
-                <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-accent-on-dark">
-                  {f.quando}
-                </p>
-                <h3 className="font-display mt-3 text-xl">{f.titulo}</h3>
-                <p className="mt-2 text-[14px] leading-relaxed text-white/60">
+                <p className="pj-label text-pj-olive-soft">{f.quando}</p>
+                <h3 className="pj-display mt-3 text-[1.5rem]">{f.titulo}</h3>
+                <p className="mt-3 text-[14px] leading-relaxed text-pj-bg/70">
                   {f.body}
                 </p>
               </motion.div>

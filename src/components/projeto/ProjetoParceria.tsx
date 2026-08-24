@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowRight, Check, MessageCircle } from "lucide-react";
+import { ArrowUpRight, Check } from "lucide-react";
 import {
   PROJETO_BUSCA,
   PROJETO_FORMATOS_TEXTO,
@@ -11,22 +11,10 @@ import {
 import Cabecalho from "./Cabecalho";
 import { waLink } from "./ProjetoHero";
 
-const STATUS: Record<BuscaItem["status"], { label: string; cls: string; dot: string }> = {
-  aberto: {
-    label: "Vaga aberta",
-    cls: "bg-primary-light text-primary-dark",
-    dot: "bg-primary",
-  },
-  conversando: {
-    label: "Em conversa",
-    cls: "bg-[#F6E9D2] text-[#8A5A1B]",
-    dot: "bg-[#C8892B]",
-  },
-  fechado: {
-    label: "Fechado",
-    cls: "bg-border text-muted",
-    dot: "bg-muted",
-  },
+const STATUS: Record<BuscaItem["status"], { label: string; cor: string }> = {
+  aberto: { label: "Vaga aberta", cor: "text-pj-terra" },
+  conversando: { label: "Em conversa", cor: "text-pj-olive-soft" },
+  fechado: { label: "Fechado", cor: "text-pj-muted" },
 };
 
 export default function ProjetoParceria() {
@@ -35,39 +23,34 @@ export default function ProjetoParceria() {
   return (
     <>
       {/* O que estou procurando */}
-      <section id="procuro" className="bg-background px-5 py-20 sm:px-8 sm:py-28">
-        <div className="mx-auto max-w-6xl">
+      <section id="procuro" className="bg-pj-bg px-5 py-20 sm:px-10 sm:py-28">
+        <div className="mx-auto max-w-[1400px]">
           <Cabecalho
-            n="07"
+            n="08"
             chapeu="O que estou procurando"
             titulo={`${abertas} categorias de parceiro ainda abertas.`}
             sub="Se a sua marca se encaixa em alguma delas, me chama. Se não estiver na lista e fizer sentido pra obra, me chama do mesmo jeito."
           />
 
-          <div className="mt-14 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-14 grid gap-x-14 sm:grid-cols-2">
             {PROJETO_BUSCA.map((b, i) => {
               const s = STATUS[b.status];
               return (
                 <motion.div
                   key={b.categoria}
-                  initial={{ opacity: 0, y: 16 }}
+                  initial={{ opacity: 0, y: 12 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-40px" }}
-                  transition={{ duration: 0.4, delay: (i % 6) * 0.04 }}
-                  className="flex items-center justify-between gap-4 rounded-2xl border border-border bg-white/60 px-5 py-4"
+                  transition={{ duration: 0.35, delay: (i % 8) * 0.03 }}
+                  className="flex items-baseline justify-between gap-4 border-b border-pj-line py-5"
                 >
                   <div className="min-w-0">
-                    <p className="truncate text-[15px] font-semibold text-foreground">
-                      {b.categoria}
-                    </p>
-                    <p className="mt-0.5 truncate text-[13px] text-muted">
+                    <p className="text-[17px] font-semibold">{b.categoria}</p>
+                    <p className="mt-0.5 text-[13px] text-pj-muted">
                       {b.ambiente}
                     </p>
                   </div>
-                  <span
-                    className={`inline-flex shrink-0 items-center gap-1.5 rounded-full px-3 py-1 text-[11px] font-semibold ${s.cls}`}
-                  >
-                    <span className={`h-1.5 w-1.5 rounded-full ${s.dot}`} />
+                  <span className={`pj-label shrink-0 ${s.cor}`}>
                     {b.marca && b.status === "fechado" ? b.marca : s.label}
                   </span>
                 </motion.div>
@@ -78,61 +61,65 @@ export default function ProjetoParceria() {
       </section>
 
       {/* Formatos de parceria */}
-      <section id="parceria" className="bg-background-alt px-5 py-20 sm:px-8 sm:py-28">
-        <div className="mx-auto max-w-6xl">
+      <section id="parceria" className="bg-pj-bg2 px-5 py-20 sm:px-10 sm:py-28">
+        <div className="mx-auto max-w-[1400px]">
           <Cabecalho
-            n="08"
+            n="09"
             chapeu="Formatos de parceria"
             titulo="Três jeitos de entrar. Escolha o tamanho."
             sub={PROJETO_FORMATOS_TEXTO}
           />
 
-          <div className="mt-14 grid gap-5 lg:grid-cols-3">
+          <div className="mt-14 grid gap-6 lg:grid-cols-3">
             {PROJETO_PLANOS.map((p, i) => (
               <motion.div
                 key={p.nome}
-                initial={{ opacity: 0, y: 24 }}
+                initial={{ opacity: 0, y: 22 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-60px" }}
                 transition={{ duration: 0.5, delay: i * 0.07 }}
-                className={`flex flex-col rounded-3xl p-8 sm:p-9 ${
+                className={`flex flex-col rounded-2xl p-8 sm:p-10 ${
                   p.destaque
-                    ? "bg-foreground text-white"
-                    : "border border-border bg-background"
+                    ? "bg-pj-olive text-pj-bg"
+                    : "border border-pj-line bg-pj-bg"
                 }`}
               >
-                {p.destaque && (
-                  <span className="mb-5 inline-flex w-fit rounded-full bg-accent-on-dark px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-foreground">
-                    Mais completo
+                <div className="flex items-start justify-between gap-4">
+                  <h3 className="pj-display text-[1.8rem] sm:text-[2.1rem]">
+                    {p.nome}
+                  </h3>
+                  <span
+                    className={`pj-label shrink-0 pt-2 ${
+                      p.destaque ? "text-pj-olive-soft" : "text-pj-terra"
+                    }`}
+                  >
+                    {String(i + 1).padStart(2, "0")}
                   </span>
-                )}
-                <h3 className="font-display text-2xl sm:text-3xl">{p.nome}</h3>
+                </div>
                 <p
-                  className={`mt-1 text-[13px] font-semibold uppercase tracking-[0.12em] ${
-                    p.destaque ? "text-accent-on-dark" : "text-primary"
+                  className={`pj-label mt-2 ${
+                    p.destaque ? "text-pj-bg/70" : "text-pj-muted"
                   }`}
                 >
                   {p.chamada}
                 </p>
                 <p
-                  className={`mt-5 text-[15px] leading-relaxed ${
-                    p.destaque ? "text-white/70" : "text-foreground-soft"
+                  className={`mt-6 text-[15px] leading-relaxed ${
+                    p.destaque ? "text-pj-bg/80" : "text-pj-muted"
                   }`}
                 >
                   {p.descricao}
                 </p>
 
-                <ul className="mt-7 space-y-3">
+                <ul className="mt-8 space-y-3">
                   {p.entregas.map((e) => (
                     <li key={e} className="flex gap-3 text-[14px] leading-snug">
                       <Check
                         className={`mt-[3px] h-4 w-4 shrink-0 ${
-                          p.destaque ? "text-accent-on-dark" : "text-primary"
+                          p.destaque ? "text-pj-olive-soft" : "text-pj-terra"
                         }`}
                       />
-                      <span className={p.destaque ? "text-white/85" : "text-foreground"}>
-                        {e}
-                      </span>
+                      <span>{e}</span>
                     </li>
                   ))}
                 </ul>
@@ -143,15 +130,14 @@ export default function ProjetoParceria() {
                   )}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`group mt-9 inline-flex items-center justify-center gap-2 rounded-full px-6 py-3.5 text-sm font-semibold transition ${
+                  className={`group mt-10 inline-flex items-center justify-center gap-2 rounded-full px-6 py-3.5 text-sm font-semibold transition ${
                     p.destaque
-                      ? "bg-accent-on-dark text-foreground hover:bg-white"
-                      : "bg-foreground text-white hover:bg-primary-dark"
+                      ? "bg-pj-bg text-pj-ink hover:bg-pj-terra hover:text-pj-paper"
+                      : "bg-pj-ink text-pj-bg hover:bg-pj-terra"
                   }`}
                 >
-                  <MessageCircle className="h-[17px] w-[17px]" />
                   Quero esse formato
-                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                  <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
                 </a>
               </motion.div>
             ))}

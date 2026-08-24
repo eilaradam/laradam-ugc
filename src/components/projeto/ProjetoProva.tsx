@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import * as Icons from "lucide-react";
 import { VIDEOS } from "@/data/content";
 import VideoCard from "@/components/VideoCard";
 import {
@@ -10,12 +9,7 @@ import {
   PROJETO_VIDEOS_IDS,
 } from "@/data/projeto";
 import Cabecalho from "./Cabecalho";
-import { ProjetoDepoimentos } from "./ProjetoMarcas";
-
-function Icon({ name, className }: { name: string; className?: string }) {
-  const C = (Icons as unknown as Record<string, React.ComponentType<{ className?: string }>>)[name];
-  return C ? <C className={className} /> : null;
-}
+import { ProjetoDepoimentos, ProjetoLogos } from "./ProjetoMarcas";
 
 const videos = PROJETO_VIDEOS_IDS.map((id) =>
   VIDEOS.find((v) => v.id === id)
@@ -24,37 +18,32 @@ const videos = PROJETO_VIDEOS_IDS.map((id) =>
 export default function ProjetoProva() {
   return (
     <>
-      {/* Por que entrar no projeto */}
-      <section className="bg-background-alt px-5 py-20 sm:px-8 sm:py-28">
-        <div className="mx-auto max-w-6xl">
+      {/* Por que entrar */}
+      <section className="bg-pj-bg px-5 py-20 sm:px-10 sm:py-28">
+        <div className="mx-auto max-w-[1400px]">
           <Cabecalho
-            n="02"
+            n="03"
             chapeu="Por que entrar"
-            titulo={
-              <>
-                Uma reforma é o melhor lugar do mundo pra mostrar um produto de
-                casa.
-              </>
-            }
+            titulo="Uma reforma é o melhor lugar pra mostrar um produto de casa."
           />
 
-          <div className="mt-14 grid gap-px overflow-hidden rounded-3xl bg-border sm:grid-cols-2">
+          <div className="mt-14 grid gap-x-14 gap-y-10 sm:grid-cols-2">
             {PROJETO_ARGUMENTOS.map((a, i) => (
               <motion.div
                 key={a.title}
-                initial={{ opacity: 0, y: 24 }}
+                initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-60px" }}
                 transition={{ duration: 0.5, delay: i * 0.06 }}
-                className="bg-background p-8 sm:p-10"
+                className="border-t border-pj-line pt-6"
               >
-                <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-primary-light">
-                  <Icon name={a.icon} className="h-5 w-5 text-primary" />
-                </div>
-                <h3 className="font-display mt-6 text-2xl leading-tight sm:text-[1.7rem]">
+                <span className="pj-label text-pj-terra">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <h3 className="pj-display mt-3 text-[1.5rem] sm:text-[1.9rem]">
                   {a.title}
                 </h3>
-                <p className="mt-3 text-[15px] leading-relaxed text-foreground-soft">
+                <p className="mt-3 max-w-md text-[15px] leading-relaxed text-pj-muted">
                   {a.body}
                 </p>
               </motion.div>
@@ -63,45 +52,39 @@ export default function ProjetoProva() {
         </div>
       </section>
 
-      {/* Resultados e depoimentos */}
-      <section className="bg-background px-5 py-20 sm:px-8 sm:py-28">
-        <div className="mx-auto max-w-6xl">
+      {/* Resultados, logos e depoimentos */}
+      <section className="bg-pj-bg2 px-5 py-20 sm:px-10 sm:py-28">
+        <div className="mx-auto max-w-[1400px]">
           <Cabecalho
-            n="03"
+            n="04"
             chapeu="Resultados"
-            titulo={
-              <>
-                Não é teste. É o que as marcas{" "}
-                <span className="font-serif-accent text-primary">já colheram</span>{" "}
-                comigo.
-              </>
-            }
+            titulo="Não é teste. É o que as marcas já colheram comigo."
           />
 
-          <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-14 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
             {PROJETO_RESULTADOS.map((r, i) => (
               <motion.div
                 key={r.brand + r.metric}
-                initial={{ opacity: 0, y: 24 }}
+                initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-60px" }}
                 transition={{ duration: 0.5, delay: i * 0.06 }}
-                className="flex flex-col rounded-3xl bg-foreground p-7 text-white"
+                className="border-t border-pj-line pt-6"
               >
-                <p className="font-display text-[2.75rem] leading-none text-accent-on-dark">
+                <p className="pj-display text-[3rem] text-pj-olive sm:text-[3.6rem]">
                   {r.metric}
                 </p>
-                <p className="mt-3 text-sm leading-tight text-white/70">
-                  {r.label}
+                <p className="mt-2 text-[14px] leading-tight">{r.label}</p>
+                <p className="mt-4 text-sm font-semibold">{r.brand}</p>
+                <p className="mt-1 text-[13px] leading-snug text-pj-muted">
+                  {r.note}
                 </p>
-                <div className="mt-auto pt-8">
-                  <p className="text-sm font-semibold">{r.brand}</p>
-                  <p className="mt-1 text-[13px] leading-snug text-white/55">
-                    {r.note}
-                  </p>
-                </div>
               </motion.div>
             ))}
+          </div>
+
+          <div className="mt-20">
+            <ProjetoLogos />
           </div>
 
           <ProjetoDepoimentos />
@@ -109,16 +92,16 @@ export default function ProjetoProva() {
       </section>
 
       {/* Vídeos de casa e deco */}
-      <section className="bg-background-alt px-5 py-20 sm:px-8 sm:py-28">
-        <div className="mx-auto max-w-6xl">
+      <section className="bg-pj-bg px-5 py-20 sm:px-10 sm:py-28">
+        <div className="mx-auto max-w-[1400px]">
           <Cabecalho
-            n="04"
+            n="05"
             chapeu="Casa e decoração"
             titulo="Esse nicho já é o meu terreno."
             sub="Vídeos que já produzi pra marcas de casa, móveis, organização e decoração. Clique pra assistir."
           />
 
-          <div className="mt-14 grid grid-cols-2 gap-4 sm:grid-cols-4 sm:gap-5">
+          <div className="mt-14 grid grid-cols-2 gap-4 sm:grid-cols-4 sm:gap-6">
             {videos.map((v, i) => (
               <VideoCard key={v.id} video={v} index={i} />
             ))}
