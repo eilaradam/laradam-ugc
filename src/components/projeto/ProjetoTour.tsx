@@ -16,7 +16,7 @@ export default function ProjetoTour() {
   const [interagindo, setInteragindo] = useState(false);
 
   return (
-    <section id="tour" className="bg-pj-bg px-5 py-20 sm:px-10 sm:py-28">
+    <section id="tour" className="bg-pj-bg px-5 py-14 sm:px-10 sm:py-20">
       <div className="mx-auto max-w-[1400px]">
         <div className="flex flex-col items-center gap-6">
           <Cabecalho n="03" chapeu="Tour 3D" centro titulo={PROJETO_TOUR.titulo} />
@@ -41,7 +41,7 @@ export default function ProjetoTour() {
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.6 }}
           onMouseLeave={() => setInteragindo(false)}
-          className="mt-12 overflow-hidden rounded-3xl border border-pj-line bg-pj-bg2"
+          className="mt-10 overflow-hidden rounded-3xl border border-pj-line bg-pj-bg2"
         >
           <div className="relative aspect-[4/3] w-full sm:aspect-[16/9]">
             {ligado ? (

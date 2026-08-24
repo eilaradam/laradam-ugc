@@ -38,7 +38,7 @@ export function ProjetoLogos() {
 /** Depoimentos de marcas, em colunas com filete. */
 export function ProjetoDepoimentos() {
   return (
-    <div className="mt-16 grid gap-4 lg:grid-cols-3">
+    <div className="mt-12 grid gap-4 lg:grid-cols-3">
       {depoimentos.map((d, i) => (
         <motion.figure
           key={d.brand}
@@ -55,6 +55,8 @@ export function ProjetoDepoimentos() {
             {d.logoFile && (
               // eslint-disable-next-line @next/next/no-img-element
               <img
+                loading="lazy"
+                decoding="async"
                 src={`/logo-1/${d.logoFile}`}
                 alt={d.brand}
                 className="h-8 w-8 object-contain mix-blend-multiply"

@@ -65,6 +65,8 @@ export default function ProjetoGaleria({
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
+                fetchPriority="high"
+                decoding="async"
                 src={atual.src}
                 alt={atual.titulo}
                 draggable={false}
@@ -136,6 +138,8 @@ export default function ProjetoGaleria({
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={r.src}
+                  loading="lazy"
+                  decoding="async"
                   alt={r.titulo}
                   className="h-full w-full object-cover"
                 />

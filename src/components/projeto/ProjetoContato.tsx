@@ -34,10 +34,10 @@ export default function ProjetoContato() {
   return (
     <>
       {/* Dúvidas */}
-      <section className="bg-pj-bg px-5 py-20 sm:px-10 sm:py-28">
+      <section className="bg-pj-bg px-5 py-14 sm:px-10 sm:py-20">
         <div className="mx-auto max-w-[900px]">
           <Cabecalho
-            n="11"
+            n="07"
             chapeu="Dúvidas comuns"
             centro
             className="mx-auto"
@@ -52,7 +52,7 @@ export default function ProjetoContato() {
       </section>
 
       {/* Chamada final */}
-      <section id="contato" className="bg-pj-ink px-5 py-24 text-pj-bg sm:px-10 sm:py-32">
+      <section id="contato" className="bg-pj-ink px-5 py-20 text-pj-bg sm:px-10 sm:py-24">
         <div className="mx-auto max-w-[1400px]">
           <p className="pj-label text-pj-olive-soft">Vamos construir juntos</p>
           <h2 className="pj-display mt-6 max-w-[14ch] text-[2.8rem] uppercase sm:text-[5rem] lg:text-[6.4rem]">

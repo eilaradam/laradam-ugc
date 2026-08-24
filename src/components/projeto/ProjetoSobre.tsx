@@ -22,6 +22,8 @@ export default function ProjetoSobre() {
             <>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
+                loading="lazy"
+                decoding="async"
                 src={fundo.src}
                 alt=""
                 aria-hidden
@@ -34,6 +36,8 @@ export default function ProjetoSobre() {
           <div className="relative grid gap-5 lg:grid-cols-[auto_1fr] lg:items-center">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
+                loading="lazy"
+                decoding="async"
               src={PROJETO_SOBRE.foto}
               alt={PROJETO_SOBRE.fotoAlt}
               className="h-52 w-40 rounded-3xl object-cover object-top sm:h-72 sm:w-56"

@@ -206,11 +206,8 @@ export const PROJETO_PLANOS: Plano[] = [
       "Exclusividade na sua categoria durante toda a obra",
       "Série de 4 a 6 conteúdos dedicados",
       "Presença nas 3 fases: escolha, instalação e resultado",
-      "Sequências de stories com link e caixinha de perguntas",
-      "Ensaio de fotos do ambiente pronto, em alta resolução",
+      "Fotos do ambiente pronto em alta resolução",
       "Direitos de uso e impulsionamento por 6 meses",
-      "Depoimento em vídeo pro canal da marca",
-      "Destaque no tour final do antes e depois",
     ],
   },
   {
@@ -221,8 +218,7 @@ export const PROJETO_PLANOS: Plano[] = [
     entregas: [
       "2 a 3 conteúdos dedicados ao ambiente",
       "Stories da chegada e da instalação",
-      "Fotos do ambiente pronto em alta resolução",
-      "Aparição no tour do antes e depois",
+      "Fotos do ambiente pronto em alta",
       "Direitos de uso por 3 meses",
     ],
   },
@@ -234,7 +230,6 @@ export const PROJETO_PLANOS: Plano[] = [
     entregas: [
       "1 reel dedicado ou integração no conteúdo da obra",
       "Sequência de stories com link",
-      "Fotos do produto no ambiente real",
       "Direitos de uso por 3 meses",
     ],
   },
@@ -293,7 +288,7 @@ export const PROJETO_TOUR = {
 
 // Quem assina o projeto (foto + recado pra marca).
 export const PROJETO_SOBRE = {
-  foto: "/projeto/lara.jpg",
+  foto: "/projeto/lara.webp",
   fotoAlt: "Lara Dam",
   nome: "Lara Dam",
   cargo: "UGC Creator e estrategista de conteúdo",
@@ -319,42 +314,42 @@ export type Render = {
 
 export const PROJETO_GALERIA: Render[] = [
   {
-    src: "/projeto/galeria/01-estar.jpg",
+    src: "/projeto/galeria/01-estar.webp",
     titulo: "Sala de estar",
     legenda: "Painel ripado, iluminação indireta e o sofá em frente ao canto de gravação.",
   },
   {
-    src: "/projeto/galeria/02-cozinha-ilha.jpg",
+    src: "/projeto/galeria/02-cozinha-ilha.webp",
     titulo: "Cozinha com ilha",
     legenda: "Bancada em granilite, marcenaria em nogueira e a parede verde oliva.",
   },
   {
-    src: "/projeto/galeria/03-canto-gravacao.jpg",
+    src: "/projeto/galeria/03-canto-gravacao.webp",
     titulo: "O canto de gravação",
     legenda: "Espelho arco, plantas e luz controlada: o cenário fixo dos vídeos.",
   },
   {
-    src: "/projeto/galeria/04-jantar-cozinha.jpg",
+    src: "/projeto/galeria/04-jantar-cozinha.webp",
     titulo: "Jantar e cozinha integrados",
     legenda: "Mesa, pendente de madeira e a ilha com banquetas logo atrás.",
   },
   {
-    src: "/projeto/galeria/05-ilha-banquetas.jpg",
+    src: "/projeto/galeria/05-ilha-banquetas.webp",
     titulo: "Ilha e banquetas",
     legenda: "O ponto de café da manhã e de gravação de receita.",
   },
   {
-    src: "/projeto/galeria/06-estar-cortina.jpg",
+    src: "/projeto/galeria/06-estar-cortina.webp",
     titulo: "Estar e cortina",
     legenda: "Rack em madeira, cortina de linho e a parede de quadros.",
   },
   {
-    src: "/projeto/galeria/07-jantar.jpg",
+    src: "/projeto/galeria/07-jantar.webp",
     titulo: "Mesa de jantar",
     legenda: "Onde entram as receitas, os utensílios e a mesa posta.",
   },
   {
-    src: "/projeto/galeria/08-integrado.jpg",
+    src: "/projeto/galeria/08-integrado.webp",
     titulo: "Vista geral",
     legenda: "Sala, jantar e cozinha em um ambiente só.",
   },
@@ -392,16 +387,7 @@ export const PROJETO_ANTES_DEPOIS: AntesDepois[] = [
 ];
 
 // Vídeos de casa e decoração que já entreguei (ids do array VIDEOS em content.ts).
-export const PROJETO_VIDEOS_IDS = [
-  "d-coza2",
-  "d1",
-  "d7",
-  "d13",
-  "d11",
-  "d5",
-  "d9",
-  "d4",
-];
+export const PROJETO_VIDEOS_IDS = ["d-coza2", "d1", "d7", "d13"];
 
 export const PROJETO_FAQ = [
   {
@@ -410,7 +396,7 @@ export const PROJETO_FAQ = [
   },
   {
     q: "Posso participar com um item só?",
-    a: "Pode. O formato Parceiro de Produto existe exatamente pra isso. Um item, um pacote de conteúdo.",
+    a: "Pode. O formato Parceiro de Produto existe exatamente pra isso: um item, um pacote de conteúdo.",
   },
   {
     q: "Tenho exclusividade na minha categoria?",
@@ -418,14 +404,6 @@ export const PROJETO_FAQ = [
   },
   {
     q: "Posso usar os vídeos nos meus anúncios?",
-    a: "Sim. Todos os formatos incluem direitos de uso, e o material já é entregue pensado pra rodar como criativo de performance.",
-  },
-  {
-    q: "Onde o conteúdo é publicado?",
-    a: "No meu Instagram e TikTok, além dos arquivos em alta entregues pra marca usar nos canais dela.",
-  },
-  {
-    q: "Quem assina o projeto?",
-    a: "A obra tem projeto de arquitetura, então cada escolha de material tem justificativa técnica e vai ser mostrada assim no conteúdo.",
+    a: "Sim. Todos os formatos incluem direitos de uso, e o material já é entregue pensado pra rodar como criativo de performance. Publico no meu Instagram e TikTok e mando os arquivos em alta pra marca.",
   },
 ];

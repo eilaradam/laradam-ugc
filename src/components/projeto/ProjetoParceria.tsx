@@ -4,7 +4,9 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowUpRight, Check, ChevronDown } from "lucide-react";
 import {
+  PROJETO,
   PROJETO_BUSCA,
+  PROJETO_CRONOGRAMA,
   PROJETO_FORMATOS_TEXTO,
   PROJETO_PLANOS,
   type BuscaItem,
@@ -28,10 +30,10 @@ export default function ProjetoParceria() {
   return (
     <>
       {/* O que estou procurando */}
-      <section id="procuro" className="bg-pj-bg px-5 py-20 sm:px-10 sm:py-28">
+      <section id="procuro" className="bg-pj-bg px-5 py-14 sm:px-10 sm:py-20">
         <div className="mx-auto max-w-[1400px]">
           <Cabecalho
-            n="09"
+            n="05"
             chapeu="O que estou procurando"
             centro
             className="mx-auto"
@@ -39,7 +41,7 @@ export default function ProjetoParceria() {
             sub="Se a sua marca se encaixa em alguma delas, me chama. Se não estiver na lista e fizer sentido pra obra, me chama do mesmo jeito."
           />
 
-          <div className="mt-14 grid gap-x-14 sm:grid-cols-2">
+          <div className="mt-10 grid gap-x-14 sm:grid-cols-2">
             {lista.map((b, i) => {
               const s = STATUS[b.status];
               return (
@@ -87,7 +89,7 @@ export default function ProjetoParceria() {
       <section id="parceria" className="bg-pj-ink px-5 py-20 text-pj-bg sm:px-10 sm:py-28">
         <div className="mx-auto max-w-[1400px]">
           <Cabecalho
-            n="10"
+            n="06"
             chapeu="Formatos de parceria"
             dark
             centro
@@ -96,7 +98,7 @@ export default function ProjetoParceria() {
             sub={PROJETO_FORMATOS_TEXTO}
           />
 
-          <div className="mt-14 grid gap-6 lg:grid-cols-3">
+          <div className="mt-10 grid gap-6 lg:grid-cols-3">
             {PROJETO_PLANOS.map((p, i) => (
               <motion.div
                 key={p.nome}
@@ -165,6 +167,31 @@ export default function ProjetoParceria() {
                 </a>
               </motion.div>
             ))}
+          </div>
+
+          {/* cronograma */}
+          <div className="mt-14 border-t border-pj-bg/20 pt-12">
+            <p className="pj-label text-pj-olive-soft">Cronograma</p>
+            <h3 className="pj-display mt-4 max-w-[22ch] text-[1.7rem] sm:text-[2.3rem]">
+              {PROJETO.janelaFechamento}
+            </h3>
+            <div className="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-5 lg:gap-6">
+              {PROJETO_CRONOGRAMA.map((f, i) => (
+                <motion.div
+                  key={f.quando}
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-60px" }}
+                  transition={{ duration: 0.45, delay: i * 0.05 }}
+                >
+                  <p className="pj-label text-pj-terra">{f.quando}</p>
+                  <p className="mt-2 text-[15px] font-semibold">{f.titulo}</p>
+                  <p className="mt-1.5 text-[13.5px] leading-relaxed text-pj-bg/55">
+                    {f.body}
+                  </p>
+                </motion.div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
