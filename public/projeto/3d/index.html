@@ -31,7 +31,18 @@
   footer{position:absolute;bottom:18px;left:22px;right:22px;display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--muted)}
   #dl,#wallsBtn{pointer-events:auto}
   #wallsBtn.on{background:var(--sage);border-color:var(--sage);color:#fff}
+  #painel{position:absolute;left:22px;bottom:22px;width:340px;max-width:calc(100vw - 44px);background:#fbfaf5;border:1px solid var(--line);border-radius:22px;padding:20px 20px 18px;box-shadow:0 18px 50px rgba(0,0,0,.14);transform:translateY(14px);opacity:0;pointer-events:none;transition:opacity .25s ease, transform .25s ease}
+  #painel.on{opacity:1;transform:none;pointer-events:auto}
+  #painel .cap{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#b4654a;font-weight:700}
+  #painel h2{margin:10px 0 0;font-size:24px;line-height:1.05;letter-spacing:-.02em}
+  #painel .lista{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+  #painel .lista span{background:#eceae4;border-radius:999px;padding:6px 11px;font-size:12.5px;color:#3f4a35}
+  #painel a.cta{display:inline-flex;align-items:center;gap:6px;margin-top:16px;background:#2b2f2c;color:#fff;border-radius:999px;padding:10px 16px;font-size:12.5px;font-weight:600;text-decoration:none}
+  #painel a.cta:hover{background:#b4654a}
+  #painel .x{position:absolute;top:14px;right:14px;border:0;background:transparent;font-size:18px;line-height:1;color:var(--muted);cursor:pointer}
   @media (max-width:640px){
+    #painel{left:12px;right:12px;bottom:12px;width:auto;padding:16px}
+    #painel h2{font-size:20px}
     .views{top:auto;bottom:92px;right:50%;transform:translateX(50%);flex-wrap:wrap;justify-content:center}
     .rooms{top:auto;bottom:52px;right:50%;transform:translateX(50%);flex-wrap:wrap;justify-content:center}
     footer{justify-content:center}
@@ -48,7 +59,7 @@
     <p>Tour 3D do espaço onde os conteúdos são gravados</p>
   </header>
   <div id="loading" aria-live="polite">Montando o apê…</div>
-  <div id="hint">Arraste para girar, pince ou role para aproximar, ou escolha um ambiente acima</div>
+  <div id="hint">Clique nos móveis para ver os produtos que procuro. Arraste para girar.</div>
   <div class="views" role="group" aria-label="Ângulo de visão">
     <button data-az="45">Copa e quadros</button>
     <button data-az="-45">Quadros e cortina</button>
@@ -71,6 +82,13 @@
       <button id="dl">Baixar imagem</button>
     </div>
   </footer>
+  <div id="painel" role="dialog" aria-live="polite">
+    <button class="x" id="painelX" aria-label="Fechar">✕</button>
+    <span class="cap">Você consegue imaginar o seu produto aqui?</span>
+    <h2 id="painelTitulo"></h2>
+    <div class="lista" id="painelLista"></div>
+    <a class="cta" id="painelCta" target="_blank" rel="noopener">Quero patrocinar esse item ↗</a>
+  </div>
 </div>
 
 <script src="/projeto/3d/three.min.js"></script>
@@ -165,22 +183,27 @@
   const root = new THREE.Group();
   scene.add(root);
 
+  // etiqueta do movel que esta sendo montado (usada pelo clique nos produtos)
+  let TAG = null;
+  function tag(t){ TAG = t; }
+  function marca(m){ if(TAG) m.userData.item = TAG; return m; }
+
   function box(w,h,d, material, x,y,z, parent=root){
-    const m = new THREE.Mesh(new THREE.BoxGeometry(w,h,d), material);
+    const m = marca(new THREE.Mesh(new THREE.BoxGeometry(w,h,d), material));
     m.position.set(x + w/2, y + h/2, z + d/2);
     m.castShadow = true; m.receiveShadow = true;
     parent.add(m);
     return m;
   }
   function cyl(r,h, material, x,y,z, parent=root, seg=32){
-    const m = new THREE.Mesh(new THREE.CylinderGeometry(r,r,h,seg), material);
+    const m = marca(new THREE.Mesh(new THREE.CylinderGeometry(r,r,h,seg), material));
     m.position.set(x, y + h/2, z);
     m.castShadow = true; m.receiveShadow = true;
     parent.add(m);
     return m;
   }
   function sphere(r, material, x,y,z, sx=1,sy=1,sz=1, parent=root){
-    const m = new THREE.Mesh(new THREE.SphereGeometry(r, 18, 14), material);
+    const m = marca(new THREE.Mesh(new THREE.SphereGeometry(r, 18, 14), material));
     m.position.set(x,y,z); m.scale.set(sx,sy,sz);
     m.castShadow = true; m.receiveShadow = true;
     parent.add(m);
@@ -214,7 +237,7 @@
     const m = new THREE.Mesh(g, mats);
     m.position.set(x + w/2, 0, z + d/2);
     m.castShadow = true; m.receiveShadow = true;
-    m.userData.dir = dir; m.userData.y0 = y0; m.userData.y1 = y1; m.userData.interior = interior;
+    m.userData.dir = dir; m.userData.y0 = y0; m.userData.y1 = y1; m.userData.interior = interior; m.userData.item = 'parede';
     root.add(m); walls.push(m);
     return m;
   }
@@ -252,25 +275,31 @@
   const quartzo = new THREE.MeshStandardMaterial({map: speckle(), roughness:.4});
   const quartzoX = perCm(quartzo, 70);
   const branco = mat(C.branco, {roughness:.5});
+  tag("geladeira");
   // geladeira 60x62, ao lado da porta (z 7..69)
   box(62, 175, 62, branco, 0, 0, 7);
   box(1, 60, 2, mat(0xbbbbbb), 62.2, 100, 10);
+  tag("cafe");
   // armário café 65 (z 77..142) x 60, 90 de altura, tampo quartzo
   box(60, 86, 65, freijo, 0, 0, 77);
   box(60, 4, 65, quartzo, 0, 86, 77);
   cyl(6, 12, branco, 25, 90, 100, root, 16); // cafeteira
   cyl(4, 8, branco, 45, 90, 92, root, 16);
   cyl(4, 8, branco, 45, 90, 116, root, 16);
+  tag("prateleira");
   // prateleiras com LED (04 e 05) a 160 de altura
   box(30, 2, 60, freijo, 0, 160, 0);
   box(30, 2, 77, freijo, 0, 160, 65);
+  tag("marcenaria");
   // armário aéreo 142 x 95 x 40 a 185 do piso
   const aereo = box(40, 95, 142, branco, 0, 185, 0);
   box(0.6, 95, 1, mat(0xd5d2cc), 40.3, 185, 46.5);
   box(0.6, 95, 1, mat(0xd5d2cc), 40.3, 185, 93);
+  tag("porta");
   // porta de entrada (z 144..223) em Babosa
   box(4, 210, 79, mat(C.babosa), 0, 0, 144);
   box(1.5, 2, 10, mat(0xc9c2b4), 4.2, 100, 205);
+  tag("ilha");
   // ilha conforme detalhamento 03 (pág. 25): corpo 148 x 63 x 86, tampo 158 x 90 com balanço de 25 pro lado dos bancos,
   // cantos arredondados r10 na ponta livre, recorte 22x5 junto à parede, 2 portas + 4 gavetas na frente, ripado atrás
   (function(){
@@ -291,33 +320,38 @@
     sh.absarc(ix+8, -(iz+148), 10, -Math.PI/2, -Math.PI, true);
     sh.lineTo(ix-2, -iz);
     const top = new THREE.Mesh(new THREE.ExtrudeGeometry(sh, {depth:4, bevelEnabled:false, curveSegments:16}), quartzoX);
-    top.rotation.x = -Math.PI/2; top.position.y = 86; top.castShadow = true; top.receiveShadow = true; root.add(top);
+    top.userData.item = 'ilha'; top.rotation.x = -Math.PI/2; top.position.y = 86; top.castShadow = true; top.receiveShadow = true; root.add(top);
   })();
+  tag("banqueta");
   // bancos sob o balanço do tampo
   const seatMat = mat(C.bege);
   [[278,45],[278,105]].forEach(([x,z])=>{
     box(32, 4, 32, seatMat, x-16, 63, z-16);
     [[-12,-12],[12,-12],[-12,12],[12,12]].forEach(([dx,dz])=> cyl(1.5, 63, freijo, x+dx, 0, z+dz, root, 8));
   });
+  tag("utensilios");
   // livro de receitas e tábua na ilha
   box(2, 22, 16, mat(0xe9e3d3), 238, 90, 40);
   box(3, 30, 20, freijo, 244, 90, 42);
 
+  tag("ripado");
   // ---------- RIPADO (x 246..474 na parede de fundo) ----------
   const ripa = mat(0xe3d9c6, {roughness:.8});
   for(let x=246; x<474; x+=4) box(3, H, 2, ripa, x, 0, 0);
 
+  tag("espelho");
   // espelho arco 60 x 160 encostado no ripado
   (function(){
     const s = new THREE.Shape();
     s.moveTo(-30,0); s.lineTo(30,0); s.lineTo(30,130); s.absarc(0,130,30,0,Math.PI,false); s.lineTo(-30,0);
     const g = new THREE.ExtrudeGeometry(s, {depth:3, bevelEnabled:false});
     const frame = new THREE.Mesh(g, freijoX);
-    frame.rotation.x = 0; frame.position.set(396, 0, 3.5); frame.castShadow=true; root.add(frame);
+    frame.userData.item = 'espelho'; frame.rotation.x = 0; frame.position.set(396, 0, 3.5); frame.castShadow=true; root.add(frame);
     const glass = new THREE.Mesh(g, mat(0xc9d3cf, {roughness:.1, metalness:.6}));
-    glass.scale.set(.9,.93,1); glass.position.set(396, 2, 4.5); root.add(glass);
+    glass.userData.item = 'espelho'; glass.scale.set(.9,.93,1); glass.position.set(396, 2, 4.5); root.add(glass);
   })();
 
+  tag("quadros");
   // ---------- ESTAR ----------
   // pintura Babosa termina em 232; quadros Monet a partir de 522
   const moldura = mat(0xd8c6a3, {roughness:.5});
@@ -325,6 +359,7 @@
     box(50, 70, 2, moldura, cx-25, 115, 0);
     box(44, 64, 1, mat(col, {roughness:.9}), cx-22, 118, 2);
   });
+  tag("sofa");
   // sofá Belgrado 230 com chaise à direita (x 505..735)
   const linho = texMat(weaveDraw('#efe8db', '#c9bfae'), [3,3], {roughness:1});
   const sofaBase = box(230, 40, 90, linho, 505, 8, 10);
@@ -336,24 +371,31 @@
   box(230, 8, 90, freijo, 505, 0, 10);             // base madeira
   box(45, 45, 8, mat(C.oliva), 650, 48, 30);       // almofada oliva
   box(45, 45, 8, mat(C.bege), 700, 48, 30);        // almofada bege
+  tag("tapete");
   // tapete chenille off-white 250 x 200 (x 485..735, z 76..276)
   box(250, 1.5, 200, texMat(noiseDraw('#f0ebe0', 34), [6,5], {roughness:1}), 485, 0, 76);
+  tag("puff");
   // puff redondo linho areia
   cyl(28, 40, mat(C.bege), 700, 0, 230);
+  tag("rack");
   // rack existente 200 x 40 x 50 na parede da TV
   box(200, 50, 40, freijo, 530, 0, D-40);
   box(90, 46, 36, mat(0x3a2418), 620, 2, D-38);  // nicho
   for(let x=534; x<600; x+=4) box(2, 50, 1.5, freijo, x, 0, D-41.5);
   cyl(8, 3, mat(0xefe6d6), 560, 50, D-20, root, 24); // vitrola
+  tag("tv");
   // TV The Frame 122 x 70
   box(122, 70, 3, mat(0xd3c4a4), 569, 105, D-3);
   box(116, 64, 1, mat(0xf0a7a0, {roughness:.9}), 572, 108, D-4);
+  tag("prateleira");
   // 2 prateleiras madeiradas 100+110 com LED a 225
   box(210, 3, 25, freijo, 525, 225, D-25);
+  tag("quadros");
   // quadro Dublin 50x70 sobre a mesa (parede da frente)
   box(50, 70, 2, moldura, 358, 114, D-2);
   box(44, 64, 1, mat(0xf3f1ea), 361, 117, D-3);
 
+  tag("mesa");
   // ---------- JANTAR ----------
   // mesa 80 x 120 (x 343..423, z 170..290), tampo branco, base freijó
   box(80, 4, 120, mat(0xf7f5f0, {roughness:.3}), 343, 72, 170);
@@ -367,16 +409,20 @@
     for(let i=-15;i<=15;i+=5) cyl(0.8, 40, white, i, 48, -17, g, 6);
     box(40, 3, 3, white, -20, 88, -18.5, g);
   }
+  tag('cadeiras');
   chair(330, 205, Math.PI/2); chair(330, 255, Math.PI/2);
   chair(436, 205, -Math.PI/2); chair(436, 255, -Math.PI/2);
+  tag("pendente");
   // pendente Saruê 40cm sobre a mesa (80 acima do tampo)
   cyl(20, 16, freijo, 383, 156, 230, root, 32);
   cyl(19, 1, mat(0xfff3d6, {emissive:0xffe0a8, emissiveIntensity:.6}), 383, 155, 230, root, 32);
   cyl(0.4, H-172, mat(0x333333), 383, 172, 230, root, 4);
+  tag("decor");
   // vaso com capim seco na mesa
   cyl(6, 20, mat(0xf3f1ec), 383, 76, 230, root, 16);
   for(let i=0;i<5;i++) cyl(0.5, 45, mat(0xb08a5e), 383 + (i-2)*2, 96, 230 + (i%2)*2, root, 4);
 
+  tag("luminaria");
   // ---------- LUMINÁRIA DE CHÃO E PLANTAS ----------
   (function(){
     const g = new THREE.Group(); g.position.set(484, 0, 48); root.add(g);
@@ -395,14 +441,17 @@
     sphere(r*.75, mat(C.folha2), x+r*.5, 30+h-r*.3, z-r*.4, 1, .8, 1);
     sphere(r*.7, mat(col), x-r*.55, 30+h-r*.2, z+r*.4, 1, .75, 1);
   }
+  tag('plantas');
   plant(440, 40, 26, 55, 17, C.folha);     // ficus lyrata
   plant(470, 100, 20, 30, 14, C.folha2);   // calathea
   plant(420, 98, 26, 20, 15, C.folha);     // costela de adão
+  tag("plantas");
   // planta pendente na prateleira da TV
   sphere(14, mat(C.folha2), 540, 236, D-14, 1, .6, 1);
   // planta na prateleira da copa
   sphere(9, mat(C.folha2), 18, 168, 92, 1, .8, 1);
 
+  tag("cortina");
   // ---------- CORTINA (parede direita) ----------
   const cortina = texMat(weaveDraw('#e4dccb', '#c4b9a4'), [1,6], {roughness:1});
   const cortina2 = texMat(weaveDraw('#d7cdb8', '#b8ac95'), [1,6], {roughness:1});
@@ -410,6 +459,7 @@
     const m = box(7, H-2, 7, i%2?cortina:cortina2, W-9, 1, z);
     m.castShadow = false;
   }
+  tag("iluminacao");
   // trilho eletrificado com 4 spots
   box(150, 3, 3, mat(0xf2f0eb), 560, H-3, 20);
   [575, 612, 650, 688].forEach(x=> cyl(3, 8, mat(0xf2f0eb), x, H-11, 22, root, 12));
@@ -417,6 +467,7 @@
   [330, 396, 462].forEach(x=> box(10, 1, 10, mat(0xfff8e8, {emissive:0xfff0cc, emissiveIntensity:.8}), x-5, H-1, 25));
 
 
+  tag("piso");
   // ---------- COZINHA, CORREDOR, BANHEIRO E QUARTO (vazios, só o volume) ----------
   // conforme o croqui: faixa abaixo da sala. Cozinha à esquerda, corredor + banheiro no meio, quarto à direita.
   const K = {x:22,  z:263, w:150, d:284};     // cozinha 1,50 x ~2,80, termina 70 cm antes do fundo do quarto
@@ -454,6 +505,7 @@
     const kx = K.x, kz = K.z, kw = K.w, kd = K.d;
     const white = mat(0xf4f3ef, {roughness:.45});
     const line = mat(0xd9d6cf);
+    tag("marcenaria_cozinha");
     // armário em L: perna longa na parede da direita (oeste) e perna curta na parede do fundo, até a máquina
     const cx = kx, cz = kz+12, cw = 55, cd = kd-12;
     box(cw, 86, cd, white, cx, 0, cz);                         // perna longa
@@ -464,6 +516,7 @@
     [cz+45, cz+95, cz+145, cz+205, cz+265, cz+325].forEach(z=> box(1, 82, .8, line, cx+cw, 2, z));
     [22, 42, 62].forEach(y=> box(1, .8, 45, line, cx+cw, y, cz));
     box(.8, 82, 1, line, cx+cw+20, 2, kz+kd-56);
+    tag("pia");
     // cuba embutida + torneira gooseneck
     box(40, 2, 45, mat(0xc9ccc8, {roughness:.3, metalness:.5}), cx+6, 88.2, cz+150);
     box(34, 14, 39, mat(0x9ea3a0, {roughness:.3, metalness:.6}), cx+9, 74, cz+153);
@@ -472,14 +525,17 @@
       const t = new THREE.Mesh(new THREE.TorusGeometry(9, 1.2, 8, 24, Math.PI), mat(0xd0d3d2, {metalness:.8, roughness:.25}));
       t.position.set(cx+17, 118, cz+172); t.rotation.y = Math.PI/2; t.castShadow = true; root.add(t);
     })();
+    tag("cooktop");
     // cooktop de indução + air fryer no fundo da bancada
     box(38, 1.2, 30, mat(0x1a1a1a, {roughness:.2}), cx+8, 90, cz+cd-36);
     box(24, 26, 26, mat(0x222222, {roughness:.5}), cx+16, 91, cz+cd-72);
+    tag("lavadora");
     // máquina de lavar no canto do fundo
     const wm = mat(0x3b3d40, {roughness:.35, metalness:.3});
     box(55, 85, 60, wm, kx+kw-55, 0, kz+kd-60);
     cyl(18, 2, mat(0x141414, {roughness:.1, metalness:.4}), kx+kw-27, 42, kz+kd-61, root, 32).rotation.x = Math.PI/2;
     box(55, 3, 2, mat(0x8a8d90), kx+kw-55, 78, kz+kd-62);
+    tag("marcenaria_cozinha");
     // armário aéreo: portas em off-white com nicho aberto de freijó embaixo e LED sob o nicho (referência enviada)
     const cream = mat(0xece5d7, {roughness:.35});
     const az0 = cz+15, al = 190;
@@ -497,15 +553,19 @@
     cyl(5, 12, mat(0xbfb6a6), kx+18, 157.5, az0+70, root, 14);
     cyl(4, 9, mat(0xe9e3d3), kx+18, 157.5, az0+125, root, 14);
     cyl(5.5, 5, mat(0xd9c9a6), kx+18, 157.5, az0+160, root, 14);
+    tag("prateleira");
     // prateleira de madeira no fundo, sobre a perna curta, com plantas e potes
     box(40, 2.5, 22, freijo, cx+cw, 150, kz+kd-22);
     sphere(8, mat(C.folha2), cx+cw+10, 158, kz+kd-11, 1, .7, 1);
     cyl(4, 12, mat(0xe9e3d3), cx+cw+26, 152.5, kz+kd-11, root, 12);
     cyl(3.5, 9, mat(0xd9c9a6), cx+cw+34, 152.5, kz+kd-14, root, 12);
+    tag("plantas");
     // temperinhos na tampa do passa-prato
     [55, 84, 113].forEach(x=>{ cyl(5, 9, mat(0xe9e3d3), x, 92, 253, root, 14); sphere(7, mat(C.folha), x, 105, 253, 1, .8, 1); });
+    tag("tapete");
     // passadeira bege no piso
     box(55, 1.2, 190, texMat(weaveDraw('#e3d6bf', '#c2b39a'), [2,6], {roughness:1}), kx+kw-70, 0, cz+30);
+    tag("janela");
     // janela basculante alta na parede do fundo (3 folhas de vidro)
     const frame = mat(0xdcd9d2, {roughness:.6});
     const glass = mat(0x8bb1d4, {roughness:.15, metalness:.1, transparent:true, opacity:.75});
@@ -531,6 +591,7 @@
     const linen = texMat(weaveDraw('#d9cdb9', '#b9ab93'), [4,3], {roughness:1});
     const linenX = perCm(linen, 40);
     const duvet = texMat(noiseDraw('#efe9df', 26), [5,4], {roughness:1});
+    tag("cama");
     // cama box estofada em linho bege, colcha clara, travesseiros fofos (referências enviadas)
     box(194, 28, 144, linen, qx+12, 0, bz-2);
     box(190, 20, 140, mat(0xf4f1ea, {roughness:1}), qx+14, 28, bz);
@@ -538,6 +599,7 @@
     box(40, 4, 140, duvet, qx+164, 48, bz);
     [[bz+8,'#e6dfd2'],[bz+74,'#e6dfd2']].forEach(([z,c])=> box(30, 14, 60, mat(c, {roughness:1}), qx+22, 48, z));
     [[bz+22,'#d5cbb7'],[bz+80,'#d5cbb7']].forEach(([z,c])=> box(20, 11, 42, mat(c, {roughness:1}), qx+44, 48, z));
+    tag("cama");
     // cabeceira larga estofada com canto arredondado, afastada da parede e com luz por trás
     (function(){
       const z0 = bz-48, z1 = bz+148, h = 108, r = 46;
@@ -546,7 +608,7 @@
       sh.absarc(-z0-r, h-r, r, 0, Math.PI/2, false);
       sh.lineTo(-z1, h); sh.lineTo(-z1, 0);
       const hb = new THREE.Mesh(new THREE.ExtrudeGeometry(sh, {depth:8, bevelEnabled:false, curveSegments:24}), linenX);
-      hb.rotation.y = Math.PI/2; hb.position.set(qx+5, 0, 0); hb.castShadow = true; hb.receiveShadow = true; root.add(hb);
+      hb.userData.item = 'cama'; hb.rotation.y = Math.PI/2; hb.position.set(qx+5, 0, 0); hb.castShadow = true; hb.receiveShadow = true; root.add(hb);
       const glow = new THREE.Mesh(new THREE.ExtrudeGeometry(sh, {depth:1, bevelEnabled:false, curveSegments:24}), mat(0xfff0d0, {emissive:0xffdca0, emissiveIntensity:1}));
       glow.rotation.y = Math.PI/2; glow.position.set(qx+2.5, 0, 0); root.add(glow);
       const l = new THREE.PointLight(0xffd9a6, .55, 220, 2); l.position.set(qx+12, 70, bz+52); root.add(l);
@@ -554,12 +616,15 @@
       sphere(7, mat(0xfaf6ee, {emissive:0xfff3dc, emissiveIntensity:.7}), qx+17, 88, bz-22);
       cyl(2.5, 1, mat(C.dourado, {metalness:.6, roughness:.4}), qx+13.5, 87.5, bz-22, root, 12).rotation.z = Math.PI/2;
     })();
+    tag("marcenaria_quarto");
     // painel de madeira clara atrás da cama, com juntas, até o teto
     const oak = freijo;
     box(2, 250, qs-412, oak, qx+.5, 0, 410);
     for(let z=470; z<qs-2; z+=60) box(.8, 250, .6, mat(0x8f6a42), qx+2.4, 0, z);
+    tag("quadros");
     // dois quadros com molduras finas acima da cabeceira
     [bz+20, bz+82].forEach(z=>{ box(1.5, 50, 50, mat(0xd8c6a3), qx+2.6, 145, z); box(.6, 44, 44, mat(0xf1ede4), qx+4.1, 148, z+3); });
+    tag("mesinha");
     // mesinha lateral redonda com base de arame
     (function(){
       const cx = qx+30, czz = bz-26;
@@ -571,6 +636,7 @@
       for(let i=0;i<4;i++) cyl(.4, 30, mat(0x5a3a22), cx+8+(i-1.5)*1.5, 71, czz+4+(i%2)*1.5, root, 4);       // galhos
       [[cx+6,101,czz+3],[cx+10,97,czz+6],[cx+9,94,czz+2]].forEach(([x,y,z])=> sphere(2.5, mat(C.folha2), x, y, z));
     })();
+    tag("espelho");
     // espelho arco na parede sul (esquerda de quem olha a cabeceira)
     (function(){
       const sh = new THREE.Shape();
@@ -581,11 +647,13 @@
       const gl = new THREE.Mesh(g, mat(0xc9d3cf, {roughness:.1, metalness:.6}));
       gl.rotation.y = Math.PI; gl.scale.set(.9,.93,1); gl.position.set(650, 2, qs-2); root.add(gl);
     })();
+    tag("prateleira");
     // prateleiras no canto entre a janela e o espelho
     box(22, 2.5, 45, wood, qe-22, 150, qs-50);
     box(22, 2.5, 45, wood, qe-22, 185, qs-50);
     sphere(9, mat(C.folha2), qe-11, 194, qs-28, 1, .7, 1);
     box(4, 12, 18, mat(0xd9c9a6), qe-14, 153, qs-40);
+    tag("cortina");
     // janela com persiana rolô na parede leste (mesma parede da janela da sala)
     const frame = mat(0xdcd9d2, {roughness:.6});
     const wz = qz+100;
@@ -595,6 +663,7 @@
     box(3, 127, 3, frame, qe-3, 100, wz+147);
     box(1.5, 120, 144, mat(0xe9dfc9, {roughness:1}), qe-2.5, 102, wz+3).castShadow=false;
     cyl(3, 148, mat(0xe0d6c0), qe-4, 150, wz+75, root, 16).rotation.x = Math.PI/2;
+    tag("closet");
     // ---- marcenaria integrada: closet em freijó com portas de palhinha em arco, torre arredondada de nichos na ponta esquerda
     //      e bancada de trabalho contínua saindo do closet pela parede da janela (referências enviadas)
     const cane = texMat(tileDraw('#dcbc8c', '#b48c58', 6, 6), [6,6], {roughness:.9});
@@ -633,6 +702,7 @@
     [[46,'#c9b58f'],[92,'#8fa3b8'],[138,'#b07a48'],[184,'#444a55']].forEach(([y,c])=> box(3+Math.random()*4, 22, 20, mat(c, {roughness:.9}), cxs-14, y, cz0+20));
     box(4, 22, 20, mat(0xd9d3c6), cxs-22, 46, cz0+20); box(3, 18, 18, mat(0x5f6b45), cxs-26, 92, cz0+22);
     sphere(8, mat(C.folha2), tx+18, 148, cz0+30, 1, .7, 1); cyl(5, 8, mat(0xe9e3d3), tx+18, 138.5, cz0+30, root, 14);
+    tag("home_office");
     // bancada em freijó na parede da janela, mais estreita (50), começando no armário e indo até o fundo, com painéis de apoio e gaveteiro
     const dz = cz0+cd0+2, dl = qs-dz-2, dd = 50;
     box(dd, 4, dl, freijo, qe-dd, 72, dz);
@@ -642,6 +712,7 @@
     [22, 36, 50].forEach(y=> box(36, .8, 1, mat(0x5a3419), qe-43, y, dz+60));
     [0,1,2,3].forEach(i=> cyl(1.6, 1, freijo, qe-25, 15+i*14, dz+60.5, root, 12).rotation.x = Math.PI/2);
     [[qe-42,dz+22],[qe-10,dz+22],[qe-42,dz+56],[qe-10,dz+56]].forEach(([x,z])=> cyl(2, 8, mat(0x2b2b2b), x, 0, z, root, 8));
+    tag("tech");
     // dois postos: monitor + teclado e notebook
     box(2, 30, 50, mat(0x1c1c1c, {roughness:.3}), qe-10, 90, dz+70);
     box(4, 15, 12, mat(0x2b2b2b), qe-9, 75, dz+89);
@@ -651,6 +722,7 @@
     cyl(5, 3, mat(0x222222), qe-20, 75, dz+125, root, 12);                  // luminária de mesa
     cyl(.8, 32, mat(0x222222), qe-20, 78, dz+125, root, 8);
     cyl(6, 3, mat(0x9a5a4a, {roughness:.5}), qe-20, 110, dz+125, root, 16);
+    tag("cadeiras");
     // cadeiras de madeira com palhinha, uma em cada posto
     function caneChair(x, z, rotY){
       const g = new THREE.Group(); g.position.set(x, 0, z); g.rotation.y = rotY; root.add(g);
@@ -663,18 +735,23 @@
     }
     caneChair(qe-95, dz+92, -Math.PI/2);
     caneChair(qe-95, dz+175, -Math.PI/2);
+    tag("plantas");
     // ficus grande ao lado da torre
     plant(qx+95, qz+40, 34, 95, 20, C.folha);
+    tag("tapete");
     // tapete cru sob a cama, avançando até a poltrona
     box(230, 1.5, 168, texMat(noiseDraw('#efe6d6', 34), [6,4], {roughness:1}), qx+50, 0, bz-20);
+    tag("cama");
     // manta xadrez caída no pé da cama
     box(70, 5, 90, texMat(tileDraw('#b39272', '#6e5138', 32, 32), [4,3], {roughness:1}), qx+130, 48, bz+30);
     box(4, 40, 90, texMat(tileDraw('#b39272', '#6e5138', 32, 32), [4,3], {roughness:1}), qx+204, 8, bz+30);
+    tag("prateleira");
     // prateleira comprida acima da janela, com plantas pendentes e livros
     box(20, 2.5, 190, freijo, qe-20, 236, dz+45);
     sphere(12, mat(C.folha2), qe-10, 244, dz+70, 1, .6, 1);
     sphere(10, mat(C.folha), qe-10, 243, dz+185, 1, .6, 1);
     box(6, 14, 30, mat(0xd9c9a6), qe-14, 238.5, dz+120);
+    tag("plantas");
     // planta perto do pé da cama
     plant(qx+215, bz+95, 22, 35, 14, C.folha);
   })();
@@ -685,6 +762,7 @@
     const white = mat(0xf6f6f4, {roughness:.25});
     const gold = mat(C.dourado, {metalness:.6, roughness:.35});
     const vidro = mat(0xdfe4e6, {transparent:true, opacity:.45, roughness:.1});
+    tag("revestimento");
     // papel de parede botânico na parede da direita (a da janela), do chão ao teto
     const leafDraw = (g,S)=>{
       g.fillStyle = '#e4dac6'; g.fillRect(0,0,S,S);
@@ -703,6 +781,7 @@
     };
     const wallpaper = new THREE.MeshStandardMaterial({map: makeTex(leafDraw, [bw/130, 280/130], 512), roughness:.9});
     box(bw, 278, 1, wallpaper, bx, 0, bs-1).castShadow = false;   // só na parede da pia e do vaso
+    tag("box");
     // box do chuveiro na parede da porta, ao lado da porta, com deck de madeira e nicho
     const sx = bx+20;
     box(80, .6, 80, mat(0xdad6ce, {roughness:.5}), sx, -.2, bz);
@@ -712,18 +791,21 @@
     box(3, 200, 80, vidro, sx+80, 0, bz);
     box(80, 200, 3, vidro, sx, 0, bz+80);
     box(30, 30, 1, mat(0xcfc8bb), sx+25, 110, bz+1.2);
+    tag("janela");
     // janela basculante alta na parede da direita, ao lado do vaso
     const frame = mat(0xdcd9d2, {roughness:.6});
     const glass = mat(0x8bb1d4, {roughness:.15, transparent:true, opacity:.75});
     box(3, 3, 60, frame, bx+1, 200, bs-70); box(3, 3, 60, frame, bx+1, 250, bs-70);
     box(3, 53, 3, frame, bx+1, 200, bs-70); box(3, 53, 3, frame, bx+1, 200, bs-13);
     for(let i=0;i<3;i++) box(1.2, 15, 54, glass, bx+2, 204+i*16, bs-67).castShadow=false;
+    tag("louca");
     // vaso sanitário monobloco, junto ao gabinete
     const tx0 = be-150;
     box(34, 38, 14, white, tx0, 40, bs-14);
     box(34, 40, 14, white, tx0, 0, bs-14);
     const bowl = cyl(17, 40, white, tx0+17, 0, bs-36, root, 32); bowl.scale.z = 1.3;
     cyl(17.5, 2, mat(0xffffff, {roughness:.2}), tx0+17, 40, bs-36, root, 32).scale.z = 1.3;
+    tag("gabinete");
     // gabinete ripado suspenso em freijó com tampo de quartzo e cuba redonda de apoio
     const vx = be-100, vw = 92;
     box(vw, 34, 44, freijo, vx, 60, bs-44);
@@ -740,6 +822,7 @@
     box(28, 18, 30, wicker, vx+52, 32.5, bs-38);
     box(24, 8, 30, mat(0xf3efe6, {roughness:1}), vx+54, 50.5, bs-38);                       // toalhas dobradas
     box(80, 1, 40, mat(0xfff3d6, {emissive:0xffe0a8, emissiveIntensity:.9}), vx+6, 59, bs-42).castShadow=false;
+    tag("espelho");
     // espelho oval com luz por trás
     (function(){
       const w = 64, h = 96, r = 32;
@@ -754,21 +837,25 @@
       const fr = mk(gold, 1.5); fr.rotation.y = Math.PI; fr.position.set(vx+vw/2, 128, bs-3.5); root.add(fr);
       const gl = mk(mat(0xc9d3cf, {roughness:.1, metalness:.6}), 1); gl.scale.set(.94,.96,1); gl.rotation.y = Math.PI; gl.position.set(vx+vw/2, 130, bs-4.5); root.add(gl);
     })();
+    tag("prateleira");
     // prateleira de madeira ao lado do espelho com planta pendente, vela e LED embaixo
     box(52, 2.5, 14, freijo, tx0-8, 150, bs-14);
     box(48, .8, 10, mat(0xfff3d6, {emissive:0xffe0a8, emissiveIntensity:.9}), tx0-6, 149, bs-12).castShadow=false;
     cyl(7, 8, mat(0xe9e3d3), tx0+8, 152.5, bs-7, root, 16); sphere(9, mat(C.folha2), tx0+8, 163, bs-8, 1, .6, 1);
     [[tx0+2,146],[tx0+4,136],[tx0+7,126],[tx0+3,116]].forEach(([x,y])=> sphere(3, mat(C.folha), x, y, bs-3));  // ramos caindo
     cyl(4, 6, mat(0xf3efe6), tx0+30, 152.5, bs-7, root, 14);
+    tag("plantas");
     // planta de galhos ao lado da cuba e sabonete
     cyl(4, 12, mat(0xdfe4e6, {transparent:true, opacity:.6, roughness:.1}), vx+8, 97, bs-24, root, 14);
     for(let i=0;i<5;i++) cyl(.4, 34, mat(0x5a3a22), vx+8+(i-2)*1.4, 109, bs-24+(i%2)*1.5, root, 4);
     [[vx+4,138],[vx+10,142],[vx+13,133],[vx+6,128]].forEach(([x,y])=> sphere(2.5, mat(C.folha2), x, y, bs-24));
     cyl(2.2, 10, mat(0x5a3a22, {roughness:.4}), vx+22, 97, bs-16, root, 12);
+    tag("tapete_banheiro");
     // tapete pequeno e piso
     box(80, 1.2, 45, texMat(weaveDraw('#e3d6bf', '#c2b39a'), [3,2], {roughness:1}), vx-20, 0, bs-100);
   })();
 
+  tag(null);
   // ---------- luzes pontuais quentes (pendente, abajures, LEDs) ----------
   [[383,150,230,.7,380],[484,130,48,.5,300],[630,222,292,.45,260],[40,152,380,.45,220],[336,120,600,.35,220],[419,82,447,.45,240],[57,210,140,.3,200]].forEach(([x,y,z,i,d])=>{
     const l = new THREE.PointLight(0xffdcb0, i, d, 2); l.position.set(x,y,z); root.add(l);
@@ -910,6 +997,124 @@
     a.download = 'lara-isa-3d.png';
     a.href = renderer.domElement.toDataURL('image/png');
     a.click();
+  });
+
+
+  // ---------- produtos que procuro em cada móvel ----------
+  const PRODUTOS = {
+    geladeira:          ['Geladeira', 'Organizador de geladeira', 'Ímãs e porta-retrato', 'Potes herméticos', 'Purificador de água'],
+    cafe:               ['Cafeteira', 'Cápsulas e café', 'Xícaras e canecas', 'Bandeja', 'Potes e organizadores'],
+    prateleira:         ['Objetos de decoração', 'Livros', 'Vasos pequenos', 'Fita de LED', 'Prateleira de madeira'],
+    marcenaria:         ['Marcenaria planejada', 'Puxadores', 'Organizadores internos', 'Iluminação de nicho'],
+    porta:              ['Tinta', 'Fechadura inteligente', 'Puxador', 'Capacho'],
+    ilha:               ['Pedra da bancada', 'Móvel planejado', 'Forno de embutir', 'Cooktop', 'Tábuas', 'Organizadores'],
+    banqueta:           ['Banquetas', 'Almofadas de assento', 'Capa de banqueta'],
+    utensilios:         ['Tábuas', 'Kit de utensílios', 'Livro de receitas', 'Fruteira', 'Potes'],
+    ripado:             ['Painel ripado', 'Marcenaria', 'Tinta', 'Iluminação de destaque'],
+    espelho:            ['Espelho', 'Moldura', 'Iluminação de espelho'],
+    quadros:            ['Quadros e pôsteres', 'Molduras', 'Trilho de quadros'],
+    sofa:               ['Sofá', 'Almofadas', 'Manta', 'Capa de sofá', 'Mesa lateral'],
+    tapete:             ['Tapete', 'Passadeira', 'Manta antiderrapante'],
+    puff:               ['Puff', 'Poltrona', 'Almofada de chão'],
+    rack:               ['Rack', 'Marcenaria planejada', 'Decoração do rack', 'Vitrola e discos'],
+    tv:                 ['TV', 'Soundbar', 'Suporte de parede', 'Streaming'],
+    mesa:               ['Mesa de jantar', 'Cadeiras', 'Jogo americano', 'Louça e talheres', 'Taças', 'Toalha de mesa'],
+    cadeiras:           ['Cadeiras', 'Almofadas de assento', 'Capa de cadeira'],
+    pendente:           ['Pendente', 'Lâmpada inteligente', 'Luminárias'],
+    decor:              ['Vasos', 'Flores secas', 'Velas', 'Objetos de mesa'],
+    luminaria:          ['Luminária de chão', 'Abajur', 'Lâmpada inteligente'],
+    plantas:            ['Plantas', 'Vasos e cachepôs', 'Substrato e adubo', 'Regador'],
+    cortina:            ['Cortina', 'Trilho', 'Blackout', 'Persiana'],
+    iluminacao:         ['Trilho e spots', 'Fita de LED', 'Lâmpadas inteligentes', 'Automação'],
+    piso:               ['Piso vinílico ou laminado', 'Porcelanato', 'Rodapé', 'Instalação'],
+    parede:             ['Tinta', 'Papel de parede', 'Revestimento', 'Painel ripado'],
+    marcenaria_cozinha: ['Marcenaria planejada', 'Puxadores', 'Organizadores', 'Pedra da bancada'],
+    pia:                ['Cuba', 'Torneira', 'Purificador', 'Lixeira embutida', 'Escorredor'],
+    cooktop:            ['Cooktop', 'Air fryer', 'Forno', 'Coifa', 'Micro-ondas'],
+    lavadora:           ['Máquina de lavar', 'Secadora', 'Produtos de limpeza', 'Cesto de roupa'],
+    janela:             ['Esquadria', 'Persiana', 'Película', 'Cortina'],
+    cama:               ['Cama', 'Colchão', 'Lençol', 'Travesseiro', 'Fronha', 'Cobertor e colcha'],
+    mesinha:            ['Mesa de cabeceira', 'Abajur', 'Objetos de mesa'],
+    closet:             ['Guarda-roupa planejado', 'Cabides', 'Organizadores', 'Porta de palhinha'],
+    home_office:        ['Bancada planejada', 'Cadeira de escritório', 'Luminária de mesa', 'Organizador de mesa'],
+    tech:               ['Monitor', 'Teclado e mouse', 'Notebook', 'Suporte e hub', 'Microfone e câmera'],
+    marcenaria_quarto:  ['Painel ripado', 'Marcenaria', 'Iluminação indireta'],
+    box:                ['Box de vidro', 'Chuveiro', 'Ducha higiênica', 'Deck de madeira', 'Nicho'],
+    louca:              ['Vaso sanitário', 'Assento', 'Ducha higiênica', 'Lixeira'],
+    gabinete:           ['Gabinete planejado', 'Cuba de apoio', 'Torneira', 'Pedra da bancada', 'Organizadores'],
+    revestimento:       ['Papel de parede', 'Porcelanato', 'Pastilhas', 'Tinta'],
+    tapete_banheiro:    ['Tapete de banheiro', 'Toalhas', 'Porta-escova', 'Saboneteira'],
+  };
+  const NOMES = {
+    geladeira:'Geladeira', cafe:'Cantinho do café', prateleira:'Prateleiras', marcenaria:'Marcenaria da copa',
+    porta:'Porta de entrada', ilha:'Ilha da cozinha', banqueta:'Banquetas', utensilios:'Utensílios',
+    ripado:'Painel ripado', espelho:'Espelho', quadros:'Quadros', sofa:'Sofá', tapete:'Tapete', puff:'Puff',
+    rack:'Rack da TV', tv:'TV', mesa:'Mesa de jantar', cadeiras:'Cadeiras', pendente:'Pendente',
+    decor:'Decoração', luminaria:'Luminária de chão', plantas:'Plantas', cortina:'Cortina',
+    iluminacao:'Iluminação', piso:'Piso', parede:'Parede', marcenaria_cozinha:'Armários da cozinha',
+    pia:'Pia e torneira', cooktop:'Cooktop e eletros', lavadora:'Máquina de lavar', janela:'Janela',
+    cama:'Cama', mesinha:'Mesa de cabeceira', closet:'Closet', home_office:'Bancada de trabalho',
+    tech:'Setup de trabalho', marcenaria_quarto:'Painel do quarto', box:'Box do chuveiro',
+    louca:'Vaso sanitário', gabinete:'Gabinete do banheiro', revestimento:'Revestimento',
+    tapete_banheiro:'Tapete do banheiro',
+  };
+
+  const painel = document.getElementById('painel');
+  const painelTitulo = document.getElementById('painelTitulo');
+  const painelLista = document.getElementById('painelLista');
+  const painelCta = document.getElementById('painelCta');
+  document.getElementById('painelX').addEventListener('click', ()=> painel.classList.remove('on'));
+
+  function abrePainel(chave){
+    const nome = NOMES[chave] || chave;
+    painelTitulo.textContent = nome;
+    painelLista.innerHTML = '';
+    (PRODUTOS[chave] || []).forEach(t=>{
+      const s = document.createElement('span'); s.textContent = t; painelLista.appendChild(s);
+    });
+    painelCta.href = 'https://wa.me/5512988729264?text=' + encodeURIComponent(
+      'Oi Lara! Vi o tour 3D do Projeto Casa Estúdio e quero falar sobre: ' + nome + '.'
+    );
+    painel.classList.add('on');
+  }
+
+  // clique nos móveis
+  const ray = new THREE.Raycaster();
+  const alvo = new THREE.Vector2();
+  function itemDe(obj){
+    let o = obj;
+    while(o){ if(o.userData && o.userData.item) return o.userData.item; o = o.parent; }
+    return null;
+  }
+  function pegaItem(cx, cy){
+    const r = el0.getBoundingClientRect();
+    alvo.x = ((cx - r.left)/r.width)*2 - 1;
+    alvo.y = -((cy - r.top)/r.height)*2 + 1;
+    ray.setFromCamera(alvo, cam);
+    const hits = ray.intersectObjects(root.children, true);
+    for(const h of hits){
+      if(h.object.visible === false) continue;
+      const it = itemDe(h.object);
+      if(it) return it;
+    }
+    return null;
+  }
+  let downX = 0, downY = 0, downT = 0;
+  el0.addEventListener('pointerdown', e=>{ downX = e.clientX; downY = e.clientY; downT = Date.now(); });
+  el0.addEventListener('pointerup', e=>{
+    if(pointers.size > 0) return;
+    if(Math.hypot(e.clientX-downX, e.clientY-downY) > 6 || Date.now()-downT > 600) return;
+    const it = pegaItem(e.clientX, e.clientY);
+    if(it) abrePainel(it); else painel.classList.remove('on');
+  });
+  // cursor de mãozinha em cima do que é clicável
+  let ultimoHover = 0;
+  el0.addEventListener('pointermove', e=>{
+    if(dragging || e.pointerType !== 'mouse') return;
+    const agora = Date.now();
+    if(agora - ultimoHover < 90) return;
+    ultimoHover = agora;
+    el0.style.cursor = pegaItem(e.clientX, e.clientY) ? 'pointer' : 'grab';
   });
 
   resize(); updateCam(); syncButtons();
