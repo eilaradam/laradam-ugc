@@ -1,10 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { PROJETO, PROJETO_AMBIENTES, PROJETO_GALERIA } from "@/data/projeto";
+import { PROJETO, PROJETO_AMBIENTES } from "@/data/projeto";
 import Cabecalho from "./Cabecalho";
-
-const imagem = PROJETO_GALERIA[1] ?? PROJETO_GALERIA[0];
 
 export default function ProjetoAmbientes() {
   return (
@@ -57,22 +55,6 @@ export default function ProjetoAmbientes() {
           ))}
         </div>
 
-        {imagem && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-60px" }}
-            transition={{ duration: 0.6 }}
-            className="mt-4 overflow-hidden rounded-3xl"
-          >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={imagem.src}
-              alt={imagem.titulo}
-              className="aspect-[16/9] w-full object-cover sm:aspect-[2.6/1]"
-            />
-          </motion.div>
-        )}
       </div>
     </section>
   );

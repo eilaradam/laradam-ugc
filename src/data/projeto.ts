@@ -12,7 +12,7 @@ export const PROJETO = {
   intro2:
     "Procuro marcas parceiras pra construir esse projeto comigo. Quem entra, entra na história inteira.",
   inicioObra: "Setembro de 2026",
-  janelaFechamento: "Estou fechando as parcerias até o fim de agosto de 2026.",
+  janelaFechamento: "Estou fechando as parcerias até o fim de outubro de 2026.",
   whatsapp: "5512988729264",
   whatsappLabel: "(12) 98872-9264",
   whatsappMensagem:
@@ -299,12 +299,12 @@ export const PROJETO_SOBRE = {
   cargo: "UGC Creator e estrategista de conteúdo",
   local: "Litoral de SP",
   bullets: [
-    "2 anos gravando pra marca todo dia",
+    "Experiência de 2 anos gravando publicidades",
     "Roteiro, gravação, edição e entrega, tudo comigo",
     "Casa e decoração é um dos meus nichos fortes",
   ],
   recado:
-    "Essa reforma é a minha casa de verdade, não um cenário alugado. É onde eu gravo, onde eu vivo e onde os produtos vão ser usados todo dia depois que a obra acabar. Quem entrar agora não aparece num vídeo solto: aparece na história inteira, e continua aparecendo depois.",
+    "A reforma é aqui em casa mesmo, onde eu vivo e gravo. Então tudo que entrar agora vai continuar aparecendo depois que a obra terminar, porque eu vou usar de verdade. Quem vem junto nessa não aparece num vídeo solto, vem pra história inteira.",
   assinatura: "Lara",
 };
 

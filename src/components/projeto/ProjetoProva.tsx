@@ -54,7 +54,7 @@ export default function ProjetoProva() {
         </div>
       </section>
 
-      {/* Resultados, logos e depoimentos */}
+      {/* Resultados + vídeos */}
       <section className="bg-pj-bg2 px-5 py-20 sm:px-10 sm:py-28">
         <div className="mx-auto max-w-[1400px]">
           <Cabecalho
@@ -87,30 +87,41 @@ export default function ProjetoProva() {
             ))}
           </div>
 
-          <div className="mt-20">
-            <ProjetoLogos />
+          {/* os vídeos que eu já entreguei */}
+          <div className="mt-20 text-center">
+            <span className="pj-label text-pj-muted">Casa e decoração</span>
+            <h3 className="pj-display mx-auto mt-4 max-w-[18ch] text-[1.9rem] sm:text-[2.6rem]">
+              Esse nicho já é o meu terreno.
+            </h3>
+            <p className="mx-auto mt-4 max-w-xl text-[15px] leading-relaxed text-pj-muted">
+              Vídeos que já produzi pra marcas de casa, móveis, organização e
+              decoração. Clique pra assistir.
+            </p>
           </div>
 
-          <ProjetoDepoimentos />
+          <div className="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-4 sm:gap-6">
+            {videos.map((v, i) => (
+              <VideoCard key={v.id} video={v} index={i} />
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* Vídeos de casa e deco */}
+      {/* Feedback das marcas */}
       <section className="bg-pj-bg px-5 py-20 sm:px-10 sm:py-28">
         <div className="mx-auto max-w-[1400px]">
           <Cabecalho
             n="06"
-            chapeu="Casa e decoração"
+            chapeu="Feedback das marcas"
             centro
+            titulo="O que elas falam depois de gravar comigo."
             className="mx-auto"
-            titulo="Esse nicho já é o meu terreno."
-            sub="Vídeos que já produzi pra marcas de casa, móveis, organização e decoração. Clique pra assistir."
           />
 
-          <div className="mt-14 grid grid-cols-2 gap-4 sm:grid-cols-4 sm:gap-6">
-            {videos.map((v, i) => (
-              <VideoCard key={v.id} video={v} index={i} />
-            ))}
+          <ProjetoDepoimentos />
+
+          <div className="mt-16">
+            <ProjetoLogos />
           </div>
         </div>
       </section>

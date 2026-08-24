@@ -1,7 +1,8 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowUpRight, Check } from "lucide-react";
+import { ArrowUpRight, Check, ChevronDown } from "lucide-react";
 import {
   PROJETO_BUSCA,
   PROJETO_FORMATOS_TEXTO,
@@ -17,8 +18,12 @@ const STATUS: Record<BuscaItem["status"], { label: string; cor: string }> = {
   fechado: { label: "Fechado", cor: "text-pj-muted" },
 };
 
+const VISIVEIS = 6;
+
 export default function ProjetoParceria() {
+  const [tudo, setTudo] = useState(false);
   const abertas = PROJETO_BUSCA.filter((b) => b.status === "aberto").length;
+  const lista = tudo ? PROJETO_BUSCA : PROJETO_BUSCA.slice(0, VISIVEIS);
 
   return (
     <>
@@ -35,7 +40,7 @@ export default function ProjetoParceria() {
           />
 
           <div className="mt-14 grid gap-x-14 sm:grid-cols-2">
-            {PROJETO_BUSCA.map((b, i) => {
+            {lista.map((b, i) => {
               const s = STATUS[b.status];
               return (
                 <motion.div
@@ -59,6 +64,22 @@ export default function ProjetoParceria() {
               );
             })}
           </div>
+
+          {PROJETO_BUSCA.length > VISIVEIS && (
+            <div className="mt-10 flex justify-center">
+              <button
+                onClick={() => setTudo((v) => !v)}
+                className="group inline-flex items-center gap-2 rounded-full border border-pj-line bg-pj-paper px-7 py-3.5 text-sm font-semibold transition hover:border-pj-ink"
+              >
+                {tudo
+                  ? "Mostrar menos"
+                  : `Ver todas as ${PROJETO_BUSCA.length} categorias`}
+                <ChevronDown
+                  className={`h-4 w-4 transition-transform ${tudo ? "rotate-180" : ""}`}
+                />
+              </button>
+            </div>
+          )}
         </div>
       </section>
 
