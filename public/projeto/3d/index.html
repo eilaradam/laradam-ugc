@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Tour 3D interativo do apartamento da Lara Dam: o espaço onde os conteúdos UGC são gravados.">
+<meta property="og:title" content="O apê da Lara · tour 3D">
+<meta property="og:description" content="Sala, copa, cozinha, banheiro e quarto em um modelo 3D interativo. Gire, aproxime e conheça o cenário dos vídeos.">
+<title>O apê da Lara · tour 3D</title>
+<style>
+  :root{
+    --bg:#eceae4; --ink:#2b2f2c; --muted:#7a827c; --sage:#7a9080; --line:#d6d3cb;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%;background:var(--bg);font-family:"Helvetica Neue",Arial,sans-serif;color:var(--ink);overflow:hidden}
+  #app{position:relative;width:100%;height:100%}
+  canvas{display:block;width:100%;height:100%;touch-action:none;opacity:0;transition:opacity .6s ease}
+  canvas.ready{opacity:1}
+  #loading{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:13px;letter-spacing:.08em;color:var(--muted);pointer-events:none;transition:opacity .4s}
+  #loading.off{opacity:0}
+  #hint{position:absolute;left:50%;bottom:64px;transform:translateX(-50%);background:#fff;border:1px solid var(--line);border-radius:999px;padding:8px 14px;font-size:12px;color:var(--muted);pointer-events:none;transition:opacity .6s;white-space:nowrap;max-width:92vw;overflow:hidden;text-overflow:ellipsis}
+  #hint.off{opacity:0}
+  header{position:absolute;top:18px;left:22px;pointer-events:none}
+  header h1{margin:0;font-size:13px;letter-spacing:.18em;font-weight:600;color:var(--sage)}
+  header p{margin:4px 0 0;font-size:12px;color:var(--muted)}
+  .views{position:absolute;top:18px;right:22px;display:flex;gap:6px}
+  .rooms{position:absolute;top:58px;right:22px;display:flex;gap:6px}
+  .views button,.rooms button,#dl,#wallsBtn,#topBtn{border:1px solid var(--line);background:#fff;color:var(--ink);font:12px/1 inherit;padding:9px 12px;border-radius:999px;cursor:pointer}
+  .views button.on,.rooms button.on{background:var(--sage);border-color:var(--sage);color:#fff}
+  .views button:focus-visible,.rooms button:focus-visible,#dl:focus-visible,#wallsBtn:focus-visible{outline:2px solid var(--sage);outline-offset:2px}
+  footer{position:absolute;bottom:18px;left:22px;right:22px;display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--muted)}
+  #dl,#wallsBtn{pointer-events:auto}
+  #wallsBtn.on{background:var(--sage);border-color:var(--sage);color:#fff}
+  @media (max-width:640px){
+    .views{top:auto;bottom:92px;right:50%;transform:translateX(50%);flex-wrap:wrap;justify-content:center}
+    .rooms{top:auto;bottom:52px;right:50%;transform:translateX(50%);flex-wrap:wrap;justify-content:center}
+    footer{justify-content:center}
+    footer span{display:none}
+    #hint{bottom:150px}
+    header p{max-width:60vw}
+  }
+</style>
+</head>
+<body>
+<div id="app">
+  <header>
+    <h1>O APÊ DA LARA</h1>
+    <p>Tour 3D do espaço onde os conteúdos são gravados</p>
+  </header>
+  <div id="loading" aria-live="polite">Montando o apê…</div>
+  <div id="hint">Arraste para girar, pince ou role para aproximar, ou escolha um ambiente acima</div>
+  <div class="views" role="group" aria-label="Ângulo de visão">
+    <button data-az="45">Copa e quadros</button>
+    <button data-az="-45">Quadros e cortina</button>
+    <button data-az="-135">Cortina e TV</button>
+    <button data-az="135">TV e copa</button>
+    <button id="topBtn">Vista de cima</button>
+  </div>
+  <div class="rooms" role="group" aria-label="Ambiente">
+    <button data-room="casa" class="on">Casa toda</button>
+    <button data-room="sala">Sala</button>
+    <button data-room="copa">Copa</button>
+    <button data-room="cozinha">Cozinha</button>
+    <button data-room="banheiro">Banheiro</button>
+    <button data-room="quarto">Quarto</button>
+  </div>
+  <footer>
+    <span>Projeto de interiores da sala, jantar e copa: Bianca Ramos · be.out studio. Modelo 3D construído com Claude.</span>
+    <div style="display:flex;gap:6px">
+      <button id="wallsBtn">Paredes: cortadas</button>
+      <button id="dl">Baixar imagem</button>
+    </div>
+  </footer>
+</div>
+
+<script src="three.min.js"></script>
+<script>
+(function(){
+  const app = document.getElementById('app');
+  const renderer = new THREE.WebGLRenderer({antialias:true, alpha:true, preserveDrawingBuffer:true});
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  renderer.outputEncoding = THREE.sRGBEncoding;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.12;
+  app.insertBefore(renderer.domElement, app.firstChild);
+
+  const scene = new THREE.Scene();
+
+  // ---------- paleta do projeto ----------
+  const C = {
+    papel: 0xe7dfd0,   // Suvinil B148 Papel Picado
+    babosa: 0x7f8a67,  // Suvinil E056 Babosa
+    piso: 0xb48a5e,    // vinílico Vernazza madeira marrom
+    freijo: 0x8a5a3a,  // MDF Louro Freijó
+    quartzo: 0xf1eee6,
+    branco: 0xf6f4ef,
+    linho: 0xefe8db,
+    linhoEsc: 0xd9d0bf,
+    oliva: 0x5f6b45,
+    bege: 0xd8c7a8,
+    folha: 0x4f7a49,
+    folha2: 0x6f9a5c,
+    wallDark: 0x2c2a27,
+    dourado: 0xb08b45,
+    preto: 0x1f1f1f,
+  };
+
+  const mat = (color, opts={}) => new THREE.MeshStandardMaterial(Object.assign({color, roughness:.85, metalness:0}, opts));
+
+  // ---------- texturas procedurais ----------
+  function makeTex(draw, repeat=[1,1], size=256){
+    const c = document.createElement('canvas'); c.width = c.height = size;
+    draw(c.getContext('2d'), size);
+    const t = new THREE.CanvasTexture(c);
+    t.wrapS = t.wrapT = THREE.RepeatWrapping; t.repeat.set(repeat[0], repeat[1]);
+    t.encoding = THREE.sRGBEncoding; t.anisotropy = 8;
+    return t;
+  }
+  const woodDraw = (base, dark) => (g,S)=>{
+    g.fillStyle = base; g.fillRect(0,0,S,S);
+    for(let i=0;i<90;i++){
+      g.strokeStyle = dark; g.globalAlpha = .08 + Math.random()*.22; g.lineWidth = .6 + Math.random()*2.2;
+      const x = Math.random()*S;
+      g.beginPath(); g.moveTo(x,0);
+      g.bezierCurveTo(x+Math.random()*8-4, S*.33, x+Math.random()*8-4, S*.66, x+Math.random()*6-3, S);
+      g.stroke();
+    }
+    g.globalAlpha = 1;
+  };
+  const plankDraw = (base, dark, groove) => (g,S)=>{
+    woodDraw(base, dark)(g,S);
+    g.strokeStyle = groove; g.lineWidth = 2.2;
+    for(let i=1;i<3;i++){ g.beginPath(); g.moveTo(i*S/3,0); g.lineTo(i*S/3,S); g.stroke(); }
+    for(let i=0;i<3;i++){ const y = i*S/3 + Math.random()*S/3; g.beginPath(); g.moveTo(i*S/3, y); g.lineTo((i+1)*S/3, y); g.stroke(); }
+  };
+  const tileDraw = (bg, grout, tw, th) => (g,S)=>{
+    g.fillStyle = grout; g.fillRect(0,0,S,S);
+    for(let y=0;y<S;y+=th) for(let x=0;x<S;x+=tw){
+      g.fillStyle = bg; g.globalAlpha = .88 + Math.random()*.12;
+      g.fillRect(x+1.2, y+1.2, tw-2.4, th-2.4);
+    }
+    g.globalAlpha = 1;
+  };
+  const noiseDraw = (base, amt) => (g,S)=>{
+    g.fillStyle = base; g.fillRect(0,0,S,S);
+    const img = g.getImageData(0,0,S,S), d = img.data;
+    for(let i=0;i<d.length;i+=4){ const n = (Math.random()-.5)*amt; d[i]+=n; d[i+1]+=n; d[i+2]+=n; }
+    g.putImageData(img,0,0);
+  };
+  const weaveDraw = (base, dark) => (g,S)=>{
+    noiseDraw(base, 18)(g,S);
+    g.strokeStyle = dark; g.globalAlpha = .18; g.lineWidth = 1;
+    for(let i=0;i<S;i+=3){ g.beginPath(); g.moveTo(0,i); g.lineTo(S,i); g.stroke(); g.beginPath(); g.moveTo(i,0); g.lineTo(i,S); g.stroke(); }
+    g.globalAlpha = 1;
+  };
+  const texMat = (draw, repeat, opts={}) => new THREE.MeshStandardMaterial(Object.assign({map: makeTex(draw, repeat), roughness:.85, metalness:0}, opts));
+  const freijo = texMat(woodDraw('#8f5d3c', '#5a3419'), [1,1], {roughness:.55});   // único tom de madeira da casa
+  // ExtrudeGeometry gera UV em centímetros: estas cópias repetem a textura a cada N cm
+  const perCm = (m, cm) => { const c = m.clone(); c.map = m.map.clone(); c.map.needsUpdate = true; c.map.repeat.set(1/cm, 1/cm); return c; };
+  const freijoX = perCm(freijo, 60);
+
+  // ---------- helpers ----------
+  const root = new THREE.Group();
+  scene.add(root);
+
+  function box(w,h,d, material, x,y,z, parent=root){
+    const m = new THREE.Mesh(new THREE.BoxGeometry(w,h,d), material);
+    m.position.set(x + w/2, y + h/2, z + d/2);
+    m.castShadow = true; m.receiveShadow = true;
+    parent.add(m);
+    return m;
+  }
+  function cyl(r,h, material, x,y,z, parent=root, seg=32){
+    const m = new THREE.Mesh(new THREE.CylinderGeometry(r,r,h,seg), material);
+    m.position.set(x, y + h/2, z);
+    m.castShadow = true; m.receiveShadow = true;
+    parent.add(m);
+    return m;
+  }
+  function sphere(r, material, x,y,z, sx=1,sy=1,sz=1, parent=root){
+    const m = new THREE.Mesh(new THREE.SphereGeometry(r, 18, 14), material);
+    m.position.set(x,y,z); m.scale.set(sx,sy,sz);
+    m.castShadow = true; m.receiveShadow = true;
+    parent.add(m);
+    return m;
+  }
+
+  // ---------- planta (cm, origem no canto superior esquerdo do PDF) ----------
+  // Copa: x 0..232, z 0..248.  Sala: x 232..748, z 0..301. Recorte inferior a partir de x=172.
+  const W = 748, D = 301, H = 280, T = 15;
+  const plankTex = (w,d) => texMat(plankDraw('#b8895c', '#7a4f2c', '#8f6540'), [w/66, d/66], {roughness:.65});
+  const floorMat = plankTex(W, 248);
+  box(W, 2, 248, floorMat, 0, -2, 0);
+  box(W-172, 2, D-248, plankTex(W-172, D-248), 172, -2, 248);
+
+  // ---------- paredes com corte dinâmico ----------
+  // dir: 'n' (fundo z=0), 'w' (esquerda x=0), 's' (frente), 'e' (direita)
+  const walls = [];
+  function wall(dir, x,z, len, innerColor, y0=0, y1=H, outerColor=null){
+    // geometria de altura 1, escalada em y
+    const plaster = c => { const m = mat(c, {roughness:.95}); m.map = makeTex(noiseDraw('#ffffff', 22), [2,2]); return m; };
+    const inner = plaster(innerColor), dark = mat(C.wallDark, {roughness:.95});
+    let w,d, mats;
+    // ordem BoxGeometry: +x, -x, +y, -y, +z, -z
+    if(dir==='n'){ w=len; d=T; mats=[dark,dark,dark,dark,inner,dark]; }
+    if(dir==='s'){ w=len; d=T; mats=[dark,dark,dark,dark,dark,inner]; }
+    if(dir==='w'){ w=T; d=len; mats=[inner,dark,dark,dark,dark,dark]; }
+    if(dir==='e'){ w=T; d=len; mats=[dark,inner,dark,dark,dark,dark]; }
+    if(outerColor !== null){ const o = plaster(outerColor); mats[{n:5, s:4, w:1, e:0}[dir]] = o; }
+    const interior = outerColor !== null;   // divisórias internas ficam sempre inteiras
+    const g = new THREE.BoxGeometry(w,1,d); g.translate(0,.5,0);
+    const m = new THREE.Mesh(g, mats);
+    m.position.set(x + w/2, 0, z + d/2);
+    m.castShadow = true; m.receiveShadow = true;
+    m.userData.dir = dir; m.userData.y0 = y0; m.userData.y1 = y1; m.userData.interior = interior;
+    root.add(m); walls.push(m);
+    return m;
+  }
+  // parede de fundo (z = -T..0)
+  wall('n', 0,-T, 232, C.babosa);      // copa em Babosa
+  wall('n', 232,-T, W-232, C.papel);   // resto em Papel Picado
+  // parede esquerda
+  wall('w', -T,-T, 248+T, C.babosa);
+  // parede inferior da copa (z=248): passa-prato de 95..172 (abertura de 90 a 200 de altura)
+  wall('s', -T,248, 31+T, C.papel, 0, H, C.papel);
+  wall('s', 31,248, 110, C.papel, 0, 90, C.papel);
+  wall('s', 31,248, 110, C.papel, 200, H, C.papel);
+  wall('s', 141,248, 31, C.papel, 0, H, C.papel);
+  box(118, 4, 30, freijo, 27, 88, 238);   // tampa de madeira do passa-prato
+  // parede do recorte (x=172, z 248..301)
+  wall('w', 172,248, D-248+T, C.papel, 0, H, C.papel);
+  // parede da frente (z=301) com vão do corredor 232..322
+  wall('s', 172,D, 60, C.papel, 0, H, C.papel);
+  wall('s', 322,D, W-322+T, C.papel, 0, H, C.papel);
+  // parede direita (janela/cortina)
+  wall('e', W,-T, D+2*T, C.papel);
+
+  // ---------- COPA ----------
+  function speckle(){
+    const c = document.createElement('canvas'); c.width = c.height = 256;
+    const g = c.getContext('2d'); g.fillStyle = '#f3f0e8'; g.fillRect(0,0,256,256);
+    for(let i=0;i<1100;i++){
+      g.fillStyle = Math.random()<.45 ? '#7d766b' : (Math.random()<.5 ? '#b8ae9e' : '#d9d2c4');
+      const r = Math.random()*1.5+.4;
+      g.beginPath(); g.arc(Math.random()*256, Math.random()*256, r, 0, Math.PI*2); g.fill();
+    }
+    const t = new THREE.CanvasTexture(c); t.wrapS = t.wrapT = THREE.RepeatWrapping; t.repeat.set(2,2); t.encoding = THREE.sRGBEncoding;
+    return t;
+  }
+  const quartzo = new THREE.MeshStandardMaterial({map: speckle(), roughness:.4});
+  const quartzoX = perCm(quartzo, 70);
+  const branco = mat(C.branco, {roughness:.5});
+  // geladeira 60x62, ao lado da porta (z 7..69)
+  box(62, 175, 62, branco, 0, 0, 7);
+  box(1, 60, 2, mat(0xbbbbbb), 62.2, 100, 10);
+  // armário café 65 (z 77..142) x 60, 90 de altura, tampo quartzo
+  box(60, 86, 65, freijo, 0, 0, 77);
+  box(60, 4, 65, quartzo, 0, 86, 77);
+  cyl(6, 12, branco, 25, 90, 100, root, 16); // cafeteira
+  cyl(4, 8, branco, 45, 90, 92, root, 16);
+  cyl(4, 8, branco, 45, 90, 116, root, 16);
+  // prateleiras com LED (04 e 05) a 160 de altura
+  box(30, 2, 60, freijo, 0, 160, 0);
+  box(30, 2, 77, freijo, 0, 160, 65);
+  // armário aéreo 142 x 95 x 40 a 185 do piso
+  const aereo = box(40, 95, 142, branco, 0, 185, 0);
+  box(0.6, 95, 1, mat(0xd5d2cc), 40.3, 185, 46.5);
+  box(0.6, 95, 1, mat(0xd5d2cc), 40.3, 185, 93);
+  // porta de entrada (z 144..223) em Babosa
+  box(4, 210, 79, mat(C.babosa), 0, 0, 144);
+  box(1.5, 2, 10, mat(0xc9c2b4), 4.2, 100, 205);
+  // ilha conforme detalhamento 03 (pág. 25): corpo 148 x 63 x 86, tampo 158 x 90 com balanço de 25 pro lado dos bancos,
+  // cantos arredondados r10 na ponta livre, recorte 22x5 junto à parede, 2 portas + 4 gavetas na frente, ripado atrás
+  (function(){
+    const ix = 180, iz = 0;                                  // canto encostado na parede (z=0)
+    box(59, 5, 144, mat(0x4a2e1a), ix+2, 0, iz+2);            // rodapé recuado
+    box(63, 81, 148, freijo, ix, 5, iz);                      // corpo
+    for(let z=iz; z<iz+148; z+=4) box(2, 81, 3, freijo, ix+63, 5, z);          // ripado do lado dos bancos, mesmo freijó
+    const fr = mat(0x5a3419);
+    [52, 102].forEach(z=> box(1, 79, .8, fr, ix-.6, 6, iz+z));                  // divisões das portas e do bloco de gavetas
+    [19, 38, 57].forEach(y=> box(1, .8, 40, fr, ix-.6, 5+y, iz+102));            // gavetas de 19
+    box(1, .8, 40, fr, ix-.6, 82, iz+102);
+    // tampo em quartzo: shape em planta (x, -z)
+    const sh = new THREE.Shape();
+    sh.moveTo(ix-2, -iz); sh.lineTo(ix+38, -iz); sh.lineTo(ix+38, -(iz+5)); sh.lineTo(ix+60, -(iz+5)); sh.lineTo(ix+60, -iz);
+    sh.lineTo(ix+88, -iz); sh.lineTo(ix+88, -(iz+148));
+    sh.absarc(ix+78, -(iz+148), 10, 0, -Math.PI/2, true);
+    sh.lineTo(ix+8, -(iz+158));
+    sh.absarc(ix+8, -(iz+148), 10, -Math.PI/2, -Math.PI, true);
+    sh.lineTo(ix-2, -iz);
+    const top = new THREE.Mesh(new THREE.ExtrudeGeometry(sh, {depth:4, bevelEnabled:false, curveSegments:16}), quartzoX);
+    top.rotation.x = -Math.PI/2; top.position.y = 86; top.castShadow = true; top.receiveShadow = true; root.add(top);
+  })();
+  // bancos sob o balanço do tampo
+  const seatMat = mat(C.bege);
+  [[278,45],[278,105]].forEach(([x,z])=>{
+    box(32, 4, 32, seatMat, x-16, 63, z-16);
+    [[-12,-12],[12,-12],[-12,12],[12,12]].forEach(([dx,dz])=> cyl(1.5, 63, freijo, x+dx, 0, z+dz, root, 8));
+  });
+  // livro de receitas e tábua na ilha
+  box(2, 22, 16, mat(0xe9e3d3), 238, 90, 40);
+  box(3, 30, 20, freijo, 244, 90, 42);
+
+  // ---------- RIPADO (x 246..474 na parede de fundo) ----------
+  const ripa = mat(0xe3d9c6, {roughness:.8});
+  for(let x=246; x<474; x+=4) box(3, H, 2, ripa, x, 0, 0);
+
+  // espelho arco 60 x 160 encostado no ripado
+  (function(){
+    const s = new THREE.Shape();
+    s.moveTo(-30,0); s.lineTo(30,0); s.lineTo(30,130); s.absarc(0,130,30,0,Math.PI,false); s.lineTo(-30,0);
+    const g = new THREE.ExtrudeGeometry(s, {depth:3, bevelEnabled:false});
+    const frame = new THREE.Mesh(g, freijoX);
+    frame.rotation.x = 0; frame.position.set(396, 0, 3.5); frame.castShadow=true; root.add(frame);
+    const glass = new THREE.Mesh(g, mat(0xc9d3cf, {roughness:.1, metalness:.6}));
+    glass.scale.set(.9,.93,1); glass.position.set(396, 2, 4.5); root.add(glass);
+  })();
+
+  // ---------- ESTAR ----------
+  // pintura Babosa termina em 232; quadros Monet a partir de 522
+  const moldura = mat(0xd8c6a3, {roughness:.5});
+  [[569,0x9bb28a],[629,0xa9c1d1],[689,0xb4a35f]].forEach(([cx,col])=>{
+    box(50, 70, 2, moldura, cx-25, 115, 0);
+    box(44, 64, 1, mat(col, {roughness:.9}), cx-22, 118, 2);
+  });
+  // sofá Belgrado 230 com chaise à direita (x 505..735)
+  const linho = texMat(weaveDraw('#efe8db', '#c9bfae'), [3,3], {roughness:1});
+  const sofaBase = box(230, 40, 90, linho, 505, 8, 10);
+  box(230, 45, 22, linho, 505, 48, 10);           // encosto
+  box(230, 3, 90, mat(C.linhoEsc), 505, 48, 10);  // sulco assento
+  box(14, 55, 90, linho, 505, 8, 10);              // braço esq
+  box(14, 55, 70, linho, 721, 8, 100);             // braço chaise
+  box(90, 40, 80, linho, 645, 8, 100);             // chaise
+  box(230, 8, 90, freijo, 505, 0, 10);             // base madeira
+  box(45, 45, 8, mat(C.oliva), 650, 48, 30);       // almofada oliva
+  box(45, 45, 8, mat(C.bege), 700, 48, 30);        // almofada bege
+  // tapete chenille off-white 250 x 200 (x 485..735, z 76..276)
+  box(250, 1.5, 200, texMat(noiseDraw('#f0ebe0', 34), [6,5], {roughness:1}), 485, 0, 76);
+  // puff redondo linho areia
+  cyl(28, 40, mat(C.bege), 700, 0, 230);
+  // rack existente 200 x 40 x 50 na parede da TV
+  box(200, 50, 40, freijo, 530, 0, D-40);
+  box(90, 46, 36, mat(0x3a2418), 620, 2, D-38);  // nicho
+  for(let x=534; x<600; x+=4) box(2, 50, 1.5, freijo, x, 0, D-41.5);
+  cyl(8, 3, mat(0xefe6d6), 560, 50, D-20, root, 24); // vitrola
+  // TV The Frame 122 x 70
+  box(122, 70, 3, mat(0xd3c4a4), 569, 105, D-3);
+  box(116, 64, 1, mat(0xf0a7a0, {roughness:.9}), 572, 108, D-4);
+  // 2 prateleiras madeiradas 100+110 com LED a 225
+  box(210, 3, 25, freijo, 525, 225, D-25);
+  // quadro Dublin 50x70 sobre a mesa (parede da frente)
+  box(50, 70, 2, moldura, 358, 114, D-2);
+  box(44, 64, 1, mat(0xf3f1ea), 361, 117, D-3);
+
+  // ---------- JANTAR ----------
+  // mesa 80 x 120 (x 343..423, z 170..290), tampo branco, base freijó
+  box(80, 4, 120, mat(0xf7f5f0, {roughness:.3}), 343, 72, 170);
+  box(14, 72, 60, freijo, 376, 0, 200);
+  // cadeiras Windsor brancas
+  function chair(x,z, dir){
+    const g = new THREE.Group(); g.position.set(x,0,z); g.rotation.y = dir; root.add(g);
+    const white = mat(0xf4f2ee, {roughness:.6});
+    box(40, 3, 40, white, -20, 45, -20, g);
+    [[-16,-16],[16,-16],[-16,16],[16,16]].forEach(([dx,dz])=> cyl(1.4, 45, mat(0xd9c39d), dx, 0, dz, g, 8));
+    for(let i=-15;i<=15;i+=5) cyl(0.8, 40, white, i, 48, -17, g, 6);
+    box(40, 3, 3, white, -20, 88, -18.5, g);
+  }
+  chair(330, 205, Math.PI/2); chair(330, 255, Math.PI/2);
+  chair(436, 205, -Math.PI/2); chair(436, 255, -Math.PI/2);
+  // pendente Saruê 40cm sobre a mesa (80 acima do tampo)
+  cyl(20, 16, freijo, 383, 156, 230, root, 32);
+  cyl(19, 1, mat(0xfff3d6, {emissive:0xffe0a8, emissiveIntensity:.6}), 383, 155, 230, root, 32);
+  cyl(0.4, H-172, mat(0x333333), 383, 172, 230, root, 4);
+  // vaso com capim seco na mesa
+  cyl(6, 20, mat(0xf3f1ec), 383, 76, 230, root, 16);
+  for(let i=0;i<5;i++) cyl(0.5, 45, mat(0xb08a5e), 383 + (i-2)*2, 96, 230 + (i%2)*2, root, 4);
+
+  // ---------- LUMINÁRIA DE CHÃO E PLANTAS ----------
+  (function(){
+    const g = new THREE.Group(); g.position.set(484, 0, 48); root.add(g);
+    [0, 2.1, 4.2].forEach(a=>{
+      const leg = cyl(1.5, 132, freijo, 0, 0, 0, g, 8);
+      const dir = new THREE.Vector3(-Math.cos(a)*20, 130, -Math.sin(a)*20).normalize();
+      leg.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0), dir);
+      leg.position.set(Math.cos(a)*10, 65, Math.sin(a)*10);
+    });
+    cyl(20, 30, mat(0xe8dcc3, {emissive:0xffe4b0, emissiveIntensity:.25}), 0, 120, 0, g, 32);
+  })();
+  function plant(x,z, r, h, potR, col){
+    cyl(potR, 30, mat(0xf3f1ec), x, 0, z, root, 24);
+    cyl(1.5, h, mat(0x5b6b3a), x, 30, z, root, 6);
+    sphere(r, mat(col), x, 30+h, z, 1, .7, 1);
+    sphere(r*.75, mat(C.folha2), x+r*.5, 30+h-r*.3, z-r*.4, 1, .8, 1);
+    sphere(r*.7, mat(col), x-r*.55, 30+h-r*.2, z+r*.4, 1, .75, 1);
+  }
+  plant(440, 40, 26, 55, 17, C.folha);     // ficus lyrata
+  plant(470, 100, 20, 30, 14, C.folha2);   // calathea
+  plant(420, 98, 26, 20, 15, C.folha);     // costela de adão
+  // planta pendente na prateleira da TV
+  sphere(14, mat(C.folha2), 540, 236, D-14, 1, .6, 1);
+  // planta na prateleira da copa
+  sphere(9, mat(C.folha2), 18, 168, 92, 1, .8, 1);
+
+  // ---------- CORTINA (parede direita) ----------
+  const cortina = texMat(weaveDraw('#e4dccb', '#c4b9a4'), [1,6], {roughness:1});
+  const cortina2 = texMat(weaveDraw('#d7cdb8', '#b8ac95'), [1,6], {roughness:1});
+  for(let z=0, i=0; z<D; z+=7.5, i++){
+    const m = box(7, H-2, 7, i%2?cortina:cortina2, W-9, 1, z);
+    m.castShadow = false;
+  }
+  // trilho eletrificado com 4 spots
+  box(150, 3, 3, mat(0xf2f0eb), 560, H-3, 20);
+  [575, 612, 650, 688].forEach(x=> cyl(3, 8, mat(0xf2f0eb), x, H-11, 22, root, 12));
+  // spots dicroicos sobre o ripado
+  [330, 396, 462].forEach(x=> box(10, 1, 10, mat(0xfff8e8, {emissive:0xfff0cc, emissiveIntensity:.8}), x-5, H-1, 25));
+
+
+  // ---------- COZINHA, CORREDOR, BANHEIRO E QUARTO (vazios, só o volume) ----------
+  // conforme o croqui: faixa abaixo da sala. Cozinha à esquerda, corredor + banheiro no meio, quarto à direita.
+  const K = {x:22,  z:263, w:150, d:284};     // cozinha 1,50 x ~2,80, termina 70 cm antes do fundo do quarto
+  const Cor = {x:187, z:316, w:197, d:90};    // corredor, mesma largura do banheiro
+  const B = {x:187, z:421, w:197, d:196};     // banheiro 1,97 x ~2,00 (faixa de 3 m menos o corredor)
+  const Q = {x:399, z:316, w:349, d:301};     // quarto 3 m de fundo, igual à sala, alinhado com a parede direita
+  const ceramic = (w,d) => texMat(tileDraw('#e6e1d8', '#c9c3b8', 256, 256), [w/60, d/60], {roughness:.45});
+  box(K.w, 2, K.d, ceramic(K.w, K.d), K.x, -2, K.z);
+  box(Cor.w, 2, Cor.d, plankTex(Cor.w, Cor.d), Cor.x, -2, Cor.z);
+  box(B.w, 2, B.d, ceramic(B.w, B.d), B.x, -2, B.z);
+  box(Q.w, 2, Q.d, plankTex(Q.w, Q.d), Q.x, -2, Q.z);
+  // azulejos: banheiro 30x60 até 2,20 m nas quatro paredes; cozinha 10x10 cru atrás da bancada
+  const kitTile = (len, h) => texMat(tileDraw('#efe7d8', '#d3c9b6', 64, 64), [len/40, h/40], {roughness:.2});
+  box(1, 70, K.d-12, kitTile(K.d-12, 70), K.x, 90, K.z+12);
+  box(K.w, 70, 1, kitTile(K.w, 70), K.x, 90, K.z+K.d-1);
+  // cozinha: norte é a parede da copa (com o vão), leste continua a parede do recorte
+  wall('w', K.x-T, K.z, K.d, C.papel);
+  wall('e', K.x+K.w, K.z+53+80, K.d-53-80, C.papel, 0, H, C.papel);   // porta da cozinha pro corredor em z 316..396
+  wall('s', K.x-T, K.z+K.d, K.w+2*T, C.babosa);   // parede da janela em Babosa, como na copa
+  wall('w', B.x-T, K.z+K.d, B.z+B.d-(K.z+K.d), C.papel, 0, H, C.papel);   // parede do banheiro abaixo do fim da cozinha (sempre inteira)
+  // corredor: norte é a parede da frente da sala (com o vão); oeste é a parede da cozinha
+  // banheiro: parede norte com porta pro corredor (vão x 250..330)
+  wall('n', B.x, B.z-T, 109, C.papel, 0, H, C.papel);
+  wall('n', B.x+189, B.z-T, B.w-189, C.papel, 0, H, C.papel);
+  wall('s', B.x-T, B.z+B.d, B.w+2*T, 0xd9ccb8);   // parede da pia em microcimento bege
+  // parede entre corredor/banheiro e quarto, porta do quarto junto ao canto (z 325..405)
+  wall('e', Cor.x+Cor.w, Cor.z, 9, C.papel, 0, H, C.papel);
+  wall('e', Cor.x+Cor.w, Cor.z+89, Q.z+Q.d-(Cor.z+89), C.papel, 0, H, C.papel);
+  // quarto
+  wall('e', Q.x+Q.w, Q.z, Q.d+T, C.papel);
+  wall('s', Q.x, Q.z+Q.d, Q.w+T, C.papel);
+
+  // ---------- COZINHA: móveis e janela (conforme foto) ----------
+  (function(){
+    const kx = K.x, kz = K.z, kw = K.w, kd = K.d;
+    const white = mat(0xf4f3ef, {roughness:.45});
+    const line = mat(0xd9d6cf);
+    // armário em L: perna longa na parede da direita (oeste) e perna curta na parede do fundo, até a máquina
+    const cx = kx, cz = kz+12, cw = 55, cd = kd-12;
+    box(cw, 86, cd, white, cx, 0, cz);                         // perna longa
+    box(40, 86, 55, white, cx+cw, 0, kz+kd-55);                // perna curta
+    box(cw+3, 4, cd+1, quartzo, cx, 86, cz-1);                 // tampo quartzo
+    box(kw-cw, 4, 57, quartzo, cx+cw, 86, kz+kd-57);   // tampo passa por cima da máquina de lavar
+    // portas e gavetas
+    [cz+45, cz+95, cz+145, cz+205, cz+265, cz+325].forEach(z=> box(1, 82, .8, line, cx+cw, 2, z));
+    [22, 42, 62].forEach(y=> box(1, .8, 45, line, cx+cw, y, cz));
+    box(.8, 82, 1, line, cx+cw+20, 2, kz+kd-56);
+    // cuba embutida + torneira gooseneck
+    box(40, 2, 45, mat(0xc9ccc8, {roughness:.3, metalness:.5}), cx+6, 88.2, cz+150);
+    box(34, 14, 39, mat(0x9ea3a0, {roughness:.3, metalness:.6}), cx+9, 74, cz+153);
+    cyl(1.2, 28, mat(0xd0d3d2, {metalness:.8, roughness:.25}), cx+8, 90, cz+172, root, 10);
+    (function(){
+      const t = new THREE.Mesh(new THREE.TorusGeometry(9, 1.2, 8, 24, Math.PI), mat(0xd0d3d2, {metalness:.8, roughness:.25}));
+      t.position.set(cx+17, 118, cz+172); t.rotation.y = Math.PI/2; t.castShadow = true; root.add(t);
+    })();
+    // cooktop de indução + air fryer no fundo da bancada
+    box(38, 1.2, 30, mat(0x1a1a1a, {roughness:.2}), cx+8, 90, cz+cd-36);
+    box(24, 26, 26, mat(0x222222, {roughness:.5}), cx+16, 91, cz+cd-72);
+    // máquina de lavar no canto do fundo
+    const wm = mat(0x3b3d40, {roughness:.35, metalness:.3});
+    box(55, 85, 60, wm, kx+kw-55, 0, kz+kd-60);
+    cyl(18, 2, mat(0x141414, {roughness:.1, metalness:.4}), kx+kw-27, 42, kz+kd-61, root, 32).rotation.x = Math.PI/2;
+    box(55, 3, 2, mat(0x8a8d90), kx+kw-55, 78, kz+kd-62);
+    // armário aéreo: portas em off-white com nicho aberto de freijó embaixo e LED sob o nicho (referência enviada)
+    const cream = mat(0xece5d7, {roughness:.35});
+    const az0 = cz+15, al = 190;
+    box(35, 60, al, cream, kx, 187, az0);                                   // bloco de portas
+    [az0+63, az0+127].forEach(z=> box(1, 56, .8, mat(0xd8d0c0), kx+35, 189, z));
+    box(35, 2.5, al, freijo, kx, 184.5, az0);                              // topo do nicho
+    box(35, 2.5, al, freijo, kx, 155, az0);                                // base do nicho
+    box(35, 29.5, 2.5, freijo, kx, 157.5, az0);                            // laterais e divisória
+    box(35, 29.5, 2.5, freijo, kx, 157.5, az0+al-2.5);
+    box(35, 29.5, 2.5, freijo, kx, 157.5, az0+al/2-1.25);
+    box(2, 29.5, al, freijo, kx, 157.5, az0);                              // fundo do nicho em madeira
+    box(30, 1, al-4, mat(0xfff3d6, {emissive:0xffe0a8, emissiveIntensity:.9}), kx+2, 154, az0+2).castShadow=false;
+    cyl(6, 4, mat(0xe9e3d3), kx+18, 157.5, az0+30, root, 16);              // tigelas e potes no nicho
+    cyl(5, 3, mat(0xd9d2c4), kx+18, 161.5, az0+30, root, 16);
+    cyl(5, 12, mat(0xbfb6a6), kx+18, 157.5, az0+70, root, 14);
+    cyl(4, 9, mat(0xe9e3d3), kx+18, 157.5, az0+125, root, 14);
+    cyl(5.5, 5, mat(0xd9c9a6), kx+18, 157.5, az0+160, root, 14);
+    // prateleira de madeira no fundo, sobre a perna curta, com plantas e potes
+    box(40, 2.5, 22, freijo, cx+cw, 150, kz+kd-22);
+    sphere(8, mat(C.folha2), cx+cw+10, 158, kz+kd-11, 1, .7, 1);
+    cyl(4, 12, mat(0xe9e3d3), cx+cw+26, 152.5, kz+kd-11, root, 12);
+    cyl(3.5, 9, mat(0xd9c9a6), cx+cw+34, 152.5, kz+kd-14, root, 12);
+    // temperinhos na tampa do passa-prato
+    [55, 84, 113].forEach(x=>{ cyl(5, 9, mat(0xe9e3d3), x, 92, 253, root, 14); sphere(7, mat(C.folha), x, 105, 253, 1, .8, 1); });
+    // passadeira bege no piso
+    box(55, 1.2, 190, texMat(weaveDraw('#e3d6bf', '#c2b39a'), [2,6], {roughness:1}), kx+kw-70, 0, cz+30);
+    // janela basculante alta na parede do fundo (3 folhas de vidro)
+    const frame = mat(0xdcd9d2, {roughness:.6});
+    const glass = mat(0x8bb1d4, {roughness:.15, metalness:.1, transparent:true, opacity:.75});
+    const wx = kx+kw-95, wy = 190, ww = 60, wh = 72;
+    box(ww, 3, 3, frame, wx, wy, kz+kd-3);
+    box(ww, 3, 3, frame, wx, wy+wh-3, kz+kd-3);
+    box(3, wh, 3, frame, wx, wy, kz+kd-3);
+    box(3, wh, 3, frame, wx+ww-3, wy, kz+kd-3);
+    for(let i=0;i<3;i++){
+      box(ww-6, 1.2, 1.2, glass, wx+3, wy+3+i*22, kz+kd-2).castShadow=false;
+      box(ww-6, 20, .6, glass, wx+3, wy+4+i*22, kz+kd-1.6).castShadow=false;
+    }
+  })();
+
+  // ---------- QUARTO: móveis conforme fotos ----------
+  (function(){
+    const qx = Q.x, qz = Q.z, qw = Q.w, qd = Q.d, qe = qx+qw, qs = qz+qd;
+    const white = mat(0xf4f3ef, {roughness:.5});
+    const wood = freijo;
+    const gray = mat(0xbfc2c6, {roughness:.6});
+    // cama de casal 140 x 190, cabeceira na parede do corredor, deslocada pro lado da janela
+    const bz = qs-150;
+    const linen = texMat(weaveDraw('#d9cdb9', '#b9ab93'), [4,3], {roughness:1});
+    const linenX = perCm(linen, 40);
+    const duvet = texMat(noiseDraw('#efe9df', 26), [5,4], {roughness:1});
+    // cama box estofada em linho bege, colcha clara, travesseiros fofos (referências enviadas)
+    box(194, 28, 144, linen, qx+12, 0, bz-2);
+    box(190, 20, 140, mat(0xf4f1ea, {roughness:1}), qx+14, 28, bz);
+    box(150, 6, 142, duvet, qx+54, 48, bz-1);
+    box(40, 4, 140, duvet, qx+164, 48, bz);
+    [[bz+8,'#e6dfd2'],[bz+74,'#e6dfd2']].forEach(([z,c])=> box(30, 14, 60, mat(c, {roughness:1}), qx+22, 48, z));
+    [[bz+22,'#d5cbb7'],[bz+80,'#d5cbb7']].forEach(([z,c])=> box(20, 11, 42, mat(c, {roughness:1}), qx+44, 48, z));
+    // cabeceira larga estofada com canto arredondado, afastada da parede e com luz por trás
+    (function(){
+      const z0 = bz-48, z1 = bz+148, h = 108, r = 46;
+      const sh = new THREE.Shape();
+      sh.moveTo(-z1, 0); sh.lineTo(-z0, 0); sh.lineTo(-z0, h-r);
+      sh.absarc(-z0-r, h-r, r, 0, Math.PI/2, false);
+      sh.lineTo(-z1, h); sh.lineTo(-z1, 0);
+      const hb = new THREE.Mesh(new THREE.ExtrudeGeometry(sh, {depth:8, bevelEnabled:false, curveSegments:24}), linenX);
+      hb.rotation.y = Math.PI/2; hb.position.set(qx+5, 0, 0); hb.castShadow = true; hb.receiveShadow = true; root.add(hb);
+      const glow = new THREE.Mesh(new THREE.ExtrudeGeometry(sh, {depth:1, bevelEnabled:false, curveSegments:24}), mat(0xfff0d0, {emissive:0xffdca0, emissiveIntensity:1}));
+      glow.rotation.y = Math.PI/2; glow.position.set(qx+2.5, 0, 0); root.add(glow);
+      const l = new THREE.PointLight(0xffd9a6, .55, 220, 2); l.position.set(qx+12, 70, bz+52); root.add(l);
+      // arandela de globo branco na cabeceira, do lado da mesinha
+      sphere(7, mat(0xfaf6ee, {emissive:0xfff3dc, emissiveIntensity:.7}), qx+17, 88, bz-22);
+      cyl(2.5, 1, mat(C.dourado, {metalness:.6, roughness:.4}), qx+13.5, 87.5, bz-22, root, 12).rotation.z = Math.PI/2;
+    })();
+    // painel de madeira clara atrás da cama, com juntas, até o teto
+    const oak = freijo;
+    box(2, 250, qs-412, oak, qx+.5, 0, 410);
+    for(let z=470; z<qs-2; z+=60) box(.8, 250, .6, mat(0x8f6a42), qx+2.4, 0, z);
+    // dois quadros com molduras finas acima da cabeceira
+    [bz+20, bz+82].forEach(z=>{ box(1.5, 50, 50, mat(0xd8c6a3), qx+2.6, 145, z); box(.6, 44, 44, mat(0xf1ede4), qx+4.1, 148, z+3); });
+    // mesinha lateral redonda com base de arame
+    (function(){
+      const cx = qx+30, czz = bz-26;
+      cyl(21, 2.5, oak, cx, 52, czz, root, 32);
+      for(let i=0;i<10;i++){ const a = i/10*Math.PI*2; cyl(.5, 52, mat(C.dourado, {metalness:.7, roughness:.3}), cx+Math.cos(a)*18, 0, czz+Math.sin(a)*18, root, 6); }
+      cyl(19, .8, mat(C.dourado, {metalness:.7, roughness:.3}), cx, 0, czz, root, 32);
+      box(22, 3, 16, mat(0xe9e3d3), cx-11, 54.5, czz-8);                                   // livro
+      cyl(4, 14, mat(0xdfe4e6, {transparent:true, opacity:.6, roughness:.1}), cx+8, 57.5, czz+4, root, 16);   // vaso de vidro
+      for(let i=0;i<4;i++) cyl(.4, 30, mat(0x5a3a22), cx+8+(i-1.5)*1.5, 71, czz+4+(i%2)*1.5, root, 4);       // galhos
+      [[cx+6,101,czz+3],[cx+10,97,czz+6],[cx+9,94,czz+2]].forEach(([x,y,z])=> sphere(2.5, mat(C.folha2), x, y, z));
+    })();
+    // espelho arco na parede sul (esquerda de quem olha a cabeceira)
+    (function(){
+      const sh = new THREE.Shape();
+      sh.moveTo(-30,0); sh.lineTo(30,0); sh.lineTo(30,130); sh.absarc(0,130,30,0,Math.PI,false); sh.lineTo(-30,0);
+      const g = new THREE.ExtrudeGeometry(sh, {depth:3, bevelEnabled:false});
+      const fr = new THREE.Mesh(g, mat(C.dourado,{roughness:.4, metalness:.5}));
+      fr.rotation.y = Math.PI; fr.position.set(650, 0, qs-1); fr.castShadow = true; root.add(fr);
+      const gl = new THREE.Mesh(g, mat(0xc9d3cf, {roughness:.1, metalness:.6}));
+      gl.rotation.y = Math.PI; gl.scale.set(.9,.93,1); gl.position.set(650, 2, qs-2); root.add(gl);
+    })();
+    // prateleiras no canto entre a janela e o espelho
+    box(22, 2.5, 45, wood, qe-22, 150, qs-50);
+    box(22, 2.5, 45, wood, qe-22, 185, qs-50);
+    sphere(9, mat(C.folha2), qe-11, 194, qs-28, 1, .7, 1);
+    box(4, 12, 18, mat(0xd9c9a6), qe-14, 153, qs-40);
+    // janela com persiana rolô na parede leste (mesma parede da janela da sala)
+    const frame = mat(0xdcd9d2, {roughness:.6});
+    const wz = qz+100;
+    box(3, 3, 150, frame, qe-3, 100, wz);
+    box(3, 3, 150, frame, qe-3, 224, wz);
+    box(3, 127, 3, frame, qe-3, 100, wz);
+    box(3, 127, 3, frame, qe-3, 100, wz+147);
+    box(1.5, 120, 144, mat(0xe9dfc9, {roughness:1}), qe-2.5, 102, wz+3).castShadow=false;
+    cyl(3, 148, mat(0xe0d6c0), qe-4, 150, wz+75, root, 16).rotation.x = Math.PI/2;
+    // ---- marcenaria integrada: closet em freijó com portas de palhinha em arco, torre arredondada de nichos na ponta esquerda
+    //      e bancada de trabalho contínua saindo do closet pela parede da janela (referências enviadas)
+    const cane = texMat(tileDraw('#dcbc8c', '#b48c58', 6, 6), [6,6], {roughness:.9});
+    const caneX = perCm(cane, 24);
+    const cz0 = qz, cd0 = 60, ch = 250, cxs = qe-180, cxe = qe;   // closet x 568..748, z 316..376
+    box(cxe-cxs, ch, cd0, freijo, cxs, 0, cz0);
+    // 4 portas com painel de palhinha em arco
+    const nDoors = 4, dw = (cxe-cxs)/nDoors;
+    for(let i=0;i<nDoors;i++){
+      const x0 = cxs + i*dw;
+      box(.8, ch-4, 1, mat(0x5a3419), x0, 2, cz0+cd0);                                   // frisos entre portas
+      const sh = new THREE.Shape();
+      const pw = dw-14, ph = ch-70, r = pw/2;
+      sh.moveTo(-r,0); sh.lineTo(r,0); sh.lineTo(r, ph-r); sh.absarc(0, ph-r, r, 0, Math.PI, false); sh.lineTo(-r,0);
+      const panel = new THREE.Mesh(new THREE.ExtrudeGeometry(sh, {depth:1.2, bevelEnabled:false}), caneX);
+      panel.position.set(x0+dw/2, 25, cz0+cd0); panel.castShadow = true; root.add(panel);
+      cyl(1.8, 1.5, freijo, x0 + (i%2 ? 6 : dw-6), 118, cz0+cd0+1.2, root, 16).rotation.x = Math.PI/2;   // puxadores redondos
+    }
+    // torre de nichos com ponta arredondada, na esquerda do closet (x 528..568)
+    const tx = cxs-40;
+    function roundedSlab(y, h, material){
+      const sh = new THREE.Shape();
+      sh.moveTo(cxs, -cz0); sh.lineTo(tx+30, -cz0);
+      sh.absarc(tx+30, -(cz0+cd0/2), cd0/2, Math.PI/2, 3*Math.PI/2, false);
+      sh.lineTo(cxs, -(cz0+cd0)); sh.lineTo(cxs, -cz0);
+      const m = new THREE.Mesh(new THREE.ExtrudeGeometry(sh, {depth:h, bevelEnabled:false, curveSegments:24}), material === freijo ? freijoX : material);
+      m.rotation.x = -Math.PI/2; m.position.y = y; m.castShadow = true; m.receiveShadow = true; root.add(m);
+      return m;
+    }
+    roundedSlab(0, 42, freijo);                                              // gavetão arredondado embaixo
+    box(30, .8, 1.2, mat(0x5a3419), tx+15, 21, cz0+cd0-.6);
+    [44, 90, 136, 182, 228].forEach(y=> roundedSlab(y, 2.5, freijo));      // prateleiras
+    roundedSlab(ch-2.5, 2.5, freijo);                                        // tampo
+    box(20, ch, 2, freijo, cxs-20, 0, cz0);                                  // fundo do trecho reto
+    // livros e planta nos nichos
+    [[46,'#c9b58f'],[92,'#8fa3b8'],[138,'#b07a48'],[184,'#444a55']].forEach(([y,c])=> box(3+Math.random()*4, 22, 20, mat(c, {roughness:.9}), cxs-14, y, cz0+20));
+    box(4, 22, 20, mat(0xd9d3c6), cxs-22, 46, cz0+20); box(3, 18, 18, mat(0x5f6b45), cxs-26, 92, cz0+22);
+    sphere(8, mat(C.folha2), tx+18, 148, cz0+30, 1, .7, 1); cyl(5, 8, mat(0xe9e3d3), tx+18, 138.5, cz0+30, root, 14);
+    // bancada em freijó na parede da janela, mais estreita (50), começando no armário e indo até o fundo, com painéis de apoio e gaveteiro
+    const dz = cz0+cd0+2, dl = qs-dz-2, dd = 50;
+    box(dd, 4, dl, freijo, qe-dd, 72, dz);
+    box(dd, 72, 3, freijo, qe-dd, 0, qs-5);                                  // painel de apoio no fim
+    box(dd, 72, 3, freijo, qe-dd, 0, dz);                                    // painel de apoio junto ao armário
+    box(38, 55, 40, freijo, qe-44, 8, dz+20);                                // gaveteiro com rodízios
+    [22, 36, 50].forEach(y=> box(36, .8, 1, mat(0x5a3419), qe-43, y, dz+60));
+    [0,1,2,3].forEach(i=> cyl(1.6, 1, freijo, qe-25, 15+i*14, dz+60.5, root, 12).rotation.x = Math.PI/2);
+    [[qe-42,dz+22],[qe-10,dz+22],[qe-42,dz+56],[qe-10,dz+56]].forEach(([x,z])=> cyl(2, 8, mat(0x2b2b2b), x, 0, z, root, 8));
+    // dois postos: monitor + teclado e notebook
+    box(2, 30, 50, mat(0x1c1c1c, {roughness:.3}), qe-10, 90, dz+70);
+    box(4, 15, 12, mat(0x2b2b2b), qe-9, 75, dz+89);
+    box(12, 1, 36, mat(0xe8e6e0), qe-40, 75, dz+77);
+    box(22, 1.5, 30, mat(0xc9cacc, {metalness:.5, roughness:.4}), qe-40, 75, dz+160);
+    box(1, 20, 30, mat(0x2a2a2a), qe-18, 76.5, dz+160);
+    cyl(5, 3, mat(0x222222), qe-20, 75, dz+125, root, 12);                  // luminária de mesa
+    cyl(.8, 32, mat(0x222222), qe-20, 78, dz+125, root, 8);
+    cyl(6, 3, mat(0x9a5a4a, {roughness:.5}), qe-20, 110, dz+125, root, 16);
+    // cadeiras de madeira com palhinha, uma em cada posto
+    function caneChair(x, z, rotY){
+      const g = new THREE.Group(); g.position.set(x, 0, z); g.rotation.y = rotY; root.add(g);
+      box(42, 3, 42, cane, -21, 45, -21, g);
+      [[-18,-18],[18,-18],[-18,18],[18,18]].forEach(([dx,dz2])=> cyl(1.4, 45, freijo, dx, 0, dz2, g, 8));
+      const sh = new THREE.Shape(); sh.moveTo(-19,0); sh.lineTo(19,0); sh.lineTo(19,26); sh.absarc(0,26,19,0,Math.PI,false); sh.lineTo(-19,0);
+      const back = new THREE.Mesh(new THREE.ExtrudeGeometry(sh, {depth:1.2, bevelEnabled:false}), caneX);
+      back.position.set(0, 50, 18.8); back.castShadow = true; g.add(back);
+      cyl(1.4, 48, freijo, -19, 45, 19.5, g, 8); cyl(1.4, 48, freijo, 19, 45, 19.5, g, 8);
+    }
+    caneChair(qe-95, dz+92, -Math.PI/2);
+    caneChair(qe-95, dz+175, -Math.PI/2);
+    // ficus grande ao lado da torre
+    plant(qx+95, qz+40, 34, 95, 20, C.folha);
+    // tapete cru sob a cama, avançando até a poltrona
+    box(230, 1.5, 168, texMat(noiseDraw('#efe6d6', 34), [6,4], {roughness:1}), qx+50, 0, bz-20);
+    // manta xadrez caída no pé da cama
+    box(70, 5, 90, texMat(tileDraw('#b39272', '#6e5138', 32, 32), [4,3], {roughness:1}), qx+130, 48, bz+30);
+    box(4, 40, 90, texMat(tileDraw('#b39272', '#6e5138', 32, 32), [4,3], {roughness:1}), qx+204, 8, bz+30);
+    // prateleira comprida acima da janela, com plantas pendentes e livros
+    box(20, 2.5, 190, freijo, qe-20, 236, dz+45);
+    sphere(12, mat(C.folha2), qe-10, 244, dz+70, 1, .6, 1);
+    sphere(10, mat(C.folha), qe-10, 243, dz+185, 1, .6, 1);
+    box(6, 14, 30, mat(0xd9c9a6), qe-14, 238.5, dz+120);
+    // planta perto do pé da cama
+    plant(qx+215, bz+95, 22, 35, 14, C.folha);
+  })();
+
+  // ---------- BANHEIRO: referência enviada (gabinete ripado suspenso, espelho oval com luz, papel de parede botânico) ----------
+  (function(){
+    const bx = B.x, bz = B.z, bw = B.w, bd = B.d, be = bx+bw, bs = bz+bd;
+    const white = mat(0xf6f6f4, {roughness:.25});
+    const gold = mat(C.dourado, {metalness:.6, roughness:.35});
+    const vidro = mat(0xdfe4e6, {transparent:true, opacity:.45, roughness:.1});
+    // papel de parede botânico na parede da direita (a da janela), do chão ao teto
+    const leafDraw = (g,S)=>{
+      g.fillStyle = '#e4dac6'; g.fillRect(0,0,S,S);
+      const cols = ['#9aa583','#7f8b68','#b3b493','#c3bc9c'];
+      for(let i=0;i<110;i++){
+        g.save(); g.translate(Math.random()*S, Math.random()*S); g.rotate(Math.random()*Math.PI*2);
+        const L = 40+Math.random()*90, w = 10+Math.random()*18;
+        g.fillStyle = cols[i%4]; g.globalAlpha = .7;
+        g.beginPath(); g.ellipse(0,0,L/2,w/2,0,0,Math.PI*2); g.fill();
+        g.strokeStyle = '#6b7554'; g.globalAlpha = .55; g.lineWidth = 1.1;
+        g.beginPath(); g.moveTo(-L/2,0); g.lineTo(L/2,0); g.stroke();
+        for(let k=-L/2+8;k<L/2-6;k+=8){ g.beginPath(); g.moveTo(k,0); g.lineTo(k+6,-w*.42); g.moveTo(k,0); g.lineTo(k+6,w*.42); g.stroke(); }
+        g.restore();
+      }
+      g.globalAlpha = 1;
+    };
+    const wallpaper = new THREE.MeshStandardMaterial({map: makeTex(leafDraw, [bw/130, 280/130], 512), roughness:.9});
+    box(bw, 278, 1, wallpaper, bx, 0, bs-1).castShadow = false;   // só na parede da pia e do vaso
+    // box do chuveiro na parede da porta, ao lado da porta, com deck de madeira e nicho
+    const sx = bx+20;
+    box(80, .6, 80, mat(0xdad6ce, {roughness:.5}), sx, -.2, bz);
+    for(let x=sx+3; x<sx+78; x+=5) box(3.5, 2, 74, freijo, x, 0, bz+3);
+    cyl(1.2, 30, gold, sx+40, 185, bz+17, root, 8).rotation.x = Math.PI/2;
+    cyl(7, 2, gold, sx+40, 198, bz+32, root, 24);
+    box(3, 200, 80, vidro, sx+80, 0, bz);
+    box(80, 200, 3, vidro, sx, 0, bz+80);
+    box(30, 30, 1, mat(0xcfc8bb), sx+25, 110, bz+1.2);
+    // janela basculante alta na parede da direita, ao lado do vaso
+    const frame = mat(0xdcd9d2, {roughness:.6});
+    const glass = mat(0x8bb1d4, {roughness:.15, transparent:true, opacity:.75});
+    box(3, 3, 60, frame, bx+1, 200, bs-70); box(3, 3, 60, frame, bx+1, 250, bs-70);
+    box(3, 53, 3, frame, bx+1, 200, bs-70); box(3, 53, 3, frame, bx+1, 200, bs-13);
+    for(let i=0;i<3;i++) box(1.2, 15, 54, glass, bx+2, 204+i*16, bs-67).castShadow=false;
+    // vaso sanitário monobloco, junto ao gabinete
+    const tx0 = be-150;
+    box(34, 38, 14, white, tx0, 40, bs-14);
+    box(34, 40, 14, white, tx0, 0, bs-14);
+    const bowl = cyl(17, 40, white, tx0+17, 0, bs-36, root, 32); bowl.scale.z = 1.3;
+    cyl(17.5, 2, mat(0xffffff, {roughness:.2}), tx0+17, 40, bs-36, root, 32).scale.z = 1.3;
+    // gabinete ripado suspenso em freijó com tampo de quartzo e cuba redonda de apoio
+    const vx = be-100, vw = 92;
+    box(vw, 34, 44, freijo, vx, 60, bs-44);
+    for(let x=vx; x<vx+vw; x+=4) box(2.4, 34, 1.6, freijo, x+.8, 60, bs-45.6);        // ripado da frente
+    box(vw+2, 3, 46, quartzo, vx-1, 94, bs-46);
+    cyl(20, 12, white, vx+vw/2, 97, bs-24, root, 40);
+    cyl(18.5, 1, mat(0xffffff, {roughness:.2}), vx+vw/2, 108, bs-24, root, 40);
+    cyl(1.6, 16, gold, vx+vw/2, 118, bs-8, root, 10).rotation.x = Math.PI/2;                // torneira de parede
+    cyl(1.6, 2, gold, vx+vw/2+8, 121, bs-2.5, root, 10).rotation.x = Math.PI/2;
+    cyl(1.6, 2, gold, vx+vw/2-8, 121, bs-2.5, root, 10).rotation.x = Math.PI/2;
+    box(vw, 2.5, 44, freijo, vx, 30, bs-44);                                                // prateleira aberta embaixo
+    const wicker = texMat(tileDraw('#c9a978', '#a3835a', 8, 8), [4,2], {roughness:1});
+    box(30, 22, 30, wicker, vx+6, 32.5, bs-38);                                             // cestos
+    box(28, 18, 30, wicker, vx+52, 32.5, bs-38);
+    box(24, 8, 30, mat(0xf3efe6, {roughness:1}), vx+54, 50.5, bs-38);                       // toalhas dobradas
+    box(80, 1, 40, mat(0xfff3d6, {emissive:0xffe0a8, emissiveIntensity:.9}), vx+6, 59, bs-42).castShadow=false;
+    // espelho oval com luz por trás
+    (function(){
+      const w = 64, h = 96, r = 32;
+      const sh = new THREE.Shape();
+      sh.moveTo(-w/2+r, 0); sh.lineTo(w/2-r, 0); sh.absarc(w/2-r, r, r, -Math.PI/2, 0, false);
+      sh.lineTo(w/2, h-r); sh.absarc(w/2-r, h-r, r, 0, Math.PI/2, false);
+      sh.lineTo(-w/2+r, h); sh.absarc(-w/2+r, h-r, r, Math.PI/2, Math.PI, false);
+      sh.lineTo(-w/2, r); sh.absarc(-w/2+r, r, r, Math.PI, 3*Math.PI/2, false);
+      const mk = (m, depth) => new THREE.Mesh(new THREE.ExtrudeGeometry(sh, {depth, bevelEnabled:false, curveSegments:24}), m);
+      const glow = mk(mat(0xfff0d0, {emissive:0xffdca0, emissiveIntensity:1}), .8);
+      glow.rotation.y = Math.PI; glow.scale.set(1.08,1.06,1); glow.position.set(vx+vw/2, 125, bs-1.6); root.add(glow);
+      const fr = mk(gold, 1.5); fr.rotation.y = Math.PI; fr.position.set(vx+vw/2, 128, bs-3.5); root.add(fr);
+      const gl = mk(mat(0xc9d3cf, {roughness:.1, metalness:.6}), 1); gl.scale.set(.94,.96,1); gl.rotation.y = Math.PI; gl.position.set(vx+vw/2, 130, bs-4.5); root.add(gl);
+    })();
+    // prateleira de madeira ao lado do espelho com planta pendente, vela e LED embaixo
+    box(52, 2.5, 14, freijo, tx0-8, 150, bs-14);
+    box(48, .8, 10, mat(0xfff3d6, {emissive:0xffe0a8, emissiveIntensity:.9}), tx0-6, 149, bs-12).castShadow=false;
+    cyl(7, 8, mat(0xe9e3d3), tx0+8, 152.5, bs-7, root, 16); sphere(9, mat(C.folha2), tx0+8, 163, bs-8, 1, .6, 1);
+    [[tx0+2,146],[tx0+4,136],[tx0+7,126],[tx0+3,116]].forEach(([x,y])=> sphere(3, mat(C.folha), x, y, bs-3));  // ramos caindo
+    cyl(4, 6, mat(0xf3efe6), tx0+30, 152.5, bs-7, root, 14);
+    // planta de galhos ao lado da cuba e sabonete
+    cyl(4, 12, mat(0xdfe4e6, {transparent:true, opacity:.6, roughness:.1}), vx+8, 97, bs-24, root, 14);
+    for(let i=0;i<5;i++) cyl(.4, 34, mat(0x5a3a22), vx+8+(i-2)*1.4, 109, bs-24+(i%2)*1.5, root, 4);
+    [[vx+4,138],[vx+10,142],[vx+13,133],[vx+6,128]].forEach(([x,y])=> sphere(2.5, mat(C.folha2), x, y, bs-24));
+    cyl(2.2, 10, mat(0x5a3a22, {roughness:.4}), vx+22, 97, bs-16, root, 12);
+    // tapete pequeno e piso
+    box(80, 1.2, 45, texMat(weaveDraw('#e3d6bf', '#c2b39a'), [3,2], {roughness:1}), vx-20, 0, bs-100);
+  })();
+
+  // ---------- luzes pontuais quentes (pendente, abajures, LEDs) ----------
+  [[383,150,230,.7,380],[484,130,48,.5,300],[630,222,292,.45,260],[40,152,380,.45,220],[336,120,600,.35,220],[419,82,447,.45,240],[57,210,140,.3,200]].forEach(([x,y,z,i,d])=>{
+    const l = new THREE.PointLight(0xffdcb0, i, d, 2); l.position.set(x,y,z); root.add(l);
+  });
+
+  // recentra o modelo na origem
+  root.position.set(-W/2, 0, -360);
+
+  // ---------- luz ----------
+  scene.add(new THREE.HemisphereLight(0xfff5e6, 0x8a7a63, .55));
+  const sun = new THREE.DirectionalLight(0xffe8c4, .95);
+  sun.position.set(-320, 520, 380);
+  sun.castShadow = true;
+  const small = Math.min(innerWidth, innerHeight) < 700 || devicePixelRatio > 2;
+  sun.shadow.mapSize.set(small ? 2048 : 4096, small ? 2048 : 4096);
+  const sc = sun.shadow.camera;
+  sc.left = -750; sc.right = 750; sc.top = 750; sc.bottom = -750; sc.near = 10; sc.far = 1600;
+  sun.shadow.bias = -0.0008;
+  scene.add(sun);
+  const fill = new THREE.DirectionalLight(0xdfe9ff, .3);
+  fill.position.set(400, 300, -300);
+  scene.add(fill);
+
+  // ---------- câmera isométrica ----------
+  const cam = new THREE.OrthographicCamera(-1,1,1,-1, -2000, 4000);
+  let az = 45, el = 33, zoom = 1, dist = 1600, wallMode = 'cut';   // cut | full | none
+  const target = new THREE.Vector3(0, 90, 0);
+  function updateCam(){
+    const a = THREE.MathUtils.degToRad(az), e = THREE.MathUtils.degToRad(el);
+    cam.position.set(
+      target.x + dist*Math.cos(e)*Math.sin(a),
+      target.y + dist*Math.sin(e),
+      target.z + dist*Math.cos(e)*Math.cos(a));
+    cam.lookAt(target);
+    // paredes viradas para a câmera ficam baixas (corte), as de fundo ficam inteiras
+    const dx = Math.sin(a), dz = Math.cos(a);
+    walls.forEach(w=>{
+      if(wallMode === 'none'){ w.visible = false; return; }
+      const d = w.userData.dir;
+      const back = wallMode === 'full' || w.userData.interior || (d==='n' && dz>0) || (d==='s' && dz<0) || (d==='w' && dx>0) || (d==='e' && dx<0);
+      const y0 = w.userData.y0, y1 = w.userData.y1;
+      if(back){ w.visible = true; w.position.y = y0; w.scale.y = y1-y0; }
+      else if(y0 > 0){ w.visible = false; }
+      else { w.visible = true; w.position.y = 0; w.scale.y = 22; }
+    });
+  }
+  function resize(){
+    const w = app.clientWidth, h = app.clientHeight;
+    renderer.setSize(w, h, false);
+    const base = 560 / zoom; // meio-tamanho vertical em cm
+    const asp = w/h;
+    cam.left = -base*asp; cam.right = base*asp; cam.top = base; cam.bottom = -base;
+    cam.updateProjectionMatrix();
+  }
+  window.addEventListener('resize', resize);
+
+  // arrastar para girar, scroll para zoom
+  let dragging=false, lx=0, ly=0;
+  const el0 = renderer.domElement;
+  const pointers = new Map(); let pinchDist = 0;
+  el0.addEventListener('pointerdown', e=>{
+    pointers.set(e.pointerId, [e.clientX, e.clientY]); el0.setPointerCapture(e.pointerId);
+    if(pointers.size === 1){ dragging=true; lx=e.clientX; ly=e.clientY; }
+    if(pointers.size === 2){ dragging=false; const [a,b] = [...pointers.values()]; pinchDist = Math.hypot(a[0]-b[0], a[1]-b[1]); }
+    document.getElementById('hint').classList.add('off');
+  });
+  el0.addEventListener('pointermove', e=>{
+    if(!pointers.has(e.pointerId)) return;
+    pointers.set(e.pointerId, [e.clientX, e.clientY]);
+    if(pointers.size === 2){
+      const [a,b] = [...pointers.values()]; const d = Math.hypot(a[0]-b[0], a[1]-b[1]);
+      if(pinchDist){ zoom = THREE.MathUtils.clamp(zoom * (d/pinchDist), .6, 3); resize(); }
+      pinchDist = d; return;
+    }
+    if(!dragging) return;
+    az -= (e.clientX-lx)*.4; el = THREE.MathUtils.clamp(el + (e.clientY-ly)*.25, 18, 88);
+    lx=e.clientX; ly=e.clientY; updateCam(); syncButtons();
+  });
+  const endPointer = e=>{ pointers.delete(e.pointerId); if(pointers.size < 2) pinchDist = 0; if(pointers.size === 0) dragging = false; else { const [a] = [...pointers.values()]; lx=a[0]; ly=a[1]; dragging = pointers.size === 1; } };
+  el0.addEventListener('pointerup', endPointer); el0.addEventListener('pointercancel', endPointer);
+  el0.addEventListener('wheel', e=>{ e.preventDefault(); zoom = THREE.MathUtils.clamp(zoom * (e.deltaY<0?1.1:.9), .6, 3); resize(); }, {passive:false});
+
+  const btns = [...document.querySelectorAll('.views button')];
+  function syncButtons(){
+    const n = ((az % 360)+360)%360;
+    btns.forEach(b=>{
+      const t = ((+b.dataset.az % 360)+360)%360;
+      b.classList.toggle('on', Math.abs(n-t) < 1);
+    });
+  }
+  // animação genérica de câmera (ângulo, alvo e zoom)
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function flyTo(to){
+    const from = {az, el, zoom, tx: target.x, tz: target.z};
+    const dAz = to.az === undefined ? 0 : ((to.az - az + 540) % 360) - 180;
+    const t0 = performance.now();
+    (function step(t){
+      const k = reduce ? 1 : Math.min(1, (t-t0)/700);
+      const e = k<.5 ? 2*k*k : -1+(4-2*k)*k;
+      if(to.az !== undefined) az = from.az + dAz*e;
+      if(to.el !== undefined) el = from.el + (to.el-from.el)*e;
+      if(to.zoom !== undefined){ zoom = from.zoom + (to.zoom-from.zoom)*e; resize(); }
+      if(to.tx !== undefined){ target.x = from.tx + (to.tx-from.tx)*e; target.z = from.tz + (to.tz-from.tz)*e; }
+      updateCam(); syncButtons();
+      if(k<1) requestAnimationFrame(step);
+    })(t0);
+  }
+  btns.forEach(b=> b.addEventListener('click', ()=> flyTo({az: +b.dataset.az, el: 33})));
+
+  // ambientes: centro em coordenadas da planta (cm) e zoom que enquadra
+  const rooms = {
+    casa:     {x: 374, z: 358, zoom: 1},
+    sala:     {x: 490, z: 150, zoom: 1.9},
+    copa:     {x: 116, z: 124, zoom: 2.6},
+    cozinha:  {x: 97,  z: 405, zoom: 2.6},
+    banheiro: {x: 285, z: 519, zoom: 2.8},
+    quarto:   {x: 573, z: 466, zoom: 2.2},
+  };
+  const roomBtns = [...document.querySelectorAll('.rooms button')];
+  roomBtns.forEach(b=> b.addEventListener('click', ()=>{
+    const r = rooms[b.dataset.room];
+    roomBtns.forEach(o=> o.classList.toggle('on', o===b));
+    flyTo({tx: r.x + root.position.x, tz: r.z + root.position.z, zoom: r.zoom});
+  }));
+
+  const wallsBtn = document.getElementById('wallsBtn');
+  const wallLabels = {cut: 'Paredes: cortadas', full: 'Paredes: inteiras', none: 'Paredes: nenhuma'};
+  wallsBtn.textContent = wallLabels[wallMode];
+  wallsBtn.addEventListener('click', ()=>{
+    wallMode = wallMode === 'cut' ? 'full' : wallMode === 'full' ? 'none' : 'cut';
+    wallsBtn.textContent = wallLabels[wallMode];
+    wallsBtn.classList.toggle('on', wallMode !== 'cut');
+    updateCam();
+  });
+  document.getElementById('topBtn').addEventListener('click', ()=> flyTo({az: 0, el: 88}));
+  document.getElementById('dl').addEventListener('click', ()=>{
+    renderer.render(scene, cam);
+    const a = document.createElement('a');
+    a.download = 'lara-isa-3d.png';
+    a.href = renderer.domElement.toDataURL('image/png');
+    a.click();
+  });
+
+  resize(); updateCam(); syncButtons();
+  let frames = 0;
+  (function loop(){
+    renderer.render(scene, cam);
+    if(++frames === 2){ el0.classList.add('ready'); document.getElementById('loading').classList.add('off'); setTimeout(()=> document.getElementById('hint').classList.add('off'), 6000); }
+    requestAnimationFrame(loop);
+  })();
+})();
+</script>
+</body>
+</html>

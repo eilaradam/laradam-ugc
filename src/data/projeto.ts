@@ -277,6 +277,16 @@ export const PROJETO_PALETA = [
   { cor: "#B4654A", nome: "Terracota", onde: "Espelho arco e detalhes" },
 ];
 
+
+// Tour 3D do apartamento (arquivo estático em public/projeto/3d/).
+export const PROJETO_TOUR = {
+  url: "/projeto/3d",
+  titulo: "Entre no apê antes de decidir.",
+  texto:
+    "Um modelo 3D do apartamento pra você girar, aproximar e ver de qualquer ângulo. Dá pra escolher o ambiente, ver de cima e imaginar exatamente onde o seu produto entra na casa.",
+  chamada: "Abrir em tela cheia",
+};
+
 // Quem assina o projeto (foto + recado pra marca).
 export const PROJETO_SOBRE = {
   foto: "/lara-sobre.jpg",
@@ -305,19 +315,44 @@ export type Render = {
 
 export const PROJETO_GALERIA: Render[] = [
   {
-    src: "/projeto/galeria/01-integrado.jpg",
-    titulo: "Sala, jantar e cozinha integradas",
-    legenda: "Piso de madeira, marcenaria ripada e a parede verde oliva ao fundo.",
+    src: "/projeto/galeria/01-estar.jpg",
+    titulo: "Sala de estar",
+    legenda: "Painel ripado, iluminação indireta e o sofá em frente ao canto de gravação.",
   },
   {
-    src: "/projeto/galeria/02-cozinha.jpg",
+    src: "/projeto/galeria/02-cozinha-ilha.jpg",
     titulo: "Cozinha com ilha",
-    legenda: "Bancada em granilite, marcenaria ripada e banquetas pro café da manhã.",
+    legenda: "Bancada em granilite, marcenaria em nogueira e a parede verde oliva.",
   },
   {
-    src: "/projeto/galeria/03-estar.jpg",
-    titulo: "Estar e painel ripado",
-    legenda: "O canto que vira ambiente de gravação: painel bege, espelho arco e plantas.",
+    src: "/projeto/galeria/03-canto-gravacao.jpg",
+    titulo: "O canto de gravação",
+    legenda: "Espelho arco, plantas e luz controlada: o cenário fixo dos vídeos.",
+  },
+  {
+    src: "/projeto/galeria/04-jantar-cozinha.jpg",
+    titulo: "Jantar e cozinha integrados",
+    legenda: "Mesa, pendente de madeira e a ilha com banquetas logo atrás.",
+  },
+  {
+    src: "/projeto/galeria/05-ilha-banquetas.jpg",
+    titulo: "Ilha e banquetas",
+    legenda: "O ponto de café da manhã e de gravação de receita.",
+  },
+  {
+    src: "/projeto/galeria/06-estar-cortina.jpg",
+    titulo: "Estar e cortina",
+    legenda: "Rack em madeira, cortina de linho e a parede de quadros.",
+  },
+  {
+    src: "/projeto/galeria/07-jantar.jpg",
+    titulo: "Mesa de jantar",
+    legenda: "Onde entram as receitas, os utensílios e a mesa posta.",
+  },
+  {
+    src: "/projeto/galeria/08-integrado.jpg",
+    titulo: "Vista geral",
+    legenda: "Sala, jantar e cozinha em um ambiente só.",
   },
 ];
 

@@ -99,7 +99,7 @@ export default function ProjetoEscopo() {
       <section className="bg-pj-bg px-5 py-20 sm:px-10 sm:py-28">
         <div className="mx-auto max-w-[1400px]">
           <Cabecalho
-            n="06"
+            n="07"
             chapeu="Paleta e materiais"
             titulo="A cara do projeto, escolha por escolha."
           />
@@ -159,7 +159,7 @@ export default function ProjetoEscopo() {
       <section className="bg-pj-olive px-5 py-20 text-pj-bg sm:px-10 sm:py-28">
         <div className="mx-auto max-w-[1400px]">
           <Cabecalho
-            n="07"
+            n="08"
             chapeu="Cronograma"
             dark
             titulo={PROJETO.janelaFechamento}

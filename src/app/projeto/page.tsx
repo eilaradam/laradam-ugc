@@ -3,6 +3,7 @@ import { Archivo } from "next/font/google";
 import ProjetoHero from "@/components/projeto/ProjetoHero";
 import ProjetoSobre from "@/components/projeto/ProjetoSobre";
 import ProjetoAmbientes from "@/components/projeto/ProjetoAmbientes";
+import ProjetoTour from "@/components/projeto/ProjetoTour";
 import ProjetoProva from "@/components/projeto/ProjetoProva";
 import ProjetoEscopo from "@/components/projeto/ProjetoEscopo";
 import ProjetoParceria from "@/components/projeto/ProjetoParceria";
@@ -51,6 +52,7 @@ export default function ProjetoPage() {
       <ProjetoHero />
       <ProjetoSobre />
       <ProjetoAmbientes />
+      <ProjetoTour />
       <ProjetoProva />
       <ProjetoEscopo />
       <ProjetoParceria />

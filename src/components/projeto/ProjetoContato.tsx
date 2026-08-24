@@ -37,7 +37,7 @@ export default function ProjetoContato() {
       <section className="bg-pj-bg px-5 py-20 sm:px-10 sm:py-28">
         <div className="mx-auto max-w-[1400px]">
           <Cabecalho
-            n="10"
+            n="11"
             chapeu="Dúvidas comuns"
             titulo="O que as marcas costumam perguntar."
           />

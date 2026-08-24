@@ -22,7 +22,7 @@ export default function ProjetoProva() {
       <section className="bg-pj-bg px-5 py-20 sm:px-10 sm:py-28">
         <div className="mx-auto max-w-[1400px]">
           <Cabecalho
-            n="03"
+            n="04"
             chapeu="Por que entrar"
             titulo="Uma reforma é o melhor lugar pra mostrar um produto de casa."
           />
@@ -56,7 +56,7 @@ export default function ProjetoProva() {
       <section className="bg-pj-bg2 px-5 py-20 sm:px-10 sm:py-28">
         <div className="mx-auto max-w-[1400px]">
           <Cabecalho
-            n="04"
+            n="05"
             chapeu="Resultados"
             titulo="Não é teste. É o que as marcas já colheram comigo."
           />
@@ -95,7 +95,7 @@ export default function ProjetoProva() {
       <section className="bg-pj-bg px-5 py-20 sm:px-10 sm:py-28">
         <div className="mx-auto max-w-[1400px]">
           <Cabecalho
-            n="05"
+            n="06"
             chapeu="Casa e decoração"
             titulo="Esse nicho já é o meu terreno."
             sub="Vídeos que já produzi pra marcas de casa, móveis, organização e decoração. Clique pra assistir."

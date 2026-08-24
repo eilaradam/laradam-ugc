@@ -26,7 +26,7 @@ export default function ProjetoParceria() {
       <section id="procuro" className="bg-pj-bg px-5 py-20 sm:px-10 sm:py-28">
         <div className="mx-auto max-w-[1400px]">
           <Cabecalho
-            n="08"
+            n="09"
             chapeu="O que estou procurando"
             titulo={`${abertas} categorias de parceiro ainda abertas.`}
             sub="Se a sua marca se encaixa em alguma delas, me chama. Se não estiver na lista e fizer sentido pra obra, me chama do mesmo jeito."
@@ -64,7 +64,7 @@ export default function ProjetoParceria() {
       <section id="parceria" className="bg-pj-bg2 px-5 py-20 sm:px-10 sm:py-28">
         <div className="mx-auto max-w-[1400px]">
           <Cabecalho
-            n="09"
+            n="10"
             chapeu="Formatos de parceria"
             titulo="Três jeitos de entrar. Escolha o tamanho."
             sub={PROJETO_FORMATOS_TEXTO}
