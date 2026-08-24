@@ -20,7 +20,7 @@ export const PROJETO = {
   email: "laradam.ugc@gmail.com",
   instagram: "eilaradam",
   // Preencha quando quiser creditar o escritório na página (deixe vazio pra esconder).
-  arquiteta: { nome: "", instagram: "" },
+  arquiteta: { nome: "Bianca Ramos, do be.out studio", instagram: "" },
 };
 
 // Frase da faixa corrida do topo.
