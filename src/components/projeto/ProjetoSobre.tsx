@@ -36,7 +36,7 @@ export default function ProjetoSobre() {
             <img
               src={PROJETO_SOBRE.foto}
               alt={PROJETO_SOBRE.fotoAlt}
-              className="h-40 w-40 rounded-3xl object-cover object-top sm:h-56 sm:w-56"
+              className="h-52 w-40 rounded-3xl object-cover object-top sm:h-72 sm:w-56"
             />
 
             <div className="rounded-3xl bg-pj-paper p-6 sm:p-9">
