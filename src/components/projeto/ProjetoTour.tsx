@@ -7,12 +7,11 @@ import { PROJETO_TOUR } from "@/data/projeto";
 import Cabecalho from "./Cabecalho";
 
 /**
- * Tour 3D do apartamento. O modelo (Three.js) so carrega no clique e, quando
- * o mouse sai de cima, uma camada invisivel volta a cobrir o iframe pra rolagem
- * da pagina nao ficar presa no zoom do 3D.
+ * Tour 3D do apartamento. O modelo ja vem aberto (o iframe usa lazy nativo,
+ * entao so baixa quando a secao chega perto da tela). Uma camada por cima
+ * devolve a rolagem pra pagina enquanto ninguem esta girando o modelo.
  */
 export default function ProjetoTour() {
-  const [ligado, setLigado] = useState(false);
   const [interagindo, setInteragindo] = useState(false);
 
   return (
@@ -44,51 +43,31 @@ export default function ProjetoTour() {
           className="mt-10 overflow-hidden rounded-3xl border border-pj-line bg-pj-bg2"
         >
           <div className="relative aspect-[4/3] w-full sm:aspect-[16/9]">
-            {ligado ? (
-              <>
-                <iframe
-                  src={PROJETO_TOUR.url}
-                  title="Tour 3D do apartamento"
-                  className="absolute inset-0 h-full w-full"
-                  loading="lazy"
-                />
-                {/* camada que devolve a rolagem pra pagina quando ninguem esta girando o modelo */}
-                {!interagindo && (
-                  <button
-                    onClick={() => setInteragindo(true)}
-                    aria-label="Clique para girar o modelo"
-                    className="absolute inset-0 flex items-end justify-center bg-transparent pb-6"
-                  >
-                    <span className="rounded-full bg-pj-ink/85 px-4 py-2 text-[12px] font-semibold text-pj-bg backdrop-blur">
-                      Clique para girar o modelo
-                    </span>
-                  </button>
-                )}
-              </>
-            ) : (
+            <iframe
+              src={PROJETO_TOUR.url}
+              title="Tour 3D do apartamento"
+              className="absolute inset-0 h-full w-full"
+              loading="lazy"
+            />
+            {/* camada que devolve a rolagem pra pagina enquanto ninguem esta
+                girando o modelo. No celular ela manda pro tour em tela cheia,
+                porque o gesto de girar brigaria com a rolagem. */}
+            {!interagindo && (
               <button
                 onClick={() => {
-                  // no celular o modelo abre em tela cheia (embutido a rolagem
-                  // da pagina ficaria presa no gesto de girar)
                   if (window.innerWidth < 640) {
                     window.open(PROJETO_TOUR.url, "_blank", "noopener");
                     return;
                   }
-                  setLigado(true);
                   setInteragindo(true);
                 }}
-                className="group absolute inset-0 flex flex-col items-center justify-center gap-5 bg-pj-bg2 transition hover:bg-pj-line/40"
+                aria-label="Interagir com o modelo 3D"
+                className="group absolute inset-0 flex items-end justify-center bg-transparent pb-6"
               >
-                <span className="flex h-16 w-16 items-center justify-center rounded-full bg-pj-terra text-pj-paper transition group-hover:scale-105">
-                  <Move3d className="h-7 w-7" />
-                </span>
-                <span className="text-center">
-                  <span className="pj-display block text-[1.4rem] sm:text-[1.8rem]">
-                    Abrir o modelo 3D
-                  </span>
-                  <span className="mt-1 block text-[14px] text-pj-muted">
-                    Arraste pra girar, aproxime e escolha o ambiente
-                  </span>
+                <span className="flex items-center gap-2 rounded-full bg-pj-ink/85 px-4 py-2 text-[12px] font-semibold text-pj-bg backdrop-blur transition group-hover:bg-pj-ink">
+                  <Move3d className="h-4 w-4" />
+                  <span className="hidden sm:inline">Clique para girar o modelo</span>
+                  <span className="sm:hidden">Abrir em tela cheia</span>
                 </span>
               </button>
             )}
