@@ -107,12 +107,7 @@ export default function ProjetoProva() {
 
           <div className="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-4 sm:gap-5">
             {videos.map((v, i) => (
-              <div key={v.id}>
-                <VideoCard video={v} index={i} />
-                <p className="mt-3 text-[13px] font-semibold text-foreground">
-                  {v.brand}
-                </p>
-              </div>
+              <VideoCard key={v.id} video={v} index={i} />
             ))}
           </div>
         </div>

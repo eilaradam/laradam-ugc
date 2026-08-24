@@ -116,7 +116,7 @@ export default function ProjetoContato() {
         </div>
       </section>
 
-      <footer className="bg-foreground px-5 pb-10 text-center text-[12px] text-white/35 sm:px-8">
+      <footer className="bg-foreground px-5 pb-28 text-center text-[12px] text-white/35 sm:px-8 sm:pb-10">
         Lara Dam · UGC Creator e estrategista de conteúdo · Litoral de SP
       </footer>
 
