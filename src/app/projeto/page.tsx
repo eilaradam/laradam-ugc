@@ -19,6 +19,21 @@ export const metadata: Metadata = {
     description:
       "Uma reforma inteira documentada, do vazio ao ambiente pronto de gravação. Proposta de parceria para marcas.",
     type: "website",
+    images: [
+      {
+        url: "https://ugc.laradam.com/projeto/og.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Projeto Casa Estúdio · Lara Dam",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Projeto Casa Estúdio · Lara Dam",
+    description:
+      "Uma reforma inteira documentada, do vazio ao ambiente pronto de gravação.",
+    images: ["https://ugc.laradam.com/projeto/og.jpg"],
   },
 };
 
