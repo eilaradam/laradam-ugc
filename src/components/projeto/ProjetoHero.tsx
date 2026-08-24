@@ -3,7 +3,6 @@
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { PROJETO, PROJETO_MARQUEE } from "@/data/projeto";
-import ProjetoGaleria from "./ProjetoGaleria";
 import Ornamento from "./Ornamento";
 import { waLink } from "./ProjetoNav";
 
@@ -69,9 +68,6 @@ export default function ProjetoHero() {
           </a>
         </motion.div>
       </div>
-
-      {/* faixa de imagem ocupando a largura toda */}
-      <ProjetoGaleria />
 
       {/* faixa corrida */}
       <div className="overflow-hidden bg-pj-ink py-3.5 text-pj-bg">
