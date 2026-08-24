@@ -72,7 +72,7 @@ export default function ProjetoGaleria({ itens = PROJETO_GALERIA }: { itens?: Re
           </AnimatePresence>
 
           {/* degradê pra legenda ler bem */}
-          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-black/75 to-transparent" />
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 hidden h-2/5 bg-gradient-to-t from-black/75 to-transparent sm:block" />
 
           <span className="absolute left-4 top-4 rounded-full bg-black/45 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-white backdrop-blur">
             Como vai ficar
@@ -86,7 +86,7 @@ export default function ProjetoGaleria({ itens = PROJETO_GALERIA }: { itens?: Re
             <Expand className="h-4 w-4" />
           </button>
 
-          <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 p-5 sm:p-6">
+          <div className="absolute inset-x-0 bottom-0 hidden items-end justify-between gap-4 p-5 sm:flex sm:p-6">
             <div className="min-w-0">
               <p className="font-display text-xl text-white sm:text-2xl">
                 {atual.titulo}
@@ -121,6 +121,23 @@ export default function ProjetoGaleria({ itens = PROJETO_GALERIA }: { itens?: Re
                 <ChevronRight className="h-5 w-5" />
               </button>
             </>
+          )}
+        </div>
+
+        {/* legenda embaixo do painel no celular */}
+        <div className="mt-4 flex items-start justify-between gap-4 sm:hidden">
+          <div className="min-w-0">
+            <p className="font-display text-xl text-white">{atual.titulo}</p>
+            {atual.legenda && (
+              <p className="mt-1 text-[13px] leading-snug text-white/65">
+                {atual.legenda}
+              </p>
+            )}
+          </div>
+          {total > 1 && (
+            <span className="shrink-0 pt-1 text-[12px] font-semibold text-white/60">
+              {String(i + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
+            </span>
           )}
         </div>
 
