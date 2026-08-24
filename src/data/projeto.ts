@@ -11,7 +11,7 @@ export const PROJETO = {
     "Cozinha nova com ilha, um ambiente próprio de gravação e o banheiro refeito do zero. Tudo com projeto de arquitetura e documentado em vídeo, do primeiro dia de obra ao tour final.",
   intro2:
     "Procuro marcas parceiras pra construir esse projeto comigo. Quem entra, entra na história inteira.",
-  inicioObra: "Setembro de 2026",
+  inicioObra: "Novembro de 2026",
   janelaFechamento: "Estou fechando as parcerias até o fim de outubro de 2026.",
   whatsapp: "5512988729264",
   whatsappLabel: "(12) 98872-9264",
@@ -246,22 +246,22 @@ export const PROJETO_FORMATOS_TEXTO =
 // Cronograma da obra.
 export const PROJETO_CRONOGRAMA = [
   {
-    quando: "Agosto",
+    quando: "Setembro e outubro",
     titulo: "Seleção das marcas",
     body: "Projeto aprovado com a arquiteta e fechamento das parcerias. É agora que a sua marca entra.",
   },
   {
-    quando: "Setembro",
+    quando: "Novembro",
     titulo: "Começa a obra",
     body: "Demolição, bastidores e o conteúdo do antes. A audiência entra na história junto comigo.",
   },
   {
-    quando: "Outubro",
+    quando: "Dezembro",
     titulo: "Instalação",
     body: "Chegada dos materiais, marcenaria, pedra, louças e iluminação. Fase de unboxing e de mostrar cada escolha.",
   },
   {
-    quando: "Novembro",
+    quando: "Janeiro",
     titulo: "Revelação",
     body: "Acabamento, decoração e o tour completo do antes e depois. O conteúdo de maior alcance do projeto.",
   },
