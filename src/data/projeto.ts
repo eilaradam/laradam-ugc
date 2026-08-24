@@ -387,7 +387,16 @@ export const PROJETO_ANTES_DEPOIS: AntesDepois[] = [
 ];
 
 // Vídeos de casa e decoração que já entreguei (ids do array VIDEOS em content.ts).
-export const PROJETO_VIDEOS_IDS = ["d-coza2", "d1", "d7", "d13"];
+// Vídeos escolhidos pela Lara pra essa página (ids do array VIDEOS em content.ts)
+export const PROJETO_VIDEOS_IDS = [
+  "t-reforma100", // Reforma100
+  "d7",           // Mez Móveis
+  "d10",          // Offertus
+  "d1",           // DT3
+  "d8",           // Mez Móveis
+  "d11",          // Velds
+  "d2",           // DT3
+];
 
 export const PROJETO_FAQ = [
   {

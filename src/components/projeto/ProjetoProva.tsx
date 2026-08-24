@@ -44,18 +44,20 @@ export default function ProjetoProva() {
         </div>
 
         {/* vídeos de casa e decoração */}
-        <div className="mt-12 grid gap-8 lg:grid-cols-[1fr_1.6fr] lg:items-center lg:gap-14">
-          <div>
-            <p className="pj-label text-pj-muted">Casa e decoração</p>
-            <h3 className="pj-display mt-4 max-w-[14ch] text-[1.8rem] sm:text-[2.4rem]">
-              Esse nicho já é o meu terreno.
-            </h3>
-            <p className="mt-4 max-w-sm text-[15px] leading-relaxed text-pj-muted">
-              Alguns dos vídeos que já produzi pra marcas de casa, móveis e
-              organização. Clique pra assistir.
+        <div className="mt-14">
+          <div className="flex flex-wrap items-end justify-between gap-6">
+            <div>
+              <p className="pj-label text-pj-muted">Casa e decoração</p>
+              <h3 className="pj-display mt-4 max-w-[16ch] text-[1.8rem] sm:text-[2.4rem]">
+                Esse nicho já é o meu terreno.
+              </h3>
+            </div>
+            <p className="max-w-sm text-[15px] leading-relaxed text-pj-muted">
+              Alguns dos vídeos que já produzi pra marcas de casa, móveis,
+              reforma e organização. Clique pra assistir.
             </p>
           </div>
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+          <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-4">
             {videos.map((v, i) => (
               <VideoCard key={v.id} video={v} index={i} />
             ))}
