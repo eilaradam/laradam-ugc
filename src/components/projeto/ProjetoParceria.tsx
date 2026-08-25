@@ -86,7 +86,7 @@ export default function ProjetoParceria() {
       </section>
 
       {/* Formatos de parceria */}
-      <section id="parceria" className="bg-pj-ink px-5 py-20 text-pj-bg sm:px-10 sm:py-28">
+      <section id="parceria" className="bg-pj-ink px-5 py-16 text-pj-bg sm:px-10 sm:py-20">
         <div className="mx-auto max-w-[1400px]">
           <Cabecalho
             n="06"

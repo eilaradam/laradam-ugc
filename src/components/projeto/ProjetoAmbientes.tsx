@@ -97,7 +97,7 @@ export default function ProjetoAmbientes() {
   const comImagem = PROJETO_ANTES_DEPOIS.filter((i) => i.antes || i.depois);
 
   return (
-    <section id="projeto" className="bg-pj-ink px-5 py-20 text-pj-bg sm:px-10 sm:py-28">
+    <section id="projeto" className="bg-pj-ink px-5 py-16 text-pj-bg sm:px-10 sm:py-20">
       <div className="mx-auto max-w-[1400px]">
         <Cabecalho
           n="02"
@@ -111,7 +111,7 @@ export default function ProjetoAmbientes() {
           className="mx-auto"
         />
 
-        <div className="mt-10 grid gap-4 sm:grid-cols-2">
+        <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {PROJETO_AMBIENTES.map((amb, i) => (
             <motion.div
               key={amb.slug}
@@ -119,27 +119,17 @@ export default function ProjetoAmbientes() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
               transition={{ duration: 0.5, delay: i * 0.06 }}
-              className="rounded-3xl bg-pj-bg p-7 text-pj-ink sm:p-9"
+              className="rounded-3xl bg-pj-bg p-6 text-pj-ink sm:p-7"
             >
-              <div className="flex items-baseline justify-between gap-4">
-                <h3 className="pj-display text-[1.6rem] sm:text-[2rem]">{amb.nome}</h3>
-                <span className="pj-label shrink-0 text-pj-terra">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-              </div>
-              <p className="mt-3 text-[15px] leading-relaxed text-pj-muted">
+              <span className="pj-label text-pj-terra">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <h3 className="pj-display mt-3 text-[1.45rem] sm:text-[1.7rem]">
+                {amb.nome}
+              </h3>
+              <p className="mt-2.5 text-[14px] leading-relaxed text-pj-muted">
                 {amb.resumo}
               </p>
-              <ul className="mt-6 flex flex-wrap gap-2">
-                {amb.itens.map((it) => (
-                  <li
-                    key={it}
-                    className="rounded-full bg-pj-bg2 px-3 py-1.5 text-[12.5px] font-medium text-pj-olive"
-                  >
-                    {it}
-                  </li>
-                ))}
-              </ul>
             </motion.div>
           ))}
         </div>

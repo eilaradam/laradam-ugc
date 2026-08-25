@@ -393,10 +393,12 @@ export const PROJETO_VIDEOS_IDS = [
   "t-reforma100", // Reforma100
   "d7",           // Mez Móveis
   "d10",          // Offertus
-  "d1",           // DT3
-  "d8",           // Mez Móveis
-  "d11",          // Velds
-  "d2",           // DT3
+  // Os 4 acima ja enchem a linha na pagina. Os de baixo estao guardados aqui
+  // pra trocar quando ela quiser (basta subir um deles pra cima).
+  // "d1",        // DT3
+  // "d8",        // Mez Móveis
+  // "d11",       // Velds
+  // "d2",        // DT3
 ];
 
 export const PROJETO_FAQ = [
