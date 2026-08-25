@@ -200,7 +200,7 @@ export const PROJETO_PLANOS: Plano[] = [
     nome: "Parceiro do Projeto",
     chamada: "Uma marca por categoria",
     descricao:
-      "Assina o projeto comigo, do primeiro vídeo ao tour final, com exclusividade na sua categoria.",
+      "Assina o projeto comigo, do primeiro vídeo ao tour final, com exclusividade na sua categoria. Produto e cachê de produção.",
     destaque: true,
     entregas: [
       "Exclusividade na sua categoria durante toda a obra",
@@ -214,7 +214,7 @@ export const PROJETO_PLANOS: Plano[] = [
     nome: "Parceiro de Ambiente",
     chamada: "Cozinha, estúdio ou banheiro",
     descricao:
-      "A marca assume um ambiente inteiro e responde pela transformação dele.",
+      "A marca assume um ambiente inteiro e responde pela transformação dele. Produto e cachê de produção.",
     entregas: [
       "2 a 3 conteúdos dedicados ao ambiente",
       "Stories da chegada e da instalação",
@@ -224,9 +224,9 @@ export const PROJETO_PLANOS: Plano[] = [
   },
   {
     nome: "Parceiro de Produto",
-    chamada: "Permuta item a item",
+    chamada: "Item a item",
     descricao:
-      "Produto por conteúdo. O jeito mais simples de entrar.",
+      "A marca entra com um produto e com o cachê do conteúdo dele. O jeito mais simples de começar.",
     entregas: [
       "1 reel dedicado ou integração no conteúdo da obra",
       "Sequência de stories com link",
@@ -236,7 +236,7 @@ export const PROJETO_PLANOS: Plano[] = [
 ];
 
 export const PROJETO_FORMATOS_TEXTO =
-  "Permuta, patrocínio em dinheiro ou condição especial de compra. Dá pra combinar os três: me conta o que funciona pra sua marca.";
+  "Em todos os formatos a marca entra com o produto e com o cachê da produção. O que muda é o tamanho da entrega. Me conta o que funciona pra sua marca que eu monto a proposta.";
 
 // Cronograma da obra.
 export const PROJETO_CRONOGRAMA = [
@@ -401,12 +401,12 @@ export const PROJETO_VIDEOS_IDS = [
 
 export const PROJETO_FAQ = [
   {
-    q: "Como funciona a permuta?",
-    a: "A marca envia (ou instala) o produto e a contrapartida é o conteúdo combinado no contrato. Não cobro cachê nesse formato, só alinho o volume de entregas com o valor do item.",
+    q: "Como funciona o pagamento?",
+    a: "São duas partes. A marca entra com o produto, que é enviado ou instalado aqui e vira parte da obra, e com o cachê da produção do conteúdo. O produto é o material do projeto e o conteúdo é o meu trabalho, então cada um tem o seu valor. Fecho tudo em contrato antes de começar, com volume de entregas e prazos combinados.",
   },
   {
     q: "Posso participar com um item só?",
-    a: "Pode. O formato Parceiro de Produto existe exatamente pra isso: um item, um pacote de conteúdo.",
+    a: "Pode. O formato Parceiro de Produto existe exatamente pra isso: um item, um pacote de conteúdo e um cachê proporcional ao pacote.",
   },
   {
     q: "Tenho exclusividade na minha categoria?",

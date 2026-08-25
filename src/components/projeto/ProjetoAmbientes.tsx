@@ -7,8 +7,6 @@ import {
   PROJETO,
   PROJETO_AMBIENTES,
   PROJETO_ANTES_DEPOIS,
-  PROJETO_ARGUMENTOS,
-  PROJETO_PALETA,
   type AntesDepois,
 } from "@/data/projeto";
 import Cabecalho from "./Cabecalho";
@@ -146,28 +144,9 @@ export default function ProjetoAmbientes() {
           ))}
         </div>
 
-        {/* paleta e materiais */}
-        <div className="mt-10">
-          <p className="pj-label text-pj-olive-soft">Paleta e materiais</p>
-          <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
-            {PROJETO_PALETA.map((c) => (
-              <div key={c.nome} className="flex items-center gap-3">
-                <span
-                  className="h-11 w-11 shrink-0 rounded-full"
-                  style={{ backgroundColor: c.cor }}
-                />
-                <span className="min-w-0 leading-tight">
-                  <span className="block text-[13px] font-semibold">{c.nome}</span>
-                  <span className="block text-[12px] text-pj-bg/50">{c.onde}</span>
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-
         {/* antes e depois (aparece quando tiver foto) */}
         {comImagem.length > 0 && (
-          <div className="mt-12">
+          <div className="mt-14">
             <p className="pj-label text-pj-olive-soft">Antes e depois</p>
             <div className="mt-6 grid gap-8 lg:grid-cols-2">
               {comImagem.map((item) => (
@@ -187,27 +166,6 @@ export default function ProjetoAmbientes() {
           </div>
         )}
 
-        {/* por que a marca deveria entrar */}
-        <div className="mt-12 border-t border-pj-bg/20 pt-12">
-          <h3 className="pj-display max-w-[22ch] text-[1.7rem] sm:text-[2.3rem]">
-            Uma reforma é o melhor lugar pra mostrar um produto de casa.
-          </h3>
-          <div className="mt-10 grid gap-x-12 gap-y-8 sm:grid-cols-2">
-            {PROJETO_ARGUMENTOS.map((a, i) => (
-              <div key={a.title} className="flex gap-4">
-                <span className="pj-label shrink-0 pt-1 text-pj-terra">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <div>
-                  <p className="text-[16px] font-semibold">{a.title}</p>
-                  <p className="mt-1.5 text-[14px] leading-relaxed text-pj-bg/60">
-                    {a.body}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
       </div>
     </section>
   );
