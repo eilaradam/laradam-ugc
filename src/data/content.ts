@@ -128,7 +128,7 @@ export const VIDEOS: Video[] = [
   // BELEZA
   { id: "b-anethun", title: "Anethun", category: "beleza", brand: "Anethun", youtubeId: "YwEt7sa0zAE" },
   { id: "b-noma", title: "Noma", category: "beleza", brand: "Noma", youtubeId: "TbRE2_mezCg" },
-  { id: "b1", title: "Skincare noturno", category: "beleza", brand: "L'Oréal", views: "500k", youtubeId: "6kvtFKsPQPw" },
+  { id: "b1", title: "Box Magenta", category: "beleza", brand: "Box Magenta", views: "500k", youtubeId: "6kvtFKsPQPw" },
   { id: "b2", title: "Inglot", category: "beleza", brand: "Inglot", youtubeId: "0g1pFDhxi-4" },
   { id: "b3", title: "Rituaria", category: "beleza", brand: "Rituaria", youtubeId: "Yt_UjtmiMgg" },
   { id: "b4", title: "Rituaria", category: "beleza", brand: "Rituaria", youtubeId: "CzO13_qS6Fs" },
