@@ -84,6 +84,7 @@ export type Category = {
 
 export const CATEGORIES: Category[] = [
   { slug: "all", name: "Todos", tagline: "" },
+  { slug: "ia", name: "Conteúdo com IA", tagline: "Inteligência artificial virando conteúdo" },
   { slug: "beleza", name: "Beleza", tagline: "Produtos que viram ritual" },
   { slug: "casa", name: "Casa & Deco", tagline: "Ambientes que inspiram" },
   { slug: "gastronomia", name: "Gastronomia", tagline: "Comida que dá água na boca" },
@@ -109,6 +110,13 @@ export type Video = {
 };
 
 export const VIDEOS: Video[] = [
+  // CONTEÚDO COM IA
+  { id: "ia1", title: "Vozo", category: "ia", brand: "Vozo", youtubeId: "PlrpWvdSK1s" },
+  { id: "ia2", title: "Sintra", category: "ia", brand: "Sintra", youtubeId: "FlbG-BtKedg" },
+  { id: "ia3", title: "Vozo", category: "ia", brand: "Vozo", youtubeId: "QmKELZR_GeM" },
+  { id: "ia4", title: "Ace Studio", category: "ia", brand: "Ace Studio", youtubeId: "s_U9EUNP_o0" },
+  { id: "ia5", title: "Hostgator", category: "ia", brand: "Hostgator", youtubeId: "rnb44YHTlAY" },
+
   // GASTRONOMIA
   { id: "g1", title: "Ateliê", category: "gastronomia", brand: "Ateliê", youtubeId: "0FhBNV71z9A" },
   { id: "g2", title: "Ateliê", category: "gastronomia", brand: "Ateliê", youtubeId: "XmjA7cpCPfQ" },

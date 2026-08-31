@@ -443,6 +443,11 @@ const dict: Record<Lang, Dict> = {
       comingSoon: "Em breve nessa categoria.",
       items: [
         {
+          slug: "ia",
+          name: "Conteúdo com IA",
+          tagline: "Inteligência artificial virando conteúdo",
+        },
+        {
           slug: "beleza",
           name: "Beleza",
           tagline: "Produtos que viram ritual",
@@ -940,6 +945,11 @@ const dict: Record<Lang, Dict> = {
         "Browse by niche. Each row is a specialty. Swipe sideways to see more.",
       comingSoon: "Coming soon in this category.",
       items: [
+        {
+          slug: "ia",
+          name: "AI Content",
+          tagline: "Artificial intelligence turned into content",
+        },
         {
           slug: "beleza",
           name: "Beauty",
