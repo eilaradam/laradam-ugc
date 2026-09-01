@@ -115,9 +115,19 @@ export function proximaData(hoje = new Date()): Contagem | null {
   return melhor;
 }
 
-/** "Faltam 87 dias pra Black Friday" / "É amanhã" / "É hoje" */
+/**
+ * "Faltam 87 dias pra Black Friday", "Falta 1 dia pro Natal", "O Natal é hoje".
+ * O nome vem com artigo ("o Natal") pra a frase ficar certa nos dois lugares,
+ * e aqui a preposição junta com ele: pra + o = pro.
+ */
+function paraOnde(nome: string): string {
+  if (nome.startsWith("o ")) return `pro ${nome.slice(2)}`;
+  if (nome.startsWith("a ")) return `pra ${nome.slice(2)}`;
+  return `pra ${nome}`;
+}
+
 export function fraseContagem(c: Contagem): string {
   if (c.dias === 0) return `${c.nome[0].toUpperCase() + c.nome.slice(1)} é hoje`;
-  if (c.dias === 1) return `Falta 1 dia pra ${c.nome}`;
-  return `Faltam ${c.dias} dias pra ${c.nome}`;
+  if (c.dias === 1) return `Falta 1 dia ${paraOnde(c.nome)}`;
+  return `Faltam ${c.dias} dias ${paraOnde(c.nome)}`;
 }
