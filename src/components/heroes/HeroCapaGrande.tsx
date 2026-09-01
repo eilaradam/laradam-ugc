@@ -56,7 +56,7 @@ export default function HeroCapaGrande() {
           className="relative mx-auto w-full max-w-[1800px]"
         >
           <div
-            className="relative overflow-hidden rounded-[28px] md:rounded-[40px] bg-foreground/5 shadow-[0_28px_70px_-30px_rgba(30,42,68,0.45)] aspect-[4/5] sm:aspect-[16/9] md:aspect-[16/5]"
+            className="relative overflow-hidden rounded-[28px] md:rounded-[40px] bg-foreground/5 shadow-[0_28px_70px_-30px_rgba(30,42,68,0.45)] aspect-[3/2] sm:aspect-[16/7] md:aspect-[16/5]"
             onTouchStart={(e) => { toqueX.current = e.touches[0].clientX; }}
             onTouchEnd={(e) => {
               if (toqueX.current === null) return;
