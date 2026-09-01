@@ -36,19 +36,28 @@ export default function HeroCapaGrande() {
       id="top"
       className="relative overflow-hidden bg-background noise pt-28 md:pt-32 pb-16 md:pb-24"
     >
-      {/* Nome gigante ocupando a largura toda */}
-      <motion.h1
+      {/* O espaco mais nobre do site diz o que ela VENDE, nao o nome dela (que ja esta
+          no menu). O chapeu em italico usa a serifada da marca. */}
+      <motion.div
         initial={{ opacity: 0, y: 24 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-        className="px-3 md:px-6 font-display font-black text-foreground leading-[0.78] tracking-[-0.05em] text-center select-none whitespace-nowrap"
-        style={{ fontSize: "clamp(2.5rem, 14.5vw, 17.5rem)" }}
+        className="px-3 md:px-6 text-center select-none"
       >
-        LARA DAM
-      </motion.h1>
+        <span className="block font-serif-accent italic text-foreground-soft leading-none mb-1 md:mb-2"
+          style={{ fontSize: "clamp(1.05rem, 2.6vw, 2.6rem)" }}>
+          conteúdo que
+        </span>
+        <h1
+          className="font-display font-black text-foreground leading-[0.8] tracking-[-0.05em] whitespace-nowrap"
+          style={{ fontSize: "clamp(3rem, 16vw, 19rem)" }}
+        >
+          CONVERTE
+        </h1>
+      </motion.div>
 
       {/* Card do carrossel subindo por cima das letras */}
-      <div className="relative -mt-[5vw] md:-mt-[5vw] px-4 md:px-[3.7vw]">
+      <div className="relative -mt-[2vw] md:-mt-[1.6vw] px-4 md:px-[3.7vw]">
         <motion.div
           initial={{ opacity: 0, scale: 0.96 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -96,7 +105,7 @@ export default function HeroCapaGrande() {
               <Seta lado="esq" onClick={() => ir(-1)} />
               <Seta lado="dir" onClick={() => ir(1)} />
 
-              <div className="mt-5 flex items-center justify-center gap-2">
+              <div className="mt-4 flex items-center justify-center gap-2">
                 {fotos.map((f, n) => (
                   <button
                     key={f.src}
@@ -119,8 +128,24 @@ export default function HeroCapaGrande() {
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.35, duration: 0.7 }}
-        className="mt-7 md:mt-[3.4vw] flex flex-col items-center gap-5 px-6"
+        className="mt-6 md:mt-[2.4vw] flex flex-col items-center gap-6 px-6"
       >
+        <div className="flex flex-wrap items-center justify-center gap-x-7 gap-y-2 text-center">
+          {[
+            ["+500", "vídeos"],
+            ["+200", "marcas"],
+            ["100M", "views"],
+          ].map(([n, l], k) => (
+            <div key={l} className="flex items-center gap-7">
+              {k > 0 && <span className="hidden sm:block h-4 w-px bg-foreground/15" />}
+              <span className="flex items-baseline gap-1.5">
+                <span className="font-display font-black text-foreground text-xl md:text-2xl leading-none">{n}</span>
+                <span className="text-xs md:text-sm text-foreground-soft">{l}</span>
+              </span>
+            </div>
+          ))}
+        </div>
+
         <div className="flex flex-wrap items-center justify-center gap-3">
           <a
             href="#contato"
@@ -132,16 +157,11 @@ export default function HeroCapaGrande() {
           <a
             href="#categorias"
             data-track="capa_ver_portfolio"
-            className="inline-flex items-center rounded-full border border-foreground/20 px-7 py-4 text-sm md:text-base font-semibold text-foreground transition-colors hover:bg-foreground hover:text-background"
+            className="text-sm md:text-base font-semibold text-foreground-soft underline underline-offset-4 decoration-foreground/25 transition-colors hover:text-primary hover:decoration-primary"
           >
             Ver portfólio
           </a>
         </div>
-        <p className="max-w-lg text-center text-sm md:text-base leading-relaxed text-foreground-soft">
-          UGC Creator e estrategista de conteúdo. Mais de{" "}
-          <span className="font-serif-accent italic text-primary">500 vídeos</span>, 200 marcas
-          parceiras e 100M de views.
-        </p>
       </motion.div>
     </section>
   );
