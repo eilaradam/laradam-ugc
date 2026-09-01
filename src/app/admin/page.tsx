@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { getSupabase, type Lead, type EventRow } from "@/lib/supabase";
 import type { Session } from "@supabase/supabase-js";
+import BannerEditor from "@/components/admin/BannerEditor";
 
 const ALLOWED_EMAIL = "laradam.ugc@gmail.com";
 
@@ -136,7 +137,7 @@ function Login() {
   );
 }
 
-type Tab = "overview" | "bio" | "leads" | "buttons" | "videos";
+type Tab = "overview" | "banner" | "bio" | "leads" | "buttons" | "videos";
 
 function Dashboard({ email }: { email: string }) {
   const [leads, setLeads] = useState<Lead[]>([]);
@@ -329,7 +330,7 @@ function Dashboard({ email }: { email: string }) {
 
         {/* Tabs + range */}
         <div className="flex flex-wrap items-center gap-2 mb-6 text-xs">
-          {(["overview", "bio", "leads", "buttons", "videos"] as Tab[]).map((t) => (
+          {(["overview", "banner", "bio", "leads", "buttons", "videos"] as Tab[]).map((t) => (
             <button
               key={t}
               onClick={() => setTab(t)}
@@ -366,6 +367,7 @@ function Dashboard({ email }: { email: string }) {
             {tab === "overview" && (
               <Overview stats={stats} dailyViews={dailyViews} />
             )}
+            {tab === "banner" && <BannerEditor />}
             {tab === "bio" && <BioStats data={bioData} />}
             {tab === "leads" && <LeadsList leads={filteredLeads} />}
             {tab === "buttons" && <ButtonsList items={buttonAgg} />}
@@ -381,6 +383,8 @@ function tabLabel(t: Tab) {
   switch (t) {
     case "overview":
       return "Visão geral";
+    case "banner":
+      return "Banner da capa";
     case "bio":
       return "Bio (/bio)";
     case "leads":

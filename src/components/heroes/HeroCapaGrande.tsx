@@ -3,7 +3,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { HERO_FOTOS } from "@/data/content";
+import { BANNER_PADRAO, type Banner } from "@/lib/banner";
 
 /**
  * Capa editorial: promessa em serifada (com "converte." em italico petroleo,
@@ -11,8 +11,9 @@ import { HERO_FOTOS } from "@/data/content";
  * foto larga e CTA pilula central. Tudo cabe na primeira tela.
  * As fotos vem de HERO_FOTOS (src/data/content.ts): trocar la troca aqui.
  */
-export default function HeroCapaGrande() {
-  const fotos = HERO_FOTOS.length ? HERO_FOTOS : [{ src: "/fotobio.png", alt: "Lara Dam" }];
+export default function HeroCapaGrande({ banner }: { banner?: Banner }) {
+  const b = banner || BANNER_PADRAO;
+  const fotos = b.fotos.length ? b.fotos : [{ src: "/fotobio.png", alt: "Lara Dam" }];
   const [i, setI] = useState(0);
   const [dir, setDir] = useState(1);
   const toqueX = useRef<number | null>(null);
@@ -46,7 +47,7 @@ export default function HeroCapaGrande() {
       >
         <div className="flex items-center justify-center gap-3 text-[10px] md:text-xs uppercase tracking-[0.2em] md:tracking-[0.3em] text-primary font-medium whitespace-nowrap">
           <span className="hidden sm:block h-px w-8 bg-primary" />
-          UGC Creator &amp; Content Strategist
+          {b.eyebrow}
           <span className="hidden sm:block h-px w-8 bg-primary" />
         </div>
 
@@ -54,15 +55,12 @@ export default function HeroCapaGrande() {
           className="mt-3 md:mt-4 font-display font-medium text-foreground leading-[1.02] tracking-[-0.02em] text-balance"
           style={{ fontSize: "clamp(2.9rem, 8.6vw, 11rem)" }}
         >
-          conteúdo que{" "}
-          <span className="font-serif-accent italic text-primary">converte.</span>
+          {b.titulo}{" "}
+          <span className="font-serif-accent italic text-primary">{b.destaque}</span>
         </h1>
 
         <p className="mx-auto mt-4 md:mt-5 max-w-[21rem] md:max-w-2xl text-sm md:text-lg text-foreground-soft leading-relaxed">
-          Sou a Lara Dam:{" "}
-          <strong className="font-semibold text-foreground">+500 vídeos</strong>,{" "}
-          <strong className="font-semibold text-foreground">+200 marcas parceiras</strong> e{" "}
-          <strong className="font-semibold text-foreground">+100M de views</strong>.
+          {destacaNumeros(b.sublinha)}
         </p>
       </motion.div>
 
@@ -143,18 +141,18 @@ export default function HeroCapaGrande() {
         className="mt-5 md:mt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-3 px-6"
       >
         <a
-          href="#contato"
+          href={b.cta_link}
           data-track="capa_agendar"
           className="inline-flex items-center rounded-full bg-primary px-9 py-4 text-sm md:text-base font-bold text-white transition-colors hover:bg-primary-dark"
         >
-          Agendar uma conversa
+          {b.cta_texto}
         </a>
         <a
-          href="#categorias"
+          href={b.link_href}
           data-track="capa_ver_portfolio"
           className="text-sm md:text-base font-semibold text-foreground-soft underline underline-offset-4 decoration-foreground/25 transition-colors hover:text-primary hover:decoration-primary"
         >
-          Ver portfólio
+          {b.link_texto}
         </a>
       </motion.div>
     </section>
@@ -176,5 +174,14 @@ function Seta({ lado, onClick }: { lado: "esq" | "dir"; onClick: () => void }) {
         strokeWidth={2}
       />
     </button>
+  );
+}
+
+/** Deixa os números da sublinha em negrito sozinhos, pra ela não precisar formatar nada. */
+function destacaNumeros(texto: string) {
+  return texto.split(/(\+?\d[\d.,]*\s?[A-Za-zÀ-ÿ%]*)/g).map((parte, i) =>
+    /^\+?\d/.test(parte)
+      ? <strong key={i} className="font-semibold text-foreground">{parte}</strong>
+      : <span key={i}>{parte}</span>
   );
 }
