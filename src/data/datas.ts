@@ -38,38 +38,56 @@ export const DATAS_COMERCIAIS: DataComercial[] = [
   {
     nome: "Black Friday",
     quando: (a) => ultimaSexta(a, 11),
-    recado: "garanta o seu conteúdo antes da corrida",
+    recado: "reserve a sua agenda de novembro",
     janela: 100,
   },
   {
     nome: "o Natal",
     quando: dia(12, 25),
-    recado: "reserve o vídeo da sua campanha",
+    recado: "vamos gravar a sua campanha de fim de ano?",
     janela: 60,
-  },
-  {
-    nome: "o Dia das Mães",
-    quando: (a) => domingoDaSemana(a, 5, 2),
-    recado: "a data mais afetiva do varejo pede conteúdo de verdade",
-    janela: 60,
-  },
-  {
-    nome: "o Dia dos Namorados",
-    quando: dia(6, 12),
-    recado: "ainda dá tempo de fazer bonito",
-    janela: 45,
-  },
-  {
-    nome: "o Dia dos Pais",
-    quando: (a) => domingoDaSemana(a, 8, 2),
-    recado: "reserve o vídeo da sua campanha",
-    janela: 45,
   },
   {
     nome: "a volta às aulas",
     quando: dia(2, 1),
     recado: "comece o ano com conteúdo pronto",
+    janela: 45,
+  },
+  {
+    nome: "o Dia do Consumidor",
+    quando: dia(3, 15),
+    recado: "a Black Friday do primeiro semestre",
+    janela: 45,
+  },
+  {
+    nome: "o Dia das Mães",
+    quando: (a) => domingoDaSemana(a, 5, 2),
+    recado: "a data mais emocionante do varejo",
+    janela: 55,
+  },
+  {
+    nome: "o Dia dos Namorados",
+    quando: dia(6, 12),
+    recado: "ainda dá tempo de fazer bonito",
     janela: 40,
+  },
+  {
+    nome: "o Dia dos Pais",
+    quando: (a) => domingoDaSemana(a, 8, 2),
+    recado: "bora gravar a sua campanha?",
+    janela: 50,
+  },
+  {
+    nome: "o Dia do Cliente",
+    quando: dia(9, 15),
+    recado: "hora de agradecer quem compra de você",
+    janela: 35,
+  },
+  {
+    nome: "o Dia das Crianças",
+    quando: dia(10, 12),
+    recado: "conteúdo pra família toda ver",
+    janela: 45,
   },
 ];
 
