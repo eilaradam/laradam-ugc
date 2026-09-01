@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { HERO_FOTOS } from "@/data/content";
+import TagContagem from "@/components/TagContagem";
 
 /**
  * Capa editorial: promessa em serifada (com "converte." em italico petroleo,
@@ -44,11 +45,7 @@ export default function HeroCapaGrande() {
         transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
         className="px-5 md:px-12 text-center"
       >
-        <div className="flex items-center justify-center gap-3 text-[10px] md:text-xs uppercase tracking-[0.2em] md:tracking-[0.3em] text-primary font-medium whitespace-nowrap">
-          <span className="hidden sm:block h-px w-8 bg-primary" />
-          UGC Creator &amp; Content Strategist
-          <span className="hidden sm:block h-px w-8 bg-primary" />
-        </div>
+        <TagContagem padrao="UGC Creator & Content Strategist" />
 
         <h1
           className="mt-3 md:mt-4 font-display font-medium text-foreground leading-[1.02] tracking-[-0.02em] text-balance"
