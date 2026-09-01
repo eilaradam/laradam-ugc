@@ -95,11 +95,17 @@ export type HeroFoto = {
   posicao?: string;
 };
 
+// A faixa da capa é larga e baixa: foto HORIZONTAL serve muito melhor.
+// Das quatro, só a fotobio é horizontal, por isso ela abre o carrossel.
+// As verticais viram close (a faixa mostra ~1/4 da altura delas): o `posicao`
+// ajusta qual pedaço aparece. Pra capa ficar top, o ideal é subir mais fotos
+// horizontais aqui.
+// (a lara-sobre.jpg ficou de fora: tem só 724px de largura, esticada na faixa
+// fica borrada e o rosto não cabe no corte. É só adicionar de volta se quiser.)
 export const HERO_FOTOS: HeroFoto[] = [
-  { src: "/lara-sobre.jpg", alt: "Lara Dam", legenda: "UGC Creator" },
-  { src: "/lara-sobre1.png", alt: "Lara Dam" },
-  { src: "/fotobio.png", alt: "Lara Dam" },
-  { src: "/2.png", alt: "Lara Dam" },
+  { src: "/fotobio.png", alt: "Lara Dam", posicao: "center 32%" },
+  { src: "/2.png", alt: "Lara Dam", posicao: "center 17%" },
+  { src: "/lara-sobre1.png", alt: "Lara Dam", posicao: "center 12%" },
 ];
 
 export const CATEGORIES: Category[] = [
