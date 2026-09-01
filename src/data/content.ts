@@ -87,7 +87,13 @@ export type Category = {
  * põe o arquivo em /public e escreve o caminho abaixo. A ordem da lista é a ordem
  * que aparece. `legenda` é opcional, some se ficar vazia.
  */
-export type HeroFoto = { src: string; alt?: string; legenda?: string };
+export type HeroFoto = {
+  src: string;
+  alt?: string;
+  legenda?: string;
+  /** Enquadramento dentro da faixa. Padrao "center 28%". Ex: "center top", "50% 40%". */
+  posicao?: string;
+};
 
 export const HERO_FOTOS: HeroFoto[] = [
   { src: "/lara-sobre.jpg", alt: "Lara Dam", legenda: "UGC Creator" },

@@ -42,18 +42,18 @@ export default function HeroCapaGrande() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
         className="px-3 md:px-6 font-display font-black text-foreground leading-[0.78] tracking-[-0.05em] text-center select-none whitespace-nowrap"
-        style={{ fontSize: "clamp(2.5rem, 12.6vw, 15rem)" }}
+        style={{ fontSize: "clamp(2.5rem, 14.5vw, 17.5rem)" }}
       >
         LARA DAM
       </motion.h1>
 
       {/* Card do carrossel subindo por cima das letras */}
-      <div className="relative -mt-[3.2vw] md:-mt-[2.6vw] px-4 md:px-[4vw]">
+      <div className="relative -mt-[5vw] md:-mt-[5vw] px-4 md:px-[3.7vw]">
         <motion.div
           initial={{ opacity: 0, scale: 0.96 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.15, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-          className="relative mx-auto w-full max-w-[1560px]"
+          className="relative mx-auto w-full max-w-[1800px]"
         >
           <div
             className="relative overflow-hidden rounded-[28px] md:rounded-[40px] bg-foreground/5 shadow-[0_28px_70px_-30px_rgba(30,42,68,0.45)] aspect-[4/5] sm:aspect-[16/9] md:aspect-[16/5]"
@@ -76,6 +76,7 @@ export default function HeroCapaGrande() {
                 exit={{ opacity: 0, x: dir > 0 ? -60 : 60 }}
                 transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
                 className="absolute inset-0 h-full w-full object-cover"
+                style={{ objectPosition: fotos[i].posicao || "center 28%" }}
                 draggable={false}
               />
             </AnimatePresence>
