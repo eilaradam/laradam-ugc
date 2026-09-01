@@ -13,6 +13,7 @@ import Testimonials from "@/components/Testimonials";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import LeadCapturePopup from "@/components/LeadCapturePopup";
+import TagBarra from "@/components/TagBarra";
 
 // Força layout desktop também no mobile — celular vai mostrar a página
 // renderizada a 1280px, encolhida pra caber. Visitante pode pinch-zoom.
@@ -33,7 +34,8 @@ export default function Home() {
           .lara-hero-photo { height: 640px !important; }
         }
       ` }} />
-      <main className="flex-1">
+      <TagBarra />
+      <main className="flex-1 pt-[var(--barra-topo,0px)]">
         <Nav />
       <Hero />
       <Marquee />
