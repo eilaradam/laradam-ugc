@@ -34,7 +34,7 @@ export default function HeroCapaGrande() {
   return (
     <section
       id="top"
-      className="relative overflow-hidden bg-background noise pt-24 md:pt-24 pb-14 md:pb-20"
+      className="relative overflow-hidden bg-background noise pt-24 md:pt-20 pb-12 md:pb-16"
     >
       {/* O espaco mais nobre do site diz o que ela VENDE, nao o nome dela (que ja esta
           no menu). O chapeu em italico usa a serifada da marca. */}
@@ -105,7 +105,7 @@ export default function HeroCapaGrande() {
               <Seta lado="esq" onClick={() => ir(-1)} />
               <Seta lado="dir" onClick={() => ir(1)} />
 
-              <div className="mt-4 flex items-center justify-center gap-2">
+              <div className="mt-3 flex items-center justify-center gap-2">
                 {fotos.map((f, n) => (
                   <button
                     key={f.src}
@@ -128,7 +128,7 @@ export default function HeroCapaGrande() {
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.35, duration: 0.7 }}
-        className="mt-6 md:mt-[2.4vw] flex flex-col items-center gap-6 px-6"
+        className="mt-5 md:mt-[1.2vw] flex flex-col items-center gap-4 px-6"
       >
         <div className="flex flex-wrap items-center justify-center gap-x-7 gap-y-2 text-center">
           {[
