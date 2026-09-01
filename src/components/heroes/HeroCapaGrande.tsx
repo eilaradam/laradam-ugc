@@ -41,22 +41,22 @@ export default function HeroCapaGrande() {
         initial={{ opacity: 0, y: 24 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-        className="px-3 md:px-6 font-display font-black text-foreground leading-[0.78] tracking-[-0.045em] text-center select-none"
-        style={{ fontSize: "clamp(3.5rem, 17.5vw, 20rem)" }}
+        className="px-3 md:px-6 font-display font-black text-foreground leading-[0.78] tracking-[-0.05em] text-center select-none whitespace-nowrap"
+        style={{ fontSize: "clamp(2.5rem, 12.6vw, 15rem)" }}
       >
         LARA DAM
       </motion.h1>
 
       {/* Card do carrossel subindo por cima das letras */}
-      <div className="relative -mt-[7vw] md:-mt-[8.5vw] px-4 md:px-10">
+      <div className="relative -mt-[3.2vw] md:-mt-[2.6vw] px-4 md:px-[4vw]">
         <motion.div
           initial={{ opacity: 0, scale: 0.96 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.15, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-          className="relative mx-auto w-full max-w-[1180px]"
+          className="relative mx-auto w-full max-w-[1560px]"
         >
           <div
-            className="relative overflow-hidden rounded-[28px] md:rounded-[44px] bg-foreground/5 shadow-[0_28px_70px_-30px_rgba(30,42,68,0.45)] aspect-[4/5] sm:aspect-[16/10] md:aspect-[16/8]"
+            className="relative overflow-hidden rounded-[28px] md:rounded-[40px] bg-foreground/5 shadow-[0_28px_70px_-30px_rgba(30,42,68,0.45)] aspect-[4/5] sm:aspect-[16/9] md:aspect-[16/5]"
             onTouchStart={(e) => { toqueX.current = e.touches[0].clientX; }}
             onTouchEnd={(e) => {
               if (toqueX.current === null) return;
@@ -118,13 +118,8 @@ export default function HeroCapaGrande() {
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.35, duration: 0.7 }}
-        className="mt-9 md:mt-12 flex flex-col items-center gap-5 px-6"
+        className="mt-7 md:mt-[3.4vw] flex flex-col items-center gap-5 px-6"
       >
-        <p className="max-w-lg text-center text-sm md:text-base leading-relaxed text-foreground-soft">
-          UGC Creator e estrategista de conteúdo. Mais de{" "}
-          <span className="font-serif-accent italic text-primary">500 vídeos</span>, 200 marcas
-          parceiras e 100M de views.
-        </p>
         <div className="flex flex-wrap items-center justify-center gap-3">
           <a
             href="#contato"
@@ -141,6 +136,11 @@ export default function HeroCapaGrande() {
             Ver portfólio
           </a>
         </div>
+        <p className="max-w-lg text-center text-sm md:text-base leading-relaxed text-foreground-soft">
+          UGC Creator e estrategista de conteúdo. Mais de{" "}
+          <span className="font-serif-accent italic text-primary">500 vídeos</span>, 200 marcas
+          parceiras e 100M de views.
+        </p>
       </motion.div>
     </section>
   );
