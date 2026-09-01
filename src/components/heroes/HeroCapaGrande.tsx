@@ -34,7 +34,7 @@ export default function HeroCapaGrande() {
   return (
     <section
       id="top"
-      className="relative overflow-hidden bg-background noise pt-28 md:pt-32 pb-16 md:pb-24"
+      className="relative overflow-hidden bg-background noise pt-24 md:pt-24 pb-14 md:pb-20"
     >
       {/* O espaco mais nobre do site diz o que ela VENDE, nao o nome dela (que ja esta
           no menu). O chapeu em italico usa a serifada da marca. */}
@@ -44,20 +44,20 @@ export default function HeroCapaGrande() {
         transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
         className="px-3 md:px-6 text-center select-none"
       >
-        <span className="block font-serif-accent italic text-foreground-soft leading-none mb-1 md:mb-2"
-          style={{ fontSize: "clamp(1.05rem, 2.6vw, 2.6rem)" }}>
+        <span className="block font-serif-accent italic text-foreground-soft leading-tight mb-3 md:mb-5"
+          style={{ fontSize: "clamp(1rem, 2.3vw, 2.25rem)" }}>
           conteúdo que
         </span>
         <h1
-          className="font-display font-black text-foreground leading-[0.8] tracking-[-0.05em] whitespace-nowrap"
-          style={{ fontSize: "clamp(3rem, 16vw, 19rem)" }}
+          className="font-display font-black text-foreground leading-[0.86] tracking-[-0.05em] whitespace-nowrap"
+          style={{ fontSize: "clamp(3rem, 14vw, 17rem)" }}
         >
           CONVERTE
         </h1>
       </motion.div>
 
       {/* Card do carrossel subindo por cima das letras */}
-      <div className="relative -mt-[2vw] md:-mt-[1.6vw] px-4 md:px-[3.7vw]">
+      <div className="relative -mt-[2.6vw] md:-mt-[2.2vw] px-4 md:px-[3.7vw]">
         <motion.div
           initial={{ opacity: 0, scale: 0.96 }}
           animate={{ opacity: 1, scale: 1 }}
