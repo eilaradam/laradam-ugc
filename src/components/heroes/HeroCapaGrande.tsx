@@ -154,11 +154,13 @@ function Seta({ lado, onClick }: { lado: "esq" | "dir"; onClick: () => void }) {
       type="button"
       onClick={onClick}
       aria-label={lado === "esq" ? "Foto anterior" : "Próxima foto"}
-      className={`absolute top-1/2 -translate-y-1/2 z-20 grid h-11 w-11 md:h-14 md:w-14 place-items-center rounded-full text-foreground transition
-        bg-background/70 backdrop-blur hover:bg-background md:bg-transparent md:backdrop-blur-0 md:hover:bg-background/70
-        ${lado === "esq" ? "left-2 md:-left-4 lg:-left-12" : "right-2 md:-right-4 lg:-right-12"}`}
+      className={`absolute top-1/2 -translate-y-1/2 z-20 grid h-11 w-11 md:h-14 md:w-14 place-items-center rounded-full text-white transition
+        hover:bg-white/15 ${lado === "esq" ? "left-2 md:left-5" : "right-2 md:right-5"}`}
     >
-      <Icone className="h-6 w-6 md:h-8 md:w-8" strokeWidth={1.8} />
+      <Icone
+        className="h-7 w-7 md:h-9 md:w-9 drop-shadow-[0_2px_6px_rgba(0,0,0,0.45)]"
+        strokeWidth={2}
+      />
     </button>
   );
 }
