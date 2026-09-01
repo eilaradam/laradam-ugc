@@ -82,6 +82,20 @@ export type Category = {
   tagline: string;
 };
 
+/**
+ * Fotos da capa nova (HeroCapaGrande). É SÓ AQUI que se troca a imagem do carrossel:
+ * põe o arquivo em /public e escreve o caminho abaixo. A ordem da lista é a ordem
+ * que aparece. `legenda` é opcional, some se ficar vazia.
+ */
+export type HeroFoto = { src: string; alt?: string; legenda?: string };
+
+export const HERO_FOTOS: HeroFoto[] = [
+  { src: "/lara-sobre.jpg", alt: "Lara Dam", legenda: "UGC Creator" },
+  { src: "/lara-sobre1.png", alt: "Lara Dam" },
+  { src: "/fotobio.png", alt: "Lara Dam" },
+  { src: "/2.png", alt: "Lara Dam" },
+];
+
 export const CATEGORIES: Category[] = [
   { slug: "all", name: "Todos", tagline: "" },
   { slug: "ia", name: "Conteúdo com IA", tagline: "Inteligência artificial virando conteúdo" },
