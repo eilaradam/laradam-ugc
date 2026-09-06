@@ -163,15 +163,37 @@ function render() {
     frag.appendChild(carrossel(prodClaude));
   }
 
-  /* 4. LINK EXTERNO SIMPLES */
-  const L = C.linkExterno;
-  const linkExt = el("button", "card link-ext reveal");
-  linkExt.innerHTML = `
-    <span class="thumb" style="${L.imagem ? `background-image:url('${L.imagem}')` : `background:linear-gradient(135deg,${L.thumbCor},${L.thumbCor}99)`}">${L.imagem ? "" : "🛒"}</span>
-    <span class="info"><strong>${esc(L.titulo)}</strong><small>${esc(L.descricao)}</small></span>
-    <span class="out">${ICONS.external}</span>`;
-  linkExt.onclick = () => { Analytics.track("link_externo", { id: "livro" }); window.open(L.url, "_blank", "noopener"); };
-  frag.appendChild(linkExt);
+  /* 4. LINKS EXTERNOS
+     Era um card so (a loja dela). Virou lista pra caber as ferramentas de IA que
+     ela indica, cada uma podendo ter cupom. Quem so tem o objeto antigo continua
+     funcionando: cai no fallback de um item. */
+  const listaExt = (C.linksExternos && C.linksExternos.length) ? C.linksExternos
+                 : (C.linkExterno ? [C.linkExterno] : []);
+  if (listaExt.length && C.textos && C.textos.tituloLinks) {
+    frag.appendChild(el("h2", "section-title reveal", esc(C.textos.tituloLinks)));
+  }
+  listaExt.forEach((L, i) => {
+    if (!L || !L.url) return;
+    const linkExt = el("button", "card link-ext reveal");
+    const cor = L.thumbCor || "#FFFFFF";
+    linkExt.innerHTML = `
+      <span class="thumb" style="${L.imagem ? `background-image:url('${L.imagem}')` : `background:linear-gradient(135deg,${cor},${cor}99)`}">${L.imagem ? "" : (L.emoji || "🛒")}</span>
+      <span class="info"><strong>${esc(L.titulo)}</strong><small>${esc(L.descricao || "")}</small>
+        ${L.cupom ? `<span class="cupom" data-cupom="${esc(L.cupom)}">cupom <b>${esc(L.cupom)}</b><i>copiar</i></span>` : ""}</span>
+      <span class="out">${ICONS.external}</span>`;
+    /* O cupom copia sem abrir o link: quem clica ali quer o codigo, nao a pagina. */
+    const selo = linkExt.querySelector(".cupom");
+    if (selo) selo.addEventListener("click", (ev) => {
+      ev.stopPropagation();
+      const cod = selo.dataset.cupom;
+      const marcar = () => { selo.classList.add("copiado"); setTimeout(() => selo.classList.remove("copiado"), 1600); };
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(cod).then(marcar).catch(marcar);
+      else marcar();
+      Analytics.track("cupom_copiado", { id: L.id || String(i) });
+    });
+    linkExt.onclick = () => { Analytics.track("link_externo", { id: L.id || String(i) }); window.open(L.url, "_blank", "noopener"); };
+    frag.appendChild(linkExt);
+  });
 
   /* 5. PLATAFORMA (powered by) */
   frag.appendChild(poweredBy(C.plataforma));

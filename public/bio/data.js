@@ -242,6 +242,40 @@ window.BIO_DEFAULT = {
   ],
 
   /* ---------- 4. LINK EXTERNO SIMPLES ---------- */
+  /* Lista, nao card unico: cabem a loja dela e as ferramentas que ela indica.
+     Cada item pode ter `cupom` (vira selo que copia o codigo sem abrir o link)
+     e `emoji` (aparece quando nao ha imagem). */
+  linksExternos: [
+    {
+      id: "loja",
+      titulo: "Produtos que uso na criação de conteúdo",
+      descricao: "Câmera, luz, apps e os gadgets que uso pra gravar todo dia. Minha lista testada e aprovada.",
+      thumbCor: "#FFFFFF",
+      emoji: "🛒",
+      imagem: "",
+      url: "https://collshp.com/laradam?view=storefront",
+    },
+    {
+      id: "ace-studio",
+      titulo: "Ace Studio",
+      descricao: "Trilha com IA pros meus vídeos. O link já entra com o meu desconto.",
+      thumbCor: "#8B7BE8",
+      emoji: "🎵",
+      imagem: "",
+      url: "https://acestudio.ai/?promo=LARAD",
+    },
+    {
+      id: "sintra-ai",
+      titulo: "Sintra AI",
+      descricao: "Assistentes de IA pra tirar tarefa da minha mão.",
+      thumbCor: "#4FA3D1",
+      emoji: "🤖",
+      imagem: "",
+      cupom: "LARA75",
+      url: "https://sintra.ai/partner/lara",
+    },
+  ],
+  /* mantido pra quem ainda le o campo antigo */
   linkExterno: {
     titulo: "Produtos que uso na criação de conteúdo",
     descricao: "Câmera, luz, apps e os gadgets que uso pra gravar todo dia. Minha lista testada e aprovada.",
@@ -293,5 +327,6 @@ window.BIO_DEFAULT = {
     tituloCarrossel: "Meus cursos",
     tituloCarrossel2: "Com a Claude",
     tituloCatalogo: "Todos os meus produtos",
+    tituloLinks: "O que eu uso",
   },
 };

@@ -468,3 +468,17 @@ body {
   * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
   .reveal { opacity: 1; transform: none; }
 }
+
+/* Selo de cupom no card de link externo. Fica dentro do .info pra alinhar com o
+   texto, e para o clique antes de abrir o link (quem clica ali quer o codigo). */
+.link-ext .cupom{display:flex;width:fit-content;align-items:center;gap:6px;margin-top:8px;padding:4px 10px;
+  border-radius:100px;border:1px dashed rgba(var(--accent-rgb),.55);background:rgba(var(--accent-rgb),.10);
+  color:var(--accent-2);font-size:11.5px;font-weight:600;letter-spacing:.2px;cursor:pointer;
+  transition:background .15s ease,border-color .15s ease;}
+.link-ext .cupom:hover{background:rgba(var(--accent-rgb),.18);border-color:var(--accent-2);}
+.link-ext .cupom b{font-weight:800;letter-spacing:.6px;}
+.link-ext .cupom i{font-style:normal;opacity:.6;font-size:10.5px;}
+.link-ext .cupom.copiado{border-style:solid;}
+/* troca o texto inteiro: emendar "do" em "copiar" dava "copiardo" */
+.link-ext .cupom.copiado i{font-size:0;opacity:1;}
+.link-ext .cupom.copiado i::after{content:"copiado ✓";font-size:10.5px;}
