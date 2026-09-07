@@ -496,6 +496,12 @@ function Calculadora({ t }: { t: typeof COPY.pt }) {
           </div>
 
           <div className="px-6 md:px-8 py-4 border-t-2 border-black/10 text-xs md:text-sm text-black/60 leading-relaxed">
+            {/* Direito de imagem em linha propria: muita agencia cobra isso a parte,
+                entao estar incluso e argumento, nao letra miuda. */}
+            <p className="flex items-start gap-2 mb-2 text-black">
+              <span className="text-[var(--mm-orange)] font-bold leading-5">✓</span>
+              <span className="font-semibold">{t.calc.direitos}</span>
+            </p>
             <span className="font-semibold text-black">{t.calc.minimo}</span> {t.calc.rodape}
             {moeda === "USD" && (
               <span className="block mt-1.5 text-black/45">{t.calc.cambio(String(DOLAR).replace(".", ","))}</span>
