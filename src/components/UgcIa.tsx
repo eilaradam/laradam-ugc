@@ -76,6 +76,12 @@ function CapaShort({ id }: { id: string }) {
       alt=""
       loading="lazy"
       onError={() => setTentativa((n) => n + 1)}
+      /* O YouTube devolve 200 com um cinza de 120x90 quando nao tem a capa,
+         entao onError NUNCA dispara. Quem denuncia o placeholder e o tamanho. */
+      onLoad={(e) => {
+        const img = e.currentTarget as HTMLImageElement;
+        if (img.naturalWidth <= 160 && tentativa < CAMINHOS_CAPA.length - 1) setTentativa((n) => n + 1);
+      }}
       className="absolute inset-0 w-full h-full object-cover"
     />
   );
