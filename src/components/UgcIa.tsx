@@ -8,9 +8,9 @@
    pra acrescentar espanhol numa pagina so.
    ========================================================================== */
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, Play, ChevronDown, Mail, MessageCircle, AtSign } from "lucide-react";
+import { ArrowRight, Play, ChevronDown, ChevronLeft, ChevronRight, Mail, MessageCircle, AtSign } from "lucide-react";
 import { BRAND_LOGO_FILES } from "@/data/content";
 import { COPY, IDIOMAS, type Idioma } from "@/data/ugcIaCopy";
 import { useLang } from "@/lib/i18n";
@@ -207,45 +207,94 @@ function Hero({ t, lang, set }: { t: typeof COPY.pt; lang: Idioma; set: (i: Idio
 
 function Portfolio({ t }: { t: typeof COPY.pt }) {
   const { open } = useVideoModal();
+  const trilho = useRef<HTMLDivElement>(null);
+  const [temAntes, setTemAntes] = useState(false);
+  const [temDepois, setTemDepois] = useState(false);
+
+  /* As setas so aparecem quando ha pra onde ir: seta morta e pior que seta
+     nenhuma, porque a pessoa clica e nada acontece. */
+  const medir = () => {
+    const el = trilho.current;
+    if (!el) return;
+    setTemAntes(el.scrollLeft > 4);
+    setTemDepois(el.scrollLeft + el.clientWidth < el.scrollWidth - 4);
+  };
+  useEffect(() => {
+    const el = trilho.current;
+    if (!el) return;
+    medir();
+    el.addEventListener("scroll", medir, { passive: true });
+    window.addEventListener("resize", medir);
+    return () => {
+      el.removeEventListener("scroll", medir);
+      window.removeEventListener("resize", medir);
+    };
+  }, []);
+  const andar = (dir: 1 | -1) => {
+    const el = trilho.current;
+    if (el) el.scrollBy({ left: el.clientWidth * dir * 0.9, behavior: "smooth" });
+  };
+
   return (
     <section className="bg-[#FAF8F4] py-14 md:py-20 border-t border-black/10">
       <div className="max-w-6xl mx-auto px-6 md:px-12">
         <h2 className="font-display font-black text-2xl md:text-4xl leading-[0.95] tracking-tighter uppercase text-black">
           {t.portfolio.t1} <span className="text-[var(--mm-orange)]">{t.portfolio.t2}</span>
         </h2>
-        <div className="mt-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 md:gap-4">
-          {VIDEOS.map((id, i) => (
-            <motion.button
-              key={i}
-              type="button"
-              disabled={!id}
-              onClick={() => id && open({ id: `ugcia-${i}`, youtubeId: id, title: t.portfolio.nichos[i], brand: "Lara Dam", category: "ugc-ia" })}
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: i * 0.05 }}
-              className="group text-left rounded-xl overflow-hidden bg-white border-2 border-black/10 hover:border-[var(--mm-orange)] transition-colors disabled:cursor-default disabled:hover:border-black/10"
-            >
-              <div className="aspect-[9/16] bg-black/[0.04] flex items-center justify-center relative overflow-hidden">
-                {id ? (
-                  <>
-                    <CapaShort id={id} />
-                    <span className="relative z-10 w-10 h-10 rounded-full bg-[var(--mm-orange)] flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
-                      <Play className="w-4 h-4 text-white fill-white ml-0.5" />
-                    </span>
-                  </>
-                ) : (
-                  <div className="text-center px-2">
-                    <Play className="w-5 h-5 mx-auto text-black/20 mb-1.5" />
-                    <p className="text-[10px] text-black/35 leading-tight">{t.portfolio.vazio}</p>
-                  </div>
-                )}
-              </div>
-              <div className="p-2.5">
-                <p className="text-[10px] text-black/50 leading-tight">{t.portfolio.nichos[i]}</p>
-              </div>
-            </motion.button>
-          ))}
+
+        <div className="relative mt-10">
+          <button
+            type="button"
+            aria-label="Anterior"
+            onClick={() => andar(-1)}
+            disabled={!temAntes}
+            className="absolute left-0 md:-left-5 top-1/2 -translate-y-1/2 z-10 w-10 h-10 md:w-12 md:h-12 rounded-full bg-black text-white shadow-lg flex items-center justify-center transition-opacity disabled:opacity-0 disabled:pointer-events-none hover:bg-[var(--mm-orange)]"
+          >
+            <ChevronLeft className="w-5 h-5" />
+          </button>
+          <button
+            type="button"
+            aria-label="Próximo"
+            onClick={() => andar(1)}
+            disabled={!temDepois}
+            className="absolute right-0 md:-right-5 top-1/2 -translate-y-1/2 z-10 w-10 h-10 md:w-12 md:h-12 rounded-full bg-black text-white shadow-lg flex items-center justify-center transition-opacity disabled:opacity-0 disabled:pointer-events-none hover:bg-[var(--mm-orange)]"
+          >
+            <ChevronRight className="w-5 h-5" />
+          </button>
+
+          <div
+            ref={trilho}
+            className="flex gap-3 md:gap-4 overflow-x-auto overflow-y-hidden overscroll-x-contain touch-pan-x scroll-smooth snap-x snap-mandatory scrollbar-hide px-1 py-2"
+          >
+            {VIDEOS.map((id, i) => (
+              <button
+                key={i}
+                type="button"
+                disabled={!id}
+                onClick={() => id && open({ id: `ugcia-${i}`, youtubeId: id, title: t.portfolio.nichos[i] ?? "", brand: "Lara Dam", category: "ugc-ia" })}
+                className="group text-left flex-shrink-0 snap-start w-[48%] sm:w-[32%] md:w-[24%] lg:w-[19%] rounded-xl overflow-hidden bg-white border-2 border-black/10 hover:border-[var(--mm-orange)] transition-colors disabled:cursor-default disabled:hover:border-black/10"
+              >
+                <div className="aspect-[9/16] bg-black/[0.04] flex items-center justify-center relative overflow-hidden">
+                  {id ? (
+                    <>
+                      <CapaShort id={id} />
+                      <span className="relative z-10 w-10 h-10 rounded-full bg-[var(--mm-orange)] flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                        <Play className="w-4 h-4 text-white fill-white ml-0.5" />
+                      </span>
+                    </>
+                  ) : (
+                    <div className="text-center px-2">
+                      <Play className="w-5 h-5 mx-auto text-black/20 mb-1.5" />
+                      <p className="text-[10px] text-black/35 leading-tight">{t.portfolio.vazio}</p>
+                    </div>
+                  )}
+                </div>
+                <div className="p-2.5">
+                  <p className="text-[10px] text-black/50 leading-tight">{t.portfolio.nichos[i] ?? ""}</p>
+                </div>
+              </button>
+            ))}
+          </div>
         </div>
       </div>
     </section>
