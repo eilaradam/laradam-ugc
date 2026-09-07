@@ -564,7 +564,7 @@ function SobreMim({ t }: { t: typeof COPY.pt }) {
           {/* Arquivo proprio: a lara-sobre.jpg e usada tambem na /gestao e no hero da
               home, entao trocar la mudaria tres paginas de uma vez. */}
           <img
-            src="/lara-ugc-ia.jpg"
+            src="/nova-foto.jpeg"
             alt="Lara Dam"
             onError={(e) => { (e.currentTarget as HTMLImageElement).src = "/lara-sobre.jpg"; }}
             className="w-full rounded-[2rem] object-cover shadow-lg"
