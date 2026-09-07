@@ -22,19 +22,6 @@ const PALETTE: React.CSSProperties = {
   ["--mm-pink" as string]: "#FFCFD2",
 };
 
-/* ============================ TABELA DE PRECO ============================
-   Numeros dela, em real. Mexer AQUI muda a calculadora inteira.
-   O dolar e conversao de vitrine: o contrato fecha em real, entao a taxa e
-   uma constante visivel na tela em vez de cotacao ao vivo, que quebraria a
-   pagina se a fonte saisse do ar. */
-const PRECO = {
-  video: 972,        // cada conteudo, ja com a gestao inclusa (= US$ 180 no cambio abaixo)
-  variacao: 250,     // segunda versao do mesmo conteudo (teste A/B)
-  segundoModelo: 300, // gravar tambem em outro angulo/formato
-  minimo: 10,        // pacote minimo, em conteudos
-};
-const DOLAR = 5.4;
-
 const WA_NUMERO = "5512988729264";
 const WA_EXIBE = "+55 12 98872-9264";   // internacional: quem le e de fora
 const EMAIL = "laradam.ugc@gmail.com";
@@ -487,125 +474,21 @@ function PainelDolar({ t }: { t: typeof COPY.pt }) {
   );
 }
 
-function Calculadora({ t, lang }: { t: typeof COPY.pt; lang: Idioma }) {
-  const [conteudos, setConteudos] = useState(10);
-  const [ab, setAb] = useState(true);
-  const [doisModelos, setDoisModelos] = useState(false);
-  /* Quem escolheu ingles ou espanhol ja entra na tabela em dolar: fazer a marca
-     estrangeira ler R$ 12.220 e pedir pra ela chutar a conversao pra cima. */
-  const [moeda, setMoeda] = useState<"BRL" | "USD">(lang === "pt" ? "BRL" : "USD");
-  /* Trocar o idioma no meio da visita tem que trocar a moeda junto: sem isso,
-     quem escolhia ingles e depois voltava pro portugues ficava no painel de
-     dolar, porque a moeda so era decidida na primeira montagem. */
-  useEffect(() => { setMoeda(lang === "pt" ? "BRL" : "USD"); }, [lang]);
-
-  const porConteudo = PRECO.video + (ab ? PRECO.variacao : 0) + (doisModelos ? PRECO.segundoModelo : 0);
-  const total = conteudos * porConteudo;
-  /* Com A/B cada creator entrega 2 conteudos, entao o time e metade. */
-  const creators = ab ? Math.ceil(conteudos / 2) : conteudos;
-  const pecas = conteudos * (ab ? 2 : 1) * (doisModelos ? 2 : 1);
-
-  const money = (v: number) =>
-    moeda === "BRL"
-      ? "R$ " + Math.round(v).toLocaleString("pt-BR")
-      : "US$ " + Math.round(v / DOLAR).toLocaleString("en-US");
-
-  const Escolha = ({ v, set, opts, label, dica }: {
-    v: boolean; set: (b: boolean) => void; opts: [string, string]; label: string; dica: string;
-  }) => (
-    <div className="mb-6 last:mb-0">
-      <p className="text-xs md:text-sm font-bold text-black mb-2.5">{label}</p>
-      <div className="flex gap-2">
-        {[true, false].map((op, i) => (
-          <button
-            key={String(op)}
-            type="button"
-            onClick={() => set(op)}
-            className={`flex-1 rounded-xl py-2.5 px-2 font-bold text-xs md:text-sm transition-colors border-2 ${
-              v === op ? "bg-[var(--mm-orange)] border-[var(--mm-orange)] text-white" : "bg-white border-black/10 text-black/60 hover:border-black/25"
-            }`}
-          >
-            {opts[i]}
-          </button>
-        ))}
-      </div>
-      <p className="mt-2 text-[11px] md:text-xs text-black/50 leading-relaxed">{dica}</p>
-    </div>
-  );
-
+function Calculadora({ t }: { t: typeof COPY.pt }) {
   return (
     <section id="calculadora" className="bg-[#FAF8F4] py-14 md:py-20 border-t border-black/10 scroll-mt-24">
       <div className="max-w-6xl mx-auto px-6 md:px-12">
         <h2 className="font-display font-black text-2xl md:text-4xl leading-[0.95] tracking-tighter text-black uppercase max-w-3xl">
           {t.calc.t1} <span className="text-[var(--mm-orange)]">{t.calc.t2}</span>
         </h2>
-
         <div className="mt-10 md:mt-14 rounded-2xl overflow-hidden border-2 border-black/10 bg-white">
-          {/* moeda */}
-          <div className="flex border-b-2 border-black/10">
-            {(["BRL", "USD"] as const).map((m, i) => (
-              <button
-                key={m}
-                type="button"
-                onClick={() => setMoeda(m)}
-                className={`flex-1 py-4 text-xs md:text-sm font-bold uppercase tracking-wide transition-colors ${
-                  moeda === m ? "bg-white text-[var(--mm-orange)]" : "bg-black/[0.03] text-black/50 hover:text-black/70"
-                }`}
-              >
-                {m === "BRL" ? "R$" : "US$"} · {t.calc.moeda[i]}
-              </button>
-            ))}
-          </div>
-
-          {moeda === "USD" ? <PainelDolar t={t} /> : (
-          <div className="grid md:grid-cols-[1fr_340px]">
-            <div className="p-6 md:p-8">
-              <div className="mb-6">
-                <div className="flex justify-between items-baseline mb-2.5">
-                  <p className="text-xs md:text-sm font-bold text-black">{t.calc.conteudos}</p>
-                  <span className="font-display font-black text-2xl text-[var(--mm-orange)]">{conteudos}</span>
-                </div>
-                <input
-                  type="range"
-                  min={PRECO.minimo}
-                  max={60}
-                  step={2}
-                  value={conteudos}
-                  onChange={(e) => setConteudos(Number(e.target.value))}
-                  className="w-full accent-[var(--mm-orange)]"
-                />
-                <p className="mt-2 text-[11px] md:text-xs text-black/50">{t.calc.dicaConteudos}</p>
-              </div>
-
-              <Escolha v={ab} set={setAb} opts={[t.calc.sim, t.calc.nao]} label={t.calc.ab} dica={t.calc.dicaAb} />
-              <Escolha v={doisModelos} set={setDoisModelos} opts={[t.calc.ambos, t.calc.so1]} label={t.calc.modelos} dica={t.calc.dicaModelos} />
-            </div>
-
-            <div className="bg-black text-white p-6 md:p-8 flex flex-col justify-center">
-              <p className="text-[10px] uppercase tracking-[0.2em] text-white/50">{t.calc.investimento}</p>
-              <p className="font-display font-black text-3xl md:text-4xl leading-none mt-2">{money(total)}</p>
-              <p className="text-sm text-white/60 mt-1.5">{money(porConteudo)} {t.calc.porConteudo}</p>
-              <div className="mt-6 pt-5 border-t border-white/20 space-y-2.5">
-                {[conteudos, pecas, creators].map((v, i) => (
-                  <div key={i} className="flex justify-between text-sm">
-                    <span className="text-white/60">{t.calc.linhas[i]}</span>
-                    <span className="font-display font-black tabular-nums">{v}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-          )}
-
+          <PainelDolar t={t} />
           <div className="px-6 md:px-8 py-4 border-t-2 border-black/10 text-xs md:text-sm text-black/60 leading-relaxed">
-            {/* Direito de imagem em linha propria: muita agencia cobra isso a parte,
-                entao estar incluso e argumento, nao letra miuda. */}
             <p className="flex items-start gap-2 mb-2 text-black">
               <span className="text-[var(--mm-orange)] font-bold leading-5">✓</span>
               <span className="font-semibold">{t.calc.direitos}</span>
             </p>
-            <span className="font-semibold text-black">{t.calc.minimo}</span> {t.calc.rodape}
-
+            {t.calc.rodape}
           </div>
         </div>
       </div>
@@ -767,7 +650,7 @@ export default function UgcIa() {
       <Portfolio t={t} />
       <Angulos t={t} />
       <Processo t={t} />
-      <Calculadora t={t} lang={lang} />
+      <Calculadora t={t} />
       <Marcas t={t} />
       <SobreMim t={t} />
       <Perguntas t={t} />
