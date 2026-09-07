@@ -393,11 +393,111 @@ function Processo({ t }: { t: typeof COPY.pt }) {
   );
 }
 
-function Calculadora({ t }: { t: typeof COPY.pt }) {
+/* ============================ PAINEL EM DOLAR ============================
+   Sem slider de proposito. Em real o slider ajuda: o cliente brasileiro ja
+   conhece a faixa. Em dolar ele entrega o numero antes de a Lara saber o
+   budget da marca, e marca estrangeira costuma ter budget maior do que a
+   tabela dela. Entao aqui: ancora "a partir de", o que ja esta incluso, os
+   adicionais, e um formulario que PERGUNTA o budget. */
+const USD_MINIMO = 4000;
+
+function PainelDolar({ t }: { t: typeof COPY.pt }) {
+  const u = t.calc.usd;
+  const [env, setEnv] = useState<"parado" | "indo" | "ok" | "erro">("parado");
+
+  async function enviar(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const f = new FormData(e.currentTarget);
+    setEnv("indo");
+    try {
+      const r = await fetch("/api/gestao-leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: f.get("name"), email: f.get("email"), company: f.get("company"),
+          budget: f.get("budget"), message: f.get("message"),
+          modality: "ugc-ia", goal: "internacional",
+        }),
+      });
+      setEnv(r.ok ? "ok" : "erro");
+    } catch { setEnv("erro"); }
+  }
+
+  return (
+    <div className="grid md:grid-cols-[1fr_360px]">
+      <div className="p-6 md:p-8">
+        <p className="text-[10px] uppercase tracking-[0.2em] text-black/45">{u.apartir}</p>
+        <p className="font-display font-black text-4xl md:text-5xl leading-none mt-1 text-black">
+          US$ {USD_MINIMO.toLocaleString("en-US")}
+        </p>
+        <p className="text-sm text-black/55 mt-1.5">{u.pacote}</p>
+
+        <p className="mt-7 text-[10px] font-bold uppercase tracking-widest text-black/40">{u.incluso}</p>
+        <ul className="mt-3 space-y-1.5">
+          {u.itens.map((i) => (
+            <li key={i} className="flex items-start gap-2 text-sm text-black/75">
+              <span className="text-[var(--mm-orange)] font-bold leading-5">✓</span>{i}
+            </li>
+          ))}
+        </ul>
+
+        <p className="mt-7 text-[10px] font-bold uppercase tracking-widest text-black/40">{u.adicionais}</p>
+        <div className="mt-3 border-t border-black/10">
+          {u.linhas.map(([k, v]) => (
+            <div key={k} className="flex justify-between gap-4 py-2.5 border-b border-black/10 text-sm">
+              <span className="text-black/70">{k}</span>
+              <span className="font-bold text-black whitespace-nowrap">{v}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="bg-black text-white p-6 md:p-8">
+        {env === "ok" ? (
+          <div className="h-full flex flex-col justify-center text-center">
+            <p className="text-3xl mb-3">✓</p>
+            <p className="font-bold">{u.ok}</p>
+          </div>
+        ) : (
+          <form onSubmit={enviar} className="flex flex-col gap-3">
+            <div>
+              <p className="font-display font-black text-lg leading-tight">{u.formTitulo}</p>
+              <p className="text-xs text-white/55 mt-1">{u.formSub}</p>
+            </div>
+            {[["name", u.nome, "text"], ["email", u.email, "email"], ["company", u.empresa, "text"]].map(([n, ph, tp]) => (
+              <input key={n} name={n} type={tp} placeholder={ph} required={n === "email"}
+                className="w-full rounded-xl bg-white/10 border border-white/15 px-3.5 py-2.5 text-sm placeholder:text-white/40 focus:outline-none focus:border-[var(--mm-orange)]" />
+            ))}
+            <select name="budget" defaultValue=""
+              className="w-full rounded-xl bg-white/10 border border-white/15 px-3.5 py-2.5 text-sm focus:outline-none focus:border-[var(--mm-orange)]">
+              <option value="" disabled className="text-black">{u.budget}</option>
+              {u.budgets.map((b) => <option key={b} value={b} className="text-black">{b}</option>)}
+            </select>
+            <textarea name="message" rows={3} placeholder={u.msg}
+              className="w-full rounded-xl bg-white/10 border border-white/15 px-3.5 py-2.5 text-sm placeholder:text-white/40 focus:outline-none focus:border-[var(--mm-orange)] resize-none" />
+            <button type="submit" disabled={env === "indo"}
+              className="mt-1 w-full rounded-full bg-[var(--mm-orange)] py-3 text-sm font-bold uppercase tracking-wide hover:bg-[var(--mm-orange-deep)] transition-colors disabled:opacity-60">
+              {env === "indo" ? u.enviando : u.enviar}
+            </button>
+            {env === "erro" && <p className="text-xs text-[var(--mm-orange)]">{u.erro}</p>}
+          </form>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function Calculadora({ t, lang }: { t: typeof COPY.pt; lang: Idioma }) {
   const [conteudos, setConteudos] = useState(10);
   const [ab, setAb] = useState(true);
   const [doisModelos, setDoisModelos] = useState(false);
-  const [moeda, setMoeda] = useState<"BRL" | "USD">("BRL");
+  /* Quem escolheu ingles ou espanhol ja entra na tabela em dolar: fazer a marca
+     estrangeira ler R$ 12.220 e pedir pra ela chutar a conversao pra cima. */
+  const [moeda, setMoeda] = useState<"BRL" | "USD">(lang === "pt" ? "BRL" : "USD");
+  /* Trocar o idioma no meio da visita tem que trocar a moeda junto: sem isso,
+     quem escolhia ingles e depois voltava pro portugues ficava no painel de
+     dolar, porque a moeda so era decidida na primeira montagem. */
+  useEffect(() => { setMoeda(lang === "pt" ? "BRL" : "USD"); }, [lang]);
 
   const porConteudo = PRECO.video + (ab ? PRECO.variacao : 0) + (doisModelos ? PRECO.segundoModelo : 0);
   const total = conteudos * porConteudo;
@@ -457,6 +557,7 @@ function Calculadora({ t }: { t: typeof COPY.pt }) {
             ))}
           </div>
 
+          {moeda === "USD" ? <PainelDolar t={t} /> : (
           <div className="grid md:grid-cols-[1fr_340px]">
             <div className="p-6 md:p-8">
               <div className="mb-6">
@@ -494,6 +595,7 @@ function Calculadora({ t }: { t: typeof COPY.pt }) {
               </div>
             </div>
           </div>
+          )}
 
           <div className="px-6 md:px-8 py-4 border-t-2 border-black/10 text-xs md:text-sm text-black/60 leading-relaxed">
             {/* Direito de imagem em linha propria: muita agencia cobra isso a parte,
@@ -503,9 +605,7 @@ function Calculadora({ t }: { t: typeof COPY.pt }) {
               <span className="font-semibold">{t.calc.direitos}</span>
             </p>
             <span className="font-semibold text-black">{t.calc.minimo}</span> {t.calc.rodape}
-            {moeda === "USD" && (
-              <span className="block mt-1.5 text-black/45">{t.calc.cambio(String(DOLAR).replace(".", ","))}</span>
-            )}
+
           </div>
         </div>
       </div>
@@ -667,7 +767,7 @@ export default function UgcIa() {
       <Portfolio t={t} />
       <Angulos t={t} />
       <Processo t={t} />
-      <Calculadora t={t} />
+      <Calculadora t={t} lang={lang} />
       <Marcas t={t} />
       <SobreMim t={t} />
       <Perguntas t={t} />
