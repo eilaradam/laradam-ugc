@@ -43,6 +43,8 @@ const VIDEOS: Peca[] = [
   { id: "Qh8pC1tzsM0" },
   { id: "kyHn2hVSxU8" },
   { id: "wJWtr055UpA" },
+  { id: "zBEEDsWrj5g" },
+  { id: "ZnoQzWTTSHM" },
   /* Estes dois sao falados em ingles. Ficam no fim e levam selo: pra marca
      estrangeira isso e argumento de venda, nao defeito de ordem. */
   { id: "dwb42jctVK8", bilingue: true },
@@ -272,13 +274,21 @@ function Portfolio({ t }: { t: typeof COPY.pt }) {
                 key={i}
                 type="button"
                 disabled={!id}
-                onClick={() => id && open({ id: `ugcia-${i}`, youtubeId: id, title: t.portfolio.nichos[i] ?? "", brand: "Lara Dam", category: "ugc-ia" })}
+                onClick={() => id && open({ id: `ugcia-${i}`, youtubeId: id, title: "Lara Dam", brand: "Lara Dam", category: "ugc-ia" })}
                 className="group text-left flex-shrink-0 snap-start w-[48%] sm:w-[32%] md:w-[24%] lg:w-[19%] rounded-xl overflow-hidden bg-white border-2 border-black/10 hover:border-[var(--mm-orange)] transition-colors disabled:cursor-default disabled:hover:border-black/10"
               >
+                {/* Sem rodape: a legenda por card so repetia rotulo e roubava altura.
+                    O unico aviso que muda decisao, o de bilingue, virou etiqueta
+                    sobre a propria capa. */}
                 <div className="aspect-[9/16] bg-black/[0.04] flex items-center justify-center relative overflow-hidden">
                   {id ? (
                     <>
                       <CapaShort id={id} />
+                      {v.bilingue && (
+                        <span className="absolute top-2 left-2 z-10 text-[9px] font-bold uppercase tracking-wide text-white bg-[var(--mm-orange)] rounded-full px-2 py-1 leading-none shadow">
+                          {t.portfolio.bilingue}
+                        </span>
+                      )}
                       <span className="relative z-10 w-10 h-10 rounded-full bg-[var(--mm-orange)] flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
                         <Play className="w-4 h-4 text-white fill-white ml-0.5" />
                       </span>
@@ -289,14 +299,6 @@ function Portfolio({ t }: { t: typeof COPY.pt }) {
                       <p className="text-[10px] text-black/35 leading-tight">{t.portfolio.vazio}</p>
                     </div>
                   )}
-                </div>
-                <div className="p-2.5">
-                  {v.bilingue && (
-                    <span className="inline-block mb-1 text-[9px] font-bold uppercase tracking-wide text-[var(--mm-orange)] bg-[var(--mm-pink)] rounded-full px-2 py-0.5">
-                      {t.portfolio.bilingue}
-                    </span>
-                  )}
-                  <p className="text-[10px] text-black/50 leading-tight">{t.portfolio.nichos[i] ?? ""}</p>
                 </div>
               </button>
               );

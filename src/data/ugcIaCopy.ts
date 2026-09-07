@@ -25,8 +25,7 @@ export const COPY = {
       stats: [["+100", "campanhas gerenciadas"], ["+2.000", "creators em rede"], ["15 dias", "do aceite à entrega"]],
       faixa: ["Criado em português", "Creators brasileiras que já usam IA", "Sem cara de anúncio"],
     },
-    portfolio: { t1: "Quem grava.", t2: "Peças recentes da nossa base.", vazio: "vídeo a subir", bilingue: "bilíngue · PT e inglês",
-      nichos: ["ângulo 1 · quem constrói", "ângulo 1 · quem constrói", "ângulo 2 · quem já usa IA", "ângulo 2 · quem já usa IA", "talento em câmera", "talento em câmera"] },
+    portfolio: { t1: "Quem grava.", t2: "Peças recentes da nossa base.", vazio: "vídeo a subir", bilingue: "bilíngue · PT e inglês" },
     angulos: {
       t1: "Toda marca fala com dois públicos.", t2: "A gente testa os dois.",
       corpo: "Duas campanhas separadas, com casos de uso diferentes, pra sua mídia descobrir qual mensagem converte mais.",
@@ -112,8 +111,7 @@ export const COPY = {
       stats: [["+100", "campaigns managed"], ["+2,000", "creators in network"], ["15 days", "from go-ahead to delivery"]],
       faixa: ["Made in Brazil", "Creators who already use AI", "Never looks like an ad"],
     },
-    portfolio: { t1: "Who films.", t2: "Recent work from our roster.", vazio: "video coming", bilingue: "bilingual · PT and English",
-      nichos: ["angle 1 · the builders", "angle 1 · the builders", "angle 2 · already using AI", "angle 2 · already using AI", "on-camera talent", "on-camera talent"] },
+    portfolio: { t1: "Who films.", t2: "Recent work from our roster.", vazio: "video coming", bilingue: "bilingual · PT and English" },
     angulos: {
       t1: "Every brand talks to two audiences.", t2: "We test both.",
       corpo: "Two separate campaigns with different use cases, so your media can find out which message converts.",
@@ -199,8 +197,7 @@ export const COPY = {
       stats: [["+100", "campañas gestionadas"], ["+2.000", "creadoras en red"], ["15 días", "del sí a la entrega"]],
       faixa: ["Creado en Brasil", "Creadoras que ya usan IA", "Sin cara de anuncio"],
     },
-    portfolio: { t1: "Quién graba.", t2: "Trabajos recientes de nuestra base.", vazio: "video por subir", bilingue: "bilingüe · PT e inglés",
-      nichos: ["ángulo 1 · quien construye", "ángulo 1 · quien construye", "ángulo 2 · quien ya usa IA", "ángulo 2 · quien ya usa IA", "talento frente a cámara", "talento frente a cámara"] },
+    portfolio: { t1: "Quién graba.", t2: "Trabajos recientes de nuestra base.", vazio: "video por subir", bilingue: "bilingüe · PT e inglés" },
     angulos: {
       t1: "Toda marca habla con dos públicos.", t2: "Probamos los dos.",
       corpo: "Dos campañas separadas, con casos de uso distintos, para que tus medios descubran qué mensaje convierte más.",
