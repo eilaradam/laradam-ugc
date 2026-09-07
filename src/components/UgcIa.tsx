@@ -61,6 +61,26 @@ function Rico({ txt }: { txt: string }) {
   );
 }
 
+/* Capa do Short. O YouTube guarda a vertical em caminhos diferentes conforme o
+   video, e as vezes em nenhum: testei os seis dela e "oar2" resolve a maioria,
+   "oardefault" pega o resto e "maxresdefault" e o plano C (16:9). Sem essa
+   cadeia, tres cards mostravam o cinza de "sem miniatura". */
+const CAMINHOS_CAPA = ["oar2", "oardefault", "maxresdefault"];
+
+function CapaShort({ id }: { id: string }) {
+  const [tentativa, setTentativa] = useState(0);
+  const caminho = CAMINHOS_CAPA[Math.min(tentativa, CAMINHOS_CAPA.length - 1)];
+  return (
+    <img
+      src={`https://i.ytimg.com/vi/${id}/${caminho}.jpg`}
+      alt=""
+      loading="lazy"
+      onError={() => setTentativa((n) => n + 1)}
+      className="absolute inset-0 w-full h-full object-cover"
+    />
+  );
+}
+
 function Stat({ value, label }: { value: string; label: string }) {
   return (
     <div className="flex items-baseline gap-1.5">
@@ -203,13 +223,7 @@ function Portfolio({ t }: { t: typeof COPY.pt }) {
               <div className="aspect-[9/16] bg-black/[0.04] flex items-center justify-center relative overflow-hidden">
                 {id ? (
                   <>
-                    <img
-                      src={`https://i.ytimg.com/vi/${id}/oardefault.jpg`}
-                      alt=""
-                      loading="lazy"
-                      onError={(e) => { (e.currentTarget as HTMLImageElement).src = `https://i.ytimg.com/vi/${id}/hqdefault.jpg`; }}
-                      className="absolute inset-0 w-full h-full object-cover"
-                    />
+                    <CapaShort id={id} />
                     <span className="relative z-10 w-10 h-10 rounded-full bg-[var(--mm-orange)] flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
                       <Play className="w-4 h-4 text-white fill-white ml-0.5" />
                     </span>
