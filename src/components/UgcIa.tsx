@@ -403,7 +403,7 @@ function PainelDolar({ t }: { t: typeof COPY.pt }) {
         body: JSON.stringify({
           name: f.get("name"), email: f.get("email"), company: f.get("company"),
           budget: f.get("budget"), message: f.get("message"),
-          modality: "ugc-ia", goal: "internacional",
+          modality: "ugc-ia", goal: f.get("qtd") || "internacional",
         }),
       });
       setEnv(r.ok ? "ok" : "erro");
@@ -455,10 +455,17 @@ function PainelDolar({ t }: { t: typeof COPY.pt }) {
               <input key={n} name={n} type={tp} placeholder={ph} required={n === "email"}
                 className="w-full rounded-xl bg-white/10 border border-white/15 px-3.5 py-2.5 text-sm placeholder:text-white/40 focus:outline-none focus:border-[var(--mm-orange)]" />
             ))}
+            {/* Duas perguntas em vez de "budget por criativo": marca responde
+                orcamento TOTAL sem hesitar, e a quantidade diz o tamanho. */}
+            <select name="qtd" defaultValue=""
+              className="w-full rounded-xl bg-white/10 border border-white/15 px-3.5 py-2.5 text-sm focus:outline-none focus:border-[var(--mm-orange)]">
+              <option value="" disabled className="text-black">{u.qtd}</option>
+              {u.qtds.map((b) => <option key={b} value={b} className="text-black">{b}</option>)}
+            </select>
             <select name="budget" defaultValue=""
               className="w-full rounded-xl bg-white/10 border border-white/15 px-3.5 py-2.5 text-sm focus:outline-none focus:border-[var(--mm-orange)]">
-              <option value="" disabled className="text-black">{u.budget}</option>
-              {u.budgets.map((b) => <option key={b} value={b} className="text-black">{b}</option>)}
+              <option value="" disabled className="text-black">{u.orcamento}</option>
+              {u.orcamentos.map((b) => <option key={b} value={b} className="text-black">{b}</option>)}
             </select>
             <textarea name="message" rows={3} placeholder={u.msg}
               className="w-full rounded-xl bg-white/10 border border-white/15 px-3.5 py-2.5 text-sm placeholder:text-white/40 focus:outline-none focus:border-[var(--mm-orange)] resize-none" />
