@@ -630,17 +630,14 @@ export default function UgcIa() {
   const [pronto, setPronto] = useState(false);
   const site = useLang();
 
-  useEffect(() => {
-    try {
-      const salvo = localStorage.getItem("ugcIaLang");
-      if (salvo === "pt" || salvo === "en" || salvo === "es") setLangLocal(salvo);
-    } catch { /* sem storage, mostra o portao */ }
-    setPronto(true);
-  }, []);
+  /* O portao aparece SEMPRE, a cada carregamento. Ela pediu assim: a pagina e
+     pra marca de fora, e quem manda o link nao sabe em que idioma a pessoa vai
+     querer ler. Lembrar a escolha economizava um clique e custava a primeira
+     impressao de quem chega pela segunda vez com outro interlocutor. */
+  useEffect(() => { setPronto(true); }, []);
 
   const escolher = (i: Idioma) => {
     setLangLocal(i);
-    try { localStorage.setItem("ugcIaLang", i); } catch { /* segue sem lembrar */ }
     /* O menu do site so fala pt e en. Em espanhol deixo o menu em ingles, que e
        o mais proximo, em vez de quebrar os rotulos dele. */
     site.setLang(i === "pt" ? "pt" : "en");
