@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Replit Brasil · Proposta Lara Dam</title>
+<!-- Proposta pra uma marca: fora do Google, como a pagina /projeto. -->
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Proposta de performance creative para o Replit no Brasil.">
+<meta property="og:title" content="Replit Brasil · Proposta Lara Dam">
+<meta property="og:description" content="Duas rotas de posicionamento, testadas com creators que ja ensinam IA no Brasil.">
+<meta property="og:type" content="website">
+<style>
+  html,body{margin:0;padding:0}
+  img{max-width:100%}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Karla:wght@400;500;700;800&family=JetBrains+Mono:wght@400;700&display=swap">
+<style>
+:root{
+  --paper:#FBF8F5; --paper2:#F3EBE4; --card:#FFFFFF;
+  --ink:#191316; --ink2:#5C4B44; --muted:#9A8A82; --line:#E8DED6;
+  --brown:#7B3E1B; --brown-d:#4A2410; --amber:#C8891F; --amber-bg:#FBEFD8;
+  --ok:#2F6B4F;
+  --f-d:'Fraunces',Georgia,serif; --f-b:'Karla',system-ui,sans-serif; --f-m:'JetBrains Mono',ui-monospace,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#151011; --paper2:#1F1719; --card:#1C1517;
+  --ink:#F6EFEA; --ink2:#C4B2A8; --muted:#8B7A72; --line:#332A28;
+  --brown:#E8935C; --brown-d:#F0B189; --amber:#E3B45F; --amber-bg:#3A2C13; --ok:#6FCB96;
+}}
+:root[data-theme="dark"]{
+  --paper:#151011; --paper2:#1F1719; --card:#1C1517;
+  --ink:#F6EFEA; --ink2:#C4B2A8; --muted:#8B7A72; --line:#332A28;
+  --brown:#E8935C; --brown-d:#F0B189; --amber:#E3B45F; --amber-bg:#3A2C13; --ok:#6FCB96;
+}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-b);font-size:16.5px;line-height:1.62;padding:0 0 90px}
+.w{max-width:940px;margin:0 auto;padding:0 26px}
+h1,h2,h3{text-wrap:balance}
+p{max-width:68ch}
+
+/* capa */
+.capa{background:var(--brown-d);color:#F6EFEA;padding:60px 0 52px;margin-bottom:56px;position:relative;overflow:hidden}
+.capa::after{content:"";position:absolute;right:-90px;top:-120px;width:380px;height:380px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,255,255,.10),transparent 70%)}
+.capa .w{position:relative;z-index:1}
+.eyebrow{font-family:var(--f-m);font-size:11px;letter-spacing:.18em;text-transform:uppercase;opacity:.72;margin:0 0 18px}
+.capa h1{font-family:var(--f-d);font-weight:700;font-size:clamp(34px,5.6vw,56px);line-height:1.04;letter-spacing:-.02em;margin:0 0 18px;color:#fff}
+.capa .tese{font-size:19px;max-width:60ch;opacity:.88;margin:0 0 30px}
+.capa .meta{display:flex;gap:26px;flex-wrap:wrap;font-family:var(--f-m);font-size:12px;opacity:.7;
+  border-top:1px solid rgba(255,255,255,.18);padding-top:20px}
+.capa .meta b{display:block;font-family:var(--f-b);font-size:14px;font-weight:700;opacity:1;color:#fff;margin-top:3px}
+
+section{margin:0 0 58px}
+.num{font-family:var(--f-m);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--brown);margin:0 0 10px}
+h2{font-family:var(--f-d);font-weight:600;font-size:clamp(26px,3.4vw,34px);line-height:1.14;letter-spacing:-.015em;margin:0 0 14px}
+h3{font-size:16px;font-weight:800;margin:26px 0 8px}
+.sub{color:var(--ink2);max-width:66ch}
+
+/* leitura do brief */
+.rotas{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:26px 0}
+@media(max-width:720px){.rotas{grid-template-columns:1fr}}
+.rota{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 24px}
+.rota .tag{font-family:var(--f-m);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
+  background:var(--paper2);color:var(--brown);padding:4px 10px;border-radius:100px;display:inline-block;margin-bottom:12px}
+.rota h3{margin:0 0 8px;font-size:19px;font-family:var(--f-d);font-weight:600}
+.rota p{font-size:14.5px;color:var(--ink2);margin:0 0 14px}
+.rota .ganchos{border-top:1px solid var(--line);padding-top:14px;margin-top:4px}
+.rota .ganchos b{display:block;font-family:var(--f-m);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:9px}
+.gancho{font-family:var(--f-d);font-size:17px;font-weight:600;line-height:1.32;margin-bottom:11px;padding-left:14px;border-left:2px solid var(--amber)}
+
+/* entrega: 2 -> 4 -> 12 */
+.conta{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--line);border-radius:14px;
+  overflow:hidden;margin:26px 0;background:var(--line)}
+@media(max-width:640px){.conta{grid-template-columns:1fr}}
+.conta > div{background:var(--card);padding:22px 20px}
+.conta b{display:block;font-family:var(--f-m);font-size:38px;font-weight:700;color:var(--brown);line-height:1;letter-spacing:-.03em}
+.conta span{display:block;font-weight:700;font-size:14.5px;margin:9px 0 4px}
+.conta i{font-style:normal;font-size:13px;color:var(--ink2);line-height:1.5}
+.ratios{display:flex;gap:7px;margin-top:12px;align-items:flex-end}
+.ratios em{font-style:normal;border:1.5px solid var(--brown);border-radius:3px;display:block;opacity:.75}
+.r916{width:15px;height:27px}.r169{width:32px;height:18px}.r45{width:21px;height:26px}
+.ratios span{display:none}
+
+/* método */
+.passos{counter-reset:p;list-style:none;padding:0;margin:22px 0}
+.passos li{counter-increment:p;position:relative;padding:0 0 20px 52px;max-width:66ch}
+.passos li::before{content:counter(p,decimal-leading-zero);position:absolute;left:0;top:1px;
+  font-family:var(--f-m);font-size:12px;font-weight:700;color:#fff;background:var(--brown);
+  width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center}
+.passos b{display:block;font-size:16px;margin-bottom:3px}
+.passos span{color:var(--ink2);font-size:15px}
+
+/* portfolio */
+.vids{display:grid;grid-template-columns:repeat(auto-fill,minmax(198px,1fr));gap:15px;margin:24px 0}
+.vid{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.vid .tela{aspect-ratio:9/16;background:var(--paper2);display:flex;align-items:center;justify-content:center;
+  position:relative;border-bottom:1px solid var(--line)}
+.vid video{width:100%;height:100%;object-fit:cover;display:block}
+.vid .vazio{text-align:center;padding:16px;color:var(--muted);font-size:12.5px;line-height:1.5}
+.vid .vazio em{font-style:normal;display:block;font-family:var(--f-m);font-size:26px;opacity:.35;margin-bottom:8px}
+.vid .pe{padding:12px 14px}
+.vid .pe b{display:block;font-size:14px;font-weight:700}
+.vid .pe span{font-size:12.5px;color:var(--ink2)}
+
+/* cenários */
+.cen{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:26px 0}
+@media(max-width:760px){.cen{grid-template-columns:1fr}}
+.c{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 22px 24px;position:relative}
+.c.mid{border-color:var(--brown);box-shadow:0 8px 30px rgba(123,62,27,.13)}
+.c .selo{position:absolute;top:-11px;left:22px;background:var(--brown);color:#fff;font-family:var(--f-m);
+  font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:4px 11px;border-radius:100px}
+.c .nome{font-family:var(--f-m);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+.c .n{font-family:var(--f-d);font-size:36px;font-weight:700;line-height:1;letter-spacing:-.02em}
+.c .n small{font-family:var(--f-b);font-size:14px;font-weight:700;color:var(--ink2);letter-spacing:0}
+.c ul{list-style:none;padding:0;margin:16px 0 0;border-top:1px solid var(--line);padding-top:14px}
+.c li{font-size:14px;color:var(--ink2);padding:4px 0 4px 20px;position:relative}
+.c li::before{content:"→";position:absolute;left:0;color:var(--brown);font-size:12px}
+.c .valor{margin-top:16px;padding-top:14px;border-top:1px solid var(--line);font-family:var(--f-m);font-size:13px;color:var(--ink2)}
+.c .valor b{display:block;font-family:var(--f-b);font-size:20px;font-weight:800;color:var(--ink);margin-top:3px}
+
+.preencher{background:var(--amber-bg);color:var(--amber);border:1px dashed var(--amber);
+  padding:1px 9px;border-radius:5px;font-family:var(--f-m);font-size:.86em;font-weight:700;white-space:nowrap}
+
+/* cronograma */
+.crono{border:1px solid var(--line);border-radius:14px;overflow:hidden;margin:24px 0}
+.crono .l{display:grid;grid-template-columns:112px 1fr;border-top:1px solid var(--line);background:var(--card)}
+.crono .l:first-child{border-top:0}
+.crono .d{background:var(--paper2);padding:14px 16px;font-family:var(--f-m);font-size:12.5px;font-weight:700;color:var(--brown)}
+.crono .t{padding:14px 18px;font-size:14.5px}
+.crono .t b{display:block;font-weight:700}
+.crono .t span{color:var(--ink2);font-size:13.5px}
+
+/* guardrails */
+.gr{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:22px 0}
+@media(max-width:720px){.gr{grid-template-columns:1fr}}
+.g{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--ok);border-radius:0 12px 12px 0;padding:15px 17px}
+.g b{display:block;font-size:14px;margin-bottom:4px}
+.g span{font-size:13.5px;color:var(--ink2);line-height:1.5}
+
+.fecho{background:var(--brown-d);color:#F6EFEA;border-radius:18px;padding:38px 36px;margin-top:44px}
+.fecho h2{color:#fff;margin-bottom:12px}
+.fecho p{opacity:.88;max-width:62ch}
+.fecho .contato{display:flex;gap:28px;flex-wrap:wrap;margin-top:24px;padding-top:22px;border-top:1px solid rgba(255,255,255,.18);
+  font-family:var(--f-m);font-size:12px;opacity:.7}
+.fecho .contato b{display:block;font-family:var(--f-b);font-size:15px;font-weight:700;color:#fff;opacity:1;margin-top:3px}
+.nota{font-size:13px;color:var(--muted);font-style:italic;margin-top:10px}
+</style>
+
+<div class="capa">
+  <div class="w">
+    <p class="eyebrow">Proposta · Always-on Growth Creative · Brasil</p>
+    <h1>Replit no Brasil, contado por quem<br>o brasileiro já escuta sobre IA</h1>
+    <p class="tese">Duas rotas de posicionamento, testadas com creators que já ensinam IA no Brasil. Criativo nascido em português, não adaptado.</p>
+    <div class="meta">
+      <div>PARA<b>Kelsey Dolby · Alex</b></div>
+      <div>DE<b>Lara Dam · agência de creators</b></div>
+      <div>DATA<b>08 de setembro de 2026</b></div>
+      <div>META<b>ROAS ≥ 1,25</b></div>
+    </div>
+  </div>
+</div>
+
+<div class="w">
+
+<section>
+  <p class="num">01 · O que eu li no brief</p>
+  <h2>O teste não é de criativo. É de posicionamento.</h2>
+  <p class="sub">A pergunta não é qual vídeo é melhor, é qual porta faz o brasileiro entrar. Por isso as duas rotas são produzidas como campanhas separadas, terminando no mesmo lugar: testar de graça.</p>
+  <div class="rotas">
+    <div class="rota">
+      <span class="tag">Rota A · App Builder</span>
+      <h3>De ideia parada a app no ar</h3>
+      <p>A barreira não é técnica, é de permissão: a pessoa acha que precisa ser dev. O vídeo mostra alguém como ela, e o produto no ar no fim.</p>
+      <div class="ganchos">
+        <b>direções de gancho</b>
+        <div class="gancho">"Eu não sei programar. Isso aqui ficou pronto em 40 minutos."</div>
+        <div class="gancho">"Todo mundo tem uma ideia de app parada no bloco de notas."</div>
+      </div>
+    </div>
+    <div class="rota">
+      <span class="tag">Rota B · IA do dia a dia</span>
+      <h3>Não é pra programador. É pra quem tem caixa de entrada.</h3>
+      <p>Ela já usa IA e não sabe que isso existe. Pega uma tarefa chata e real, e mostra a ferramenta pronta no fim, não a conversa com o robô.</p>
+      <div class="ganchos">
+        <b>direções de gancho</b>
+        <div class="gancho">"Eu parei de organizar viagem em planilha. Fiz uma coisa que faz por mim."</div>
+        <div class="gancho">"Você já usa IA pra perguntar. Ninguém te contou que dá pra usar pra construir."</div>
+      </div>
+    </div>
+  </div>
+  <p class="nota">Direções, não roteiros fechados. O roteiro final sai com o creator escolhido e o caso de uso dele.</p>
+</section>
+
+<section>
+  <p class="num">02 · Por que nós</p>
+  <h2>A Rota B é literalmente o que eu faço todo dia.</h2>
+  <p class="sub">Eu <b>ensino creators brasileiras a usarem IA no trabalho delas</b>. O meu público é exatamente quem vocês descreveram no item 03 do brief. Na prática: ninguém precisa explicar o produto pro creator, o caso de uso é um que ele já tinha, e a demonstração aguenta a pergunta "mas funciona mesmo?".</p>
+</section>
+
+<section>
+  <p class="num">03 · A entrega</p>
+  <h2>Por creator: 2 conceitos, 4 variações, 12 arquivos.</h2>
+  <div class="conta">
+    <div><b>2</b><span>conceitos</span><i>Rota A e Rota B, tratadas como campanhas separadas pra o teste ler cada uma.</i></div>
+    <div><b>4</b><span>variações criativas</span><i>Dois ganchos por conceito. Muda a abertura e o que ela promete, não só a primeira frase.</i></div>
+    <div><b>12</b><span>exports finais</span><i>Cada variação em três proporções, já editada e pronta pra subir.
+      <span class="ratios"><em class="r916"></em><em class="r45"></em><em class="r169"></em></span></i></div>
+  </div>
+  <p class="sub">Vídeo finalizado: roteiro, gravação, edição, legenda em português e os cortes de proporção. Não é material bruto.</p>
+</section>
+
+<section>
+  <p class="num">04 · Como produzo</p>
+  <h2>Nativo não é sotaque. É referência.</h2>
+  <div class="gr">
+    <div class="g"><b>Caso de uso do próprio creator</b><span>A viagem dele, a planilha dele. Nada de exemplo genérico.</span></div>
+    <div class="g"><b>Roteiro por segundo</b><span>Tempo, fala e direção de imagem. Gancho nos primeiros 5 segundos.</span></div>
+    <div class="g"><b>A tela aparece cedo</b><span>Como nos benchmarks que vocês mandaram: a coisa sendo construída, não só alguém falando dela.</span></div>
+    <div class="g"><b>Ganchos que discordam entre si</b><span>Um abre pela dor, o outro pelo resultado. Aberturas parecidas desperdiçam inventário.</span></div>
+    <div class="g"><b>Sem citar concorrente</b><span>Referência por comportamento: "você já usa IA pra perguntar". Checado peça a peça.</span></div>
+    <div class="g"><b>Nada de cara de anúncio</b><span>Ambiente real, sem estúdio nem locução. O creator fala como fala no perfil dele.</span></div>
+  </div>
+</section>
+
+<section>
+  <p class="num">05 · Quem grava</p>
+  <h2>Portfólio das creators</h2>
+  <p class="sub">Peças recentes da nossa base: tom, ritmo e qualidade de edição.</p>
+  <div class="vids" id="vids"></div>
+  <p class="nota">Perfis, audiência e disponibilidade seguem em anexo na aprovação.</p>
+</section>
+
+<section>
+  <p class="num">06 · Investimento</p>
+  <h2>Preço fechado por creator, escalável.</h2>
+  <p class="sub">O valor cobre o pacote inteiro de um creator. O unitário não muda entre as faixas.</p>
+  <div class="cen">
+    <div class="c">
+      <div class="nome">Piloto</div>
+      <div class="n">3 <small>creators</small></div>
+      <ul><li>6 conceitos no ar</li><li>12 variações criativas</li><li>36 exports finais</li></ul>
+      <div class="valor">investimento<b><span class="preencher">R$ a definir</span></b></div>
+    </div>
+    <div class="c mid">
+      <span class="selo">sugerido</span>
+      <div class="nome">Teste completo</div>
+      <div class="n">5 <small>creators</small></div>
+      <ul><li>10 conceitos no ar</li><li>20 variações criativas</li><li>60 exports finais</li><li>10 peças por rota, o mínimo pra ler qual vence</li></ul>
+      <div class="valor">investimento<b><span class="preencher">R$ a definir</span></b></div>
+    </div>
+    <div class="c">
+      <div class="nome">Escala</div>
+      <div class="n">8 <small>creators</small></div>
+      <ul><li>16 conceitos no ar</li><li>32 variações criativas</li><li>96 exports finais</li><li>volume pra cortar o que não performa e ainda sobrar teste</li></ul>
+      <div class="valor">investimento<b><span class="preencher">R$ a definir</span></b></div>
+    </div>
+  </div>
+  <h3>Fora do pacote, cobrado à parte</h3>
+  <p class="sub"><b>Distribuição no canal do creator.</b> Para quem tem audiência de IA acima de 10 mil, a veiculação no perfil próprio tem taxa à parte, por creator. O pacote acima cobre a produção para os canais do Replit.</p>
+  <p class="nota">Créditos do Replit são bem-vindos e não substituem o cachê.</p>
+</section>
+
+<section>
+  <p class="num">07 · Cronograma</p>
+  <h2>Do aceite ao entregue em nove dias.</h2>
+  <div class="crono">
+    <div class="l"><div class="d">09 set</div><div class="t"><b>Aprovação e escolha da faixa</b><span>Fechamos o número de creators e o escopo.</span></div></div>
+    <div class="l"><div class="d">10 a 11 set</div><div class="t"><b>Casting e roteiros</b><span>Casting por rota e os 4 roteiros de cada creator, pra vocês aprovarem.</span></div></div>
+    <div class="l"><div class="d">12 set</div><div class="t"><b>Janela de ajuste</b><span>Retorno de vocês antes de qualquer gravação. É aqui que se corrige barato.</span></div></div>
+    <div class="l"><div class="d">13 a 16 set</div><div class="t"><b>Gravação e edição</b><span>4 variações por creator, com legenda em português.</span></div></div>
+    <div class="l"><div class="d">17 set</div><div class="t"><b>Revisão e cortes de proporção</b><span>Checagem dos guardrails e os 12 exports por creator.</span></div></div>
+    <div class="l"><div class="d">18 set</div><div class="t"><b>Entrega final</b><span>Arquivos nomeados por conceito, gancho e proporção.</span></div></div>
+  </div>
+</section>
+
+<div class="fecho">
+  <h2>Próximo passo</h2>
+  <p>Escolham a faixa e eu começo o casting no dia 09. Se quiserem ajustar escopo ou ganchos antes de fechar, consigo essa conversa ainda esta semana.</p>
+  <div class="contato">
+    <div>CONTATO<b>Lara Dam</b></div>
+    <div>INSTAGRAM<b>@eilaradam</b></div>
+    <div>PROPOSTA VÁLIDA ATÉ<b>30 de setembro de 2026</b></div>
+  </div>
+</div>
+</div>
+
+<script>
+/* Os vídeos das creators entram aqui. Enquanto o arquivo não sobe, o espaço
+   aparece marcado de propósito, pra não parecer bloco quebrado. */
+const CREATORS = [
+  { nome: "a definir", nicho: "Rota A · app builder", src: "" },
+  { nome: "a definir", nicho: "Rota A · app builder", src: "" },
+  { nome: "a definir", nicho: "Rota B · IA do dia a dia", src: "" },
+  { nome: "a definir", nicho: "Rota B · IA do dia a dia", src: "" },
+  { nome: "a definir", nicho: "talento em câmera", src: "" },
+  { nome: "a definir", nicho: "talento em câmera", src: "" }
+];
+document.getElementById("vids").innerHTML = CREATORS.map(function (c) {
+  return '<div class="vid"><div class="tela">'
+    + (c.src
+        ? '<video src="' + c.src + '" controls playsinline preload="metadata"></video>'
+        : '<div class="vazio"><em>▶</em>vídeo da creator<br>a subir</div>')
+    + '</div><div class="pe"><b>' + c.nome + '</b><span>' + c.nicho + '</span></div></div>';
+}).join("");
+</script>
+
+</body>
+</html>
