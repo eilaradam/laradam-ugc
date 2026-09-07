@@ -561,7 +561,14 @@ function SobreMim({ t }: { t: typeof COPY.pt }) {
           </div>
         </div>
         <div className="relative">
-          <img src="/lara-sobre.jpg" alt="Lara Dam" className="w-full rounded-[2rem] object-cover shadow-lg" />
+          {/* Arquivo proprio: a lara-sobre.jpg e usada tambem na /gestao e no hero da
+              home, entao trocar la mudaria tres paginas de uma vez. */}
+          <img
+            src="/lara-ugc-ia.jpg"
+            alt="Lara Dam"
+            onError={(e) => { (e.currentTarget as HTMLImageElement).src = "/lara-sobre.jpg"; }}
+            className="w-full rounded-[2rem] object-cover shadow-lg"
+          />
         </div>
       </div>
     </section>
