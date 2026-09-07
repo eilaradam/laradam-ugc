@@ -22,9 +22,18 @@ const PALETTE: React.CSSProperties = {
   ["--mm-pink" as string]: "#FFCFD2",
 };
 
-/* Preco por creator. Enquanto for null, o painel mostra o ESCOPO em vez de
-   dinheiro: melhor nao mostrar numero nenhum do que mostrar um chutado. */
-const PRECO_CREATOR: number | null = null;
+/* ============================ TABELA DE PRECO ============================
+   Numeros dela, em real. Mexer AQUI muda a calculadora inteira.
+   O dolar e conversao de vitrine: o contrato fecha em real, entao a taxa e
+   uma constante visivel na tela em vez de cotacao ao vivo, que quebraria a
+   pagina se a fonte saisse do ar. */
+const PRECO = {
+  video: 650,        // cada conteudo
+  variacao: 250,     // segunda versao do mesmo conteudo (teste A/B)
+  segundoModelo: 300, // gravar tambem em outro angulo/formato
+  minimo: 10,        // pacote minimo, em conteudos
+};
+const DOLAR = 5.4;
 
 const WA_NUMERO = "5512988729264";
 const WA_EXIBE = "+55 12 98872-9264";   // internacional: quem le e de fora
@@ -41,13 +50,16 @@ const BRANDS_TEXT = [
 /* Shorts do YouTube. Ela mandou 9 links, mas 4 eram o MESMO video repetido
    (wJWtr055UpA), entao sao 6 unicos. Abre no modal do site em vez de carregar
    6 players de uma vez, que e o que a /gestao ja faz. */
-const VIDEOS: string[] = [
-  "FlbG-BtKedg",
-  "dwb42jctVK8",
-  "-kKJ7oWSnEw",
-  "Qh8pC1tzsM0",
-  "kyHn2hVSxU8",
-  "wJWtr055UpA",
+type Peca = { id: string; bilingue?: boolean };
+const VIDEOS: Peca[] = [
+  { id: "FlbG-BtKedg" },
+  { id: "Qh8pC1tzsM0" },
+  { id: "kyHn2hVSxU8" },
+  { id: "wJWtr055UpA" },
+  /* Estes dois sao falados em ingles. Ficam no fim e levam selo: pra marca
+     estrangeira isso e argumento de venda, nao defeito de ordem. */
+  { id: "dwb42jctVK8", bilingue: true },
+  { id: "-kKJ7oWSnEw", bilingue: true },
 ];
 
 /** **negrito** vira <strong>, pra copy ficar legivel no dicionario */
@@ -266,7 +278,9 @@ function Portfolio({ t }: { t: typeof COPY.pt }) {
             ref={trilho}
             className="flex gap-3 md:gap-4 overflow-x-auto overflow-y-hidden overscroll-x-contain touch-pan-x scroll-smooth snap-x snap-mandatory scrollbar-hide px-1 py-2"
           >
-            {VIDEOS.map((id, i) => (
+            {VIDEOS.map((v, i) => {
+              const id = v.id;
+              return (
               <button
                 key={i}
                 type="button"
@@ -290,10 +304,16 @@ function Portfolio({ t }: { t: typeof COPY.pt }) {
                   )}
                 </div>
                 <div className="p-2.5">
+                  {v.bilingue && (
+                    <span className="inline-block mb-1 text-[9px] font-bold uppercase tracking-wide text-[var(--mm-orange)] bg-[var(--mm-pink)] rounded-full px-2 py-0.5">
+                      {t.portfolio.bilingue}
+                    </span>
+                  )}
                   <p className="text-[10px] text-black/50 leading-tight">{t.portfolio.nichos[i] ?? ""}</p>
                 </div>
               </button>
-            ))}
+              );
+            })}
           </div>
         </div>
       </div>
@@ -374,34 +394,38 @@ function Processo({ t }: { t: typeof COPY.pt }) {
 }
 
 function Calculadora({ t }: { t: typeof COPY.pt }) {
-  const [modo, setModo] = useState<"creators" | "orcamento">("creators");
-  const [creators, setCreators] = useState(5);
-  const [orcamento, setOrcamento] = useState(10);
-  const [angulos, setAngulos] = useState(2);
-  const [ganchos, setGanchos] = useState(2);
-  const [ratios, setRatios] = useState(3);
+  const [conteudos, setConteudos] = useState(10);
+  const [ab, setAb] = useState(true);
+  const [doisModelos, setDoisModelos] = useState(false);
+  const [moeda, setMoeda] = useState<"BRL" | "USD">("BRL");
 
-  const verba = orcamento * 5000;
-  const n = modo === "orcamento" && PRECO_CREATOR ? Math.max(1, Math.floor(verba / PRECO_CREATOR)) : creators;
-  const variacoes = n * angulos * ganchos;
-  const arquivos = variacoes * ratios;
-  const porAngulo = angulos ? Math.round(variacoes / angulos) : 0;
-  const dinheiro = (v: number) => "R$ " + Math.round(v).toLocaleString("pt-BR");
+  const porConteudo = PRECO.video + (ab ? PRECO.variacao : 0) + (doisModelos ? PRECO.segundoModelo : 0);
+  const total = conteudos * porConteudo;
+  /* Com A/B cada creator entrega 2 conteudos, entao o time e metade. */
+  const creators = ab ? Math.ceil(conteudos / 2) : conteudos;
+  const pecas = conteudos * (ab ? 2 : 1) * (doisModelos ? 2 : 1);
 
-  const Seg = ({ v, set, opts, label, dica }: { v: number; set: (n: number) => void; opts: number[]; label: string; dica: string }) => (
+  const money = (v: number) =>
+    moeda === "BRL"
+      ? "R$ " + Math.round(v).toLocaleString("pt-BR")
+      : "US$ " + Math.round(v / DOLAR).toLocaleString("en-US");
+
+  const Escolha = ({ v, set, opts, label, dica }: {
+    v: boolean; set: (b: boolean) => void; opts: [string, string]; label: string; dica: string;
+  }) => (
     <div className="mb-6 last:mb-0">
       <p className="text-xs md:text-sm font-bold text-black mb-2.5">{label}</p>
       <div className="flex gap-2">
-        {opts.map((o) => (
+        {[true, false].map((op, i) => (
           <button
-            key={o}
+            key={String(op)}
             type="button"
-            onClick={() => set(o)}
-            className={`flex-1 rounded-xl py-2.5 font-display font-black text-base transition-colors border-2 ${
-              v === o ? "bg-[var(--mm-orange)] border-[var(--mm-orange)] text-white" : "bg-white border-black/10 text-black/60 hover:border-black/25"
+            onClick={() => set(op)}
+            className={`flex-1 rounded-xl py-2.5 px-2 font-bold text-xs md:text-sm transition-colors border-2 ${
+              v === op ? "bg-[var(--mm-orange)] border-[var(--mm-orange)] text-white" : "bg-white border-black/10 text-black/60 hover:border-black/25"
             }`}
           >
-            {o}
+            {opts[i]}
           </button>
         ))}
       </div>
@@ -415,57 +439,53 @@ function Calculadora({ t }: { t: typeof COPY.pt }) {
         <h2 className="font-display font-black text-2xl md:text-4xl leading-[0.95] tracking-tighter text-black uppercase max-w-3xl">
           {t.calc.t1} <span className="text-[var(--mm-orange)]">{t.calc.t2}</span>
         </h2>
+
         <div className="mt-10 md:mt-14 rounded-2xl overflow-hidden border-2 border-black/10 bg-white">
+          {/* moeda */}
           <div className="flex border-b-2 border-black/10">
-            {(["creators", "orcamento"] as const).map((m, i) => (
+            {(["BRL", "USD"] as const).map((m, i) => (
               <button
                 key={m}
                 type="button"
-                onClick={() => setModo(m)}
+                onClick={() => setMoeda(m)}
                 className={`flex-1 py-4 text-xs md:text-sm font-bold uppercase tracking-wide transition-colors ${
-                  modo === m ? "bg-white text-[var(--mm-orange)]" : "bg-black/[0.03] text-black/50 hover:text-black/70"
+                  moeda === m ? "bg-white text-[var(--mm-orange)]" : "bg-black/[0.03] text-black/50 hover:text-black/70"
                 }`}
               >
-                {t.calc.abas[i]}
+                {m === "BRL" ? "R$" : "US$"} · {t.calc.moeda[i]}
               </button>
             ))}
           </div>
+
           <div className="grid md:grid-cols-[1fr_340px]">
             <div className="p-6 md:p-8">
               <div className="mb-6">
                 <div className="flex justify-between items-baseline mb-2.5">
-                  <p className="text-xs md:text-sm font-bold text-black">
-                    {modo === "creators" ? t.calc.creators : t.calc.orcamento}
-                  </p>
-                  <span className="font-display font-black text-2xl text-[var(--mm-orange)]">
-                    {modo === "creators" ? creators : PRECO_CREATOR ? dinheiro(verba) : "—"}
-                  </span>
+                  <p className="text-xs md:text-sm font-bold text-black">{t.calc.conteudos}</p>
+                  <span className="font-display font-black text-2xl text-[var(--mm-orange)]">{conteudos}</span>
                 </div>
-                {modo === "creators" ? (
-                  <input type="range" min={1} max={15} value={creators} onChange={(e) => setCreators(Number(e.target.value))} className="w-full accent-[var(--mm-orange)]" />
-                ) : (
-                  <input type="range" min={1} max={30} value={orcamento} onChange={(e) => setOrcamento(Number(e.target.value))} className="w-full accent-[var(--mm-orange)]" />
-                )}
-                <p className="mt-2 text-[11px] md:text-xs text-black/50">
-                  {modo === "creators" ? t.calc.dicaCreators : t.calc.dicaOrcamento}
-                </p>
+                <input
+                  type="range"
+                  min={PRECO.minimo}
+                  max={60}
+                  step={2}
+                  value={conteudos}
+                  onChange={(e) => setConteudos(Number(e.target.value))}
+                  className="w-full accent-[var(--mm-orange)]"
+                />
+                <p className="mt-2 text-[11px] md:text-xs text-black/50">{t.calc.dicaConteudos}</p>
               </div>
-              <Seg v={angulos} set={setAngulos} opts={[1, 2]} label={t.calc.angulos} dica={t.calc.dicaAngulos} />
-              <Seg v={ganchos} set={setGanchos} opts={[1, 2, 3]} label={t.calc.ganchos} dica={t.calc.dicaGanchos} />
-              <Seg v={ratios} set={setRatios} opts={[1, 2, 3]} label={t.calc.ratios} dica={t.calc.dicaRatios} />
+
+              <Escolha v={ab} set={setAb} opts={[t.calc.sim, t.calc.nao]} label={t.calc.ab} dica={t.calc.dicaAb} />
+              <Escolha v={doisModelos} set={setDoisModelos} opts={[t.calc.ambos, t.calc.so1]} label={t.calc.modelos} dica={t.calc.dicaModelos} />
             </div>
+
             <div className="bg-black text-white p-6 md:p-8 flex flex-col justify-center">
-              <p className="text-[10px] uppercase tracking-[0.2em] text-white/50">
-                {PRECO_CREATOR ? t.calc.investimento : t.calc.recebe}
-              </p>
-              <p className="font-display font-black text-3xl md:text-4xl leading-none mt-2">
-                {PRECO_CREATOR ? dinheiro(n * PRECO_CREATOR) : `${arquivos} ${t.calc.arquivosLabel}`}
-              </p>
-              <p className="text-sm text-white/60 mt-1.5">
-                {n} {n === 1 ? t.calc.creatorSing : t.calc.creatorPlur}
-              </p>
+              <p className="text-[10px] uppercase tracking-[0.2em] text-white/50">{t.calc.investimento}</p>
+              <p className="font-display font-black text-3xl md:text-4xl leading-none mt-2">{money(total)}</p>
+              <p className="text-sm text-white/60 mt-1.5">{money(porConteudo)} {t.calc.porConteudo}</p>
               <div className="mt-6 pt-5 border-t border-white/20 space-y-2.5">
-                {[variacoes, arquivos, porAngulo].map((v, i) => (
+                {[conteudos, pecas, creators].map((v, i) => (
                   <div key={i} className="flex justify-between text-sm">
                     <span className="text-white/60">{t.calc.linhas[i]}</span>
                     <span className="font-display font-black tabular-nums">{v}</span>
@@ -474,11 +494,12 @@ function Calculadora({ t }: { t: typeof COPY.pt }) {
               </div>
             </div>
           </div>
+
           <div className="px-6 md:px-8 py-4 border-t-2 border-black/10 text-xs md:text-sm text-black/60 leading-relaxed">
-            {angulos > 1 && porAngulo < 6 && (
-              <span className="text-[var(--mm-orange-deep)] font-semibold">{t.calc.aviso(porAngulo)}</span>
+            <span className="font-semibold text-black">{t.calc.minimo}</span> {t.calc.rodape}
+            {moeda === "USD" && (
+              <span className="block mt-1.5 text-black/45">{t.calc.cambio(String(DOLAR).replace(".", ","))}</span>
             )}
-            {t.calc.rodape}
           </div>
         </div>
       </div>
