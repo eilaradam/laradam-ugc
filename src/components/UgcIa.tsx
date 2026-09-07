@@ -14,6 +14,7 @@ import { ArrowRight, Play, ChevronDown, Mail, MessageCircle, AtSign } from "luci
 import { BRAND_LOGO_FILES } from "@/data/content";
 import { COPY, IDIOMAS, type Idioma } from "@/data/ugcIaCopy";
 import { useLang } from "@/lib/i18n";
+import { useVideoModal } from "./VideoModalProvider";
 
 const PALETTE: React.CSSProperties = {
   ["--mm-orange" as string]: "#FF5824",
@@ -37,7 +38,17 @@ const BRANDS_TEXT = [
   "Knorr", "Brinox", "Coza", "Mont Blanc", "Jean Paul Gaultier", "Huawei",
 ];
 
-const VIDEOS: string[] = ["", "", "", "", "", ""];
+/* Shorts do YouTube. Ela mandou 9 links, mas 4 eram o MESMO video repetido
+   (wJWtr055UpA), entao sao 6 unicos. Abre no modal do site em vez de carregar
+   6 players de uma vez, que e o que a /gestao ja faz. */
+const VIDEOS: string[] = [
+  "FlbG-BtKedg",
+  "dwb42jctVK8",
+  "-kKJ7oWSnEw",
+  "Qh8pC1tzsM0",
+  "kyHn2hVSxU8",
+  "wJWtr055UpA",
+];
 
 /** **negrito** vira <strong>, pra copy ficar legivel no dicionario */
 function Rico({ txt }: { txt: string }) {
@@ -169,18 +180,40 @@ function Hero({ t, lang, set }: { t: typeof COPY.pt; lang: Idioma; set: (i: Idio
 }
 
 function Portfolio({ t }: { t: typeof COPY.pt }) {
+  const { open } = useVideoModal();
   return (
     <section className="bg-[#FAF8F4] py-14 md:py-20 border-t border-black/10">
       <div className="max-w-6xl mx-auto px-6 md:px-12">
         <h2 className="font-display font-black text-2xl md:text-4xl leading-[0.95] tracking-tighter uppercase text-black">
           {t.portfolio.t1} <span className="text-[var(--mm-orange)]">{t.portfolio.t2}</span>
         </h2>
-        <div className="mt-10 grid grid-cols-2 md:grid-cols-6 gap-3 md:gap-4">
-          {VIDEOS.map((src, i) => (
-            <div key={i} className="rounded-xl overflow-hidden bg-white border-2 border-black/10">
-              <div className="aspect-[9/16] bg-black/[0.04] flex items-center justify-center">
-                {src ? (
-                  <video src={src} controls playsInline preload="metadata" className="w-full h-full object-cover" />
+        <div className="mt-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 md:gap-4">
+          {VIDEOS.map((id, i) => (
+            <motion.button
+              key={i}
+              type="button"
+              disabled={!id}
+              onClick={() => id && open({ id: `ugcia-${i}`, youtubeId: id, title: t.portfolio.nichos[i], brand: "Lara Dam", category: "ugc-ia" })}
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: i * 0.05 }}
+              className="group text-left rounded-xl overflow-hidden bg-white border-2 border-black/10 hover:border-[var(--mm-orange)] transition-colors disabled:cursor-default disabled:hover:border-black/10"
+            >
+              <div className="aspect-[9/16] bg-black/[0.04] flex items-center justify-center relative overflow-hidden">
+                {id ? (
+                  <>
+                    <img
+                      src={`https://i.ytimg.com/vi/${id}/oardefault.jpg`}
+                      alt=""
+                      loading="lazy"
+                      onError={(e) => { (e.currentTarget as HTMLImageElement).src = `https://i.ytimg.com/vi/${id}/hqdefault.jpg`; }}
+                      className="absolute inset-0 w-full h-full object-cover"
+                    />
+                    <span className="relative z-10 w-10 h-10 rounded-full bg-[var(--mm-orange)] flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                      <Play className="w-4 h-4 text-white fill-white ml-0.5" />
+                    </span>
+                  </>
                 ) : (
                   <div className="text-center px-2">
                     <Play className="w-5 h-5 mx-auto text-black/20 mb-1.5" />
@@ -191,7 +224,7 @@ function Portfolio({ t }: { t: typeof COPY.pt }) {
               <div className="p-2.5">
                 <p className="text-[10px] text-black/50 leading-tight">{t.portfolio.nichos[i]}</p>
               </div>
-            </div>
+            </motion.button>
           ))}
         </div>
       </div>
