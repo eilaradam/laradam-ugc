@@ -6,9 +6,6 @@ const nextConfig: NextConfig = {
       // A pagina /bio e um site estatico servido de public/bio/
       { source: "/bio", destination: "/bio/index.html" },
       { source: "/bio/", destination: "/bio/index.html" },
-      // Modelo generico pra marcas de IA, com calculadora (public/ugc-ia/)
-      { source: "/ugc-ia", destination: "/ugc-ia/index.html" },
-      { source: "/ugc-ia/", destination: "/ugc-ia/index.html" },
       // Proposta do Replit (HTML estatico em public/replit/)
       { source: "/replit", destination: "/replit/index.html" },
       { source: "/replit/", destination: "/replit/index.html" },
