@@ -21,40 +21,40 @@ const PALETTE: React.CSSProperties = {
    dinheiro: melhor nao mostrar numero nenhum do que mostrar um chutado. */
 const PRECO_CREATOR: number | null = null;
 
-const PORTAS = [
+const ANGULOS = [
   {
-    tag: "Porta 1 · quem constrói",
-    titulo: "De ideia parada a coisa pronta",
-    corpo: "A barreira não é técnica, é de permissão: a pessoa acha que precisa ser especialista.",
+    tag: "Ângulo 1 · quem quer construir",
+    titulo: "Da ideia parada ao projeto no ar",
+    corpo: "Ela tem um projeto guardado há meses e acha que precisa saber programar pra tirar do papel.",
     ganchos: [
       "“Eu não sei fazer isso. Ficou pronto em 40 minutos.”",
       "“Todo mundo tem uma ideia parada no bloco de notas.”",
     ],
   },
   {
-    tag: "Porta 2 · quem usa no dia a dia",
-    titulo: "Não é pra especialista. É pra quem tem caixa de entrada.",
-    corpo: "Ela já usa IA e não sabe que o seu produto existe. Uma tarefa chata e real, resolvida na frente dela.",
+    tag: "Ângulo 2 · quem já usa IA",
+    titulo: "Pra quem tem tarefa chata, não pra especialista",
+    corpo: "Ela já usa IA pra perguntar coisas, mas não sabe que o seu produto resolve o trabalho dela.",
     ganchos: [
       "“Eu parei de fazer isso em planilha. Fiz uma coisa que faz por mim.”",
-      "“Você já usa IA pra perguntar. Ninguém te contou que dá pra usar pra isso.”",
+      "“Ninguém te contou que dá pra usar pra fazer, não só pra perguntar.”",
     ],
   },
 ];
 
 const ETAPAS = [
   { n: "01", title: "Diagnóstico", body: "Antes de qualquer proposta, conversa. Preciso entender o produto, quem você quer alcançar e o que já foi testado." },
-  { n: "02", title: "As duas portas", body: "Definimos os dois posicionamentos que vão brigar entre si e o perfil de creator ideal pra cada um." },
+  { n: "02", title: "Os dois ângulos", body: "Definimos os dois posicionamentos que vão brigar entre si e o perfil de creator ideal pra cada um." },
   { n: "03", title: "Casting e roteiro", body: "Seleciono dentro da minha base e escrevo os roteiros por segundo. Você aprova antes de qualquer gravação." },
   { n: "04", title: "Produção", body: "Os creators gravam, eu acompanho. Quando chega na sua mão, já passou por filtro." },
-  { n: "05", title: "Entrega e leitura", body: "Arquivos nomeados por conceito, gancho e proporção. No fim, leitura de qual porta venceu." },
+  { n: "05", title: "Entrega e leitura", body: "Arquivos nomeados por conceito, gancho e proporção. No fim, leitura de qual ângulo venceu." },
 ];
 
 const CREATORS = [
-  { nome: "a definir", nicho: "porta 1 · quem constrói", src: "" },
-  { nome: "a definir", nicho: "porta 1 · quem constrói", src: "" },
-  { nome: "a definir", nicho: "porta 2 · dia a dia", src: "" },
-  { nome: "a definir", nicho: "porta 2 · dia a dia", src: "" },
+  { nome: "a definir", nicho: "ângulo 1 · quem constrói", src: "" },
+  { nome: "a definir", nicho: "ângulo 1 · quem constrói", src: "" },
+  { nome: "a definir", nicho: "ângulo 2 · quem já usa IA", src: "" },
+  { nome: "a definir", nicho: "ângulo 2 · quem já usa IA", src: "" },
   { nome: "a definir", nicho: "talento em câmera", src: "" },
   { nome: "a definir", nicho: "talento em câmera", src: "" },
 ];
@@ -71,24 +71,17 @@ function Stat({ value, label }: { value: string; label: string }) {
 function Hero() {
   return (
     <section className="relative overflow-hidden bg-[#FAF8F4] text-black pt-24 md:pt-28 pb-0">
-      <div className="relative max-w-6xl mx-auto px-6 md:px-12 pt-2 md:pt-4 pb-10 md:pb-14">
-        <div className="flex items-center gap-2.5 mb-4 md:mb-5">
-          <div className="w-2 h-2 rounded-full bg-[var(--mm-orange)] animate-pulse" />
-          <span className="font-display font-black text-black text-xs md:text-sm tracking-widest uppercase">
-            LARADAM<span className="text-[var(--mm-orange)]">.</span>IA
-          </span>
-        </div>
+      <div className="relative max-w-6xl mx-auto px-6 md:px-12 pt-6 md:pt-10 pb-10 md:pb-14">
         <h1 className="font-display font-black text-black text-3xl md:text-5xl lg:text-6xl leading-[0.95] tracking-tighter uppercase">
-          <span className="block text-[1.2em]">Vídeo para</span>
-          <span className="block">marcas de IA</span>
+          <span className="block text-[1.2em]">Gestão de campanha</span>
+          <span className="block">UGC</span>
         </h1>
         <p className="mt-2 md:mt-3 font-display font-bold text-[var(--mm-orange)] text-base md:text-lg lg:text-xl tracking-tight">
-          feito por quem ensina IA.
+          para marcas que precisam de quem entende de IA.
         </p>
         <p className="mt-4 text-sm md:text-base max-w-xl leading-relaxed text-black/75">
-          Creators brasileiras que já usam inteligência artificial no trabalho delas. Criativo nascido em português,
-          não adaptado de peça global.{" "}
-          <span className="text-black font-semibold">Você roda mídia. Nós rodamos a criação.</span>
+          Creators brasileiras que já trabalham com inteligência artificial no dia a dia. Criativo pensado em português.{" "}
+          <span className="text-black font-semibold">Você roda a mídia. Nós rodamos a criação.</span>
         </p>
         <div className="mt-5">
           <a
@@ -105,9 +98,9 @@ function Hero() {
         <div className="mt-6 flex flex-nowrap items-center gap-x-3 text-black/70 border-t border-black/10 pt-3 overflow-x-auto whitespace-nowrap">
           <Stat value="+100" label="campanhas gerenciadas" />
           <span className="text-black/20">|</span>
-          <Stat value="+1.200" label="creators em rede" />
+          <Stat value="+2.000" label="creators em rede" />
           <span className="text-black/20">|</span>
-          <Stat value="9 dias" label="do aceite à entrega" />
+          <Stat value="15 dias" label="do aceite à entrega" />
         </div>
       </div>
 
@@ -115,9 +108,9 @@ function Hero() {
         <div className="marquee-slow">
           {Array.from({ length: 10 }).map((_, i) => (
             <div key={i} className="flex items-center gap-3 md:gap-5 text-xs md:text-sm uppercase tracking-[0.25em] font-bold text-white whitespace-nowrap">
-              <span>Nascido em português</span>
+              <span>Criado em português</span>
               <span className="text-white/70">✦</span>
-              <span>Creators que já usam IA</span>
+              <span>Creators brasileiras que já usam IA</span>
               <span className="text-white/70">✦</span>
               <span>Sem cara de anúncio</span>
               <span className="text-white/70">✦</span>
@@ -129,19 +122,19 @@ function Hero() {
   );
 }
 
-function Portas() {
+function Angulos() {
   return (
     <section className="bg-white py-14 md:py-20 border-t border-black/10">
       <div className="max-w-6xl mx-auto px-6 md:px-12">
         <h2 className="font-display font-black text-2xl md:text-4xl leading-[0.95] tracking-tighter text-black uppercase max-w-3xl">
-          Toda marca de IA tem duas portas.{" "}
-          <span className="text-[var(--mm-orange)]">Testamos as duas.</span>
+          Toda marca fala com dois públicos.{" "}
+          <span className="text-[var(--mm-orange)]">A gente testa os dois.</span>
         </h2>
         <p className="mt-4 text-base md:text-lg text-black/75 max-w-2xl leading-relaxed">
-          Produzidas como campanhas separadas, com cenário e caso de uso diferentes, pra o teste conseguir ler qual vence.
+          Duas campanhas separadas, com casos de uso diferentes, pra sua mídia descobrir qual mensagem converte mais.
         </p>
         <div className="mt-10 md:mt-14 grid md:grid-cols-2 gap-4 md:gap-5">
-          {PORTAS.map((p, i) => (
+          {ANGULOS.map((p, i) => (
             <motion.div
               key={p.tag}
               initial={{ opacity: 0, y: 20 }}
@@ -177,15 +170,15 @@ function Calculadora() {
   const [modo, setModo] = useState<"creators" | "orcamento">("creators");
   const [creators, setCreators] = useState(5);
   const [orcamento, setOrcamento] = useState(10);
-  const [portas, setPortas] = useState(2);
+  const [angulos, setAngulos] = useState(2);
   const [ganchos, setGanchos] = useState(2);
   const [ratios, setRatios] = useState(3);
 
   const verba = orcamento * 5000;
   const n = modo === "orcamento" && PRECO_CREATOR ? Math.max(1, Math.floor(verba / PRECO_CREATOR)) : creators;
-  const variacoes = n * portas * ganchos;
+  const variacoes = n * angulos * ganchos;
   const arquivos = variacoes * ratios;
-  const porPorta = portas ? Math.round(variacoes / portas) : 0;
+  const porAngulo = angulos ? Math.round(variacoes / angulos) : 0;
   const dinheiro = (v: number) => "R$ " + Math.round(v).toLocaleString("pt-BR");
 
   const Seg = ({ v, set, opts, label, dica }: { v: number; set: (n: number) => void; opts: number[]; label: string; dica: string }) => (
@@ -243,7 +236,7 @@ function Calculadora() {
                   </div>
                   <input type="range" min={1} max={15} value={creators} onChange={(e) => setCreators(Number(e.target.value))}
                     className="w-full accent-[var(--mm-orange)]" />
-                  <p className="mt-2 text-[11px] md:text-xs text-black/50">Cada creator grava as duas portas com o caso de uso dele.</p>
+                  <p className="mt-2 text-[11px] md:text-xs text-black/50">Cada creator grava os dois ângulos com o caso de uso dele.</p>
                 </div>
               ) : (
                 <div className="mb-6">
@@ -258,9 +251,9 @@ function Calculadora() {
                   <p className="mt-2 text-[11px] md:text-xs text-black/50">Eu mostro quantos creators cabem e o que sai disso.</p>
                 </div>
               )}
-              <Seg v={portas} set={setPortas} opts={[1, 2]} label="Portas testadas"
-                dica="Duas é o padrão: é o que permite comparar posicionamento." />
-              <Seg v={ganchos} set={setGanchos} opts={[1, 2, 3]} label="Ganchos por porta"
+              <Seg v={angulos} set={setAngulos} opts={[1, 2]} label="Ângulos testados"
+                dica="Dois é o padrão: é o que permite comparar posicionamento." />
+              <Seg v={ganchos} set={setGanchos} opts={[1, 2, 3]} label="Ganchos por ângulo"
                 dica="Aberturas diferentes da mesma ideia, pra achar a que segura." />
               <Seg v={ratios} set={setRatios} opts={[1, 2, 3]} label="Proporções"
                 dica="9:16 pro vertical, 4:5 pro feed, 16:9 pro YouTube e display." />
@@ -275,7 +268,7 @@ function Calculadora() {
               </p>
               <p className="text-sm text-white/60 mt-1.5">{n} {n === 1 ? "creator" : "creators"}</p>
               <div className="mt-6 pt-5 border-t border-white/20 space-y-2.5">
-                {[["variações criativas", variacoes], ["arquivos finais", arquivos], ["peças por porta", porPorta]].map(([k, v]) => (
+                {[["variações criativas", variacoes], ["arquivos finais", arquivos], ["peças por ângulo", porAngulo]].map(([k, v]) => (
                   <div key={String(k)} className="flex justify-between text-sm">
                     <span className="text-white/60">{k}</span>
                     <span className="font-display font-black tabular-nums">{v}</span>
@@ -286,10 +279,10 @@ function Calculadora() {
           </div>
 
           <div className="px-6 md:px-8 py-4 border-t-2 border-black/10 text-xs md:text-sm text-black/60 leading-relaxed">
-            {portas > 1 && porPorta < 6 ? (
+            {angulos > 1 && porAngulo < 6 ? (
               <span className="text-[var(--mm-orange-deep)] font-semibold">
-                Atenção: com {porPorta} peça{porPorta === 1 ? "" : "s"} por porta, o teste dificilmente separa qual posicionamento vence.
-                A partir de 10 por porta a leitura fica confiável.{" "}
+                Atenção: com {porAngulo} peça{porAngulo === 1 ? "" : "s"} por ângulo, o teste dificilmente separa qual posicionamento vence.
+                A partir de 10 por ângulo a leitura fica confiável.{" "}
               </span>
             ) : null}
             O valor cobre roteiro, gravação, edição, legenda em português e todos os cortes de proporção.
@@ -397,7 +390,7 @@ export default function UgcIa() {
   return (
     <div style={PALETTE}>
       <Hero />
-      <Portas />
+      <Angulos />
       <Calculadora />
       <Processo />
       <Portfolio />
