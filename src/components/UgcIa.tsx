@@ -28,7 +28,7 @@ const PALETTE: React.CSSProperties = {
    uma constante visivel na tela em vez de cotacao ao vivo, que quebraria a
    pagina se a fonte saisse do ar. */
 const PRECO = {
-  video: 650,        // cada conteudo
+  video: 972,        // cada conteudo, ja com a gestao inclusa (= US$ 180 no cambio abaixo)
   variacao: 250,     // segunda versao do mesmo conteudo (teste A/B)
   segundoModelo: 300, // gravar tambem em outro angulo/formato
   minimo: 10,        // pacote minimo, em conteudos
