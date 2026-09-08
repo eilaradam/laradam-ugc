@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { motion } from "framer-motion";
 import { Play } from "lucide-react";
 import type { Video } from "@/data/content";
@@ -38,6 +38,20 @@ export default function VideoCard({ video, index = 0, size = "md" }: Props) {
   const [shouldLoadPreview, setShouldLoadPreview] = useState(false);
   const [previewReady, setPreviewReady] = useState(false);
 
+  // O src já vem no HTML do servidor (e o React ainda emite um <link preload>),
+  // então a thumb costuma terminar de carregar ANTES da hidratação. Quando isso
+  // acontece o onLoad/onError abaixo nunca chega no React e a cascata não roda —
+  // o card fica preso no placeholder cinza 120x90 do YouTube. Por isso checamos
+  // também na montagem, que é o único momento em que dá pra recuperar o evento
+  // perdido. (naturalWidth 0 = deu erro; 120 = placeholder de "não existe".)
+  const checarThumbNaMontagem = useCallback(
+    (el: HTMLImageElement | null) => {
+      if (!el || video.thumbnail || !video.youtubeId) return;
+      if (el.complete && el.naturalWidth <= 120) bumpThumb(el, video.youtubeId);
+    },
+    [video.thumbnail, video.youtubeId]
+  );
+
   // Preview no hover (mudo, em loop, sem controles — só pra dar "vida")
   const previewUrl = video.youtubeId
     ? `https://www.youtube.com/embed/${video.youtubeId}?autoplay=1&mute=1&loop=1&controls=0&playlist=${video.youtubeId}&modestbranding=1&rel=0&playsinline=1&vq=hd1080`
@@ -71,6 +85,7 @@ export default function VideoCard({ video, index = 0, size = "md" }: Props) {
         {video.youtubeId && (
           <>
             <img
+              ref={checarThumbNaMontagem}
               src={
                 video.thumbnail ??
                 `https://i.ytimg.com/vi/${video.youtubeId}/maxresdefault.jpg`

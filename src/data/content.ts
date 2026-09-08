@@ -172,7 +172,9 @@ export const VIDEOS: Video[] = [
   { id: "b16", title: "Botox", category: "beleza", brand: "Botox", youtubeId: "YOmm3Zi87PE" },
 
   // CASA & DECO
-  { id: "d-lorenzetti", title: "Lorenzetti", category: "casa", brand: "Lorenzetti", youtubeId: "7k843Vkuipo" },
+  // Short sem maxresdefault/sddefault no YouTube (dão 404): fixamos a capa
+  // vertical oar2 direto pra não depender da cascata de fallback do VideoCard.
+  { id: "d-lorenzetti", title: "Lorenzetti", category: "casa", brand: "Lorenzetti", youtubeId: "7k843Vkuipo", thumbnail: "https://i.ytimg.com/vi/7k843Vkuipo/oar2.jpg" },
   { id: "d-unipega", title: "Unipega", category: "casa", brand: "Unipega", youtubeId: "rkdMNa32XhY" },
   { id: "d-coza2", title: "Coza", category: "casa", brand: "Coza", youtubeId: "nbq1HzdlPJE", thumbnail: "/coza-organizadores-capa.jpg" },
   { id: "d1", title: "DT3", category: "casa", brand: "DT3", youtubeId: "Imt3HZDlCXU" },
