@@ -152,6 +152,7 @@ export const VIDEOS: Video[] = [
   { id: "g6", title: "Tropical", category: "food", brand: "Tropical", youtubeId: "QgCK-EJKTm0" },
 
   // BELEZA
+  { id: "b-creamy", title: "Creamy", category: "beleza", brand: "Creamy", youtubeId: "08Bl9O930Kg" },
   { id: "b-anethun", title: "Anethun", category: "beleza", brand: "Anethun", youtubeId: "YwEt7sa0zAE" },
   { id: "b-noma", title: "Noma", category: "beleza", brand: "Noma", youtubeId: "TbRE2_mezCg" },
   { id: "b1", title: "Box Magenta", category: "beleza", brand: "Box Magenta", views: "500k", youtubeId: "6kvtFKsPQPw" },
