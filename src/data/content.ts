@@ -202,6 +202,7 @@ export const VIDEOS: Video[] = [
 
   // SAÚDE & FITNESS
   { id: "s1", title: "Squadz", category: "saude", brand: "Squadz", youtubeId: "vbQW-1VEjPk" },
+  { id: "s-pharma-pdrn", title: "Pharmapele PDRN", category: "saude", brand: "Pharmapele", youtubeId: "r5Ls6pbsmWQ" },
   { id: "s-pharma-creatina", title: "Pharmapele Creatina", category: "saude", brand: "Pharmapele", youtubeId: "_6sCm4K8DRE" },
   { id: "s-pharma", title: "Pharmapele", category: "saude", brand: "Pharmapele", youtubeId: "Eul1uuQhU7g" },
   { id: "s-pharma-emagrece", title: "Pharmapele Emagrecimento", category: "saude", brand: "Pharmapele", youtubeId: "K31BzOy3qt0" },
