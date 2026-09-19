@@ -1,7 +1,6 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  basePath: "/ugc321",
   async rewrites() {
     return [
       // A pagina /bio e um site estatico servido de public/bio/
