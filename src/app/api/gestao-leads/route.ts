@@ -1,24 +1,45 @@
 import { NextResponse } from "next/server";
 import { supabaseAdmin } from "@/lib/supabase";
 import { sendLeadNotification } from "@/lib/resend";
+import {
+  guardLead,
+  emailBudgetOk,
+  validEmail,
+  str,
+  tooManyLinks,
+} from "@/lib/guard";
 
 export async function POST(req: Request) {
-  const body = await req.json().catch(() => null);
-  if (!body?.email) {
+  const body = (await req.json().catch(() => null)) as Record<
+    string,
+    unknown
+  > | null;
+  if (!body) {
     return NextResponse.json({ error: "Email obrigatório" }, { status: 400 });
   }
 
+  const barrado = guardLead(req, body, {
+    name: "gestao-leads",
+    limit: 5,
+    windowMs: 60 * 60 * 1000,
+  });
+  if (barrado) return barrado;
+
+  if (!validEmail(body.email)) {
+    return NextResponse.json({ error: "Email inválido" }, { status: 400 });
+  }
+
   const lead = {
-    name: body.name ?? null,
+    name: str(body.name, 120),
     email: String(body.email).trim(),
-    whatsapp: body.whatsapp ?? null,
-    company: body.company ?? null,
-    role: body.role ?? null,
-    site: body.site ?? null,
-    modality: body.modality ?? null,
-    goal: body.goal ?? null,
-    budget: body.budget ?? null,
-    message: body.message ?? null,
+    whatsapp: str(body.whatsapp, 40),
+    company: str(body.company, 160),
+    role: str(body.role, 120),
+    site: str(body.site, 200),
+    modality: str(body.modality, 80),
+    goal: str(body.goal, 200),
+    budget: str(body.budget, 80),
+    message: str(body.message, 4000),
   };
 
   // 1) Salva no Supabase
@@ -38,26 +59,30 @@ export async function POST(req: Request) {
   }
 
   // 2) Email via Resend (reaproveita a função existente, com formato compatível)
-  try {
-    await sendLeadNotification({
-      name: lead.name,
-      email: lead.email,
-      phone: lead.whatsapp,
-      brand: lead.company,
-      budget: lead.budget,
-      message: [
-        lead.role && `Cargo: ${lead.role}`,
-        lead.site && `Site: ${lead.site}`,
-        lead.modality && `Modalidade: ${lead.modality}`,
-        lead.goal && `Objetivo: ${lead.goal}`,
-        lead.message,
-      ]
-        .filter(Boolean)
-        .join("\n"),
-      source: "contact" as const,
-    });
-  } catch (e) {
-    console.error("[gestao-leads] resend exception", e);
+  if (!tooManyLinks(lead.message) && emailBudgetOk()) {
+    try {
+      await sendLeadNotification({
+        name: lead.name,
+        email: lead.email,
+        phone: lead.whatsapp,
+        brand: lead.company,
+        budget: lead.budget,
+        message: [
+          lead.role && `Cargo: ${lead.role}`,
+          lead.site && `Site: ${lead.site}`,
+          lead.modality && `Modalidade: ${lead.modality}`,
+          lead.goal && `Objetivo: ${lead.goal}`,
+          lead.message,
+        ]
+          .filter(Boolean)
+          .join("\n"),
+        source: "contact" as const,
+      });
+    } catch (e) {
+      console.error("[gestao-leads] resend exception", e);
+    }
+  } else {
+    console.warn("[gestao-leads] email suprimido (spam ou teto horário)");
   }
 
   return NextResponse.json({ ok: true });

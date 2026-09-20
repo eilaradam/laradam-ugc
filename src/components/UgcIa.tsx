@@ -15,6 +15,7 @@ import { BRAND_LOGO_FILES } from "@/data/content";
 import { COPY, IDIOMAS, type Idioma } from "@/data/ugcIaCopy";
 import { useLang } from "@/lib/i18n";
 import { useVideoModal } from "./VideoModalProvider";
+import Honeypot from "./Honeypot";
 
 const PALETTE: React.CSSProperties = {
   ["--mm-orange" as string]: "#FF5824",
@@ -404,6 +405,7 @@ function PainelDolar({ t }: { t: typeof COPY.pt }) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           name: f.get("name"), email: f.get("email"), company: f.get("company"),
+          website: f.get("website"),
           budget: f.get("budget"), message: f.get("message"),
           modality: "ugc-ia", goal: f.get("qtd") || "internacional",
         }),
@@ -449,6 +451,7 @@ function PainelDolar({ t }: { t: typeof COPY.pt }) {
           </div>
         ) : (
           <form onSubmit={enviar} className="flex flex-col gap-3">
+            <Honeypot />
             <div>
               <p className="font-display font-black text-lg leading-tight">{u.formTitulo}</p>
               <p className="text-xs text-white/55 mt-1">{u.formSub}</p>

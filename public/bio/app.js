@@ -442,6 +442,7 @@ const ChatEngine = {
         <input class="cl-in" data-k="nome" placeholder="Seu nome" autocomplete="name" value="${esc(this.nome || "")}">
         <input class="cl-in" data-k="whatsapp" placeholder="Seu WhatsApp" inputmode="tel" autocomplete="tel">
         <input class="cl-in" data-k="email" type="email" placeholder="Seu e-mail" autocomplete="email">
+        <input data-k="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:0;height:0;opacity:0">
         <div class="cl-err"></div>
         <button class="cl-btn">Ver minha recomendação ${ICONS.arrow}</button>`;
       const btn = $(".cl-btn", box);
@@ -450,6 +451,7 @@ const ChatEngine = {
         const nome = $('[data-k="nome"]', box).value.trim();
         const whatsapp = $('[data-k="whatsapp"]', box).value.trim();
         const email = $('[data-k="email"]', box).value.trim();
+        const hp = $('[data-k="hp"]', box).value.trim(); // isca anti-bot
         if (!nome || !whatsapp) { err.textContent = "Preenche pelo menos nome e WhatsApp :)"; return; }
         err.textContent = "";
         btn.disabled = true; btn.textContent = "Enviando...";
@@ -458,7 +460,7 @@ const ChatEngine = {
           await fetch("/api/bio-lead", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ nome, whatsapp, email, respostas: { tags: this.tags, contexto: this.contexto, produto_id: this.produtoId }, produto: produto ? produto.titulo : "" }),
+            body: JSON.stringify({ nome, whatsapp, email, website: hp, respostas: { tags: this.tags, contexto: this.contexto, produto_id: this.produtoId }, produto: produto ? produto.titulo : "" }),
           });
         } catch {}
         Analytics.track("chat_lead");

@@ -1,17 +1,32 @@
 import { NextResponse } from "next/server";
 import { supabaseAdmin } from "@/lib/supabase";
 import { sendLeadNotification } from "@/lib/resend";
+import { guardLead, emailBudgetOk, validEmail, str } from "@/lib/guard";
 
 export async function POST(req: Request) {
-  const body = await req.json().catch(() => null);
-  if (!body?.email) {
+  const body = (await req.json().catch(() => null)) as Record<
+    string,
+    unknown
+  > | null;
+  if (!body) {
     return NextResponse.json({ error: "Email obrigatório" }, { status: 400 });
   }
 
+  const barrado = guardLead(req, body, {
+    name: "leads",
+    limit: 5,
+    windowMs: 60 * 60 * 1000,
+  });
+  if (barrado) return barrado;
+
+  if (!validEmail(body.email)) {
+    return NextResponse.json({ error: "Email inválido" }, { status: 400 });
+  }
+
   const lead = {
-    name: body.name ?? null,
+    name: str(body.name, 120),
     email: String(body.email).trim(),
-    phone: body.phone ?? null,
+    phone: str(body.phone, 40),
     brand: null as string | null,
     budget: null as string | null,
     message: null as string | null,
@@ -30,10 +45,14 @@ export async function POST(req: Request) {
     console.error("[leads] supabase exception", e);
   }
 
-  try {
-    await sendLeadNotification(lead);
-  } catch (e) {
-    console.error("[leads] resend exception", e);
+  if (emailBudgetOk()) {
+    try {
+      await sendLeadNotification(lead);
+    } catch (e) {
+      console.error("[leads] resend exception", e);
+    }
+  } else {
+    console.warn("[leads] email suprimido (teto horário)");
   }
 
   return NextResponse.json({ ok: true });

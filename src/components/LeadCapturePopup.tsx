@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
 import { useT } from "@/lib/i18n";
+import Honeypot from "./Honeypot";
 
 const DISMISS_KEY = "lead-popup-dismissed-at";
 const SUBMITTED_KEY = "lead-popup-submitted";
@@ -136,6 +137,7 @@ export default function LeadCapturePopup() {
                 </p>
 
                 <form onSubmit={onSubmit} className="space-y-2.5">
+                  <Honeypot />
                   <input
                     name="name"
                     placeholder={t.popup.name}

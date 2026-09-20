@@ -31,6 +31,7 @@ function WhatsAppIcon(props: React.SVGProps<SVGSVGElement>) {
 }
 import { SITE } from "@/data/content";
 import { useT } from "@/lib/i18n";
+import Honeypot from "./Honeypot";
 
 export default function Contact() {
   const t = useT();
@@ -138,6 +139,7 @@ export default function Contact() {
           transition={{ duration: 0.7, delay: 0.15 }}
           className="md:col-span-7 space-y-5"
         >
+          <Honeypot />
           <div className="grid md:grid-cols-2 gap-5">
             <Field name="name" label={t.contact.name} placeholder={t.contact.namePh} required />
             <Field
