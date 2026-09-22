@@ -64,9 +64,8 @@ export const MEIDIGITAL: Proposta = {
 
   // ↓↓↓ TROQUE AQUI. `id` = id do vídeo em src/data/content.ts.
   referencias: [
-    { id: "t9", porque: "O vídeo do Reclame Aqui: mesmo tom e mesma linguagem que a campanha pede." },
-    { id: "t0a", porque: "Fintech pra quem empreende: 100M de views e recorde de CTR no Meta." },
-    { id: "t0b", porque: "Explicação simples de produto financeiro, sem cara de anúncio." },
+    { id: "t-meidigital", porque: "O vídeo que já gravamos juntas pra MEI Digital: é a base de tom e de formato pra este." },
+    { id: "t-proton", porque: "Falando com a câmera + b-roll mostrando a rotina de um MEI: trabalho, correria e a própria experiência." },
   ],
 
   cronograma: [

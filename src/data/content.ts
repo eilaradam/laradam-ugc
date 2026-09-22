@@ -228,6 +228,7 @@ export const VIDEOS: Video[] = [
   { id: "t-reforma100", title: "Reforma100", category: "tech", brand: "Reforma100", youtubeId: "XWnvZbTcHJw" },
   { id: "t-proton", title: "Proton VPN", category: "tech", brand: "Proton VPN", youtubeId: "PkDuP91RErg" },
   { id: "t-decolar", title: "Decolar", category: "tech", brand: "Decolar", youtubeId: "J7_OQ-y0v0g" },
+  { id: "t-meidigital", title: "MEI Digital", category: "tech", brand: "MEI Digital", youtubeId: "vO2ygP0PpO8", landscape: true },
   { id: "t-vero", title: "Vero", category: "tech", brand: "Vero", youtubeId: "8QRM5LPK5M8" },
   { id: "t6", title: "Focus", category: "tech", brand: "Focus", youtubeId: "GvLjL_Ru19U" },
   { id: "t7", title: "Logitech", category: "tech", brand: "Logitech", youtubeId: "sspAuh3TFqw" },
