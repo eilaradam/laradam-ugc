@@ -15,7 +15,7 @@ export default function HeroOption6() {
   return (
     <section
       id="top"
-      className="relative bg-[#F4F4EF] pt-4 md:pt-6 pb-3 md:pb-6"
+      className="relative bg-[#F4F4EF] pt-20 md:pt-6 pb-3 md:pb-6"
     >
       {/* Camadas de fundo (grid + glow) — clipadas aqui pra não vazar,
           sem cortar a foto que fica no fluxo normal acima delas. */}
