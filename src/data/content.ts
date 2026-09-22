@@ -111,13 +111,13 @@ export const HERO_FOTOS: HeroFoto[] = [
 export const CATEGORIES: Category[] = [
   { slug: "all", name: "Todos", tagline: "" },
   { slug: "ia", name: "Conteúdo com IA", tagline: "Inteligência artificial virando conteúdo" },
-  { slug: "beleza", name: "Beleza", tagline: "Produtos que viram ritual" },
-  { slug: "casa", name: "Casa & Deco", tagline: "Ambientes que inspiram" },
+  { slug: "tech", name: "Tech & Apps", tagline: "Apps e gadgets em linguagem humana" },
   { slug: "gastronomia", name: "Gastronomia", tagline: "Comida que dá água na boca" },
+  { slug: "casa", name: "Casa & Deco", tagline: "Ambientes que inspiram" },
+  { slug: "beleza", name: "Beleza", tagline: "Produtos que viram ritual" },
   { slug: "food", name: "Drinks e Sobremesas", tagline: "Bebidas, doces e sabores que viram desejo" },
   { slug: "saude", name: "Saúde & Fitness", tagline: "Suplementos e bem-estar que viram rotina" },
   { slug: "financas", name: "Finanças", tagline: "Dinheiro e fintech sem complicação" },
-  { slug: "tech", name: "Tech & Apps", tagline: "Apps e gadgets em linguagem humana" },
   { slug: "moda", name: "Moda", tagline: "Outfits que contam história" },
   { slug: "viagem", name: "Viagem", tagline: "Experiências & destinos" },
 ];
