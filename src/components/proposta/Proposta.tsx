@@ -25,6 +25,14 @@ export type Proposta = {
   whatsapp: string;
   whatsappMensagem: string;
   email: string;
+  /** Bloco final. Sem isso, entra o texto neutro padrão. */
+  chamada?: { titulo: string; destaque: string; texto: string };
+};
+
+const CHAMADA_PADRAO = {
+  titulo: "Vamos alinhar os",
+  destaque: "próximos passos",
+  texto: "Qualquer dúvida sobre a proposta, é só me chamar. Com o descritivo em mãos, fecho o roteiro e mando pra aprovação.",
 };
 
 function Eyebrow({ n, children }: { n: string; children: React.ReactNode }) {
@@ -204,9 +212,10 @@ export default function PropostaPage({ p }: { p: Proposta }) {
       <section className="mx-auto max-w-5xl px-6 py-14 md:py-20">
         <div className="rounded-3xl bg-foreground p-8 text-background md:p-12">
           <h2 className="font-display text-3xl font-black tracking-tight md:text-5xl">
-            Bora fazer bonito na <span className="font-serif-accent italic text-accent-on-dark">votação</span>?
+            {(p.chamada || CHAMADA_PADRAO).titulo}{" "}
+            <span className="font-serif-accent italic text-accent-on-dark">{(p.chamada || CHAMADA_PADRAO).destaque}</span>?
           </h2>
-          <p className="mt-4 max-w-xl text-background/75">Me chama e a gente fecha o roteiro ainda essa semana.</p>
+          <p className="mt-4 max-w-xl text-background/75">{(p.chamada || CHAMADA_PADRAO).texto}</p>
           <div className="mt-8 flex flex-wrap gap-3">
             <a href={zap} target="_blank" rel="noopener" className="inline-flex items-center gap-2 rounded-full bg-accent-on-dark px-6 py-3 font-semibold text-foreground transition-transform hover:-translate-y-0.5">
               <MessageCircle size={18} /> Falar no WhatsApp
