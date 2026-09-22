@@ -144,6 +144,8 @@ export const VIDEOS: Video[] = [
   { id: "ia5", title: "Hostgator", category: "ia", brand: "Hostgator", youtubeId: "rnb44YHTlAY" },
 
   // GASTRONOMIA
+  { id: "g-oliv1", title: "Oliv", category: "gastronomia", brand: "Oliv", youtubeId: "UeU757r2FUw" },
+  { id: "g-oliv2", title: "Oliv", category: "gastronomia", brand: "Oliv", youtubeId: "rrIv0BFvq38" },
   { id: "g1", title: "Ateliê", category: "gastronomia", brand: "Ateliê", youtubeId: "0FhBNV71z9A" },
   { id: "g2", title: "Ateliê", category: "gastronomia", brand: "Ateliê", youtubeId: "XmjA7cpCPfQ" },
   { id: "g3", title: "Rap10", category: "gastronomia", brand: "Rap10", youtubeId: "orhbzi_XYiA" },
@@ -173,6 +175,7 @@ export const VIDEOS: Video[] = [
   { id: "b16", title: "Botox", category: "beleza", brand: "Botox", youtubeId: "YOmm3Zi87PE" },
 
   // CASA & DECO
+  { id: "d-noroeste", title: "Noroeste Solar", category: "casa", brand: "Noroeste Solar", youtubeId: "vP3qucUXC8I" },
   { id: "d-hoomy", title: "Hoomy", category: "casa", brand: "Hoomy", youtubeId: "IcBBViuO6Gw" },
   // Short sem maxresdefault/sddefault no YouTube (dão 404): fixamos a capa
   // vertical oar2 direto pra não depender da cascata de fallback do VideoCard.
