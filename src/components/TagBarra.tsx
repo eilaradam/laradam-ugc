@@ -10,7 +10,7 @@ import { proximaData, fraseContagem, type Contagem } from "@/data/datas";
  * chegando, e aí o menu volta a encostar no topo.
  *
  * As frases da data (recado + extras) correm na VERTICAL, uma de cada vez.
- * Data em destaque (Black Friday) ganha faixa mais alta, fundo preto e selo.
+ * Data em destaque (Black Friday) ganha faixa mais alta, fundo amarelo e selo preto.
  *
  * O menu é `fixed top-0`, então a altura da faixa vira a variável CSS
  * --barra-topo, que o Nav e o <main> usam pra descer junto.
@@ -90,13 +90,13 @@ export default function TagBarra() {
       style={{ height: c.destaque ? ALTURA_DESTAQUE : ALTURA }}
       className={`group fixed top-0 left-0 right-0 z-[60] flex items-center justify-center gap-2 px-4 transition-colors ${
         c.destaque
-          ? "bg-[#0B0F1A] text-background hover:bg-foreground md:gap-3"
+          ? "bg-[#F5B301] text-[#1E2A44] hover:bg-[#E9A800] md:gap-3"
           : "bg-foreground text-background hover:bg-primary"
       }`}
     >
       {selo ? (
-        /* selo da data grande: teal claro sobre preto, regra dela de contraste */
-        <span className="flex-shrink-0 rounded-full bg-accent-on-dark px-2 py-0.5 text-[9px] md:text-[10px] font-bold uppercase tracking-[0.18em] text-foreground">
+        /* selo da data grande: preto com letra amarela, cara de promoção */
+        <span className="flex-shrink-0 rounded-full bg-[#0B0F1A] px-2 py-0.5 text-[9px] md:text-[10px] font-bold uppercase tracking-[0.18em] text-[#F5B301]">
           {selo}
         </span>
       ) : (
@@ -114,11 +114,11 @@ export default function TagBarra() {
       >
         {frase}
       </span>
-      <span className={`hidden sm:inline ${c.destaque ? "text-accent-on-dark/70" : "text-background/50"}`}>·</span>
+      <span className={`hidden sm:inline ${c.destaque ? "text-[#1E2A44]/40" : "text-background/50"}`}>·</span>
       <Ticker
         linhas={c.linhas}
         className={`hidden sm:block ${
-          c.destaque ? "text-[13px] md:text-[15px] text-background/85" : "text-[11px] md:text-[13px] text-background/70"
+          c.destaque ? "text-[13px] md:text-[15px] text-[#1E2A44]/80" : "text-[11px] md:text-[13px] text-background/70"
         }`}
       />
 
@@ -130,7 +130,7 @@ export default function TagBarra() {
 
       <span
         className={`flex-shrink-0 transition-transform group-hover:translate-x-0.5 ${
-          c.destaque ? "text-accent-on-dark" : ""
+          c.destaque ? "font-bold text-[#1E2A44]" : ""
         }`}
       >
         {c.destaque ? <span className="hidden md:inline text-[12px] font-semibold mr-1">reservar agenda</span> : null}→
