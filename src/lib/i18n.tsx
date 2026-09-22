@@ -448,25 +448,25 @@ const dict: Record<Lang, Dict> = {
           tagline: "Inteligência artificial virando conteúdo",
         },
         {
-          slug: "beleza",
-          name: "Beleza",
-          tagline: "Produtos que viram ritual",
-        },
-        { slug: "casa", name: "Casa & Deco", tagline: "Ambientes que inspiram" },
-        {
           slug: "tech",
           name: "Tech & Apps",
           tagline: "Apps e gadgets em linguagem humana",
         },
         {
-          slug: "financas",
-          name: "Finanças",
-          tagline: "Dinheiro e fintech sem complicação",
-        },
-        {
           slug: "gastronomia",
           name: "Gastronomia",
           tagline: "Comida que dá água na boca",
+        },
+        { slug: "casa", name: "Casa & Deco", tagline: "Ambientes que inspiram" },
+        {
+          slug: "beleza",
+          name: "Beleza",
+          tagline: "Produtos que viram ritual",
+        },
+        {
+          slug: "financas",
+          name: "Finanças",
+          tagline: "Dinheiro e fintech sem complicação",
         },
         {
           slug: "food",
@@ -951,9 +951,14 @@ const dict: Record<Lang, Dict> = {
           tagline: "Artificial intelligence turned into content",
         },
         {
-          slug: "beleza",
-          name: "Beauty",
-          tagline: "Products that become a ritual",
+          slug: "tech",
+          name: "Tech & Apps",
+          tagline: "Apps and gadgets in human language",
+        },
+        {
+          slug: "gastronomia",
+          name: "Gastronomy",
+          tagline: "Food that makes your mouth water",
         },
         {
           slug: "casa",
@@ -961,19 +966,14 @@ const dict: Record<Lang, Dict> = {
           tagline: "Spaces that inspire",
         },
         {
-          slug: "tech",
-          name: "Tech & Apps",
-          tagline: "Apps and gadgets in human language",
+          slug: "beleza",
+          name: "Beauty",
+          tagline: "Products that become a ritual",
         },
         {
           slug: "financas",
           name: "Finance",
           tagline: "Money and fintech, no jargon",
-        },
-        {
-          slug: "gastronomia",
-          name: "Gastronomy",
-          tagline: "Food that makes your mouth water",
         },
         {
           slug: "food",
