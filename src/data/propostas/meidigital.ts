@@ -16,7 +16,7 @@ export const MEIDIGITAL: Proposta = {
     "Vídeo com o meu rosto, em formato orgânico, pra levar direto à votação na categoria de soluções para microempresas.",
   destaques: [
     { rotulo: "Votação até", valor: "05/11" },
-    { rotulo: "Conteúdo rodando", valor: "todo outubro" },
+    { rotulo: "Conteúdo rodando", valor: "Em outubro" },
     { rotulo: "Gravação", valor: "28 a 30/09" },
   ],
 
