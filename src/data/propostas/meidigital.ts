@@ -66,6 +66,7 @@ export const MEIDIGITAL: Proposta = {
   referencias: [
     { id: "t-meidigital", porque: "O vídeo que já gravamos juntas pra MEI Digital: é a base de tom e de formato pra este." },
     { id: "t-proton", porque: "Falando com a câmera + b-roll mostrando a rotina de um MEI: trabalho, correria e a própria experiência." },
+    { id: "d8", porque: "Formato de depoimento, falando com a câmera de um jeito mais profissional: qualidade superior + b-roll." },
   ],
 
   cronograma: [
