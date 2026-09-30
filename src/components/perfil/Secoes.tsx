@@ -7,6 +7,9 @@ import { NICHO_EMOJI, PUBLI, RESULTADOS } from "@/data/perfil";
 import { useVideoModal } from "@/components/VideoModalProvider";
 import { fmtBR, usePerfil } from "./PerfilApp";
 
+// Quantos vídeos aparecem em cada carrossel de nicho (a busca continua olhando todos).
+const POR_NICHO = 5;
+
 const THUMBS = ["maxresdefault.jpg", "oardefault.jpg", "oar2.jpg", "sddefault.jpg", "hqdefault.jpg", "mqdefault.jpg"];
 
 /* ---------- card de vídeo (9:16), prévia no hover, abre no player ---------- */
@@ -113,7 +116,7 @@ function Nicho({ slug, nome, tagline, videos }: { slug: string; nome: string; ta
           <h3>{NICHO_EMOJI[slug] ?? "⭐"} {nome} <small>{videos.length}</small></h3>
           {tagline && <div className="tag">{tagline}</div>}
         </div>
-        <div className="pf-setas">
+        <div className="pf-setas" style={{ visibility: podeAnt || podeProx ? "visible" : "hidden" }}>
           <button aria-label="Anterior" onClick={() => rolar(-1)} disabled={!podeAnt}><ChevronLeft className="w-5 h-5" /></button>
           <button aria-label="Próximo" onClick={() => rolar(1)} disabled={!podeProx}><ChevronRight className="w-5 h-5" /></button>
         </div>
@@ -138,7 +141,7 @@ export function Videos() {
       <Titulo
         id="videos"
         titulo="Meus vídeos 🎬"
-        sub={`${VIDEOS.length} vídeos pra ${new Set(VIDEOS.map((v) => v.brand)).size} marcas, separados por nicho. Desliza cada fileira pro lado e clica pra assistir.`}
+        sub={`Os ${POR_NICHO} mais recentes de cada nicho. Quer ver outro? Busca pela marca: são ${VIDEOS.length} vídeos pra ${new Set(VIDEOS.map((v) => v.brand)).size} marcas.`}
         extra={
           <label className="pf-busca">
             <Search className="w-4 h-4 text-[#9AA0AE]" />
@@ -162,12 +165,12 @@ export function Videos() {
           <div className="pf-pilulas">
             {nichos.map((n) => (
               <a key={n.slug} href={`#nicho-${n.slug}`} className="pf-pilula">
-                {NICHO_EMOJI[n.slug]} {n.name} <span className="opacity-60">{VIDEOS.filter((v) => v.category === n.slug).length}</span>
+                {NICHO_EMOJI[n.slug]} {n.name}
               </a>
             ))}
           </div>
           {nichos.map((n) => (
-            <Nicho key={n.slug} slug={n.slug} nome={n.name} tagline={n.tagline} videos={VIDEOS.filter((v) => v.category === n.slug)} />
+            <Nicho key={n.slug} slug={n.slug} nome={n.name} tagline={n.tagline} videos={VIDEOS.filter((v) => v.category === n.slug).slice(0, POR_NICHO)} />
           ))}
         </>
       )}
