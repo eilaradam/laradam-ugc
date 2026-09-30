@@ -42,7 +42,7 @@ export default function TakeRenderizar() {
   }
 
   return (
-    <Take id="renderizar" direita={<span className="st-chip-claro st-chip">fila: {pedido.length} {pedido.length === 1 ? "item" : "itens"}</span>}>
+    <Take id="renderizar" direita={<span className="st-chip-claro st-chip" role="status" aria-atomic="true">fila: {pedido.length} {pedido.length === 1 ? "item" : "itens"}</span>}>
       <div className="mb-6">
         <h2 className="st-display font-extrabold text-4xl md:text-6xl leading-[0.98] tracking-tight">{RENDERIZAR.titulo}</h2>
         <p className="mt-3 text-[var(--st-ink-2)] text-base md:text-lg max-w-xl">{RENDERIZAR.sub}</p>

@@ -79,6 +79,20 @@ export default function Timeline() {
         <div
           ref={area}
           className="relative flex-1 min-w-0 select-none cursor-crosshair"
+          role="slider"
+          tabIndex={0}
+          aria-label="Playhead da timeline"
+          aria-valuemin={0}
+          aria-valuemax={DURACAO_TOTAL}
+          aria-valuenow={Math.round(tempo)}
+          aria-valuetext={timecode(tempo)}
+          onKeyDown={(e) => {
+            const passo = e.shiftKey ? 30 : 6;
+            if (e.key === "ArrowRight") { e.preventDefault(); irPara(tempo + passo); }
+            else if (e.key === "ArrowLeft") { e.preventDefault(); irPara(tempo - passo); }
+            else if (e.key === "Home") { e.preventDefault(); irPara(0); }
+            else if (e.key === "End") { e.preventDefault(); irPara(DURACAO_TOTAL); }
+          }}
           onPointerDown={onDown}
           onPointerMove={onMove}
           onPointerUp={onUp}

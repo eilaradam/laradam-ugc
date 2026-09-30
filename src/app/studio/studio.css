@@ -264,6 +264,7 @@
 .st-esconde-barra { scrollbar-width: none; }
 
 /* ---------- acessibilidade e movimento ---------- */
+html:has(.studio) { scroll-padding-top: calc(var(--st-topo) + 16px); scroll-padding-bottom: calc(var(--st-timeline) + 16px); }
 .studio button, .studio [role="checkbox"], .studio a { cursor: pointer; }
 .studio :focus-visible { outline: 3px solid var(--st-blue); outline-offset: 2px; border-radius: 4px; }
 .studio .st-clipe:focus-visible, .studio .st-clip-card:focus-visible { outline-offset: 0; }
