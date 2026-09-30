@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Bookmark, ChevronLeft, ChevronRight, Heart, MessageCircle, Play, Plus, Search, Send } from "lucide-react";
 import { BRAND_LOGO_FILES, CATEGORIES, VIDEOS, type Video } from "@/data/content";
-import { MELHORES, NICHO_EMOJI, PUBLI, RESULTADOS } from "@/data/perfil";
+import { NICHO_EMOJI, PUBLI, RESULTADOS } from "@/data/perfil";
 import { useVideoModal } from "@/components/VideoModalProvider";
 import { fmtBR, usePerfil } from "./PerfilApp";
 
@@ -56,15 +56,16 @@ export function Resultados() {
       </div>
       <div className="pf-cases">
         {RESULTADOS.cases.map((c) => {
-          const v = VIDEOS.find((x) => x.id === c.id);
-          if (!v) return null;
+          const v: Video = { id: `case-${c.youtubeId}`, title: c.marca, brand: c.marca, category: c.categoria, youtubeId: c.youtubeId, thumbnail: c.capa };
           return (
-            <div key={c.id} className="pf-case">
+            <div key={c.youtubeId} className="pf-case">
               <Reel video={v} grande />
               <div className="txt">
                 <div className="pf-mao pf-nota">{c.nota}</div>
-                <h3>{c.titulo}</h3>
+                <h3>{c.marca}</h3>
                 <div className="metrica">{c.metrica}</div>
+                <div className="text-xs font-extrabold uppercase tracking-wider text-[var(--cinza)] mt-1.5">{c.onde}</div>
+                {c.stats && <div className="stats">{c.stats.map((x) => <span key={x}>{x}</span>)}</div>}
                 <p>{c.detalhe}</p>
                 <span className="dica">▶ clica no vídeo pra assistir</span>
               </div>
@@ -131,7 +132,6 @@ export function Videos() {
   const resultados: Video[] = q
     ? VIDEOS.filter((v) => `${v.brand} ${v.title} ${v.category} ${nichos.find((n) => n.slug === v.category)?.name ?? ""}`.toLowerCase().includes(q))
     : [];
-  const melhores = MELHORES.map((id) => VIDEOS.find((v) => v.id === id)).filter((v): v is Video => Boolean(v));
 
   return (
     <section id="videos" className="pf-sec">
@@ -160,14 +160,12 @@ export function Videos() {
         <>
           {/* atalhos pros nichos */}
           <div className="pf-pilulas">
-            <a href="#nicho-melhores" className="pf-pilula on">⭐ Melhores</a>
             {nichos.map((n) => (
               <a key={n.slug} href={`#nicho-${n.slug}`} className="pf-pilula">
                 {NICHO_EMOJI[n.slug]} {n.name} <span className="opacity-60">{VIDEOS.filter((v) => v.category === n.slug).length}</span>
               </a>
             ))}
           </div>
-          <Nicho slug="melhores" nome="Melhores" tagline="Os que mais deram resultado" videos={melhores} />
           {nichos.map((n) => (
             <Nicho key={n.slug} slug={n.slug} nome={n.name} tagline={n.tagline} videos={VIDEOS.filter((v) => v.category === n.slug)} />
           ))}

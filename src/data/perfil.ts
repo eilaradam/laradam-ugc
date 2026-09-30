@@ -11,12 +11,11 @@ export const PERFIL = {
   fallback: { followers: 16039, reach_month: 367702, posts: 141 },
   bioTitulo: "Lara Dam 👋 UGC creator & influenciadora",
   bio: [
-    "🎬 vídeo que vende pra sua marca (UGC, criativos, roteiro)",
-    "📱 publi que conversa no meu perfil (reels, stories, collab)",
-    "📍 Litoral de SP · 🤝 InfinitePay, Méliuz, DT3, Logitech, Airbnb",
+    "🎬 vídeo que vende pra sua marca (UGC, publi, criativos, roteiro)",
+    "📍 Litoral de SP",
   ],
   balao: "Oi! Eu gravo **vídeo que vende** pra sua marca e faço **publi que conversa** no meu perfil. Sem cara de anúncio.",
-  nota: "← me chama que eu respondo em até 48h",
+  nota: "← me chama pra conversarmos sobre a sua empresa ou conteúdo pra sua marca",
   carimbo: "100M+ views",
 };
 
@@ -34,7 +33,7 @@ export const NAV = [
 
 export const RESULTADOS = {
   titulo: "Números que importam 📊",
-  sub: "O que o meu conteúdo já entregou pras marcas. Os dois vídeos abaixo são os maiores cases: clica pra assistir.",
+  sub: "O que o meu conteúdo já entregou pras marcas. Os vídeos abaixo são os maiores cases: clica pra assistir.",
   numeros: [
     { v: "100M+", k: "views em campanhas" },
     { v: "500+", k: "vídeos gravados" },
@@ -43,16 +42,19 @@ export const RESULTADOS = {
     { v: "38%", k: "de CPA a menos" },
     { v: "2 anos", k: "de estrada" },
   ],
+  // Os 4 cases de destaque (mesmos do site atual). Cada um vira um card com
+  // o vídeo do YouTube ao lado; a capa vem de /public/best-*.jpg.
   cases: [
-    { id: "t0a", nota: "← o maior case", titulo: "InfinitePay", metrica: "100M de views", detalhe: "Recorde de CTR no Meta. O vídeo virou o criativo principal da campanha." },
-    { id: "t0b", nota: "← o segundo maior", titulo: "Méliuz", metrica: "30M de views", detalhe: "Roteiro + criativo pra growth. Campanha de mercado com cashback." },
+    { youtubeId: "5wf8Fv2CTa4", capa: "/best-infinitepay.jpg", nota: "← o maior case", marca: "InfinitePay", categoria: "financas", metrica: "+100 milhões de views", onde: "apenas no TikTok", detalhe: "Recorde de CTR no Meta. O vídeo virou o criativo principal da campanha." },
+    { youtubeId: "wesTfq67X9o", capa: "/best-meliuz.jpg", nota: "← roteiro + criativo", marca: "Méliuz", categoria: "financas", metrica: "+30 milhões de views", onde: "apenas no TikTok", detalhe: "Campanha de mercado com cashback, feita pra growth." },
+    { youtubeId: "2s6BI893C74", capa: "/best-bready.jpg", nota: "← o que mais converteu", marca: "Bready", categoria: "gastronomia", metrica: "5,94x de ROAS", onde: "anúncios de performance", detalhe: "Criativo pra tráfego pago: cada R$ 1 investido voltou quase 6." },
+    { youtubeId: "dgQYEfEQTvQ", capa: "/best-meliuz-cashback.jpg", nota: "← campanha 360°", marca: "Méliuz Cashback", categoria: "financas", metrica: "1.023 vídeos", onde: "campanha 360°", detalhe: "Volume com consistência: uma campanha inteira com a minha cara.", stats: ["5,6M de views", "66 mil salvamentos"] },
   ],
 };
 
 export const NICHO_EMOJI: Record<string, string> = {
   ia: "🤖", tech: "📱", gastronomia: "🍝", casa: "🛋️", beleza: "💄", financas: "💸", food: "🍹", saude: "🏃‍♀️", moda: "👗", viagem: "✈️",
 };
-export const MELHORES = ["t0a", "t0b", "t-infinitepay", "b1", "g-oliv1", "d-noroeste", "s-pharma-pdrn", "t-meidigital", "ia1", "va3", "d1", "s1"];
 
 export const CARAS = [
   { src: "/ensaio/cara-01.webp", legenda: "o hook" },
