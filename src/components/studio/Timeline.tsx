@@ -87,7 +87,7 @@ export default function Timeline() {
           <div className="st-regua">
             {ticks.map((t) => (
               <div key={t.s} className={`st-tick ${t.grande ? "grande" : ""}`} style={{ left: pct(t.s) }}>
-                {t.grande && <span>{timecode(t.s).slice(3, 8)}</span>}
+                {t.grande && <span className={t.s % 60 === 0 ? "" : "hidden md:inline"}>{timecode(t.s).slice(3, 8)}</span>}
               </div>
             ))}
           </div>
