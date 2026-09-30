@@ -29,9 +29,9 @@ export default function Contato() {
           <div className="pf-mao pf-nota mt-4">ou me chama direto ↓</div>
           <div className="mt-3 grid gap-2">
             {[
-              { r: "WhatsApp", v: PERFIL.whatsappLabel, h: `https://wa.me/${PERFIL.whatsapp}`, cor: "var(--verde)" },
-              { r: "E-mail", v: PERFIL.email, h: `mailto:${PERFIL.email}`, cor: "var(--amarelo)" },
-              { r: "Instagram", v: `@${PERFIL.usuario}`, h: PERFIL.instagramUrl, cor: "var(--rosa)" },
+              { r: "WhatsApp", v: PERFIL.whatsappLabel, h: `https://wa.me/${PERFIL.whatsapp}`, cor: "#fff" },
+              { r: "E-mail", v: PERFIL.email, h: `mailto:${PERFIL.email}`, cor: "var(--claro2)" },
+              { r: "Instagram", v: `@${PERFIL.usuario}`, h: PERFIL.instagramUrl, cor: "#fff" },
             ].map((c) => (
               <a key={c.r} href={c.h} target={c.h.startsWith("http") ? "_blank" : undefined} rel="noopener" className="flex items-center gap-3 px-4 py-3 rounded-2xl border-2 border-[var(--ink)] font-bold transition-transform hover:-translate-y-0.5" style={{ background: c.cor }} data-track={`perfil_contato_${c.r.toLowerCase()}`}>
                 <span className="text-xs uppercase tracking-widest w-20 text-[var(--ink)] opacity-70">{c.r}</span><span>{c.v}</span><ArrowUpRight className="w-4 h-4 ml-auto opacity-60" />

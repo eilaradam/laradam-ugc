@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { Bookmark, Heart, MessageCircle, Play, Plus, Search, Send } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { Bookmark, ChevronLeft, ChevronRight, Heart, MessageCircle, Play, Plus, Search, Send } from "lucide-react";
 import { BRAND_LOGO_FILES, CATEGORIES, VIDEOS, type Video } from "@/data/content";
 import { MELHORES, NICHO_EMOJI, PUBLI, RESULTADOS } from "@/data/perfil";
 import { useVideoModal } from "@/components/VideoModalProvider";
@@ -51,7 +51,7 @@ export function Resultados() {
       <Titulo id="resultados" titulo={RESULTADOS.titulo} sub={RESULTADOS.sub} />
       <div className="pf-numeros6">
         {RESULTADOS.numeros.map((n) => (
-          <div key={n.k} className="pf-num" style={{ background: n.cor }}><b>{n.v}</b><span>{n.k}</span></div>
+          <div key={n.k} className="pf-num"><b>{n.v}</b><span>{n.k}</span></div>
         ))}
       </div>
       <div className="pf-cases">
@@ -76,54 +76,102 @@ export function Resultados() {
   );
 }
 
-/* ---------- VÍDEOS: portfólio completo, filtro por nicho + busca ---------- */
+/* ---------- VÍDEOS: um carrossel por nicho (+ busca) ---------- */
+function useTrilho({ videos }: { videos: Video[] }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [podeAnt, setPodeAnt] = useState(false);
+  const [podeProx, setPodeProx] = useState(true);
+
+  const atualizar = () => {
+    const el = ref.current;
+    if (!el) return;
+    setPodeAnt(el.scrollLeft > 4);
+    setPodeProx(el.scrollLeft + el.clientWidth < el.scrollWidth - 4);
+  };
+  useEffect(() => {
+    atualizar();
+    const el = ref.current;
+    if (!el) return;
+    el.addEventListener("scroll", atualizar, { passive: true });
+    window.addEventListener("resize", atualizar);
+    return () => { el.removeEventListener("scroll", atualizar); window.removeEventListener("resize", atualizar); };
+  }, [videos.length]);
+
+  const rolar = (dir: 1 | -1) => ref.current?.scrollBy({ left: ref.current.clientWidth * dir, behavior: "smooth" });
+
+  return { ref, podeAnt, podeProx, rolar };
+}
+
+function Nicho({ slug, nome, tagline, videos }: { slug: string; nome: string; tagline?: string; videos: Video[] }) {
+  const { ref, podeAnt, podeProx, rolar } = useTrilho({ videos });
+  if (videos.length === 0) return null;
+  return (
+    <div id={`nicho-${slug}`} className="pf-nicho">
+      <div className="pf-nicho-cab">
+        <div>
+          <h3>{NICHO_EMOJI[slug] ?? "⭐"} {nome} <small>{videos.length}</small></h3>
+          {tagline && <div className="tag">{tagline}</div>}
+        </div>
+        <div className="pf-setas">
+          <button aria-label="Anterior" onClick={() => rolar(-1)} disabled={!podeAnt}><ChevronLeft className="w-5 h-5" /></button>
+          <button aria-label="Próximo" onClick={() => rolar(1)} disabled={!podeProx}><ChevronRight className="w-5 h-5" /></button>
+        </div>
+      </div>
+      <div ref={ref} className="pf-trilho">
+        {videos.map((v) => <Reel key={v.id} video={v} />)}
+      </div>
+    </div>
+  );
+}
+
 export function Videos() {
-  const [nicho, setNicho] = useState("melhores");
   const [busca, setBusca] = useState("");
-  const [limite, setLimite] = useState(12);
   const nichos = CATEGORIES.filter((c) => c.slug !== "all");
   const q = busca.trim().toLowerCase();
-  const lista: Video[] = q
+  const resultados: Video[] = q
     ? VIDEOS.filter((v) => `${v.brand} ${v.title} ${v.category} ${nichos.find((n) => n.slug === v.category)?.name ?? ""}`.toLowerCase().includes(q))
-    : nicho === "melhores"
-      ? MELHORES.map((id) => VIDEOS.find((v) => v.id === id)).filter((v): v is Video => Boolean(v))
-      : VIDEOS.filter((v) => v.category === nicho);
-  const visiveis = lista.slice(0, limite);
+    : [];
+  const melhores = MELHORES.map((id) => VIDEOS.find((v) => v.id === id)).filter((v): v is Video => Boolean(v));
 
   return (
     <section id="videos" className="pf-sec">
       <Titulo
         id="videos"
         titulo="Meus vídeos 🎬"
-        sub={`${VIDEOS.length} vídeos pra ${new Set(VIDEOS.map((v) => v.brand)).size} marcas. Escolhe um nicho ou busca pela marca. Clica pra assistir.`}
+        sub={`${VIDEOS.length} vídeos pra ${new Set(VIDEOS.map((v) => v.brand)).size} marcas, separados por nicho. Desliza cada fileira pro lado e clica pra assistir.`}
         extra={
           <label className="pf-busca">
             <Search className="w-4 h-4 text-[#9AA0AE]" />
-            <input value={busca} onChange={(e) => { setBusca(e.target.value); setLimite(12); }} placeholder="Buscar marca ou nicho" aria-label="Buscar vídeos por marca ou nicho" />
+            <input value={busca} onChange={(e) => setBusca(e.target.value)} placeholder="Buscar marca ou nicho" aria-label="Buscar vídeos por marca ou nicho" />
           </label>
         }
       />
+
       {q ? (
-        <div className="mt-4 flex items-center gap-3 flex-wrap font-bold">
-          {lista.length} resultado{lista.length === 1 ? "" : "s"} pra “{busca}”
-          <button className="pf-pilula" onClick={() => setBusca("")}>limpar ✕</button>
-        </div>
+        <>
+          <div className="mt-4 flex items-center gap-3 flex-wrap font-bold">
+            {resultados.length} resultado{resultados.length === 1 ? "" : "s"} pra “{busca}”
+            <button className="pf-pilula" onClick={() => setBusca("")}>limpar ✕</button>
+          </div>
+          <div className="pf-reels">{resultados.map((v) => <Reel key={v.id} video={v} />)}</div>
+          {resultados.length === 0 && <div className="mt-6 text-center font-bold text-[var(--cinza)]">Nada com esse nome ainda. Tenta “beleza”, “tech” ou o nome de uma marca. 🙂</div>}
+        </>
       ) : (
-        <div className="pf-pilulas">
-          <button className={`pf-pilula ${nicho === "melhores" ? "on" : ""}`} onClick={() => { setNicho("melhores"); setLimite(12); }}>⭐ Melhores</button>
+        <>
+          {/* atalhos pros nichos */}
+          <div className="pf-pilulas">
+            <a href="#nicho-melhores" className="pf-pilula on">⭐ Melhores</a>
+            {nichos.map((n) => (
+              <a key={n.slug} href={`#nicho-${n.slug}`} className="pf-pilula">
+                {NICHO_EMOJI[n.slug]} {n.name} <span className="opacity-60">{VIDEOS.filter((v) => v.category === n.slug).length}</span>
+              </a>
+            ))}
+          </div>
+          <Nicho slug="melhores" nome="Melhores" tagline="Os que mais deram resultado" videos={melhores} />
           {nichos.map((n) => (
-            <button key={n.slug} className={`pf-pilula ${nicho === n.slug ? "on" : ""}`} onClick={() => { setNicho(n.slug); setLimite(12); }}>
-              {NICHO_EMOJI[n.slug]} {n.name} <span className="opacity-60">{VIDEOS.filter((v) => v.category === n.slug).length}</span>
-            </button>
+            <Nicho key={n.slug} slug={n.slug} nome={n.name} tagline={n.tagline} videos={VIDEOS.filter((v) => v.category === n.slug)} />
           ))}
-        </div>
-      )}
-      <div className="pf-reels">{visiveis.map((v) => <Reel key={v.id} video={v} />)}</div>
-      {lista.length === 0 && <div className="mt-6 text-center font-bold text-[var(--cinza)]">Nada com esse nome ainda. Tenta “beleza”, “tech” ou o nome de uma marca. 🙂</div>}
-      {lista.length > limite && (
-        <div className="mt-5 flex justify-center">
-          <button className="pf-btn borda" onClick={() => setLimite((l) => l + 12)}><Plus className="w-4 h-4" /> Ver mais {Math.min(12, lista.length - limite)} vídeos</button>
-        </div>
+        </>
       )}
     </section>
   );
@@ -142,7 +190,7 @@ export function Publi() {
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src="/ensaio/cara-01.webp" alt="" style={{ objectPosition: "center 18%" }} />
               <div className="leading-tight"><div className="font-extrabold text-sm">eilaradam</div><div className="text-xs text-[var(--cinza)] font-semibold">Litoral de SP · Parceria paga</div></div>
-              <span className="ml-auto text-[10px] font-extrabold uppercase tracking-wider px-2 py-1 rounded-md bg-[var(--amarelo)]">Publi</span>
+              <span className="ml-auto text-[10px] font-extrabold uppercase tracking-wider px-2 py-1 rounded-md bg-[var(--claro2)] text-[var(--azul)]">Publi</span>
             </div>
             <div className="foto">{/* eslint-disable-next-line @next/next/no-img-element */}<img src={PUBLI.foto} alt="Lara Dam na janela com a cidade ao fundo" loading="lazy" style={{ objectPosition: "center 30%" }} /></div>
             <div className="acoes"><Heart /><MessageCircle /><Send /><Bookmark className="ml-auto" /></div>
@@ -151,14 +199,14 @@ export function Publi() {
         </div>
         <div className="md:col-span-7">
           <div className="pf-numeros">
-            <div className="pf-num" style={{ background: "var(--rosa)" }}><b>{fmtBR(stats.followers)}</b><span>seguidores</span></div>
-            <div className="pf-num" style={{ background: "var(--amarelo)" }}><b>{fmtBR(stats.reach_month)}</b><span>alcance em 30 dias</span></div>
-            <div className="pf-num" style={{ background: "var(--verde)" }}><b>{stats.posts}</b><span>posts no feed</span></div>
+            <div className="pf-num"><b>{fmtBR(stats.followers)}</b><span>seguidores</span></div>
+            <div className="pf-num"><b>{fmtBR(stats.reach_month)}</b><span>alcance em 30 dias</span></div>
+            <div className="pf-num"><b>{stats.posts}</b><span>posts no feed</span></div>
           </div>
           <div className="mt-2 text-xs font-bold text-[var(--cinza)] flex items-center gap-2"><span className={`w-2 h-2 rounded-full ${stats.live ? "bg-[var(--azul)] animate-pulse" : "bg-[var(--cinza)]"}`} />{stats.live ? "ao vivo, direto da API do Instagram" : "última leitura da API do Instagram"}</div>
           <div className="pf-formatos">
-            {PUBLI.formatos.map((f, i) => (
-              <div key={f.nome} className="pf-formato" style={{ background: ["var(--lilas)", "var(--pessego)", "var(--menta)", "var(--azul2)"][i] }}>
+            {PUBLI.formatos.map((f) => (
+              <div key={f.nome} className="pf-formato">
                 <div className="e">{f.e}</div><b>{f.nome}</b><p>{f.desc}</p>
               </div>
             ))}

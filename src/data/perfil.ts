@@ -36,12 +36,12 @@ export const RESULTADOS = {
   titulo: "Números que importam 📊",
   sub: "O que o meu conteúdo já entregou pras marcas. Os dois vídeos abaixo são os maiores cases: clica pra assistir.",
   numeros: [
-    { v: "100M+", k: "views em campanhas", cor: "var(--amarelo)" },
-    { v: "500+", k: "vídeos gravados", cor: "var(--rosa)" },
-    { v: "200+", k: "marcas parceiras", cor: "var(--verde)" },
-    { v: "2.4x", k: "ROAS médio com ads", cor: "var(--lilas)" },
-    { v: "38%", k: "de CPA a menos", cor: "var(--pessego)" },
-    { v: "2 anos", k: "de estrada", cor: "var(--menta)" },
+    { v: "100M+", k: "views em campanhas" },
+    { v: "500+", k: "vídeos gravados" },
+    { v: "200+", k: "marcas parceiras" },
+    { v: "2.4x", k: "ROAS médio com ads" },
+    { v: "38%", k: "de CPA a menos" },
+    { v: "2 anos", k: "de estrada" },
   ],
   cases: [
     { id: "t0a", nota: "← o maior case", titulo: "InfinitePay", metrica: "100M de views", detalhe: "Recorde de CTR no Meta. O vídeo virou o criativo principal da campanha." },

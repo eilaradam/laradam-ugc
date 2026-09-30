@@ -77,7 +77,7 @@ export default function Cabecalho() {
         {/* atalhos grandes: o cliente sabe onde clicar */}
         <nav className="pf-atalhos" aria-label="Ir para">
           {NAV.slice(0, 4).map((n, i) => (
-            <a key={n.id} href={`#${n.id}`} className="pf-atalho" style={{ background: ["var(--amarelo)", "var(--azul2)", "var(--rosa)", "var(--verde)"][i] }}>
+            <a key={n.id} href={`#${n.id}`} className="pf-atalho">
               <span className="e">{n.emoji}</span>
               <span><b>{n.rotulo}</b><small>{["views, ROAS e cases", "portfólio completo por nicho", "no meu perfil, com números ao vivo", "quem já trabalhou comigo"][i]}</small></span>
               <span className="seta">↓</span>
