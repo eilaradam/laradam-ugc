@@ -88,18 +88,18 @@
 .pf-tile .pill.claro{background:#fff;color:var(--ink)}
 .pf-tile.txt{display:flex;flex-direction:column;justify-content:space-between;padding:14px}
 @media (min-width:768px){.pf-tile.txt{padding:26px}}
-.pf-tile.txt h3{font-size:16px;font-weight:800;line-height:1.08;letter-spacing:-.02em}
+.pf-tile.txt h3{font-size:14px;font-weight:800;line-height:1.1;letter-spacing:-.02em}
 @media (min-width:768px){.pf-tile.txt h3{font-size:30px}}
 .pf-tile.txt p{font-weight:600;font-size:11px;opacity:.85;margin-top:6px;display:none}
 @media (min-width:768px){.pf-tile.txt p{display:block;font-size:15px;margin-top:10px}}
 .pf-tile.txt .emoji{font-size:26px;line-height:1}
 @media (min-width:768px){.pf-tile.txt .emoji{font-size:44px}}
-.pf-tile.txt .cta{align-self:flex-start;background:var(--ink);color:#fff;font-weight:800;padding:8px 12px;border-radius:10px;font-size:11px}
-@media (min-width:768px){.pf-tile.txt .cta{padding:12px 18px;font-size:14px;border-radius:12px}}
+.pf-tile.txt .cta{display:none;align-self:flex-start;background:var(--ink);color:#fff;font-weight:800;padding:8px 12px;border-radius:10px;font-size:11px}
+@media (min-width:768px){.pf-tile.txt .cta{display:inline-block;padding:12px 18px;font-size:14px;border-radius:12px}}
 .pf-tile.azul{background:var(--azul);color:#fff}.pf-tile.azul p{color:#fff;opacity:.9}
 .pf-tile.amarelo{background:var(--amarelo)}.pf-tile.rosa{background:var(--rosa)}.pf-tile.verde{background:var(--verde)}.pf-tile.lilas{background:var(--lilas)}.pf-tile.pessego{background:var(--pessego)}.pf-tile.menta{background:var(--menta)}
-.pf-tile .cap{position:absolute;left:0;right:0;bottom:0;padding:34px 12px 12px;background:linear-gradient(transparent,rgba(20,33,61,.85));color:#fff;font-weight:800;font-size:12px}
-@media (min-width:768px){.pf-tile .cap{padding:40px 16px 14px;font-size:15px}}
+.pf-tile .cap{display:none;position:absolute;left:0;right:0;bottom:0;padding:34px 12px 12px;background:linear-gradient(transparent,rgba(20,33,61,.85));color:#fff;font-weight:800;font-size:12px}
+@media (min-width:768px){.pf-tile .cap{display:block;padding:40px 16px 52px;font-size:15px}}
 
 /* reels */
 .pf-pilulas{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}

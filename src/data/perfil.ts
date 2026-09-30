@@ -43,7 +43,7 @@ export const FEED: Tile[] = [
   { tipo: "foto", src: "/ensaio/capa.webp", posicao: "center 20%", pill: "100M+ views", icone: "play", video: "t0a" },
   { tipo: "texto", cor: "azul", emoji: "🎬", titulo: "Vídeo que vende pra sua marca", corpo: "UGC de conversão, criativos pra tráfego e roteiro validado por performance.", cta: "Ver os reels", aba: "reels", alvo: "grade" },
   { tipo: "foto", src: "/ensaio/ugc-caixas.webp", posicao: "center 30%", pill: "📦 e-commerce", pillClaro: true, icone: "grade", aba: "reels", alvo: "grade" },
-  { tipo: "foto", src: "/ensaio/publi-janela.webp", posicao: "center 25%", pill: "Publi · Parceria paga", cap: "16 mil seguidores · 368 mil de alcance no mês", icone: "play", aba: "publi", alvo: "grade" },
+  { tipo: "foto", src: "/ensaio/publi-janela.webp", posicao: "center 25%", pill: "Publi · Parceria paga", cap: "16 mil seguidores · 368 mil de alcance por mês", icone: "play", aba: "publi", alvo: "grade" },
   { tipo: "texto", cor: "amarelo", emoji: "📈", titulo: "2.4x de ROAS. 200+ marcas.", corpo: "Conteúdo que virou playbook de criativo pra InfinitePay, Méliuz e DT3.", cta: "Ver as marcas", aba: "marcas", alvo: "grade" },
   { tipo: "foto", src: "/ensaio/caixas-0009.webp", posicao: "center 40%", pill: "🎥 bastidores", pillClaro: true, icone: "play", alvo: "caras" },
   { tipo: "texto", cor: "rosa", emoji: "💬", titulo: "“A Lara é a creator que mais converte.”", corpo: "Méliuz · roteiro + criativo pra growth", cta: "Ler depoimentos", alvo: "depoimentos" },
