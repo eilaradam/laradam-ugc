@@ -30,6 +30,7 @@
   position: relative;
   z-index: 1;
   min-height: 100vh;
+  display: flex; flex-direction: column; justify-content: center;
   padding: calc(var(--st-topo) + 28px) 16px calc(var(--st-timeline) + 40px);
   scroll-margin-top: var(--st-topo);
 }
@@ -38,6 +39,7 @@
 }
 .st-frame {
   position: relative;
+  width: 100%;
   max-width: 1280px;
   margin: 0 auto;
 }
@@ -161,7 +163,8 @@
 .st-tick span { position: absolute; left: 3px; top: -9px; white-space: nowrap; }
 .st-trilha { position: relative; height: 44px; border-bottom: 1px solid var(--st-blue-line); }
 .st-trilha-audio { height: 22px; }
-.st-trilha-rotulo { position: absolute; left: 0; top: 0; bottom: 0; width: 30px; display: flex; align-items: center; justify-content: center; font-family: var(--st-font-mono), monospace; font-size: 9px; font-weight: 700; color: #fff; background: var(--st-ink); z-index: 2; }
+.st-trilha-rotulo { height: 44px; border-bottom: 1px solid #fff; display: flex; align-items: center; justify-content: center; font-family: var(--st-font-mono), monospace; font-size: 9px; font-weight: 700; color: #fff; background: var(--st-ink); }
+.st-trilha-rotulo-audio { height: 22px; }
 .st-clipe {
   position: absolute; top: 4px; bottom: 4px;
   border: 2px solid var(--st-ink); border-radius: 5px; overflow: hidden;
@@ -218,9 +221,9 @@
 .st-creditos::before, .st-creditos::after { content: ""; position: absolute; left: 0; right: 0; height: 70px; z-index: 2; pointer-events: none; }
 .st-creditos::before { top: 0; background: linear-gradient(var(--st-ink), transparent); }
 .st-creditos::after { bottom: 0; background: linear-gradient(transparent, var(--st-ink)); }
-.st-creditos-rolo { position: absolute; left: 0; right: 0; top: 100%; animation: st-rolar 38s linear infinite; }
+.st-creditos-rolo { position: absolute; left: 0; right: 0; top: 56px; animation: st-rolar 34s linear infinite; }
 .st-creditos:hover .st-creditos-rolo { animation-play-state: paused; }
-@keyframes st-rolar { to { transform: translateY(calc(-100% - 380px)); } }
+@keyframes st-rolar { to { transform: translateY(calc(-100% - 56px)); } }
 .st-credito { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; padding: 9px 22px; align-items: baseline; }
 .st-credito dt { font-family: var(--st-font-mono), monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; text-align: right; opacity: 0.6; }
 .st-credito dd { font-family: var(--st-font-display), sans-serif; font-weight: 600; font-size: 18px; }

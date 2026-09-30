@@ -58,8 +58,8 @@ export default function Fundo() {
         const dx = p.x - cursor.x;
         const dy = p.y - cursor.y;
         const d = Math.sqrt(dx * dx + dy * dy);
-        let r = 1.15 + energia * 0.6 + respira * 0.15;
-        let a = 0.16 + energia * 0.12;
+        let r = 1.3 + energia * 0.6 + respira * 0.15;
+        let a = 0.22 + energia * 0.12;
         let ox = 0, oy = 0;
         if (d < R) {
           const k = 1 - d / R;           // 0 na borda, 1 no centro

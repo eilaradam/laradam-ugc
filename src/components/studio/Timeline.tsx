@@ -68,6 +68,13 @@ export default function Timeline() {
           </div>
         </div>
 
+        {/* rótulos das trilhas */}
+        <div className="flex flex-col flex-shrink-0 w-[30px]">
+          <div className="h-[18px]" />
+          <div className="st-trilha-rotulo">V1</div>
+          <div className="st-trilha-rotulo st-trilha-rotulo-audio hidden md:flex">A1</div>
+        </div>
+
         {/* trilhas */}
         <div
           ref={area}
@@ -87,7 +94,6 @@ export default function Timeline() {
 
           {/* V1: os takes */}
           <div className="st-trilha">
-            <div className="st-trilha-rotulo">V1</div>
             {TAKES.map((t) => (
               <div
                 key={t.id}
@@ -108,8 +114,7 @@ export default function Timeline() {
 
           {/* A1: forma de onda */}
           <div className="st-trilha st-trilha-audio hidden md:block">
-            <div className="st-trilha-rotulo">A1</div>
-            <svg className="absolute inset-y-0 left-[30px] right-0 w-[calc(100%-30px)] h-full" preserveAspectRatio="none" viewBox={`0 0 ${onda.length} 20`}>
+            <svg className="absolute inset-0 w-full h-full" preserveAspectRatio="none" viewBox={`0 0 ${onda.length} 20`}>
               {onda.map((v, i) => (
                 <rect key={i} x={i + 0.15} y={10 - v * 9} width={0.7} height={v * 18} fill="var(--st-blue-mid)" />
               ))}

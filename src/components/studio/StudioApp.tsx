@@ -34,8 +34,8 @@ export function useStudio() {
   return c;
 }
 
-// Ponto da tela que "é" o playhead: 38% da altura do viewport.
-const ANCORA = 0.38;
+// O tempo é o topo da tela: um take "começa" quando encosta no topo da página
+// e o último take termina quando a rolagem chega no fim do documento.
 const VELOCIDADE = 2; // segundos de timeline por segundo real quando está tocando
 
 export default function StudioApp() {
@@ -47,17 +47,22 @@ export default function StudioApp() {
 
   // Mede onde cada take começa/termina no documento
   const medir = useCallback(() => {
-    return TAKES.map((t) => {
+    const fimDaRolagem = document.documentElement.scrollHeight - window.innerHeight;
+    const lista = TAKES.map((t) => {
       const el = document.getElementById(t.id);
       if (!el) return { ...t, top: 0, height: 1 };
       const r = el.getBoundingClientRect();
       return { ...t, top: r.top + window.scrollY, height: r.height };
     });
+    // o último take vai só até onde a página consegue rolar
+    const u = lista[lista.length - 1];
+    u.height = Math.max(1, fimDaRolagem - u.top);
+    return lista;
   }, []);
 
   // rolagem -> tempo
   const calcularTempo = useCallback(() => {
-    const y = window.scrollY + window.innerHeight * ANCORA;
+    const y = window.scrollY;
     const takes = medir();
     if (y <= takes[0].top) return 0;
     for (const t of takes) {
@@ -76,8 +81,9 @@ export default function StudioApp() {
       const takes = medir();
       const t = takes.find((k) => s >= k.inicio && s < k.fim) ?? takes[takes.length - 1];
       const frac = (s - t.inicio) / (t.fim - t.inicio);
-      const y = t.top + frac * t.height - window.innerHeight * ANCORA;
-      window.scrollTo({ top: Math.max(0, y), behavior: "auto" });
+      const y = t.top + frac * t.height;
+      // "instant" ignora o scroll-behavior: smooth global do site
+      window.scrollTo({ top: Math.max(0, y), behavior: "instant" as ScrollBehavior });
       setTempo(s);
     },
     [medir]

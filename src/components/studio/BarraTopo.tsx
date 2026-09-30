@@ -18,7 +18,7 @@ export default function BarraTopo() {
 
         <span className="hidden lg:inline st-mono text-[11px] text-[var(--st-ink-2)] opacity-80 truncate">{PROJETO.arquivo}</span>
 
-        <nav className="hidden md:flex items-center gap-1 ml-auto">
+        <nav className="hidden lg:flex items-center gap-1 ml-auto">
           {TAKES.map((t) => (
             <button
               key={t.id}
@@ -30,7 +30,7 @@ export default function BarraTopo() {
           ))}
         </nav>
 
-        <div className="flex items-center gap-2 md:gap-3 ml-auto md:ml-2 flex-shrink-0">
+        <div className="flex items-center gap-2 md:gap-3 ml-auto lg:ml-2 flex-shrink-0">
           {tocando ? (
             <span className="st-mono text-[10px] uppercase tracking-widest flex items-center gap-1.5" style={{ color: "var(--st-rec)" }}>
               <span className="st-rec" /> play
