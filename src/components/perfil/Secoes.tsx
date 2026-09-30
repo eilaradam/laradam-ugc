@@ -62,7 +62,7 @@ export function Resultados() {
             <div key={c.id} className="pf-case">
               <Reel video={v} grande />
               <div className="txt">
-                <div className="pf-mao pf-nota">← o maior case</div>
+                <div className="pf-mao pf-nota">{c.nota}</div>
                 <h3>{c.titulo}</h3>
                 <div className="metrica">{c.metrica}</div>
                 <p>{c.detalhe}</p>

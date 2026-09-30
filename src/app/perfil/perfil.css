@@ -23,7 +23,8 @@
 .pf-menu a:hover{background:var(--azul2)}
 .pf-menu a.on{background:var(--ink);color:#fff}
 .pf-menu a .e{font-size:14px}
-.pf-topo-cta{font-weight:800;font-size:14px;color:var(--azul);white-space:nowrap}
+.pf-topo-cta{font-weight:800;font-size:14px;color:var(--azul);white-space:nowrap;grid-row:1;grid-column:2}
+@media (min-width:1024px){.pf-topo-cta{grid-row:auto;grid-column:auto}}
 .pf-busca{display:flex;align-items:center;gap:8px;background:#F3F4F6;border-radius:12px;padding:0 14px;height:42px;width:100%;max-width:360px;border:2px solid transparent}
 .pf-busca:focus-within{border-color:var(--azul);background:#fff}
 .pf-busca input{flex:1;min-width:0;background:transparent;border:0;outline:0;font:inherit;font-weight:600;font-size:14px;color:var(--ink)}

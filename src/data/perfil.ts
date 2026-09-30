@@ -44,8 +44,8 @@ export const RESULTADOS = {
     { v: "2 anos", k: "de estrada", cor: "var(--menta)" },
   ],
   cases: [
-    { id: "t0a", titulo: "InfinitePay", metrica: "100M de views", detalhe: "Recorde de CTR no Meta. O vídeo virou o criativo principal da campanha." },
-    { id: "t0b", titulo: "Méliuz", metrica: "30M de views", detalhe: "Roteiro + criativo pra growth. Campanha de mercado com cashback." },
+    { id: "t0a", nota: "← o maior case", titulo: "InfinitePay", metrica: "100M de views", detalhe: "Recorde de CTR no Meta. O vídeo virou o criativo principal da campanha." },
+    { id: "t0b", nota: "← o segundo maior", titulo: "Méliuz", metrica: "30M de views", detalhe: "Roteiro + criativo pra growth. Campanha de mercado com cashback." },
   ],
 };
 
