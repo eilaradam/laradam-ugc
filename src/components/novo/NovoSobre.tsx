@@ -14,7 +14,10 @@ export default function NovoSobre() {
         <div className="md:col-span-7">
           <Eyebrow>{SOBRE.eyebrow}</Eyebrow>
           <h2 className="mt-5 font-display font-black text-4xl md:text-6xl leading-[0.95] tracking-tighter text-foreground">
-            {SOBRE.titulo1} <span className="font-serif-accent italic text-primary">{SOBRE.nome}</span> 👋
+            {SOBRE.titulo1}{" "}
+            <span className="whitespace-nowrap">
+              <span className="font-serif-accent italic text-primary">{SOBRE.nome}</span> 👋
+            </span>
           </h2>
           <p className="mt-5 text-foreground-soft text-base md:text-lg leading-relaxed max-w-2xl">{SOBRE.corpo1}</p>
           <p className="mt-4 text-foreground-soft text-base md:text-lg leading-relaxed max-w-2xl">{SOBRE.corpo2}</p>
