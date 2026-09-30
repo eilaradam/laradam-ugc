@@ -22,34 +22,32 @@ export const PERFIL = {
 
 export const FAIXA = ["500 vídeos gravados", "200 marcas", "100M+ views", "2.4x ROAS", "InfinitePay", "Méliuz", "DT3", "Logitech", "Airbnb", "Beauty Fair"];
 
-export type Aba = "feed" | "reels" | "publi" | "marcas";
-
-export type Destaque = { id: string; rotulo: string; foto?: string; emoji?: string; cor?: string; aba?: Aba; alvo?: string };
-export const DESTAQUES: Destaque[] = [
-  { id: "ugc", rotulo: "UGC", foto: "/ensaio/ugc-caixas.webp", aba: "reels", alvo: "grade" },
-  { id: "publi", rotulo: "Publi", foto: "/ensaio/publi-janela.webp", aba: "publi", alvo: "grade" },
-  { id: "marcas", rotulo: "Marcas", emoji: "🤝", cor: "var(--amarelo)", aba: "marcas", alvo: "grade" },
-  { id: "bastidores", rotulo: "Bastidores", foto: "/ensaio/ugc-tripe.webp", alvo: "caras" },
-  { id: "depoimentos", rotulo: "Depoimentos", emoji: "💬", cor: "var(--rosa)", alvo: "depoimentos" },
-  { id: "sobre", rotulo: "Sobre", foto: "/ensaio/sobre.webp", alvo: "sobre" },
-  { id: "contato", rotulo: "Contato", emoji: "✉️", cor: "var(--lilas)", alvo: "contato" },
+export const NAV = [
+  { id: "resultados", rotulo: "Resultados", emoji: "📊" },
+  { id: "videos", rotulo: "Vídeos", emoji: "🎬" },
+  { id: "publi", rotulo: "Publi", emoji: "📱" },
+  { id: "marcas", rotulo: "Marcas", emoji: "🤝" },
+  { id: "depoimentos", rotulo: "Depoimentos", emoji: "💬" },
+  { id: "sobre", rotulo: "Sobre", emoji: "👋" },
+  { id: "contato", rotulo: "Contato", emoji: "✉️" },
 ];
 
-export type Tile =
-  | { tipo: "foto"; src: string; posicao?: string; pill?: string; pillClaro?: boolean; cap?: string; icone: "play" | "grade" | "pessoa"; aba?: Aba; alvo?: string; video?: string }
-  | { tipo: "texto"; cor: "azul" | "amarelo" | "rosa" | "verde" | "lilas" | "pessego" | "menta"; emoji: string; titulo: string; corpo: string; cta: string; aba?: Aba; alvo?: string };
-
-export const FEED: Tile[] = [
-  { tipo: "foto", src: "/ensaio/capa.webp", posicao: "center 20%", pill: "100M+ views", icone: "play", video: "t0a" },
-  { tipo: "texto", cor: "azul", emoji: "🎬", titulo: "Vídeo que vende pra sua marca", corpo: "UGC de conversão, criativos pra tráfego e roteiro validado por performance.", cta: "Ver os reels", aba: "reels", alvo: "grade" },
-  { tipo: "foto", src: "/ensaio/ugc-caixas.webp", posicao: "center 30%", pill: "📦 e-commerce", pillClaro: true, icone: "grade", aba: "reels", alvo: "grade" },
-  { tipo: "foto", src: "/ensaio/publi-janela.webp", posicao: "center 25%", pill: "Publi · Parceria paga", cap: "16 mil seguidores · 368 mil de alcance por mês", icone: "play", aba: "publi", alvo: "grade" },
-  { tipo: "texto", cor: "amarelo", emoji: "📈", titulo: "2.4x de ROAS. 200+ marcas.", corpo: "Conteúdo que virou playbook de criativo pra InfinitePay, Méliuz e DT3.", cta: "Ver as marcas", aba: "marcas", alvo: "grade" },
-  { tipo: "foto", src: "/ensaio/caixas-0009.webp", posicao: "center 40%", pill: "🎥 bastidores", pillClaro: true, icone: "play", alvo: "caras" },
-  { tipo: "texto", cor: "rosa", emoji: "💬", titulo: "“A Lara é a creator que mais converte.”", corpo: "Méliuz · roteiro + criativo pra growth", cta: "Ler depoimentos", alvo: "depoimentos" },
-  { tipo: "foto", src: "/ensaio/sobre-sofa.webp", posicao: "center 25%", pill: "👋 sobre a Lara", pillClaro: true, icone: "pessoa", alvo: "sobre" },
-  { tipo: "texto", cor: "lilas", emoji: "✉️", titulo: "Quer gravar comigo?", corpo: "Conta o projeto e eu respondo em até 48h.", cta: "Chamar a Lara", alvo: "contato" },
-];
+export const RESULTADOS = {
+  titulo: "Números que importam 📊",
+  sub: "O que o meu conteúdo já entregou pras marcas. Os dois vídeos abaixo são os maiores cases: clica pra assistir.",
+  numeros: [
+    { v: "100M+", k: "views em campanhas", cor: "var(--amarelo)" },
+    { v: "500+", k: "vídeos gravados", cor: "var(--rosa)" },
+    { v: "200+", k: "marcas parceiras", cor: "var(--verde)" },
+    { v: "2.4x", k: "ROAS médio com ads", cor: "var(--lilas)" },
+    { v: "38%", k: "de CPA a menos", cor: "var(--pessego)" },
+    { v: "2 anos", k: "de estrada", cor: "var(--menta)" },
+  ],
+  cases: [
+    { id: "t0a", titulo: "InfinitePay", metrica: "100M de views", detalhe: "Recorde de CTR no Meta. O vídeo virou o criativo principal da campanha." },
+    { id: "t0b", titulo: "Méliuz", metrica: "30M de views", detalhe: "Roteiro + criativo pra growth. Campanha de mercado com cashback." },
+  ],
+};
 
 export const NICHO_EMOJI: Record<string, string> = {
   ia: "🤖", tech: "📱", gastronomia: "🍝", casa: "🛋️", beleza: "💄", financas: "💸", food: "🍹", saude: "🏃‍♀️", moda: "👗", viagem: "✈️",

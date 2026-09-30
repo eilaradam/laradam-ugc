@@ -1,7 +1,7 @@
 "use client";
 
-import { Search } from "lucide-react";
-import { DESTAQUES, FAIXA, PERFIL } from "@/data/perfil";
+import { useEffect, useState } from "react";
+import { FAIXA, NAV, PERFIL } from "@/data/perfil";
 import { fmtBR, usePerfil } from "./PerfilApp";
 
 function negrito(t: string) {
@@ -9,24 +9,38 @@ function negrito(t: string) {
 }
 
 export default function Cabecalho() {
-  const { busca, setBusca, stats, ir, aba, setAba } = usePerfil();
+  const { stats } = usePerfil();
+  const [ativo, setAtivo] = useState("");
   const faixa = [...FAIXA, ...FAIXA];
+
+  // marca no menu a seção que está na tela
+  useEffect(() => {
+    const els = NAV.map((n) => document.getElementById(n.id)).filter(Boolean) as HTMLElement[];
+    const obs = new IntersectionObserver(
+      (entries) => { entries.forEach((e) => { if (e.isIntersecting) setAtivo(e.target.id); }); },
+      { rootMargin: "-40% 0px -50% 0px" }
+    );
+    els.forEach((el) => obs.observe(el));
+    return () => obs.disconnect();
+  }, []);
 
   return (
     <>
       <header className="pf-topo">
-        <div className="pf-wrap">
+        <div className="pf-wrap pf-topo-linha">
           <a href="#top" className="pf-marca">lara<span>dam</span>.ugc</a>
-          <label className="pf-busca">
-            <Search className="w-4 h-4 text-[#9AA0AE]" />
-            <input value={busca} onChange={(e) => setBusca(e.target.value)} placeholder="Buscar marca, nicho ou formato" aria-label="Buscar vídeos por marca ou nicho" />
-          </label>
-          <a href="#contato" className="pf-topo-cta hidden sm:inline">Trabalhe comigo →</a>
+          <nav className="pf-menu" aria-label="Seções">
+            {NAV.map((n) => (
+              <a key={n.id} href={`#${n.id}`} className={ativo === n.id ? "on" : ""}>
+                <span className="e">{n.emoji}</span> {n.rotulo}
+              </a>
+            ))}
+          </nav>
+          <a href="#contato" className="pf-topo-cta">Trabalhe comigo →</a>
         </div>
       </header>
 
       <div className="pf-wrap" id="top">
-        {/* cartão do perfil */}
         <section className="pf-card">
           <div className="pf-avatar">
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -56,38 +70,20 @@ export default function Cabecalho() {
           <div className="pf-carimbo" style={{ right: 18, top: -16 }}>{PERFIL.carimbo}</div>
         </section>
 
-        {/* faixa de estrelas */}
         <div className="pf-faixa" aria-hidden>
           <div className="pf-rola">{faixa.map((t, i) => <span key={i}><i>★</i> {t}</span>)}</div>
         </div>
 
-        {/* destaques */}
-        <nav className="pf-destaques" aria-label="Destaques">
-          {DESTAQUES.map((d) => (
-            <button key={d.id} className="pf-dest" onClick={() => ir({ aba: d.aba, alvo: d.alvo })}>
-              {d.foto ? (
-                <span className="bola">{/* eslint-disable-next-line @next/next/no-img-element */}<img src={d.foto} alt="" style={{ objectPosition: "center 20%" }} /></span>
-              ) : (
-                <span className="bola cor" style={{ background: d.cor }}>{d.emoji}</span>
-              )}
-              {d.rotulo}
-            </button>
+        {/* atalhos grandes: o cliente sabe onde clicar */}
+        <nav className="pf-atalhos" aria-label="Ir para">
+          {NAV.slice(0, 4).map((n, i) => (
+            <a key={n.id} href={`#${n.id}`} className="pf-atalho" style={{ background: ["var(--amarelo)", "var(--azul2)", "var(--rosa)", "var(--verde)"][i] }}>
+              <span className="e">{n.emoji}</span>
+              <span><b>{n.rotulo}</b><small>{["views, ROAS e cases", "portfólio completo por nicho", "no meu perfil, com números ao vivo", "quem já trabalhou comigo"][i]}</small></span>
+              <span className="seta">↓</span>
+            </a>
           ))}
         </nav>
-
-        {/* abas */}
-        <div className="pf-abas" id="grade" role="tablist">
-          {([
-            ["feed", "Feed", <svg key="f" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><rect x="3" y="3" width="18" height="18" rx="3" /><path d="M3 9h18M3 15h18M9 3v18M15 3v18" /></svg>],
-            ["reels", "Reels", <svg key="r" viewBox="0 0 24 24" fill="currentColor"><path d="M5 3l14 9-14 9z" /></svg>],
-            ["publi", "Publi", <svg key="p" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7 7 .6-5.3 4.6L18.5 21 12 17.3 5.5 21l1.8-6.8L2 9.6 9 9z" /></svg>],
-            ["marcas", "Marcadas", <svg key="m" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M20 12a8 8 0 1 1-16 0 8 8 0 0 1 16 0z" /><circle cx="12" cy="12" r="3" /></svg>],
-          ] as const).map(([id, rotulo, icone]) => (
-            <button key={id} role="tab" aria-selected={aba === id} className={`pf-aba ${aba === id ? "on" : ""}`} onClick={() => setAba(id)}>
-              {icone} {rotulo}
-            </button>
-          ))}
-        </div>
       </div>
     </>
   );
