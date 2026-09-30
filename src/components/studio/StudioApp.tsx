@@ -47,22 +47,25 @@ export default function StudioApp() {
 
   // Mede onde cada take começa/termina no documento
   const medir = useCallback(() => {
-    const fimDaRolagem = document.documentElement.scrollHeight - window.innerHeight;
-    const lista = TAKES.map((t) => {
+    return TAKES.map((t) => {
       const el = document.getElementById(t.id);
       if (!el) return { ...t, top: 0, height: 1 };
       const r = el.getBoundingClientRect();
       return { ...t, top: r.top + window.scrollY, height: r.height };
     });
-    // o último take vai só até onde a página consegue rolar
-    const u = lista[lista.length - 1];
-    u.height = Math.max(1, fimDaRolagem - u.top);
-    return lista;
   }, []);
+
+  // A "âncora" (ponto da página que o playhead representa) desliza do topo da
+  // tela (rolagem 0) até o pé da tela (rolagem máxima). Assim o tempo começa em
+  // 0 no topo do site e chega no total exatamente no fim, sem take perdido.
+  const fatorAncora = () => {
+    const fim = document.documentElement.scrollHeight - window.innerHeight;
+    return fim > 0 ? 1 + window.innerHeight / fim : 1;
+  };
 
   // rolagem -> tempo
   const calcularTempo = useCallback(() => {
-    const y = window.scrollY;
+    const y = window.scrollY * fatorAncora();
     const takes = medir();
     if (y <= takes[0].top) return 0;
     for (const t of takes) {
@@ -81,7 +84,7 @@ export default function StudioApp() {
       const takes = medir();
       const t = takes.find((k) => s >= k.inicio && s < k.fim) ?? takes[takes.length - 1];
       const frac = (s - t.inicio) / (t.fim - t.inicio);
-      const y = t.top + frac * t.height;
+      const y = (t.top + frac * t.height) / fatorAncora();
       // "instant" ignora o scroll-behavior: smooth global do site
       window.scrollTo({ top: Math.max(0, y), behavior: "instant" as ScrollBehavior });
       setTempo(s);
@@ -133,12 +136,13 @@ export default function StudioApp() {
     if (!tocando) return;
     let raf = 0;
     let ultimo = performance.now();
+    let atual = calcularTempo();
     const passo = (agora: number) => {
       if (!tocandoRef.current) return;
-      const dt = (agora - ultimo) / 1000;
+      const dt = Math.min(0.1, (agora - ultimo) / 1000);
       ultimo = agora;
-      const atual = calcularTempo();
-      const prox = atual + dt * VELOCIDADE;
+      atual += dt * VELOCIDADE;
+      const prox = atual;
       if (prox >= DURACAO_TOTAL) {
         irPara(DURACAO_TOTAL);
         tocandoRef.current = false;
