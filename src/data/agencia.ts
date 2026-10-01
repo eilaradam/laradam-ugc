@@ -118,6 +118,9 @@ export const AG_CONTEUDOS = {
     { brand: "Coza", nicho: "casa", instagram: "DcZj-sOx0dm", thumbnail: "/capas-ig/DcZj-sOx0dm.webp", titulo: "Saco Zip Vácuo" },
     { brand: "Coza", nicho: "casa", instagram: "DbRTjSqhSH6", thumbnail: "/capas-ig/DbRTjSqhSH6.webp", titulo: "Linha Dry · geladeira" },
     { brand: "Coza", nicho: "casa", instagram: "DbI8BXWgbXU", thumbnail: "/capas-ig/DbI8BXWgbXU.webp", titulo: "Cesto de lavanderia" },
+    // Little Duck (Instagram, 2026) — puxado pra cima a pedido da Lara
+    { brand: "Little Duck", nicho: "casa", instagram: "DUjAJxnjdZe", thumbnail: "/capas-ig/DUjAJxnjdZe.webp", titulo: "Sofá de brincar · vale a pena?" },
+    { brand: "Little Duck", nicho: "casa", instagram: "DSXnRGlDQSH", thumbnail: "/capas-ig/DSXnRGlDQSH.webp", titulo: "Conheça a fábrica" },
     // Frooty (Instagram, set/out 2026)
     { brand: "Frooty", nicho: "food", instagram: "DSYQzfmERiN", thumbnail: "/capas-ig/DSYQzfmERiN.webp", titulo: "#RoxosPorFrooty" },
     { brand: "Frooty", nicho: "food", instagram: "DSI1HbikZge", thumbnail: "/capas-ig/DSI1HbikZge.webp", titulo: "Pós-corrida" },
@@ -164,9 +167,12 @@ export const AG_CONTEUDOS = {
     { brand: "Copacol", nicho: "gastronomia", instagram: "DLnlWIDyK_S", thumbnail: "/capas-ig/DLnlWIDyK_S.webp", titulo: "Filé de tilápia · 3 receitas" },
     { brand: "Copacol", nicho: "gastronomia", instagram: "DJSUfuZPuZh", thumbnail: "/capas-ig/DJSUfuZPuZh.webp", titulo: "Patê de tilápia" },
     { brand: "Copacol", nicho: "gastronomia", instagram: "DIR8uSzPDE5", thumbnail: "/capas-ig/DIR8uSzPDE5.webp", titulo: "Peixe que não gruda na grelha" },
-    // Little Duck (Instagram, 2026)
-    { brand: "Little Duck", nicho: "casa", instagram: "DUjAJxnjdZe", thumbnail: "/capas-ig/DUjAJxnjdZe.webp", titulo: "Sofá de brincar · vale a pena?" },
-    { brand: "Little Duck", nicho: "casa", instagram: "DSXnRGlDQSH", thumbnail: "/capas-ig/DSXnRGlDQSH.webp", titulo: "Conheça a fábrica" },
+    // Magalu (Instagram, influenciadoras diferentes, campanha Liquidação da Metade do Ano)
+    { brand: "Magalu", nicho: "casa", instagram: "DLar1CxO9dY", thumbnail: "/capas-ig/DLar1CxO9dY.webp", titulo: "Liquidação da Metade · papelaria" },
+    { brand: "Magalu", nicho: "casa", instagram: "DLaQPpTOuQ-", thumbnail: "/capas-ig/DLaQPpTOuQ-.webp", titulo: "Liquidação da Metade" },
+    { brand: "Magalu", nicho: "casa", instagram: "DLbE5YXp7nn", thumbnail: "/capas-ig/DLbE5YXp7nn.webp", titulo: "Item que ficou no carrinho" },
+    { brand: "Magalu", nicho: "casa", instagram: "DLcyqYpRd8a", thumbnail: "/capas-ig/DLcyqYpRd8a.webp", titulo: "Comprar com desconto" },
+    { brand: "Magalu", nicho: "casa", instagram: "DLc8UBLxW2D", thumbnail: "/capas-ig/DLc8UBLxW2D.webp", titulo: "Liquidação da Metade do Ano" },
     // YouTube (já estavam na página de gestão)
     { brand: "Sebastian", nicho: "beleza", youtubeId: "i62BOlzvQlo" },
     { brand: "OLX", nicho: "tech", youtubeId: "ukZSk1h_Y2Q" },
