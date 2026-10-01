@@ -32,21 +32,18 @@ export default function DMs() {
           className="pf-dm text-left"
           onClick={() => open({ id: "audio-cliente", title: "Depoimento de cliente", category: "áudio", brand: "Cliente", youtubeId: "rRrIpSRu90A", audioOnly: true })}
         >
-          <span className="av" style={{ background: "var(--azul)", color: "#fff" }}><Headphones className="w-5 h-5" /></span>
-          <span className="msg" style={{ background: "var(--azul2)" }}>
-            <span className="quem">Cliente · mensagem de voz · 13:52</span>
-            <span className="flex items-center gap-1 text-[var(--azul)]">{Array.from({ length: 28 }).map((_, i) => <i key={i} className="block w-[3px] rounded bg-current" style={{ height: `${8 + Math.abs(Math.sin(i * 0.8)) * 18}px` }} />)}</span>
-            <span className="reacao">▶ <b>ouvir o áudio</b></span>
-          </span>
+          <span className="av" style={{ background: "var(--azul)", color: "#fff" }}><Headphones className="w-6 h-6" /></span>
+          <span className="quote">Mensagem de voz, 13:52</span>
+          <span className="flex items-center justify-center gap-1 text-[var(--azul)] my-3">{Array.from({ length: 22 }).map((_, i) => <i key={i} className="block w-[3px] rounded bg-current" style={{ height: `${8 + Math.abs(Math.sin(i * 0.8)) * 16}px` }} />)}</span>
+          <span className="quem">Cliente</span>
+          <span className="reacao">▶ ouvir o áudio</span>
         </button>
         {TESTIMONIALS.map((t) => (
           <div key={t.brand} className="pf-dm">
             <Avatar brand={t.brand} logoFile={t.logoFile} />
-            <div className="msg">
-              <div className="quem">{t.instagram ? <a href={`https://instagram.com/${t.instagram}`} target="_blank" rel="noopener">@{t.instagram}</a> : t.brand}{t.role ? ` · ${t.role}` : ""}</div>
-              {t.quote}
-              {t.metric && <div><span className="reacao">🔥 <b>{t.metric.value}</b> {t.metric.label}</span></div>}
-            </div>
+            <div className="quote">&ldquo;{t.quote}&rdquo;</div>
+            <div className="quem">{t.instagram ? <a href={`https://instagram.com/${t.instagram}`} target="_blank" rel="noopener">@{t.instagram}</a> : t.brand}</div>
+            {t.metric && <span className="reacao">🔥 <b>{t.metric.value}</b> {t.metric.label}</span>}
           </div>
         ))}
       </div>

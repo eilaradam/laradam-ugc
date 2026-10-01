@@ -46,13 +46,10 @@ export const AUDIENCIA = {
     { k: "Homens", v: 11.8 },
   ],
   idade: [
-    { k: "13-17", v: 0.1 },
     { k: "18-24", v: 10.3 },
     { k: "25-34", v: 53.7 },
     { k: "35-44", v: 26.9 },
-    { k: "45-54", v: 7.0 },
-    { k: "55-64", v: 1.5 },
-    { k: "65+", v: 0.4 },
+    { k: "45+", v: 8.9 }, // soma 45-54 (7,0) + 55-64 (1,5) + 65+ (0,4): faixas isoladas tinham número mto baixo
   ],
   paises: [
     { k: "Brasil", bandeira: "🇧🇷", v: 93.8 },

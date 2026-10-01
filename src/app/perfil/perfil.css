@@ -442,3 +442,61 @@
 .ag-capa .mosaico .t span{position:absolute;left:8px;bottom:8px;background:#fff;color:var(--ink);font-size:10px;font-weight:800;padding:3px 7px;border-radius:999px;border:1px solid var(--ink)}
 .ag-hero-rod-centro{justify-content:center!important}
 .ag-hero-rod-centro .ag-cta{align-items:center;text-align:center}
+
+/* ========================================================================
+   /perfil: redesign "Grande e arejado" (01/10/2026, pedido da Lara).
+   Escopo .pf-kit (só a classe de layout do /perfil) pra NÃO afetar /agencia
+   (.ag-j) nem /entrada, que continuam com o visual de borda grossa + sombra
+   deslocada. Troca por: sem borda pesada, sombra suave, mais respiro entre
+   blocos e menos itens/texto espremido por tela.
+   ======================================================================== */
+
+/* ritmo geral: mais distância entre seções e entre título e conteúdo */
+.pf-kit .pf-sec{margin-top:96px}
+.pf-kit .pf-sec-cab{margin-bottom:4px}
+.pf-kit .pf-sec > .grid,
+.pf-kit .pf-numeros6,.pf-kit .pf-numeros,.pf-kit .pf-cases,.pf-kit .pf-dms,
+.pf-kit .pf-formatos,.pf-kit .pf-servicos,.pf-kit .pf-marcas,.pf-kit .pf-publis-grid,
+.pf-kit .pf-audiencia-grid{margin-top:28px}
+
+/* cartão do perfil: sem contorno preto, sombra suave */
+.pf-kit .pf-card{border:none;box-shadow:0 20px 50px rgba(46,25,18,.10);border-radius:32px}
+.pf-kit .pf-balao{border:none;box-shadow:0 10px 24px rgba(46,25,18,.10)}
+.pf-kit .pf-balao::after{border:none;box-shadow:2px 2px 6px rgba(46,25,18,.06)}
+.pf-kit .pf-carimbo{border-color:var(--azul)}
+
+/* números/stats: sem caixa, só o número grande + respiro */
+.pf-kit .pf-num{border:none;background:none;padding:0}
+.pf-kit .pf-num b{font-size:30px}
+@media (min-width:768px){.pf-kit .pf-num b{font-size:38px}}
+
+/* formatos (Publi) e serviços: sem borda grossa, sombra suave, mais espaço */
+.pf-kit .pf-formato,.pf-kit .pf-servico{border:none;box-shadow:0 8px 24px rgba(46,25,18,.08);padding:22px}
+.pf-kit .pf-servico:hover{box-shadow:0 12px 28px rgba(46,25,18,.12)}
+.pf-kit .pf-formatos{gap:16px}
+.pf-kit .pf-servicos{gap:16px}
+
+/* cases de resultado: sombra suave, sem contorno */
+.pf-kit .pf-case{border:none;box-shadow:0 10px 28px rgba(46,25,18,.08);padding:20px}
+@media (min-width:768px){.pf-kit .pf-case{padding:24px}}
+
+/* post mockup da Publi: sombra suave no lugar do contorno + sombra deslocada */
+.pf-kit .pf-post{border:none;box-shadow:0 16px 40px rgba(46,25,18,.12)}
+.pf-kit .pf-post .cab{border-bottom:1px solid var(--linha)}
+
+/* marcas: tira a borda preta grossa, fica só a logo flutuando */
+.pf-kit .pf-logo{border:1px solid var(--linha);box-shadow:none}
+
+/* caixa genérica usada em listas de preço/FAQ se existirem no kit */
+.pf-kit .pf-caixa{border:none;box-shadow:0 10px 28px rgba(46,25,18,.08)}
+
+/* DMs: de "balão de chat" pra depoimento grande e centralizado (Direção E) */
+.pf-kit .pf-dms{display:grid;grid-template-columns:1fr;gap:40px 32px}
+@media (min-width:640px){.pf-kit .pf-dms{grid-template-columns:repeat(2,1fr)}}
+@media (min-width:1024px){.pf-kit .pf-dms{grid-template-columns:repeat(3,1fr)}}
+.pf-kit .pf-dm{display:flex;flex-direction:column;align-items:center;text-align:center;gap:0;background:none;border:0;font:inherit;color:inherit;padding:0}
+.pf-kit .pf-dm .av{width:60px;height:60px;border:none;margin-bottom:18px}
+.pf-kit .pf-dm .quote{font-size:17px;font-weight:700;line-height:1.5;max-width:30ch}
+.pf-kit .pf-dm .quem{margin-top:14px;font-size:13px;font-weight:800;color:var(--azul)}
+.pf-kit .pf-dm .reacao{margin-top:12px;display:inline-flex;background:none;border:none;color:var(--cinza);font-weight:700;padding:0}
+.pf-kit .pf-dm .reacao b{color:var(--azul)}
