@@ -64,7 +64,7 @@ export const NICHO_EMOJI: Record<string, string> = {
 export const PUBLI = {
   titulo: "Publi no @eilaradam",
   sub: "A sua marca no meu feed, com a minha cara e a minha voz. Os números são ao vivo, direto da API do Instagram.",
-  foto: "/ensaio/publi-janela.webp",
+  foto: "/ensaio/publi-risada.webp", // P&B, risada com a mão no cabelo
   legenda: "a sua marca no meu feed, do jeito que a minha audiência já gosta de ver 🫶",
   formatos: [
     { e: "🎬", nome: "Reels", desc: "Vídeo no feed com roteiro e edição pensados pra alcance." },

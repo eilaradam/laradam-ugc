@@ -267,7 +267,7 @@ export function Publi() {
               <div className="leading-tight"><div className="font-extrabold text-sm">eilaradam</div><div className="text-xs text-[var(--cinza)] font-semibold">Litoral de SP · Parceria paga</div></div>
               <span className="ml-auto text-[10px] font-extrabold uppercase tracking-wider px-2 py-1 rounded-md bg-[var(--claro2)] text-[var(--azul)]">Publi</span>
             </div>
-            <div className="foto">{/* eslint-disable-next-line @next/next/no-img-element */}<img src={PUBLI.foto} alt="Lara Dam na janela com a cidade ao fundo" loading="lazy" style={{ objectPosition: "center 30%" }} /></div>
+            <div className="foto">{/* eslint-disable-next-line @next/next/no-img-element */}<img src={PUBLI.foto} alt="Lara Dam rindo, em preto e branco" loading="lazy" style={{ objectPosition: "center 40%" }} /></div>
             <div className="acoes"><Heart /><MessageCircle /><Send /><Bookmark className="ml-auto" /></div>
             <div className="legenda"><b>{fmtBR(stats.followers)} seguidores</b><br /><b>eilaradam</b> {PUBLI.legenda}</div>
           </div>
