@@ -220,6 +220,17 @@
 .pf-post .acoes{display:flex;gap:14px;padding:12px 14px 4px}
 .pf-post .acoes svg{width:24px;height:24px}
 .pf-post .legenda{padding:6px 14px 14px;font-size:14px;font-weight:600;line-height:1.45}
+
+.pf-publis-cab{margin-top:40px}
+.pf-publis-cab h3{font-size:20px;font-weight:800;letter-spacing:-.01em}
+.pf-publis-cab .sub{margin-top:4px;font-size:14px;font-weight:600;color:var(--cinza)}
+.pf-publis-grid{margin-top:16px;display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+@media (min-width:640px){.pf-publis-grid{grid-template-columns:repeat(3,1fr)}}
+@media (min-width:1024px){.pf-publis-grid{grid-template-columns:repeat(5,1fr)}}
+.pf-publi-card{display:flex;flex-direction:column;gap:8px}
+.pf-publi-stats{display:flex;align-items:center;gap:10px;font-size:12px;font-weight:800;color:var(--ink)}
+.pf-publi-stats span{display:inline-flex;align-items:center;gap:3px}
+.pf-publi-metricas{font-size:11px;font-weight:600;color:var(--cinza)}
 .pf-numeros{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
 .pf-num{border:2px solid var(--ink);border-radius:16px;padding:12px}
 .pf-num{background:#fff}

@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Bookmark, ChevronLeft, ChevronRight, Heart, MessageCircle, Play, Plus, Search, Send } from "lucide-react";
 import { CATEGORIES, VIDEOS, type Video } from "@/data/content";
-import { LOGOS_ORDEM, NICHO_EMOJI, PERFIL, PUBLI, RESULTADOS, SERVICOS } from "@/data/perfil";
+import { LOGOS_ORDEM, NICHO_EMOJI, PERFIL, PUBLI, PUBLIS_REAIS, RESULTADOS, SERVICOS, type PubliReal } from "@/data/perfil";
 import { useVideoModal } from "@/components/VideoModalProvider";
 import { fmtBR, usePerfil } from "./PerfilApp";
 
@@ -293,7 +293,42 @@ export function Publi() {
           <a href="#contato" className="pf-btn azul mt-5" data-track="perfil_publi_cta">Quero uma publi com a Lara</a>
         </div>
       </div>
+
+      <div className="pf-publis-cab">
+        <h3>Minhas publis, do mais pro menos curtido</h3>
+        <p className="sub">Números reais da API do Instagram: curtidas, comentários, salvamentos e alcance de cada post.</p>
+      </div>
+      <div className="pf-publis-grid">
+        {PUBLIS_REAIS.map((p) => (
+          <PubliCard key={p.id} publi={p} />
+        ))}
+      </div>
     </section>
+  );
+}
+
+/* ---------- card de uma publi real (capa + stats embaixo) ---------- */
+function PubliCard({ publi: p }: { publi: PubliReal }) {
+  const { open } = useVideoModal();
+  const abrir = () =>
+    p.externo
+      ? window.open(`https://www.instagram.com/p/${p.instagram}/`, "_blank", "noopener")
+      : open({ id: p.instagram, title: p.brand, category: "Publi", brand: p.brand, instagram: p.instagram, thumbnail: p.thumbnail, videoLocal: p.videoLocal });
+  return (
+    <div className="pf-publi-card">
+      <button className="pf-reel" onClick={abrir} aria-label={`Assistir publi ${p.brand}`} data-cursor="play">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={p.thumbnail} alt="" loading="lazy" />
+        <span className="play"><span><Play className="w-4 h-4 fill-white ml-0.5" /></span></span>
+        <span className="marca"><small>Publi</small>{p.brand}</span>
+      </button>
+      <div className="pf-publi-stats">
+        <span><Heart className="w-3.5 h-3.5" /> {fmtBR(p.likes)}</span>
+        <span><MessageCircle className="w-3.5 h-3.5" /> {fmtBR(p.comments)}</span>
+        <span><Bookmark className="w-3.5 h-3.5" /> {fmtBR(p.saved)}</span>
+      </div>
+      <div className="pf-publi-metricas">{fmtBR(p.reach)} de alcance · {fmtBR(p.views)} views</div>
+    </div>
   );
 }
 

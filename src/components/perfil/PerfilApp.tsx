@@ -4,7 +4,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { FAIXA, NAV, PERFIL } from "@/data/perfil";
 import Cabecalho, { type CabConfig } from "./Cabecalho";
 import Rodape from "./Rodape";
-import { Marcas, Publi, Resultados, Servicos, Videos } from "./Secoes";
+import { Marcas, Publi, Resultados, Servicos } from "./Secoes";
 import DMs from "./DMs";
 import Sobre from "./Sobre";
 import Contato from "./Contato";
@@ -68,7 +68,6 @@ export default function PerfilApp() {
         <Sobre />
         <Resultados />
         <Servicos />
-        <Videos />
         <Publi />
         <Marcas />
         <DMs />
