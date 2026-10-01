@@ -3,7 +3,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { PERFIL } from "@/data/perfil";
 import Cabecalho from "./Cabecalho";
-import { Marcas, Publi, Resultados, Videos } from "./Secoes";
+import { Marcas, Publi, Resultados, Servicos, Videos } from "./Secoes";
 import DMs from "./DMs";
 import Sobre from "./Sobre";
 import Contato from "./Contato";
@@ -44,13 +44,24 @@ export default function PerfilApp() {
       <main className="pf-wrap">
         <Sobre />
         <Resultados />
+        <Servicos />
         <Videos />
         <Publi />
         <Marcas />
         <DMs />
         <Contato />
-        <div className="pf-rodape">© {new Date().getFullYear()} Lara Dam · UGC creator & influenciadora · Litoral de SP · {PERFIL.email}</div>
+        <footer className="pf-rodape">
+          <div className="links">
+            <a href={PERFIL.instagramUrl} target="_blank" rel="noopener">Instagram @{PERFIL.usuario}</a>
+            <a href={PERFIL.tiktokUrl} target="_blank" rel="noopener">TikTok @{PERFIL.tiktok}</a>
+            <a href="/gestao">Gestão de campanhas</a>
+            <a href={`mailto:${PERFIL.email}`}>{PERFIL.email}</a>
+          </div>
+          <div>© {new Date().getFullYear()} Lara Dam · UGC creator & influenciadora · Litoral de SP</div>
+        </footer>
       </main>
+      {/* botão fixo de WhatsApp (só no celular) */}
+      <a href={PERFIL.whatsappUrl} target="_blank" rel="noopener" className="pf-zap-fixo" data-track="perfil_zap_fixo" aria-label="Chamar a Lara no WhatsApp">💬 Chamar no WhatsApp</a>
     </PerfilCtx.Provider>
   );
 }

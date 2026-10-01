@@ -5,8 +5,11 @@ import { Headphones } from "lucide-react";
 import { TESTIMONIALS } from "@/data/content";
 import { useVideoModal } from "@/components/VideoModalProvider";
 
+// Logos com texto miúdo ficam ilegíveis no círculo: essas usam as iniciais.
+const SO_INICIAIS = new Set(["Tropical Especiarias", "Beauty Fair", "Terramazonia"]);
+
 function Avatar({ brand, logoFile }: { brand: string; logoFile?: string }) {
-  const [erro, setErro] = useState(false);
+  const [erro, setErro] = useState(SO_INICIAIS.has(brand));
   const iniciais = brand.replace(/[^A-Za-z0-9 ]/g, "").split(" ").map((w) => w[0]).filter(Boolean).slice(0, 2).join("").toUpperCase();
   return (
     <span className="av">

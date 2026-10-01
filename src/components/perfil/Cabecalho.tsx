@@ -36,7 +36,7 @@ export default function Cabecalho() {
               </a>
             ))}
           </nav>
-          <a href="#contato" className="pf-topo-cta">Trabalhe comigo →</a>
+          <a href={PERFIL.whatsappUrl} target="_blank" rel="noopener" className="pf-topo-cta" data-track="perfil_topo_whatsapp">Trabalhe comigo →</a>
         </div>
       </header>
 
@@ -50,7 +50,7 @@ export default function Cabecalho() {
             <div className="pf-nome">
               <h1>{PERFIL.usuario}</h1>
               <svg width="26" height="26" viewBox="0 0 24 24" aria-label="verificada"><circle cx="12" cy="12" r="11" fill="#2350D8" /><path d="M7 12.5l3 3 7-7" stroke="#fff" strokeWidth="2.6" fill="none" strokeLinecap="round" strokeLinejoin="round" /></svg>
-              <a href="#contato" className="pf-btn azul" data-track="perfil_trabalhe_comigo">Trabalhe comigo</a>
+              <a href={PERFIL.whatsappUrl} target="_blank" rel="noopener" className="pf-btn azul" data-track="perfil_trabalhe_comigo">💬 Trabalhe comigo</a>
               <a href={PERFIL.instagramUrl} target="_blank" rel="noopener" className="pf-btn" data-track="perfil_instagram">Ver no Instagram</a>
             </div>
             <div className="pf-stats">
@@ -62,7 +62,7 @@ export default function Cabecalho() {
             <div className="pf-bio">
               <div className="n">{PERFIL.bioTitulo}</div>
               {PERFIL.bio.map((l) => <div key={l}>{l}</div>)}
-              <a href="#contato">ugc.laradam.com/trabalhe-comigo</a>
+              <a href="#contato">📩 prefere formulário? trabalhe comigo por aqui</a>
             </div>
             <div className="pf-balao">{negrito(PERFIL.balao)}</div>
             <div className="pf-mao pf-nota mt-5 md:mt-6">{PERFIL.nota}</div>

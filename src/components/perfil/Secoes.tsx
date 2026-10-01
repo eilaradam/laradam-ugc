@@ -2,8 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Bookmark, ChevronLeft, ChevronRight, Heart, MessageCircle, Play, Plus, Search, Send } from "lucide-react";
-import { BRAND_LOGO_FILES, CATEGORIES, VIDEOS, type Video } from "@/data/content";
-import { NICHO_EMOJI, PUBLI, RESULTADOS } from "@/data/perfil";
+import { CATEGORIES, VIDEOS, type Video } from "@/data/content";
+import { LOGOS_ORDEM, NICHO_EMOJI, PERFIL, PUBLI, RESULTADOS, SERVICOS } from "@/data/perfil";
 import { useVideoModal } from "@/components/VideoModalProvider";
 import { fmtBR, usePerfil } from "./PerfilApp";
 
@@ -11,6 +11,8 @@ import { fmtBR, usePerfil } from "./PerfilApp";
 const VISIVEIS = 5;
 
 const THUMBS = ["maxresdefault.jpg", "oardefault.jpg", "oar2.jpg", "sddefault.jpg", "hqdefault.jpg", "mqdefault.jpg"];
+// No celular o card é pequeno: começa pela capa média (640px) e economiza uns 4 MB na página.
+const THUMBS_LEVES = ["sddefault.jpg", "hqdefault.jpg", "mqdefault.jpg"];
 
 /* ---------- card de vídeo (9:16), prévia no hover, abre no player ---------- */
 function Reel({ video, grande = false }: { video: Video; grande?: boolean }) {
@@ -18,9 +20,12 @@ function Reel({ video, grande = false }: { video: Video; grande?: boolean }) {
   const [idx, setIdx] = useState(0);
   const [preview, setPreview] = useState(false);
   const [pronto, setPronto] = useState(false);
+  const [leve, setLeve] = useState(false);
+  useEffect(() => { if (!grande && window.innerWidth < 768) setLeve(true); }, [grande]);
+  const lista = leve ? THUMBS_LEVES : THUMBS;
   const id = video.youtubeId;
-  const src = video.thumbnail ?? (id ? `https://i.ytimg.com/vi/${id}/${THUMBS[idx]}` : "");
-  const proximo = () => { if (!video.thumbnail && idx < THUMBS.length - 1) setIdx(idx + 1); };
+  const src = video.thumbnail ?? (id ? `https://i.ytimg.com/vi/${id}/${lista[idx]}` : "");
+  const proximo = () => { if (!video.thumbnail && idx < lista.length - 1) setIdx(idx + 1); };
   const nicho = CATEGORIES.find((c) => c.slug === video.category)?.name ?? video.category;
   return (
     <button className={`pf-reel ${grande ? "grande" : ""}`} onClick={() => open(video)} onMouseEnter={() => setPreview(true)} onFocus={() => setPreview(true)} aria-label={`Assistir ${video.title} (${video.brand})`} data-cursor="play">
@@ -126,6 +131,26 @@ function Destaques() {
       </div>
       <div className="text-center text-xs font-bold text-[var(--cinza)] mt-2">{cases[ativo].marca} · {ativo + 1} de {n}</div>
     </div>
+  );
+}
+
+/* ---------- SERVIÇOS: o que a marca pode contratar ---------- */
+export function Servicos() {
+  return (
+    <section id="servicos" className="pf-sec">
+      <Titulo id="servicos" titulo={SERVICOS.titulo} sub={SERVICOS.sub} />
+      <div className="pf-servicos">
+        {SERVICOS.itens.map((it) => (
+          <a key={it.nome} href={PERFIL.whatsappUrl} target="_blank" rel="noopener" className="pf-servico" data-track={`perfil_servico_${it.nome.toLowerCase().replace(/[^a-z]+/g, "_")}`}>
+            <span className="e">{it.e}</span>
+            {it.tag && <span className="tag">{it.tag}</span>}
+            <b>{it.nome}</b>
+            <p>{it.desc}</p>
+            <span className="cta">Quero esse →</span>
+          </a>
+        ))}
+      </div>
+    </section>
   );
 }
 
@@ -274,7 +299,7 @@ export function Publi() {
 /* ---------- MARCAS ---------- */
 export function Marcas() {
   const [todas, setTodas] = useState(false);
-  const lista = todas ? BRAND_LOGO_FILES : BRAND_LOGO_FILES.slice(0, 24);
+  const lista = todas ? LOGOS_ORDEM : LOGOS_ORDEM.slice(0, 24);
   return (
     <section id="marcas" className="pf-sec">
       <Titulo id="marcas" titulo="Marcas que já trabalharam comigo 🤝" sub="Mais de 200 parcerias em 2 anos, de fintech a beleza, casa e gastronomia. Algumas delas:" />

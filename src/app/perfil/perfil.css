@@ -201,7 +201,7 @@
 .pf-dms{display:grid;gap:14px;margin-top:18px}
 @media (min-width:768px){.pf-dms{grid-template-columns:1fr 1fr;gap:18px}}
 .pf-dm{display:flex;gap:12px;align-items:flex-start}
-.pf-dm .av{width:44px;height:44px;border-radius:50%;border:2px solid var(--ink);background:#fff;overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px}
+.pf-dm .av{width:54px;height:54px;background:var(--claro2);border-radius:50%;border:2px solid var(--ink);background:#fff;overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px}
 .pf-dm .av img{width:100%;height:100%;object-fit:contain;padding:4px}
 .pf-dm .msg{background:#F3F4F6;border-radius:4px 18px 18px 18px;padding:12px 14px;font-weight:600;font-size:14px;line-height:1.45;position:relative}
 .pf-dm .quem{font-size:12px;font-weight:800;color:var(--cinza);margin-bottom:6px}
@@ -241,6 +241,28 @@
 .pf-campo input,.pf-campo textarea{width:100%;border:2px solid var(--ink);border-radius:14px;padding:12px 14px;font:inherit;font-weight:600;font-size:15px;background:#fff;color:var(--ink);outline:0}
 .pf-campo input:focus,.pf-campo textarea:focus{border-color:var(--azul);box-shadow:0 0 0 3px var(--azul2)}
 .pf-rodape{margin:60px 0 40px;text-align:center;font-weight:700;font-size:13px;color:var(--cinza)}
+.pf-rodape .links{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 18px;margin-bottom:10px}
+.pf-rodape .links a{color:var(--azul);font-weight:800}
+@media (max-width:767px){.pf-rodape{margin-bottom:96px}}
+
+/* serviços */
+.pf-servicos{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}
+@media (min-width:768px){.pf-servicos{grid-template-columns:repeat(3,1fr);gap:14px}}
+@media (min-width:1280px){.pf-servicos{grid-template-columns:repeat(6,1fr)}}
+.pf-servico{position:relative;display:flex;flex-direction:column;gap:6px;padding:14px;border:2px solid var(--ink);border-radius:18px;background:#fff;color:var(--ink);text-decoration:none;box-shadow:4px 4px 0 var(--azul);transition:transform .18s ease-out,background .18s ease-out}
+.pf-servico:hover{transform:translateY(-3px);background:var(--claro)}
+.pf-servico .e{font-size:28px;line-height:1}
+.pf-servico .tag{position:absolute;top:10px;right:10px;background:var(--azul);color:#fff;font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;padding:3px 7px;border-radius:999px}
+.pf-servico b{font-size:15px;font-weight:800;line-height:1.15}
+.pf-servico p{font-size:12px;font-weight:600;color:var(--cinza);line-height:1.35;flex:1}
+.pf-servico .cta{font-size:12px;font-weight:800;color:var(--azul)}
+
+/* botão fixo de WhatsApp (celular) */
+.pf-zap-fixo{display:none}
+@media (max-width:767px){.pf-zap-fixo{display:flex;position:fixed;left:16px;right:16px;bottom:14px;z-index:40;align-items:center;justify-content:center;height:50px;border-radius:999px;background:var(--azul);color:#fff;font-weight:800;font-size:15px;border:2px solid var(--ink);box-shadow:0 4px 0 var(--ink);text-decoration:none}}
+
+/* topo no celular: só o menu rolável */
+@media (max-width:1023px){.pf-marca,.pf-topo-cta{display:none}.pf-topo-linha{grid-template-columns:1fr;padding-top:8px;padding-bottom:8px}.pf-menu{grid-column:auto}}
 
 .pf button,.pf a{cursor:pointer}
 .pf :focus-visible{outline:3px solid var(--azul);outline-offset:2px}

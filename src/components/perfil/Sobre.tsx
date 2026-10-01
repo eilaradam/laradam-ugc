@@ -24,7 +24,8 @@ export default function Sobre() {
           <h2>{SOBRE.titulo}</h2>
           <p className="mt-4 font-semibold text-base md:text-lg leading-relaxed">{SOBRE.p1}</p>
           <p className="mt-3 font-semibold text-base md:text-lg leading-relaxed text-[var(--cinza)]">{SOBRE.p2}</p>
-          <div className="mt-5 flex flex-wrap gap-2">
+          <div className="mt-5 text-xs font-extrabold uppercase tracking-widest text-[var(--cinza)]">{SOBRE.nichosTitulo}</div>
+          <div className="mt-2 flex flex-wrap gap-2">
             {SOBRE.pills.map((p, i) => (
               <span key={p} className="px-3 py-2 rounded-xl border-2 border-[var(--ink)] text-sm font-extrabold" style={{ background: i % 2 ? "#fff" : "var(--claro2)" }}>{p}</span>
             ))}

@@ -6,6 +6,10 @@ export const PERFIL = {
   instagramUrl: "https://instagram.com/eilaradam",
   whatsapp: "5512988729264",
   whatsappLabel: "(12) 98872-9264",
+  // mensagem que já chega pronta quando a marca clica em "Trabalhe comigo"
+  whatsappUrl: "https://wa.me/5512988729264?text=" + encodeURIComponent("Oi Lara! Vi seu portfólio e quero conversar sobre conteúdo pra minha marca."),
+  tiktok: "eularadam",
+  tiktokUrl: "https://www.tiktok.com/@eularadam",
   email: "laradam.ugc@gmail.com",
   avatar: "/ensaio/cara-01.webp",
   fallback: { followers: 16039, reach_month: 367702, posts: 141 },
@@ -24,6 +28,7 @@ export const FAIXA = ["500 vídeos gravados", "200 marcas", "100M+ views", "2.4x
 export const NAV = [
   { id: "sobre", rotulo: "Sobre", emoji: "👋" },
   { id: "resultados", rotulo: "Resultados", emoji: "📊" },
+  { id: "servicos", rotulo: "Serviços", emoji: "🛠️" },
   { id: "videos", rotulo: "Vídeos", emoji: "🎬" },
   { id: "publi", rotulo: "Publi", emoji: "📱" },
   { id: "marcas", rotulo: "Marcas", emoji: "🤝" },
@@ -40,7 +45,7 @@ export const RESULTADOS = {
     { v: "200+", k: "marcas parceiras" },
     { v: "2.4x", k: "ROAS médio com ads" },
     { v: "38%", k: "de CPA a menos" },
-    { v: "2 anos", k: "de estrada" },
+    { v: "+45%", k: "vendas no e-commerce com ads" },
   ],
   // Os 4 cases de destaque (mesmos do site atual). Cada um vira um card com
   // o vídeo do YouTube ao lado; a capa vem de /public/best-*.jpg.
@@ -79,7 +84,8 @@ export const SOBRE = {
   titulo: "Oie, eu sou a Lara Dam 👋",
   p1: "Tenho 27 anos, moro no Litoral de SP e há 2 anos vivo de criar conteúdo. Comecei gravando UGC pra marcas e hoje faço as duas coisas: vídeo que roda como anúncio pra mais de 200 marcas e publi no meu perfil, pra uma audiência que acompanha meus bastidores.",
   p2: "Também ensino outras creators a organizar a carreira. Então entendo os dois lados da mesa: o da marca que precisa de resultado e o da creator que precisa de briefing claro.",
-  pills: ["+200 marcas parceiras", "Litoral de SP · Brasil", "500+ vídeos", "2 anos de estrada"],
+  nichosTitulo: "Nichos que mais gravo",
+  pills: ["💸 Finanças", "💄 Beleza", "🛋️ Casa & Deco", "📱 Tech & Apps", "🍝 Gastronomia"],
   ficha: [
     { k: "Formatos", v: "9:16 · 16:9 · 4:5" },
     { k: "Entrega", v: "Editado, com legenda e variações de hook" },
@@ -87,3 +93,25 @@ export const SOBRE = {
     { k: "Prazo", v: "A partir de 7 dias" },
   ],
 };
+
+// Serviços (o que a marca pode contratar). Clicar leva pro WhatsApp com a mensagem pronta.
+export const SERVICOS = {
+  titulo: "O que você pode contratar 🛠️",
+  sub: "Seis formatos de trabalho. Escolhe o que faz sentido pra sua marca e me chama.",
+  itens: [
+    { e: "🎬", nome: "UGC de conversão", desc: "Vídeo autêntico pensado pra vender: hook, prova e CTA.", tag: "mais pedido" },
+    { e: "🎯", nome: "Criativos pra tráfego", desc: "Ads pro Meta, TikTok e YouTube, com variações de hook." },
+    { e: "✍️", nome: "Roteiro estratégico", desc: "Script validado por performance, pra você ou pra outras creators." },
+    { e: "📸", nome: "Fotos lifestyle", desc: "Imagem com direção de arte pra campanha e feed." },
+    { e: "🛍️", nome: "Pacote e-commerce", desc: "Entrega mensal pra manter a loja e o feed vivos." },
+    { e: "✨", nome: "Consultoria UGC", desc: "Briefing, curadoria e direção de creators." },
+  ],
+};
+
+// Ordem dos logos em /public/logo-1 pra página /perfil: marcas grandes primeiro,
+// sem repetidas (Huawei, Jägermeister, Artex, SPC, Sofá na Caixa, Chilli Beans,
+// OLX, Rap10, Terramazonia aparecem 2x na pasta) e sem o 43 (logo do WhatsApp).
+export const LOGOS_ORDEM: string[] = [
+  59, 35, 36, 61, 3, 60, 46, 21, 62, 6, 14, 11, 12, 27, 28, 20, 7, 17, 39, 31, 24, 22, 2, 13,
+  10, 8, 25, 1, 4, 5, 9, 15, 18, 19, 23, 26, 29, 30, 32, 33, 38, 40, 41, 42, 47, 48, 50, 51, 52, 54, 55,
+].map((n) => `${n}.png`);
