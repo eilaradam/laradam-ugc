@@ -49,18 +49,18 @@ export const NILEN: Proposta = {
       ],
       contratoFixo: {
         titulo: "Contrato de 3 meses",
-        valor: "R$ 4.500/mês · R$ 450 por criativo",
-        economia: "Economia de R$ 1.000 por mês",
+        valor: "R$ 4.900/mês · R$ 490 por criativo",
+        economia: "Economia de R$ 600 por mês",
       },
     },
     {
       nome: "Pacote 20 Creators",
       tipo: "Mensal",
-      valor: "R$ 10.000/mês",
+      valor: "R$ 9.800/mês",
       descricao:
         "20 criativos novos por mês, entregues em lotes a cada 2 semanas. Volume pra renovar os anúncios antes do público cansar, sem precisar montar a operação de novo.",
       inclui: [
-        "R$ 500 por criativo",
+        "R$ 490 por criativo",
         "Seleção de 20 creators por mês",
         "Briefing por fragrância e roteiro revisado antes de cada gravação",
         "Direito de uso em anúncios por 6 meses",
@@ -69,8 +69,8 @@ export const NILEN: Proposta = {
       badge: "Recomendado pra quem roda anúncio",
       contratoFixo: {
         titulo: "Contrato de 3 meses",
-        valor: "R$ 8.500/mês · R$ 425 por criativo",
-        economia: "Economia de R$ 1.500 por mês",
+        valor: "R$ 9.000/mês · R$ 450 por criativo",
+        economia: "Economia de R$ 800 por mês",
       },
     },
   ],
