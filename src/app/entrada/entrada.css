@@ -1,0 +1,59 @@
+/* Página de entrada (/entrada): carregando + escolha do caminho. Usa os tokens de .pf */
+.en-pagina{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px 16px 32px}
+@media (min-width:768px){.en-pagina{padding:40px 24px}}
+
+/* ---- carregando ---- */
+.en-carregando{display:flex;flex-direction:column;align-items:center;gap:18px;animation:en-aparece .4s ease-out}
+.en-anel{position:relative;width:150px;height:150px}
+@media (min-width:768px){.en-anel{width:180px;height:180px}}
+.en-anel svg{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg)}
+.en-anel .trilha{fill:none;stroke:var(--claro2);stroke-width:6}
+.en-anel .progresso{fill:none;stroke:var(--azul);stroke-width:6;stroke-linecap:round;stroke-dasharray:339.3;stroke-dashoffset:339.3;animation:en-anel 1.6s cubic-bezier(.4,0,.2,1) forwards}
+.en-anel img{position:absolute;inset:14px;width:calc(100% - 28px);height:calc(100% - 28px);border-radius:50%;object-fit:cover;border:3px solid var(--ink)}
+.en-carregando-txt{font-weight:800;font-size:15px;letter-spacing:.02em;color:var(--ink)}
+.en-carregando-txt .pontos i{font-style:normal;animation:en-pisca 1s infinite}
+.en-carregando-txt .pontos i:nth-child(2){animation-delay:.2s}.en-carregando-txt .pontos i:nth-child(3){animation-delay:.4s}
+.en-barra{width:220px;height:10px;border:2px solid var(--ink);border-radius:999px;overflow:hidden;background:#fff}
+.en-barra i{display:block;height:100%;width:0;background:repeating-linear-gradient(-45deg,var(--azul) 0 8px,var(--azulmedio) 8px 16px);animation:en-barra 1.6s cubic-bezier(.4,0,.2,1) forwards}
+@keyframes en-anel{to{stroke-dashoffset:0}}
+@keyframes en-barra{to{width:100%}}
+@keyframes en-pisca{0%,100%{opacity:.2}50%{opacity:1}}
+@keyframes en-aparece{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* ---- escolha ---- */
+.en-escolha{width:100%;max-width:1180px;animation:en-aparece .5s ease-out}
+.en-cab{text-align:center;display:flex;flex-direction:column;align-items:center;gap:10px}
+.en-avatar{width:84px;height:84px;border-radius:50%;padding:4px;background:#fff;border:3px solid var(--azul)}
+.en-avatar img{width:100%;height:100%;border-radius:50%;object-fit:cover}
+.en-eyebrow{font-weight:800;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--azul)}
+.en-cab h1{font-size:34px;font-weight:800;letter-spacing:-.03em;line-height:1.02}
+@media (min-width:768px){.en-cab h1{font-size:52px}}
+.en-cab h1 span{color:var(--azul)}
+.en-cab p{font-weight:600;color:var(--cinza);font-size:15px;max-width:520px}
+@media (min-width:768px){.en-cab p{font-size:17px}}
+
+.en-caminhos{display:grid;gap:14px;margin-top:28px}
+@media (min-width:900px){.en-caminhos{grid-template-columns:repeat(3,1fr);gap:20px;margin-top:40px}}
+.en-caminho{display:grid;grid-template-columns:120px 1fr;border:2px solid var(--ink);border-radius:22px;overflow:hidden;background:#fff;color:var(--ink);text-decoration:none;box-shadow:6px 6px 0 var(--ink);transition:transform .2s ease-out,box-shadow .2s ease-out;opacity:0;animation:en-sobe .5s ease-out forwards}
+@media (min-width:900px){.en-caminho{grid-template-columns:1fr;grid-template-rows:230px 1fr}}
+.en-caminho:hover{transform:translate(-2px,-4px);box-shadow:10px 10px 0 var(--azul)}
+.en-caminho:focus-visible{outline:3px solid var(--azul);outline-offset:3px}
+.en-caminho .foto{position:relative;background:var(--claro2);border-right:2px solid var(--ink)}
+@media (min-width:900px){.en-caminho .foto{border-right:0;border-bottom:2px solid var(--ink)}}
+.en-caminho .foto img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.en-caminho .rotulo{position:absolute;left:10px;top:10px;display:inline-flex;align-items:center;gap:6px;background:#fff;border:2px solid var(--ink);border-radius:999px;padding:5px 11px;font-weight:800;font-size:12px;letter-spacing:.1em;text-transform:uppercase}
+.en-caminho .rotulo .e{font-size:15px}
+.en-caminho .txt{padding:14px 16px;display:flex;flex-direction:column;gap:6px}
+@media (min-width:900px){.en-caminho .txt{padding:20px 22px 22px;gap:8px}}
+.en-caminho h2{font-size:18px;font-weight:800;letter-spacing:-.02em;line-height:1.1}
+@media (min-width:900px){.en-caminho h2{font-size:24px}}
+.en-caminho p{font-size:13px;font-weight:600;color:var(--cinza);line-height:1.4}
+@media (min-width:900px){.en-caminho p{font-size:15px}}
+.en-caminho .pra{font-size:17px;color:var(--azul);line-height:1.15}
+@media (min-width:900px){.en-caminho .pra{font-size:20px}}
+.en-caminho .cta{margin-top:auto;display:inline-flex;align-items:center;gap:8px;align-self:flex-start;background:var(--azul);color:#fff;font-weight:800;font-size:14px;padding:10px 16px;border-radius:12px;border:2px solid var(--ink);box-shadow:0 3px 0 var(--ink)}
+.en-caminho.publi .foto{background:var(--claro2)}
+@keyframes en-sobe{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+
+.en-rodape{margin-top:28px;text-align:center;font-weight:700;font-size:12px;color:var(--cinza)}
+@media (prefers-reduced-motion:reduce){.en-caminho{opacity:1;animation:none}}
