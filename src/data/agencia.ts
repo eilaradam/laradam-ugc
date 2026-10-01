@@ -5,13 +5,31 @@ export const AG_WHATSAPP = "https://wa.me/5512988729264?text=" + encodeURICompon
 
 export const AG_NAV = [
   { id: "comparar", rotulo: "Comparar" },
+  { id: "conteudos", rotulo: "Conteúdos" },
   { id: "modalidades", rotulo: "Modalidades" },
   { id: "processo", rotulo: "Processo" },
-  { id: "conteudos", rotulo: "Cases" },
   { id: "sobre", rotulo: "Sobre" },
   { id: "duvidas", rotulo: "Dúvidas" },
   { id: "contato", rotulo: "Contato" },
 ];
+
+// Capa da agência: frase, botão e um mosaico com capas das creators da rede.
+export const AG_CAPA = {
+  eyebrow: "Gestão de campanhas UGC · do briefing à entrega",
+  titulo1: "Sua marca não precisa de mais um vídeo.",
+  tituloAcento: "Precisa de uma campanha que funcione.",
+  sub: "Seleção de creators, briefing, roteiro revisado, produção acompanhada e entrega no prazo. Você roda mídia. Nós rodamos a operação.",
+  cta: "Quero conversar sobre minha campanha",
+  ctaSub: "Diagnóstico gratuito antes de qualquer proposta. Resposta em até 24h.",
+  numeros: [
+    { b: "+100", t: "campanhas gerenciadas" },
+    { b: "+200", t: "marcas atendidas" },
+    { b: "+1.200", t: "creators em rede" },
+  ],
+  mosaicoLegenda: "creators da rede em campanhas recentes",
+  // quantas capas entram no mosaico (pega as primeiras com capa local, pulando marcas repetidas em sequência)
+  mosaicoQtd: 9,
+};
 
 // Abertura da página (opção J escolhida pela Lara em 01/10/2026): comparação "por conta × com gestão".
 export const AG_VS = {

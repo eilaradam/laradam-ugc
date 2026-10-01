@@ -388,3 +388,29 @@
 .ag-ficha .l{display:flex;justify-content:space-between;gap:14px;padding:9px 14px;border-bottom:1px solid var(--linha);font-size:13px}
 .ag-ficha .l:last-child{border-bottom:0}
 .ag-ficha .l span{font-weight:700;color:var(--cinza)}.ag-ficha .l b{font-weight:800;text-align:right}
+
+/* ---------- agência: capa ---------- */
+.ag-capa{display:grid;gap:26px;padding-top:26px;align-items:center}
+@media (min-width:900px){.ag-capa{grid-template-columns:1.05fr .95fr;gap:40px;padding-top:34px;min-height:560px}}
+.ag-capa .k{font-size:11px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--azul)}
+.ag-capa h1{margin-top:12px;font-size:34px;font-weight:800;letter-spacing:-.045em;line-height:1}
+@media (min-width:768px){.ag-capa h1{font-size:50px}}
+.ag-capa h1 span{color:var(--azul)}
+.ag-capa p{margin-top:14px;font-size:15px;font-weight:600;color:var(--cinza);line-height:1.5;max-width:520px}
+.ag-capa .ag-cta{margin-top:20px}
+.ag-capa .ag-nums{margin-top:24px}
+.ag-capa .mosaico{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;align-items:start}
+@media (min-width:900px){.ag-capa .mosaico{gap:12px;padding:10px 0}}
+.ag-capa .mosaico .t{position:relative;aspect-ratio:9/13;border:2px solid var(--ink);border-radius:14px;overflow:hidden;background:var(--claro2);opacity:0;animation:en-sobe .5s ease-out forwards}
+.ag-capa .mosaico .t:nth-child(3n+2){transform:translateY(18px)}
+@media (min-width:900px){.ag-capa .mosaico .t:nth-child(3n+2){transform:translateY(26px)}.ag-capa .mosaico .t:nth-child(3n+3){transform:translateY(8px)}}
+.ag-capa .mosaico .t img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.ag-capa .mosaico .t span{position:absolute;left:8px;bottom:8px;background:#fff;color:var(--ink);font-size:10px;font-weight:800;padding:3px 7px;border-radius:999px;border:1px solid var(--ink)}
+.ag-capa .mosaico .t:nth-child(n+7){display:none}
+@media (min-width:900px){.ag-capa .mosaico .t:nth-child(n+7){display:block}}
+.ag-hero-rod-centro{justify-content:center!important}
+.ag-hero-rod-centro .ag-cta{align-items:center;text-align:center}
+@keyframes en-sobe{from{opacity:0;transform:translateY(14px)}to{opacity:1}}
+.ag-capa .mosaico .t:nth-child(3n+2){animation-name:en-sobe-2}
+@keyframes en-sobe-2{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(26px)}}
+@media (prefers-reduced-motion:reduce){.ag-capa .mosaico .t{animation:none;opacity:1}}
