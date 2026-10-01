@@ -14,10 +14,12 @@ export type Proposta = {
   subtitulo: string;
   destaques: { rotulo: string; valor: string }[];
   sobre: string;
-  opcoes: { nome: string; tipo: string; valor: string; descricao: string; inclui: string[]; destaque?: boolean; badge?: string }[];
+  opcoes: { nome: string; tipo: string; valor: string; descricao: string; inclui: string[]; destaque?: boolean; badge?: string; economia?: string }[];
   notaOpcoes?: string;
   extra?: { nome: string; valor: string; descricao: string; condicao?: string };
   incluso: string[];
+  /** Bloco curto e discreto logo depois de "O que está incluso". */
+  responsabilidadesMarca?: { titulo: string; itens: string[] };
   // Referência de vídeo: ou `id` (puxa do portfólio da Lara em content.ts),
   // ou `video` inline (pra mostrar trabalho de outras creators da rede, ex. conteúdos da /agencia).
   referencias: (
@@ -31,6 +33,7 @@ export type Proposta = {
     linhas: { nome: string; cidade: string; status: string }[];
   };
   cronograma: { etapa: string; quando: string }[];
+  cronogramaNota?: string;
   pagamento: string;
   proximoPasso: string;
   whatsapp: string;
@@ -187,6 +190,9 @@ export default function PropostaPage({ p }: { p: Proposta }) {
                     </li>
                   ))}
                 </ul>
+                {o.economia && (
+                  <p className={"mt-5 text-sm font-bold " + (o.destaque ? "text-accent-on-dark" : "text-primary")}>{o.economia}</p>
+                )}
               </div>
             ))}
           </div>
@@ -218,6 +224,20 @@ export default function PropostaPage({ p }: { p: Proposta }) {
             </li>
           ))}
         </ul>
+
+        {p.responsabilidadesMarca && (
+          <div className="mt-6 rounded-2xl border border-dashed border-border bg-background-alt/50 px-5 py-4">
+            <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted">{p.responsabilidadesMarca.titulo}</div>
+            <ul className="mt-3 space-y-1.5">
+              {p.responsabilidadesMarca.itens.map((i) => (
+                <li key={i} className="flex items-start gap-2 text-sm text-foreground-soft">
+                  <span className="mt-1.5 h-1 w-1 flex-shrink-0 rounded-full bg-muted" />
+                  <span>{i}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </section>
 
       {/* painel de acompanhamento (exemplo) */}
@@ -321,6 +341,7 @@ export default function PropostaPage({ p }: { p: Proposta }) {
             </li>
           ))}
         </ol>
+        {p.cronogramaNota && <p className="mt-6 max-w-2xl text-sm text-muted">{p.cronogramaNota}</p>}
       </section>
 
       {/* pagamento + próximo passo */}
@@ -328,7 +349,7 @@ export default function PropostaPage({ p }: { p: Proposta }) {
         <div className="mx-auto grid max-w-5xl grid-cols-1 gap-8 px-6 py-12 md:grid-cols-2 md:py-16">
           <div>
             <Eyebrow n={secao()}>Pagamento</Eyebrow>
-            <p className="leading-relaxed text-foreground-soft">{p.pagamento}</p>
+            <p className="whitespace-pre-line leading-relaxed text-foreground-soft">{p.pagamento}</p>
           </div>
           <div>
             <Eyebrow n={secao()}>Próximo passo</Eyebrow>

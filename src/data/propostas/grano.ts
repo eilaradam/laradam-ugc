@@ -7,7 +7,9 @@
 // /agencia — é o caso aqui: Frooty/Brinox/Coza/Copacol/Trisanti/Rap10 são
 // marcas atendidas pela rede, não vídeos da própria Lara).
 //
-// Valores passados pela Lara em 01/10: pontual R$550 x 10, contínuo (mín. 3 meses) R$450 x 10.
+// Ajuste de 01/10 (2ª leva): preço do contínuo subiu pra R$490/criativo, direito de
+// uso detalhado, bloco de responsabilidades da marca, cronograma de 3 semanas e
+// condições de pagamento completas.
 
 import type { Proposta } from "@/components/proposta/Proposta";
 
@@ -20,12 +22,12 @@ export const GRANO: Proposta = {
     "Campanha UGC gerenciada por mim, do briefing à entrega: 10 criativos com creators selecionadas no meu banco, prontos pra rodar no seu feed e em anúncios.",
   destaques: [
     { rotulo: "Criativos", valor: "10" },
-    { rotulo: "Cronograma", valor: "2 semanas" },
+    { rotulo: "Cronograma", valor: "3 semanas" },
     { rotulo: "Creators", valor: "Pré-aprovadas" },
   ],
 
   sobre:
-    "Campanha fechada de 10 criativos UGC pra Grano, com creators selecionadas na minha rede e toda a operação sob minha gestão: briefing, roteiro, produção e revisão antes da entrega. Em 2 semanas você tem os 10 vídeos prontos pra publicar e usar em mídia paga.",
+    "Campanha fechada de 10 criativos UGC pra Grano, com creators selecionadas na minha rede e toda a operação sob minha gestão: briefing, roteiro, produção e revisão antes da entrega. Em 3 semanas você tem os 10 vídeos prontos pra publicar e usar em mídia paga.",
 
   opcoes: [
     {
@@ -37,25 +39,30 @@ export const GRANO: Proposta = {
         "R$ 550 por criativo",
         "Seleção de 10 creators pelo perfil da Grano",
         "Briefing e roteiro revisado antes da gravação",
-        "Direito de uso em anúncios",
+        "Uso orgânico sem prazo: redes sociais, site e e-commerce da marca",
+        "Uso em tráfego pago por 6 meses a partir da entrega de cada vídeo",
+        "Renovação do tráfego pago sob consulta",
       ],
     },
     {
       nome: "Pacote Contínuo",
       tipo: "Recorrente · mínimo 3 meses",
-      valor: "R$ 4.500/mês",
+      valor: "R$ 4.900/mês",
       descricao: "10 criativos UGC por mês, com creators renovadas e a operação rodando todo mês.",
       inclui: [
-        "R$ 450 por criativo",
+        "R$ 490 por criativo",
         "Seleção de 10 creators por mês",
         "Briefing e roteiro revisado antes de cada gravação",
-        "Direito de uso em anúncios",
+        "Uso orgânico sem prazo: redes sociais, site e e-commerce da marca",
+        "Uso em tráfego pago por 6 meses a partir da entrega de cada vídeo",
+        "Renovação do tráfego pago sob consulta",
       ],
       destaque: true,
       badge: "Mais econômico",
+      economia: "R$ 600 a menos por mês",
     },
   ],
-  notaOpcoes: "No pacote contínuo o compromisso mínimo é de 3 meses; depois disso, segue mês a mês até você decidir pausar.",
+  notaOpcoes: "No pacote contínuo o compromisso mínimo é de 3 meses. Depois disso, segue mês a mês, com aviso prévio de 30 dias para cancelar.",
 
   incluso: [
     "Diagnóstico e seleção das creators",
@@ -64,7 +71,18 @@ export const GRANO: Proposta = {
     "Produção acompanhada",
     "1 rodada de ajustes por vídeo",
     "Nota fiscal",
+    "Creator reserva já aprovada por vocês, para cobrir imprevistos",
+    "Revisão interna de cada vídeo antes de chegar até vocês",
   ],
+
+  responsabilidadesMarca: {
+    titulo: "O que precisamos de vocês",
+    itens: [
+      "Envio dos produtos para as creators, com frete por conta da marca",
+      "Aprovação do briefing e dos perfis selecionados",
+      "Retorno sobre roteiros e vídeos em até 2 dias úteis",
+    ],
+  },
 
   // Prévia do painel de acompanhamento (igual agencia.laradam.com), com nomes e status de exemplo —
   // não são creators reais nem confirmadas pra campanha, é só pra mostrar como fica o processo.
@@ -91,12 +109,14 @@ export const GRANO: Proposta = {
   ],
 
   cronograma: [
-    { etapa: "Seleção das creators e briefing", quando: "Semana 1" },
-    { etapa: "Roteiro revisado e gravações", quando: "Semana 1 e 2" },
-    { etapa: "Entrega dos 10 vídeos", quando: "Fim da semana 2" },
+    { etapa: "Diagnóstico, seleção das creators e briefing", quando: "Semana 1" },
+    { etapa: "Roteiros aprovados e gravações", quando: "Semana 2" },
+    { etapa: "Entrega dos 10 vídeos", quando: "Semana 3" },
   ],
+  cronogramaNota: "Prazo contado a partir do recebimento do produto pelas creators.",
 
-  pagamento: "[preencher condições: forma de pagamento, prazo e dados para a nota fiscal]",
+  pagamento:
+    "Pacote Pontual: 50% na assinatura e 50% na entrega dos vídeos.\nPacote Contínuo: pagamento mensal antecipado, até o dia 5 de cada mês.\nForma de pagamento: PIX ou boleto.\nDados para a nota fiscal: Lara Dam LTDA, CNPJ 55.446.568/0001-22.",
 
   proximoPasso: "Assim que aprovar a proposta, já parto pra seleção das creators e briefing da campanha.",
 
