@@ -5,11 +5,15 @@ import { useState } from "react";
 export function HeroPhoto({
   className = "",
   rounded = false,
+  src,
 }: {
   className?: string;
   rounded?: boolean;
+  /** Foto recortada (fundo transparente) pra usar no lugar da padrão. */
+  src?: string;
 }) {
   const SOURCES = [
+    ...(src ? [src] : []),
     "/lara-fundo.png",
     "/larafundo.png",
     "/lara-hero.png",
@@ -21,7 +25,7 @@ export function HeroPhoto({
 
   if (failed) return null;
 
-  const isPng = SOURCES[idx]?.endsWith(".png");
+  const isPng = /\.(png|webp)$/.test(SOURCES[idx] ?? "");
 
   return (
     /* eslint-disable-next-line @next/next/no-img-element */

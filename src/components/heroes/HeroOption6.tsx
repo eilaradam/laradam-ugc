@@ -10,7 +10,7 @@ const ACCENT = "var(--primary)";
 const ACCENT_DARK = "var(--primary-dark)";
 const ACCENT_LIGHT = "var(--accent-on-dark)";
 
-export default function HeroOption6() {
+export default function HeroOption6({ foto }: { foto?: string } = {}) {
   const t = useT();
   return (
     <section
@@ -120,7 +120,7 @@ export default function HeroOption6() {
             transition={{ delay: 0.4, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
             className="relative z-10 flex items-end justify-center origin-bottom"
           >
-            <HeroPhoto className="lara-hero-photo w-auto h-[46vh] sm:h-[56vh] md:h-[74vh] max-w-full object-contain object-bottom" />
+            <HeroPhoto src={foto} className="lara-hero-photo w-auto h-[46vh] sm:h-[56vh] md:h-[74vh] max-w-full object-contain object-bottom" />
           </motion.div>
 
           {/* Bubble 1 — direita (flutua devagar pra cima/baixo, zoom no hover) */}

@@ -5,8 +5,8 @@
   --background-alt:#F3F6FF;
   --foreground:#14213D;
   --foreground-soft:#3B4766;
-  --primary:#2350D8;
-  --primary-dark:#1A3FB0;
+  --primary:#1D43BD;
+  --primary-dark:#16349A;
   --primary-light:#E4EAFF;
   --accent-on-dark:#7F9DFF;
   --muted:#5B6478;
@@ -24,14 +24,14 @@
   min-height:100vh;
 }
 /* pontinhos azuis do mídia kit atrás de tudo */
-.skin-kit::before{content:"";position:fixed;inset:0;z-index:-1;background-image:radial-gradient(circle,rgba(35,80,216,.07) 1px,transparent 1.5px);background-size:16px 16px;pointer-events:none}
+.skin-kit::before{content:"";position:fixed;inset:0;z-index:-1;background-image:radial-gradient(circle,rgba(29,67,189,.07) 1px,transparent 1.5px);background-size:16px 16px;pointer-events:none}
 /* fontes: display e corpo viram Plus Jakarta; o itálico de acento vira a palavra em azul (sem itálico) */
 .skin-kit .font-display{font-family:var(--pf-font),system-ui,sans-serif;letter-spacing:-.025em}
 .skin-kit .font-serif-accent{font-family:var(--pf-font),system-ui,sans-serif;font-style:normal;font-weight:800}
 /* fundos chapados da home ficam transparentes pra mostrar os pontinhos (a capa e os serviços) */
-.skin-kit .bg-background{background-color:transparent}
+.skin-kit section.bg-background{background-color:transparent}
 .skin-kit .hero-grade{background-image:none!important}
-.skin-kit .hero-brilho{background:radial-gradient(circle,rgba(35,80,216,.14) 0%,transparent 70%)!important}
+.skin-kit .hero-brilho{background:radial-gradient(circle,rgba(29,67,189,.14) 0%,transparent 70%)!important}
 /* menu: sem sombra pesada, só uma linha */
 .skin-kit nav.fixed{box-shadow:none!important;border-bottom:1px solid var(--border);background:rgba(255,255,255,.94)!important}
 /* faixa de datas (Black Friday era amarela): no kit vira azul */
