@@ -224,6 +224,7 @@ export const VIDEOS: Video[] = [
   { id: "t3", title: "BV Financeiro", category: "financas", brand: "BV", youtubeId: "Q_n4uwkxiDo" },
 
   // TECH & APPS
+  { id: "t-fancy", title: "Fancy Carregador Portátil", category: "tech", brand: "Fancy", youtubeId: "0VDR45qTci8" },
   { id: "t-infinitepay", title: "InfinitePay Tap", category: "tech", brand: "InfinitePay", views: "4M", youtubeId: "40q0gv_b9AM" },
   { id: "t-reforma100", title: "Reforma100", category: "tech", brand: "Reforma100", youtubeId: "XWnvZbTcHJw" },
   { id: "t-proton", title: "Proton VPN", category: "tech", brand: "Proton VPN", youtubeId: "PkDuP91RErg" },
@@ -237,6 +238,8 @@ export const VIDEOS: Video[] = [
   { id: "t10", title: "Gamma", category: "tech", brand: "Gamma", youtubeId: "nZQoMA114MA" },
 
   // MODA
+  { id: "m-salvatore", title: "Salvatore Macacão", category: "moda", brand: "Salvatore", youtubeId: "fqG3TpTft5c" },
+  { id: "m-invisalove", title: "Invisalove Sutiã Adesivo", category: "moda", brand: "Invisalove", youtubeId: "sRvIU18YUXg" },
   { id: "b-ds", title: "DS", category: "moda", brand: "DS", youtubeId: "CxJeyu75qQc" },
   { id: "m1", title: "Outfit do dia", category: "moda", brand: "Lust", youtubeId: "nV1oWxv_J_4" },
   { id: "m2", title: "Midas Time", category: "moda", brand: "Midas Time", youtubeId: "wZgUdGFouNA" },
