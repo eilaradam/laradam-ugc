@@ -1,16 +1,17 @@
-// Proposta pra NILEN (perfumaria, nilen.com.br): marca começou a operar em maio,
-// ainda pequena, precisa estruturar criativo pra anúncio. Dois pacotes + opção de
-// contrato fixo de 3 meses com desconto (ver `extra`, aparece embaixo dos cards).
+// Proposta pra NILEN (perfumaria, nilen.com.br): marca começou a operar em maio
+// (segundo o que a Lara me passou; não achei confirmação independente no site/IG,
+// deixei "maio" por ser a única fonte que tenho), ainda pequena, precisa estruturar
+// criativo pra anúncio.
 // Página: ugc.laradam.com/nilen (fora do menu e fora do Google; a Lara manda o link direto).
 //
-// ⚠️ 3 VALORES EM ABERTO (a Lara não passou os números ainda):
-// 1) opcoes[0].valor = pacote de 10 conteúdos (pontual)
-// 2) opcoes[1].valor = pacote de 20 criativos/mês
-// 3) extra.valor = valor mensal com desconto fechando contrato fixo de 3 meses
+// Layout dos cards de Investimento = igual ao da /grano (2 cards: claro + escuro
+// com selo). O 3º card ("Contrato fixo") saiu; agora é só uma frase na notaOpcoes.
 //
-// Pagamento reaproveita a condição padrão já usada na proposta da Grano (PIX/boleto,
-// CNPJ, 50/50 no pontual e mensal antecipado até dia 5); ajustar se a Lara quiser
-// outra condição específica pra Nilen.
+// Pendências com a Lara:
+// 1) `pagamento` deveria terminar com "Proposta válida até [dd/mm/aaaa]." Ela não
+//    deu a data; não incluí a frase pra não deixar colchete na página.
+// 2) Item 8 do pedido dela ("Hoje os dois botões apontam pra 5512988729264") ficou
+//    sem dizer pra qual número trocar. Mantive o número atual até ela confirmar.
 
 import type { Proposta } from "@/components/proposta/Proposta";
 
@@ -20,7 +21,7 @@ export const NILEN: Proposta = {
   cliente: "Nilen",
   titulo: "Criativos pra Nilen testar anúncio toda semana.",
   subtitulo:
-    "Vocês estão dando o próximo passo em criativo e tráfego pago. A gente monta o fluxo de conteúdo pra isso virar rotina: creators certas pro perfil da Nilen, roteiro revisado por fragrância e vídeos prontos pra testar em mídia paga.",
+    "Vocês estão dando o próximo passo em criativo e tráfego pago. Eu monto o fluxo de conteúdo pra isso virar rotina: creators certas pro perfil da Nilen, roteiro revisado por fragrância e vídeos prontos pra testar em mídia paga.",
   destaques: [
     { rotulo: "Pacotes", valor: "10 ou 20 criativos/mês" },
     { rotulo: "Nicho", valor: "Perfumaria" },
@@ -28,57 +29,56 @@ export const NILEN: Proposta = {
   ],
 
   sobre:
-    "A Nilen começou a operar em maio e está dando o passo de estruturar criativo e anúncios de verdade. Selecionamos creators da nossa rede com perfil pra perfumaria, cuidamos do briefing por fragrância, do roteiro revisado antes da gravação e da revisão de cada vídeo antes da entrega. Vocês recebem os criativos prontos pra publicar e pra rodar em mídia paga.",
+    "A Nilen começou a operar em maio e está dando o passo de estruturar criativo e anúncios de verdade. Eu seleciono creators da minha rede com perfil pra perfumaria, cuido do briefing por fragrância, do roteiro revisado antes da gravação e da revisão de cada vídeo antes da entrega. Vocês recebem os criativos prontos pra publicar e pra rodar em mídia paga.",
 
   opcoesTitulo: "Investimento",
   opcoes: [
     {
-      nome: "Pacote 10 Conteúdos",
-      tipo: "Campanha pontual",
-      valor: "R$ [preencher]",
-      descricao: "10 criativos UGC, cada um com uma creator diferente da rede. Ideal pra testar o formato e descobrir quais fragrâncias e ângulos convertem.",
+      nome: "Pacote Pontual",
+      tipo: "Campanha única",
+      valor: "R$ 5.500",
+      descricao:
+        "10 criativos UGC, cada um com uma creator diferente, sem compromisso de recorrência. Ideal pra testar o formato e descobrir quais fragrâncias e ângulos convertem.",
       inclui: [
+        "R$ 550 por criativo",
         "Seleção de 10 creators pelo perfil da Nilen",
         "Briefing por fragrância e roteiro revisado antes da gravação",
-        "Acompanhamento da produção",
-        "Direito de uso em anúncios",
+        "Direito de uso em anúncios por 6 meses",
       ],
     },
     {
-      nome: "Pacote 20 Criativos",
-      tipo: "Mensal",
-      valor: "R$ [preencher]/mês",
-      descricao: "20 criativos novos por mês, com creators diferentes a cada ciclo. Volume suficiente pra manter o funil de anúncios sempre com conteúdo novo pra testar.",
+      nome: "Pacote Contínuo",
+      tipo: "Recorrente",
+      valor: "R$ 4.500/mês",
+      descricao:
+        "10 criativos novos por mês, com creators diferentes a cada ciclo e entregas a cada 2 semanas. Vocês renovam os anúncios antes do público cansar, sem precisar montar a operação de novo.",
       inclui: [
-        "Seleção de 20 creators por mês",
+        "R$ 450 por criativo",
+        "Seleção de 10 creators por mês",
         "Briefing por fragrância e roteiro revisado antes de cada gravação",
-        "Acompanhamento da produção",
-        "Direito de uso em anúncios",
+        "Direito de uso em anúncios por 6 meses",
       ],
       destaque: true,
       badge: "Recomendado pra quem roda anúncio",
     },
   ],
-  notaOpcoes: "Ambos os pacotes têm compromisso mês a mês, sem fidelidade mínima.",
-
-  extra: {
-    nome: "Contrato fixo · 3 meses",
-    valor: "R$ [preencher]/mês",
-    descricao: "Fechando o Pacote 20 Criativos por 3 meses direto, o valor mensal sai com desconto em relação ao mês a mês, com o mesmo escopo do pacote mensal.",
-    condicao: "Valor garantido durante os 3 meses do contrato.",
-  },
+  notaOpcoes:
+    "No Pacote Contínuo, o compromisso mínimo é de 3 meses. Depois disso, segue mês a mês até vocês decidirem pausar. Precisa de mais volume? O Contínuo também sai com 20 criativos por mês, a R$ 9.000/mês.",
 
   incluso: [
     "Diagnóstico de público e seleção das creators",
     "Briefing por fragrância, construído junto com o time da Nilen",
     "Roteiro revisado antes de cada gravação",
     "Acompanhamento da produção",
-    "1 rodada de ajustes por vídeo",
+    "Até 3 ajustes por vídeo",
     "Nota fiscal",
+    "Entrega no Drive: vídeo com e sem legenda, roteiro e sugestão de capa",
+    "Uso de imagem: orgânico sem prazo e tráfego pago por 6 meses",
   ],
 
   // Prévia de exemplo do painel de acompanhamento (igual agencia.laradam.com), com
-  // nomes e status de demonstração; não reflete o tamanho real do pacote escolhido.
+  // nomes e status de demonstração. 10 linhas pra bater com o Pacote Pontual/Contínuo
+  // de 10 criativos (toolbar mostra "Nilen · 10 vídeos · 10 creators" automaticamente).
   painel: {
     titulo: "Acompanhamento da campanha",
     sub: "A Nilen recebe acesso a um painel exclusivo com cada creator, o portfólio e o status do roteiro atualizado em tempo real. Vocês sabem em que etapa está cada vídeo sem precisar pedir atualização.",
@@ -88,12 +88,18 @@ export const NILEN: Proposta = {
       { nome: "Creator 3", cidade: "Belo Horizonte, MG", status: "Selecionada" },
       { nome: "Creator 4", cidade: "Porto Alegre, RS", status: "Roteiro em revisão" },
       { nome: "Creator 5", cidade: "Salvador, BA", status: "Entregue" },
+      { nome: "Creator 6", cidade: "Recife, PE", status: "Selecionada" },
+      { nome: "Creator 7", cidade: "Fortaleza, CE", status: "Em gravação" },
+      { nome: "Creator 8", cidade: "Brasília, DF", status: "Roteiro aprovado" },
+      { nome: "Creator 9", cidade: "Campinas, SP", status: "Entregue" },
+      { nome: "Creator 10", cidade: "Florianópolis, SC", status: "Selecionada" },
     ],
   },
 
   // Trocado de título porque estes NÃO são campanhas da rede da Lara (são UGC real
   // de perfumaria de outras marcas/creators, mandados por ela como referência de tom
-  // e gancho); "Campanhas que já produzimos" ficaria incorreto aqui.
+  // e gancho); "Campanhas que já produzimos" ficaria incorreto aqui. (Seção não
+  // listada no pedido mais recente, mantida como estava.)
   referenciasTitulo: "Referências de UGC de perfumaria",
   referenciasIntro: "Toque em qualquer vídeo pra assistir. São exemplos reais de UGC de perfumaria pra pensar o tom e os ganchos dos criativos da Nilen.",
   referencias: [
@@ -112,14 +118,15 @@ export const NILEN: Proposta = {
   ],
 
   cronograma: [
-    { etapa: "Diagnóstico e seleção das creators", quando: "Semana 1" },
-    { etapa: "Briefing por fragrância e gravações", quando: "Semana 1 e 2" },
-    { etapa: "Entrega do primeiro lote de criativos", quando: "Fim da semana 2" },
+    { etapa: "Diagnóstico, seleção das creators e envio do produto", quando: "Semana 1" },
+    { etapa: "Briefing por fragrância, roteiro e gravação", quando: "Depois que a creator recebe o perfume" },
+    { etapa: "Entrega do primeiro lote", quando: "Até 15 dias depois que o produto chega às creators" },
   ],
-  cronogramaNota: "No Pacote 20 Criativos, os lotes seguintes entram em ciclos de 30 dias.",
+  cronogramaNota:
+    "No Pacote Contínuo, os criativos chegam em lotes a cada 2 semanas.\nO envio do perfume para cada creator e o frete ficam por conta da Nilen. O prazo começa a contar quando o produto chega.",
 
   pagamento:
-    "Pacote 10 Conteúdos: 50% na assinatura e 50% na entrega dos vídeos.\nPacote 20 Criativos e Contrato fixo: pagamento mensal antecipado, até o dia 5 de cada mês.\nForma de pagamento: PIX ou boleto.\nDados para a nota fiscal: Lara Dam LTDA, CNPJ 55.446.568/0001-22.",
+    "Pacote Pontual: 50% na assinatura e 50% na entrega dos vídeos.\nPacote Contínuo: pagamento mensal antecipado, até o dia 5 de cada mês.\nForma de pagamento: PIX ou boleto.\nDados para a nota fiscal: Lara Dam LTDA, CNPJ 55.446.568/0001-22.",
 
   proximoPasso: "Com a proposta aprovada, já parto pra seleção das creators e briefing por fragrância.",
 
@@ -130,7 +137,7 @@ export const NILEN: Proposta = {
   chamada: {
     titulo: "Vamos",
     destaque: "começar",
-    texto: "Ficou alguma dúvida sobre a proposta ou os pacotes? Fale com a gente.",
+    texto: "Ficou alguma dúvida sobre a proposta ou os pacotes? Fale comigo.",
   },
   assinatura: "Lara Dam · Gestão de campanhas UGC",
 };

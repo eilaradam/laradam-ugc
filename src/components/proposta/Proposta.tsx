@@ -349,7 +349,7 @@ export default function PropostaPage({ p }: { p: Proposta }) {
             </li>
           ))}
         </ol>
-        {p.cronogramaNota && <p className="mt-6 max-w-2xl text-sm text-muted">{p.cronogramaNota}</p>}
+        {p.cronogramaNota && <p className="mt-6 max-w-2xl whitespace-pre-line text-sm text-muted">{p.cronogramaNota}</p>}
       </section>
 
       {/* pagamento + próximo passo */}
