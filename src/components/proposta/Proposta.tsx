@@ -233,7 +233,11 @@ export default function PropostaPage({ p }: { p: Proposta }) {
             ))}
           </div>
           {p.notaOpcoes && <p className="mt-6 max-w-3xl text-sm text-foreground-soft">{p.notaOpcoes}</p>}
-          {p.notaExtra && <p className="mt-3 max-w-3xl text-sm text-muted">{p.notaExtra}</p>}
+          {p.notaExtra && (
+            <div className="mt-4 inline-flex max-w-3xl items-center gap-2 rounded-full border border-primary/30 bg-primary-light px-4 py-2.5 text-sm font-semibold text-primary">
+              {p.notaExtra}
+            </div>
+          )}
 
           {p.extra && (
             <div className="mt-8 rounded-3xl border border-dashed border-primary/50 bg-primary-light p-7 md:p-8">
