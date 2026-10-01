@@ -173,6 +173,8 @@ export const VIDEOS: Video[] = [
   { id: "b14", title: "Cand Óculos", category: "beleza", brand: "Cand", youtubeId: "JPz1wMt_R4I" },
   { id: "b15", title: "Bem Me Fiz", category: "beleza", brand: "Bem Me Fiz", youtubeId: "P3UrVHbwI9g" },
   { id: "b16", title: "Botox", category: "beleza", brand: "Botox", youtubeId: "YOmm3Zi87PE" },
+  // (a pedido da Lara, 01/10: fica em último em Beleza)
+  { id: "s-pharma-pdrn", title: "Pharmapele PDRN", category: "beleza", brand: "Pharmapele", youtubeId: "r5Ls6pbsmWQ" },
 
   // CASA & DECO
   { id: "d-noroeste", title: "Noroeste Solar", category: "casa", brand: "Noroeste Solar", youtubeId: "vP3qucUXC8I" },
@@ -205,7 +207,6 @@ export const VIDEOS: Video[] = [
 
   // SAÚDE & FITNESS
   { id: "s1", title: "Squadz", category: "saude", brand: "Squadz", youtubeId: "vbQW-1VEjPk" },
-  { id: "s-pharma-pdrn", title: "Pharmapele PDRN", category: "saude", brand: "Pharmapele", youtubeId: "r5Ls6pbsmWQ" },
   { id: "s-pharma-creatina", title: "Pharmapele Creatina", category: "saude", brand: "Pharmapele", youtubeId: "_6sCm4K8DRE" },
   { id: "s-pharma", title: "Pharmapele", category: "saude", brand: "Pharmapele", youtubeId: "Eul1uuQhU7g" },
   { id: "s-pharma-emagrece", title: "Pharmapele Emagrecimento", category: "saude", brand: "Pharmapele", youtubeId: "K31BzOy3qt0" },
