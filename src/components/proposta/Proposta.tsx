@@ -14,6 +14,7 @@ export type Proposta = {
   subtitulo: string;
   destaques: { rotulo: string; valor: string }[];
   sobre: string;
+  opcoesTitulo?: string;
   opcoes: { nome: string; tipo: string; valor: string; descricao: string; inclui: string[]; destaque?: boolean; badge?: string; economia?: string }[];
   notaOpcoes?: string;
   extra?: { nome: string; valor: string; descricao: string; condicao?: string };
@@ -22,6 +23,8 @@ export type Proposta = {
   responsabilidadesMarca?: { titulo: string; itens: string[] };
   // Referência de vídeo: ou `id` (puxa do portfólio da Lara em content.ts),
   // ou `video` inline (pra mostrar trabalho de outras creators da rede, ex. conteúdos da /agencia).
+  referenciasTitulo?: string;
+  referenciasIntro?: string;
   referencias: (
     | { id: string; porque: string }
     | { video: { brand: string; titulo?: string; youtubeId?: string; instagram?: string; thumbnail?: string }; porque: string }
@@ -30,6 +33,9 @@ export type Proposta = {
   painel?: {
     titulo: string;
     sub: string;
+    /** Contagem mostrada na barra (tamanho real da campanha). Sem isso, usa o nº de linhas do exemplo. */
+    videosQtd?: number;
+    creatorsQtd?: number;
     linhas: { nome: string; cidade: string; status: string }[];
   };
   cronograma: { etapa: string; quando: string }[];
@@ -41,6 +47,8 @@ export type Proposta = {
   email: string;
   /** Bloco final. Sem isso, entra o texto neutro padrão. */
   chamada?: { titulo: string; destaque: string; texto: string };
+  /** Linha de assinatura no rodapé. Sem isso, usa o texto padrão (perfil de creator). */
+  assinatura?: string;
 };
 
 const CHAMADA_PADRAO = {
@@ -162,7 +170,7 @@ export default function PropostaPage({ p }: { p: Proposta }) {
       {/* opções */}
       <section className="bg-background-alt">
         <div className="mx-auto max-w-5xl px-6 py-12 md:py-16">
-          <Eyebrow n={secao()}>Opções de vídeo</Eyebrow>
+          <Eyebrow n={secao()}>{p.opcoesTitulo || "Opções de vídeo"}</Eyebrow>
           <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
             {p.opcoes.map((o) => (
               <div
@@ -259,10 +267,10 @@ export default function PropostaPage({ p }: { p: Proposta }) {
                 <Calendar size={13} /> {p.cliente}
               </span>
               <span className="inline-flex items-center gap-1.5 rounded-full border border-border bg-background px-2.5 py-1 text-xs font-semibold">
-                <Film size={12} /> {p.painel.linhas.length} vídeos
+                <Film size={12} /> {p.painel.videosQtd ?? p.painel.linhas.length} vídeos
               </span>
               <span className="inline-flex items-center gap-1.5 rounded-full border border-border bg-background px-2.5 py-1 text-xs font-semibold">
-                <Users size={12} /> {p.painel.linhas.length} creators
+                <Users size={12} /> {p.painel.creatorsQtd ?? p.painel.linhas.length} creators
               </span>
             </div>
 
@@ -298,12 +306,12 @@ export default function PropostaPage({ p }: { p: Proposta }) {
 
             {/* rodapé */}
             <div className="flex items-center justify-between bg-background-alt px-4 py-2.5 text-xs font-semibold text-foreground-soft">
-              <span>{p.painel.linhas.length} creators</span>
-              <span>{p.painel.linhas.filter((l) => /aprovado|entregue/i.test(l.status)).length} aprovado</span>
+              <span>{p.painel.creatorsQtd ?? p.painel.linhas.length} creators</span>
+              <span>{p.painel.linhas.filter((l) => /aprovado|entregue/i.test(l.status)).length} aprovados</span>
             </div>
           </div>
 
-          <p className="mt-4 text-xs text-muted">Exemplo ilustrativo (nomes, fotos e status de demonstração) de como fica o acompanhamento da sua campanha no meu painel de gestão.</p>
+          <p className="mt-4 text-xs text-muted">Exemplo ilustrativo, com nomes e status de demonstração.</p>
         </section>
       )}
 
@@ -314,9 +322,9 @@ export default function PropostaPage({ p }: { p: Proposta }) {
             <div className="mb-5 flex items-center gap-3 text-[11px] uppercase tracking-[0.3em] text-accent-on-dark font-semibold">
               <span className="font-serif-accent italic normal-case tracking-normal text-base text-accent-on-dark/70">{secao()}</span>
               <span className="h-px w-8 bg-accent-on-dark/50" />
-              Referências do meu portfólio
+              {p.referenciasTitulo || "Referências do meu portfólio"}
             </div>
-            <p className="mb-8 max-w-2xl text-background/75">Toca em qualquer um pra assistir. É o tom que eu proponho pro vídeo do prêmio.</p>
+            <p className="mb-8 max-w-2xl text-background/75">{p.referenciasIntro || "Toca em qualquer um pra assistir. É o tom que eu proponho pro vídeo do prêmio."}</p>
             <div className="grid grid-cols-2 gap-5 md:grid-cols-3">
               {refs.map((r, i) => (
                 <div key={r.video!.id}>
@@ -378,7 +386,7 @@ export default function PropostaPage({ p }: { p: Proposta }) {
             </a>
           </div>
         </div>
-        <p className="mt-8 text-center text-xs text-muted">Lara Dam · UGC Creator & Content Strategist · @eilaradam</p>
+        <p className="mt-8 text-center text-xs text-muted">{p.assinatura || "Lara Dam · UGC Creator & Content Strategist · @eilaradam"}</p>
       </section>
     </main>
   );
