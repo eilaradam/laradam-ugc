@@ -18,9 +18,9 @@ export default function Sobre({ dados = SOBRE }: { dados?: SobreDados }) {
           </div>
           <svg className="absolute -left-3 -bottom-6 w-28 h-28 md:w-36 md:h-36" viewBox="0 0 200 200" aria-hidden>
             <defs><path id="pf-c" d="M100,100 m-72,0 a72,72 0 1,1 144,0 a72,72 0 1,1 -144,0" /></defs>
-            <circle cx="100" cy="100" r="92" fill="#fff" stroke="#14213D" strokeWidth="4" /><circle cx="100" cy="100" r="52" fill="var(--claro2)" stroke="#14213D" strokeWidth="3" />
-            <text fontFamily="var(--pf-font)" fontWeight="800" fontSize="19" fill="#14213D" letterSpacing="3"><textPath href="#pf-c">UGC CREATOR ★ INFLUENCIADORA ★ LITORAL DE SP ★ </textPath></text>
-            <text x="100" y="110" textAnchor="middle" fontFamily="var(--pf-font)" fontWeight="800" fontSize="30" fill="#14213D">2026</text>
+            <circle cx="100" cy="100" r="92" fill="#fff" stroke="#2E1912" strokeWidth="4" /><circle cx="100" cy="100" r="52" fill="var(--claro2)" stroke="#2E1912" strokeWidth="3" />
+            <text fontFamily="var(--pf-font)" fontWeight="800" fontSize="19" fill="#2E1912" letterSpacing="3"><textPath href="#pf-c">UGC CREATOR ★ INFLUENCIADORA ★ LITORAL DE SP ★ </textPath></text>
+            <text x="100" y="110" textAnchor="middle" fontFamily="var(--pf-font)" fontWeight="800" fontSize="30" fill="#2E1912">2026</text>
           </svg>
         </div>
         <div className="md:col-span-7">

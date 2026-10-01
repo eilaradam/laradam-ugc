@@ -1,10 +1,12 @@
-/* /perfil: o site como um perfil de Instagram. Escopo .pf */
+/* /perfil: o site como um perfil de Instagram. Escopo .pf
+   Paleta TERRACOTA (01/10/2026, pedido da Lara): as variáveis mantiveram o nome --azul* por compatibilidade,
+   mas os valores são terracota (#BF4A2B), tijolo escuro (#9B3426), pêssego claro e marrom-terra na tinta. */
 .pf{
-  --bg:#FFFFFF;--ink:#14213D;--azul:#1D43BD;--azul2:#E4EAFF;--azul3:#C9D6FF;--cinza:#5B6478;--linha:#E5E7EB;
-  --claro:#F3F6FF;--claro2:#E4EAFF;--azulmedio:#7F9DFF;
+  --bg:#FFFFFF;--ink:#2E1912;--azul:#BF4A2B;--azul2:#F7E4DB;--azul3:#EDC7B7;--cinza:#6B5A52;--linha:#EFE3DC;
+  --claro:#FBF3EF;--claro2:#F7E4DB;--azulmedio:#E08A66;
   font-family:var(--pf-font),system-ui,sans-serif;color:var(--ink);background:var(--bg);min-height:100vh;position:relative;
 }
-.pf::before{content:"";position:fixed;inset:0;background-image:radial-gradient(circle,rgba(29,67,189,.07) 1px,transparent 1.5px);background-size:16px 16px;pointer-events:none;z-index:0}
+.pf::before{content:"";position:fixed;inset:0;background-image:radial-gradient(circle,rgba(191,74,43,.07) 1px,transparent 1.5px);background-size:16px 16px;pointer-events:none;z-index:0}
 .pf>*{position:relative;z-index:1}
 .pf-mao{font-family:var(--pf-mao),cursive;font-weight:600}
 .pf-wrap{max-width:1080px;margin:0 auto;padding:0 16px}
@@ -26,10 +28,10 @@
 .pf-menu a .e{font-size:14px}
 .pf-topo-cta{font-weight:800;font-size:14px;color:var(--azul);white-space:nowrap;grid-row:1;grid-column:2}
 @media (min-width:1024px){.pf-topo-cta{grid-row:auto;grid-column:auto}}
-.pf-busca{display:flex;align-items:center;gap:8px;background:#F3F4F6;border-radius:12px;padding:0 14px;height:42px;width:100%;max-width:360px;border:2px solid transparent}
+.pf-busca{display:flex;align-items:center;gap:8px;background:#F6EFEA;border-radius:12px;padding:0 14px;height:42px;width:100%;max-width:360px;border:2px solid transparent}
 .pf-busca:focus-within{border-color:var(--azul);background:#fff}
 .pf-busca input{flex:1;min-width:0;background:transparent;border:0;outline:0;font:inherit;font-weight:600;font-size:14px;color:var(--ink)}
-.pf-busca input::placeholder{color:#9AA0AE}
+.pf-busca input::placeholder{color:#A89A92}
 
 /* cartão do perfil */
 .pf-card{position:relative;background:#fff;border:2px solid var(--ink);border-radius:28px;padding:24px;box-shadow:0 8px 0 var(--azul);margin-top:24px;display:grid;gap:22px}
@@ -42,7 +44,7 @@
 .pf-nome{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
 .pf-nome h1{font-size:26px;font-weight:700;letter-spacing:-.01em}
 @media (min-width:768px){.pf-nome h1{font-size:30px}}
-.pf-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:12px;font-weight:700;font-size:14px;background:#EFEFEF;color:var(--ink);border:2px solid transparent;transition:transform .18s ease-out,background .18s ease-out;cursor:pointer}
+.pf-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:12px;font-weight:700;font-size:14px;background:#F1EAE5;color:var(--ink);border:2px solid transparent;transition:transform .18s ease-out,background .18s ease-out;cursor:pointer}
 .pf-btn:hover{transform:translateY(-2px)}
 .pf-btn.azul{background:var(--azul);color:#fff}
 .pf-btn.ink{background:var(--ink);color:#fff}
@@ -203,7 +205,7 @@
 .pf-dm{display:flex;gap:12px;align-items:flex-start}
 .pf-dm .av{width:54px;height:54px;background:var(--claro2);border-radius:50%;border:2px solid var(--ink);background:#fff;overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px}
 .pf-dm .av img{width:100%;height:100%;object-fit:contain;padding:4px}
-.pf-dm .msg{background:#F3F4F6;border-radius:4px 18px 18px 18px;padding:12px 14px;font-weight:600;font-size:14px;line-height:1.45;position:relative}
+.pf-dm .msg{background:#F6EFEA;border-radius:4px 18px 18px 18px;padding:12px 14px;font-weight:600;font-size:14px;line-height:1.45;position:relative}
 .pf-dm .quem{font-size:12px;font-weight:800;color:var(--cinza);margin-bottom:6px}
 .pf-dm .quem a{color:var(--azul)}
 .pf-dm .reacao{display:inline-flex;align-items:center;gap:6px;margin-top:10px;background:#fff;border:2px solid var(--ink);border-radius:999px;padding:4px 10px;font-size:12px;font-weight:800}

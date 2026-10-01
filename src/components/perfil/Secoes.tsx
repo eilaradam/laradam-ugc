@@ -218,7 +218,7 @@ export function Videos() {
         sub={`${VIDEOS.length} vídeos pra ${new Set(VIDEOS.map((v) => v.brand)).size} marcas, separados por nicho. Aparecem ${VISIVEIS} por vez: usa as setas ou desliza pro lado pra ver os outros. Clica pra assistir.`}
         extra={
           <label className="pf-busca">
-            <Search className="w-4 h-4 text-[#9AA0AE]" />
+            <Search className="w-4 h-4 text-[#A89A92]" />
             <input value={busca} onChange={(e) => setBusca(e.target.value)} placeholder="Buscar marca ou nicho" aria-label="Buscar vídeos por marca ou nicho" />
           </label>
         }

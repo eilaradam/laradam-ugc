@@ -65,7 +65,7 @@ export default function Cabecalho({ cab }: { cab: CabConfig }) {
           <div>
             <div className="pf-nome">
               <h1>{cab.usuario}</h1>
-              <svg width="26" height="26" viewBox="0 0 24 24" aria-label="verificada"><circle cx="12" cy="12" r="11" fill="#1D43BD" /><path d="M7 12.5l3 3 7-7" stroke="#fff" strokeWidth="2.6" fill="none" strokeLinecap="round" strokeLinejoin="round" /></svg>
+              <svg width="26" height="26" viewBox="0 0 24 24" aria-label="verificada"><circle cx="12" cy="12" r="11" fill="#BF4A2B" /><path d="M7 12.5l3 3 7-7" stroke="#fff" strokeWidth="2.6" fill="none" strokeLinecap="round" strokeLinejoin="round" /></svg>
               <a href={cab.cta.href} target="_blank" rel="noopener" className="pf-btn azul" data-track={cab.cta.track}>{cab.cta.rotulo}</a>
               {cab.segundo && (
                 <a href={cab.segundo.href} target={cab.segundo.externo ? "_blank" : undefined} rel="noopener" className="pf-btn" data-track={cab.segundo.track}>{cab.segundo.rotulo}</a>

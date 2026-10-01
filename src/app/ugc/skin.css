@@ -2,15 +2,15 @@
    só cores (azul, branco, navy), fonte (Plus Jakarta Sans) e fundo pontilhado. */
 .skin-kit{
   --background:#FFFFFF;
-  --background-alt:#F3F6FF;
-  --foreground:#14213D;
-  --foreground-soft:#3B4766;
-  --primary:#1D43BD;
-  --primary-dark:#16349A;
-  --primary-light:#E4EAFF;
-  --accent-on-dark:#7F9DFF;
-  --muted:#5B6478;
-  --border:#C9D6FF;
+  --background-alt:#FBF3EF;
+  --foreground:#2E1912;
+  --foreground-soft:#5A443B;
+  --primary:#BF4A2B;
+  --primary-dark:#9B3426;
+  --primary-light:#F7E4DB;
+  --accent-on-dark:#E08A66;
+  --muted:#6B5A52;
+  --border:#EDC7B7;
   --font-be-vietnam:var(--pf-font);
   --font-dm-sans:var(--pf-font);
   font-family:var(--pf-font),system-ui,sans-serif;
@@ -24,14 +24,14 @@
   min-height:100vh;
 }
 /* pontinhos azuis do mídia kit atrás de tudo */
-.skin-kit::before{content:"";position:fixed;inset:0;z-index:-1;background-image:radial-gradient(circle,rgba(29,67,189,.07) 1px,transparent 1.5px);background-size:16px 16px;pointer-events:none}
+.skin-kit::before{content:"";position:fixed;inset:0;z-index:-1;background-image:radial-gradient(circle,rgba(191,74,43,.07) 1px,transparent 1.5px);background-size:16px 16px;pointer-events:none}
 /* fontes: display e corpo viram Plus Jakarta; o itálico de acento vira a palavra em azul (sem itálico) */
 .skin-kit .font-display{font-family:var(--pf-font),system-ui,sans-serif;letter-spacing:-.025em}
 .skin-kit .font-serif-accent{font-family:var(--pf-font),system-ui,sans-serif;font-style:normal;font-weight:800}
 /* fundos chapados da home ficam transparentes pra mostrar os pontinhos (a capa e os serviços) */
 .skin-kit section.bg-background{background-color:transparent}
 .skin-kit .hero-grade{background-image:none!important}
-.skin-kit .hero-brilho{background:radial-gradient(circle,rgba(29,67,189,.14) 0%,transparent 70%)!important}
+.skin-kit .hero-brilho{background:radial-gradient(circle,rgba(191,74,43,.14) 0%,transparent 70%)!important}
 /* menu: sem sombra pesada, só uma linha */
 .skin-kit nav.fixed{box-shadow:none!important;border-bottom:1px solid var(--border);background:rgba(255,255,255,.94)!important}
 /* faixa de datas (Black Friday era amarela): no kit vira azul */
