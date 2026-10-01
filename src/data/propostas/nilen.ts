@@ -38,29 +38,29 @@ export const NILEN: Proposta = {
     {
       nome: "Pacote 10 Creators",
       tipo: "Mensal",
-      valor: "R$ 5.500/mês",
+      valor: "R$ 6.500/mês",
       descricao:
         "10 criativos UGC por mês, cada um com uma creator diferente. Ideal pra testar o formato e descobrir quais fragrâncias e ângulos convertem.",
       inclui: [
-        "R$ 550 por criativo",
+        "R$ 650 por criativo",
         "Seleção de 10 creators pelo perfil da Nilen",
         "Briefing por fragrância e roteiro revisado antes da gravação",
         "Direito de uso em anúncios por 6 meses",
       ],
       contratoFixo: {
         titulo: "Contrato de 3 meses",
-        valor: "R$ 4.900/mês · R$ 490 por criativo",
+        valor: "R$ 5.900/mês · R$ 590 por criativo",
         economia: "Economia de R$ 600 por mês",
       },
     },
     {
       nome: "Pacote 20 Creators",
       tipo: "Mensal",
-      valor: "R$ 9.800/mês",
+      valor: "R$ 12.000/mês",
       descricao:
         "20 criativos novos por mês, entregues em lotes a cada 2 semanas. Volume pra renovar os anúncios antes do público cansar, sem precisar montar a operação de novo.",
       inclui: [
-        "R$ 490 por criativo",
+        "R$ 600 por criativo",
         "Seleção de 20 creators por mês",
         "Briefing por fragrância e roteiro revisado antes de cada gravação",
         "Direito de uso em anúncios por 6 meses",
@@ -69,13 +69,14 @@ export const NILEN: Proposta = {
       badge: "Recomendado pra quem roda anúncio",
       contratoFixo: {
         titulo: "Contrato de 3 meses",
-        valor: "R$ 9.000/mês · R$ 450 por criativo",
-        economia: "Economia de R$ 800 por mês",
+        valor: "R$ 10.800/mês · R$ 540 por criativo",
+        economia: "Economia de R$ 1.200 por mês",
       },
     },
   ],
   notaOpcoes:
     "Sem contrato, os pacotes seguem mês a mês e vocês pausam quando quiserem. No contrato de 3 meses, o valor fica travado durante o período. Em caso de cancelamento antes do fim, é cobrada a diferença do desconto nos meses já utilizados.",
+  notaExtra: "Quer começar menor? Dá pra fazer um teste com 5 creators por R$ 3.250, pagamento único.",
 
   incluso: [
     "Diagnóstico de público e seleção das creators",
@@ -138,7 +139,7 @@ export const NILEN: Proposta = {
     "No Pacote 20 Creators, os criativos chegam em lotes a cada 2 semanas.\nO envio do perfume para cada creator e o frete ficam por conta da Nilen. O prazo começa a contar quando o produto chega.",
 
   pagamento:
-    "Pacotes mensais e contrato de 3 meses: pagamento antecipado, até o dia 5 de cada mês.\nForma de pagamento: PIX ou boleto.\nDados para a nota fiscal: Lara Dam LTDA, CNPJ 55.446.568/0001-22.",
+    "Pacotes mensais e contrato de 3 meses: pagamento antecipado, até o dia 5 de cada mês.\nTeste com 5 creators: 50% na assinatura e 50% na entrega dos vídeos.\nForma de pagamento: PIX ou boleto.\nDados para a nota fiscal: Lara Dam LTDA, CNPJ 55.446.568/0001-22.",
 
   proximoPasso: "Com a proposta aprovada, já parto pra seleção das creators e briefing por fragrância.",
 

@@ -28,6 +28,8 @@ export type Proposta = {
     contratoFixo?: { titulo: string; valor: string; economia: string };
   }[];
   notaOpcoes?: string;
+  /** Linha discreta abaixo da notaOpcoes, sem card (ex. oferta de teste menor). */
+  notaExtra?: string;
   extra?: { nome: string; valor: string; descricao: string; condicao?: string };
   incluso: string[];
   /** Bloco curto e discreto logo depois de "O que está incluso". */
@@ -230,6 +232,7 @@ export default function PropostaPage({ p }: { p: Proposta }) {
             ))}
           </div>
           {p.notaOpcoes && <p className="mt-6 max-w-3xl text-sm text-foreground-soft">{p.notaOpcoes}</p>}
+          {p.notaExtra && <p className="mt-3 max-w-3xl text-sm text-muted">{p.notaExtra}</p>}
 
           {p.extra && (
             <div className="mt-8 rounded-3xl border border-dashed border-primary/50 bg-primary-light p-7 md:p-8">
