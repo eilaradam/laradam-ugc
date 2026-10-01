@@ -197,6 +197,8 @@ export const AG_CONTEUDOS = {
   ] as AgVideo[],
   // marcas com 3+ vídeos ganham fileira própria; o resto vai em "Mais marcas"
   minimoFileira: 3,
+  // exceção: fileira própria mesmo com menos vídeos (pedido da Lara: "puxar pra cima")
+  fileiraForcada: ["Little Duck"] as string[],
 };
 
 export const AG_MODALIDADES = {

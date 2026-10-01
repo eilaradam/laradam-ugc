@@ -26,7 +26,7 @@ export function Conteudos() {
   // fileiras por marca (na ordem em que aparecem), e o resto junto
   const ordem: string[] = []; const porMarca: Record<string, Video[]> = {};
   todos.forEach((v) => { if (!porMarca[v.brand]) { porMarca[v.brand] = []; ordem.push(v.brand); } porMarca[v.brand].push(v); });
-  const fileiras = ordem.filter((m) => porMarca[m].length >= AG_CONTEUDOS.minimoFileira);
+  const fileiras = ordem.filter((m) => porMarca[m].length >= AG_CONTEUDOS.minimoFileira || AG_CONTEUDOS.fileiraForcada.includes(m));
   const resto = ordem.filter((m) => !fileiras.includes(m)).flatMap((m) => porMarca[m]);
   const slug = (m: string) => m.toLowerCase().normalize("NFD").replace(/[^a-z0-9]+/g, "-");
   return (
