@@ -98,7 +98,7 @@ function LogoMarca({ name, domain }: { name: string; domain: string }) {
   return (
     <div className="pf-logo" title={name}>
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={`https://logo.clearbit.com/${domain}`} alt={name} loading="lazy" onError={() => setErro(true)} />
+      <img src={`https://unavatar.io/${domain}?fallback=false`} alt={name} loading="lazy" onError={() => setErro(true)} />
     </div>
   );
 }

@@ -229,7 +229,7 @@ export type AgMarca = { name: string; domain: string };
 export const AG_MARCAS = {
   titulo: "Marcas que já passaram pela operação",
   sub: "Mais de 200 marcas atendidas em campanhas com várias creators. Algumas delas:",
-  // domain = pra puxar a logo via logo.clearbit.com (mesmo esquema do resto do site)
+  // domain = pra puxar a logo via unavatar.io (logo.clearbit.com não respondeu nos testes)
   lista: [
     { name: "OLX", domain: "olx.com.br" },
     { name: "ZAP Imóveis", domain: "zapimoveis.com.br" },
@@ -249,7 +249,7 @@ export const AG_MARCAS = {
     { name: "Trisanti", domain: "trisanti.com.br" },
     { name: "Rap10", domain: "rap10.com.br" },
     { name: "Neutrogena", domain: "neutrogena.com.br" },
-    { name: "Frooty", domain: "frootybrasil.com.br" },
+    { name: "Frooty", domain: "frooty.com.br" },
     { name: "Sebastian", domain: "sebastianprofessional.com" },
     { name: "Coza", domain: "coza.com.br" },
     { name: "Sofá na Caixa", domain: "sofanacaixa.com.br" },
