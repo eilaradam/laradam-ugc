@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Bookmark, ChevronLeft, ChevronRight, Heart, MessageCircle, Play, Plus, Search, Send } from "lucide-react";
 import { CATEGORIES, VIDEOS, type Video } from "@/data/content";
-import { LOGOS_ORDEM, NICHO_EMOJI, PERFIL, PUBLI, PUBLIS_REAIS, RESULTADOS, SERVICOS, type PubliReal } from "@/data/perfil";
+import { AUDIENCIA, LOGOS_ORDEM, NICHO_EMOJI, PERFIL, PUBLI, PUBLIS_REAIS, RESULTADOS, SERVICOS, type PubliReal } from "@/data/perfil";
 import { useVideoModal } from "@/components/VideoModalProvider";
 import { fmtBR, usePerfil } from "./PerfilApp";
 
@@ -50,6 +50,44 @@ function Titulo({ id, titulo, sub, extra }: { id: string; titulo: string; sub: s
       <div><h2 id={`${id}-titulo`}>{titulo}</h2><p className="sub">{sub}</p></div>
       {extra}
     </div>
+  );
+}
+
+/* ---------- AUDIÊNCIA: gênero, faixa etária e localização de quem segue ---------- */
+export function Audiencia() {
+  return (
+    <section id="audiencia" className="pf-sec">
+      <Titulo id="audiencia" titulo="Quem é meu público 👥" sub={`Gênero, idade e localização de quem me segue. Conferido direto no Instagram em ${AUDIENCIA.atualizadoEm}.`} />
+      <div className="pf-audiencia-grid">
+        <div className="pf-audiencia-bloco">
+          <h3>Gênero</h3>
+          {AUDIENCIA.genero.map((g) => (
+            <div key={g.k} className="pf-barra">
+              <div className="pf-barra-cab"><span>{g.k}</span><b>{g.v}%</b></div>
+              <div className="pf-barra-trilho"><div className="pf-barra-fill" style={{ width: `${g.v}%` }} /></div>
+            </div>
+          ))}
+        </div>
+        <div className="pf-audiencia-bloco">
+          <h3>Faixa etária</h3>
+          {AUDIENCIA.idade.map((a) => (
+            <div key={a.k} className="pf-barra">
+              <div className="pf-barra-cab"><span>{a.k} anos</span><b>{a.v}%</b></div>
+              <div className="pf-barra-trilho"><div className="pf-barra-fill" style={{ width: `${a.v}%` }} /></div>
+            </div>
+          ))}
+        </div>
+        <div className="pf-audiencia-bloco">
+          <h3>Principais países</h3>
+          {AUDIENCIA.paises.map((p) => (
+            <div key={p.k} className="pf-barra">
+              <div className="pf-barra-cab"><span>{p.bandeira} {p.k}</span><b>{p.v}%</b></div>
+              <div className="pf-barra-trilho"><div className="pf-barra-fill" style={{ width: `${p.v}%` }} /></div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -274,24 +312,29 @@ export function Publi() {
           </div>
         </div>
         <div className="md:col-span-7">
-          <div className="pf-numeros pf-numeros-4">
+          <div className="text-xs font-extrabold uppercase tracking-wider text-[var(--azul)]">Números ao vivo</div>
+          <div className="pf-numeros pf-numeros-4 mt-2.5">
             <div className="pf-num"><b>{fmtBR(stats.followers)}</b><span>seguidores</span></div>
             <div className="pf-num"><b>{fmtBR(stats.reach_month)}</b><span>alcance em 30 dias</span></div>
             <div className="pf-num"><b>{stats.posts}</b><span>posts no feed</span></div>
             <div className="pf-num"><b>{stats.engagement_rate != null ? `${stats.engagement_rate}%` : "—"}</b><span>taxa de engajamento</span></div>
           </div>
-          <div className="mt-2 text-xs font-bold text-[var(--cinza)] flex items-center gap-2"><span className={`w-2 h-2 rounded-full ${stats.live ? "bg-[var(--azul)] animate-pulse" : "bg-[var(--cinza)]"}`} />{stats.live ? "ao vivo, direto da API do Instagram" : "última leitura da API do Instagram"}</div>
-          <div className="pf-formatos">
+          <div className="mt-2.5 text-xs font-bold text-[var(--cinza)] flex items-center gap-2"><span className={`w-2 h-2 rounded-full ${stats.live ? "bg-[var(--azul)] animate-pulse" : "bg-[var(--cinza)]"}`} />{stats.live ? "ao vivo, direto da API do Instagram" : "última leitura da API do Instagram"}</div>
+
+          <div className="text-xs font-extrabold uppercase tracking-wider text-[var(--azul)] mt-8">Formatos disponíveis</div>
+          <div className="pf-formatos mt-2.5">
             {PUBLI.formatos.map((f) => (
               <div key={f.nome} className="pf-formato">
                 <div className="e">{f.e}</div><b>{f.nome}</b><p>{f.desc}</p>
               </div>
             ))}
           </div>
-          <ul className="mt-4 grid gap-2">
+
+          <div className="text-xs font-extrabold uppercase tracking-wider text-[var(--azul)] mt-8">Por que funciona</div>
+          <ul className="mt-2.5 grid gap-2.5">
             {PUBLI.porques.map((p) => <li key={p} className="flex gap-2 font-semibold text-sm"><span>✅</span><span>{p}</span></li>)}
           </ul>
-          <a href="#contato" className="pf-btn azul mt-5" data-track="perfil_publi_cta">Quero uma publi com a Lara</a>
+          <a href="#contato" className="pf-btn azul mt-6" data-track="perfil_publi_cta">Quero uma publi com a Lara</a>
         </div>
       </div>
 

@@ -27,6 +27,7 @@ export const FAIXA = ["500 vídeos gravados", "200 marcas", "100M+ views", "2.4x
 
 export const NAV = [
   { id: "sobre", rotulo: "Sobre", emoji: "👋" },
+  { id: "audiencia", rotulo: "Público", emoji: "👥" },
   { id: "resultados", rotulo: "Resultados", emoji: "📊" },
   { id: "servicos", rotulo: "Serviços", emoji: "🛠️" },
   { id: "publi", rotulo: "Publi", emoji: "📱" },
@@ -34,6 +35,33 @@ export const NAV = [
   { id: "depoimentos", rotulo: "Depoimentos", emoji: "💬" },
   { id: "contato", rotulo: "Contato", emoji: "✉️" },
 ];
+
+// Perfil do público (gênero, faixa etária, localização), conferido à mão pela Lara
+// direto nos Insights do Instagram em 01/10/2026. Não tem fonte ao vivo pra isso
+// (a API não expõe esse dado pro nosso cache hoje), então é snapshot manual.
+export const AUDIENCIA = {
+  atualizadoEm: "01/10/2026",
+  genero: [
+    { k: "Mulheres", v: 88.2 },
+    { k: "Homens", v: 11.8 },
+  ],
+  idade: [
+    { k: "13-17", v: 0.1 },
+    { k: "18-24", v: 10.3 },
+    { k: "25-34", v: 53.7 },
+    { k: "35-44", v: 26.9 },
+    { k: "45-54", v: 7.0 },
+    { k: "55-64", v: 1.5 },
+    { k: "65+", v: 0.4 },
+  ],
+  paises: [
+    { k: "Brasil", bandeira: "🇧🇷", v: 93.8 },
+    { k: "Portugal", bandeira: "🇵🇹", v: 2.0 },
+    { k: "Estados Unidos", bandeira: "🇺🇸", v: 1.2 },
+    { k: "Irlanda", bandeira: "🇮🇪", v: 0.3 },
+    { k: "Espanha", bandeira: "🇪🇸", v: 0.3 },
+  ],
+};
 
 export const RESULTADOS = {
   titulo: "Números que importam 📊",

@@ -4,7 +4,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { FAIXA, NAV, PERFIL } from "@/data/perfil";
 import Cabecalho, { type CabConfig } from "./Cabecalho";
 import Rodape from "./Rodape";
-import { Marcas, Publi, Resultados, Servicos } from "./Secoes";
+import { Audiencia, Marcas, Publi, Resultados, Servicos } from "./Secoes";
 import DMs from "./DMs";
 import Sobre from "./Sobre";
 import Contato from "./Contato";
@@ -66,6 +66,7 @@ export default function PerfilApp() {
       <Cabecalho cab={cab} />
       <main className="pf-wrap">
         <Sobre />
+        <Audiencia />
         <Resultados />
         <Servicos />
         <Publi />

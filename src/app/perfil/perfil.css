@@ -221,6 +221,16 @@
 .pf-post .acoes svg{width:24px;height:24px}
 .pf-post .legenda{padding:6px 14px 14px;font-size:14px;font-weight:600;line-height:1.45}
 
+.pf-audiencia-grid{display:grid;grid-template-columns:1fr;gap:28px;margin-top:8px}
+@media (min-width:768px){.pf-audiencia-grid{grid-template-columns:repeat(3,1fr);gap:24px}}
+.pf-audiencia-bloco h3{font-size:14px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:var(--cinza);margin-bottom:12px}
+.pf-barra{margin-bottom:12px}
+.pf-barra:last-child{margin-bottom:0}
+.pf-barra-cab{display:flex;justify-content:space-between;align-items:baseline;font-size:13px;font-weight:700;margin-bottom:4px}
+.pf-barra-cab b{font-weight:800;color:var(--azul)}
+.pf-barra-trilho{height:8px;border-radius:999px;background:var(--linha);overflow:hidden}
+.pf-barra-fill{height:100%;border-radius:999px;background:var(--azul)}
+
 .pf-publis-cab{margin-top:40px}
 .pf-publis-cab h3{font-size:20px;font-weight:800;letter-spacing:-.01em}
 .pf-publis-cab .sub{margin-top:4px;font-size:14px;font-weight:600;color:var(--cinza)}
