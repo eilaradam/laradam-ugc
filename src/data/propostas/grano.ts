@@ -55,6 +55,21 @@ export const GRANO: Proposta = {
     "Nota fiscal",
   ],
 
+  // Prévia do painel de acompanhamento (igual agencia.laradam.com), com nomes e status de exemplo —
+  // não são creators reais nem confirmadas pra campanha, é só pra mostrar como fica o processo.
+  painel: {
+    titulo: "Como fica o acompanhamento da sua campanha",
+    sub: "Um painel só da Grano, com cada creator, o status do roteiro e do conteúdo em tempo real. Exemplo de como fica assim que a campanha começa:",
+    linhas: [
+      { nome: "Creator 01", perfil: "Gastronomia · receitas do dia a dia", status: "Roteiro aprovado" },
+      { nome: "Creator 02", perfil: "Lifestyle · rotina saudável", status: "Em gravação" },
+      { nome: "Creator 03", perfil: "Mãe · praticidade na cozinha", status: "Selecionada" },
+      { nome: "Creator 04", perfil: "Fitness · pré/pós treino", status: "Roteiro em revisão" },
+      { nome: "Creator 05", perfil: "Casa · organização e despensa", status: "Entregue" },
+      { nome: "Creator 06", perfil: "Gastronomia · receitas rápidas", status: "Selecionada" },
+    ],
+  },
+
   // Melhores (maior engajamento) de cada marca na rede, puxados de AG_CONTEUDOS (src/data/agencia.ts).
   referencias: [
     { video: { brand: "Brinox", titulo: "5 motivos · Ceramiclife Loft", instagram: "DUY_qQwAmRW", thumbnail: "/capas-ig/DUY_qQwAmRW.webp" }, porque: "O vídeo de maior engajamento da rede pra Brinox: demonstração de produto com argumento claro." },

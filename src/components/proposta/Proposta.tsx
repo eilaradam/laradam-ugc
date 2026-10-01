@@ -24,6 +24,12 @@ export type Proposta = {
     | { id: string; porque: string }
     | { video: { brand: string; titulo?: string; youtubeId?: string; instagram?: string; thumbnail?: string }; porque: string }
   )[];
+  /** Prévia de exemplo (dados de demonstração) do painel de acompanhamento da campanha. */
+  painel?: {
+    titulo: string;
+    sub: string;
+    linhas: { nome: string; perfil: string; status: string }[];
+  };
   cronograma: { etapa: string; quando: string }[];
   pagamento: string;
   proximoPasso: string;
@@ -40,13 +46,36 @@ const CHAMADA_PADRAO = {
   texto: "Qualquer dúvida sobre a proposta, é só me chamar. Com o descritivo em mãos, fecho o roteiro e mando pra aprovação.",
 };
 
-function Eyebrow({ n, children }: { n: string; children: React.ReactNode }) {
+function Eyebrow({ n, children, dark }: { n: string; children: React.ReactNode; dark?: boolean }) {
   return (
-    <div className="mb-5 flex items-center gap-3 text-[11px] uppercase tracking-[0.3em] text-primary font-semibold">
-      <span className="font-serif-accent italic normal-case tracking-normal text-base text-primary/70">{n}</span>
-      <span className="h-px w-8 bg-primary/40" />
+    <div
+      className={
+        "mb-5 flex items-center gap-3 text-[11px] uppercase tracking-[0.3em] font-semibold " +
+        (dark ? "text-accent-on-dark" : "text-primary")
+      }
+    >
+      <span className={"font-serif-accent italic normal-case tracking-normal text-base " + (dark ? "text-accent-on-dark/70" : "text-primary/70")}>{n}</span>
+      <span className={"h-px w-8 " + (dark ? "bg-accent-on-dark/50" : "bg-primary/40")} />
       {children}
     </div>
+  );
+}
+
+const AVATAR_CORES = ["bg-primary", "bg-foreground", "bg-accent-on-dark"];
+
+function AvatarIniciais({ nome, i }: { nome: string; i: number }) {
+  const iniciais = nome
+    .split(" ")
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((p) => p[0]!.toUpperCase())
+    .join("");
+  const cor = AVATAR_CORES[i % AVATAR_CORES.length];
+  const texto = cor === "bg-accent-on-dark" ? "text-foreground" : "text-background";
+  return (
+    <span className={"flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full text-sm font-bold " + cor + " " + texto}>
+      {iniciais}
+    </span>
   );
 }
 
@@ -70,6 +99,9 @@ export default function PropostaPage({ p }: { p: Proposta }) {
       };
     })
     .filter((r) => !!r.video);
+
+  let secaoAtual = 0;
+  const secao = () => String(++secaoAtual).padStart(2, "0");
 
   return (
     <main className="min-h-screen bg-background text-foreground">
@@ -110,14 +142,14 @@ export default function PropostaPage({ p }: { p: Proposta }) {
 
       {/* sobre */}
       <section className="mx-auto max-w-5xl px-6 py-10 md:py-14">
-        <Eyebrow n="01">Sobre a campanha</Eyebrow>
+        <Eyebrow n={secao()}>Sobre a campanha</Eyebrow>
         <p className="max-w-3xl text-lg leading-relaxed">{p.sobre}</p>
       </section>
 
       {/* opções */}
       <section className="bg-background-alt">
         <div className="mx-auto max-w-5xl px-6 py-12 md:py-16">
-          <Eyebrow n="02">Opções de vídeo</Eyebrow>
+          <Eyebrow n={secao()}>Opções de vídeo</Eyebrow>
           <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
             {p.opcoes.map((o) => (
               <div
@@ -165,7 +197,7 @@ export default function PropostaPage({ p }: { p: Proposta }) {
 
       {/* incluso */}
       <section className="mx-auto max-w-5xl px-6 py-12 md:py-16">
-        <Eyebrow n="03">O que está incluso</Eyebrow>
+        <Eyebrow n={secao()}>O que está incluso</Eyebrow>
         <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {p.incluso.map((i) => (
             <li key={i} className="flex items-center gap-3 rounded-2xl border border-border bg-background-alt px-5 py-4 text-sm font-medium">
@@ -178,12 +210,42 @@ export default function PropostaPage({ p }: { p: Proposta }) {
         </ul>
       </section>
 
+      {/* painel de acompanhamento (exemplo) */}
+      {p.painel && (
+        <section className="mx-auto max-w-5xl px-6 py-12 md:py-16">
+          <Eyebrow n={secao()}>{p.painel.titulo}</Eyebrow>
+          <p className="mb-8 max-w-2xl text-foreground-soft">{p.painel.sub}</p>
+          <div className="overflow-hidden rounded-2xl border border-border">
+            {p.painel.linhas.map((l, i) => (
+              <div
+                key={l.nome}
+                className={
+                  "flex items-center gap-4 px-5 py-4 " +
+                  (i % 2 === 0 ? "bg-background" : "bg-background-alt") +
+                  (i > 0 ? " border-t border-border" : "")
+                }
+              >
+                <AvatarIniciais nome={l.nome} i={i} />
+                <div className="min-w-0 flex-1">
+                  <div className="font-semibold">{l.nome}</div>
+                  <div className="text-sm text-foreground-soft">{l.perfil}</div>
+                </div>
+                <span className="flex-shrink-0 rounded-full border border-primary/30 bg-primary-light px-3 py-1 text-xs font-semibold text-primary">
+                  {l.status}
+                </span>
+              </div>
+            ))}
+          </div>
+          <p className="mt-4 text-xs text-muted">Exemplo ilustrativo (nomes e status fictícios) de como fica o acompanhamento da sua campanha no meu painel de gestão.</p>
+        </section>
+      )}
+
       {/* referências */}
       {refs.length > 0 && (
         <section className="bg-foreground text-background">
           <div className="mx-auto max-w-5xl px-6 py-12 md:py-16">
             <div className="mb-5 flex items-center gap-3 text-[11px] uppercase tracking-[0.3em] text-accent-on-dark font-semibold">
-              <span className="font-serif-accent italic normal-case tracking-normal text-base text-accent-on-dark/70">04</span>
+              <span className="font-serif-accent italic normal-case tracking-normal text-base text-accent-on-dark/70">{secao()}</span>
               <span className="h-px w-8 bg-accent-on-dark/50" />
               Referências do meu portfólio
             </div>
@@ -202,7 +264,7 @@ export default function PropostaPage({ p }: { p: Proposta }) {
 
       {/* cronograma */}
       <section className="mx-auto max-w-5xl px-6 py-12 md:py-16">
-        <Eyebrow n="05">Cronograma</Eyebrow>
+        <Eyebrow n={secao()}>Cronograma</Eyebrow>
         <ol className="relative ml-2 border-l-2 border-primary/30 pl-7">
           {p.cronograma.map((c) => (
             <li key={c.etapa} className="relative pb-7 last:pb-0">
@@ -218,11 +280,11 @@ export default function PropostaPage({ p }: { p: Proposta }) {
       <section className="bg-background-alt">
         <div className="mx-auto grid max-w-5xl grid-cols-1 gap-8 px-6 py-12 md:grid-cols-2 md:py-16">
           <div>
-            <Eyebrow n="06">Pagamento</Eyebrow>
+            <Eyebrow n={secao()}>Pagamento</Eyebrow>
             <p className="leading-relaxed text-foreground-soft">{p.pagamento}</p>
           </div>
           <div>
-            <Eyebrow n="07">Próximo passo</Eyebrow>
+            <Eyebrow n={secao()}>Próximo passo</Eyebrow>
             <p className="leading-relaxed">{p.proximoPasso}</p>
           </div>
         </div>
