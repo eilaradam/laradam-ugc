@@ -7,13 +7,10 @@
 // /agencia; é o caso aqui: Frooty/Brinox/Coza/Copacol/Trisanti/Rap10 são
 // marcas atendidas pela rede, não vídeos da própria Lara).
 //
-// Reescrita completa de copy em 01/10 (3ª leva). Dois pontos a confirmar com a Lara:
-// 1) Pacote Contínuo voltou pra R$4.500/mês nesta leva (a leva anterior tinha fechado
-//    R$4.900/mês com uma linha de economia). Mantive o valor desta leva por ser o mais
-//    recente, mas o valor mudou pra trás e vale confirmar se foi proposital.
-// 2) `pagamento` NÃO veio nesta leva (ela deixou "[forma de pagamento...]" de novo).
-//    Mantive o texto já preenchido na leva anterior em vez de voltar pro placeholder.
-// 3) `proximoPasso` veio com "[X] dias úteis" sem o número; tirei essa cláusula até
+// Reescrita completa de copy em 01/10 (3ª leva). Pontos ainda em aberto com a Lara:
+// 1) Pacote Contínuo está em R$4.500/mês (uma leva anterior tinha fechado R$4.900/mês
+//    com uma linha de economia). Sinalizado pra ela, aguardando confirmação.
+// 2) `proximoPasso` veio com "[X] dias úteis" sem o número; tirei essa cláusula até
 //    ela confirmar o prazo.
 
 import type { Proposta } from "@/components/proposta/Proposta";
@@ -98,9 +95,9 @@ export const GRANO: Proposta = {
   // Melhores (maior engajamento) de cada marca na rede, puxados de AG_CONTEUDOS (src/data/agencia.ts).
   // Trisanti e Rap10 não têm título próprio no YouTube (só o nome da marca), por isso ficam sem `titulo`.
   referencias: [
-    { video: { brand: "Brinox", titulo: "5 motivos · Ceramiclife Loft", instagram: "DUY_qQwAmRW", thumbnail: "/capas-ig/DUY_qQwAmRW.webp" }, porque: "O vídeo de maior engajamento da campanha da Brinox: demonstração de produto com argumento claro." },
+    { video: { brand: "Brinox", titulo: "5 motivos · Ceramiclife Loft", instagram: "DUY_qQwAmRW", thumbnail: "/capas-ig/DUY_qQwAmRW.webp" }, porque: "O vídeo da campanha Brinox: demonstração de produto com argumento claro." },
     { video: { brand: "Copacol", titulo: "Peixe que não gruda na grelha", instagram: "DIR8uSzPDE5", thumbnail: "/capas-ig/DIR8uSzPDE5.webp" }, porque: "Receita com o produto como protagonista. É a referência mais próxima do que propomos pra Grano." },
-    { video: { brand: "Frooty", titulo: "Campanha", instagram: "DRiMzoBET65", thumbnail: "/capas-ig/DRiMzoBET65.webp" }, porque: "Alimento no dia a dia, formato leve e natural." },
+    { video: { brand: "Frooty", titulo: "Campanha", instagram: "DRiMzoBET65", thumbnail: "/capas-ig/DRiMzoBET65.webp" }, porque: "Campanha Frooty com foco em mostrar variedade de produtos e falar sobre campanha ativa." },
     { video: { brand: "Trisanti", youtubeId: "fDjZz6kMjMY" }, porque: "Referência de tom pra categoria de alimentos da rede." },
     { video: { brand: "Rap10", youtubeId: "sb9PHTUVBvc" }, porque: "Outro exemplo de UGC gastronômico produzido pela rede." },
     { video: { brand: "Coza", titulo: "Cesto de lavanderia", instagram: "DbI8BXWgbXU", thumbnail: "/capas-ig/DbI8BXWgbXU.webp" }, porque: "Uso prático do produto na rotina, com boa retenção." },
@@ -112,9 +109,8 @@ export const GRANO: Proposta = {
     { etapa: "Entrega dos 10 vídeos", quando: "Fim da semana 2" },
   ],
 
-  // Mantido da leva anterior: esta leva voltou a deixar "[forma de pagamento...]" sem preencher.
   pagamento:
-    "Pacote Pontual: 50% na assinatura e 50% na entrega dos vídeos.\nPacote Contínuo: pagamento mensal antecipado, até o dia 5 de cada mês.\nForma de pagamento: PIX ou boleto.\nDados para a nota fiscal: Lara Dam LTDA, CNPJ 55.446.568/0001-22.",
+    "Pagamento mensal com prazo de 10 dias após a emissão da nota, ou até o dia 5 de cada mês.\nForma de pagamento: PIX ou boleto.\nDados para a nota fiscal: Lara Dam LTDA, CNPJ 55.446.568/0001-22.",
 
   // "em até [X] dias úteis" ainda sem o número; pendente com a Lara.
   proximoPasso: "Com a proposta aprovada, iniciamos a seleção das creators e enviamos o briefing pra validação da Grano.",
