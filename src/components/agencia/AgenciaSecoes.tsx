@@ -21,6 +21,7 @@ export function Conteudos() {
     youtubeId: v.youtubeId,
     instagram: v.instagram,
     thumbnail: v.thumbnail,
+    externo: v.externo,
   }));
   // fileiras por marca (na ordem em que aparecem), e o resto junto
   const ordem: string[] = []; const porMarca: Record<string, Video[]> = {};

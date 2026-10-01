@@ -29,7 +29,7 @@ export function Reel({ video, grande = false }: { video: Video; grande?: boolean
   const proximo = () => { if (!video.thumbnail && idx < lista.length - 1) setIdx(idx + 1); };
   const nicho = CATEGORIES.find((c) => c.slug === video.category)?.name ?? video.category;
   return (
-    <button className={`pf-reel ${grande ? "grande" : ""}`} onClick={() => open(video)} onMouseEnter={() => setPreview(true)} onFocus={() => setPreview(true)} aria-label={`Assistir ${video.title} (${video.brand})`} data-cursor="play">
+    <button className={`pf-reel ${grande ? "grande" : ""}`} onClick={() => (video.externo && video.instagram ? window.open(`https://www.instagram.com/p/${video.instagram}/`, "_blank", "noopener") : open(video))} onMouseEnter={() => setPreview(true)} onFocus={() => setPreview(true)} aria-label={`Assistir ${video.title} (${video.brand})`} data-cursor="play">
       {src && (
         // eslint-disable-next-line @next/next/no-img-element
         <img src={src} alt="" loading="lazy" onError={proximo} onLoad={(e) => { if (!video.thumbnail && e.currentTarget.naturalWidth <= 120) proximo(); }} />

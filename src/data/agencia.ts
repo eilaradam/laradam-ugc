@@ -83,7 +83,7 @@ export const AG_OQUEFACO = {
   ],
 };
 
-export type AgVideo = { brand: string; nicho: string; youtubeId?: string; instagram?: string; thumbnail?: string; titulo?: string };
+export type AgVideo = { brand: string; nicho: string; youtubeId?: string; instagram?: string; thumbnail?: string; titulo?: string; externo?: boolean };
 
 // Vídeos gerenciados pela agência (outras creators). YouTube = capa automática;
 // Instagram = capa local em /public/capas-ig/<código>.webp (o IG não deixa puxar).
@@ -113,6 +113,28 @@ export const AG_CONTEUDOS = {
     { brand: "Sofá na Caixa", nicho: "casa", instagram: "DUYTg6RAnhB", thumbnail: "/capas-ig/DUYTg6RAnhB.webp", titulo: "Sofá modular" },
     { brand: "Sofá na Caixa", nicho: "casa", instagram: "DUTyzAsjb75", thumbnail: "/capas-ig/DUTyzAsjb75.webp", titulo: "Modular na rotina" },
     { brand: "Sofá na Caixa", nicho: "casa", instagram: "DRAwgoyjzLz", thumbnail: "/capas-ig/DRAwgoyjzLz.webp", titulo: "Por dentro da fábrica" },
+    // OLX (Instagram, 2025/2026)
+    { brand: "OLX", nicho: "tech", instagram: "DPy_nAwDbxO", thumbnail: "/capas-ig/DPy_nAwDbxO.webp", titulo: "Review Kawasaki Z750" },
+    { brand: "OLX", nicho: "tech", instagram: "DP1nqeuD4mF", thumbnail: "/capas-ig/DP1nqeuD4mF.webp", titulo: "Review Kawasaki Z900" },
+    { brand: "OLX", nicho: "tech", instagram: "DOZM18bj5kA", thumbnail: "/capas-ig/DOZM18bj5kA.webp", titulo: "15 anos · cupons de aniversário" },
+    { brand: "OLX", nicho: "tech", instagram: "DNWCcthRGYA", thumbnail: "/capas-ig/DNWCcthRGYA.webp", titulo: "AntiGolpe · papo fora do app" },
+    { brand: "OLX", nicho: "tech", instagram: "DM-0qNsvdrg", thumbnail: "/capas-ig/DM-0qNsvdrg.webp", titulo: "Financiamento de moto no app", externo: true },
+    { brand: "OLX", nicho: "tech", instagram: "DLsilMggZY5", thumbnail: "/capas-ig/DLsilMggZY5.webp", titulo: "Taxa de liberação? Aqui não" },
+    { brand: "OLX", nicho: "tech", instagram: "DKhtWaoi2sq", thumbnail: "/capas-ig/DKhtWaoi2sq.webp", titulo: "A realidade de morar sozinho" },
+    { brand: "OLX", nicho: "tech", instagram: "DKscQ9IAuLU", thumbnail: "/capas-ig/DKscQ9IAuLU.webp", titulo: "Desapegados do mês" },
+    { brand: "OLX", nicho: "tech", instagram: "DKc6At1PtC8", thumbnail: "/capas-ig/DKc6At1PtC8.webp", titulo: "Vale a pena carro híbrido?" },
+    { brand: "OLX", nicho: "tech", instagram: "DJ5ES3Xub8x", thumbnail: "/capas-ig/DJ5ES3Xub8x.webp", titulo: "Manutenção preventiva" },
+    { brand: "OLX", nicho: "tech", instagram: "DJSAogQvEAz", thumbnail: "/capas-ig/DJSAogQvEAz.webp", titulo: "Dia das Mães · desapega" },
+    { brand: "OLX", nicho: "tech", instagram: "DHmLuhpNWQt", thumbnail: "/capas-ig/DHmLuhpNWQt.webp", titulo: "A amiga que compra tudo na OLX" },
+    // ZAP Imóveis (Instagram, 2025/2026)
+    { brand: "Zap Imóveis", nicho: "casa", instagram: "DRQCBemkVEK", thumbnail: "/capas-ig/DRQCBemkVEK.webp", titulo: "Festival da Mudança · Black Friday" },
+    { brand: "Zap Imóveis", nicho: "casa", instagram: "DQmrUK6lI34", thumbnail: "/capas-ig/DQmrUK6lI34.webp", titulo: "Guia de bairros · Liberdade" },
+    { brand: "Zap Imóveis", nicho: "casa", instagram: "DP4PU94jLpu", thumbnail: "/capas-ig/DP4PU94jLpu.webp", titulo: "Guia de bairros · Barra Funda" },
+    { brand: "Zap Imóveis", nicho: "casa", instagram: "DPMpWcFAjhJ", thumbnail: "/capas-ig/DPMpWcFAjhJ.webp", titulo: "Top 5 cozinhas dos sonhos" },
+    { brand: "Zap Imóveis", nicho: "casa", instagram: "DOWzhaCjJP5", thumbnail: "/capas-ig/DOWzhaCjJP5.webp", titulo: "Vantagens de morar em casa grande" },
+    { brand: "Zap Imóveis", nicho: "casa", instagram: "DLlFk99pWvL", thumbnail: "/capas-ig/DLlFk99pWvL.webp", titulo: "Festival da Mudança" },
+    { brand: "Zap Imóveis", nicho: "casa", instagram: "DIcBndMP5DC", thumbnail: "/capas-ig/DIcBndMP5DC.webp", titulo: "POV: a amiga exigente" },
+    { brand: "Zap Imóveis", nicho: "casa", instagram: "DIRTQ5YNag4", thumbnail: "/capas-ig/DIRTQ5YNag4.webp", titulo: "Tentando achar o apê dos sonhos" },
     // YouTube (já estavam na página de gestão)
     { brand: "Sebastian", nicho: "beleza", youtubeId: "i62BOlzvQlo" },
     { brand: "OLX", nicho: "tech", youtubeId: "ukZSk1h_Y2Q" },
