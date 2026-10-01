@@ -91,18 +91,24 @@ export const NILEN: Proposta = {
     ],
   },
 
-  referenciasTitulo: "Campanhas que já produzimos",
-  referenciasIntro: "Toque em qualquer vídeo pra assistir. São referências de formato e ritmo pra pensar os criativos da Nilen.",
-  // Wella/Sebastian/Neutrogena em destaque (pedido da Lara, mais próximos de beleza/perfumaria),
-  // depois Magalu (melhor engajamento da rede) e alguns de OLX.
+  // Trocado de título porque estes NÃO são campanhas da rede da Lara (são UGC real
+  // de perfumaria de outras marcas/creators, mandados por ela como referência de tom
+  // e gancho); "Campanhas que já produzimos" ficaria incorreto aqui.
+  referenciasTitulo: "Referências de UGC de perfumaria",
+  referenciasIntro: "Toque em qualquer vídeo pra assistir. São exemplos reais de UGC de perfumaria pra pensar o tom e os ganchos dos criativos da Nilen.",
   referencias: [
-    { video: { brand: "Wella", youtubeId: "15nOoGJ872g" }, porque: "UGC de beleza com o produto no centro: referência direta de tom pra campanha de perfumaria." },
-    { video: { brand: "Sebastian", youtubeId: "i62BOlzvQlo" }, porque: "Outro exemplo de beleza da rede, formato que funciona bem pra linha de fragrâncias como a da Nilen." },
-    { video: { brand: "Neutrogena", youtubeId: "ATz4wOA_mAc" }, porque: "Rotina com o produto como protagonista: a proximidade que buscamos pros criativos da Nilen." },
-    { video: { brand: "Magalu", titulo: "Liquidação da Metade", instagram: "DLaQPpTOuQ-", thumbnail: "/capas-ig/DLaQPpTOuQ-.webp" }, porque: "Um dos vídeos de maior engajamento da rede: gancho de oferta, bom formato pra testar em anúncio." },
-    { video: { brand: "Magalu", titulo: "Liquidação da Metade do Ano", instagram: "DLc8UBLxW2D", thumbnail: "/capas-ig/DLc8UBLxW2D.webp" }, porque: "Outro formato de oferta com boa resposta, referência de ritmo pra campanha paga." },
-    { video: { brand: "OLX", titulo: "Taxa de liberação? Aqui não", instagram: "DLsilMggZY5", thumbnail: "/capas-ig/DLsilMggZY5.webp" }, porque: "Formato direto, resolvendo uma objeção do produto: referência de argumento pra anúncio." },
-    { video: { brand: "OLX", titulo: "15 anos · cupons de aniversário", instagram: "DOZM18bj5kA", thumbnail: "/capas-ig/DOZM18bj5kA.webp" }, porque: "Gancho sazonal e promocional, outro ângulo pra testar nos criativos da Nilen." },
+    { video: { brand: "Natura", titulo: "Una Blush · promoção", instagram: "DU9JkOkEcli", thumbnail: "/capas-ig/DU9JkOkEcli.webp" }, porque: "Gancho de promoção e preço, formato direto pra campanha com cupom ou oferta." },
+    { video: { brand: "Olympia Parfums", titulo: "Guia de presente · Dia dos Pais", instagram: "DbrCudTiPbX", thumbnail: "/capas-ig/DbrCudTiPbX.webp" }, porque: "Guia de presente por estilo de perfume, bom formato pra datas comemorativas." },
+    { video: { brand: "Olympia Parfums", titulo: "Descoberta na loja", instagram: "DXcqWd-h7uV", thumbnail: "/capas-ig/DXcqWd-h7uV.webp" }, porque: "Storytelling de descoberta em loja física, com gancho emocional forte." },
+    { video: { brand: "Amakha", titulo: "Kit Elegance Blue", instagram: "DaoMW_3DSDY", thumbnail: "/capas-ig/DaoMW_3DSDY.webp" }, porque: "Review do produto com a creator apresentando o kit, direto ao ponto." },
+    { video: { brand: "Amakha", titulo: "Zaya · Dia dos Namorados", instagram: "DY0O38xCN-o", thumbnail: "/capas-ig/DY0O38xCN-o.webp" }, porque: "Gancho de data comemorativa, produto como sugestão de presente." },
+    { video: { brand: "Natura", titulo: "Natura Friday · Body Splash", instagram: "DRW5WSPjnf9", thumbnail: "/capas-ig/DRW5WSPjnf9.webp" }, porque: "Formato de oferta com cupom e urgência, bom pra testar em anúncio." },
+    { video: { brand: "Sahari", titulo: "Al Mas The Diamond", instagram: "DXhR92cDYWE", thumbnail: "/capas-ig/DXhR92cDYWE.webp" }, porque: "Review de 'perfume favorito do momento' com onde comprar, formato de recomendação." },
+    { video: { brand: "Perfumistta", titulo: "Qual é a sua cara?", instagram: "DVLvPiuDhk5", thumbnail: "/capas-ig/DVLvPiuDhk5.webp" }, porque: "Pergunta direta ao público com cupom, bom gancho de engajamento." },
+    { video: { brand: "Perfumistta", titulo: "O perfume que não sai da bolsa", instagram: "DRSGWMPDuU2", thumbnail: "/capas-ig/DRSGWMPDuU2.webp" }, porque: "Formato de rotina e preferência pessoal, com cupom." },
+    { video: { brand: "Carolina Herrera", titulo: "La Bomba", instagram: "DSYK6FfkYZl", thumbnail: "/capas-ig/DSYK6FfkYZl.webp" }, porque: "Storytelling sobre a inspiração do perfume, tom mais editorial." },
+    { video: { brand: "Libougie", titulo: "Perfume de bolsa", instagram: "DKM6pe0R6Oq", thumbnail: "/capas-ig/DKM6pe0R6Oq.webp" }, porque: "Foco em praticidade: perfume de bolsa pro dia a dia." },
+    { video: { brand: "Bloom", titulo: "Combo Body Splash", instagram: "DcMlPm0pcrN", thumbnail: "/capas-ig/DcMlPm0pcrN.webp" }, porque: "Gancho de combo e preço, oferta clara, direto pra anúncio." },
   ],
 
   cronograma: [
