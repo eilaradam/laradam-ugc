@@ -31,7 +31,8 @@
 /* fundos chapados da home ficam transparentes pra mostrar os pontinhos (a capa e os serviços) */
 .skin-kit section.bg-background{background-color:transparent}
 .skin-kit .hero-grade{background-image:none!important}
-.skin-kit .hero-brilho{background:radial-gradient(circle,rgba(191,74,43,.14) 0%,transparent 70%)!important}
+/* sem brilho redondo no fundo (a Lara não gosta de círculo/degradê radial atrás do conteúdo) */
+.skin-kit .hero-brilho{display:none!important}
 /* menu: sem sombra pesada, só uma linha */
 .skin-kit nav.fixed{box-shadow:none!important;border-bottom:1px solid var(--border);background:rgba(255,255,255,.94)!important}
 /* faixa de datas (Black Friday era amarela): no kit vira azul */
