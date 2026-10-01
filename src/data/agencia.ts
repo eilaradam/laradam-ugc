@@ -135,6 +135,20 @@ export const AG_CONTEUDOS = {
     { brand: "Zap Imóveis", nicho: "casa", instagram: "DLlFk99pWvL", thumbnail: "/capas-ig/DLlFk99pWvL.webp", titulo: "Festival da Mudança" },
     { brand: "Zap Imóveis", nicho: "casa", instagram: "DIcBndMP5DC", thumbnail: "/capas-ig/DIcBndMP5DC.webp", titulo: "POV: a amiga exigente" },
     { brand: "Zap Imóveis", nicho: "casa", instagram: "DIRTQ5YNag4", thumbnail: "/capas-ig/DIRTQ5YNag4.webp", titulo: "Tentando achar o apê dos sonhos" },
+    // Brinox (Instagram, 2026)
+    { brand: "Brinox", nicho: "casa", instagram: "DUY_qQwAmRW", thumbnail: "/capas-ig/DUY_qQwAmRW.webp", titulo: "5 motivos · Ceramiclife Loft" },
+    { brand: "Brinox", nicho: "casa", instagram: "DUDyLcVjbUH", thumbnail: "/capas-ig/DUDyLcVjbUH.webp", titulo: "Primeiro jogo de panelas" },
+    { brand: "Brinox", nicho: "casa", instagram: "DTgWK53ErIb", thumbnail: "/capas-ig/DTgWK53ErIb.webp", titulo: "Panela que não gruda" },
+    { brand: "Brinox", nicho: "casa", instagram: "DWM8J0yjyLA", thumbnail: "/capas-ig/DWM8J0yjyLA.webp", titulo: "Ceramiclife Loft · casa dos sonhos" },
+    // Copacol (Instagram, 2025/2026)
+    { brand: "Copacol", nicho: "gastronomia", instagram: "DUY_yYNCKRx", thumbnail: "/capas-ig/DUY_yYNCKRx.webp", titulo: "Salada com frango desfiado" },
+    { brand: "Copacol", nicho: "gastronomia", instagram: "DLlHPbNNuC4", thumbnail: "/capas-ig/DLlHPbNNuC4.webp", titulo: "Ajudinha na cozinha" },
+    { brand: "Copacol", nicho: "gastronomia", instagram: "DLnlWIDyK_S", thumbnail: "/capas-ig/DLnlWIDyK_S.webp", titulo: "Filé de tilápia · 3 receitas" },
+    { brand: "Copacol", nicho: "gastronomia", instagram: "DJSUfuZPuZh", thumbnail: "/capas-ig/DJSUfuZPuZh.webp", titulo: "Patê de tilápia" },
+    { brand: "Copacol", nicho: "gastronomia", instagram: "DIR8uSzPDE5", thumbnail: "/capas-ig/DIR8uSzPDE5.webp", titulo: "Peixe que não gruda na grelha" },
+    // Little Duck (Instagram, 2026)
+    { brand: "Little Duck", nicho: "casa", instagram: "DUjAJxnjdZe", thumbnail: "/capas-ig/DUjAJxnjdZe.webp", titulo: "Sofá de brincar · vale a pena?" },
+    { brand: "Little Duck", nicho: "casa", instagram: "DSXnRGlDQSH", thumbnail: "/capas-ig/DSXnRGlDQSH.webp", titulo: "Conheça a fábrica" },
     // YouTube (já estavam na página de gestão)
     { brand: "Sebastian", nicho: "beleza", youtubeId: "i62BOlzvQlo" },
     { brand: "OLX", nicho: "tech", youtubeId: "ukZSk1h_Y2Q" },
