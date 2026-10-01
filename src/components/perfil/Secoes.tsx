@@ -24,6 +24,7 @@ export function Reel({ video, grande = false }: { video: Video; grande?: boolean
   useEffect(() => { if (!grande && window.innerWidth < 768) setLeve(true); }, [grande]);
   const lista = leve ? THUMBS_LEVES : THUMBS;
   const id = video.youtubeId;
+  // Reel do IG: capa local; YouTube: cascata de capas do YouTube
   const src = video.thumbnail ?? (id ? `https://i.ytimg.com/vi/${id}/${lista[idx]}` : "");
   const proximo = () => { if (!video.thumbnail && idx < lista.length - 1) setIdx(idx + 1); };
   const nicho = CATEGORIES.find((c) => c.slug === video.category)?.name ?? video.category;
@@ -187,7 +188,7 @@ export function Nicho({ slug, nome, tagline, videos }: { slug: string; nome: str
     <div id={`nicho-${slug}`} className="pf-nicho">
       <div className="pf-nicho-cab">
         <div>
-          <h3>{NICHO_EMOJI[slug] ?? "⭐"} {nome} <small>{videos.length}</small></h3>
+          <h3>{slug.startsWith("marca-") ? "" : (NICHO_EMOJI[slug] ?? "⭐") + " "}{nome} <small>{videos.length}</small></h3>
           {tagline && <div className="tag">{tagline}</div>}
         </div>
         <div className="pf-setas" style={{ visibility: podeAnt || podeProx ? "visible" : "hidden" }}>

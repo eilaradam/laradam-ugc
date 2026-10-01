@@ -65,7 +65,10 @@ export default function VideoModalProvider({
   // - vq=hd1080: pedido explícito de qualidade máxima (YouTube ajusta se não disponível)
   const embedUrl = video?.youtubeId
     ? `https://www.youtube.com/embed/${video.youtubeId}?autoplay=1&controls=1&rel=0&modestbranding=1&playsinline=1&vq=hd1080&hd=1`
+    : video?.instagram
+    ? `https://www.instagram.com/p/${video.instagram}/embed/`
     : null;
+  const ehInstagram = !!video?.instagram && !video?.youtubeId;
 
   return (
     <VideoModalContext.Provider value={{ open, close }}>
@@ -124,6 +127,8 @@ export default function VideoModalProvider({
                   ? "relative w-[min(90vw,520px)] aspect-square bg-gradient-to-br from-primary/30 via-foreground to-black rounded-3xl overflow-hidden shadow-2xl"
                   : video.landscape
                   ? "relative w-[min(95vw,1280px)] aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl"
+                  : ehInstagram
+                  ? "relative w-[min(92vw,400px)] h-[min(90vh,760px)] bg-white rounded-2xl overflow-hidden shadow-2xl"
                   : "relative h-[min(90vh,900px)] aspect-[9/16] max-w-full bg-black rounded-2xl overflow-hidden shadow-2xl"
               }
             >
@@ -139,6 +144,7 @@ export default function VideoModalProvider({
                     }
                     allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
                     allowFullScreen
+                    scrolling={ehInstagram ? "no" : undefined}
                   />
                   {video.audioOnly && (
                     <div className="absolute inset-0 flex flex-col items-center justify-center text-white p-10 text-center">

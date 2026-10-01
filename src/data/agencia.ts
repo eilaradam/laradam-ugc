@@ -83,31 +83,60 @@ export const AG_OQUEFACO = {
   ],
 };
 
+export type AgVideo = { brand: string; nicho: string; youtubeId?: string; instagram?: string; thumbnail?: string; titulo?: string };
+
+// Vídeos gerenciados pela agência (outras creators). YouTube = capa automática;
+// Instagram = capa local em /public/capas-ig/<código>.webp (o IG não deixa puxar).
 export const AG_CONTEUDOS = {
   titulo: "Conteúdos gerenciados pelo nosso time",
-  sub: "Conheça algumas creators que poderão criar para a sua marca. Desliza pro lado e clica pra assistir.",
+  sub: "Campanhas com várias creators, por marca. Desliza pro lado e clica pra assistir.",
   videos: [
-    { youtubeId: "i62BOlzvQlo", brand: "Sebastian" },
-    { youtubeId: "ukZSk1h_Y2Q", brand: "OLX" },
-    { youtubeId: "9WjJTAbJsms", brand: "Frooty" },
-    { youtubeId: "3qKBJccHlg8", brand: "Zap Imóveis" },
-    { youtubeId: "H5nVICmwGog", brand: "Brinox" },
-    { youtubeId: "15nOoGJ872g", brand: "Wella" },
-    { youtubeId: "fDjZz6kMjMY", brand: "Trisanti" },
-    { youtubeId: "sb9PHTUVBvc", brand: "Rap10" },
-    { youtubeId: "ATz4wOA_mAc", brand: "Neutrogena" },
-    { youtubeId: "ZnoQzWTTSHM", brand: "Automotivo" },
-    { youtubeId: "_76b4s5tOZQ", brand: "OLX" },
-    { youtubeId: "ij5dOFY29ZI", brand: "Frooty" },
-    { youtubeId: "pqUrs6-l8Lg", brand: "Zap Imóveis" },
-    { youtubeId: "XhDRsx2Q2MM", brand: "Brinox" },
-    { youtubeId: "SNAvEW9DO7M", brand: "Trisanti" },
-    { youtubeId: "lvxaMi4GaVc", brand: "Rap10" },
-    { youtubeId: "Dc9D0nj7n3U", brand: "OLX" },
-    { youtubeId: "q4RDtGGGcDc", brand: "Zap Imóveis" },
-    { youtubeId: "bg-wyhCzVkQ", brand: "OLX" },
-    { youtubeId: "8y0eXGsfHv4", brand: "Zap Imóveis" },
-  ],
+    // Coza (Instagram, out/2026)
+    { brand: "Coza", nicho: "casa", instagram: "Ddmx8TpR2_c", thumbnail: "/capas-ig/Ddmx8TpR2_c.webp", titulo: "Zip Vácuo · kit hóspede" },
+    { brand: "Coza", nicho: "casa", instagram: "DdO1UKmB-AH", thumbnail: "/capas-ig/DdO1UKmB-AH.webp", titulo: "Linha Modo Bambu" },
+    { brand: "Coza", nicho: "casa", instagram: "DdCodtuReFZ", thumbnail: "/capas-ig/DdCodtuReFZ.webp", titulo: "Linha Puffer" },
+    { brand: "Coza", nicho: "casa", instagram: "DcrzFNpxgT2", thumbnail: "/capas-ig/DcrzFNpxgT2.webp", titulo: "Linha Puffer" },
+    { brand: "Coza", nicho: "casa", instagram: "DcejObxR_2a", thumbnail: "/capas-ig/DcejObxR_2a.webp", titulo: "Saco a vácuo na mala" },
+    { brand: "Coza", nicho: "casa", instagram: "DcZj-sOx0dm", thumbnail: "/capas-ig/DcZj-sOx0dm.webp", titulo: "Saco Zip Vácuo" },
+    { brand: "Coza", nicho: "casa", instagram: "DbRTjSqhSH6", thumbnail: "/capas-ig/DbRTjSqhSH6.webp", titulo: "Linha Dry · geladeira" },
+    { brand: "Coza", nicho: "casa", instagram: "DbI8BXWgbXU", thumbnail: "/capas-ig/DbI8BXWgbXU.webp", titulo: "Cesto de lavanderia" },
+    // Frooty (Instagram, set/out 2026)
+    { brand: "Frooty", nicho: "food", instagram: "DSYQzfmERiN", thumbnail: "/capas-ig/DSYQzfmERiN.webp", titulo: "#RoxosPorFrooty" },
+    { brand: "Frooty", nicho: "food", instagram: "DSI1HbikZge", thumbnail: "/capas-ig/DSI1HbikZge.webp", titulo: "Pós-corrida" },
+    { brand: "Frooty", nicho: "food", instagram: "DSBG8z5kbxf", thumbnail: "/capas-ig/DSBG8z5kbxf.webp", titulo: "Na rotina" },
+    { brand: "Frooty", nicho: "food", instagram: "DR0QwBGEfxK", thumbnail: "/capas-ig/DR0QwBGEfxK.webp", titulo: "#RoxoPorFrooty" },
+    { brand: "Frooty", nicho: "food", instagram: "DRrg9RUkWB8", thumbnail: "/capas-ig/DRrg9RUkWB8.webp", titulo: "Açaí no seu ritmo" },
+    { brand: "Frooty", nicho: "food", instagram: "DRiMzoBET65", thumbnail: "/capas-ig/DRiMzoBET65.webp", titulo: "Campanha" },
+    { brand: "Frooty", nicho: "food", instagram: "DPMpsJkCV4j", thumbnail: "/capas-ig/DPMpsJkCV4j.webp", titulo: "Super Cremoso" },
+    { brand: "Frooty", nicho: "food", instagram: "DPXFbq4kavM", thumbnail: "/capas-ig/DPXFbq4kavM.webp", titulo: "Super Cremoso" },
+    // Sofá na Caixa (Instagram, set/out 2026)
+    { brand: "Sofá na Caixa", nicho: "casa", instagram: "DUYTg6RAnhB", thumbnail: "/capas-ig/DUYTg6RAnhB.webp", titulo: "Sofá modular" },
+    { brand: "Sofá na Caixa", nicho: "casa", instagram: "DUTyzAsjb75", thumbnail: "/capas-ig/DUTyzAsjb75.webp", titulo: "Modular na rotina" },
+    { brand: "Sofá na Caixa", nicho: "casa", instagram: "DRAwgoyjzLz", thumbnail: "/capas-ig/DRAwgoyjzLz.webp", titulo: "Por dentro da fábrica" },
+    // YouTube (já estavam na página de gestão)
+    { brand: "Sebastian", nicho: "beleza", youtubeId: "i62BOlzvQlo" },
+    { brand: "OLX", nicho: "tech", youtubeId: "ukZSk1h_Y2Q" },
+    { brand: "Frooty", nicho: "food", youtubeId: "9WjJTAbJsms" },
+    { brand: "Zap Imóveis", nicho: "casa", youtubeId: "3qKBJccHlg8" },
+    { brand: "Brinox", nicho: "casa", youtubeId: "H5nVICmwGog" },
+    { brand: "Wella", nicho: "beleza", youtubeId: "15nOoGJ872g" },
+    { brand: "Trisanti", nicho: "gastronomia", youtubeId: "fDjZz6kMjMY" },
+    { brand: "Rap10", nicho: "gastronomia", youtubeId: "sb9PHTUVBvc" },
+    { brand: "Neutrogena", nicho: "beleza", youtubeId: "ATz4wOA_mAc" },
+    { brand: "Automotivo", nicho: "tech", youtubeId: "ZnoQzWTTSHM" },
+    { brand: "OLX", nicho: "tech", youtubeId: "_76b4s5tOZQ" },
+    { brand: "Frooty", nicho: "food", youtubeId: "ij5dOFY29ZI" },
+    { brand: "Zap Imóveis", nicho: "casa", youtubeId: "pqUrs6-l8Lg" },
+    { brand: "Brinox", nicho: "casa", youtubeId: "XhDRsx2Q2MM" },
+    { brand: "Trisanti", nicho: "gastronomia", youtubeId: "SNAvEW9DO7M" },
+    { brand: "Rap10", nicho: "gastronomia", youtubeId: "lvxaMi4GaVc" },
+    { brand: "OLX", nicho: "tech", youtubeId: "Dc9D0nj7n3U" },
+    { brand: "Zap Imóveis", nicho: "casa", youtubeId: "q4RDtGGGcDc" },
+    { brand: "OLX", nicho: "tech", youtubeId: "bg-wyhCzVkQ" },
+    { brand: "Zap Imóveis", nicho: "casa", youtubeId: "8y0eXGsfHv4" },
+  ] as AgVideo[],
+  // marcas com 3+ vídeos ganham fileira própria; o resto vai em "Mais marcas"
+  minimoFileira: 3,
 };
 
 export const AG_MODALIDADES = {

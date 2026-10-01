@@ -70,7 +70,7 @@ export default function VideoCard({ video, index = 0, size = "md" }: Props) {
     >
       <div className="aspect-[9/16] relative overflow-hidden rounded-2xl bg-foreground">
         {/* Placeholder when no youtubeId */}
-        {!video.youtubeId && (
+        {!video.youtubeId && !video.instagram && (
           <div className="absolute inset-0 bg-gradient-to-br from-foreground via-foreground-soft to-primary/30 flex items-center justify-center">
             <div className="text-background/40 text-center p-4">
               <Play className="w-10 h-10 mx-auto mb-2 opacity-60" />
@@ -79,6 +79,12 @@ export default function VideoCard({ video, index = 0, size = "md" }: Props) {
               </div>
             </div>
           </div>
+        )}
+
+        {/* Reel do Instagram: só a capa local (o embed abre no modal) */}
+        {!video.youtubeId && video.instagram && video.thumbnail && (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img src={video.thumbnail} alt={video.title} loading="lazy" className="absolute inset-0 w-full h-full object-cover object-center" />
         )}
 
         {/* Real embed (loads on 1st hover; thumb sempre visível por trás) */}

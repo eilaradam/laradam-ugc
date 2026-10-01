@@ -129,6 +129,8 @@ export type Video = {
   brand: string;
   views?: string;
   youtubeId?: string;
+  /** Reel publicado no Instagram (código da URL, ex: "Ddmx8TpR2_c"). Precisa de `thumbnail` local, o IG não deixa puxar a capa. */
+  instagram?: string;
   thumbnail?: string;
   featured?: boolean;
   landscape?: boolean; // abre o modal em 16:9 ao invés de 9:16 (vertical)

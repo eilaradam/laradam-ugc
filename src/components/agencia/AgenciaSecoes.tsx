@@ -13,11 +13,28 @@ function Titulo({ titulo, sub }: { titulo: string; sub: string }) {
 }
 
 export function Conteudos() {
-  const videos: Video[] = AG_CONTEUDOS.videos.map((v, i) => ({ id: `ag-${i}-${v.youtubeId}`, title: v.brand, brand: v.brand, category: "gestão", youtubeId: v.youtubeId }));
+  const todos: Video[] = AG_CONTEUDOS.videos.map((v, i) => ({
+    id: `ag-${i}-${v.youtubeId ?? v.instagram}`,
+    title: v.titulo ? `${v.brand} · ${v.titulo}` : v.brand,
+    brand: v.brand,
+    category: v.nicho,
+    youtubeId: v.youtubeId,
+    instagram: v.instagram,
+    thumbnail: v.thumbnail,
+  }));
+  // fileiras por marca (na ordem em que aparecem), e o resto junto
+  const ordem: string[] = []; const porMarca: Record<string, Video[]> = {};
+  todos.forEach((v) => { if (!porMarca[v.brand]) { porMarca[v.brand] = []; ordem.push(v.brand); } porMarca[v.brand].push(v); });
+  const fileiras = ordem.filter((m) => porMarca[m].length >= AG_CONTEUDOS.minimoFileira);
+  const resto = ordem.filter((m) => !fileiras.includes(m)).flatMap((m) => porMarca[m]);
+  const slug = (m: string) => m.toLowerCase().normalize("NFD").replace(/[^a-z0-9]+/g, "-");
   return (
     <section id="conteudos" className="pf-sec">
-      <Titulo titulo={AG_CONTEUDOS.titulo} sub={AG_CONTEUDOS.sub} />
-      <Nicho slug="gestao" nome="Creators da rede" tagline="Vídeos gerenciados do briefing à entrega" videos={videos} />
+      <Titulo titulo={AG_CONTEUDOS.titulo} sub={`${todos.length} vídeos de ${ordem.length} marcas. ${AG_CONTEUDOS.sub}`} />
+      {fileiras.map((m) => (
+        <Nicho key={m} slug={`marca-${slug(m)}`} nome={m} tagline={`${porMarca[m].length} vídeos com creators da rede`} videos={porMarca[m]} />
+      ))}
+      {resto.length > 0 && <Nicho slug="marca-outras" nome="Mais marcas" tagline={ordem.filter((m) => !fileiras.includes(m)).join(" · ")} videos={resto} />}
     </section>
   );
 }
