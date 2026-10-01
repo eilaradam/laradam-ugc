@@ -1,73 +1,79 @@
-// Proposta pra GRANO.
+// Proposta pra GRANO: campanha UGC gerenciada, 10 criativos, via rede de creators.
 // Página: ugc.laradam.com/grano (fora do menu e fora do Google; a Lara manda o link direto).
 //
-// PRA TROCAR OS VÍDEOS DE REFERÊNCIA: mexa só em `referencias` lá embaixo.
-// Cada item é o `id` de um vídeo do portfólio (src/data/content.ts) + uma linha
-// de por que ele funcionou. Pode ter quantos quiser.
+// PRA TROCAR OS VÍDEOS DE REFERÊNCIA: mexa só em `referencias` lá embaixo. Cada
+// item pode ser `{ id, porque }` (vídeo do portfólio da Lara em content.ts) ou
+// `{ video: {...}, porque }` (vídeo de outra creator da rede, ex. conteúdos da
+// /agencia — é o caso aqui: Frooty/Brinox/Coza/Copacol/Trisanti/Rap10 são
+// marcas atendidas pela rede, não vídeos da própria Lara).
 //
-// Campos entre [colchetes] ainda precisam ser preenchidos com os detalhes reais
-// da campanha (escopo, valores, datas e forma de pagamento).
+// ⚠️ VALOR: não encontrei uma base de preço por criativo/campanha salva (nem no
+// repo, nem no Drive, nem no Supabase do CRM — o campo "valor_medio" do CRM só
+// existe no front, sem dado salvo). `opcoes[0].valor` ficou como placeholder:
+// a Lara precisa passar o número pra eu completar e publicar de novo.
 
 import type { Proposta } from "@/components/proposta/Proposta";
 
 export const GRANO: Proposta = {
   slug: "grano",
-  eyebrow: "Proposta",
+  eyebrow: "Proposta · campanha UGC",
   cliente: "Grano",
-  titulo: "[título da campanha]",
-  subtitulo: "[o que é o vídeo em uma frase: formato, tom e objetivo]",
+  titulo: "10 creators, uma campanha, um mês de conteúdo.",
+  subtitulo:
+    "Campanha UGC gerenciada por mim, do briefing à entrega: 10 criativos com creators selecionadas no meu banco, prontos pra rodar no seu feed e em anúncios.",
   destaques: [
-    { rotulo: "[prazo/data]", valor: "[valor]" },
-    { rotulo: "[prazo/data]", valor: "[valor]" },
-    { rotulo: "[prazo/data]", valor: "[valor]" },
+    { rotulo: "Criativos", valor: "10" },
+    { rotulo: "Cronograma", valor: "2 semanas" },
+    { rotulo: "Creators", valor: "Pré-aprovadas" },
   ],
 
-  sobre: "[parágrafo explicando o contexto da campanha, o que a Grano precisa e por que esse formato funciona]",
+  sobre:
+    "Campanha fechada de 10 criativos UGC pra Grano, com creators selecionadas na minha rede e toda a operação sob minha gestão: briefing, roteiro, produção e revisão antes da entrega. Em 2 semanas você tem os 10 vídeos prontos pra publicar e usar em mídia paga.",
 
   opcoes: [
     {
-      nome: "Opção 1",
-      tipo: "UGC",
-      valor: "R$ [valor]",
-      descricao: "[o que entrega nessa opção]",
-      inclui: ["[direito de uso / detalhe extra]"],
-    },
-    {
-      nome: "Opção 2",
-      tipo: "Collab",
-      valor: "R$ [valor]",
-      descricao: "[o que entrega nessa opção]",
-      inclui: ["[direito de uso / detalhe extra]"],
+      nome: "Campanha Grano",
+      tipo: "UGC gerenciado",
+      valor: "R$ [preencher: valor total pra 10 criativos]",
+      descricao: "10 vídeos UGC, cada um com uma creator diferente da rede, roteiro revisado por mim antes da gravação.",
+      inclui: [
+        "Seleção de 10 creators pelo perfil da Grano",
+        "Briefing e roteiro revisado antes da gravação",
+        "Produção acompanhada e 1 rodada de ajustes por vídeo",
+        "Direito de uso em anúncios",
+      ],
       destaque: true,
     },
   ],
 
   incluso: [
-    "Roteiro alinhado com vocês antes da gravação",
-    "Gravação",
-    "Edição e legenda",
-    "1 rodada de ajustes",
+    "Diagnóstico e seleção das creators",
+    "Briefing co-criado com vocês",
+    "Roteiro revisado antes de cada gravação",
+    "Produção acompanhada",
+    "1 rodada de ajustes por vídeo",
     "Nota fiscal",
   ],
 
-  // ↓↓↓ TROQUE AQUI. `id` = id do vídeo em src/data/content.ts.
-  // Comecei com referências de food/gastronomia (Cafeza, Ateliê, Copacol);
-  // troque se o produto da Grano for outra coisa.
+  // Melhores (maior engajamento) de cada marca na rede, puxados de AG_CONTEUDOS (src/data/agencia.ts).
   referencias: [
-    { id: "o1", porque: "Café falando com a câmera, formato próximo e caseiro: bom tom pra uma marca de grãos." },
-    { id: "g1", porque: "UGC de alimento com b-roll de preparo + depoimento: mostra produto e experiência juntos." },
-    { id: "g5", porque: "Formato mais institucional, útil se a Grano quiser algo com cara de anúncio." },
+    { video: { brand: "Brinox", titulo: "5 motivos · Ceramiclife Loft", instagram: "DUY_qQwAmRW", thumbnail: "/capas-ig/DUY_qQwAmRW.webp" }, porque: "O vídeo de maior engajamento da rede pra Brinox: demonstração de produto com argumento claro." },
+    { video: { brand: "Frooty", titulo: "Campanha", instagram: "DRiMzoBET65", thumbnail: "/capas-ig/DRiMzoBET65.webp" }, porque: "UGC de alimento/bebida com bom resultado: formato leve, do dia a dia." },
+    { video: { brand: "Copacol", titulo: "Peixe que não gruda na grelha", instagram: "DIR8uSzPDE5", thumbnail: "/capas-ig/DIR8uSzPDE5.webp" }, porque: "Receita + produto, tom de gastronomia: referência direta pra Grano." },
+    { video: { brand: "Coza", titulo: "Cesto de lavanderia", instagram: "DbI8BXWgbXU", thumbnail: "/capas-ig/DbI8BXWgbXU.webp" }, porque: "Uso prático do produto no dia a dia, com boa retenção." },
+    { video: { brand: "Trisanti", youtubeId: "fDjZz6kMjMY" }, porque: "Referência de tom pra categoria de alimentos da rede." },
+    { video: { brand: "Rap10", youtubeId: "sb9PHTUVBvc" }, porque: "Outro exemplo de UGC gastronômico produzido pela rede." },
   ],
 
   cronograma: [
-    { etapa: "Roteiro e referências alinhados", quando: "[data]" },
-    { etapa: "Gravação", quando: "[data]" },
-    { etapa: "Entrega do vídeo", quando: "[data]" },
+    { etapa: "Seleção das creators e briefing", quando: "Semana 1" },
+    { etapa: "Roteiro revisado e gravações", quando: "Semana 1 e 2" },
+    { etapa: "Entrega dos 10 vídeos", quando: "Fim da semana 2" },
   ],
 
   pagamento: "[preencher condições: forma de pagamento, prazo e dados para a nota fiscal]",
 
-  proximoPasso: "Assim que recebermos o descritivo da campanha, fecho o roteiro e mando pra aprovação.",
+  proximoPasso: "Assim que aprovar a proposta, já parto pra seleção das creators e briefing da campanha.",
 
   whatsapp: "5512988729264",
   whatsappMensagem: "Oi Lara! Vi a proposta da Grano e quero fechar.",

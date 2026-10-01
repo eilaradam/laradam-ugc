@@ -18,7 +18,12 @@ export type Proposta = {
   notaOpcoes?: string;
   extra?: { nome: string; valor: string; descricao: string; condicao?: string };
   incluso: string[];
-  referencias: { id: string; porque: string }[];
+  // Referência de vídeo: ou `id` (puxa do portfólio da Lara em content.ts),
+  // ou `video` inline (pra mostrar trabalho de outras creators da rede, ex. conteúdos da /agencia).
+  referencias: (
+    | { id: string; porque: string }
+    | { video: { brand: string; titulo?: string; youtubeId?: string; instagram?: string; thumbnail?: string }; porque: string }
+  )[];
   cronograma: { etapa: string; quando: string }[];
   pagamento: string;
   proximoPasso: string;
@@ -48,7 +53,22 @@ function Eyebrow({ n, children }: { n: string; children: React.ReactNode }) {
 export default function PropostaPage({ p }: { p: Proposta }) {
   const zap = `https://wa.me/${p.whatsapp}?text=${encodeURIComponent(p.whatsappMensagem)}`;
   const refs = p.referencias
-    .map((r) => ({ video: VIDEOS.find((v) => v.id === r.id), porque: r.porque }))
+    .map((r, i) => {
+      if ("id" in r) return { video: VIDEOS.find((v) => v.id === r.id), porque: r.porque };
+      const vv = r.video;
+      return {
+        video: {
+          id: `ref-${i}-${vv.instagram || vv.youtubeId || vv.brand}`,
+          title: vv.titulo || vv.brand,
+          category: "",
+          brand: vv.brand,
+          youtubeId: vv.youtubeId,
+          instagram: vv.instagram,
+          thumbnail: vv.thumbnail,
+        },
+        porque: r.porque,
+      };
+    })
     .filter((r) => !!r.video);
 
   return (
