@@ -78,9 +78,13 @@ export const PUBLI = {
   ],
 };
 
-// Publis reais do @eilaradam (números oficiais da API do Instagram, via ig_insights_cache
-// no Supabase), ordenadas por curtidas (mais pra menos). Vídeo baixado localmente e
-// tocado num player nativo, sem o embed do Instagram. "Tuyo Brasil" não deu pra baixar
+// Publis reais do @eilaradam, ordenadas por curtidas (mais pra menos). `likes`/`comments`
+// conferidos à mão pela Lara direto no Instagram (01/10): o `ig_insights_cache` do Supabase
+// só traz o campo like_count/comments_count da API básica, que é SEMPRE orgânico e não soma
+// o engajamento de quando o post rodou como anúncio (Partnership Ad) — por isso os números
+// de curtida/comentário batiam baixo pra posts impulsionados. `saved`/`reach`/`views` vêm do
+// endpoint de insights (mais confiável, não confirmado individualmente). Vídeo baixado
+// localmente e tocado num player nativo, sem o embed do Instagram. "Tuyo Brasil" não deu pra baixar
 // (post não embedável nem pelo conector pago); abre no Instagram em vez do player.
 export type PubliReal = {
   id: string;
@@ -97,16 +101,16 @@ export type PubliReal = {
 };
 
 export const PUBLIS_REAIS: PubliReal[] = [
-  { id: "pub1", brand: "Inglot", instagram: "DKxTbCNAADz", thumbnail: "/capas-ig/DKxTbCNAADz.webp", videoLocal: "/videos-ig/DKxTbCNAADz.mp4", likes: 354, comments: 49, saved: 165, reach: 5915, views: 9715 },
-  { id: "pub2", brand: "Gamma", instagram: "DPWpciuke14", thumbnail: "/capas-ig/DPWpciuke14.webp", videoLocal: "/videos-ig/DPWpciuke14.mp4", likes: 304, comments: 53, saved: 111, reach: 4684, views: 7898 },
-  { id: "pub3", brand: "Tuyo Brasil", instagram: "DACMidayzrP", thumbnail: "/capas-ig/DACMidayzrP.webp", externo: true, likes: 292, comments: 31, saved: 127, reach: 8391, views: 11961 },
-  { id: "pub4", brand: "Lemon Cash", instagram: "DZP-u0lRVVr", thumbnail: "/capas-ig/DZP-u0lRVVr.webp", videoLocal: "/videos-ig/DZP-u0lRVVr.mp4", likes: 289, comments: 54, saved: 61, reach: 4203, views: 6111 },
-  { id: "pub5", brand: "DT3 Office", instagram: "DUtk0aqkTSe", thumbnail: "/capas-ig/DUtk0aqkTSe.webp", videoLocal: "/videos-ig/DUtk0aqkTSe.mp4", likes: 284, comments: 49, saved: 169, reach: 7662, views: 10632 },
-  { id: "pub6", brand: "Ateliê", instagram: "DWPVV24RIF5", thumbnail: "/capas-ig/DWPVV24RIF5.webp", videoLocal: "/videos-ig/DWPVV24RIF5.mp4", likes: 181, comments: 19, saved: 68, reach: 5135, views: 6871 },
-  { id: "pub7", brand: "Vozo AI", instagram: "Dcv_kiiRJdM", thumbnail: "/capas-ig/Dcv_kiiRJdM.webp", videoLocal: "/videos-ig/Dcv_kiiRJdM.mp4", likes: 156, comments: 166, saved: 68, reach: 2514, views: 4949 },
-  { id: "pub8", brand: "BF Colchões", instagram: "DSFvE1JkQCi", thumbnail: "/capas-ig/DSFvE1JkQCi.webp", videoLocal: "/videos-ig/DSFvE1JkQCi.mp4", likes: 155, comments: 18, saved: 43, reach: 4880, views: 7168 },
-  { id: "pub9", brand: "Creamy", instagram: "Dc1KSq6xN9G", thumbnail: "/capas-ig/Dc1KSq6xN9G.webp", videoLocal: "/videos-ig/Dc1KSq6xN9G.mp4", likes: 115, comments: 12, saved: 25, reach: 1782, views: 3025 },
-  { id: "pub10", brand: "Lemon Cash", instagram: "DZvPC4JRnO3", thumbnail: "/capas-ig/DZvPC4JRnO3.webp", videoLocal: "/videos-ig/DZvPC4JRnO3.mp4", likes: 109, comments: 10, saved: 18, reach: 2925, views: 4030 },
+  { id: "pub1", brand: "Ateliê", instagram: "DWPVV24RIF5", thumbnail: "/capas-ig/DWPVV24RIF5.webp", videoLocal: "/videos-ig/DWPVV24RIF5.mp4", likes: 7209, comments: 19, saved: 68, reach: 5135, views: 6871 },
+  { id: "pub2", brand: "Lemon Cash", instagram: "DZP-u0lRVVr", thumbnail: "/capas-ig/DZP-u0lRVVr.webp", videoLocal: "/videos-ig/DZP-u0lRVVr.mp4", likes: 3695, comments: 97, saved: 61, reach: 4203, views: 6111 },
+  { id: "pub3", brand: "Lemon Cash", instagram: "DZvPC4JRnO3", thumbnail: "/capas-ig/DZvPC4JRnO3.webp", videoLocal: "/videos-ig/DZvPC4JRnO3.mp4", likes: 3157, comments: 25, saved: 18, reach: 2925, views: 4030 },
+  { id: "pub4", brand: "BF Colchões", instagram: "DSFvE1JkQCi", thumbnail: "/capas-ig/DSFvE1JkQCi.webp", videoLocal: "/videos-ig/DSFvE1JkQCi.mp4", likes: 807, comments: 22, saved: 43, reach: 4880, views: 7168 },
+  { id: "pub5", brand: "DT3 Office", instagram: "DUtk0aqkTSe", thumbnail: "/capas-ig/DUtk0aqkTSe.webp", videoLocal: "/videos-ig/DUtk0aqkTSe.mp4", likes: 580, comments: 71, saved: 169, reach: 7662, views: 10632 },
+  { id: "pub6", brand: "Inglot", instagram: "DKxTbCNAADz", thumbnail: "/capas-ig/DKxTbCNAADz.webp", videoLocal: "/videos-ig/DKxTbCNAADz.mp4", likes: 354, comments: 49, saved: 165, reach: 5915, views: 9715 },
+  { id: "pub7", brand: "Gamma", instagram: "DPWpciuke14", thumbnail: "/capas-ig/DPWpciuke14.webp", videoLocal: "/videos-ig/DPWpciuke14.mp4", likes: 304, comments: 53, saved: 111, reach: 4684, views: 7898 },
+  { id: "pub8", brand: "Tuyo Brasil", instagram: "DACMidayzrP", thumbnail: "/capas-ig/DACMidayzrP.webp", externo: true, likes: 292, comments: 31, saved: 127, reach: 8391, views: 11961 },
+  { id: "pub9", brand: "Vozo AI", instagram: "Dcv_kiiRJdM", thumbnail: "/capas-ig/Dcv_kiiRJdM.webp", videoLocal: "/videos-ig/Dcv_kiiRJdM.mp4", likes: 187, comments: 205, saved: 68, reach: 2514, views: 4949 },
+  { id: "pub10", brand: "Creamy", instagram: "Dc1KSq6xN9G", thumbnail: "/capas-ig/Dc1KSq6xN9G.webp", videoLocal: "/videos-ig/Dc1KSq6xN9G.mp4", likes: 154, comments: 15, saved: 25, reach: 1782, views: 3025 },
 ];
 
 export const SOBRE = {
