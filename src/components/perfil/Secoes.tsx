@@ -57,26 +57,75 @@ export function Resultados() {
           <div key={n.k} className="pf-num"><b>{n.v}</b><span>{n.k}</span></div>
         ))}
       </div>
-      <div className="pf-cases">
-        {RESULTADOS.cases.map((c) => {
+      <Destaques />
+    </section>
+  );
+}
+
+/* ---------- DESTAQUES: coverflow (centro nítido e grande, laterais desfocadas) ---------- */
+const INTERVALO_DESTAQUES = 5000;
+
+function Destaques() {
+  const cases = RESULTADOS.cases;
+  const n = cases.length;
+  const [ativo, setAtivo] = useState(0);
+  const pausado = useRef(false);
+
+  const ir = (dir: 1 | -1) => setAtivo((a) => (a + dir + n) % n);
+
+  useEffect(() => {
+    const id = setInterval(() => { if (!pausado.current && !document.hidden) setAtivo((a) => (a + 1) % n); }, INTERVALO_DESTAQUES);
+    return () => clearInterval(id);
+  }, [n]);
+
+  return (
+    <div
+      className="pf-cf-wrap"
+      onMouseEnter={() => { pausado.current = true; }}
+      onMouseLeave={() => { pausado.current = false; }}
+      onFocusCapture={() => { pausado.current = true; }}
+      onBlurCapture={() => { pausado.current = false; }}
+    >
+      <div className="pf-cf" aria-roledescription="carrossel" aria-label="Cases de destaque">
+        {cases.map((c, i) => {
+          let rel = ((i - ativo) % n + n) % n;
+          if (rel > n / 2) rel -= n; // -2..1
+          const pos = rel === 0 ? "centro" : rel === -1 ? "esq" : rel === 1 ? "dir" : "fora";
           const v: Video = { id: `case-${c.youtubeId}`, title: c.marca, brand: c.marca, category: c.categoria, youtubeId: c.youtubeId, thumbnail: c.capa };
           return (
-            <div key={c.youtubeId} className="pf-case">
-              <Reel video={v} grande />
-              <div className="txt">
-                <div className="pf-mao pf-nota">{c.nota}</div>
-                <h3>{c.marca}</h3>
-                <div className="metrica">{c.metrica}</div>
-                <div className="text-xs font-extrabold uppercase tracking-wider text-[var(--cinza)] mt-1.5">{c.onde}</div>
-                {c.stats && <div className="stats">{c.stats.map((x) => <span key={x}>{x}</span>)}</div>}
-                <p>{c.detalhe}</p>
-                <span className="dica">▶ clica no vídeo pra assistir</span>
+            <div
+              key={c.youtubeId}
+              className={`pf-cf-item ${pos}`}
+              aria-hidden={pos !== "centro"}
+              onClickCapture={(e) => { if (pos !== "centro") { e.stopPropagation(); e.preventDefault(); setAtivo(i); } }}
+            >
+              <div className="pf-case">
+                <Reel video={v} grande />
+                <div className="txt">
+                  <div className="pf-mao pf-nota">{c.nota}</div>
+                  <h3>{c.marca}</h3>
+                  <div className="metrica">{c.metrica}</div>
+                  <div className="text-xs font-extrabold uppercase tracking-wider text-[var(--cinza)] mt-1.5">{c.onde}</div>
+                  {c.stats && <div className="stats">{c.stats.map((x) => <span key={x}>{x}</span>)}</div>}
+                  <p>{c.detalhe}</p>
+                  <span className="dica">▶ clica no vídeo pra assistir</span>
+                </div>
               </div>
             </div>
           );
         })}
       </div>
-    </section>
+      <div className="pf-cf-nav">
+        <button aria-label="Case anterior" onClick={() => ir(-1)}><ChevronLeft className="w-5 h-5" /></button>
+        <div className="pf-cf-dots" role="tablist">
+          {cases.map((c, i) => (
+            <button key={c.youtubeId} role="tab" aria-selected={i === ativo} aria-label={c.marca} className={i === ativo ? "on" : ""} onClick={() => setAtivo(i)} />
+          ))}
+        </div>
+        <button aria-label="Próximo case" onClick={() => ir(1)}><ChevronRight className="w-5 h-5" /></button>
+      </div>
+      <div className="text-center text-xs font-bold text-[var(--cinza)] mt-2">{cases[ativo].marca} · {ativo + 1} de {n}</div>
+    </div>
   );
 }
 

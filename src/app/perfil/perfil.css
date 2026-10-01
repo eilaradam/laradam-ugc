@@ -183,6 +183,24 @@
 .pf-case p{margin-top:10px;font-weight:600;font-size:14px;color:var(--cinza);line-height:1.45}
 .pf-case .dica{display:block;margin-top:10px;font-size:12px;font-weight:800;color:var(--azul)}
 .pf-reel.grande{width:100%}
+/* coverflow dos cases */
+.pf-cf-wrap{margin-top:22px}
+.pf-cf{position:relative;height:330px;overflow:hidden}
+@media (min-width:768px){.pf-cf{height:430px}}
+.pf-cf-item{position:absolute;left:50%;top:50%;width:min(88vw,660px);transform:translate(-50%,-50%);transition:transform .65s cubic-bezier(.2,.8,.2,1),opacity .65s ease,filter .65s ease;will-change:transform}
+.pf-cf-item.centro{z-index:3}
+.pf-cf-item.esq{transform:translate(calc(-50% - 60%),-50%) scale(.76);filter:blur(3px);opacity:.5;z-index:2;cursor:pointer}
+.pf-cf-item.dir{transform:translate(calc(-50% + 60%),-50%) scale(.76);filter:blur(3px);opacity:.5;z-index:2;cursor:pointer}
+.pf-cf-item.fora{transform:translate(-50%,-50%) scale(.6);opacity:0;pointer-events:none;z-index:1}
+.pf-cf-item.esq:hover,.pf-cf-item.dir:hover{filter:blur(1.5px);opacity:.7}
+.pf-cf-item .pf-case{margin:8px}
+@media (max-width:767px){.pf-cf-item .pf-case p,.pf-cf-item .pf-case .stats,.pf-cf-item .pf-case .pf-nota{display:none}.pf-cf-item .pf-case h3{font-size:20px}}
+.pf-cf-nav{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:10px}
+.pf-cf-nav>button{width:40px;height:40px;border-radius:50%;border:2px solid var(--ink);background:#fff;display:inline-flex;align-items:center;justify-content:center;transition:background .18s ease-out,color .18s ease-out}
+.pf-cf-nav>button:hover{background:var(--ink);color:#fff}
+.pf-cf-dots{display:flex;gap:8px}
+.pf-cf-dots button{width:10px;height:10px;border-radius:50%;border:2px solid var(--ink);background:#fff;padding:0;transition:background .18s ease-out,transform .18s ease-out}
+.pf-cf-dots button.on{background:var(--azul);border-color:var(--azul);transform:scale(1.25)}
 .pf-sec{margin-top:56px;scroll-margin-top:118px}
 @media (min-width:1024px){.pf-sec{scroll-margin-top:84px}}
 .pf-sec h2{font-size:28px;font-weight:800;letter-spacing:-.02em;line-height:1.05}
