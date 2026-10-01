@@ -63,12 +63,14 @@ export default function VideoModalProvider({
   // - modestbranding=1: esconde logo do YouTube
   // - playsinline=1: toca inline no mobile
   // - vq=hd1080: pedido explícito de qualidade máxima (YouTube ajusta se não disponível)
-  const embedUrl = video?.youtubeId
+  const embedUrl = video?.videoLocal
+    ? null
+    : video?.youtubeId
     ? `https://www.youtube.com/embed/${video.youtubeId}?autoplay=1&controls=1&rel=0&modestbranding=1&playsinline=1&vq=hd1080&hd=1`
     : video?.instagram
     ? `https://www.instagram.com/p/${video.instagram}/embed/`
     : null;
-  const ehInstagram = !!video?.instagram && !video?.youtubeId;
+  const ehInstagram = !!video?.instagram && !video?.youtubeId && !video?.videoLocal;
 
   return (
     <VideoModalContext.Provider value={{ open, close }}>
@@ -132,7 +134,17 @@ export default function VideoModalProvider({
                   : "relative h-[min(90vh,900px)] aspect-[9/16] max-w-full bg-black rounded-2xl overflow-hidden shadow-2xl"
               }
             >
-              {embedUrl ? (
+              {video.videoLocal ? (
+                <video
+                  key={video.videoLocal}
+                  src={video.videoLocal}
+                  poster={video.thumbnail}
+                  className="absolute inset-0 w-full h-full object-contain"
+                  controls
+                  autoPlay
+                  playsInline
+                />
+              ) : embedUrl ? (
                 <>
                   <iframe
                     src={embedUrl}

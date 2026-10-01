@@ -131,6 +131,8 @@ export type Video = {
   youtubeId?: string;
   /** Reel publicado no Instagram (código da URL, ex: "Ddmx8TpR2_c"). Precisa de `thumbnail` local, o IG não deixa puxar a capa. */
   instagram?: string;
+  /** Vídeo .mp4 baixado localmente (public/videos-ig/<code>.mp4). Toca num <video> nativo, sem o embed/chrome do Instagram (curtidas, link do post). Tem prioridade sobre `instagram` no player. */
+  videoLocal?: string;
   /** Marca desligou o embed desse post: o clique abre no Instagram em vez do player. */
   externo?: boolean;
   /** Curtidas (Instagram) ou views (YouTube) pra ordenar os carrosséis por engajamento. */

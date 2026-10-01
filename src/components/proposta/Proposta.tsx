@@ -40,7 +40,7 @@ export type Proposta = {
   referenciasIntro?: string;
   referencias: (
     | { id: string; porque: string }
-    | { video: { brand: string; titulo?: string; youtubeId?: string; instagram?: string; thumbnail?: string }; porque: string }
+    | { video: { brand: string; titulo?: string; youtubeId?: string; instagram?: string; thumbnail?: string; videoLocal?: string }; porque: string }
   )[];
   /** Prévia de exemplo (dados de demonstração) do painel de acompanhamento, no estilo da planilha do agencia.laradam.com. */
   painel?: {
@@ -128,6 +128,7 @@ export default function PropostaPage({ p }: { p: Proposta }) {
           youtubeId: vv.youtubeId,
           instagram: vv.instagram,
           thumbnail: vv.thumbnail,
+          videoLocal: vv.videoLocal,
         },
         porque: r.porque,
       };
