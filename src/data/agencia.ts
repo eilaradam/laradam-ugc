@@ -4,15 +4,50 @@ import { PERFIL } from "./perfil";
 export const AG_WHATSAPP = "https://wa.me/5512988729264?text=" + encodeURIComponent("Oi Lara! Quero conversar sobre uma campanha UGC com várias creators pra minha marca.");
 
 export const AG_NAV = [
-  { id: "oquefaco", rotulo: "O que faço", emoji: "🎯" },
-  { id: "conteudos", rotulo: "Conteúdos", emoji: "🎬" },
-  { id: "modalidades", rotulo: "Modalidades", emoji: "📦" },
-  { id: "processo", rotulo: "Processo", emoji: "🧭" },
-  { id: "marcas", rotulo: "Marcas", emoji: "🤝" },
-  { id: "sobre", rotulo: "Sobre", emoji: "👋" },
-  { id: "duvidas", rotulo: "Dúvidas", emoji: "❓" },
-  { id: "contato", rotulo: "Contato", emoji: "✉️" },
+  { id: "comparar", rotulo: "Comparar" },
+  { id: "modalidades", rotulo: "Modalidades" },
+  { id: "processo", rotulo: "Processo" },
+  { id: "conteudos", rotulo: "Cases" },
+  { id: "duvidas", rotulo: "Dúvidas" },
+  { id: "contato", rotulo: "Contato" },
 ];
+
+// Abertura da página (opção J escolhida pela Lara em 01/10/2026): comparação "por conta × com gestão".
+export const AG_VS = {
+  titulo1: "Fazer UGC por conta",
+  ou: "ou",
+  titulo2: "com gestão?",
+  sub: "A diferença entre vídeo solto e campanha que funciona está no processo. Compara:",
+  semGestao: {
+    k: "Por conta",
+    titulo: "Sua equipe caçando creator no DM",
+    itens: [
+      "Mensagem em massa e resposta de quem aparece",
+      "Briefing vago, cada creator entende de um jeito",
+      "Roteiro sem revisão e vídeo que não serve pra ads",
+      "Correr atrás de prazo e refazer entrega",
+      "Ninguém lê o resultado no fim",
+    ],
+  },
+  comGestao: {
+    k: "Com a Lara",
+    titulo: "Do briefing à entrega, sem retrabalho",
+    itens: [
+      "Casting pré-aprovado de +1.200 creators em rede",
+      "Briefing co-criado e roteiro revisado antes de gravar",
+      "Gravação acompanhada, revisão antes de chegar em você",
+      "Entrega no prazo, com direitos de uso em contrato",
+      "Relatório: o que performou e o próximo ciclo",
+    ],
+  },
+  numeros: [
+    { b: "+100", t: "campanhas gerenciadas" },
+    { b: "+200", t: "marcas atendidas" },
+    { b: "+1.200", t: "creators em rede" },
+  ],
+  cta: "Quero conversar sobre minha campanha",
+  ctaSub: "Diagnóstico gratuito antes de qualquer proposta. Resposta em até 24h.",
+};
 
 export const AG_CAB = {
   usuario: "laradam.gestão",
@@ -48,7 +83,7 @@ export const AG_OQUEFACO = {
 };
 
 export const AG_CONTEUDOS = {
-  titulo: "Conteúdos gerenciados pelo nosso time 🎬",
+  titulo: "Conteúdos gerenciados pelo nosso time",
   sub: "Conheça algumas creators que poderão criar para a sua marca. Desliza pro lado e clica pra assistir.",
   videos: [
     { youtubeId: "i62BOlzvQlo", brand: "Sebastian" },
@@ -75,7 +110,7 @@ export const AG_CONTEUDOS = {
 };
 
 export const AG_MODALIDADES = {
-  titulo: "Três formas de trabalhar. Você escolhe. 📦",
+  titulo: "Três formas de trabalhar. Você escolhe.",
   sub: "Pacote mensal, campanha pontual ou consultoria. Todas com contrato e escopo claro.",
   cards: [
     { nome: "Pacote mensal recorrente", tag: "mais escolhido", pitch: "Operação contínua pra quem já roda UGC com volume.", bullets: ["Volume mensal definido", "Entrega recorrente, sempre com creators novos no banco", "Briefing, roteiro, produção e revisão inclusos", "Suporte direto durante o mês inteiro"], ideal: "Marcas que já validaram UGC e querem escalar com previsibilidade.", cta: "Quero o plano mensal" },
@@ -85,7 +120,7 @@ export const AG_MODALIDADES = {
 };
 
 export const AG_PROCESSO = {
-  titulo: "Cinco etapas. Sem mistério, sem milagre. 🧭",
+  titulo: "Cinco etapas. Sem mistério, sem milagre.",
   sub: "Esse é o processo que rodei em mais de 100 campanhas. Cada etapa existe porque, sem ela, alguma coisa quebra.",
   etapas: [
     { n: "01", t: "Diagnóstico", d: "Antes de qualquer proposta, conversa de diagnóstico. Eu preciso entender seu produto, seu público, o que você já tentou e onde está hoje. Sem isso, qualquer proposta é chute." },
@@ -97,7 +132,7 @@ export const AG_PROCESSO = {
 };
 
 export const AG_MARCAS = {
-  titulo: "Marcas que já passaram pela operação 🤝",
+  titulo: "Marcas que já passaram pela operação",
   sub: "Mais de 200 marcas atendidas em campanhas com várias creators. Algumas delas:",
   nomes: ["OLX", "ZAP Imóveis", "Magalu", "Méliuz", "Porto Seguro", "Chilli Beans", "Bonduelle", "Bauducco", "Granado", "Lancôme", "Carolina Herrera", "Calvin Klein", "Jägermeister", "Brinox", "Wella", "Trisanti", "Rap10", "Neutrogena", "Frooty", "Sebastian"],
 };
@@ -120,7 +155,7 @@ export const AG_SOBRE = {
 };
 
 export const AG_FAQ = {
-  titulo: "Perguntas que recebo com frequência ❓",
+  titulo: "Perguntas que recebo com frequência",
   sub: "Se a sua não estiver aqui, me chama.",
   itens: [
     { q: "O que é UGC e por que minha marca precisa disso?", a: "UGC é conteúdo produzido por pessoas reais, com cara de pessoa real. Funciona porque audiência confia em pessoa, não em propaganda. Se sua marca roda mídia paga, redes sociais ou quer presença digital constante, UGC é o formato que mais retém atenção e gera conversão hoje." },
@@ -137,7 +172,7 @@ export const AG_FAQ = {
 };
 
 export const AG_CONTATO = {
-  titulo: "Vamos conversar sobre sua campanha? ✉️",
+  titulo: "Vamos conversar sobre sua campanha?",
   sub: "Diagnóstico gratuito antes de qualquer proposta. Resposta em até 24h.",
   nota: "ou me chama direto ↓",
   opcoes: {

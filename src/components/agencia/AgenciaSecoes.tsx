@@ -3,31 +3,13 @@
 import { useState } from "react";
 import { ChevronDown, Send } from "lucide-react";
 import type { Video } from "@/data/content";
-import { AG_CONTATO, AG_CONTEUDOS, AG_FAQ, AG_MARCAS, AG_MODALIDADES, AG_OQUEFACO, AG_PROCESSO, AG_WHATSAPP } from "@/data/agencia";
+import { AG_CONTATO, AG_CONTEUDOS, AG_FAQ, AG_MARCAS, AG_MODALIDADES, AG_PROCESSO, AG_WHATSAPP } from "@/data/agencia";
 import { PERFIL } from "@/data/perfil";
 import { Nicho } from "@/components/perfil/Secoes";
 import Honeypot from "@/components/Honeypot";
 
 function Titulo({ titulo, sub }: { titulo: string; sub: string }) {
   return <div className="pf-sec-cab"><div><h2>{titulo}</h2><p className="sub">{sub}</p></div></div>;
-}
-
-export function OQueFaco() {
-  return (
-    <section id="oquefaco" className="pf-sec">
-      <Titulo titulo={AG_OQUEFACO.titulo} sub={AG_OQUEFACO.sub} />
-      <div className="pf-servicos ag-6">
-        {AG_OQUEFACO.itens.map((it, i) => (
-          <div key={it.nome} className="pf-servico">
-            <span className="e">{it.e}</span>
-            <span className="tag">etapa {i + 1}</span>
-            <b>{it.nome}</b>
-            <p>{it.desc}</p>
-          </div>
-        ))}
-      </div>
-    </section>
-  );
 }
 
 export function Conteudos() {
