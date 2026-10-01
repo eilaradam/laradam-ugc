@@ -410,7 +410,7 @@
 .ag-capa .ag-cta{margin-top:20px}
 .ag-capa .ag-nums{margin-top:24px}
 .ag-capa .mosaico{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;align-items:start}
-@media (min-width:900px){.ag-capa .mosaico{gap:10px;padding:4px 0}}
+@media (min-width:900px){.ag-capa .mosaico{gap:10px;padding:4px 0;max-width:330px}}
 /* grade estática, tamanho de referência aprovado (3/4, 3 colunas) */
 .ag-capa .mosaico .t{position:relative;aspect-ratio:3/4;border:2px solid var(--ink);border-radius:14px;overflow:hidden;background:var(--claro2)}
 .ag-capa .mosaico .t:nth-child(3n+2){margin-top:12px}
