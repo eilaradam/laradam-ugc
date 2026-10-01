@@ -9,7 +9,7 @@ import DMs from "./DMs";
 import Sobre from "./Sobre";
 import Contato from "./Contato";
 
-export type LiveStats = { followers: number; reach_month: number; posts: number; live: boolean };
+export type LiveStats = { followers: number; reach_month: number; posts: number; engagement_rate: number | null; live: boolean };
 const PerfilCtx = createContext<{ stats: LiveStats } | null>(null);
 export function usePerfil() {
   const c = useContext(PerfilCtx);
@@ -34,7 +34,7 @@ export default function PerfilApp() {
     const ctrl = new AbortController();
     fetch(ENDPOINT, { signal: ctrl.signal })
       .then((r) => (r.ok ? r.json() : Promise.reject()))
-      .then((d) => { if (typeof d?.followers === "number") setStats({ followers: d.followers, reach_month: d.reach_month, posts: d.posts, live: true }); })
+      .then((d) => { if (typeof d?.followers === "number") setStats({ followers: d.followers, reach_month: d.reach_month, posts: d.posts, engagement_rate: typeof d?.engagement_rate === "number" ? d.engagement_rate : null, live: true }); })
       .catch(() => {});
     return () => ctrl.abort();
   }, []);

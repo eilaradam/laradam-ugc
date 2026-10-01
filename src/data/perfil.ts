@@ -12,7 +12,7 @@ export const PERFIL = {
   tiktokUrl: "https://www.tiktok.com/@eularadam",
   email: "laradam.ugc@gmail.com",
   avatar: "/ensaio/avatar.webp", // foto do sofá, já recortada no rosto
-  fallback: { followers: 16039, reach_month: 367702, posts: 141 },
+  fallback: { followers: 16039, reach_month: 367702, posts: 141, engagement_rate: 11.3 },
   bioTitulo: "Lara Dam 👋 UGC creator & influenciadora",
   bio: [
     "🎬 vídeo que vende pra sua marca (UGC, publi, criativos, roteiro)",

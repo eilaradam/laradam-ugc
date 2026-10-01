@@ -232,6 +232,8 @@
 .pf-publi-stats span{display:inline-flex;align-items:center;gap:3px}
 .pf-publi-metricas{font-size:11px;font-weight:600;color:var(--cinza)}
 .pf-numeros{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.pf-numeros-4{grid-template-columns:repeat(2,1fr)}
+@media (min-width:480px){.pf-numeros-4{grid-template-columns:repeat(4,1fr)}}
 .pf-num{border:2px solid var(--ink);border-radius:16px;padding:12px}
 .pf-num{background:#fff}
 .pf-num b{display:block;font-size:24px;font-weight:800;letter-spacing:-.02em;line-height:1;color:var(--azul)}

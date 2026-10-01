@@ -274,10 +274,11 @@ export function Publi() {
           </div>
         </div>
         <div className="md:col-span-7">
-          <div className="pf-numeros">
+          <div className="pf-numeros pf-numeros-4">
             <div className="pf-num"><b>{fmtBR(stats.followers)}</b><span>seguidores</span></div>
             <div className="pf-num"><b>{fmtBR(stats.reach_month)}</b><span>alcance em 30 dias</span></div>
             <div className="pf-num"><b>{stats.posts}</b><span>posts no feed</span></div>
+            <div className="pf-num"><b>{stats.engagement_rate != null ? `${stats.engagement_rate}%` : "—"}</b><span>taxa de engajamento</span></div>
           </div>
           <div className="mt-2 text-xs font-bold text-[var(--cinza)] flex items-center gap-2"><span className={`w-2 h-2 rounded-full ${stats.live ? "bg-[var(--azul)] animate-pulse" : "bg-[var(--cinza)]"}`} />{stats.live ? "ao vivo, direto da API do Instagram" : "última leitura da API do Instagram"}</div>
           <div className="pf-formatos">
