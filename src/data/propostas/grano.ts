@@ -59,14 +59,18 @@ export const GRANO: Proposta = {
   // não são creators reais nem confirmadas pra campanha, é só pra mostrar como fica o processo.
   painel: {
     titulo: "Como fica o acompanhamento da sua campanha",
-    sub: "Um painel só da Grano, com cada creator, o status do roteiro e do conteúdo em tempo real. Exemplo de como fica assim que a campanha começa:",
+    sub: "Um painel só da Grano, com cada creator, o portfólio e o status do roteiro em tempo real. Exemplo de como fica assim que a campanha começa:",
     linhas: [
-      { nome: "Creator 1", perfil: "Gastronomia · receitas do dia a dia", status: "Roteiro aprovado" },
-      { nome: "Creator 2", perfil: "Lifestyle · rotina saudável", status: "Em gravação" },
-      { nome: "Creator 3", perfil: "Mãe · praticidade na cozinha", status: "Selecionada" },
-      { nome: "Creator 4", perfil: "Fitness · pré/pós treino", status: "Roteiro em revisão" },
-      { nome: "Creator 5", perfil: "Casa · organização e despensa", status: "Entregue" },
-      { nome: "Creator 6", perfil: "Gastronomia · receitas rápidas", status: "Selecionada" },
+      { nome: "Creator 1", cidade: "São Paulo, SP", status: "Roteiro aprovado" },
+      { nome: "Creator 2", cidade: "Curitiba, PR", status: "Em gravação" },
+      { nome: "Creator 3", cidade: "Belo Horizonte, MG", status: "Selecionada" },
+      { nome: "Creator 4", cidade: "Porto Alegre, RS", status: "Roteiro em revisão" },
+      { nome: "Creator 5", cidade: "Salvador, BA", status: "Entregue" },
+      { nome: "Creator 6", cidade: "Recife, PE", status: "Selecionada" },
+      { nome: "Creator 7", cidade: "Campinas, SP", status: "Roteiro aprovado" },
+      { nome: "Creator 8", cidade: "Florianópolis, SC", status: "Em gravação" },
+      { nome: "Creator 9", cidade: "Fortaleza, CE", status: "Entregue" },
+      { nome: "Creator 10", cidade: "Brasília, DF", status: "Selecionada" },
     ],
   },
 

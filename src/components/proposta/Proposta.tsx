@@ -1,6 +1,6 @@
 "use client";
 
-import { Check, MessageCircle, Mail, ArrowUpRight } from "lucide-react";
+import { Check, MessageCircle, Mail, ArrowUpRight, Rows3, LayoutGrid, AlignLeft, Calendar, Film, Users, GripVertical } from "lucide-react";
 import { VIDEOS } from "@/data/content";
 import VideoCard from "@/components/VideoCard";
 
@@ -24,11 +24,11 @@ export type Proposta = {
     | { id: string; porque: string }
     | { video: { brand: string; titulo?: string; youtubeId?: string; instagram?: string; thumbnail?: string }; porque: string }
   )[];
-  /** Prévia de exemplo (dados de demonstração) do painel de acompanhamento da campanha. */
+  /** Prévia de exemplo (dados de demonstração) do painel de acompanhamento, no estilo da planilha do agencia.laradam.com. */
   painel?: {
     titulo: string;
     sub: string;
-    linhas: { nome: string; perfil: string; status: string }[];
+    linhas: { nome: string; cidade: string; status: string }[];
   };
   cronograma: { etapa: string; quando: string }[];
   pagamento: string;
@@ -64,19 +64,29 @@ function Eyebrow({ n, children, dark }: { n: string; children: React.ReactNode; 
 const AVATAR_CORES = ["bg-primary", "bg-foreground", "bg-accent-on-dark"];
 
 function AvatarIniciais({ nome, i }: { nome: string; i: number }) {
-  const iniciais = nome
-    .split(" ")
-    .filter(Boolean)
-    .slice(0, 2)
-    .map((p) => p[0]!.toUpperCase())
-    .join("");
+  const numerico = nome.match(/^Creator\s+(\d+)$/i);
+  const iniciais = numerico
+    ? numerico[1]
+    : nome
+        .split(" ")
+        .filter(Boolean)
+        .slice(0, 2)
+        .map((p) => p[0]!.toUpperCase())
+        .join("");
   const cor = AVATAR_CORES[i % AVATAR_CORES.length];
   const texto = cor === "bg-accent-on-dark" ? "text-foreground" : "text-background";
   return (
-    <span className={"flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full text-sm font-bold " + cor + " " + texto}>
+    <span className={"flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full text-xs font-bold " + cor + " " + texto}>
       {iniciais}
     </span>
   );
+}
+
+function corStatus(status: string) {
+  const s = status.toLowerCase();
+  if (s.includes("aprovado") || s.includes("entregue")) return "border-emerald-200 bg-emerald-50 text-emerald-700";
+  if (s.includes("gravação") || s.includes("revisão") || s.includes("andamento")) return "border-amber-200 bg-amber-50 text-amber-700";
+  return "border-border bg-background-alt text-foreground-soft";
 }
 
 export default function PropostaPage({ p }: { p: Proposta }) {
@@ -215,28 +225,65 @@ export default function PropostaPage({ p }: { p: Proposta }) {
         <section className="mx-auto max-w-5xl px-6 py-12 md:py-16">
           <Eyebrow n={secao()}>{p.painel.titulo}</Eyebrow>
           <p className="mb-8 max-w-2xl text-foreground-soft">{p.painel.sub}</p>
+
           <div className="overflow-hidden rounded-2xl border border-border">
+            {/* barra de ferramentas */}
+            <div className="flex flex-wrap items-center gap-3 border-b border-border bg-background-alt px-4 py-3">
+              <div className="flex items-center gap-2 text-muted">
+                <Rows3 size={15} />
+                <LayoutGrid size={15} className="opacity-35" />
+                <AlignLeft size={15} className="opacity-35" />
+              </div>
+              <span className="h-4 w-px bg-border" />
+              <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-foreground-soft">
+                <Calendar size={13} /> {p.cliente}
+              </span>
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-border bg-background px-2.5 py-1 text-xs font-semibold">
+                <Film size={12} /> {p.painel.linhas.length} vídeos
+              </span>
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-border bg-background px-2.5 py-1 text-xs font-semibold">
+                <Users size={12} /> {p.painel.linhas.length} creators
+              </span>
+            </div>
+
+            {/* cabeçalho (só desktop) */}
+            <div className="hidden grid-cols-[24px_20px_1.7fr_0.9fr_1fr_1.1fr] items-center gap-3 border-b border-border bg-background-alt/60 px-4 py-2.5 text-[10px] font-bold uppercase tracking-wider text-muted md:grid">
+              <span />
+              <span />
+              <span>Nome</span>
+              <span>Portfólio</span>
+              <span>Cidade</span>
+              <span>Status roteiro</span>
+            </div>
+
+            {/* linhas */}
             {p.painel.linhas.map((l, i) => (
               <div
                 key={l.nome}
-                className={
-                  "flex items-center gap-4 px-5 py-4 " +
-                  (i % 2 === 0 ? "bg-background" : "bg-background-alt") +
-                  (i > 0 ? " border-t border-border" : "")
-                }
+                className="grid grid-cols-[1fr_auto] items-center gap-3 border-b border-border px-4 py-3.5 last:border-b-0 md:grid-cols-[24px_20px_1.7fr_0.9fr_1fr_1.1fr]"
               >
-                <AvatarIniciais nome={l.nome} i={i} />
-                <div className="min-w-0 flex-1">
-                  <div className="font-semibold">{l.nome}</div>
-                  <div className="text-sm text-foreground-soft">{l.perfil}</div>
+                <span className="hidden h-4 w-4 flex-shrink-0 rounded border border-border md:block" />
+                <GripVertical size={14} className="hidden flex-shrink-0 text-muted/50 md:block" />
+                <div className="flex min-w-0 items-center gap-3">
+                  <AvatarIniciais nome={l.nome} i={i} />
+                  <span className="truncate text-sm font-semibold">{l.nome}</span>
                 </div>
-                <span className="flex-shrink-0 rounded-full border border-primary/30 bg-primary-light px-3 py-1 text-xs font-semibold text-primary">
+                <span className="hidden text-sm font-semibold text-primary md:block">LINK</span>
+                <span className="hidden text-sm text-foreground-soft md:block">{l.cidade}</span>
+                <span className={"inline-flex w-fit flex-shrink-0 items-center rounded-full border px-3 py-1 text-xs font-bold " + corStatus(l.status)}>
                   {l.status}
                 </span>
               </div>
             ))}
+
+            {/* rodapé */}
+            <div className="flex items-center justify-between bg-background-alt px-4 py-2.5 text-xs font-semibold text-foreground-soft">
+              <span>{p.painel.linhas.length} creators</span>
+              <span>{p.painel.linhas.filter((l) => /aprovado|entregue/i.test(l.status)).length} aprovado</span>
+            </div>
           </div>
-          <p className="mt-4 text-xs text-muted">Exemplo ilustrativo (nomes e status fictícios) de como fica o acompanhamento da sua campanha no meu painel de gestão.</p>
+
+          <p className="mt-4 text-xs text-muted">Exemplo ilustrativo (nomes, fotos e status de demonstração) de como fica o acompanhamento da sua campanha no meu painel de gestão.</p>
         </section>
       )}
 
