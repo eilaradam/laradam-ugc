@@ -22,7 +22,7 @@ export const GRANO: Proposta = {
   slug: "grano",
   eyebrow: "Proposta · Campanha UGC",
   cliente: "Grano",
-  titulo: "10 creators, 10 criativos, prontos em 2 semanas.",
+  titulo: "Campanha com 10 criativos, prontos em até 3 semanas.",
   subtitulo:
     "Campanha UGC com gestão completa, do briefing à entrega: 10 vídeos produzidos por creators selecionadas na nossa rede, prontos pra rodar no feed e em anúncios.",
   destaques: [
