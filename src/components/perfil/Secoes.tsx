@@ -7,8 +7,8 @@ import { NICHO_EMOJI, PUBLI, RESULTADOS } from "@/data/perfil";
 import { useVideoModal } from "@/components/VideoModalProvider";
 import { fmtBR, usePerfil } from "./PerfilApp";
 
-// Quantos vídeos aparecem em cada carrossel de nicho (a busca continua olhando todos).
-const POR_NICHO = 5;
+// Quantos vídeos ficam visíveis por vez em cada carrossel (os outros aparecem rolando pro lado).
+const VISIVEIS = 5;
 
 const THUMBS = ["maxresdefault.jpg", "oardefault.jpg", "oar2.jpg", "sddefault.jpg", "hqdefault.jpg", "mqdefault.jpg"];
 
@@ -190,7 +190,7 @@ export function Videos() {
       <Titulo
         id="videos"
         titulo="Meus vídeos 🎬"
-        sub={`Os ${POR_NICHO} mais recentes de cada nicho. Quer ver outro? Busca pela marca: são ${VIDEOS.length} vídeos pra ${new Set(VIDEOS.map((v) => v.brand)).size} marcas.`}
+        sub={`${VIDEOS.length} vídeos pra ${new Set(VIDEOS.map((v) => v.brand)).size} marcas, separados por nicho. Aparecem ${VISIVEIS} por vez: usa as setas ou desliza pro lado pra ver os outros. Clica pra assistir.`}
         extra={
           <label className="pf-busca">
             <Search className="w-4 h-4 text-[#9AA0AE]" />
@@ -214,12 +214,12 @@ export function Videos() {
           <div className="pf-pilulas">
             {nichos.map((n) => (
               <a key={n.slug} href={`#nicho-${n.slug}`} className="pf-pilula">
-                {NICHO_EMOJI[n.slug]} {n.name}
+                {NICHO_EMOJI[n.slug]} {n.name} <span className="opacity-60">{VIDEOS.filter((v) => v.category === n.slug).length}</span>
               </a>
             ))}
           </div>
           {nichos.map((n) => (
-            <Nicho key={n.slug} slug={n.slug} nome={n.name} tagline={n.tagline} videos={VIDEOS.filter((v) => v.category === n.slug).slice(0, POR_NICHO)} />
+            <Nicho key={n.slug} slug={n.slug} nome={n.name} tagline={n.tagline} videos={VIDEOS.filter((v) => v.category === n.slug)} />
           ))}
         </>
       )}
