@@ -22,12 +22,12 @@ export const PERFIL = {
 export const FAIXA = ["500 vídeos gravados", "200 marcas", "100M+ views", "2.4x ROAS", "InfinitePay", "Méliuz", "DT3", "Logitech", "Airbnb", "Beauty Fair"];
 
 export const NAV = [
+  { id: "sobre", rotulo: "Sobre", emoji: "👋" },
   { id: "resultados", rotulo: "Resultados", emoji: "📊" },
   { id: "videos", rotulo: "Vídeos", emoji: "🎬" },
   { id: "publi", rotulo: "Publi", emoji: "📱" },
   { id: "marcas", rotulo: "Marcas", emoji: "🤝" },
   { id: "depoimentos", rotulo: "Depoimentos", emoji: "💬" },
-  { id: "sobre", rotulo: "Sobre", emoji: "👋" },
   { id: "contato", rotulo: "Contato", emoji: "✉️" },
 ];
 
@@ -55,21 +55,6 @@ export const RESULTADOS = {
 export const NICHO_EMOJI: Record<string, string> = {
   ia: "🤖", tech: "📱", gastronomia: "🍝", casa: "🛋️", beleza: "💄", financas: "💸", food: "🍹", saude: "🏃‍♀️", moda: "👗", viagem: "✈️",
 };
-
-export const CARAS = [
-  { src: "/ensaio/cara-01.webp", legenda: "o hook" },
-  { src: "/ensaio/cara-02.webp", legenda: "chegou o produto" },
-  { src: "/ensaio/cara-03.webp", legenda: "o problema" },
-  { src: "/ensaio/cara-04.webp", legenda: "a dúvida" },
-  { src: "/ensaio/cara-05.webp", legenda: "o segredo" },
-  { src: "/ensaio/cara-06.webp", legenda: "a novidade" },
-  { src: "/ensaio/cara-07.webp", legenda: "o teste" },
-  { src: "/ensaio/cara-08.webp", legenda: "a reação" },
-  { src: "/ensaio/cara-09.webp", legenda: "o resultado" },
-  { src: "/ensaio/cara-10.webp", legenda: "o antes" },
-  { src: "/ensaio/cara-11.webp", legenda: "a prova" },
-  { src: "/ensaio/cara-12.webp", legenda: "o CTA" },
-];
 
 export const PUBLI = {
   titulo: "Publi no @eilaradam",

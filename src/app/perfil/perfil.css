@@ -69,17 +69,6 @@
 .pf-faixa i{color:var(--azulmedio);font-style:normal}
 @keyframes pf-marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
-/* atalhos grandes */
-.pf-atalhos{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:22px}
-@media (min-width:768px){.pf-atalhos{grid-template-columns:repeat(4,1fr);gap:14px}}
-.pf-atalho{display:flex;align-items:center;gap:10px;padding:12px 14px;border:2px solid var(--ink);border-radius:18px;color:var(--ink);text-decoration:none;background:#fff;box-shadow:4px 4px 0 var(--azul);transition:transform .18s ease-out,background .18s ease-out}
-.pf-atalho:hover{transform:translateY(-3px);background:var(--claro2)}
-@media (min-width:1280px){.pf-atalho{padding:16px 18px}}
-.pf-atalho .e{font-size:26px;line-height:1}
-.pf-atalho b{display:block;font-size:15px;font-weight:800;line-height:1.1}
-.pf-atalho small{display:block;font-size:11px;font-weight:600;color:var(--ink);opacity:.75;margin-top:2px}
-.pf-atalho .seta{margin-left:auto;font-weight:800;font-size:18px}
-
 /* destaques (não usados mais) */
 .pf-destaques{display:flex;gap:18px;margin-top:26px;overflow-x:auto;padding:4px 6px 8px;scrollbar-width:none}
 .pf-destaques::-webkit-scrollbar{display:none}
@@ -207,16 +196,6 @@
 .pf-sec .sub{color:var(--cinza);font-weight:600;margin-top:8px;font-size:15px}
 .pf-caixa{background:#fff;border:2px solid var(--ink);border-radius:22px;padding:18px;box-shadow:6px 6px 0 var(--ink)}
 @media (min-width:768px){.pf-caixa{padding:26px;border-radius:26px}}
-
-/* tira de caras */
-.pf-tira{display:flex;gap:12px;overflow-x:auto;padding:14px 4px 10px;margin-top:18px;scroll-snap-type:x mandatory;scrollbar-width:none}
-.pf-tira::-webkit-scrollbar{display:none}
-.pf-quadro{position:relative;flex-shrink:0;width:150px;background:#fff;border:2px solid var(--ink);border-radius:12px;padding:8px 8px 10px;scroll-snap-align:start;box-shadow:4px 4px 0 var(--ink)}
-@media (min-width:768px){.pf-quadro{width:186px}}
-.pf-quadro img{width:100%;aspect-ratio:2/3;object-fit:cover;object-position:center 12%;border-radius:8px;display:block}
-.pf-quadro .n{position:absolute;top:-10px;left:-8px;background:var(--azul);color:#fff;font-weight:800;font-size:11px;padding:4px 8px;border-radius:8px}
-.pf-quadro .leg{margin-top:8px;text-align:center;font-size:22px;color:var(--ink)}
-.pf-quadro:nth-child(odd){background:var(--claro2)}.pf-quadro:nth-child(even){background:#fff}
 
 /* depoimentos como DM */
 .pf-dms{display:grid;gap:14px;margin-top:18px}

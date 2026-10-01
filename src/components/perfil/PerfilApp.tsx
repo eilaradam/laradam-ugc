@@ -4,7 +4,6 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { PERFIL } from "@/data/perfil";
 import Cabecalho from "./Cabecalho";
 import { Marcas, Publi, Resultados, Videos } from "./Secoes";
-import Caras from "./Caras";
 import DMs from "./DMs";
 import Sobre from "./Sobre";
 import Contato from "./Contato";
@@ -43,13 +42,12 @@ export default function PerfilApp() {
     <PerfilCtx.Provider value={{ stats }}>
       <Cabecalho />
       <main className="pf-wrap">
+        <Sobre />
         <Resultados />
         <Videos />
         <Publi />
         <Marcas />
-        <Caras />
         <DMs />
-        <Sobre />
         <Contato />
         <div className="pf-rodape">© {new Date().getFullYear()} Lara Dam · UGC creator & influenciadora · Litoral de SP · {PERFIL.email}</div>
       </main>
