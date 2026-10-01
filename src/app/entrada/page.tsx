@@ -5,7 +5,7 @@ import type { Metadata } from "next";
 import Entrada from "@/components/entrada/Entrada";
 
 export const metadata: Metadata = {
-  title: "Lara Dam · por onde você quer começar?",
+  title: "Lara Dam · o que você precisa hoje?",
   description: "Publi no @eilaradam, UGC pra sua marca ou gestão de campanhas com várias creators. Escolhe o caminho.",
   robots: { index: false, follow: false },
 };

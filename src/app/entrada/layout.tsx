@@ -7,5 +7,5 @@ const jakarta = Plus_Jakarta_Sans({ variable: "--pf-font", subsets: ["latin"], w
 const caveat = Caveat({ variable: "--pf-mao", subsets: ["latin"], weight: ["600"] });
 
 export default function EntradaLayout({ children }: { children: React.ReactNode }) {
-  return <div className={`pf ${jakarta.variable} ${caveat.variable}`}>{children}</div>;
+  return <div className={`pf en-azul ${jakarta.variable} ${caveat.variable}`}>{children}</div>;
 }
