@@ -44,7 +44,7 @@ export default function Cabecalho() {
         <section className="pf-card">
           <div className="pf-avatar">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={PERFIL.avatar} alt="Lara Dam" style={{ objectPosition: "center 18%" }} />
+            <img src={PERFIL.avatar} alt="Lara Dam" />
           </div>
           <div>
             <div className="pf-nome">

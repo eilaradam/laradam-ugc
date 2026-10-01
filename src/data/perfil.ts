@@ -11,7 +11,7 @@ export const PERFIL = {
   tiktok: "eularadam",
   tiktokUrl: "https://www.tiktok.com/@eularadam",
   email: "laradam.ugc@gmail.com",
-  avatar: "/ensaio/cara-01.webp",
+  avatar: "/ensaio/avatar.webp", // foto do sofá, já recortada no rosto
   fallback: { followers: 16039, reach_month: 367702, posts: 141 },
   bioTitulo: "Lara Dam 👋 UGC creator & influenciadora",
   bio: [
@@ -80,7 +80,7 @@ export const PUBLI = {
 };
 
 export const SOBRE = {
-  foto: "/ensaio/sobre.webp",
+  foto: "/ensaio/sobre-caixas.webp",
   titulo: "Oie, eu sou a Lara Dam 👋",
   p1: "Tenho 27 anos, moro no Litoral de SP e há 2 anos vivo de criar conteúdo. Comecei gravando UGC pra marcas e hoje faço as duas coisas: vídeo que roda como anúncio pra mais de 200 marcas e publi no meu perfil, pra uma audiência que acompanha meus bastidores.",
   p2: "Também ensino outras creators a organizar a carreira. Então entendo os dois lados da mesa: o da marca que precisa de resultado e o da creator que precisa de briefing claro.",

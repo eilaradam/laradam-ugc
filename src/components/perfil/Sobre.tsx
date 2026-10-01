@@ -10,7 +10,7 @@ export default function Sobre() {
           <div className="pf-caixa !p-2 md:!p-3" style={{ boxShadow: "8px 8px 0 var(--azul3)" }}>
             <div className="relative aspect-[4/5] rounded-2xl overflow-hidden">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={SOBRE.foto} alt="Lara Dam apoiada no sofá do estúdio" loading="lazy" className="absolute inset-0 w-full h-full object-cover" style={{ objectPosition: "center 35%" }} />
+              <img src={SOBRE.foto} alt="Lara Dam sentada no estúdio entre caixas, com o notebook" loading="lazy" className="absolute inset-0 w-full h-full object-cover" style={{ objectPosition: "center 90%" }} />
             </div>
           </div>
           <svg className="absolute -left-3 -bottom-6 w-28 h-28 md:w-36 md:h-36" viewBox="0 0 200 200" aria-hidden>
