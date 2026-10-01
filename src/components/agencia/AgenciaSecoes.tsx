@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { ChevronDown, Send } from "lucide-react";
 import type { Video } from "@/data/content";
-import { AG_CONTATO, AG_CONTEUDOS, AG_FAQ, AG_MARCAS, AG_MODALIDADES, AG_PROCESSO, AG_WHATSAPP } from "@/data/agencia";
+import { AG_CONTATO, AG_CONTEUDOS, AG_FAQ, AG_MARCAS, AG_MODALIDADES, AG_PROCESSO, AG_SOBRE, AG_WHATSAPP } from "@/data/agencia";
 import { PERFIL } from "@/data/perfil";
 import { Nicho } from "@/components/perfil/Secoes";
 import Honeypot from "@/components/Honeypot";
@@ -141,6 +141,37 @@ export function ContatoAgencia() {
             {estado === "erro" && <span className="font-bold text-sm text-[#C0392B]">{AG_CONTATO.erro}</span>}
           </div>
         </form>
+      </div>
+    </section>
+  );
+}
+
+/* ---------- SOBRE: quem opera a campanha, com as fotos do ensaio ---------- */
+export function SobreAgencia() {
+  return (
+    <section id="sobre" className="pf-sec">
+      <div className="ag-sobre">
+        <div className="ag-sobre-fotos">
+          {AG_SOBRE.fotos.map((f, i) => (
+            <div key={f.src} className={`f f${i + 1}`}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={f.src} alt={f.alt} loading="lazy" style={{ objectPosition: f.posicao }} />
+            </div>
+          ))}
+        </div>
+        <div className="ag-sobre-txt">
+          <span className="k">{AG_SOBRE.k}</span>
+          <h2>{AG_SOBRE.titulo}</h2>
+          <p>{AG_SOBRE.p1}</p>
+          <p>{AG_SOBRE.p2}</p>
+          <div className="pf-pilulas">
+            {AG_SOBRE.pills.map((x) => <span key={x} className="pf-pilula ag-marca">{x}</span>)}
+          </div>
+          <div className="ag-ficha">
+            <div className="t">{AG_SOBRE.fichaTitulo}</div>
+            {AG_SOBRE.ficha.map((f) => <div key={f.k} className="l"><span>{f.k}</span><b>{f.v}</b></div>)}
+          </div>
+        </div>
       </div>
     </section>
   );

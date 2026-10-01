@@ -8,6 +8,7 @@ export const AG_NAV = [
   { id: "modalidades", rotulo: "Modalidades" },
   { id: "processo", rotulo: "Processo" },
   { id: "conteudos", rotulo: "Cases" },
+  { id: "sobre", rotulo: "Sobre" },
   { id: "duvidas", rotulo: "Dúvidas" },
   { id: "contato", rotulo: "Contato" },
 ];
@@ -138,13 +139,16 @@ export const AG_MARCAS = {
 };
 
 export const AG_SOBRE = {
-  foto: "/ensaio/publi-notebook.webp",
-  fotoAlt: "Lara Dam com celular e notebook no estúdio",
-  titulo: "Eu sou a Lara Dam 👋",
-  p1: "Fui uma das primeiras pessoas no Brasil a falar publicamente sobre gestão de campanhas UGC. Não porque planejei. Porque já estava fazendo. Antes de existir nome bonito pra isso, eu já organizava creator, escrevia briefing, revisava roteiro, cobrava prazo e entregava campanha que funcionava.",
+  k: "Quem opera a campanha",
+  fotos: [
+    { src: "/ensaio/publi-notebook.webp", alt: "Lara Dam com celular e notebook no estúdio", posicao: "center 25%" },
+    { src: "/ensaio/ugc-tripe.webp", alt: "Lara Dam no estúdio com tripé e caixas", posicao: "center 30%" },
+    { src: "/ensaio/sobre-caixas.webp", alt: "Lara Dam sentada entre caixas com o notebook", posicao: "center 80%" },
+  ],
+  titulo: "Eu sou a Lara Dam",
+  p1: "Fui uma das primeiras pessoas no Brasil a falar publicamente sobre gestão de campanhas UGC. Não porque planejei. Porque já estava fazendo: organizando creator, escrevendo briefing, revisando roteiro, cobrando prazo e entregando campanha que funcionava.",
   p2: "Em mais de 100 campanhas, com marcas como OLX, ZAP Imóveis, Magalu, Porto Seguro e Chilli Beans, uma coisa ficou clara: o que separa campanha boa de campanha que dá errado não é talento isolado de creator. É processo. Eu não acredito em fórmula mágica. Acredito em fazer o básico bem feito.",
-  nichosTitulo: "De creator pra creator",
-  pills: ["🎬 +100 campanhas", "👥 +1.200 creators em rede", "🤝 +200 marcas", "📍 Litoral de SP"],
+  pills: ["De creator pra creator", "+100 campanhas", "+1.200 creators em rede", "Litoral de SP"],
   fichaTitulo: "Como funciona uma campanha comigo",
   ficha: [
     { k: "Diagnóstico", v: "Gratuito, antes de qualquer proposta" },

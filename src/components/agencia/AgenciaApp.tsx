@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { AG_NAV, AG_VS, AG_WHATSAPP } from "@/data/agencia";
 import Rodape from "@/components/perfil/Rodape";
-import { Conteudos, ContatoAgencia, FAQ, MarcasTexto, Modalidades, Processo } from "./AgenciaSecoes";
+import { Conteudos, ContatoAgencia, FAQ, MarcasTexto, Modalidades, Processo, SobreAgencia } from "./AgenciaSecoes";
 
 // Agência (/agencia), opção J: abre com a comparação "por conta × com gestão",
 // depois modalidades, processo, cases, marcas, dúvidas e contato. Sem foto na abertura.
@@ -61,6 +61,7 @@ export default function AgenciaApp() {
         <Processo />
         <Conteudos />
         <MarcasTexto />
+        <SobreAgencia />
         <FAQ />
         <ContatoAgencia />
         <Rodape zap={AG_WHATSAPP} zapRotulo="💬 Conversar sobre minha campanha" track="agencia_zap_fixo" />
