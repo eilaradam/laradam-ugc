@@ -1,20 +1,59 @@
-// Portfólio UGC no estilo do mídia kit. Rota de prévia; quando a Lara aprovar,
-// o portfólio antigo (/) sai e este assume.
-import type { Metadata } from "next";
-import UgcApp from "@/components/ugc/UgcApp";
-
-const TITULO = "Lara Dam · UGC pra sua marca";
-const DESCRICAO = "Vídeo que vende: UGC, criativos pra tráfego e roteiro, prontos pra rodar como anúncio. +500 vídeos, +200 marcas, 100M+ views.";
-const OG = "https://ugc.laradam.com/ensaio/og-perfil.jpg";
+// Portfólio UGC: MESMA estrutura e capa da home (src/app/page.tsx), só com a
+// pele do mídia kit (cores azul/branco/navy + Plus Jakarta), aplicada no layout.
+// Rota de prévia; quando a Lara aprovar, a home passa a usar a mesma pele.
+import type { Metadata, Viewport } from "next";
+import Nav from "@/components/Nav";
+import Hero from "@/components/heroes/HeroOption6";
+import Marquee from "@/components/Marquee";
+import Stats from "@/components/Stats";
+import About from "@/components/About";
+import BrandsMarquee from "@/components/BrandsMarquee";
+import Services from "@/components/ServicesScrapbook";
+import BestResults from "@/components/BestResults";
+import CategoryGallery from "@/components/CategoryGallery";
+import YouTubeAds from "@/components/YouTubeAds";
+import Testimonials from "@/components/Testimonials";
+import Contact from "@/components/Contact";
+import Footer from "@/components/Footer";
+import LeadCapturePopup from "@/components/LeadCapturePopup";
+import TagBarra from "@/components/TagBarra";
 
 export const metadata: Metadata = {
-  title: TITULO,
-  description: DESCRICAO,
+  title: "Lara Dam — UGC Creator & Content Strategist",
+  description: "Portfólio de Lara Dam: UGC Creator com +500 vídeos gravados e +200 parceiros. Criativos de alta conversão para marcas que buscam destaque.",
   robots: { index: false, follow: false },
-  openGraph: { title: TITULO, description: DESCRICAO, url: "https://ugc.laradam.com/ugc", siteName: "Lara Dam", locale: "pt_BR", type: "website", images: [{ url: OG, width: 1200, height: 630 }] },
-  twitter: { card: "summary_large_image", title: TITULO, description: DESCRICAO, images: [OG] },
 };
 
+// Igual à home: celular mostra o layout de desktop encolhido.
+export const viewport: Viewport = { width: 1280, initialScale: 0.34 };
+
 export default function UgcPage() {
-  return <UgcApp />;
+  return (
+    <>
+      <style dangerouslySetInnerHTML={{ __html: `
+        @media (pointer: coarse) {
+          html { font-size: 20px; }
+          .lara-hero-grid { padding-top: 60px !important; }
+          .lara-hero-photo { height: 640px !important; }
+        }
+      ` }} />
+      <TagBarra />
+      <main className="flex-1 pt-[var(--barra-topo,0px)]">
+        <Nav />
+        <Hero />
+        <Marquee />
+        <Stats />
+        <About />
+        <BrandsMarquee />
+        <BestResults />
+        <CategoryGallery />
+        <YouTubeAds />
+        <Services />
+        <Testimonials />
+        <Contact />
+        <Footer />
+        <LeadCapturePopup />
+      </main>
+    </>
+  );
 }

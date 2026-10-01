@@ -14,6 +14,9 @@ export default function Nav() {
   const { lang, setLang } = useLang();
 
   const isGestao = pathname?.startsWith("/gestao") ?? false;
+  // Em /ugc (portfólio na pele do mídia kit) os atalhos ficam na própria página.
+  const isUgc = pathname?.startsWith("/ugc") ?? false;
+  const base = isUgc ? "/ugc" : "/";
 
   const LINKS = isGestao
     ? [
@@ -24,15 +27,17 @@ export default function Nav() {
         { href: "/gestao#gestao-contato", label: "Contato" },
       ]
     : [
-        { href: "/#sobre", label: t.nav.sobre },
-        { href: "/#servicos", label: t.nav.servicos },
-        { href: "/#categorias", label: t.nav.categorias },
-        { href: "/#contato", label: t.nav.contato },
+        { href: `${base}#sobre`, label: t.nav.sobre },
+        { href: `${base}#servicos`, label: t.nav.servicos },
+        { href: `${base}#categorias`, label: t.nav.categorias },
+        { href: `${base}#contato`, label: t.nav.contato },
       ];
 
   const GESTAO_LINK = isGestao
     ? { href: "/", label: "Portfolio" }
-    : { href: "/gestao", label: t.nav.gestao };
+    : isUgc
+      ? { href: "/agencia", label: "Agência" }
+      : { href: "/gestao", label: t.nav.gestao };
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -117,7 +122,7 @@ export default function Nav() {
               </button>
             </div>
             <a
-              href={isGestao ? "/gestao#gestao-contato" : "/#contato"}
+              href={isGestao ? "/gestao#gestao-contato" : `${base}#contato`}
               data-track="nav_trabalhe_comigo"
               className="text-[11px] md:text-xs font-semibold bg-foreground text-background px-4 md:px-5 py-2 md:py-2.5 hover:bg-primary transition-colors whitespace-nowrap"
             >
@@ -189,7 +194,7 @@ export default function Nav() {
 
             <div className="px-6 pb-10 space-y-4">
               <a
-                href={isGestao ? "/gestao#gestao-contato" : "/#contato"}
+                href={isGestao ? "/gestao#gestao-contato" : `${base}#contato`}
                 onClick={() => setOpen(false)}
                 data-track="mobile_trabalhe_comigo"
                 className="block w-full text-center bg-primary text-primary-light px-6 py-4 rounded-full font-semibold"

@@ -6,16 +6,16 @@ import { HeroPhoto } from "./_shared";
 import { useT } from "@/lib/i18n";
 
 // Acento da marca (rebranding: petróleo/teal)
-const ACCENT = "#1C5D63";
-const ACCENT_DARK = "#174C51";
-const ACCENT_LIGHT = "#7FC4C0";
+const ACCENT = "var(--primary)";
+const ACCENT_DARK = "var(--primary-dark)";
+const ACCENT_LIGHT = "var(--accent-on-dark)";
 
 export default function HeroOption6() {
   const t = useT();
   return (
     <section
       id="top"
-      className="relative bg-[#F4F4EF] pt-20 md:pt-6 pb-3 md:pb-6"
+      className="relative bg-background pt-20 md:pt-6 pb-3 md:pb-6"
     >
       {/* Camadas de fundo (grid + glow) — clipadas aqui pra não vazar,
           sem cortar a foto que fica no fluxo normal acima delas. */}
@@ -25,7 +25,7 @@ export default function HeroOption6() {
       >
         {/* Grid quadriculado fininho */}
         <div
-          className="absolute inset-0"
+          className="absolute inset-0 hero-grade"
           style={{
             backgroundImage:
               "linear-gradient(to right, rgba(0,0,0,0.06) 1px, transparent 1px), linear-gradient(to bottom, rgba(0,0,0,0.06) 1px, transparent 1px)",
@@ -35,7 +35,7 @@ export default function HeroOption6() {
 
         {/* Glow laranja sutil no canto */}
         <div
-          className="absolute -top-40 -left-40 w-[600px] h-[600px] rounded-full opacity-25"
+          className="absolute -top-40 -left-40 w-[600px] h-[600px] rounded-full opacity-25 hero-brilho"
           style={{
             background:
               "radial-gradient(circle, rgba(28,93,99,0.16) 0%, transparent 70%)",

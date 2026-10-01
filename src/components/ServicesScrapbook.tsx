@@ -23,8 +23,8 @@ const SERVICES = [
   },
 ];
 
-const ORANGE = "#1C5D63"; // acento da marca (petróleo/teal)
-const INK = "#1E2A44"; // navy (contornos/sticker)
+const ORANGE = "var(--primary)"; // acento da marca (vem do tema)
+const INK = "var(--foreground)"; // navy (contornos/sticker)
 
 // Washi tape: faixa inclinada com o texto repetido
 function Tape({
@@ -50,7 +50,7 @@ function Tape({
         top,
         zIndex: z,
         backgroundColor: isOrange ? ORANGE : "#ffffff",
-        border: isOrange ? "none" : `1px solid ${ORANGE}33`,
+        border: isOrange ? "none" : `1px solid color-mix(in srgb, ${ORANGE} 20%, transparent)`,
         transform: `translateX(-50%) rotate(${rotate}deg)`,
       }}
     >
@@ -106,7 +106,7 @@ export default function ServicesScrapbook() {
   return (
     <section
       id="servicos"
-      className="relative bg-[#F4F4EF] px-6 md:px-12 pt-24 md:pt-28 pb-16 md:pb-24 overflow-hidden"
+      className="relative bg-background px-6 md:px-12 pt-24 md:pt-28 pb-16 md:pb-24 overflow-hidden"
     >
       {/* Washi tape cruzada no topo */}
       <Tape text="@eilaradam • ugc creator" variant="white" rotate={-5} top="26px" z={1} />
@@ -155,7 +155,7 @@ export default function ServicesScrapbook() {
               viewport={{ once: true, margin: "-40px" }}
               transition={{ duration: 0.5, delay: (i % 2) * 0.08 }}
               className="relative rounded-2xl border bg-white px-5 pt-8 pb-6"
-              style={{ borderColor: "#e5ddd4" }}
+              style={{ borderColor: "var(--border)" }}
             >
               {/* Pílula do título, montada sobre a borda de cima */}
               <span

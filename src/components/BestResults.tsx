@@ -587,7 +587,7 @@ function AudioTestimonialCard() {
       />
 
       {/* UI na frente cobre visualmente o iframe */}
-      <div className="relative z-10 flex items-center gap-3 p-3 md:p-4 bg-[#e9e4db] border border-foreground/5 rounded-3xl">
+      <div className="relative z-10 flex items-center gap-3 p-3 md:p-4 bg-background-alt border border-foreground/5 rounded-3xl">
         {/* Play/Pause */}
         <div
           className={`flex-shrink-0 w-11 h-11 md:w-12 md:h-12 rounded-full flex items-center justify-center transition-colors ${
