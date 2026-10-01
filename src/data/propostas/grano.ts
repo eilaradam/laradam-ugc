@@ -61,12 +61,12 @@ export const GRANO: Proposta = {
     titulo: "Como fica o acompanhamento da sua campanha",
     sub: "Um painel só da Grano, com cada creator, o status do roteiro e do conteúdo em tempo real. Exemplo de como fica assim que a campanha começa:",
     linhas: [
-      { nome: "Creator 01", perfil: "Gastronomia · receitas do dia a dia", status: "Roteiro aprovado" },
-      { nome: "Creator 02", perfil: "Lifestyle · rotina saudável", status: "Em gravação" },
-      { nome: "Creator 03", perfil: "Mãe · praticidade na cozinha", status: "Selecionada" },
-      { nome: "Creator 04", perfil: "Fitness · pré/pós treino", status: "Roteiro em revisão" },
-      { nome: "Creator 05", perfil: "Casa · organização e despensa", status: "Entregue" },
-      { nome: "Creator 06", perfil: "Gastronomia · receitas rápidas", status: "Selecionada" },
+      { nome: "Creator 1", perfil: "Gastronomia · receitas do dia a dia", status: "Roteiro aprovado" },
+      { nome: "Creator 2", perfil: "Lifestyle · rotina saudável", status: "Em gravação" },
+      { nome: "Creator 3", perfil: "Mãe · praticidade na cozinha", status: "Selecionada" },
+      { nome: "Creator 4", perfil: "Fitness · pré/pós treino", status: "Roteiro em revisão" },
+      { nome: "Creator 5", perfil: "Casa · organização e despensa", status: "Entregue" },
+      { nome: "Creator 6", perfil: "Gastronomia · receitas rápidas", status: "Selecionada" },
     ],
   },
 
