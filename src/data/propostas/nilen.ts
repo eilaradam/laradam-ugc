@@ -5,7 +5,9 @@
 // Página: ugc.laradam.com/nilen (fora do menu e fora do Google; a Lara manda o link direto).
 //
 // Layout dos cards de Investimento = igual ao da /grano (2 cards: claro + escuro
-// com selo). O 3º card ("Contrato fixo") saiu; agora é só uma frase na notaOpcoes.
+// com selo). Os 2 cards agora são por VOLUME mensal (10 ou 20 creators), cada um
+// com um bloco "Contrato de 3 meses" (preço com desconto) no rodapé do próprio
+// card (`opcoes[].contratoFixo`, novo campo genérico em Proposta.tsx).
 //
 // Pendências com a Lara:
 // 1) `pagamento` deveria terminar com "Proposta válida até [dd/mm/aaaa]." Ela não
@@ -34,36 +36,46 @@ export const NILEN: Proposta = {
   opcoesTitulo: "Investimento",
   opcoes: [
     {
-      nome: "Pacote Pontual",
-      tipo: "Campanha única",
-      valor: "R$ 5.500",
+      nome: "Pacote 10 Creators",
+      tipo: "Mensal",
+      valor: "R$ 5.500/mês",
       descricao:
-        "10 criativos UGC, cada um com uma creator diferente, sem compromisso de recorrência. Ideal pra testar o formato e descobrir quais fragrâncias e ângulos convertem.",
+        "10 criativos UGC por mês, cada um com uma creator diferente. Ideal pra testar o formato e descobrir quais fragrâncias e ângulos convertem.",
       inclui: [
         "R$ 550 por criativo",
         "Seleção de 10 creators pelo perfil da Nilen",
         "Briefing por fragrância e roteiro revisado antes da gravação",
         "Direito de uso em anúncios por 6 meses",
       ],
+      contratoFixo: {
+        titulo: "Contrato de 3 meses",
+        valor: "R$ 4.500/mês · R$ 450 por criativo",
+        economia: "Economia de R$ 1.000 por mês",
+      },
     },
     {
-      nome: "Pacote Contínuo",
-      tipo: "Recorrente",
-      valor: "R$ 4.500/mês",
+      nome: "Pacote 20 Creators",
+      tipo: "Mensal",
+      valor: "R$ 10.000/mês",
       descricao:
-        "10 criativos novos por mês, com creators diferentes a cada ciclo e entregas a cada 2 semanas. Vocês renovam os anúncios antes do público cansar, sem precisar montar a operação de novo.",
+        "20 criativos novos por mês, entregues em lotes a cada 2 semanas. Volume pra renovar os anúncios antes do público cansar, sem precisar montar a operação de novo.",
       inclui: [
-        "R$ 450 por criativo",
-        "Seleção de 10 creators por mês",
+        "R$ 500 por criativo",
+        "Seleção de 20 creators por mês",
         "Briefing por fragrância e roteiro revisado antes de cada gravação",
         "Direito de uso em anúncios por 6 meses",
       ],
       destaque: true,
       badge: "Recomendado pra quem roda anúncio",
+      contratoFixo: {
+        titulo: "Contrato de 3 meses",
+        valor: "R$ 8.500/mês · R$ 425 por criativo",
+        economia: "Economia de R$ 1.500 por mês",
+      },
     },
   ],
   notaOpcoes:
-    "No Pacote Contínuo, o compromisso mínimo é de 3 meses. Depois disso, segue mês a mês até vocês decidirem pausar. Precisa de mais volume? O Contínuo também sai com 20 criativos por mês, a R$ 9.000/mês.",
+    "Sem contrato, os pacotes seguem mês a mês e vocês pausam quando quiserem. No contrato de 3 meses, o valor fica travado durante o período. Em caso de cancelamento antes do fim, é cobrada a diferença do desconto nos meses já utilizados.",
 
   incluso: [
     "Diagnóstico de público e seleção das creators",
@@ -123,10 +135,10 @@ export const NILEN: Proposta = {
     { etapa: "Entrega do primeiro lote", quando: "Até 15 dias depois que o produto chega às creators" },
   ],
   cronogramaNota:
-    "No Pacote Contínuo, os criativos chegam em lotes a cada 2 semanas.\nO envio do perfume para cada creator e o frete ficam por conta da Nilen. O prazo começa a contar quando o produto chega.",
+    "No Pacote 20 Creators, os criativos chegam em lotes a cada 2 semanas.\nO envio do perfume para cada creator e o frete ficam por conta da Nilen. O prazo começa a contar quando o produto chega.",
 
   pagamento:
-    "Pacote Pontual: 50% na assinatura e 50% na entrega dos vídeos.\nPacote Contínuo: pagamento mensal antecipado, até o dia 5 de cada mês.\nForma de pagamento: PIX ou boleto.\nDados para a nota fiscal: Lara Dam LTDA, CNPJ 55.446.568/0001-22.",
+    "Pacotes mensais e contrato de 3 meses: pagamento antecipado, até o dia 5 de cada mês.\nForma de pagamento: PIX ou boleto.\nDados para a nota fiscal: Lara Dam LTDA, CNPJ 55.446.568/0001-22.",
 
   proximoPasso: "Com a proposta aprovada, já parto pra seleção das creators e briefing por fragrância.",
 

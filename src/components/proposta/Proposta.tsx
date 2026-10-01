@@ -15,7 +15,18 @@ export type Proposta = {
   destaques: { rotulo: string; valor: string }[];
   sobre: string;
   opcoesTitulo?: string;
-  opcoes: { nome: string; tipo: string; valor: string; descricao: string; inclui: string[]; destaque?: boolean; badge?: string; economia?: string }[];
+  opcoes: {
+    nome: string;
+    tipo: string;
+    valor: string;
+    descricao: string;
+    inclui: string[];
+    destaque?: boolean;
+    badge?: string;
+    economia?: string;
+    /** Bloco destacado no rodapé do próprio card (ex. preço com contrato de permanência). */
+    contratoFixo?: { titulo: string; valor: string; economia: string };
+  }[];
   notaOpcoes?: string;
   extra?: { nome: string; valor: string; descricao: string; condicao?: string };
   incluso: string[];
@@ -200,6 +211,20 @@ export default function PropostaPage({ p }: { p: Proposta }) {
                 </ul>
                 {o.economia && (
                   <p className={"mt-5 text-sm font-bold " + (o.destaque ? "text-accent-on-dark" : "text-primary")}>{o.economia}</p>
+                )}
+                {o.contratoFixo && (
+                  <div
+                    className={
+                      "mt-5 rounded-xl border px-4 py-3 " +
+                      (o.destaque ? "border-background/20 bg-background/10" : "border-primary/20 bg-primary-light")
+                    }
+                  >
+                    <div className={"text-[10px] font-bold uppercase tracking-[0.15em] " + (o.destaque ? "text-accent-on-dark" : "text-primary")}>
+                      {o.contratoFixo.titulo}
+                    </div>
+                    <div className="mt-1 font-semibold">{o.contratoFixo.valor}</div>
+                    <div className={"text-sm " + (o.destaque ? "text-background/70" : "text-foreground-soft")}>{o.contratoFixo.economia}</div>
+                  </div>
                 )}
               </div>
             ))}
