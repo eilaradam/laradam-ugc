@@ -7,11 +7,9 @@
 // /agencia; é o caso aqui: Frooty/Brinox/Coza/Copacol/Trisanti/Rap10 são
 // marcas atendidas pela rede, não vídeos da própria Lara).
 //
-// Reescrita completa de copy em 01/10 (3ª leva). Pontos ainda em aberto com a Lara:
-// 1) Pacote Contínuo está em R$4.500/mês (uma leva anterior tinha fechado R$4.900/mês
-//    com uma linha de economia). Sinalizado pra ela, aguardando confirmação.
-// 2) `proximoPasso` veio com "[X] dias úteis" sem o número; tirei essa cláusula até
-//    ela confirmar o prazo.
+// Pacote Contínuo confirmado em R$4.900/mês (01/10). Ponto ainda em aberto com a Lara:
+// `proximoPasso` veio com "[X] dias úteis" sem o número; tirei essa cláusula até ela
+// confirmar o prazo.
 
 import type { Proposta } from "@/components/proposta/Proposta";
 
@@ -49,11 +47,11 @@ export const GRANO: Proposta = {
     {
       nome: "Pacote Contínuo",
       tipo: "Recorrente",
-      valor: "R$ 4.500/mês",
+      valor: "R$ 4.900/mês",
       descricao:
         "10 criativos novos por mês, com creators diferentes a cada ciclo. Vocês renovam os anúncios antes do público cansar, sem precisar montar a operação de novo.",
       inclui: [
-        "R$ 450 por criativo",
+        "R$ 490 por criativo",
         "Seleção de 10 creators por mês",
         "Briefing e roteiro revisados antes de cada gravação",
         "Direito de uso em anúncios",
