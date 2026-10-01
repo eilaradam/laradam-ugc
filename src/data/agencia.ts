@@ -28,7 +28,7 @@ export const AG_CAPA = {
   ],
   mosaicoLegenda: "creators da rede em campanhas recentes",
   // quantas capas entram no mosaico (pega as primeiras com capa local, pulando marcas repetidas em sequência)
-  mosaicoQtd: 9,
+  mosaicoQtd: 6, // 2 fileiras (3x2), pra ficar perto da altura do texto do lado
 };
 
 // Abertura da página (opção J escolhida pela Lara em 01/10/2026): comparação "por conta × com gestão".

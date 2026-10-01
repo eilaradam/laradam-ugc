@@ -420,8 +420,6 @@
 .ag-capa .mosaico .t:nth-child(3n+2) img{animation-name:ag-flutua-baixo;animation-duration:5.6s;animation-delay:.4s}
 .ag-capa .mosaico .t:nth-child(3n+3) img{animation-duration:4.4s;animation-delay:.9s}
 .ag-capa .mosaico .t span{position:absolute;left:8px;bottom:8px;background:#fff;color:var(--ink);font-size:10px;font-weight:800;padding:3px 7px;border-radius:999px;border:1px solid var(--ink)}
-.ag-capa .mosaico .t:nth-child(n+7){display:none}
-@media (min-width:900px){.ag-capa .mosaico .t:nth-child(n+7){display:block}}
 .ag-hero-rod-centro{justify-content:center!important}
 .ag-hero-rod-centro .ag-cta{align-items:center;text-align:center}
 @keyframes ag-entra{from{opacity:0}to{opacity:1}}
