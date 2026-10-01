@@ -21,11 +21,11 @@ export const NILEN: Proposta = {
   slug: "nilen",
   eyebrow: "Proposta · Campanha UGC",
   cliente: "Nilen",
-  titulo: "Criativos pra Nilen testar anúncio toda semana.",
+  titulo: "Criativos novos pra Nilen testar em anúncio todo mês.",
   subtitulo:
     "Vocês estão dando o próximo passo em criativo e tráfego pago. Eu monto o fluxo de conteúdo pra isso virar rotina: creators certas pro perfil da Nilen, roteiro revisado por fragrância e vídeos prontos pra testar em mídia paga.",
   destaques: [
-    { rotulo: "Pacotes", valor: "10 ou 20 criativos/mês" },
+    { rotulo: "Pacotes", valor: "5, 10 ou 20 criativos" },
     { rotulo: "Nicho", valor: "Perfumaria" },
     { rotulo: "Creators", valor: "Selecionadas pelo perfil da Nilen" },
   ],
@@ -138,8 +138,10 @@ export const NILEN: Proposta = {
   cronogramaNota:
     "No Pacote 20 Creators, os criativos chegam em lotes a cada 2 semanas.\nO envio do perfume para cada creator e o frete ficam por conta da Nilen. O prazo começa a contar quando o produto chega.",
 
+  // "Proposta válida até" usa 15 dias a partir de hoje (01/10/2026) como padrão,
+  // já que ela pediu essa linha 3x sem passar a data. Ajustar se quiser outro prazo.
   pagamento:
-    "Pacotes mensais e contrato de 3 meses: pagamento antecipado, até o dia 5 de cada mês.\nTeste com 5 creators: 50% na assinatura e 50% na entrega dos vídeos.\nForma de pagamento: PIX ou boleto.\nDados para a nota fiscal: Lara Dam LTDA, CNPJ 55.446.568/0001-22.",
+    "Pacotes mensais e contrato de 3 meses: pagamento antecipado, até o dia 5 de cada mês.\nTeste com 5 creators: 50% na assinatura e 50% na entrega dos vídeos.\nForma de pagamento: PIX ou boleto.\nDados para a nota fiscal: Lara Dam LTDA, CNPJ 55.446.568/0001-22.\nProposta válida até 16/10/2026.",
 
   proximoPasso: "Com a proposta aprovada, já parto pra seleção das creators e briefing por fragrância.",
 
