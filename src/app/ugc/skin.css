@@ -42,3 +42,6 @@
 .skin-kit .text-\[\#1E2A44\]\/40{color:rgba(255,255,255,.5)!important}
 .skin-kit .bg-\[\#0B0F1A\]{background-color:var(--foreground)!important}
 .skin-kit .text-\[\#F5B301\]{color:#fff!important}
+
+/* capa: começa abaixo do menu fixo (a foto nova vai até o topo) e o balão da direita fica longe do rosto */
+@media (min-width:768px){.skin-kit #top{padding-top:84px}.skin-kit #top .hero-balao-1{top:62%!important;right:4px!important}.skin-kit #top .hero-balao-2{top:84%!important}}

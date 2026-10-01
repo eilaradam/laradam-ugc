@@ -143,7 +143,7 @@ export default function HeroOption6({ foto }: { foto?: string } = {}) {
               },
             }}
             whileHover={{ scale: 1.06, transition: { duration: 0.25, ease: "easeOut" } }}
-            className="hidden md:flex absolute z-20 right-1 md:right-3 top-[35%] md:top-[38%] bg-white shadow-xl rounded-2xl p-3 md:p-3.5 items-center gap-3 max-w-[220px] border border-foreground/5 cursor-default"
+            className="hero-balao-1 hidden md:flex absolute z-20 right-1 md:right-3 top-[35%] md:top-[38%] bg-white shadow-xl rounded-2xl p-3 md:p-3.5 items-center gap-3 max-w-[220px] border border-foreground/5 cursor-default"
           >
             <span
               style={{ backgroundColor: ACCENT }}
@@ -177,7 +177,7 @@ export default function HeroOption6({ foto }: { foto?: string } = {}) {
               },
             }}
             whileHover={{ scale: 1.06, transition: { duration: 0.25, ease: "easeOut" } }}
-            className="hidden md:flex absolute z-20 left-1 md:left-3 top-[78%] md:top-[80%] bg-white shadow-xl rounded-2xl p-3 md:p-3.5 items-center gap-3 max-w-[230px] border border-foreground/5 cursor-default"
+            className="hero-balao-2 hidden md:flex absolute z-20 left-1 md:left-3 top-[78%] md:top-[80%] bg-white shadow-xl rounded-2xl p-3 md:p-3.5 items-center gap-3 max-w-[230px] border border-foreground/5 cursor-default"
           >
             <span
               style={{ backgroundColor: ACCENT }}

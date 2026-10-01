@@ -40,8 +40,8 @@ export default function UgcPage() {
       <TagBarra />
       <main className="flex-1 pt-[var(--barra-topo,0px)]">
         <Nav />
-        {/* capa do /ugc: foto 0350 do ensaio (reta, pilha de caixas, rosto livre), recortada. Outras recortadas em public/ensaio: capa-caixas, capa-caixa-rosto, capa-torre */}
-        <Hero foto="/ensaio/capa-pilha.webp" />
+        {/* capa do /ugc: foto abraçando caixas, recortada pela Lara (capa-caixas-lara). Outras recortadas em public/ensaio: capa-pilha (0350), capa-caixa-rosto, capa-torre */}
+        <Hero foto="/ensaio/capa-caixas-lara.webp" />
         <Marquee />
         <Stats />
         <About />
