@@ -133,6 +133,8 @@ export type Video = {
   instagram?: string;
   /** Marca desligou o embed desse post: o clique abre no Instagram em vez do player. */
   externo?: boolean;
+  /** Curtidas (Instagram) ou views (YouTube) pra ordenar os carrosséis por engajamento. */
+  engajamento?: number;
   thumbnail?: string;
   featured?: boolean;
   landscape?: boolean; // abre o modal em 16:9 ao invés de 9:16 (vertical)

@@ -22,18 +22,27 @@ export function Conteudos() {
     instagram: v.instagram,
     thumbnail: v.thumbnail,
     externo: v.externo,
+    engajamento: v.engajamento ?? 0,
   }));
-  // fileiras por marca (na ordem em que aparecem), e o resto junto
-  const ordem: string[] = []; const porMarca: Record<string, Video[]> = {};
-  todos.forEach((v) => { if (!porMarca[v.brand]) { porMarca[v.brand] = []; ordem.push(v.brand); } porMarca[v.brand].push(v); });
-  const fileiras = ordem.filter((m) => porMarca[m].length >= AG_CONTEUDOS.minimoFileira || AG_CONTEUDOS.fileiraForcada.includes(m));
-  const resto = ordem.filter((m) => !fileiras.includes(m)).flatMap((m) => porMarca[m]);
-  const slug = (m: string) => m.toLowerCase().normalize("NFD").replace(/[^a-z0-9]+/g, "-");
+  // ordena cada vídeo por engajamento (curtidas no Instagram, views no YouTube) antes de agrupar
+  const ordenados = [...todos].sort((a, b) => (b.engajamento ?? 0) - (a.engajamento ?? 0));
+  // fileira = marca, exceto quando duas marcas do mesmo segmento dividem uma fileira (grupoFileira)
+  const rowKey = (brand: string) => AG_CONTEUDOS.grupoFileira[brand] ?? brand;
+  const ordem: string[] = []; const porFileira: Record<string, Video[]> = {}; const marcasPorFileira: Record<string, Set<string>> = {};
+  ordenados.forEach((v) => {
+    const chave = rowKey(v.brand);
+    if (!porFileira[chave]) { porFileira[chave] = []; marcasPorFileira[chave] = new Set(); ordem.push(chave); }
+    porFileira[chave].push(v); marcasPorFileira[chave].add(v.brand);
+  });
+  const totalMarcas = new Set(todos.map((v) => v.brand)).size;
+  const fileiras = ordem.filter((m) => porFileira[m].length >= AG_CONTEUDOS.minimoFileira);
+  const resto = ordem.filter((m) => !fileiras.includes(m)).flatMap((m) => porFileira[m]);
+  const slug = (m: string) => m.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, "-");
   return (
     <section id="conteudos" className="pf-sec">
-      <Titulo titulo={AG_CONTEUDOS.titulo} sub={`${todos.length} vídeos de ${ordem.length} marcas. ${AG_CONTEUDOS.sub}`} />
+      <Titulo titulo={AG_CONTEUDOS.titulo} sub={`${todos.length} vídeos de ${totalMarcas} marcas, do mais curtido/assistido pro menos. ${AG_CONTEUDOS.sub}`} />
       {fileiras.map((m) => (
-        <Nicho key={m} slug={`marca-${slug(m)}`} nome={m} tagline={`${porMarca[m].length} vídeos com creators da rede`} videos={porMarca[m]} />
+        <Nicho key={m} slug={`marca-${slug(m)}`} nome={m} tagline={`${porFileira[m].length} vídeos com creators da rede`} videos={porFileira[m]} />
       ))}
       {resto.length > 0 && <Nicho slug="marca-outras" nome="Mais marcas" tagline={ordem.filter((m) => !fileiras.includes(m)).join(" · ")} videos={resto} />}
     </section>
@@ -76,12 +85,30 @@ export function Processo() {
   );
 }
 
+function LogoMarca({ name, domain }: { name: string; domain: string }) {
+  const [erro, setErro] = useState(false);
+  const iniciais = name.replace(/[^A-Za-zÀ-ÿ0-9 ]/g, "").split(" ").map((w) => w[0]).filter(Boolean).slice(0, 2).join("").toUpperCase();
+  if (erro) {
+    return (
+      <div className="pf-logo" title={name}>
+        <span style={{ fontWeight: 800, fontSize: 13, color: "var(--cinza)" }}>{iniciais}</span>
+      </div>
+    );
+  }
+  return (
+    <div className="pf-logo" title={name}>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src={`https://logo.clearbit.com/${domain}`} alt={name} loading="lazy" onError={() => setErro(true)} />
+    </div>
+  );
+}
+
 export function MarcasTexto() {
   return (
     <section id="marcas" className="pf-sec">
       <Titulo titulo={AG_MARCAS.titulo} sub={AG_MARCAS.sub} />
-      <div className="pf-pilulas">
-        {AG_MARCAS.nomes.map((n) => <span key={n} className="pf-pilula ag-marca">🤝 {n}</span>)}
+      <div className="pf-marcas">
+        {AG_MARCAS.lista.map((m) => <LogoMarca key={m.name} name={m.name} domain={m.domain} />)}
       </div>
     </section>
   );
