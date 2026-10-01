@@ -7,10 +7,7 @@
 // /agencia — é o caso aqui: Frooty/Brinox/Coza/Copacol/Trisanti/Rap10 são
 // marcas atendidas pela rede, não vídeos da própria Lara).
 //
-// ⚠️ VALOR: não encontrei uma base de preço por criativo/campanha salva (nem no
-// repo, nem no Drive, nem no Supabase do CRM — o campo "valor_medio" do CRM só
-// existe no front, sem dado salvo). `opcoes[0].valor` ficou como placeholder:
-// a Lara precisa passar o número pra eu completar e publicar de novo.
+// Valores passados pela Lara em 01/10: pontual R$550 x 10, contínuo (mín. 3 meses) R$450 x 10.
 
 import type { Proposta } from "@/components/proposta/Proposta";
 
@@ -32,19 +29,33 @@ export const GRANO: Proposta = {
 
   opcoes: [
     {
-      nome: "Campanha Grano",
-      tipo: "UGC gerenciado",
-      valor: "R$ [preencher: valor total pra 10 criativos]",
-      descricao: "10 vídeos UGC, cada um com uma creator diferente da rede, roteiro revisado por mim antes da gravação.",
+      nome: "Pacote Pontual",
+      tipo: "Campanha única",
+      valor: "R$ 5.500",
+      descricao: "10 criativos UGC, cada um com uma creator diferente da rede, sem compromisso de recorrência.",
       inclui: [
+        "R$ 550 por criativo",
         "Seleção de 10 creators pelo perfil da Grano",
         "Briefing e roteiro revisado antes da gravação",
-        "Produção acompanhada e 1 rodada de ajustes por vídeo",
+        "Direito de uso em anúncios",
+      ],
+    },
+    {
+      nome: "Pacote Contínuo",
+      tipo: "Recorrente · mínimo 3 meses",
+      valor: "R$ 4.500/mês",
+      descricao: "10 criativos UGC por mês, com creators renovadas e a operação rodando todo mês.",
+      inclui: [
+        "R$ 450 por criativo",
+        "Seleção de 10 creators por mês",
+        "Briefing e roteiro revisado antes de cada gravação",
         "Direito de uso em anúncios",
       ],
       destaque: true,
+      badge: "Mais econômico",
     },
   ],
+  notaOpcoes: "No pacote contínuo o compromisso mínimo é de 3 meses; depois disso, segue mês a mês até você decidir pausar.",
 
   incluso: [
     "Diagnóstico e seleção das creators",
@@ -66,11 +77,6 @@ export const GRANO: Proposta = {
       { nome: "Creator 3", cidade: "Belo Horizonte, MG", status: "Selecionada" },
       { nome: "Creator 4", cidade: "Porto Alegre, RS", status: "Roteiro em revisão" },
       { nome: "Creator 5", cidade: "Salvador, BA", status: "Entregue" },
-      { nome: "Creator 6", cidade: "Recife, PE", status: "Selecionada" },
-      { nome: "Creator 7", cidade: "Campinas, SP", status: "Roteiro aprovado" },
-      { nome: "Creator 8", cidade: "Florianópolis, SC", status: "Em gravação" },
-      { nome: "Creator 9", cidade: "Fortaleza, CE", status: "Entregue" },
-      { nome: "Creator 10", cidade: "Brasília, DF", status: "Selecionada" },
     ],
   },
 

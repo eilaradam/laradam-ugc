@@ -14,7 +14,7 @@ export type Proposta = {
   subtitulo: string;
   destaques: { rotulo: string; valor: string }[];
   sobre: string;
-  opcoes: { nome: string; tipo: string; valor: string; descricao: string; inclui: string[]; destaque?: boolean }[];
+  opcoes: { nome: string; tipo: string; valor: string; descricao: string; inclui: string[]; destaque?: boolean; badge?: string }[];
   notaOpcoes?: string;
   extra?: { nome: string; valor: string; descricao: string; condicao?: string };
   incluso: string[];
@@ -171,7 +171,7 @@ export default function PropostaPage({ p }: { p: Proposta }) {
               >
                 {o.destaque && (
                   <span className="absolute -top-3 left-7 rounded-full bg-accent-on-dark px-3 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-foreground">
-                    Mais alcance
+                    {o.badge || "Mais alcance"}
                   </span>
                 )}
                 <div className={"text-[11px] uppercase tracking-[0.25em] font-semibold " + (o.destaque ? "text-accent-on-dark" : "text-primary")}>
