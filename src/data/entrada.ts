@@ -28,8 +28,8 @@ export const ENTRADA = {
       pra: "Pra quem precisa de criativo que converte, sem aparecer no meu perfil.",
       cta: "Ver o portfólio",
       href: "/",
-      foto: "/ensaio/ugc-caixas.webp",
-      posicao: "center 30%",
+      foto: "/ensaio/capa.webp",
+      posicao: "center 22%",
     },
     {
       id: "agencia",
