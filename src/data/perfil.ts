@@ -81,6 +81,8 @@ export const PUBLI = {
 
 export const SOBRE = {
   foto: "/ensaio/sobre-caixas.webp",
+  fotoAlt: "Lara Dam sentada no estúdio entre caixas, com o notebook",
+  fichaTitulo: "Ficha técnica de uma campanha comigo",
   titulo: "Oie, eu sou a Lara Dam 👋",
   p1: "Tenho 27 anos, moro no Litoral de SP e há 2 anos vivo de criar conteúdo. Comecei gravando UGC pra marcas e hoje faço as duas coisas: vídeo que roda como anúncio pra mais de 200 marcas e publi no meu perfil, pra uma audiência que acompanha meus bastidores.",
   p2: "Também ensino outras creators a organizar a carreira. Então entendo os dois lados da mesa: o da marca que precisa de resultado e o da creator que precisa de briefing claro.",

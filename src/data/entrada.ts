@@ -5,9 +5,9 @@ export const ENTRADA = {
   titulo: "Oi, marca! 👋",
   sub: "O que você precisa hoje?",
   caminhos: [
+    { id: "ugc", emoji: "🎬", rotulo: "UGC pra sua marca", dica: "portfólio", href: "/ugc" },
     { id: "publi", emoji: "📱", rotulo: "Publi no meu perfil", dica: "mídia kit", href: "/perfil" },
-    { id: "ugc", emoji: "🎬", rotulo: "UGC pra sua marca", dica: "portfólio", href: "/" },
-    { id: "agencia", emoji: "🤝", rotulo: "Várias creators", dica: "agência", href: "/gestao" },
+    { id: "agencia", emoji: "🤝", rotulo: "Várias creators", dica: "agência", href: "/agencia" },
   ],
   rodape: "Lara Dam · Litoral de SP",
 };

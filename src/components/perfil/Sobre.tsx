@@ -2,7 +2,10 @@
 
 import { SOBRE } from "@/data/perfil";
 
-export default function Sobre() {
+export type SobreDados = typeof SOBRE;
+
+export default function Sobre({ dados = SOBRE }: { dados?: SobreDados }) {
+  const SOBRE_ = dados;
   return (
     <section id="sobre" className="pf-sec">
       <div className="grid md:grid-cols-12 gap-6 md:gap-10 items-center">
@@ -10,7 +13,7 @@ export default function Sobre() {
           <div className="pf-caixa !p-2 md:!p-3" style={{ boxShadow: "8px 8px 0 var(--azul3)" }}>
             <div className="relative aspect-[4/5] rounded-2xl overflow-hidden">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={SOBRE.foto} alt="Lara Dam sentada no estúdio entre caixas, com o notebook" loading="lazy" className="absolute inset-0 w-full h-full object-cover" style={{ objectPosition: "center 90%" }} />
+              <img src={SOBRE_.foto} alt={SOBRE_.fotoAlt} loading="lazy" className="absolute inset-0 w-full h-full object-cover" style={{ objectPosition: "center 90%" }} />
             </div>
           </div>
           <svg className="absolute -left-3 -bottom-6 w-28 h-28 md:w-36 md:h-36" viewBox="0 0 200 200" aria-hidden>
@@ -21,18 +24,18 @@ export default function Sobre() {
           </svg>
         </div>
         <div className="md:col-span-7">
-          <h2>{SOBRE.titulo}</h2>
-          <p className="mt-4 font-semibold text-base md:text-lg leading-relaxed">{SOBRE.p1}</p>
-          <p className="mt-3 font-semibold text-base md:text-lg leading-relaxed text-[var(--cinza)]">{SOBRE.p2}</p>
-          <div className="mt-5 text-xs font-extrabold uppercase tracking-widest text-[var(--cinza)]">{SOBRE.nichosTitulo}</div>
+          <h2>{SOBRE_.titulo}</h2>
+          <p className="mt-4 font-semibold text-base md:text-lg leading-relaxed">{SOBRE_.p1}</p>
+          <p className="mt-3 font-semibold text-base md:text-lg leading-relaxed text-[var(--cinza)]">{SOBRE_.p2}</p>
+          <div className="mt-5 text-xs font-extrabold uppercase tracking-widest text-[var(--cinza)]">{SOBRE_.nichosTitulo}</div>
           <div className="mt-2 flex flex-wrap gap-2">
-            {SOBRE.pills.map((p, i) => (
+            {SOBRE_.pills.map((p, i) => (
               <span key={p} className="px-3 py-2 rounded-xl border-2 border-[var(--ink)] text-sm font-extrabold" style={{ background: i % 2 ? "#fff" : "var(--claro2)" }}>{p}</span>
             ))}
           </div>
           <div className="mt-6 pf-caixa" style={{ boxShadow: "none", padding: 0, overflow: "hidden" }}>
-            <div className="px-4 py-2 text-[11px] font-extrabold uppercase tracking-widest bg-[var(--azul2)] border-b-2 border-[var(--ink)]">Ficha técnica de uma campanha comigo</div>
-            {SOBRE.ficha.map((f) => (
+            <div className="px-4 py-2 text-[11px] font-extrabold uppercase tracking-widest bg-[var(--azul2)] border-b-2 border-[var(--ink)]">{SOBRE_.fichaTitulo}</div>
+            {SOBRE_.ficha.map((f) => (
               <div key={f.k} className="flex justify-between gap-4 px-4 py-2.5 border-b border-[var(--linha)] last:border-b-0 text-sm"><span className="font-bold text-[var(--cinza)]">{f.k}</span><span className="font-extrabold text-right">{f.v}</span></div>
             ))}
           </div>

@@ -15,7 +15,7 @@ const THUMBS = ["maxresdefault.jpg", "oardefault.jpg", "oar2.jpg", "sddefault.jp
 const THUMBS_LEVES = ["sddefault.jpg", "hqdefault.jpg", "mqdefault.jpg"];
 
 /* ---------- card de vídeo (9:16), prévia no hover, abre no player ---------- */
-function Reel({ video, grande = false }: { video: Video; grande?: boolean }) {
+export function Reel({ video, grande = false }: { video: Video; grande?: boolean }) {
   const { open } = useVideoModal();
   const [idx, setIdx] = useState(0);
   const [preview, setPreview] = useState(false);
@@ -180,7 +180,7 @@ function useTrilho({ videos }: { videos: Video[] }) {
   return { ref, podeAnt, podeProx, rolar };
 }
 
-function Nicho({ slug, nome, tagline, videos }: { slug: string; nome: string; tagline?: string; videos: Video[] }) {
+export function Nicho({ slug, nome, tagline, videos }: { slug: string; nome: string; tagline?: string; videos: Video[] }) {
   const { ref, podeAnt, podeProx, rolar } = useTrilho({ videos });
   if (videos.length === 0) return null;
   return (

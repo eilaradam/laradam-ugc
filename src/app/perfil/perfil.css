@@ -267,3 +267,36 @@
 .pf button,.pf a{cursor:pointer}
 .pf :focus-visible{outline:3px solid var(--azul);outline-offset:2px}
 @media (prefers-reduced-motion:reduce){.pf *{animation:none!important;transition:none!important}}
+
+/* ---------- agência ---------- */
+.pf-servicos.ag-6{grid-template-columns:1fr}
+@media (min-width:768px){.pf-servicos.ag-6{grid-template-columns:repeat(2,1fr)}}
+@media (min-width:1024px){.pf-servicos.ag-6{grid-template-columns:repeat(3,1fr)}}
+.pf-servicos.ag-6 .pf-servico p{font-size:13px}
+.ag-modal{display:grid;gap:14px;margin-top:18px}
+@media (min-width:900px){.ag-modal{grid-template-columns:repeat(3,1fr);gap:18px}}
+.ag-card{position:relative;display:flex;flex-direction:column;gap:10px;padding:22px;border:2px solid var(--ink);border-radius:22px;background:#fff;box-shadow:6px 6px 0 var(--ink)}
+.ag-card.on{box-shadow:6px 6px 0 var(--azul);background:var(--claro)}
+.ag-card .tag{position:absolute;top:-12px;left:18px;background:var(--azul);color:#fff;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;padding:5px 10px;border-radius:999px;border:2px solid var(--ink)}
+.ag-card h3{font-size:22px;font-weight:800;letter-spacing:-.02em;line-height:1.1}
+.ag-card .pitch{font-weight:600;color:var(--cinza);font-size:14px}
+.ag-card ul{list-style:none;display:grid;gap:6px;font-size:14px;font-weight:600;margin:4px 0}
+.ag-card .ideal{font-size:13px;font-weight:600;color:var(--cinza);border-top:2px solid var(--claro2);padding-top:10px;margin-top:auto}
+.ag-card .pf-btn{align-self:flex-start;margin-top:4px}
+.ag-etapas{list-style:none;display:grid;gap:12px;margin-top:18px}
+@media (min-width:900px){.ag-etapas{grid-template-columns:repeat(5,1fr);gap:14px}}
+.ag-etapa{display:flex;gap:14px;align-items:flex-start;padding:16px;border:2px solid var(--ink);border-radius:18px;background:#fff}
+@media (min-width:900px){.ag-etapa{flex-direction:column;gap:10px}}
+.ag-etapa .n{font-size:28px;font-weight:800;color:var(--azul);letter-spacing:-.04em;line-height:1}
+.ag-etapa b{display:block;font-size:16px;font-weight:800;line-height:1.15}
+.ag-etapa p{font-size:13px;font-weight:600;color:var(--cinza);margin-top:6px;line-height:1.4}
+.pf-pilula.ag-marca{cursor:default;font-size:14px;padding:10px 16px}
+.pf-pilula.ag-marca:hover{transform:none}
+.ag-faq{display:grid;gap:10px;margin-top:18px}
+.ag-faq-item{border:2px solid var(--ink);border-radius:16px;background:#fff;overflow:hidden}
+.ag-faq-item.on{background:var(--claro)}
+.ag-faq-item button{width:100%;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 18px;font:inherit;font-weight:800;font-size:15px;text-align:left;background:none;border:0;color:var(--ink);cursor:pointer}
+.ag-faq-item.on button svg{transform:rotate(180deg)}
+.ag-faq-item p{padding:0 18px 16px;font-size:14px;font-weight:600;color:var(--cinza);line-height:1.5}
+.pf-campo select{width:100%;border:2px solid var(--ink);border-radius:14px;padding:12px 14px;font:inherit;font-weight:600;font-size:15px;background:#fff;color:var(--ink);outline:0;appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--ink) 50%),linear-gradient(135deg,var(--ink) 50%,transparent 50%);background-position:calc(100% - 20px) 50%,calc(100% - 14px) 50%;background-size:6px 6px;background-repeat:no-repeat}
+.pf-campo select:focus{border-color:var(--azul);box-shadow:0 0 0 3px var(--azul2)}

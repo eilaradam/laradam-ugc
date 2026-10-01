@@ -1,8 +1,9 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState } from "react";
-import { PERFIL } from "@/data/perfil";
-import Cabecalho from "./Cabecalho";
+import { FAIXA, NAV, PERFIL } from "@/data/perfil";
+import Cabecalho, { type CabConfig } from "./Cabecalho";
+import Rodape from "./Rodape";
 import { Marcas, Publi, Resultados, Servicos, Videos } from "./Secoes";
 import DMs from "./DMs";
 import Sobre from "./Sobre";
@@ -38,9 +39,31 @@ export default function PerfilApp() {
     return () => ctrl.abort();
   }, []);
 
+  const cab: CabConfig = {
+    usuario: PERFIL.usuario,
+    avatar: PERFIL.avatar,
+    cta: { rotulo: "💬 Trabalhe comigo", href: PERFIL.whatsappUrl, track: "perfil_trabalhe_comigo" },
+    segundo: { rotulo: "Ver no Instagram", href: PERFIL.instagramUrl, track: "perfil_instagram", externo: true },
+    stats: [
+      { b: String(stats.posts), t: "posts" },
+      { b: fmtBR(stats.followers), t: "seguidores" },
+      { b: "100M+", t: "views em campanhas" },
+      { b: "200+", t: "marcas" },
+    ],
+    bioTitulo: PERFIL.bioTitulo,
+    bio: PERFIL.bio,
+    bioLink: { rotulo: "📩 prefere formulário? trabalhe comigo por aqui", href: "#contato" },
+    balao: PERFIL.balao,
+    nota: PERFIL.nota,
+    carimbo: PERFIL.carimbo,
+    faixa: FAIXA,
+    nav: NAV,
+    topoCta: { rotulo: "Trabalhe comigo →", href: PERFIL.whatsappUrl },
+  };
+
   return (
     <PerfilCtx.Provider value={{ stats }}>
-      <Cabecalho />
+      <Cabecalho cab={cab} />
       <main className="pf-wrap">
         <Sobre />
         <Resultados />
@@ -50,18 +73,8 @@ export default function PerfilApp() {
         <Marcas />
         <DMs />
         <Contato />
-        <footer className="pf-rodape">
-          <div className="links">
-            <a href={PERFIL.instagramUrl} target="_blank" rel="noopener">Instagram @{PERFIL.usuario}</a>
-            <a href={PERFIL.tiktokUrl} target="_blank" rel="noopener">TikTok @{PERFIL.tiktok}</a>
-            <a href="/gestao">Gestão de campanhas</a>
-            <a href={`mailto:${PERFIL.email}`}>{PERFIL.email}</a>
-          </div>
-          <div>© {new Date().getFullYear()} Lara Dam · UGC creator & influenciadora · Litoral de SP</div>
-        </footer>
+        <Rodape track="perfil_zap_fixo" />
       </main>
-      {/* botão fixo de WhatsApp (só no celular) */}
-      <a href={PERFIL.whatsappUrl} target="_blank" rel="noopener" className="pf-zap-fixo" data-track="perfil_zap_fixo" aria-label="Chamar a Lara no WhatsApp">💬 Chamar no WhatsApp</a>
     </PerfilCtx.Provider>
   );
 }
