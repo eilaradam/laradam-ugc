@@ -9,7 +9,7 @@ import DMs from "./DMs";
 import Sobre from "./Sobre";
 import Contato from "./Contato";
 
-export type LiveStats = { followers: number; reach_month: number; posts: number; engagement_rate: number | null; live: boolean };
+export type LiveStats = { followers: number; reach_month: number | null; posts: number; engagement_rate: number | null; live: boolean };
 const PerfilCtx = createContext<{ stats: LiveStats } | null>(null);
 export function usePerfil() {
   const c = useContext(PerfilCtx);
@@ -18,6 +18,11 @@ export function usePerfil() {
 }
 
 const ENDPOINT = "https://mfrmnquvwwuxraqgemyh.supabase.co/functions/v1/ig-public-stats";
+
+// Número exato, com ponto de milhar (16.135). Sem dado ainda: traço.
+export function fmtExato(n: number | null | undefined) {
+  return typeof n === "number" ? String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, ".") : "—";
+}
 
 export function fmtBR(n: number) {
   if (n >= 1_000_000) return (n / 1_000_000).toFixed(1).replace(".", ",") + "M";
@@ -34,7 +39,7 @@ export default function PerfilApp() {
     const ctrl = new AbortController();
     fetch(ENDPOINT, { signal: ctrl.signal })
       .then((r) => (r.ok ? r.json() : Promise.reject()))
-      .then((d) => { if (typeof d?.followers === "number") setStats({ followers: d.followers, reach_month: d.reach_month, posts: d.posts, engagement_rate: typeof d?.engagement_rate === "number" ? d.engagement_rate : null, live: true }); })
+      .then((d) => { if (typeof d?.followers === "number") setStats({ followers: d.followers, reach_month: typeof d?.reach_month === "number" ? d.reach_month : null, posts: d.posts, engagement_rate: typeof d?.engagement_rate === "number" ? d.engagement_rate : null, live: true }); })
       .catch(() => {});
     return () => ctrl.abort();
   }, []);
@@ -46,7 +51,7 @@ export default function PerfilApp() {
     segundo: { rotulo: "Ver no Instagram", href: PERFIL.instagramUrl, track: "perfil_instagram", externo: true },
     stats: [
       { b: String(stats.posts), t: "posts" },
-      { b: fmtBR(stats.followers), t: "seguidores" },
+      { b: fmtExato(stats.followers), t: "seguidores" },
       { b: "100M+", t: "views em campanhas" },
       { b: "200+", t: "marcas" },
     ],

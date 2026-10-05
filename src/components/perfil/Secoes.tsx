@@ -5,7 +5,7 @@ import { Bookmark, ChevronLeft, ChevronRight, Heart, MessageCircle, Play, Plus, 
 import { CATEGORIES, VIDEOS, type Video } from "@/data/content";
 import { AUDIENCIA, LOGOS_ORDEM, NICHO_EMOJI, PERFIL, PUBLI, PUBLIS_REAIS, RESULTADOS, SERVICOS, type PubliReal } from "@/data/perfil";
 import { useVideoModal } from "@/components/VideoModalProvider";
-import { fmtBR, usePerfil } from "./PerfilApp";
+import { fmtExato, usePerfil } from "./PerfilApp";
 
 // Quantos vídeos ficam visíveis por vez em cada carrossel (os outros aparecem rolando pro lado).
 const VISIVEIS = 5;
@@ -308,14 +308,14 @@ export function Publi() {
             </div>
             <div className="foto">{/* eslint-disable-next-line @next/next/no-img-element */}<img src={PUBLI.foto} alt="Lara Dam rindo, em preto e branco" loading="lazy" style={{ objectPosition: "center 40%" }} /></div>
             <div className="acoes"><Heart /><MessageCircle /><Send /><Bookmark className="ml-auto" /></div>
-            <div className="legenda"><b>{fmtBR(stats.followers)} seguidores</b><br /><b>eilaradam</b> {PUBLI.legenda}</div>
+            <div className="legenda"><b>{fmtExato(stats.followers)} seguidores</b><br /><b>eilaradam</b> {PUBLI.legenda}</div>
           </div>
         </div>
         <div className="md:col-span-7">
           <div className="text-xs font-extrabold uppercase tracking-wider text-[var(--azul)]">Números ao vivo</div>
           <div className="pf-numeros pf-numeros-4 mt-2.5">
-            <div className="pf-num"><b>{fmtBR(stats.followers)}</b><span>seguidores</span></div>
-            <div className="pf-num"><b>{fmtBR(stats.reach_month)}</b><span>alcance em 30 dias</span></div>
+            <div className="pf-num"><b>{fmtExato(stats.followers)}</b><span>seguidores</span></div>
+            <div className="pf-num"><b>{fmtExato(stats.reach_month)}</b><span>alcance em 30 dias</span></div>
             <div className="pf-num"><b>{stats.posts}</b><span>posts no feed</span></div>
             <div className="pf-num"><b>{stats.engagement_rate != null ? `${stats.engagement_rate}%` : "—"}</b><span>taxa de engajamento</span></div>
           </div>
@@ -367,11 +367,11 @@ function PubliCard({ publi: p }: { publi: PubliReal }) {
         <span className="marca"><small>Publi</small>{p.brand}</span>
       </button>
       <div className="pf-publi-stats">
-        <span><Heart className="w-3.5 h-3.5" /> {fmtBR(p.likes)}</span>
-        <span><MessageCircle className="w-3.5 h-3.5" /> {fmtBR(p.comments)}</span>
-        <span><Bookmark className="w-3.5 h-3.5" /> {fmtBR(p.saved)}</span>
+        <span><Heart className="w-3.5 h-3.5" /> {fmtExato(p.likes)}</span>
+        <span><MessageCircle className="w-3.5 h-3.5" /> {fmtExato(p.comments)}</span>
+        <span><Bookmark className="w-3.5 h-3.5" /> {fmtExato(p.saved)}</span>
       </div>
-      <div className="pf-publi-metricas">{fmtBR(p.reach)} de alcance · {fmtBR(p.views)} views</div>
+      <div className="pf-publi-metricas">{fmtExato(p.reach)} de alcance · {fmtExato(p.views)} views</div>
     </div>
   );
 }
