@@ -37,11 +37,15 @@ export default function PerfilApp() {
 
   useEffect(() => {
     const ctrl = new AbortController();
-    fetch(ENDPOINT, { signal: ctrl.signal })
-      .then((r) => (r.ok ? r.json() : Promise.reject()))
-      .then((d) => { if (typeof d?.followers === "number") setStats({ followers: d.followers, reach_month: typeof d?.reach_month === "number" ? d.reach_month : null, posts: d.posts, engagement_rate: typeof d?.engagement_rate === "number" ? d.engagement_rate : null, live: true }); })
-      .catch(() => {});
-    return () => ctrl.abort();
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    // Se a primeira conexão cair (rede instável), tenta de novo até 3 vezes em vez de ficar com traço.
+    const buscar = (restantes: number) =>
+      fetch(ENDPOINT, { signal: ctrl.signal })
+        .then((r) => (r.ok ? r.json() : Promise.reject()))
+        .then((d) => { if (typeof d?.followers === "number") setStats({ followers: d.followers, reach_month: typeof d?.reach_month === "number" ? d.reach_month : null, posts: d.posts, engagement_rate: typeof d?.engagement_rate === "number" ? d.engagement_rate : null, live: true }); })
+        .catch(() => { if (restantes > 0 && !ctrl.signal.aborted) timer = setTimeout(() => buscar(restantes - 1), 3000); });
+    buscar(3);
+    return () => { ctrl.abort(); if (timer) clearTimeout(timer); };
   }, []);
 
   const cab: CabConfig = {
