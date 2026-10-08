@@ -36,8 +36,9 @@ export type Proposta = {
     titulo: string;
     intro: string;
     entrega: string[];
-    faixas: { nome: string; seguidores: string; valor: string; comAds: string }[];
-    totalNota: string;
+    faixas: { nome: string; seguidores: string; valor: string }[];
+    /** Exemplos de campanha fechada: quantos perfis, quanto no orgânico e quanto com impulsionamento. */
+    cenarios: { rotulo: string; organico: string; comAds: string }[];
     ads: string;
     notas: string[];
   };
@@ -267,23 +268,7 @@ export default function PropostaPage({ p }: { p: Proposta }) {
           <h3 className="mt-3 font-display text-3xl font-black tracking-tight md:text-4xl">{p.perfis.titulo}</h3>
           <p className="mt-4 max-w-3xl text-lg leading-relaxed">{p.perfis.intro}</p>
 
-          <div className="mt-8 grid grid-cols-1 gap-5 md:grid-cols-2">
-            {p.perfis.faixas.map((f) => (
-              <div key={f.nome} className="rounded-3xl border border-border bg-background p-7 md:p-8">
-                <div className="text-[11px] uppercase tracking-[0.25em] font-semibold text-primary">
-                  {f.nome} · {f.seguidores}
-                </div>
-                <div className="mt-3 font-display text-4xl font-black tracking-tight">{f.valor}</div>
-                <div className="text-sm text-foreground-soft">por perfil</div>
-                <div className="mt-5 rounded-xl border border-primary/20 bg-primary-light px-4 py-3 text-sm">
-                  <span className="font-semibold text-primary">Com impulsionamento (60 dias): </span>
-                  {f.comAds} por perfil
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-6 rounded-2xl border border-border bg-background px-5 py-4">
+          <div className="mt-8 rounded-2xl border border-border bg-background px-5 py-4">
             <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted">Cada perfil entrega</div>
             <ul className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-3">
               {p.perfis.entrega.map((i) => (
@@ -295,11 +280,36 @@ export default function PropostaPage({ p }: { p: Proposta }) {
             </ul>
           </div>
 
-          <div className="mt-6 rounded-3xl border border-primary bg-foreground p-7 text-background shadow-xl md:p-8">
-            <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-accent-on-dark">Investimento da campanha</div>
-            <p className="mt-3 font-display text-2xl font-black leading-tight tracking-tight md:text-3xl">{p.perfis.totalNota}</p>
+          <div className="mt-8 text-[10px] font-bold uppercase tracking-[0.2em] text-muted">Valor por perfil</div>
+          <div className="mt-3 grid grid-cols-1 gap-4 sm:grid-cols-2">
+            {p.perfis.faixas.map((f) => (
+              <div key={f.nome} className="flex items-baseline justify-between gap-4 rounded-2xl border border-border bg-background px-5 py-4">
+                <div>
+                  <div className="font-display text-lg font-bold">{f.nome}</div>
+                  <div className="text-sm text-foreground-soft">{f.seguidores}</div>
+                </div>
+                <div className="font-display text-3xl font-black tracking-tight">{f.valor}</div>
+              </div>
+            ))}
           </div>
-          <p className="mt-3 max-w-3xl text-sm text-foreground-soft">{p.perfis.ads}</p>
+
+          <div className="mt-8 text-[10px] font-bold uppercase tracking-[0.2em] text-muted">Quanto fica a campanha</div>
+          <div className="mt-3 overflow-hidden rounded-3xl border border-primary bg-foreground text-background shadow-xl">
+            <div className="grid grid-cols-[1.4fr_1fr_1fr] gap-x-3 border-b border-background/20 px-5 py-3 text-[10px] font-bold uppercase tracking-[0.15em] text-accent-on-dark md:px-7">
+              <span>Campanha</span>
+              <span className="text-right">Só orgânico</span>
+              <span className="text-right">+ impulsionamento</span>
+            </div>
+            {p.perfis.cenarios.map((c) => (
+              <div key={c.rotulo} className="grid grid-cols-[1.4fr_1fr_1fr] items-baseline gap-x-3 border-b border-background/10 px-5 py-4 last:border-b-0 md:px-7">
+                <span className="text-sm font-semibold md:text-base">{c.rotulo}</span>
+                <span className="text-right font-display text-xl font-black md:text-2xl">{c.organico}</span>
+                <span className="text-right font-display text-lg font-bold text-background/70 md:text-xl">{c.comAds}</span>
+              </div>
+            ))}
+          </div>
+
+          <p className="mt-4 max-w-3xl text-sm text-foreground-soft">{p.perfis.ads}</p>
           <ul className="mt-4 max-w-3xl space-y-1.5">
             {p.perfis.notas.map((n) => (
               <li key={n} className="flex items-start gap-2 text-sm text-foreground-soft">
