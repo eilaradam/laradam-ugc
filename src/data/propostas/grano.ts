@@ -67,7 +67,7 @@ export const GRANO: Proposta = {
   perfis: {
     titulo: "Perfis de influenciadores pra complementar o plano",
     intro:
-      "Pra complementar o plano do último trimestre, incluímos de 2 a 4 perfis de nano e micro influenciadores (até 10 mil seguidores) no Instagram, com repost no TikTok. Seleção por nicho: alimentação saudável e lifestyle, perfil família e esporte (dieta e alimentação). Cuidamos da escolha, da checagem de público e da aprovação de cada post antes de ir ao ar.",
+      "Pra complementar o plano do último trimestre, incluímos de 3 a 4 perfis de nano e micro influenciadores (até 10 mil seguidores) no Instagram, com repost no TikTok. Seleção por nicho: alimentação saudável e lifestyle, perfil família e esporte (dieta e alimentação). Cuidamos da escolha, da checagem de público e da aprovação de cada post antes de ir ao ar.",
     entrega: ["1 Reels em collab no Instagram", "Repost no TikTok", "2 stories com link"],
     faixas: [
       { nome: "Nano", seguidores: "até 5 mil seguidores", valor: "R$ 850", comAds: "R$ 1.105" },
