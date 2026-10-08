@@ -31,6 +31,16 @@ export type Proposta = {
   /** Linha discreta abaixo da notaOpcoes, sem card (ex. oferta de teste menor). */
   notaExtra?: string;
   extra?: { nome: string; valor: string; descricao: string; condicao?: string };
+  /** Segunda opção de orçamento: campanha com perfis de influenciadores, preço por faixa de seguidores. */
+  perfis?: {
+    titulo: string;
+    intro: string;
+    entrega: string[];
+    faixas: { nome: string; seguidores: string; valor: string; comAds: string }[];
+    totalNota: string;
+    ads: string;
+    notas: string[];
+  };
   incluso: string[];
   /** Bloco curto e discreto logo depois de "O que está incluso". */
   responsabilidadesMarca?: { titulo: string; itens: string[] };
@@ -251,6 +261,53 @@ export default function PropostaPage({ p }: { p: Proposta }) {
           )}
         </div>
       </section>
+
+      {/* opção 2: perfis de influenciadores */}
+      {p.perfis && (
+        <section className="mx-auto max-w-5xl px-6 py-12 md:py-16">
+          <Eyebrow n={secao()}>{p.perfis.titulo}</Eyebrow>
+          <p className="max-w-3xl text-lg leading-relaxed">{p.perfis.intro}</p>
+
+          <div className="mt-8 grid grid-cols-1 gap-5 md:grid-cols-2">
+            {p.perfis.faixas.map((f) => (
+              <div key={f.nome} className="rounded-3xl border border-border bg-background-alt p-7 md:p-8">
+                <div className="text-[11px] uppercase tracking-[0.25em] font-semibold text-primary">
+                  {f.nome} · {f.seguidores}
+                </div>
+                <div className="mt-3 font-display text-4xl font-black tracking-tight">{f.valor}</div>
+                <div className="text-sm text-foreground-soft">por perfil</div>
+                <div className="mt-5 rounded-xl border border-primary/20 bg-primary-light px-4 py-3 text-sm">
+                  <span className="font-semibold text-primary">Com impulsionamento (60 dias): </span>
+                  {f.comAds} por perfil
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-6 rounded-2xl border border-border bg-background px-5 py-4">
+            <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted">Cada perfil entrega</div>
+            <ul className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-3">
+              {p.perfis.entrega.map((i) => (
+                <li key={i} className="flex items-start gap-2 text-sm">
+                  <Check size={16} className="mt-0.5 flex-shrink-0 text-primary" />
+                  <span>{i}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <p className="mt-6 max-w-3xl font-semibold">{p.perfis.totalNota}</p>
+          <p className="mt-3 max-w-3xl text-sm text-foreground-soft">{p.perfis.ads}</p>
+          <ul className="mt-4 max-w-3xl space-y-1.5">
+            {p.perfis.notas.map((n) => (
+              <li key={n} className="flex items-start gap-2 text-sm text-foreground-soft">
+                <span className="mt-1.5 h-1 w-1 flex-shrink-0 rounded-full bg-muted" />
+                <span>{n}</span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
 
       {/* incluso */}
       <section className="mx-auto max-w-5xl px-6 py-12 md:py-16">

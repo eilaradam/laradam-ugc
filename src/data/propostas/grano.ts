@@ -62,6 +62,25 @@ export const GRANO: Proposta = {
   ],
   notaOpcoes: "Compromisso mínimo de 3 meses. Depois disso, segue mês a mês até vocês decidirem pausar.",
 
+  // Opção 2: perfis de influenciadores. Só o preço final por perfil aparece na página
+  // (repasse e margem de gestão ficam fora, é conta interna). Ads = +30% sobre o orgânico.
+  perfis: {
+    titulo: "Opção 2: campanha com perfis de influenciadores",
+    intro:
+      "Em vez de vídeos pra rodar na conta da Grano, a campanha acontece no perfil de 3 a 4 influenciadores de nicho (alimentação saudável, família, esporte), com até 10 mil seguidores. Cuidamos da seleção, da checagem de público e da aprovação de cada post antes de ir ao ar.",
+    entrega: ["1 Reels em collab no Instagram", "Repost no TikTok", "2 stories com link"],
+    faixas: [
+      { nome: "Nano", seguidores: "até 5 mil seguidores", valor: "R$ 850", comAds: "R$ 1.105" },
+      { nome: "Micro", seguidores: "5 a 10 mil seguidores", valor: "R$ 990", comAds: "R$ 1.287" },
+    ],
+    totalNota: "Campanha com 3 perfis a partir de R$ 2.550 (3 nanos). Com 4 micros, R$ 3.960.",
+    ads: "Os valores acima são só pro orgânico. Se a Grano quiser impulsionar o post do influenciador (partnership ads), o acréscimo é de 30% por 60 dias de veiculação.",
+    notas: [
+      "Mínimo de 3 perfis por campanha.",
+      "Com perfis de até 10 mil seguidores, o valor está na credibilidade de nicho e em conteúdo que pode virar anúncio, não em alcance.",
+    ],
+  },
+
   incluso: [
     "Diagnóstico de público e seleção das creators",
     "Briefing construído junto com o time da Grano",
