@@ -295,7 +295,10 @@ export default function PropostaPage({ p }: { p: Proposta }) {
             </ul>
           </div>
 
-          <p className="mt-6 max-w-3xl font-semibold">{p.perfis.totalNota}</p>
+          <div className="mt-6 rounded-3xl border border-primary bg-foreground p-7 text-background shadow-xl md:p-8">
+            <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-accent-on-dark">Investimento da campanha</div>
+            <p className="mt-3 font-display text-2xl font-black leading-tight tracking-tight md:text-3xl">{p.perfis.totalNota}</p>
+          </div>
           <p className="mt-3 max-w-3xl text-sm text-foreground-soft">{p.perfis.ads}</p>
           <ul className="mt-4 max-w-3xl space-y-1.5">
             {p.perfis.notas.map((n) => (
