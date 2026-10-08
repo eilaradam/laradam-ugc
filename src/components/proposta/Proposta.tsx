@@ -259,18 +259,17 @@ export default function PropostaPage({ p }: { p: Proposta }) {
               {p.extra.condicao && <p className="mt-3 text-sm font-semibold text-primary">{p.extra.condicao}</p>}
             </div>
           )}
-        </div>
-      </section>
 
       {/* opção 2: perfis de influenciadores */}
       {p.perfis && (
-        <section className="mx-auto max-w-5xl px-6 py-12 md:py-16">
-          <Eyebrow n={secao()}>{p.perfis.titulo}</Eyebrow>
-          <p className="max-w-3xl text-lg leading-relaxed">{p.perfis.intro}</p>
+        <div className="mt-14 border-t border-border pt-12">
+          <div className="text-[11px] uppercase tracking-[0.3em] font-semibold text-primary">Complemento opcional</div>
+          <h3 className="mt-3 font-display text-3xl font-black tracking-tight md:text-4xl">{p.perfis.titulo}</h3>
+          <p className="mt-4 max-w-3xl text-lg leading-relaxed">{p.perfis.intro}</p>
 
           <div className="mt-8 grid grid-cols-1 gap-5 md:grid-cols-2">
             {p.perfis.faixas.map((f) => (
-              <div key={f.nome} className="rounded-3xl border border-border bg-background-alt p-7 md:p-8">
+              <div key={f.nome} className="rounded-3xl border border-border bg-background p-7 md:p-8">
                 <div className="text-[11px] uppercase tracking-[0.25em] font-semibold text-primary">
                   {f.nome} · {f.seguidores}
                 </div>
@@ -306,8 +305,10 @@ export default function PropostaPage({ p }: { p: Proposta }) {
               </li>
             ))}
           </ul>
-        </section>
+        </div>
       )}
+        </div>
+      </section>
 
       {/* incluso */}
       <section className="mx-auto max-w-5xl px-6 py-12 md:py-16">

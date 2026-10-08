@@ -65,9 +65,9 @@ export const GRANO: Proposta = {
   // Opção 2: perfis de influenciadores. Só o preço final por perfil aparece na página
   // (repasse e margem de gestão ficam fora, é conta interna). Ads = +30% sobre o orgânico.
   perfis: {
-    titulo: "Opção 2: campanha com perfis de influenciadores",
+    titulo: "Perfis de influenciadores pra complementar o plano",
     intro:
-      "Em vez de vídeos pra rodar na conta da Grano, a campanha acontece no perfil de 3 a 4 influenciadores de nicho (alimentação saudável, família, esporte), com até 10 mil seguidores. Cuidamos da seleção, da checagem de público e da aprovação de cada post antes de ir ao ar.",
+      "Pra complementar o plano do último trimestre, incluímos de 2 a 4 perfis de nano e micro influenciadores (até 10 mil seguidores) no Instagram, com repost no TikTok. Seleção por nicho: alimentação saudável e lifestyle, perfil família e esporte (dieta e alimentação). Cuidamos da escolha, da checagem de público e da aprovação de cada post antes de ir ao ar.",
     entrega: ["1 Reels em collab no Instagram", "Repost no TikTok", "2 stories com link"],
     faixas: [
       { nome: "Nano", seguidores: "até 5 mil seguidores", valor: "R$ 850", comAds: "R$ 1.105" },
