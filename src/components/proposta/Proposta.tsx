@@ -37,8 +37,8 @@ export type Proposta = {
     intro: string;
     entrega: string[];
     faixas: { nome: string; seguidores: string; valor: string }[];
-    /** Exemplos de campanha fechada: quantos perfis, quanto no orgânico e quanto com impulsionamento. */
-    cenarios: { rotulo: string; organico: string; comAds: string }[];
+    /** Exemplos de campanha fechada: quantos perfis e quanto fica o total. */
+    cenarios: { rotulo: string; valor: string }[];
     ads: string;
     notas: string[];
   };
@@ -270,7 +270,7 @@ export default function PropostaPage({ p }: { p: Proposta }) {
 
           <div className="mt-8 rounded-2xl border border-border bg-background px-5 py-4">
             <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted">Cada perfil entrega</div>
-            <ul className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-3">
+            <ul className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2">
               {p.perfis.entrega.map((i) => (
                 <li key={i} className="flex items-start gap-2 text-sm">
                   <Check size={16} className="mt-0.5 flex-shrink-0 text-primary" />
@@ -295,16 +295,14 @@ export default function PropostaPage({ p }: { p: Proposta }) {
 
           <div className="mt-8 text-[10px] font-bold uppercase tracking-[0.2em] text-muted">Quanto fica a campanha</div>
           <div className="mt-3 overflow-hidden rounded-3xl border border-primary bg-foreground text-background shadow-xl">
-            <div className="grid grid-cols-[1.4fr_1fr_1fr] gap-x-3 border-b border-background/20 px-5 py-3 text-[10px] font-bold uppercase tracking-[0.15em] text-accent-on-dark md:px-7">
+            <div className="grid grid grid-cols-[1.4fr_1fr] gap-x-3 border-b border-background/20 px-5 py-3 text-[10px] font-bold uppercase tracking-[0.15em] text-accent-on-dark md:px-7">
               <span>Campanha</span>
-              <span className="text-right">Só orgânico</span>
-              <span className="text-right">+ impulsionamento</span>
+              <span className="text-right">Total</span>
             </div>
             {p.perfis.cenarios.map((c) => (
-              <div key={c.rotulo} className="grid grid-cols-[1.4fr_1fr_1fr] items-baseline gap-x-3 border-b border-background/10 px-5 py-4 last:border-b-0 md:px-7">
+              <div key={c.rotulo} className="grid grid-cols-[1.4fr_1fr] items-baseline gap-x-3 border-b border-background/10 px-5 py-4 last:border-b-0 md:px-7">
                 <span className="text-sm font-semibold md:text-base">{c.rotulo}</span>
-                <span className="text-right font-display text-xl font-black md:text-2xl">{c.organico}</span>
-                <span className="text-right font-display text-lg font-bold text-background/70 md:text-xl">{c.comAds}</span>
+                <span className="text-right font-display text-xl font-black md:text-2xl">{c.valor}</span>
               </div>
             ))}
           </div>

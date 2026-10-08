@@ -68,18 +68,18 @@ export const GRANO: Proposta = {
     titulo: "Perfis de influenciadores pra complementar o plano",
     intro:
       "Pra complementar o plano do último trimestre, incluímos de 3 a 4 perfis de nano e micro influenciadores (até 10 mil seguidores) no Instagram, com repost no TikTok. Seleção por nicho: alimentação saudável e lifestyle, perfil família e esporte (dieta e alimentação). Cuidamos da escolha, da checagem de público e da aprovação de cada post antes de ir ao ar.",
-    entrega: ["1 Reels em collab no Instagram", "Repost no TikTok", "2 stories com link"],
+    entrega: ["1 Reels em collab no Instagram", "Repost no TikTok", "2 stories com link", "Impulsionamento do post por 60 dias (partnership ads)"],
     faixas: [
-      { nome: "Nano", seguidores: "até 5 mil seguidores", valor: "R$ 850" },
-      { nome: "Micro", seguidores: "5 a 10 mil seguidores", valor: "R$ 990" },
+      { nome: "Nano", seguidores: "até 5 mil seguidores", valor: "R$ 1.105" },
+      { nome: "Micro", seguidores: "5 a 10 mil seguidores", valor: "R$ 1.287" },
     ],
     cenarios: [
-      { rotulo: "3 perfis nano", organico: "R$ 2.550", comAds: "R$ 3.315" },
-      { rotulo: "4 perfis nano", organico: "R$ 3.400", comAds: "R$ 4.420" },
-      { rotulo: "3 perfis micro", organico: "R$ 2.970", comAds: "R$ 3.861" },
-      { rotulo: "4 perfis micro", organico: "R$ 3.960", comAds: "R$ 5.148" },
+      { rotulo: "3 perfis nano", valor: "R$ 3.315" },
+      { rotulo: "4 perfis nano", valor: "R$ 4.420" },
+      { rotulo: "3 perfis micro", valor: "R$ 3.861" },
+      { rotulo: "4 perfis micro", valor: "R$ 5.148" },
     ],
-    ads: "Impulsionamento = a Grano usar o post do influenciador como anúncio (partnership ads) por 60 dias. Representa um acréscimo de 30% sobre o valor orgânico.",
+    ads: "O valor já inclui o impulsionamento: a Grano pode usar o post do influenciador como anúncio por 60 dias, sem custo adicional.",
     notas: [
       "Mínimo de 3 perfis por campanha.",
       "Com perfis de até 10 mil seguidores, o valor está na credibilidade de nicho e em conteúdo que pode virar anúncio, não em alcance.",
