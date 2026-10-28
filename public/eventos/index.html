@@ -104,12 +104,24 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .rec-tag .rec { width: 6px; height: 6px; box-shadow: none; }
 .reel.r2 .top { right: 100px; }
 
-/* LOGOS */
-.logos { border-block: 1px solid var(--line); padding-block: 36px; }
-.logos .wrap { display: grid; grid-template-columns: 220px 1fr; gap: 32px; align-items: center; }
-.logos p { font-size: 14px; color: var(--muted); }
-.logo-row { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; }
-.logo-row .ph { height: 56px; }
+/* LOGOS: 3 marcas de evento em destaque + as demais do portfólio passando, tudo em branco */
+.logos { border-block: 1px solid var(--line); padding-block: 40px 36px; display: grid; gap: 28px; overflow: hidden; }
+.logos .wrap { display: grid; gap: 18px; width: 100%; }
+.logos-label { font-family: var(--mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.feat-logos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.fl { display: grid; justify-items: center; align-content: space-between; gap: 14px; height: 150px; padding: 26px 16px 18px; border-radius: 18px; background: #fff; text-decoration: none; transition: transform .2s; }
+.fl:hover { transform: translateY(-2px); }
+.fl img { height: 56px; width: auto; max-width: 80%; object-fit: contain; }
+.fl img.zap { height: 110px; margin-block: -27px; }
+.fl img.frooty { height: 72px; margin-block: -8px; }
+.fl span { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); }
+.marquee { overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+.track { display: flex; align-items: center; gap: 40px; width: max-content; }
+.track img { height: 52px; width: auto; max-width: 150px; object-fit: contain; filter: brightness(0) invert(1); opacity: .7; }
+@media (prefers-reduced-motion: no-preference) {
+  .track { animation: logos 60s linear infinite; }
+  @keyframes logos { to { transform: translateX(-50%); } }
+}
 
 /* 01 UGC */
 .split { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center; }
@@ -242,8 +254,6 @@ footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; g
   .plans { grid-template-columns: 1fr 1fr; }
   .case-head { grid-template-columns: 1fr; gap: 20px; }
   .steps { grid-template-columns: 1fr 1fr; }
-  .logos .wrap { grid-template-columns: 1fr; gap: 16px; }
-  .logo-row { grid-template-columns: repeat(3, 1fr); }
   .nav-links { display: none; }
 }
 @media (max-width: 600px) {
@@ -261,6 +271,12 @@ footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; g
   .row-c > div { padding: 14px; font-size: 14px; }
   .card { padding: 24px; }
   .match .m { grid-template-columns: 1fr; }
+  .feat-logos { gap: 8px; }
+  .fl { padding: 18px 8px 12px; height: 110px; }
+  .fl img { height: 34px; }
+  .fl img.zap { height: 70px; margin-block: -18px; }
+  .fl img.frooty { height: 44px; margin-block: -5px; }
+  .fl span { font-size: 9px; letter-spacing: .06em; text-align: center; }
   .strip { margin-right: calc(-1 * max(20px, env(safe-area-inset-right, 0px))); }
   .metrics { gap: 20px; }
   .metrics b { font-size: 22px; }
@@ -311,12 +327,14 @@ footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; g
 
 <div class="logos">
   <div class="wrap">
-    <p>Marcas que já trabalharam com a gente</p>
-    <div class="logo-row">
-      <div class="ph">logo</div><div class="ph">logo</div><div class="ph">logo</div>
-      <div class="ph">logo</div><div class="ph">logo</div><div class="ph">logo</div>
+    <p class="logos-label">Marcas que já trabalharam com a gente</p>
+    <div class="feat-logos">
+      <a class="fl" href="#cases"><img src="/eventos/logos/camainbox.svg" alt="Cama in Box"><span>Mercado Livre Experience</span></a>
+      <a class="fl" href="#cases"><img class="zap" src="/logo-1/42.png" alt="ZAP Imóveis"><span>Casa ZAP</span></a>
+      <a class="fl" href="#cases"><img class="frooty" src="/eventos/logos/frooty.png" alt="Frooty"><span>Netshoes Run</span></a>
     </div>
   </div>
+  <div class="marquee" aria-label="Outras marcas do portfólio"><div class="track"><img src="/logo-1/3.png" alt="" loading="lazy"><img src="/logo-1/2.png" alt="" loading="lazy"><img src="/logo-1/5.png" alt="" loading="lazy"><img src="/logo-1/7.png" alt="" loading="lazy"><img src="/logo-1/14.png" alt="" loading="lazy"><img src="/logo-1/17.png" alt="" loading="lazy"><img src="/logo-1/22.png" alt="" loading="lazy"><img src="/logo-1/24.png" alt="" loading="lazy"><img src="/logo-1/29.png" alt="" loading="lazy"><img src="/logo-1/36.png" alt="" loading="lazy"><img src="/logo-1/39.png" alt="" loading="lazy"><img src="/logo-1/44.png" alt="" loading="lazy"><img src="/logo-1/45.png" alt="" loading="lazy"><img src="/logo-1/46.png" alt="" loading="lazy"><img src="/logo-1/48.png" alt="" loading="lazy"><img src="/logo-1/13.png" alt="" loading="lazy"><img src="/logo-1/41.png" alt="" loading="lazy"><img src="/logo-1/60.png" alt="" loading="lazy"><img src="/logo-1/61.png" alt="" loading="lazy"><img src="/logo-1/6.png" alt="" loading="lazy"><img src="/logo-1/21.png" alt="" loading="lazy"><img src="/logo-1/12.png" alt="" loading="lazy"><img src="/logo-1/11.png" alt="" loading="lazy"><img src="/logo-1/20.png" alt="" loading="lazy"><img src="/logo-1/52.png" alt="" loading="lazy"><img src="/logo-1/9.png" alt="" loading="lazy"><img src="/logo-1/25.png" alt="" loading="lazy"><img src="/logo-1/3.png" alt="" aria-hidden="true" loading="lazy"><img src="/logo-1/2.png" alt="" aria-hidden="true" loading="lazy"><img src="/logo-1/5.png" alt="" aria-hidden="true" loading="lazy"><img src="/logo-1/7.png" alt="" aria-hidden="true" loading="lazy"><img src="/logo-1/14.png" alt="" aria-hidden="true" loading="lazy"><img src="/logo-1/17.png" alt="" aria-hidden="true" loading="lazy"><img src="/logo-1/22.png" alt="" aria-hidden="true" loading="lazy"><img src="/logo-1/24.png" alt="" aria-hidden="true" loading="lazy"><img src="/logo-1/29.png" alt="" aria-hidden="true" loading="lazy"><img src="/logo-1/36.png" alt="" aria-hidden="true" loading="lazy"><img src="/logo-1/39.png" alt="" aria-hidden="true" loading="lazy"><img src="/logo-1/44.png" alt="" aria-hidden="true" loading="lazy"><img src="/logo-1/45.png" alt="" aria-hidden="true" loading="lazy"><img src="/logo-1/46.png" alt="" aria-hidden="true" loading="lazy"><img src="/logo-1/48.png" alt="" aria-hidden="true" loading="lazy"><img src="/logo-1/13.png" alt="" aria-hidden="true" loading="lazy"><img src="/logo-1/41.png" alt="" aria-hidden="true" loading="lazy"><img src="/logo-1/60.png" alt="" aria-hidden="true" loading="lazy"><img src="/logo-1/61.png" alt="" aria-hidden="true" loading="lazy"><img src="/logo-1/6.png" alt="" aria-hidden="true" loading="lazy"><img src="/logo-1/21.png" alt="" aria-hidden="true" loading="lazy"><img src="/logo-1/12.png" alt="" aria-hidden="true" loading="lazy"><img src="/logo-1/11.png" alt="" aria-hidden="true" loading="lazy"><img src="/logo-1/20.png" alt="" aria-hidden="true" loading="lazy"><img src="/logo-1/52.png" alt="" aria-hidden="true" loading="lazy"><img src="/logo-1/9.png" alt="" aria-hidden="true" loading="lazy"><img src="/logo-1/25.png" alt="" aria-hidden="true" loading="lazy"></div></div>
 </div>
 
 <section class="light">
