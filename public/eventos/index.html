@@ -140,20 +140,30 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .fmt li { display: flex; gap: 8px; }
 .fmt li::before { content: "→"; color: var(--accent-soft); }
 
-/* 04 cases */
-.cases { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-.case { background: var(--card); border: 1px solid var(--line); border-radius: 22px; overflow: hidden; display: grid; align-content: start; }
-.case .video { aspect-ratio: 4/5; max-width: 100%; position: relative; background: linear-gradient(180deg, #1C1C24, #111115); }
-.case .video .ph { position: absolute; inset: 14px; place-items: end center; padding-bottom: 20px; }
-.case .play { position: absolute; left: 50%; top: 50%; width: 56px; height: 56px; margin: -28px 0 0 -28px; border-radius: 50%; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.25); display: grid; place-items: center; }
-.case .play::after { content: ""; border-left: 14px solid #fff; border-block: 9px solid transparent; margin-left: 4px; }
-.case .info { padding: 22px 22px 24px; display: grid; gap: 10px; }
-.case .when { font-family: var(--mono); font-size: 12px; color: var(--muted); }
-.case h3 { font-size: 26px; }
-.case p { font-size: 15px; color: var(--muted); }
-.case .metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; border-top: 1px solid var(--line); padding-top: 14px; margin-top: 4px; }
-.case .metrics b { display: block; font-size: 22px; font-weight: 600; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; color: var(--accent-soft); }
-.case .metrics span { font-size: 12px; color: var(--muted); }
+/* 04 cases: cada evento é uma faixa com info em cima e os vídeos rolando na horizontal */
+.cases { display: grid; gap: 72px; }
+.case { display: grid; gap: 28px; }
+.case-head { display: grid; grid-template-columns: 1fr auto; gap: 32px; align-items: end; border-bottom: 1px solid var(--line); padding-bottom: 24px; }
+.case-head > * { min-width: 0; }
+.case-head .when { font-family: var(--mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--accent-soft); }
+.case-head h3 { font-size: clamp(30px, 4vw, 44px); margin-block: 10px 12px; }
+.case-head p { color: var(--muted); max-width: 60ch; }
+.metrics { display: flex; gap: 28px; }
+.metrics b { display: block; font-size: 28px; font-weight: 600; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; color: var(--fg); }
+.metrics span { font-size: 12px; color: var(--muted); }
+.strip { display: flex; gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 12px; scrollbar-width: thin; scrollbar-color: #3A3A46 transparent; }
+.strip > * { flex: 0 0 auto; scroll-snap-align: start; }
+.strip .instagram-media { width: 328px !important; min-width: 326px !important; max-width: 328px !important; margin: 0 !important; border-radius: 16px !important; border: 0 !important; background: #fff; }
+.strip iframe.instagram-media { border-radius: 16px !important; }
+.strip .ig-fallback { display: grid; place-items: center; width: 328px; height: 560px; border-radius: 16px; border: 1px dashed #3A3A46; color: var(--muted); font-family: var(--mono); font-size: 12px; text-decoration: none; }
+.native { position: relative; width: 328px; aspect-ratio: 9/16; max-width: 100%; border-radius: 16px; overflow: hidden; background: #000; }
+.native video { width: 100%; height: 100%; object-fit: cover; display: block; }
+.native .tag { position: absolute; top: 12px; left: 12px; display: flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 10px; letter-spacing: .1em; background: rgba(0,0,0,.55); padding: 5px 9px; border-radius: 6px; }
+.native button { position: absolute; right: 12px; bottom: 12px; border: 0; cursor: pointer; font-family: var(--display); font-size: 13px; font-weight: 600; color: #fff; background: rgba(0,0,0,.55); padding: 8px 12px; border-radius: 100px; }
+.native button:focus-visible { outline: 2px solid var(--accent-soft); }
+.reel video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.reel.has-video .bottom { background: linear-gradient(transparent, rgba(0,0,0,.65)); margin: -14px; padding: 40px 14px 14px; }
+.reel.has-video .loc { color: #E2E0EA; }
 
 /* 05 processo */
 .steps { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
@@ -219,7 +229,8 @@ footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; g
   .reel { width: 190px; }
   .reel.r2 { margin-left: -95px; }
   .formats { grid-template-columns: repeat(2, 1fr); row-gap: 40px; }
-  .cases, .plans { grid-template-columns: 1fr; max-width: 520px; margin-inline: auto; }
+  .plans { grid-template-columns: 1fr; max-width: 520px; margin-inline: auto; }
+  .case-head { grid-template-columns: 1fr; gap: 20px; }
   .steps { grid-template-columns: 1fr 1fr; }
   .logos .wrap { grid-template-columns: 1fr; gap: 16px; }
   .logo-row { grid-template-columns: repeat(3, 1fr); }
@@ -240,6 +251,9 @@ footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; g
   .row-c > div { padding: 14px; font-size: 14px; }
   .card { padding: 24px; }
   .match .m { grid-template-columns: 1fr; }
+  .strip { margin-right: calc(-1 * max(20px, env(safe-area-inset-right, 0px))); }
+  .metrics { gap: 20px; }
+  .metrics b { font-size: 22px; }
   .match .arr { transform: rotate(90deg); justify-self: start; }
   .logo { font-size: 15px; }
   .logo i { display: none; }
@@ -279,7 +293,7 @@ footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; g
     </div>
     <div class="stack" aria-hidden="true">
       <div class="reel r1"><div class="ph">vídeo de creator</div><div class="top"><span class="av"></span>@creator</div><div class="bottom"><span class="loc">Salvador · BA</span><span class="cap">Provei tudo no estande</span></div></div>
-      <div class="reel r2"><div class="ph">vídeo de creator</div><div class="top"><span class="av"></span>@creator</div><span class="rec-tag"><span class="rec"></span>NO EVENTO</span><div class="bottom"><span class="loc">São Paulo · SP</span><span class="cap">O que encontrei na feira hoje</span></div></div>
+      <div class="reel r2 has-video"><video src="/eventos/videos/cama-in-box.mp4" poster="/eventos/videos/cama-in-box.jpg" autoplay muted loop playsinline preload="metadata"></video><span class="rec-tag"><span class="rec"></span>NO EVENTO</span><div class="bottom"><span class="loc">São Paulo · SP</span><span class="cap">Cama in Box na Mercado Livre Experience</span></div></div>
       <div class="reel r3"><div class="ph">vídeo de creator</div><div class="top"><span class="av"></span>@creator</div><div class="bottom"><span class="loc">São Paulo · SP</span><span class="cap">Review sincero do lançamento</span></div></div>
     </div>
   </div>
@@ -362,49 +376,56 @@ footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; g
 
 <section id="cases" style="background:var(--bg-2)">
   <div class="wrap">
-    <div class="head center">
+    <div class="head">
       <span class="eyebrow" data-n="04">Eventos que já fizemos</span>
       <h2>Creators em ação.</h2>
+      <p class="lead">Os vídeos rodam direto do Instagram. Arraste pro lado pra ver todos.</p>
     </div>
     <div class="cases">
       <article class="case">
-        <div class="video"><div class="ph">vídeo do evento</div><span class="play"></span></div>
-        <div class="info">
-          <span class="when"><span class="tbd">mês/ano</span> · <span class="tbd">cidade</span></span>
-          <h3>Coming Box</h3>
-          <p>Ação com várias creators participando do evento. <span class="tbd">detalhe</span></p>
+        <div class="case-head">
+          <div>
+            <span class="when">Ativação em feira · Mercado Livre Experience · SP</span>
+            <h3>Cama in Box</h3>
+            <p>Creators no estande da Cama in Box durante a Mercado Livre Experience, gravando a experiência com o produto e o movimento da feira.</p>
+          </div>
           <div class="metrics">
+            <div><b>4</b><span>vídeos</span></div>
             <div><b><span class="tbd">00</span></b><span>creators</span></div>
-            <div><b><span class="tbd">00</span></b><span>vídeos</span></div>
             <div><b><span class="tbd">00k</span></b><span>views</span></div>
           </div>
         </div>
+        <div class="strip"><div class="native"><video src="/eventos/videos/cama-in-box.mp4" poster="/eventos/videos/cama-in-box.jpg" muted loop playsinline preload="metadata" data-autoplay></video><span class="tag"><span class="rec"></span>NO EVENTO</span><button type="button" data-unmute>Ativar som</button></div><blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/Ddy6F0HxCTf/" data-instgrm-version="14"><a class="ig-fallback" href="https://www.instagram.com/p/Ddy6F0HxCTf/" target="_blank" rel="noopener">Ver no Instagram</a></blockquote><blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DdxCwgBB21i/" data-instgrm-version="14"><a class="ig-fallback" href="https://www.instagram.com/p/DdxCwgBB21i/" target="_blank" rel="noopener">Ver no Instagram</a></blockquote><blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DdwO3ynxyYc/" data-instgrm-version="14"><a class="ig-fallback" href="https://www.instagram.com/p/DdwO3ynxyYc/" target="_blank" rel="noopener">Ver no Instagram</a></blockquote></div>
       </article>
       <article class="case">
-        <div class="video"><div class="ph">vídeo do evento</div><span class="play"></span></div>
-        <div class="info">
-          <span class="when"><span class="tbd">mês/ano</span> · <span class="tbd">cidade</span></span>
-          <h3>Zap Imóveis</h3>
-          <p><span class="tbd">o que foi o evento e o papel dos creators</span></p>
+        <div class="case-head">
+          <div>
+            <span class="when">Cobertura de evento</span>
+            <h3>ZAP Imóveis</h3>
+            <p>Cobertura do evento da ZAP Imóveis com creators: bastidores, conteúdo e destaques publicados no Instagram.</p>
+          </div>
           <div class="metrics">
+            <div><b>5</b><span>vídeos</span></div>
             <div><b><span class="tbd">00</span></b><span>creators</span></div>
-            <div><b><span class="tbd">00</span></b><span>vídeos</span></div>
             <div><b><span class="tbd">00k</span></b><span>views</span></div>
           </div>
         </div>
+        <div class="strip"><blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DHb3wK_OTH6/" data-instgrm-version="14"><a class="ig-fallback" href="https://www.instagram.com/p/DHb3wK_OTH6/" target="_blank" rel="noopener">Ver no Instagram</a></blockquote><blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DHn-h5yOFw5/" data-instgrm-version="14"><a class="ig-fallback" href="https://www.instagram.com/p/DHn-h5yOFw5/" target="_blank" rel="noopener">Ver no Instagram</a></blockquote><blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DHoo7i5P_-_/" data-instgrm-version="14"><a class="ig-fallback" href="https://www.instagram.com/p/DHoo7i5P_-_/" target="_blank" rel="noopener">Ver no Instagram</a></blockquote><blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DHtVGRqNylc/" data-instgrm-version="14"><a class="ig-fallback" href="https://www.instagram.com/p/DHtVGRqNylc/" target="_blank" rel="noopener">Ver no Instagram</a></blockquote><blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DHwZLrNv0iI/" data-instgrm-version="14"><a class="ig-fallback" href="https://www.instagram.com/p/DHwZLrNv0iI/" target="_blank" rel="noopener">Ver no Instagram</a></blockquote></div>
       </article>
       <article class="case">
-        <div class="video"><div class="ph">vídeo do evento</div><span class="play"></span></div>
-        <div class="info">
-          <span class="when"><span class="tbd">mês/ano</span> · <span class="tbd">cidade</span></span>
-          <h3>Corrida <span class="tbd">nome</span></h3>
-          <p>Creators correram e mostraram a experiência por dentro. <span class="tbd">marca</span></p>
+        <div class="case-head">
+          <div>
+            <span class="when">Evento esportivo · corrida</span>
+            <h3>Frooty na corrida</h3>
+            <p>Creators participando da corrida com a Frooty, mostrando a prova e a marca por dentro da experiência.</p>
+          </div>
           <div class="metrics">
+            <div><b>5</b><span>vídeos</span></div>
             <div><b><span class="tbd">00</span></b><span>creators</span></div>
-            <div><b><span class="tbd">00</span></b><span>vídeos</span></div>
             <div><b><span class="tbd">00k</span></b><span>views</span></div>
           </div>
         </div>
+        <div class="strip"><blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DNyKHwI4p_0/" data-instgrm-version="14"><a class="ig-fallback" href="https://www.instagram.com/p/DNyKHwI4p_0/" target="_blank" rel="noopener">Ver no Instagram</a></blockquote><blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DPT8LSZEfO8/" data-instgrm-version="14"><a class="ig-fallback" href="https://www.instagram.com/p/DPT8LSZEfO8/" target="_blank" rel="noopener">Ver no Instagram</a></blockquote><blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DO3pWJSkZDH/" data-instgrm-version="14"><a class="ig-fallback" href="https://www.instagram.com/p/DO3pWJSkZDH/" target="_blank" rel="noopener">Ver no Instagram</a></blockquote><blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DOOfmVHEeQq/" data-instgrm-version="14"><a class="ig-fallback" href="https://www.instagram.com/p/DOOfmVHEeQq/" target="_blank" rel="noopener">Ver no Instagram</a></blockquote><blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DOMpNKnkfVZ/" data-instgrm-version="14"><a class="ig-fallback" href="https://www.instagram.com/p/DOMpNKnkfVZ/" target="_blank" rel="noopener">Ver no Instagram</a></blockquote></div>
       </article>
     </div>
   </div>
@@ -508,5 +529,25 @@ footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; g
   <div class="wrap"><span>Lara Dam · UGC e creators para eventos</span><span>ugc.laradam.com/eventos</span></div>
 </footer>
 
+<script async src="https://www.instagram.com/embed.js"></script>
+<script>
+(function () {
+  var vids = document.querySelectorAll("video[data-autoplay]");
+  if ("IntersectionObserver" in window) {
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { e.isIntersecting ? e.target.play().catch(function () {}) : e.target.pause(); });
+    }, { threshold: 0.4 });
+    vids.forEach(function (v) { io.observe(v); });
+  }
+  document.querySelectorAll("[data-unmute]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      var v = b.parentNode.querySelector("video");
+      v.muted = !v.muted;
+      if (!v.muted) v.play().catch(function () {});
+      b.textContent = v.muted ? "Ativar som" : "Tirar som";
+    });
+  });
+})();
+</script>
 </body>
 </html>
