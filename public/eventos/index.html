@@ -237,31 +237,27 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .proof span { font-size: 15px; color: var(--muted); max-width: 18ch; line-height: 1.3; }
 .btn-wa { background: #25D366; color: #0A0A0C; }
 .btn-wa:hover { background: #1FBE5B; }
-/* simulador de pacote */
-.sim { display: grid; grid-template-columns: 1.1fr .9fr; border-radius: 24px; overflow: hidden; border: 1px solid var(--paper-line); background: #fff; }
-.sim > * { min-width: 0; }
-.sim-controls { padding: 36px; display: grid; gap: 24px; align-content: start; }
-.sim-controls h3 { font-size: 32px; }
-.sim-sub { color: var(--ink-muted); font-size: 15px; margin-top: -12px; }
-.sim fieldset { border: 0; margin: 0; padding: 0; display: grid; gap: 10px; }
-.sim legend { font-family: var(--mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-muted); padding: 0; margin-bottom: 10px; }
-.chips { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
-.chips-wide { grid-template-columns: 1fr 1fr; }
-.chips button { font-family: var(--display); font-size: 16px; font-weight: 600; color: var(--ink); background: var(--paper); border: 1px solid var(--paper-line); border-radius: 14px; padding: 16px 12px; cursor: pointer; transition: background .15s, border-color .15s, color .15s; }
-.chips[data-group="creators"] button { font-size: 24px; letter-spacing: -0.03em; }
-.chips button:hover { border-color: var(--accent); }
-.chips button.on { background: var(--accent); border-color: var(--accent); color: #fff; }
-.chips button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-.sim-result { background: var(--ink); color: var(--fg); padding: 36px; display: grid; gap: 22px; align-content: start; }
-.sim-label { font-family: var(--mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--accent-soft); }
-.sim-qty { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; border-bottom: 1px solid var(--line); padding-bottom: 22px; }
-.sim-qty b { display: block; font-size: 72px; font-weight: 700; letter-spacing: -0.05em; line-height: 1; font-variant-numeric: tabular-nums; }
-.sim-qty span { font-size: 14px; color: var(--muted); }
-.sim-result ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; font-size: 15px; }
-.sim-result li { display: flex; gap: 10px; }
-.sim-result li::before { content: "✓"; color: var(--accent-soft); font-weight: 700; }
-.sim-result .btn { justify-content: center; }
-.sim-result small { font-size: 13px; color: var(--muted); text-align: center; }
+/* tabela de pacotes */
+.cmp { display: grid; gap: 20px; }
+.cmp-head { display: flex; justify-content: space-between; align-items: end; gap: 12px 32px; flex-wrap: wrap; }
+.cmp-head h3 { font-size: 32px; }
+.cmp-head p { color: var(--ink-muted); font-size: 15px; max-width: 56ch; }
+.tbl-wrap { overflow-x: auto; border-radius: 22px; border: 1px solid var(--paper-line); background: #fff; }
+.cmp table { width: 100%; border-collapse: collapse; min-width: 760px; font-size: 15px; }
+.cmp th, .cmp td { padding: 15px 18px; text-align: center; border-bottom: 1px solid var(--paper-line); }
+.cmp tbody th { text-align: left; font-weight: 400; color: var(--ink-muted); }
+.cmp thead th { font-size: 20px; font-weight: 700; letter-spacing: -0.02em; padding-top: 24px; }
+.cmp thead small { display: block; font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-muted); font-weight: 400; margin-bottom: 4px; }
+.cmp .col-feat { background: rgba(123,97,255,.07); }
+.cmp thead .col-feat small { color: var(--accent); }
+.cmp .price-row td { font-size: 24px; font-weight: 700; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+.cmp .price-row small { display: block; font-size: 12px; font-weight: 400; letter-spacing: 0; color: var(--ink-muted); }
+.cmp .y { color: var(--accent); font-weight: 700; }
+.cmp .n { color: #C9C4BA; }
+.cmp tfoot td { border-bottom: 0; padding-block: 18px 24px; }
+.cmp tfoot .btn { padding: 12px 18px; font-size: 14px; }
+.cmp-note { font-size: 14px; color: var(--ink-muted); }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
 /* CTA */
 .final { text-align: center; padding-block: 128px; position: relative; overflow: hidden; }
 .final::before { content: ""; position: absolute; left: 50%; top: 100%; width: 900px; height: 600px; margin-left: -450px; margin-top: -260px; background: radial-gradient(closest-side, rgba(123,97,255,.35), transparent); pointer-events: none; }
@@ -282,7 +278,6 @@ footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; g
   .reel.r2 { margin-left: -95px; }
   .formats { grid-template-columns: repeat(2, 1fr); row-gap: 32px; }
   .grid2 { grid-template-columns: 1fr 1fr; }
-  .sim { grid-template-columns: 1fr; }
   .case-head { grid-template-columns: 1fr; gap: 20px; }
   .steps { grid-template-columns: 1fr 1fr; }
   .nav-links { display: none; }
@@ -298,9 +293,7 @@ footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; g
   .reel.r2 .top { right: 14px; }
   .rec-tag { top: auto; bottom: 64px; right: 14px; }
   .formats, .steps { grid-template-columns: 1fr; }
-  .sim-controls, .sim-result { padding: 24px; }
-  .sim-qty b { font-size: 56px; }
-  .chips-wide { grid-template-columns: 1fr; }
+  .cmp-head h3 { font-size: 26px; }
   .card { padding: 18px; }
   .card h3 { font-size: 17px; }
   .row-c, .compare .hd { gap: 8px; }
@@ -563,44 +556,28 @@ footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; g
         <li>Um ponto de contato, com prazo e fluxo de aprovação</li>
       </ul>
     </div>
-    <div class="sim" id="pacote">
-      <div class="sim-controls">
-        <h3>Monte seu pacote</h3>
-        <p class="sim-sub">Escolha quantas creators e o formato. A proposta com valores chega no seu WhatsApp.</p>
-        <fieldset>
-          <legend>Quantas creators?</legend>
-          <div class="chips" data-group="creators">
-            <button type="button" data-v="2">2</button>
-            <button type="button" data-v="3" class="on">3</button>
-            <button type="button" data-v="5">5</button>
-            <button type="button" data-v="10">10+</button>
-          </div>
-        </fieldset>
-        <fieldset>
-          <legend>Formato</legend>
-          <div class="chips chips-wide" data-group="formato">
-            <button type="button" data-v="UGC de estande" class="on">UGC de estande</button>
-            <button type="button" data-v="Captação coletiva">Captação coletiva</button>
-            <button type="button" data-v="Cobertura do evento">Cobertura do evento</button>
-            <button type="button" data-v="Conteúdo pras páginas">Conteúdo o ano todo</button>
-          </div>
-        </fieldset>
+    <div class="cmp" id="pacote">
+      <div class="cmp-head">
+        <h3>Compare os pacotes</h3>
+        <p>Valores de referência por evento. O valor final depende da cidade, dos dias de evento, do deslocamento e do número de marcas.</p>
       </div>
-      <div class="sim-result" aria-live="polite">
-        <span class="sim-label" id="sim-name">Pacote Destaque</span>
-        <div class="sim-qty">
-          <div><b id="sim-cr">3</b><span>creators</span></div>
-          <div><b id="sim-ct">6</b><span>conteúdos</span></div>
-        </div>
-        <ul>
-          <li>Casting local na cidade do evento</li>
-          <li>Roteiro aprovado antes da gravação</li>
-          <li>Captação no evento e edição</li>
-          <li id="sim-extra">Entrega pronta pra Reels, TikTok e anúncios</li>
-        </ul>
-        <a class="btn btn-wa" id="sim-cta" href="https://wa.me/5512988729264?text=Oi%20Lara!%20Vim%20pela%20p%C3%A1gina%20de%20eventos%20e%20quero%20uma%20proposta%20de%20UGC." target="_blank" rel="noopener">Pedir orçamento no WhatsApp</a>
-        <small>Resposta com valores e disponibilidade de creators.</small>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th scope="col"><span class="sr">Item</span></th><th scope="col"><small>Essencial</small>2 creators</th><th scope="col" class="col-feat"><small>Destaque · mais pedido</small>3 creators</th><th scope="col"><small>Completo</small>5 creators</th><th scope="col"><small>Personalizado</small>10+ creators</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Conteúdos</th><td>4</td><td class="col-feat">6</td><td>10</td><td>20+</td></tr>
+            <tr><th scope="row">Dias de evento</th><td>1</td><td class="col-feat">1</td><td>até 2</td><td>a combinar</td></tr>
+            <tr><th scope="row">Casting local e roteiro</th><td><span class="y">✓</span></td><td class="col-feat"><span class="y">✓</span></td><td><span class="y">✓</span></td><td><span class="y">✓</span></td></tr>
+            <tr><th scope="row">Captação no evento e edição</th><td><span class="y">✓</span></td><td class="col-feat"><span class="y">✓</span></td><td><span class="y">✓</span></td><td><span class="y">✓</span></td></tr>
+            <tr><th scope="row">Stories no dia</th><td><span class="n">—</span></td><td class="col-feat"><span class="y">✓</span></td><td><span class="y">✓</span></td><td><span class="y">✓</span></td></tr>
+            <tr><th scope="row">Várias marcas no mesmo evento</th><td><span class="n">—</span></td><td class="col-feat"><span class="n">—</span></td><td><span class="y">✓</span></td><td><span class="y">✓</span></td></tr>
+            <tr><th scope="row">Direito de uso</th><td>3 meses</td><td class="col-feat">3 meses</td><td>6 meses</td><td>a combinar</td></tr>
+            <tr class="price-row"><th scope="row">Investimento</th><td><small>a partir de</small>R$ 3.200</td><td class="col-feat"><small>a partir de</small>R$ 4.500</td><td><small>a partir de</small>R$ 6.900</td><td><small>a partir de</small>R$ 12.800</td></tr>
+          </tbody>
+          <tfoot><tr><td></td><td><a class="btn btn-line" href="https://wa.me/5512988729264?text=Oi%20Lara%21%20Vim%20pela%20p%C3%A1gina%20de%20eventos%20e%20tenho%20interesse%20no%20pacote%20Essencial%20%282%20creators%2C%204%20conte%C3%BAdos%29.%20Evento%3A%20" target="_blank" rel="noopener">Quero esse</a></td><td class="col-feat"><a class="btn btn-wa" href="https://wa.me/5512988729264?text=Oi%20Lara%21%20Vim%20pela%20p%C3%A1gina%20de%20eventos%20e%20tenho%20interesse%20no%20pacote%20Destaque%20%283%20creators%2C%206%20conte%C3%BAdos%29.%20Evento%3A%20" target="_blank" rel="noopener">Quero esse</a></td><td><a class="btn btn-line" href="https://wa.me/5512988729264?text=Oi%20Lara%21%20Vim%20pela%20p%C3%A1gina%20de%20eventos%20e%20tenho%20interesse%20no%20pacote%20Completo%20%285%20creators%2C%2010%20conte%C3%BAdos%29.%20Evento%3A%20" target="_blank" rel="noopener">Quero esse</a></td><td><a class="btn btn-line" href="https://wa.me/5512988729264?text=Oi%20Lara%21%20Vim%20pela%20p%C3%A1gina%20de%20eventos%20e%20tenho%20interesse%20no%20pacote%20Personalizado%20%2810%2B%20creators%29.%20Evento%3A%20" target="_blank" rel="noopener">Montar o meu</a></td></tr></tfoot>
+        </table>
       </div>
+      <p class="cmp-note">Evento externo, fora de São Paulo ou com mais de um dia? A gente monta a proposta junto com você.</p>
     </div>
   </div>
 </section>
@@ -633,38 +610,6 @@ document.querySelectorAll(".native").forEach(function (box) {
   v.addEventListener("pause", function () { box.classList.remove("playing"); });
   v.addEventListener("ended", function () { box.classList.remove("playing"); v.currentTime = 0; });
 });
-</script>
-<script>
-(function () {
-  var state = { creators: 3, formato: "UGC de estande" };
-  var names = { 2: "Pacote Essencial", 3: "Pacote Destaque", 5: "Pacote Completo", 10: "Pacote Personalizado" };
-  var extras = {
-    "UGC de estande": "Entrega pronta pra Reels, TikTok e anúncios",
-    "Captação coletiva": "Agenda por estande, várias marcas no mesmo dia",
-    "Cobertura do evento": "Stories e Reels de destaques do evento",
-    "Conteúdo pras páginas": "Calendário mensal entre uma edição e outra"
-  };
-  function render() {
-    var c = state.creators, big = c >= 10;
-    document.getElementById("sim-name").textContent = names[c];
-    document.getElementById("sim-cr").textContent = big ? "10+" : c;
-    document.getElementById("sim-ct").textContent = big ? "20+" : c * 2;
-    document.getElementById("sim-extra").textContent = extras[state.formato];
-    var msg = "Oi Lara! Vim pela página de eventos. Quero um orçamento: " + (big ? "10 ou mais" : c) + " creators, " + (big ? "20 ou mais" : c * 2) + " conteúdos, formato " + state.formato + ". Evento: ";
-    document.getElementById("sim-cta").href = "https://wa.me/5512988729264?text=" + encodeURIComponent(msg);
-  }
-  document.querySelectorAll(".chips").forEach(function (group) {
-    group.addEventListener("click", function (e) {
-      var b = e.target.closest("button"); if (!b) return;
-      group.querySelectorAll("button").forEach(function (x) { x.classList.remove("on"); x.setAttribute("aria-pressed", "false"); });
-      b.classList.add("on"); b.setAttribute("aria-pressed", "true");
-      var key = group.getAttribute("data-group");
-      state[key] = key === "creators" ? Number(b.getAttribute("data-v")) : b.getAttribute("data-v");
-      render();
-    });
-  });
-  render();
-})();
 </script>
 </body>
 </html>
