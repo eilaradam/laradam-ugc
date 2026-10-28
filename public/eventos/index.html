@@ -153,10 +153,10 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .metrics span { font-size: 12px; color: var(--muted); }
 .strip { display: flex; gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 12px; scrollbar-width: thin; scrollbar-color: #3A3A46 transparent; }
 .strip > * { flex: 0 0 auto; scroll-snap-align: start; }
-.strip .instagram-media { width: 328px !important; min-width: 326px !important; max-width: 328px !important; margin: 0 !important; border-radius: 16px !important; border: 0 !important; background: #fff; }
-.strip iframe.instagram-media { border-radius: 16px !important; }
-.strip .ig-fallback { display: grid; place-items: center; width: 328px; height: 560px; border-radius: 16px; border: 1px dashed #3A3A46; color: var(--muted); font-family: var(--mono); font-size: 12px; text-decoration: none; }
-.native { position: relative; width: 328px; aspect-ratio: 9/16; max-width: 100%; border-radius: 16px; overflow: hidden; background: #000; }
+/* recorte do player do Instagram: o iframe tem 540px de largura; o vídeo 9:16 fica em x 82-458, y 56-724. Só essa área aparece, sem cabeçalho, curtidas e rodapé. */
+.igv { position: relative; width: 300px; height: 533px; border-radius: 16px; overflow: hidden; background: #000; }
+.igv iframe { position: absolute; left: 0; top: 0; width: 540px; height: 900px; border: 0; transform-origin: 0 0; transform: scale(0.798) translate(-82px, -56px); }
+.native { position: relative; width: 300px; aspect-ratio: 9/16; max-width: 100%; border-radius: 16px; overflow: hidden; background: #000; }
 .native video { width: 100%; height: 100%; object-fit: cover; display: block; }
 .native .tag { position: absolute; top: 12px; left: 12px; display: flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 10px; letter-spacing: .1em; background: rgba(0,0,0,.55); padding: 5px 9px; border-radius: 6px; }
 .native button { position: absolute; right: 12px; bottom: 12px; border: 0; cursor: pointer; font-family: var(--display); font-size: 13px; font-weight: 600; color: #fff; background: rgba(0,0,0,.55); padding: 8px 12px; border-radius: 100px; }
@@ -379,7 +379,7 @@ footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; g
     <div class="head">
       <span class="eyebrow" data-n="04">Eventos que já fizemos</span>
       <h2>Creators em ação.</h2>
-      <p class="lead">Os vídeos rodam direto do Instagram. Arraste pro lado pra ver todos.</p>
+      <p class="lead">Toque no vídeo pra assistir. Arraste pro lado pra ver todos.</p>
     </div>
     <div class="cases">
       <article class="case">
@@ -395,7 +395,7 @@ footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; g
             <div><b><span class="tbd">00k</span></b><span>views</span></div>
           </div>
         </div>
-        <div class="strip"><div class="native"><video src="/eventos/videos/cama-in-box.mp4" poster="/eventos/videos/cama-in-box.jpg" muted loop playsinline preload="metadata" data-autoplay></video><span class="tag"><span class="rec"></span>NO EVENTO</span><button type="button" data-unmute>Ativar som</button></div><blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/Ddy6F0HxCTf/" data-instgrm-version="14"><a class="ig-fallback" href="https://www.instagram.com/p/Ddy6F0HxCTf/" target="_blank" rel="noopener">Ver no Instagram</a></blockquote><blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DdxCwgBB21i/" data-instgrm-version="14"><a class="ig-fallback" href="https://www.instagram.com/p/DdxCwgBB21i/" target="_blank" rel="noopener">Ver no Instagram</a></blockquote><blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DdwO3ynxyYc/" data-instgrm-version="14"><a class="ig-fallback" href="https://www.instagram.com/p/DdwO3ynxyYc/" target="_blank" rel="noopener">Ver no Instagram</a></blockquote></div>
+        <div class="strip"><div class="native"><video src="/eventos/videos/cama-in-box.mp4" poster="/eventos/videos/cama-in-box.jpg" muted loop playsinline preload="metadata" data-autoplay></video><span class="tag"><span class="rec"></span>NO EVENTO</span><button type="button" data-unmute>Ativar som</button></div><div class="igv"><iframe src="https://www.instagram.com/p/Ddy6F0HxCTf/embed/" loading="lazy" scrolling="no" title="Vídeo do evento" allow="autoplay; encrypted-media; fullscreen"></iframe></div><div class="igv"><iframe src="https://www.instagram.com/p/DdxCwgBB21i/embed/" loading="lazy" scrolling="no" title="Vídeo do evento" allow="autoplay; encrypted-media; fullscreen"></iframe></div><div class="igv"><iframe src="https://www.instagram.com/p/DdwO3ynxyYc/embed/" loading="lazy" scrolling="no" title="Vídeo do evento" allow="autoplay; encrypted-media; fullscreen"></iframe></div></div>
       </article>
       <article class="case">
         <div class="case-head">
@@ -410,14 +410,14 @@ footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; g
             <div><b><span class="tbd">00k</span></b><span>views</span></div>
           </div>
         </div>
-        <div class="strip"><blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DHb3wK_OTH6/" data-instgrm-version="14"><a class="ig-fallback" href="https://www.instagram.com/p/DHb3wK_OTH6/" target="_blank" rel="noopener">Ver no Instagram</a></blockquote><blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DHn-h5yOFw5/" data-instgrm-version="14"><a class="ig-fallback" href="https://www.instagram.com/p/DHn-h5yOFw5/" target="_blank" rel="noopener">Ver no Instagram</a></blockquote><blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DHoo7i5P_-_/" data-instgrm-version="14"><a class="ig-fallback" href="https://www.instagram.com/p/DHoo7i5P_-_/" target="_blank" rel="noopener">Ver no Instagram</a></blockquote><blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DHtVGRqNylc/" data-instgrm-version="14"><a class="ig-fallback" href="https://www.instagram.com/p/DHtVGRqNylc/" target="_blank" rel="noopener">Ver no Instagram</a></blockquote><blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DHwZLrNv0iI/" data-instgrm-version="14"><a class="ig-fallback" href="https://www.instagram.com/p/DHwZLrNv0iI/" target="_blank" rel="noopener">Ver no Instagram</a></blockquote></div>
+        <div class="strip"><div class="igv"><iframe src="https://www.instagram.com/p/DHb3wK_OTH6/embed/" loading="lazy" scrolling="no" title="Vídeo do evento" allow="autoplay; encrypted-media; fullscreen"></iframe></div><div class="igv"><iframe src="https://www.instagram.com/p/DHn-h5yOFw5/embed/" loading="lazy" scrolling="no" title="Vídeo do evento" allow="autoplay; encrypted-media; fullscreen"></iframe></div><div class="igv"><iframe src="https://www.instagram.com/p/DHoo7i5P_-_/embed/" loading="lazy" scrolling="no" title="Vídeo do evento" allow="autoplay; encrypted-media; fullscreen"></iframe></div><div class="igv"><iframe src="https://www.instagram.com/p/DHtVGRqNylc/embed/" loading="lazy" scrolling="no" title="Vídeo do evento" allow="autoplay; encrypted-media; fullscreen"></iframe></div><div class="igv"><iframe src="https://www.instagram.com/p/DHwZLrNv0iI/embed/" loading="lazy" scrolling="no" title="Vídeo do evento" allow="autoplay; encrypted-media; fullscreen"></iframe></div></div>
       </article>
       <article class="case">
         <div class="case-head">
           <div>
-            <span class="when">Evento esportivo · corrida</span>
+            <span class="when">Evento esportivo · Netshoes Run</span>
             <h3>Frooty na corrida</h3>
-            <p>Creators participando da corrida com a Frooty, mostrando a prova e a marca por dentro da experiência.</p>
+            <p>Creators na Netshoes Run com a Frooty, no lançamento do açaí cremoso: a prova, a medalha e o produto na mão.</p>
           </div>
           <div class="metrics">
             <div><b>5</b><span>vídeos</span></div>
@@ -425,7 +425,7 @@ footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; g
             <div><b><span class="tbd">00k</span></b><span>views</span></div>
           </div>
         </div>
-        <div class="strip"><blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DNyKHwI4p_0/" data-instgrm-version="14"><a class="ig-fallback" href="https://www.instagram.com/p/DNyKHwI4p_0/" target="_blank" rel="noopener">Ver no Instagram</a></blockquote><blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DPT8LSZEfO8/" data-instgrm-version="14"><a class="ig-fallback" href="https://www.instagram.com/p/DPT8LSZEfO8/" target="_blank" rel="noopener">Ver no Instagram</a></blockquote><blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DO3pWJSkZDH/" data-instgrm-version="14"><a class="ig-fallback" href="https://www.instagram.com/p/DO3pWJSkZDH/" target="_blank" rel="noopener">Ver no Instagram</a></blockquote><blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DOOfmVHEeQq/" data-instgrm-version="14"><a class="ig-fallback" href="https://www.instagram.com/p/DOOfmVHEeQq/" target="_blank" rel="noopener">Ver no Instagram</a></blockquote><blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DOMpNKnkfVZ/" data-instgrm-version="14"><a class="ig-fallback" href="https://www.instagram.com/p/DOMpNKnkfVZ/" target="_blank" rel="noopener">Ver no Instagram</a></blockquote></div>
+        <div class="strip"><div class="igv"><iframe src="https://www.instagram.com/p/DNyKHwI4p_0/embed/" loading="lazy" scrolling="no" title="Vídeo do evento" allow="autoplay; encrypted-media; fullscreen"></iframe></div><div class="igv"><iframe src="https://www.instagram.com/p/DPT8LSZEfO8/embed/" loading="lazy" scrolling="no" title="Vídeo do evento" allow="autoplay; encrypted-media; fullscreen"></iframe></div><div class="igv"><iframe src="https://www.instagram.com/p/DO3pWJSkZDH/embed/" loading="lazy" scrolling="no" title="Vídeo do evento" allow="autoplay; encrypted-media; fullscreen"></iframe></div><div class="igv"><iframe src="https://www.instagram.com/p/DOOfmVHEeQq/embed/" loading="lazy" scrolling="no" title="Vídeo do evento" allow="autoplay; encrypted-media; fullscreen"></iframe></div><div class="igv"><iframe src="https://www.instagram.com/p/DOMpNKnkfVZ/embed/" loading="lazy" scrolling="no" title="Vídeo do evento" allow="autoplay; encrypted-media; fullscreen"></iframe></div></div>
       </article>
     </div>
   </div>
@@ -529,7 +529,6 @@ footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; g
   <div class="wrap"><span>Lara Dam · UGC e creators para eventos</span><span>ugc.laradam.com/eventos</span></div>
 </footer>
 
-<script async src="https://www.instagram.com/embed.js"></script>
 <script>
 (function () {
   var vids = document.querySelectorAll("video[data-autoplay]");
