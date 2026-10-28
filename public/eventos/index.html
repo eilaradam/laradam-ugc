@@ -158,9 +158,11 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .igv iframe { position: absolute; left: 0; top: 0; width: 540px; height: 900px; border: 0; transform-origin: 0 0; transform: scale(0.798) translate(-82px, -56px); }
 .native { position: relative; width: 300px; aspect-ratio: 9/16; max-width: 100%; border-radius: 16px; overflow: hidden; background: #000; }
 .native video { width: 100%; height: 100%; object-fit: cover; display: block; }
-.native .tag { position: absolute; top: 12px; left: 12px; display: flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 10px; letter-spacing: .1em; background: rgba(0,0,0,.55); padding: 5px 9px; border-radius: 6px; }
-.native button { position: absolute; right: 12px; bottom: 12px; border: 0; cursor: pointer; font-family: var(--display); font-size: 13px; font-weight: 600; color: #fff; background: rgba(0,0,0,.55); padding: 8px 12px; border-radius: 100px; }
-.native button:focus-visible { outline: 2px solid var(--accent-soft); }
+/* mesmo play do player do Instagram: triângulo branco no centro, toque em cima pra assistir */
+.native .play-btn { position: absolute; inset: 0; width: 100%; border: 0; padding: 0; background: transparent; cursor: pointer; }
+.native .play-btn::after { content: ""; position: absolute; left: 50%; top: 50%; margin: -24px 0 0 -14px; border-left: 38px solid #fff; border-block: 24px solid transparent; filter: drop-shadow(0 2px 6px rgba(0,0,0,.35)); opacity: .92; transition: opacity .2s; }
+.native.playing .play-btn::after { opacity: 0; }
+.native .play-btn:focus-visible { outline: 2px solid var(--accent-soft); outline-offset: -4px; border-radius: 16px; }
 .reel video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .reel.has-video .bottom { background: linear-gradient(transparent, rgba(0,0,0,.65)); margin: -14px; padding: 40px 14px 14px; }
 .reel.has-video .loc { color: #E2E0EA; }
@@ -395,7 +397,7 @@ footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; g
             <div><b><span class="tbd">00k</span></b><span>views</span></div>
           </div>
         </div>
-        <div class="strip"><div class="native"><video src="/eventos/videos/cama-in-box.mp4" poster="/eventos/videos/cama-in-box.jpg" muted loop playsinline preload="metadata" data-autoplay></video><span class="tag"><span class="rec"></span>NO EVENTO</span><button type="button" data-unmute>Ativar som</button></div><div class="igv"><iframe src="https://www.instagram.com/p/Ddy6F0HxCTf/embed/" loading="lazy" scrolling="no" title="Vídeo do evento" allow="autoplay; encrypted-media; fullscreen"></iframe></div><div class="igv"><iframe src="https://www.instagram.com/p/DdxCwgBB21i/embed/" loading="lazy" scrolling="no" title="Vídeo do evento" allow="autoplay; encrypted-media; fullscreen"></iframe></div><div class="igv"><iframe src="https://www.instagram.com/p/DdwO3ynxyYc/embed/" loading="lazy" scrolling="no" title="Vídeo do evento" allow="autoplay; encrypted-media; fullscreen"></iframe></div></div>
+        <div class="strip"><div class="native"><video src="/eventos/videos/cama-in-box.mp4" poster="/eventos/videos/cama-in-box.jpg" playsinline preload="metadata"></video><button type="button" class="play-btn" aria-label="Assistir vídeo"></button></div><div class="igv"><iframe src="https://www.instagram.com/p/Ddy6F0HxCTf/embed/" loading="lazy" scrolling="no" title="Vídeo do evento" allow="autoplay; encrypted-media; fullscreen"></iframe></div><div class="igv"><iframe src="https://www.instagram.com/p/DdxCwgBB21i/embed/" loading="lazy" scrolling="no" title="Vídeo do evento" allow="autoplay; encrypted-media; fullscreen"></iframe></div><div class="igv"><iframe src="https://www.instagram.com/p/DdwO3ynxyYc/embed/" loading="lazy" scrolling="no" title="Vídeo do evento" allow="autoplay; encrypted-media; fullscreen"></iframe></div></div>
       </article>
       <article class="case">
         <div class="case-head">
@@ -530,23 +532,15 @@ footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; g
 </footer>
 
 <script>
-(function () {
-  var vids = document.querySelectorAll("video[data-autoplay]");
-  if ("IntersectionObserver" in window) {
-    var io = new IntersectionObserver(function (es) {
-      es.forEach(function (e) { e.isIntersecting ? e.target.play().catch(function () {}) : e.target.pause(); });
-    }, { threshold: 0.4 });
-    vids.forEach(function (v) { io.observe(v); });
-  }
-  document.querySelectorAll("[data-unmute]").forEach(function (b) {
-    b.addEventListener("click", function () {
-      var v = b.parentNode.querySelector("video");
-      v.muted = !v.muted;
-      if (!v.muted) v.play().catch(function () {});
-      b.textContent = v.muted ? "Ativar som" : "Tirar som";
-    });
+document.querySelectorAll(".native").forEach(function (box) {
+  var v = box.querySelector("video");
+  box.querySelector(".play-btn").addEventListener("click", function () {
+    if (v.paused) { v.play().catch(function () {}); } else { v.pause(); }
   });
-})();
+  v.addEventListener("play", function () { box.classList.add("playing"); });
+  v.addEventListener("pause", function () { box.classList.remove("playing"); });
+  v.addEventListener("ended", function () { box.classList.remove("playing"); v.currentTime = 0; });
+});
 </script>
 </body>
 </html>
