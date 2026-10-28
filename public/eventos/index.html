@@ -1,0 +1,501 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Creators locais para feiras e eventos. Casting por cidade, captação no evento e vídeos UGC prontos para cada patrocinador.">
+<meta property="og:title" content="Lara Dam Eventos · UGC para feiras e eventos">
+<meta property="og:description" content="Creators da cidade dentro do seu evento. Conteúdo pronto para cada patrocinador.">
+<style>html,body{margin:0;padding:0} img{max-width:100%} [hidden]{display:none!important}</style>
+<title>Lara Dam Eventos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800;900&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=DM+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: faixas alternadas bege/grafite, cada seção como uma "área" de feira; a credencial de creator é o elemento-assinatura. */
+:root {
+  --red: #C8441A;
+  --red-dark: #A3360F;
+  --ink: #1B1B1B;
+  --cream: #FFF8F2;
+  --sand: #EEEDE9;
+  --line: #E8E0D8;
+  --muted: #5A524C;
+  --white: #FFFFFF;
+  --on-ink-muted: #B9AFA7;
+  --display: "Montserrat", "Helvetica Neue", Arial, sans-serif;
+  --body: "DM Sans", "Helvetica Neue", Arial, sans-serif;
+  --mono: "DM Mono", ui-monospace, Menlo, monospace;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+body { background: var(--cream); color: var(--ink); font-family: var(--body); font-size: 17px; line-height: 1.6; }
+h1, h2, h3 { font-family: var(--display); line-height: 1.05; margin: 0; text-wrap: balance; letter-spacing: -0.02em; }
+p { margin: 0; }
+a { color: inherit; }
+.wrap { max-width: 1200px; margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
+section { padding-block: 96px; }
+.band-ink { background: var(--ink); color: var(--white); }
+.band-sand { background: var(--sand); }
+.band-red { background: var(--red); color: var(--white); }
+.eyebrow { font-family: var(--display); font-weight: 700; font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--red); }
+.band-ink .eyebrow { color: #F08A63; }
+.band-red .eyebrow { color: var(--ink); }
+h2 { font-size: clamp(34px, 5vw, 54px); font-weight: 800; }
+.lead { font-size: 19px; color: var(--muted); max-width: 60ch; }
+.band-ink .lead { color: var(--on-ink-muted); }
+.head { display: grid; gap: 16px; margin-bottom: 48px; }
+
+/* placeholder: o que a Lara ainda precisa preencher */
+.ph { font-family: var(--mono); font-size: 13px; color: var(--red); border: 1.5px dashed var(--red); border-radius: 8px; display: grid; place-items: center; text-align: center; padding: 12px; background: rgba(200,68,26,0.04); }
+.band-ink .ph { color: #F08A63; border-color: #F08A63; background: rgba(240,138,99,0.06); }
+.tag-ph { font-family: var(--mono); font-size: 0.85em; color: var(--red); background: rgba(200,68,26,0.08); padding: 0 6px; border-radius: 4px; white-space: nowrap; }
+.band-ink .tag-ph { color: #F08A63; background: rgba(240,138,99,0.12); }
+
+.btn { display: inline-flex; align-items: center; gap: 10px; background: var(--red); color: var(--white); font-family: var(--body); font-weight: 700; font-size: 16px; padding: 16px 30px; border-radius: 100px; text-decoration: none; border: 0; cursor: pointer; transition: background .2s; }
+.btn:hover { background: var(--red-dark); }
+.btn:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+.btn-ghost { background: transparent; color: inherit; box-shadow: inset 0 0 0 2px currentColor; }
+.btn-ghost:hover { background: rgba(255,255,255,0.08); }
+
+/* NAV */
+.nav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: var(--ink); color: var(--white); }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 30; background: var(--ink); }
+.nav .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 14px; }
+.logo { font-family: var(--display); font-weight: 900; font-size: 18px; letter-spacing: -0.01em; }
+.logo span { color: var(--red); }
+.nav-links { display: flex; gap: 28px; font-size: 14px; font-weight: 500; }
+.nav-links a { text-decoration: none; opacity: .8; }
+.nav-links a:hover { opacity: 1; }
+.nav .btn { padding: 10px 20px; font-size: 14px; }
+
+/* HERO */
+.hero { background: var(--ink); color: var(--white); padding-block: 72px 96px; overflow: hidden; }
+.hero .wrap { display: grid; grid-template-columns: 1.25fr 0.75fr; gap: 56px; align-items: center; }
+.hero h1 { font-size: clamp(44px, 7.4vw, 96px); font-weight: 900; }
+.hero h1 em { font-style: normal; color: var(--red); }
+.hero-copy { display: grid; gap: 28px; min-width: 0; }
+.hero-copy .lead { color: var(--on-ink-muted); font-size: 20px; }
+.ctas { display: flex; flex-wrap: wrap; gap: 12px; }
+
+/* Credencial */
+.pass-wrap { display: grid; justify-items: center; }
+.lanyard { width: 34px; height: 64px; background: repeating-linear-gradient(90deg, var(--red) 0 6px, var(--red-dark) 6px 12px); border-radius: 0 0 4px 4px; }
+.pass { width: min(320px, 100%); background: var(--cream); color: var(--ink); border-radius: 18px; overflow: hidden; transform: rotate(3deg); box-shadow: 0 30px 60px rgba(0,0,0,.45); margin-top: -6px; }
+.pass-hole { width: 54px; height: 10px; border-radius: 10px; background: var(--ink); margin: 14px auto 0; }
+.pass-top { background: var(--red); color: var(--white); padding: 18px 22px; margin-top: 14px; }
+.pass-top small { font-family: var(--mono); font-size: 11px; letter-spacing: .12em; opacity: .9; }
+.pass-top b { display: block; font-family: var(--display); font-weight: 900; font-size: 40px; letter-spacing: .02em; line-height: 1; margin-top: 4px; }
+.pass-body { padding: 18px 22px 22px; display: grid; gap: 12px; }
+.pass-row { display: grid; grid-template-columns: 80px 1fr; gap: 8px; font-size: 14px; border-bottom: 1px solid var(--line); padding-bottom: 10px; }
+.pass-row span:first-child { font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); padding-top: 2px; }
+.pass-row span:last-child { font-weight: 700; }
+.barcode { height: 38px; background: repeating-linear-gradient(90deg, var(--ink) 0 2px, transparent 2px 4px, var(--ink) 4px 7px, transparent 7px 9px, var(--ink) 9px 10px, transparent 10px 13px); }
+
+/* Faixa de logos */
+.logos { padding-block: 40px; background: var(--cream); border-bottom: 1px solid var(--line); }
+.logos .wrap { display: grid; gap: 18px; }
+.logos p { font-family: var(--mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.logo-row { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; }
+.logo-row .ph { height: 64px; }
+
+/* O que é UGC */
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+.split > * { min-width: 0; }
+.vs { display: grid; grid-template-columns: 1fr 1fr; border-radius: 14px; overflow: hidden; }
+.vs > div { padding: 28px 24px; display: grid; gap: 14px; align-content: start; }
+.vs .old { background: var(--white); border: 1px solid var(--line); border-right: 0; border-radius: 14px 0 0 14px; }
+.vs .new { background: var(--red); color: var(--white); }
+.vs h3 { font-size: 15px; letter-spacing: .08em; text-transform: uppercase; font-weight: 800; }
+.vs ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; font-size: 15px; }
+.vs .old li { color: var(--muted); }
+.vs .old li::before { content: "✕  "; color: #B8AEA6; }
+.vs .new li::before { content: "✓  "; color: #FFD8C8; font-weight: 700; }
+
+/* Por que em eventos */
+.reasons { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: rgba(255,255,255,.12); border-radius: 16px; overflow: hidden; }
+.reason { background: var(--ink); padding: 36px 32px; display: grid; gap: 12px; align-content: start; }
+.reason .big { font-family: var(--display); font-weight: 900; font-size: 46px; color: var(--red); line-height: 1; }
+.reason h3 { font-size: 22px; font-weight: 700; }
+.reason p { color: var(--on-ink-muted); font-size: 16px; }
+
+/* Formatos */
+.formats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.format { background: var(--white); border: 1px solid var(--line); border-radius: 14px; padding: 26px 22px; display: grid; gap: 12px; align-content: start; }
+.format .k { font-family: var(--mono); font-size: 12px; color: var(--red); letter-spacing: .08em; text-transform: uppercase; }
+.format h3 { font-size: 20px; font-weight: 800; }
+.format p { font-size: 15px; color: var(--muted); }
+.format ul { margin: 0; padding-left: 18px; font-size: 14px; color: var(--ink); display: grid; gap: 4px; }
+
+/* Cases */
+.cases { display: grid; gap: 28px; }
+.case { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 40px; padding: 32px; background: var(--white); border: 1px solid var(--line); border-radius: 18px; align-items: center; }
+.case > * { min-width: 0; }
+.reels { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.reels .ph { aspect-ratio: 9/16; max-width: 100%; font-size: 11px; }
+.case-info { display: grid; gap: 16px; }
+.case-info .when { font-family: var(--mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.case-info h3 { font-size: clamp(28px, 3.4vw, 40px); font-weight: 900; }
+.case-info p { color: var(--muted); }
+.stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; border-top: 1px solid var(--line); padding-top: 16px; }
+.stat b { display: block; font-family: var(--mono); font-weight: 500; font-size: 30px; color: var(--red); line-height: 1.1; font-variant-numeric: tabular-nums; }
+.stat span { font-size: 13px; color: var(--muted); }
+
+/* Processo */
+.steps { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0; counter-reset: s; }
+.step { padding: 0 20px 0 0; display: grid; gap: 10px; align-content: start; position: relative; }
+.step .n { font-family: var(--mono); font-size: 13px; color: var(--white); background: var(--red); width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; position: relative; z-index: 1; }
+.step::before { content: ""; position: absolute; top: 17px; left: 34px; right: 0; height: 2px; background: var(--line); }
+.step:last-child::before { display: none; }
+.step h3 { font-size: 18px; font-weight: 800; margin-top: 6px; }
+.step p { font-size: 15px; color: var(--muted); }
+
+/* Rede regional */
+.region { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
+.region > * { min-width: 0; }
+.cities { display: flex; flex-wrap: wrap; gap: 10px; }
+.city { font-family: var(--display); font-weight: 700; font-size: 15px; padding: 10px 18px; border-radius: 100px; background: var(--white); border: 1px solid var(--line); }
+.city.on { background: var(--ink); color: var(--white); border-color: var(--ink); }
+.city.on::before { content: "● "; color: var(--red); }
+.city.add { background: transparent; border: 1.5px dashed var(--red); color: var(--red); font-family: var(--mono); font-weight: 400; font-size: 13px; }
+.example { background: var(--ink); color: var(--white); border-radius: 18px; padding: 32px; display: grid; gap: 18px; }
+.example .row { display: grid; grid-template-columns: 1fr auto 1fr; gap: 12px; align-items: center; }
+.example .box { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); border-radius: 12px; padding: 16px; }
+.example .box small { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--on-ink-muted); display: block; }
+.example .box b { font-family: var(--display); font-size: 18px; }
+.example .arrow { color: var(--red); font-size: 22px; font-weight: 700; }
+
+/* Parceria */
+.partner-intro { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 56px; margin-bottom: 56px; align-items: end; }
+.partner-intro > * { min-width: 0; }
+.perks { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+.perks li { display: grid; grid-template-columns: 26px 1fr; gap: 10px; font-size: 16px; }
+.perks li::before { content: "✓"; font-weight: 800; color: var(--ink); background: var(--white); width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; font-size: 12px; margin-top: 3px; }
+.plans { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.plan { background: var(--ink); color: var(--white); border-radius: 18px; padding: 30px 26px; display: grid; gap: 16px; align-content: start; }
+.plan.feat { background: var(--white); color: var(--ink); }
+.plan .pk { font-family: var(--mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: #F08A63; }
+.plan.feat .pk { color: var(--red); }
+.plan h3 { font-size: 26px; font-weight: 900; }
+.plan .for { font-size: 15px; color: var(--on-ink-muted); }
+.plan.feat .for { color: var(--muted); }
+.plan .price { font-family: var(--mono); font-size: 30px; color: var(--red); border-block: 1px solid rgba(255,255,255,.14); padding-block: 12px; }
+.plan.feat .price { border-color: var(--line); }
+.plan ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; font-size: 15px; }
+.plan li::before { content: "✓  "; color: var(--red); font-weight: 700; }
+
+/* CTA final */
+.final { text-align: left; }
+.final .wrap { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 48px; align-items: center; }
+.final h2 { font-size: clamp(38px, 6vw, 72px); font-weight: 900; }
+.contact { background: var(--cream); color: var(--ink); border-radius: 18px; padding: 28px; display: grid; gap: 16px; }
+.contact .line { display: grid; gap: 2px; border-bottom: 1px solid var(--line); padding-bottom: 12px; }
+.contact small { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.contact b { font-size: 18px; user-select: all; }
+footer { background: var(--ink); color: var(--on-ink-muted); font-size: 13px; padding-block: 28px; }
+footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+
+@media (max-width: 980px) {
+  .hero .wrap, .split, .region, .partner-intro, .final .wrap, .case { grid-template-columns: 1fr; }
+  .formats { grid-template-columns: repeat(2, 1fr); }
+  .plans { grid-template-columns: 1fr; }
+  .steps { grid-template-columns: 1fr; gap: 24px; }
+  .step { grid-template-columns: 34px 1fr; column-gap: 16px; padding: 0; }
+  .step .n { grid-row: span 2; }
+  .step h3 { margin-top: 4px; }
+  .step::before { display: none; }
+  .logo-row { grid-template-columns: repeat(3, 1fr); }
+  .nav-links { display: none; }
+  .pass-wrap { order: -1; }
+  .pass { transform: rotate(2deg); width: min(280px, 100%); }
+}
+@media (max-width: 600px) {
+  section { padding-block: 72px; }
+  .formats, .reasons { grid-template-columns: 1fr; }
+  .vs { grid-template-columns: 1fr; }
+  .vs .old { border-right: 1px solid var(--line); border-bottom: 0; border-radius: 14px 14px 0 0; }
+  .case { padding: 18px; }
+  .example .row { grid-template-columns: 1fr; }
+  .example .arrow { transform: rotate(90deg); justify-self: center; }
+  .stat b { font-size: 24px; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .pass { animation: swing 5s ease-in-out infinite; transform-origin: 50% -60px; }
+  @keyframes swing { 0%,100% { transform: rotate(3deg); } 50% { transform: rotate(-1.5deg); } }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap">
+    <div class="logo">Lara Dam<span>.</span> Eventos</div>
+    <div class="nav-links">
+      <a href="#formatos">Formatos</a>
+      <a href="#cases">Cases</a>
+      <a href="#rede">Rede de creators</a>
+      <a href="#parceria">Parceria</a>
+    </div>
+    <a class="btn" href="#contato">Falar com a Lara</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="hero-copy">
+      <span class="eyebrow">UGC para feiras, eventos e patrocinadores</span>
+      <h1>Creators <em>da cidade</em> dentro do seu evento.</h1>
+      <p class="lead">Evento em São Paulo, creators de São Paulo. Evento na Bahia, creators da Bahia. A gente faz o casting, grava, edita e entrega conteúdo pronto pra cada marca que está no evento.</p>
+      <div class="ctas">
+        <a class="btn" href="#contato">Montar proposta pro meu evento</a>
+        <a class="btn btn-ghost" href="#parceria">Sou organizador de eventos</a>
+      </div>
+    </div>
+    <div class="pass-wrap" aria-hidden="true">
+      <div class="lanyard"></div>
+      <div class="pass">
+        <div class="pass-hole"></div>
+        <div class="pass-top"><small>CREDENCIAL · ACESSO TOTAL</small><b>CREATOR</b></div>
+        <div class="pass-body">
+          <div class="pass-row"><span>Evento</span><span>Feira de negócios</span></div>
+          <div class="pass-row"><span>Cidade</span><span>São Paulo · SP</span></div>
+          <div class="pass-row"><span>Missão</span><span>Conteúdo de 4 patrocinadores</span></div>
+          <div class="barcode"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="logos">
+  <div class="wrap">
+    <p>Marcas que já confiaram no nosso conteúdo</p>
+    <div class="logo-row">
+      <div class="ph">logo 1</div><div class="ph">logo 2</div><div class="ph">logo 3</div>
+      <div class="ph">logo 4</div><div class="ph">logo 5</div><div class="ph">logo 6</div>
+    </div>
+  </div>
+</div>
+
+<section>
+  <div class="wrap split">
+    <div class="head" style="margin:0">
+      <span class="eyebrow">O que é UGC</span>
+      <h2>Gente real falando da sua marca, com qualidade de campanha.</h2>
+      <p class="lead">UGC (User Generated Content) é conteúdo gravado por creators com a linguagem de quem usa o produto. Parece post de pessoa, não anúncio. Por isso o público assiste até o fim e confia mais.</p>
+      <p class="lead">No evento, isso vira o registro mais útil que um patrocinador pode levar pra casa: vídeos curtos, verticais e prontos pra Reels, TikTok e mídia paga.</p>
+    </div>
+    <div class="vs">
+      <div class="old">
+        <h3>Cobertura comum</h3>
+        <ul>
+          <li>Fotos do estande vazio</li>
+          <li>Vídeo institucional que ninguém posta</li>
+          <li>Conteúdo morre quando a feira acaba</li>
+          <li>Marca sem material pra campanha</li>
+        </ul>
+      </div>
+      <div class="new">
+        <h3>UGC no evento</h3>
+        <ul>
+          <li>Creator experimentando o produto ao vivo</li>
+          <li>Vídeos nativos de rede social</li>
+          <li>Conteúdo rende meses depois do evento</li>
+          <li>Material pronto pra mídia paga</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band-ink">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">Por que UGC em eventos</span>
+      <h2>O evento dura três dias. O conteúdo fica.</h2>
+    </div>
+    <div class="reasons">
+      <div class="reason"><span class="big">Local</span><h3>Creators da região do evento</h3><p>Sotaque, referências e público da cidade. Sem custo de viagem, com mais conexão com quem está ali.</p></div>
+      <div class="reason"><span class="big">1 ida</span><h3>Várias marcas numa mesma captação</h3><p>Uma equipe no evento atende vários patrocinadores no mesmo dia. Custo menor por marca, entrega maior.</p></div>
+      <div class="reason"><span class="big">Pronto</span><h3>Material de campanha, não só registro</h3><p>Resolve o problema do patrocinador que fecha mídia e não tem criativo pra rodar.</p></div>
+      <div class="reason"><span class="big">Orgânico</span><h3>Comunicação natural pras páginas do evento</h3><p>Conteúdo humano pro perfil da feira antes, durante e depois. Gera expectativa e prova social pra próxima edição.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="formatos">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">Formatos</span>
+      <h2>Quatro formas de levar creators pro evento.</h2>
+      <p class="lead">Dá pra combinar formatos e vender em pacote ou avulso. A captação pode ser no local ou remota, com o produto enviado pro creator.</p>
+    </div>
+    <div class="formats">
+      <div class="format"><span class="k">Para o patrocinador</span><h3>UGC de estande</h3><p>Creator visita o estande, testa o produto e grava a experiência.</p><ul><li>Review e unboxing</li><li>Depoimento</li><li>Tour do estande</li></ul></div>
+      <div class="format"><span class="k">Para várias marcas</span><h3>Captação coletiva</h3><p>Um dia de gravação no evento atendendo vários clientes de uma vez.</p><ul><li>Roteiro por marca</li><li>Agenda por estande</li><li>Entrega separada</li></ul></div>
+      <div class="format"><span class="k">Para o evento</span><h3>Cobertura com creators</h3><p>Creators mostram a feira como visitantes: novidades, bastidores e destaques.</p><ul><li>Stories ao vivo</li><li>Reels de destaques</li><li>Pré e pós-evento</li></ul></div>
+      <div class="format"><span class="k">O ano todo</span><h3>Conteúdo pras páginas</h3><p>Produção contínua pros perfis das feiras, entre uma edição e outra.</p><ul><li>Calendário mensal</li><li>Tom orgânico</li><li>Gestão de creators</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<section id="cases" class="band-sand">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">Eventos que já fizemos</span>
+      <h2>Creators em ação.</h2>
+    </div>
+    <div class="cases">
+      <article class="case">
+        <div class="reels"><div class="ph">vídeo 1<br>9:16</div><div class="ph">vídeo 2<br>9:16</div><div class="ph">vídeo 3<br>9:16</div></div>
+        <div class="case-info">
+          <span class="when">Evento · <span class="tag-ph">mês/ano</span> · <span class="tag-ph">cidade</span></span>
+          <h3>Coming Box</h3>
+          <p>Ação com várias creators participando do evento. <span class="tag-ph">descrever o que foi feito em 2 frases</span></p>
+          <div class="stats">
+            <div class="stat"><b><span class="tag-ph">00</span></b><span>creators</span></div>
+            <div class="stat"><b><span class="tag-ph">00</span></b><span>vídeos entregues</span></div>
+            <div class="stat"><b><span class="tag-ph">00k</span></b><span>visualizações</span></div>
+          </div>
+        </div>
+      </article>
+      <article class="case">
+        <div class="reels"><div class="ph">vídeo 1<br>9:16</div><div class="ph">vídeo 2<br>9:16</div><div class="ph">vídeo 3<br>9:16</div></div>
+        <div class="case-info">
+          <span class="when">Evento · <span class="tag-ph">mês/ano</span> · <span class="tag-ph">cidade</span></span>
+          <h3>Zap Imóveis</h3>
+          <p><span class="tag-ph">descrever o evento e o papel dos creators</span></p>
+          <div class="stats">
+            <div class="stat"><b><span class="tag-ph">00</span></b><span>creators</span></div>
+            <div class="stat"><b><span class="tag-ph">00</span></b><span>vídeos entregues</span></div>
+            <div class="stat"><b><span class="tag-ph">00k</span></b><span>visualizações</span></div>
+          </div>
+        </div>
+      </article>
+      <article class="case">
+        <div class="reels"><div class="ph">vídeo 1<br>9:16</div><div class="ph">vídeo 2<br>9:16</div><div class="ph">vídeo 3<br>9:16</div></div>
+        <div class="case-info">
+          <span class="when">Evento esportivo · <span class="tag-ph">mês/ano</span> · <span class="tag-ph">cidade</span></span>
+          <h3>Corrida <span class="tag-ph">nome</span></h3>
+          <p>Creators participaram da corrida e mostraram a experiência de dentro. <span class="tag-ph">marca envolvida</span></p>
+          <div class="stats">
+            <div class="stat"><b><span class="tag-ph">00</span></b><span>creators</span></div>
+            <div class="stat"><b><span class="tag-ph">00</span></b><span>vídeos entregues</span></div>
+            <div class="stat"><b><span class="tag-ph">00k</span></b><span>visualizações</span></div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">Como funciona</span>
+      <h2>Do briefing ao vídeo pronto.</h2>
+    </div>
+    <div class="steps">
+      <div class="step"><span class="n">1</span><h3>Briefing</h3><p>Evento, cidade, marcas e objetivo de cada patrocinador.</p></div>
+      <div class="step"><span class="n">2</span><h3>Casting local</h3><p>Seleção de creators da região com o perfil de cada marca.</p></div>
+      <div class="step"><span class="n">3</span><h3>Roteiro</h3><p>Roteiro por marca, aprovado antes do evento.</p></div>
+      <div class="step"><span class="n">4</span><h3>Captação</h3><p>Gravação no evento ou remota, com direção no local.</p></div>
+      <div class="step"><span class="n">5</span><h3>Edição e entrega</h3><p>Vídeos editados, com direitos de uso, em <span class="tag-ph">X dias</span>.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="rede" class="band-sand">
+  <div class="wrap region">
+    <div class="head" style="margin:0">
+      <span class="eyebrow">Rede de creators</span>
+      <h2>Onde o evento estiver, a gente tem gente.</h2>
+      <p class="lead">Mantemos uma base de creators por cidade. Cada evento recebe um casting feito pra ele, com o público daquela região.</p>
+      <div class="cities">
+        <span class="city on">São Paulo</span>
+        <span class="city on">Bahia</span>
+        <span class="city add">+ cidades a confirmar</span>
+      </div>
+    </div>
+    <div class="example" aria-label="Exemplo de casting">
+      <span class="eyebrow">Exemplo</span>
+      <div class="row">
+        <div class="box"><small>Evento</small><b>Feira de suplementos · SP</b></div>
+        <span class="arrow">→</span>
+        <div class="box"><small>Casting</small><b>Creators fitness de SP</b></div>
+      </div>
+      <div class="row">
+        <div class="box"><small>Evento</small><b>Feira de pescados · BA</b></div>
+        <span class="arrow">→</span>
+        <div class="box"><small>Casting</small><b>Creators de gastronomia da Bahia</b></div>
+      </div>
+      <div class="row">
+        <div class="box"><small>Evento</small><b>Feira de brinquedos · SP</b></div>
+        <span class="arrow">→</span>
+        <div class="box"><small>Casting</small><b>Creators mães e família de SP</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="parceria" class="band-red">
+  <div class="wrap">
+    <div class="partner-intro">
+      <div class="head" style="margin:0">
+        <span class="eyebrow">Para organizadores e agências</span>
+        <h2>Coloque UGC no seu portfólio e revenda pros seus patrocinadores.</h2>
+        <p class="lead" style="color:var(--white)">Você já tem o evento, o público e as marcas. A gente entra como seu braço de conteúdo: você vende dentro dos seus pacotes de mídia ou avulso, e nós entregamos.</p>
+      </div>
+      <ul class="perks">
+        <li>Modelo de parceria, com margem pra revenda</li>
+        <li>Entrega com a sua marca, se você preferir (white-label)</li>
+        <li>Atendimento a vários eventos e segmentos no ano</li>
+        <li>Um ponto de contato só, com prazo e fluxo de aprovação</li>
+      </ul>
+    </div>
+    <div class="plans">
+      <div class="plan">
+        <span class="pk">Avulso</span>
+        <h3>Estande</h3>
+        <p class="for">Para um patrocinador que quer conteúdo do evento.</p>
+        <div class="price"><span class="tag-ph">R$ —</span></div>
+        <ul><li><span class="tag-ph">X</span> creator(s) local(is)</li><li><span class="tag-ph">X</span> vídeos editados</li><li>Roteiro aprovado</li><li>Direito de uso <span class="tag-ph">X meses</span></li></ul>
+      </div>
+      <div class="plan feat">
+        <span class="pk">Mais vendido</span>
+        <h3>Feira</h3>
+        <p class="for">Captação coletiva para vários patrocinadores no mesmo evento.</p>
+        <div class="price"><span class="tag-ph">R$ — por marca</span></div>
+        <ul><li>Equipe de creators no evento</li><li><span class="tag-ph">X</span> vídeos por marca</li><li>Agenda por estande</li><li>Cobertura do evento inclusa</li></ul>
+      </div>
+      <div class="plan">
+        <span class="pk">Recorrente</span>
+        <h3>Temporada</h3>
+        <p class="for">Conteúdo contínuo pras páginas das feiras ao longo do ano.</p>
+        <div class="price"><span class="tag-ph">R$ — / mês</span></div>
+        <ul><li>Calendário mensal</li><li>Gestão de creators</li><li><span class="tag-ph">X</span> conteúdos por mês</li><li>Pré, durante e pós-evento</li></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contato" class="band-ink final">
+  <div class="wrap">
+    <div class="head" style="margin:0">
+      <span class="eyebrow">Próximo evento</span>
+      <h2>Qual é o seu próximo evento?</h2>
+      <p class="lead">Manda a data, a cidade e as marcas. Em <span class="tag-ph">24h</span> a gente devolve uma proposta com casting e formato.</p>
+    </div>
+    <div class="contact">
+      <div class="line"><small>WhatsApp</small><b><span class="tag-ph">(00) 00000-0000</span></b></div>
+      <div class="line"><small>E-mail</small><b>laradam.ugc@gmail.com</b></div>
+      <div class="line"><small>Instagram</small><b>@eilaradam</b></div>
+      <a class="btn" href="#contato">Quero uma proposta</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap"><span>Lara Dam · UGC e creators para eventos</span><span>2026</span></div>
+</footer>
+</body>
+</html>

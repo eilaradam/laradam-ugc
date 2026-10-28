@@ -9,6 +9,9 @@ const nextConfig: NextConfig = {
       // Proposta do Replit (HTML estatico em public/replit/)
       { source: "/replit", destination: "/replit/index.html" },
       { source: "/replit/", destination: "/replit/index.html" },
+      // Pagina de UGC para eventos (HTML estatico em public/eventos/)
+      { source: "/eventos", destination: "/eventos/index.html" },
+      { source: "/eventos/", destination: "/eventos/index.html" },
       // Tour 3D do apartamento (Three.js estatico)
       { source: "/projeto/3d", destination: "/projeto/3d/index.html" },
       { source: "/projeto/3d/", destination: "/projeto/3d/index.html" },
