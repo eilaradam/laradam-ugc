@@ -194,7 +194,15 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .perks { list-style: none; margin: 0; padding: 0; display: grid; border-top: 1px solid var(--paper-line); }
 .perks li { padding: 16px 0; border-bottom: 1px solid var(--paper-line); display: grid; grid-template-columns: 28px 1fr; gap: 8px; font-size: 16px; }
 .perks li::before { content: "✓"; color: var(--accent); font-weight: 700; }
-.plans { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.plans-head { display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap; margin-bottom: 20px; }
+.plans-head h3 { font-size: 28px; }
+.plans-head p { color: var(--ink-muted); font-size: 15px; max-width: 52ch; }
+.plans { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.qty { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.qty b { display: block; font-size: 48px; font-weight: 700; letter-spacing: -0.05em; line-height: 1; font-variant-numeric: tabular-nums; }
+.qty span { font-size: 13px; color: var(--ink-muted); }
+.plan.feat .qty span { color: var(--muted); }
+.plan.custom { background: transparent; border-style: dashed; border-color: #CFCAC0; }
 .plan { background: #fff; border: 1px solid var(--paper-line); border-radius: 22px; padding: 30px 26px; display: grid; gap: 16px; align-content: start; }
 .plan.feat { background: var(--ink); color: var(--fg); border-color: var(--ink); }
 .plan .pk { font-family: var(--mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-muted); display: flex; justify-content: space-between; align-items: center; gap: 8px; }
@@ -231,7 +239,7 @@ footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; g
   .reel { width: 190px; }
   .reel.r2 { margin-left: -95px; }
   .formats { grid-template-columns: repeat(2, 1fr); row-gap: 40px; }
-  .plans { grid-template-columns: 1fr; max-width: 520px; margin-inline: auto; }
+  .plans { grid-template-columns: 1fr 1fr; }
   .case-head { grid-template-columns: 1fr; gap: 20px; }
   .steps { grid-template-columns: 1fr 1fr; }
   .logos .wrap { grid-template-columns: 1fr; gap: 16px; }
@@ -248,7 +256,7 @@ footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; g
   .reel .cap { font-size: 12px; }
   .reel.r2 .top { right: 14px; }
   .rec-tag { top: auto; bottom: 64px; right: 14px; }
-  .grid2, .formats, .steps { grid-template-columns: 1fr; }
+  .grid2, .formats, .steps, .plans { grid-template-columns: 1fr; }
   .row-c, .compare .hd { gap: 8px; }
   .row-c > div { padding: 14px; font-size: 14px; }
   .card { padding: 24px; }
@@ -485,30 +493,38 @@ footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; g
         <li>Um ponto de contato, com prazo e fluxo de aprovação</li>
       </ul>
     </div>
+    <div class="plans-head"><h3>Exemplos de pacote</h3><p>Valores de referência por evento. Cada proposta é ajustada à feira, à cidade e ao número de marcas.</p></div>
     <div class="plans">
       <div class="plan">
-        <span class="pk">Avulso</span>
-        <h3>Estande</h3>
-        <p class="for">Um patrocinador que quer conteúdo do evento.</p>
+        <span class="pk">Exemplo 1</span>
+        <h3>Essencial</h3>
+        <div class="qty"><div><b>2</b><span>creators</span></div><div><b>4</b><span>conteúdos</span></div></div>
         <div class="price"><span class="tbd">R$ —</span></div>
-        <ul><li><span><span class="tbd">X</span> creator(s) local(is)</span></li><li><span><span class="tbd">X</span> vídeos editados</span></li><li>Roteiro aprovado</li><li><span>Direito de uso <span class="tbd">X meses</span></span></li></ul>
+        <ul><li>Casting local</li><li>Roteiro por conteúdo</li><li>Captação no evento</li><li>Edição e entrega</li></ul>
         <a class="btn btn-line" href="#contato">Quero esse</a>
       </div>
       <div class="plan feat">
-        <span class="pk">Por evento <em>Mais pedido</em></span>
-        <h3>Feira</h3>
-        <p class="for">Captação coletiva pra vários patrocinadores no mesmo evento.</p>
-        <div class="price"><span class="tbd">R$ — por marca</span></div>
-        <ul><li>Equipe de creators no evento</li><li><span><span class="tbd">X</span> vídeos por marca</span></li><li>Agenda por estande</li><li>Cobertura do evento inclusa</li></ul>
+        <span class="pk">Exemplo 2 <em>Mais pedido</em></span>
+        <h3>Destaque</h3>
+        <div class="qty"><div><b>3</b><span>creators</span></div><div><b>6</b><span>conteúdos</span></div></div>
+        <div class="price"><span class="tbd">R$ —</span></div>
+        <ul><li>Casting local</li><li>Roteiro por conteúdo</li><li>Captação no evento</li><li>Edição e entrega</li></ul>
         <a class="btn" href="#contato">Quero esse</a>
       </div>
       <div class="plan">
-        <span class="pk">Recorrente</span>
-        <h3>Temporada</h3>
-        <p class="for">Conteúdo contínuo pras páginas das feiras ao longo do ano.</p>
-        <div class="price"><span class="tbd">R$ — / mês</span></div>
-        <ul><li>Calendário mensal</li><li>Gestão de creators</li><li><span><span class="tbd">X</span> conteúdos por mês</span></li><li>Pré, durante e pós-evento</li></ul>
+        <span class="pk">Exemplo 3</span>
+        <h3>Completo</h3>
+        <div class="qty"><div><b>5</b><span>creators</span></div><div><b>10</b><span>conteúdos</span></div></div>
+        <div class="price"><span class="tbd">R$ —</span></div>
+        <ul><li>Casting local</li><li>Roteiro por conteúdo</li><li>Captação no evento</li><li>Edição e entrega</li></ul>
         <a class="btn btn-line" href="#contato">Quero esse</a>
+      </div>
+      <div class="plan custom">
+        <span class="pk">Sob medida</span>
+        <h3>Personalizado</h3>
+        <p class="for">Mais creators, várias marcas no mesmo evento ou conteúdo o ano todo pras páginas da feira.</p>
+        <ul><li>Quantidade livre de creators e conteúdos</li><li>Captação coletiva com várias marcas</li><li>Cobertura do evento</li><li>Revenda com a sua marca</li></ul>
+        <a class="btn btn-line" href="#contato">Montar o meu</a>
       </div>
     </div>
   </div>
