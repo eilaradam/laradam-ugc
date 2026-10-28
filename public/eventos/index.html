@@ -135,12 +135,12 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .compare .hd span:last-child { color: var(--accent); }
 
 /* 02 por que */
-.grid2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
-.card { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 32px; display: grid; gap: 14px; align-content: start; }
+.grid2 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 24px; display: grid; gap: 12px; align-content: start; }
 .ico { width: 44px; height: 44px; border-radius: 12px; border: 1px solid rgba(123,97,255,.5); display: grid; place-items: center; color: var(--accent-soft); background: rgba(123,97,255,.08); }
 .ico svg { width: 22px; height: 22px; }
-.card h3 { font-size: 26px; font-weight: 600; letter-spacing: -0.03em; }
-.card p { color: var(--muted); font-size: 16px; }
+.card h3 { font-size: 20px; font-weight: 600; letter-spacing: -0.02em; }
+.card p { color: var(--muted); font-size: 15px; }
 
 /* 03 formatos */
 .formats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
@@ -250,7 +250,8 @@ footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; g
   .stack { height: 470px; max-width: 520px; width: 100%; justify-self: center; }
   .reel { width: 190px; }
   .reel.r2 { margin-left: -95px; }
-  .formats { grid-template-columns: repeat(2, 1fr); row-gap: 40px; }
+  .formats { grid-template-columns: repeat(2, 1fr); row-gap: 32px; }
+  .grid2 { grid-template-columns: 1fr 1fr; }
   .plans { grid-template-columns: 1fr 1fr; }
   .case-head { grid-template-columns: 1fr; gap: 20px; }
   .steps { grid-template-columns: 1fr 1fr; }
@@ -266,7 +267,9 @@ footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; g
   .reel .cap { font-size: 12px; }
   .reel.r2 .top { right: 14px; }
   .rec-tag { top: auto; bottom: 64px; right: 14px; }
-  .grid2, .formats, .steps, .plans { grid-template-columns: 1fr; }
+  .formats, .steps, .plans { grid-template-columns: 1fr; }
+  .card { padding: 18px; }
+  .card h3 { font-size: 17px; }
   .row-c, .compare .hd { gap: 8px; }
   .row-c > div { padding: 14px; font-size: 14px; }
   .card { padding: 24px; }
@@ -365,22 +368,22 @@ footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; g
       <div class="card">
         <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.5"/></svg></span>
         <h3>Creators da região</h3>
-        <p>Sotaque, referências e público da cidade do evento. Sem custo de viagem e com mais conexão com quem está ali.</p>
+        <p>Gente da cidade, sem custo de viagem.</p>
       </div>
       <div class="card">
         <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="7" height="7" rx="1.5"/><rect x="14" y="4" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></span>
-        <h3>Várias marcas numa ida só</h3>
-        <p>Uma equipe no evento atende vários patrocinadores no mesmo dia. O custo por marca cai e a entrega aumenta.</p>
+        <h3>Várias marcas, uma ida</h3>
+        <p>Uma captação atende vários patrocinadores.</p>
       </div>
       <div class="card">
         <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M10.5 9.5v5l4-2.5-4-2.5Z"/></svg></span>
-        <h3>Criativo pronto pra campanha</h3>
-        <p>Resolve o patrocinador que fecha mídia e não tem material pra rodar. O vídeo sai do evento direto pro anúncio.</p>
+        <h3>Criativo pronto</h3>
+        <p>O vídeo sai do evento direto pro anúncio.</p>
       </div>
       <div class="card">
         <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 12a8 8 0 1 0 2.3-5.6M4 4v4h4"/><path d="M12 8v4l3 2"/></svg></span>
-        <h3>Página do evento sempre ativa</h3>
-        <p>Conteúdo orgânico antes, durante e depois. Gera expectativa e prova social pra próxima edição.</p>
+        <h3>Página sempre ativa</h3>
+        <p>Conteúdo antes, durante e depois.</p>
       </div>
     </div>
   </div>
@@ -391,13 +394,13 @@ footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; g
     <div class="head">
       <span class="eyebrow" data-n="03">Formatos</span>
       <h2>Quatro jeitos de levar creators pro evento.</h2>
-      <p class="lead">Os formatos se combinam e podem ser vendidos em pacote ou avulsos. A captação pode ser no local ou remota, com o produto enviado pro creator.</p>
+      <p class="lead">Em pacote ou avulso. Captação no local ou remota.</p>
     </div>
     <div class="formats">
-      <div class="fmt"><span class="k">Para o patrocinador</span><h3>UGC de estande</h3><p>Creator visita o estande, testa o produto e grava a experiência.</p><ul><li>Review e unboxing</li><li>Depoimento</li><li>Tour do estande</li></ul></div>
-      <div class="fmt"><span class="k">Para várias marcas</span><h3>Captação coletiva</h3><p>Um dia de gravação no evento atendendo vários clientes ao mesmo tempo.</p><ul><li>Roteiro por marca</li><li>Agenda por estande</li><li>Entrega separada</li></ul></div>
-      <div class="fmt"><span class="k">Para o evento</span><h3>Cobertura com creators</h3><p>Creators mostram a feira como visitantes: novidades, bastidores e destaques.</p><ul><li>Stories ao vivo</li><li>Reels de destaques</li><li>Pré e pós-evento</li></ul></div>
-      <div class="fmt"><span class="k">O ano todo</span><h3>Conteúdo pras páginas</h3><p>Produção contínua pros perfis das feiras, entre uma edição e outra.</p><ul><li>Calendário mensal</li><li>Tom orgânico</li><li>Gestão de creators</li></ul></div>
+      <div class="fmt"><span class="k">Para o patrocinador</span><h3>UGC de estande</h3><p>Creator testa o produto no estande e grava.</p></div>
+      <div class="fmt"><span class="k">Para várias marcas</span><h3>Captação coletiva</h3><p>Um dia de gravação pra várias marcas.</p></div>
+      <div class="fmt"><span class="k">Para o evento</span><h3>Cobertura com creators</h3><p>Bastidores e destaques da feira.</p></div>
+      <div class="fmt"><span class="k">O ano todo</span><h3>Conteúdo pras páginas</h3><p>Produção contínua entre uma edição e outra.</p></div>
     </div>
   </div>
 </section>
