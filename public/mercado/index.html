@@ -346,6 +346,8 @@ footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; g
 .feat-logos.six .fl img.frooty { height: 58px; margin-block: 0; }
 .igv { position: relative; width: 100%; height: auto; aspect-ratio: 376/668; border-radius: 16px; overflow: hidden; background: #000; }
 .igv iframe { position: absolute; left: 0; top: 0; width: 540px; height: 900px; border: 0; transform-origin: 0 0; pointer-events: none; }
+.reel.has-ig .igv { position: absolute; inset: 0; width: 100%; height: 100%; aspect-ratio: auto; border-radius: 0; }
+.reel.has-ig .bottom { z-index: 1; }
 .ig-open { position: absolute; inset: 0; width: 100%; border: 0; background: transparent; cursor: zoom-in; }
 .ig-open:focus-visible { outline: 2px solid var(--accent-soft); outline-offset: -3px; border-radius: 16px; }
 .lb-ig { position: relative; height: min(86vh, 900px); aspect-ratio: 376/668; max-width: 100%; border-radius: 18px; overflow: hidden; background: #000; }
@@ -388,9 +390,9 @@ footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; g
       <div class="proof"><b>+2 mil</b><span>creators cadastradas em todo o Brasil</span></div>
     </div>
     <div class="stack">
-      <div class="reel r1 has-video"><video src="/mercado/videos/hero-1.mp4" poster="/mercado/videos/daki-1.jpg" data-full="/mercado/videos/daki-1.mp4" autoplay muted loop playsinline preload="auto"></video><div class="bottom"><span class="loc">Em casa</span><span class="cap">Mercado chegou em 15 minutos</span></div></div>
-      <div class="reel r2 has-video"><video src="/mercado/videos/hero-2.mp4" poster="/mercado/videos/daki-2.jpg" data-full="/mercado/videos/daki-2.mp4" autoplay muted loop playsinline preload="auto"></video><div class="bottom"><span class="loc">Daki</span><span class="cap">Compras do mês pelo app</span></div></div>
-      <div class="reel r3 has-video"><video src="/mercado/videos/hero-3.mp4" poster="/mercado/videos/daki-3.jpg" data-full="/mercado/videos/daki-3.mp4" autoplay muted loop playsinline preload="auto"></video><div class="bottom"><span class="loc">Na cozinha</span><span class="cap">Geladeira cheia</span></div></div>
+      <div class="reel r1 has-video has-ig"><div class="igv" data-ig="DV6u9gUkaWo"><iframe src="https://www.instagram.com/p/DV6u9gUkaWo/embed/" scrolling="no" tabindex="-1" title="Vídeo da marca"></iframe><button type="button" class="ig-open" aria-label="Assistir vídeo"></button></div><div class="bottom"><span class="loc">Frooty</span><span class="cap">Açaí cremoso no fim do dia</span></div></div>
+      <div class="reel r2 has-video has-ig"><div class="igv" data-ig="DLVzdhEOo30"><iframe src="https://www.instagram.com/p/DLVzdhEOo30/embed/" scrolling="no" tabindex="-1" title="Vídeo da marca"></iframe><button type="button" class="ig-open" aria-label="Assistir vídeo"></button></div><div class="bottom"><span class="loc">Rap10</span><span class="cap">Rap10 Fit na cozinha</span></div></div>
+      <div class="reel r3 has-video has-ig"><div class="igv" data-ig="DHLyVXwRAB9"><iframe src="https://www.instagram.com/p/DHLyVXwRAB9/embed/" scrolling="no" tabindex="-1" title="Vídeo da marca"></iframe><button type="button" class="ig-open" aria-label="Assistir vídeo"></button></div><div class="bottom"><span class="loc">Trisanti</span><span class="cap">Yakisoba com molhos Santi</span></div></div>
     </div>
   </div>
 </header>
