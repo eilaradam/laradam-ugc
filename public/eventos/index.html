@@ -269,6 +269,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 /* vídeo ampliado */
 .lb { position: fixed; inset: 0; z-index: 50; display: grid; place-items: center; background: rgba(5,5,8,.86); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); padding: max(16px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) max(16px, env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); }
 .lb video { height: min(86vh, 900px); aspect-ratio: 9/16; max-width: 100%; border-radius: 18px; background: #000; object-fit: contain; box-shadow: 0 40px 120px rgba(0,0,0,.6); }
+.lb[hidden] { display: none; }
 .lb-x { position: absolute; top: max(16px, env(safe-area-inset-top, 0px)); right: max(16px, env(safe-area-inset-right, 0px)); width: 44px; height: 44px; border-radius: 50%; border: 1px solid rgba(255,255,255,.25); background: rgba(255,255,255,.08); color: #fff; font-size: 26px; line-height: 1; cursor: pointer; }
 .lb-x:focus-visible { outline: 2px solid var(--accent-soft); outline-offset: 2px; }
 .reel.has-video video { cursor: zoom-in; }
@@ -519,6 +520,21 @@ footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; g
           </div>
         </div>
         <div class="strip"><div class="native"><video src="/eventos/videos/olx-1.mp4" poster="/eventos/videos/olx-1.jpg" playsinline preload="metadata"></video><button type="button" class="play-btn" aria-label="Assistir vídeo"></button></div><div class="native"><video src="/eventos/videos/olx-2.mp4" poster="/eventos/videos/olx-2.jpg" playsinline preload="metadata"></video><button type="button" class="play-btn" aria-label="Assistir vídeo"></button></div><div class="native"><video src="/eventos/videos/olx-3.mp4" poster="/eventos/videos/olx-3.jpg" playsinline preload="metadata"></video><button type="button" class="play-btn" aria-label="Assistir vídeo"></button></div><div class="native"><video src="/eventos/videos/olx-maio.mp4" poster="/eventos/videos/olx-maio.jpg" playsinline preload="metadata"></video><button type="button" class="play-btn" aria-label="Assistir vídeo"></button></div><div class="native"><video src="/eventos/videos/olx-4.mp4" poster="/eventos/videos/olx-4.jpg" playsinline preload="metadata"></video><button type="button" class="play-btn" aria-label="Assistir vídeo"></button></div></div>
+      </article>
+      <article class="case">
+        <div class="case-head">
+          <div>
+            <span class="when">Show · Bruno Mars · SP</span>
+            <h3>Draft + Bruno Mars</h3>
+            <p>Creators com a Draft no show do Bruno Mars, mostrando a marca no meio do público.</p>
+          </div>
+          <div class="metrics">
+            <div><b>2</b><span>vídeos</span></div>
+            <div><b><span class="tbd">00</span></b><span>creators</span></div>
+            <div><b><span class="tbd">00k</span></b><span>views</span></div>
+          </div>
+        </div>
+        <div class="strip"><div class="native"><video src="/eventos/videos/draft-1.mp4" poster="/eventos/videos/draft-1.jpg" playsinline preload="metadata"></video><button type="button" class="play-btn" aria-label="Assistir vídeo"></button></div><div class="native"><video src="/eventos/videos/draft-2.mp4" poster="/eventos/videos/draft-2.jpg" playsinline preload="metadata"></video><button type="button" class="play-btn" aria-label="Assistir vídeo"></button></div></div>
       </article>
     </div>
   </div>
