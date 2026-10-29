@@ -175,6 +175,9 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .native .play-btn::after { content: ""; position: absolute; left: 50%; top: 50%; margin: -24px 0 0 -14px; border-left: 38px solid #fff; border-block: 24px solid transparent; filter: drop-shadow(0 2px 6px rgba(0,0,0,.35)); opacity: .92; transition: opacity .2s; }
 .native.playing .play-btn::after { opacity: 0; }
 .native .play-btn:focus-visible { outline: 2px solid var(--accent-soft); outline-offset: -4px; border-radius: 16px; }
+.reel .igh { position: absolute; inset: 0; overflow: hidden; background: #000; }
+.reel .igh iframe { position: absolute; left: 0; top: 0; width: 540px; height: 900px; border: 0; transform-origin: 0 0; transform: scale(0.612) translate(-82px, -56px); }
+.reel .bottom { pointer-events: none; }
 .reel video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .reel.has-video .bottom { background: linear-gradient(transparent, rgba(0,0,0,.65)); margin: -14px; padding: 40px 14px 14px; }
 .reel.has-video .loc { color: #E2E0EA; }
@@ -283,6 +286,7 @@ footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; g
   .stack { height: 470px; max-width: 520px; width: 100%; justify-self: center; }
   .reel { width: 190px; }
   .reel.r2 { margin-left: -95px; }
+  .reel .igh iframe { transform: scale(0.506) translate(-82px, -56px); }
   .formats { grid-template-columns: repeat(2, 1fr); row-gap: 32px; }
   .grid2 { grid-template-columns: 1fr 1fr; }
   .case-head { grid-template-columns: 1fr; gap: 20px; }
@@ -295,6 +299,7 @@ footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; g
   .stack { height: 380px; }
   .reel { width: 150px; border-radius: 16px; }
   .reel.r2 { margin-left: -75px; }
+  .reel .igh iframe { transform: scale(0.399) translate(-82px, -56px); }
   .reel.r1 { top: 60px; } .reel.r3 { top: 70px; }
   .reel .cap { font-size: 12px; }
   .reel.r2 .top { right: 14px; }
@@ -356,9 +361,9 @@ footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; g
       <div class="proof"><b>+2 mil</b><span>creators cadastradas em todo o Brasil</span></div>
     </div>
     <div class="stack" aria-hidden="true">
-      <div class="reel r1"><div class="ph">vídeo de creator</div><div class="top"><span class="av"></span>@creator</div><div class="bottom"><span class="loc">Salvador · BA</span><span class="cap">Provei tudo no estande</span></div></div>
+      <div class="reel r1 has-video has-ig"><div class="igh"><iframe src="https://www.instagram.com/p/DHb3wK_OTH6/embed/" loading="lazy" scrolling="no" tabindex="-1" title="Vídeo do evento" allow="autoplay; encrypted-media; fullscreen"></iframe></div><div class="bottom"><span class="loc">São Paulo · SP</span><span class="cap">ZAP Imóveis na Casa ZAP</span></div></div>
       <div class="reel r2 has-video"><video src="/eventos/videos/cama-in-box.mp4" poster="/eventos/videos/cama-in-box.jpg" autoplay muted loop playsinline preload="metadata"></video><span class="rec-tag"><span class="rec"></span>NO EVENTO</span><div class="bottom"><span class="loc">São Paulo · SP</span><span class="cap">Cama in Box na Mercado Livre Experience</span></div></div>
-      <div class="reel r3"><div class="ph">vídeo de creator</div><div class="top"><span class="av"></span>@creator</div><div class="bottom"><span class="loc">São Paulo · SP</span><span class="cap">Review sincero do lançamento</span></div></div>
+      <div class="reel r3 has-video has-ig"><div class="igh"><iframe src="https://www.instagram.com/p/DNyKHwI4p_0/embed/" loading="lazy" scrolling="no" tabindex="-1" title="Vídeo do evento" allow="autoplay; encrypted-media; fullscreen"></iframe></div><div class="bottom"><span class="loc">Netshoes Run · SP</span><span class="cap">Frooty na corrida</span></div></div>
     </div>
   </div>
 </header>
