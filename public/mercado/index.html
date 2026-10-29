@@ -1,0 +1,618 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lara Dam Mercado</title>
+<meta name="description" content="UGC pra marcas que estão no supermercado. Creators reais mostrando o produto na compra, na cozinha e no dia a dia.">
+<meta property="og:title" content="Lara Dam · UGC pra marcas de supermercado">
+<meta property="og:description" content="Seu produto na mão de quem compra.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Geist+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: base preta com faixas claras em "O que é UGC" e na parceria; seções numeradas 01-07 porque a página é um roteiro de apresentação. Um único acento violeta. */
+:root {
+  --bg: #0A0A0C;
+  --bg-2: #121216;
+  --card: #15151A;
+  --line: #26262E;
+  --fg: #F4F3F7;
+  --muted: #9A98A6;
+  --accent: #7B61FF;
+  --accent-soft: #B9A9FF;
+  --paper: #F4F2EE;
+  --paper-line: #E2DED6;
+  --ink: #0A0A0C;
+  --ink-muted: #5E5B66;
+  --display: "Geist", "Helvetica Neue", Arial, sans-serif;
+  --mono: "Geist Mono", ui-monospace, Menlo, monospace;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--fg); font-family: var(--display); font-size: 17px; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+img { max-width: 100%; }
+h1, h2, h3 { margin: 0; line-height: 1.02; letter-spacing: -0.035em; text-wrap: balance; font-weight: 700; }
+p { margin: 0; }
+a { color: inherit; }
+.wrap { max-width: 1200px; margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
+section { padding-block: 112px; }
+.light { background: var(--paper); color: var(--ink); }
+
+.eyebrow { display: inline-flex; align-items: center; gap: 12px; font-family: var(--mono); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--accent-soft); }
+.eyebrow[data-n]::before { content: attr(data-n); color: var(--muted); }
+.light .eyebrow { color: var(--accent); }
+.light .eyebrow::before { color: var(--ink-muted); }
+h2 { font-size: clamp(36px, 5.2vw, 64px); }
+.lead { font-size: 19px; color: var(--muted); max-width: 58ch; }
+.light .lead { color: var(--ink-muted); }
+.head { display: grid; gap: 20px; margin-bottom: 56px; }
+.head.center { justify-items: center; text-align: center; }
+.head.center .lead { margin: 0 auto; }
+
+/* espaço reservado para conteúdo que a Lara ainda vai mandar */
+.ph { font-family: var(--mono); font-size: 12px; color: var(--muted); border: 1px dashed #3A3A46; border-radius: 12px; display: grid; place-items: center; text-align: center; padding: 12px; }
+.light .ph { color: var(--ink-muted); border-color: #C9C4BA; }
+.tbd { font-family: var(--mono); font-size: .82em; color: var(--accent-soft); background: rgba(123,97,255,.14); padding: 1px 7px; border-radius: 6px; white-space: nowrap; letter-spacing: 0; }
+.light .tbd { color: var(--accent); background: rgba(123,97,255,.1); }
+
+.btn { display: inline-flex; align-items: center; gap: 10px; background: var(--accent); color: #fff; font-family: var(--display); font-weight: 600; font-size: 16px; padding: 15px 26px; border-radius: 100px; text-decoration: none; border: 0; cursor: pointer; transition: transform .2s, background .2s; }
+.btn:hover { background: #6A4EF5; transform: translateY(-1px); }
+.btn:focus-visible { outline: 2px solid var(--accent-soft); outline-offset: 3px; }
+.btn svg { width: 16px; height: 16px; }
+.btn-line { background: transparent; color: var(--fg); box-shadow: inset 0 0 0 1px #3A3A46; }
+.btn-line:hover { background: rgba(255,255,255,.06); }
+.light .btn-line { color: var(--ink); box-shadow: inset 0 0 0 1px #CFCAC0; }
+.light .btn-line:hover { background: rgba(0,0,0,.04); }
+
+/* NAV */
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 30; background: var(--bg); }
+.nav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: rgba(10,10,12,.86); backdrop-filter: saturate(140%) blur(10px); -webkit-backdrop-filter: saturate(140%) blur(10px); border-bottom: 1px solid var(--line); }
+.nav .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 14px; }
+.logo { font-weight: 700; font-size: 17px; letter-spacing: -0.02em; display: flex; align-items: center; gap: 10px; }
+.logo i { font-style: normal; font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); border: 1px solid var(--line); border-radius: 100px; padding: 3px 9px; }
+.nav-links { display: flex; gap: 28px; font-size: 14px; color: var(--muted); }
+.nav-links a { text-decoration: none; }
+.nav-links a:hover { color: var(--fg); }
+.nav .btn { padding: 10px 18px; font-size: 14px; }
+
+/* HERO */
+.hero { padding-block: clamp(32px, 6vh, 72px) clamp(32px, 6vh, 64px); overflow: hidden; --sh: clamp(320px, 62vh, 500px); }
+.hero .wrap { display: grid; grid-template-columns: 1.1fr .9fr; gap: 48px; align-items: center; }
+.hero-copy { display: grid; gap: clamp(16px, 2.6vh, 26px); min-width: 0; }
+.pill { justify-self: start; display: inline-flex; align-items: center; gap: 10px; font-size: 14px; color: var(--muted); border: 1px solid var(--line); border-radius: 100px; padding: 7px 14px 7px 12px; background: var(--bg-2); }
+.pill b { color: var(--fg); font-weight: 600; }
+.rec { width: 8px; height: 8px; border-radius: 50%; background: #FF3B5C; box-shadow: 0 0 0 4px rgba(255,59,92,.18); flex: none; }
+.hero h1 { font-size: clamp(40px, min(6.2vw, 9.5vh), 84px); letter-spacing: -0.045em; }
+.hero h1 span { color: var(--accent-soft); }
+.hero .lead { font-size: clamp(16px, 2.3vh, 19px); }
+.ctas { display: flex; flex-wrap: wrap; gap: 12px; }
+
+.stack { position: relative; height: var(--sh); min-width: 0; }
+.reel { position: absolute; width: calc(var(--sh) * 0.41); aspect-ratio: 9/16; max-width: 100%; border-radius: 22px; background: linear-gradient(180deg, #1E1E26 0%, #121216 100%); border: 1px solid #2E2E38; overflow: hidden; box-shadow: 0 30px 80px rgba(0,0,0,.55); }
+.reel .ph { position: absolute; inset: 0; border: 0; border-radius: 0; }
+.reel .top { position: absolute; top: 14px; left: 14px; right: 14px; display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; }
+.reel .av { width: 26px; height: 26px; border-radius: 50%; background: #2E2E38; border: 1px solid #44444F; }
+.reel .bottom { position: absolute; left: 14px; right: 14px; bottom: 14px; display: grid; gap: 6px; }
+.reel .loc { font-family: var(--mono); font-size: 11px; color: var(--muted); }
+.reel .cap { font-size: 15px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; }
+.reel.r1 { left: 0; top: 12%; transform: rotate(-6deg); }
+.reel.r2 { left: 50%; margin-left: calc(var(--sh) * -0.205); top: 0; z-index: 2; border-color: var(--accent); }
+.reel.r3 { right: 0; top: 16%; transform: rotate(6deg); }
+.rec-tag { position: absolute; top: 14px; right: 14px; display: flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 10px; letter-spacing: .1em; background: rgba(0,0,0,.5); padding: 4px 8px; border-radius: 6px; }
+.rec-tag .rec { width: 6px; height: 6px; box-shadow: none; }
+.reel.r2 .top { right: 100px; }
+
+/* LOGOS: 3 marcas de evento em destaque + as demais do portfólio passando, tudo em branco */
+.logos { border-block: 1px solid var(--line); padding-block: 40px 36px; display: grid; gap: 28px; overflow: hidden; }
+.logos .wrap { display: grid; gap: 18px; width: 100%; }
+.logos-label { font-family: var(--mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.feat-logos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.fl { display: grid; justify-items: center; align-content: space-between; gap: 14px; height: 150px; padding: 26px 16px 18px; border-radius: 18px; background: #fff; text-decoration: none; transition: transform .2s; }
+.fl:hover { transform: translateY(-2px); }
+.fl img { height: 56px; width: auto; max-width: 80%; object-fit: contain; }
+.fl img.zap { height: 110px; margin-block: -27px; }
+.fl img.frooty { height: 72px; margin-block: -8px; }
+.fl span { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); }
+.marquee { overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+.track { display: flex; align-items: center; gap: 40px; width: max-content; }
+.track img { height: 52px; width: auto; max-width: 150px; object-fit: contain; filter: brightness(0) invert(1); opacity: .7; }
+@media (prefers-reduced-motion: no-preference) {
+  .track { animation: logos 60s linear infinite; }
+  @keyframes logos { to { transform: translateX(-50%); } }
+}
+
+/* 01 UGC */
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center; }
+.split > * { min-width: 0; }
+.compare { display: grid; gap: 12px; }
+.row-c { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.row-c > div { padding: 18px 20px; border-radius: 14px; font-size: 15px; }
+.row-c .a { background: #fff; border: 1px solid var(--paper-line); color: var(--ink-muted); text-decoration: line-through; text-decoration-color: #C9C4BA; }
+.row-c .b { background: var(--ink); color: #fff; font-weight: 500; }
+.compare .hd { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; font-family: var(--mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-muted); padding-inline: 4px; }
+.compare .hd span:last-child { color: var(--accent); }
+
+/* 02 por que */
+.grid2 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 24px; display: grid; gap: 12px; align-content: start; }
+.ico { width: 44px; height: 44px; border-radius: 12px; border: 1px solid rgba(123,97,255,.5); display: grid; place-items: center; color: var(--accent-soft); background: rgba(123,97,255,.08); }
+.ico svg { width: 22px; height: 22px; }
+.card h3 { font-size: 20px; font-weight: 600; letter-spacing: -0.02em; }
+.card p { color: var(--muted); font-size: 15px; }
+
+/* 03 formatos */
+.formats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+.fmt { border-top: 1px solid var(--line); padding-top: 24px; display: grid; gap: 12px; align-content: start; }
+.fmt .k { font-family: var(--mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--accent-soft); }
+.fmt h3 { font-size: 24px; font-weight: 600; }
+.fmt p { color: var(--muted); font-size: 15px; }
+.fmt ul { list-style: none; margin: 4px 0 0; padding: 0; display: grid; gap: 8px; font-size: 14px; }
+.fmt li { display: flex; gap: 8px; }
+.fmt li::before { content: "→"; color: var(--accent-soft); }
+
+/* 04 cases: cada evento é uma faixa com info em cima e os vídeos rolando na horizontal */
+.cases { display: grid; gap: 56px; }
+.case { display: grid; gap: 18px; }
+.case-head { display: grid; grid-template-columns: 1fr; gap: 24px; align-items: end; border-bottom: 1px solid var(--line); padding-bottom: 14px; }
+.case-head > * { min-width: 0; }
+.case-head .when { font-family: var(--mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--accent-soft); }
+.case-head h3 { font-size: clamp(26px, 3vw, 34px); margin-block: 6px 6px; }
+.case-head p { color: var(--muted); max-width: 70ch; font-size: 15px; }
+.metrics { display: flex; gap: 28px; }
+.metrics b { display: block; font-size: 28px; font-weight: 600; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; color: var(--fg); }
+.metrics span { font-size: 12px; color: var(--muted); }
+.strip { display: grid; grid-auto-flow: column; grid-auto-columns: calc((100% - 48px) / 5); gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 12px; scrollbar-width: thin; scrollbar-color: #3A3A46 transparent; }
+.strip > * { flex: 0 0 auto; scroll-snap-align: start; }
+/* recorte do player do Instagram: o iframe tem 540px de largura; o vídeo 9:16 fica em x 82-458, y 56-724. Só essa área aparece, sem cabeçalho, curtidas e rodapé. */
+.igv { position: relative; width: 300px; height: 533px; border-radius: 16px; overflow: hidden; background: #000; }
+.igv iframe { position: absolute; left: 0; top: 0; width: 540px; height: 900px; border: 0; transform-origin: 0 0; transform: scale(0.798) translate(-82px, -56px); }
+.native { position: relative; width: 100%; aspect-ratio: 9/16; max-width: 100%; border-radius: 16px; overflow: hidden; background: #000; }
+.native video { width: 100%; height: 100%; object-fit: cover; display: block; }
+/* mesmo play do player do Instagram: triângulo branco no centro, toque em cima pra assistir */
+.native .play-btn { position: absolute; inset: 0; width: 100%; border: 0; padding: 0; background: transparent; cursor: pointer; }
+.native .play-btn::after { content: ""; position: absolute; left: 50%; top: 50%; margin: -24px 0 0 -14px; border-left: 38px solid #fff; border-block: 24px solid transparent; filter: drop-shadow(0 2px 6px rgba(0,0,0,.35)); opacity: .92; transition: opacity .2s; }
+.native.playing .play-btn::after { opacity: 0; }
+.native .play-btn:focus-visible { outline: 2px solid var(--accent-soft); outline-offset: -4px; border-radius: 16px; }
+.reel .igh { position: absolute; inset: 0; overflow: hidden; background: #000; }
+.reel .igh iframe { position: absolute; left: 0; top: 0; width: 540px; height: 900px; border: 0; transform-origin: 0 0; transform: scale(0.612) translate(-82px, -56px); }
+.reel .bottom { pointer-events: none; }
+.reel video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.reel.has-video .bottom { background: linear-gradient(transparent, rgba(0,0,0,.65)); margin: -14px; padding: 40px 14px 14px; }
+.reel.has-video .loc { color: #E2E0EA; }
+
+/* 05 processo */
+.steps { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+.step { position: relative; background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 24px 20px; display: grid; gap: 10px; align-content: start; overflow: hidden; }
+.step .n { position: absolute; top: 6px; right: 14px; font-size: 72px; font-weight: 800; letter-spacing: -0.05em; color: rgba(255,255,255,.05); line-height: 1; font-variant-numeric: tabular-nums; }
+.step .d { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--accent-soft); }
+.step h3 { font-size: 20px; font-weight: 600; letter-spacing: -0.02em; }
+.step p { font-size: 14px; color: var(--muted); }
+
+/* 06 rede */
+.region { display: grid; grid-template-columns: .9fr 1.1fr; gap: 64px; align-items: center; }
+.region > * { min-width: 0; }
+.cities { display: flex; flex-wrap: wrap; gap: 8px; }
+.city { font-size: 15px; font-weight: 500; padding: 9px 16px; border-radius: 100px; border: 1px solid var(--line); background: var(--bg-2); display: inline-flex; align-items: center; gap: 8px; }
+.city.on::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); }
+.city.add { border-style: dashed; color: var(--muted); font-family: var(--mono); font-size: 13px; }
+.match { display: grid; gap: 10px; }
+.match .m { display: grid; grid-template-columns: 1fr 28px 1fr; align-items: center; gap: 10px; background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 16px 18px; }
+.match small { display: block; font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: 2px; }
+.match b { font-weight: 600; font-size: 16px; letter-spacing: -0.01em; }
+.match .arr { color: var(--accent-soft); text-align: center; }
+
+/* 07 parceria */
+.partner { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; margin-bottom: 56px; align-items: end; }
+.partner > * { min-width: 0; }
+.perks { list-style: none; margin: 0; padding: 0; display: grid; border-top: 1px solid var(--paper-line); }
+.perks li { padding: 16px 0; border-bottom: 1px solid var(--paper-line); display: grid; grid-template-columns: 28px 1fr; gap: 8px; font-size: 16px; }
+.perks li::before { content: "✓"; color: var(--accent); font-weight: 700; }
+.plans-head { display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap; margin-bottom: 20px; }
+.plans-head h3 { font-size: 28px; }
+.plans-head p { color: var(--ink-muted); font-size: 15px; max-width: 52ch; }
+.plans { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.qty { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.qty b { display: block; font-size: 48px; font-weight: 700; letter-spacing: -0.05em; line-height: 1; font-variant-numeric: tabular-nums; }
+.qty span { font-size: 13px; color: var(--ink-muted); }
+.plan.feat .qty span { color: var(--muted); }
+.plan.custom { background: transparent; border-style: dashed; border-color: #CFCAC0; }
+.plan { background: #fff; border: 1px solid var(--paper-line); border-radius: 22px; padding: 30px 26px; display: grid; gap: 16px; align-content: start; }
+.plan.feat { background: var(--ink); color: var(--fg); border-color: var(--ink); }
+.plan .pk { font-family: var(--mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-muted); display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.plan.feat .pk { color: var(--muted); }
+.plan .pk em { font-style: normal; color: #fff; background: var(--accent); padding: 2px 8px; border-radius: 100px; letter-spacing: .06em; }
+.plan h3 { font-size: 30px; }
+.plan .for { font-size: 15px; color: var(--ink-muted); }
+.plan.feat .for { color: var(--muted); }
+.plan .price { font-size: 26px; font-weight: 600; letter-spacing: -0.03em; border-block: 1px solid var(--paper-line); padding-block: 14px; }
+.plan.feat .price { border-color: var(--line); }
+.plan.feat .tbd { color: var(--accent-soft); background: rgba(123,97,255,.18); }
+.plan ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; font-size: 15px; }
+.plan li { display: flex; gap: 10px; }
+.plan li::before { content: "✓"; color: var(--accent); font-weight: 700; }
+.plan.feat li::before { color: var(--accent-soft); }
+.plan .btn { justify-content: center; }
+
+.proof { display: flex; align-items: center; gap: 14px; padding-top: 4px; }
+.proof b { font-size: 30px; font-weight: 700; letter-spacing: -0.04em; color: var(--accent-soft); }
+.proof span { font-size: 15px; color: var(--muted); max-width: 18ch; line-height: 1.3; }
+.btn-wa { background: #25D366; color: #0A0A0C; }
+.btn-wa:hover { background: #1FBE5B; }
+/* tabela de pacotes */
+.cmp { display: grid; gap: 20px; }
+.cmp-head { display: flex; justify-content: space-between; align-items: end; gap: 12px 32px; flex-wrap: wrap; }
+.cmp-head h3 { font-size: 32px; }
+.cmp-head p { color: var(--ink-muted); font-size: 15px; max-width: 56ch; }
+.tbl-wrap { overflow-x: auto; border-radius: 22px; border: 1px solid var(--paper-line); background: #fff; }
+.cmp table { width: 100%; border-collapse: collapse; min-width: 760px; font-size: 15px; }
+.cmp th, .cmp td { padding: 15px 18px; text-align: center; border-bottom: 1px solid var(--paper-line); }
+.cmp tbody th { text-align: left; font-weight: 400; color: var(--ink-muted); }
+.cmp thead th { font-size: 20px; font-weight: 700; letter-spacing: -0.02em; padding-top: 24px; }
+.cmp thead small { display: block; font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-muted); font-weight: 400; margin-bottom: 4px; }
+.cmp .col-feat { background: rgba(123,97,255,.07); }
+.cmp thead .col-feat small { color: var(--accent); }
+.cmp .price-row td { font-size: 24px; font-weight: 700; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+.cmp .price-row small { display: block; font-size: 12px; font-weight: 400; letter-spacing: 0; color: var(--ink-muted); }
+.cmp .y { color: var(--accent); font-weight: 700; }
+.cmp .n { color: #C9C4BA; }
+.cmp tfoot td { border-bottom: 0; padding-block: 18px 24px; }
+.cmp tfoot .btn { padding: 12px 18px; font-size: 14px; }
+.addons { display: grid; grid-template-columns: auto repeat(3, 1fr); gap: 12px; align-items: stretch; }
+.addons-t { font-family: var(--mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-muted); align-self: center; padding-right: 8px; }
+.addons div { background: #fff; border: 1px solid var(--paper-line); border-radius: 16px; padding: 16px 18px; display: grid; gap: 4px; }
+.addons b { font-size: 15px; font-weight: 600; }
+.addons span { font-size: 14px; color: var(--ink-muted); }
+.cmp-note { font-size: 14px; color: var(--ink-muted); }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+/* vídeo ampliado */
+.lb { position: fixed; inset: 0; z-index: 50; display: grid; place-items: center; background: rgba(5,5,8,.86); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); padding: max(16px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) max(16px, env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); }
+.lb video { height: min(86vh, 900px); aspect-ratio: 9/16; max-width: 100%; border-radius: 18px; background: #000; object-fit: contain; box-shadow: 0 40px 120px rgba(0,0,0,.6); }
+.lb[hidden] { display: none; }
+.lb-x { position: absolute; top: max(16px, env(safe-area-inset-top, 0px)); right: max(16px, env(safe-area-inset-right, 0px)); width: 44px; height: 44px; border-radius: 50%; border: 1px solid rgba(255,255,255,.25); background: rgba(255,255,255,.08); color: #fff; font-size: 26px; line-height: 1; cursor: pointer; }
+.lb-x:focus-visible { outline: 2px solid var(--accent-soft); outline-offset: 2px; }
+.reel.has-video video { cursor: zoom-in; }
+@media (prefers-reduced-motion: no-preference) { .lb:not([hidden]) video { animation: lbin .25s ease-out; } @keyframes lbin { from { transform: scale(.92); opacity: 0; } } }
+/* CTA */
+.final { text-align: center; padding-block: 128px; position: relative; overflow: hidden; }
+.final::before { content: ""; position: absolute; left: 50%; top: 100%; width: 900px; height: 600px; margin-left: -450px; margin-top: -260px; background: radial-gradient(closest-side, rgba(123,97,255,.35), transparent); pointer-events: none; }
+.final .wrap { position: relative; display: grid; gap: 28px; justify-items: center; }
+.final h2 { font-size: clamp(42px, 7vw, 88px); letter-spacing: -0.045em; }
+.final .lead { margin: 0 auto; }
+.contacts { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+.contacts div { border: 1px solid var(--line); background: var(--bg-2); border-radius: 14px; padding: 12px 18px; text-align: left; }
+.contacts small { display: block; font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.contacts b { font-weight: 500; user-select: all; }
+footer { border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; padding-block: 28px; }
+footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+
+@media (max-width: 1000px) {
+  .addons { grid-template-columns: 1fr 1fr 1fr; }
+  .addons-t { grid-column: 1 / -1; }
+  .hero .wrap, .split, .region, .partner { grid-template-columns: 1fr; gap: 48px; }
+  .hero { --sh: 440px; }
+  .stack { max-width: 520px; width: 100%; justify-self: center; }
+  .reel .igh iframe { transform: scale(0.506) translate(-82px, -56px); }
+  .formats { grid-template-columns: repeat(2, 1fr); row-gap: 32px; }
+  .strip { grid-auto-columns: calc((100% - 24px) / 3.2); }
+  .grid2 { grid-template-columns: 1fr 1fr; }
+  .case-head { grid-template-columns: 1fr; gap: 20px; }
+  .steps { grid-template-columns: 1fr 1fr; }
+  .nav-links { display: none; }
+}
+@media (max-width: 600px) {
+  section { padding-block: 80px; }
+  .hero { padding-block: 56px 48px; }
+  .hero { --sh: 360px; }
+  .reel { border-radius: 16px; }
+  .reel .igh iframe { transform: scale(0.399) translate(-82px, -56px); }
+  .reel .cap { font-size: 12px; }
+  .reel.r2 .top { right: 14px; }
+  .rec-tag { top: auto; bottom: 64px; right: 14px; }
+  .formats, .steps { grid-template-columns: 1fr; }
+  .cmp-head h3 { font-size: 26px; }
+  .addons { grid-template-columns: 1fr; }
+  .card { padding: 18px; }
+  .card h3 { font-size: 17px; }
+  .row-c, .compare .hd { gap: 8px; }
+  .row-c > div { padding: 14px; font-size: 14px; }
+  .card { padding: 24px; }
+  .match .m { grid-template-columns: 1fr; }
+  .strip { grid-auto-columns: calc((100% - 12px) / 2.15); }
+  .feat-logos { gap: 8px; }
+  .fl { padding: 18px 8px 12px; height: 110px; }
+  .fl img { height: 34px; }
+  .fl img.zap { height: 70px; margin-block: -18px; }
+  .fl img.frooty { height: 44px; margin-block: -5px; }
+  .fl span { font-size: 9px; letter-spacing: .06em; text-align: center; }
+  .strip { margin-right: calc(-1 * max(20px, env(safe-area-inset-right, 0px))); }
+  .metrics { gap: 20px; }
+  .metrics b { font-size: 22px; }
+  .match .arr { transform: rotate(90deg); justify-self: start; }
+  .logo { font-size: 15px; }
+  .logo i { display: none; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .reel.r2 { animation: float 6s ease-in-out infinite; }
+  @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+}
+
+.feat-logos.four { grid-template-columns: repeat(4, 1fr); }
+.fl img.sil { filter: brightness(0); opacity: .85; }
+.fl.nolabel { height: 120px; align-content: center; overflow: hidden; }
+.fl img.big { height: 150px; max-width: 95%; margin-block: -40px; }
+.strip .ph { aspect-ratio: 9/16; width: 100%; border-radius: 16px; }
+.reel .ph { font-size: 11px; }
+@media (max-width: 1000px) { .feat-logos.four { grid-template-columns: 1fr 1fr; } }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap">
+    <div class="logo">Lara Dam <i>Mercado</i></div>
+    <div class="nav-links">
+      <a href="#cases">Cases</a>
+      <a href="#perfis">Creators por perfil</a>
+      <a href="#pacote">Pacotes</a>
+    </div>
+    <a class="btn" href="https://wa.me/5512988729264?text=Oi%20Lara%21%20Vim%20pela%20p%C3%A1gina%20de%20UGC%20pra%20marcas%20de%20supermercado%20e%20quero%20uma%20proposta." target="_blank" rel="noopener">Falar com a Lara</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="hero-copy">
+      <span class="pill"><span class="rec"></span><b>UGC pra marcas de supermercado</b> · creators reais</span>
+      <h1>Seu produto na mão de <span>quem compra.</span></h1>
+      <p class="lead">Creators reais mostrando o produto na gôndola, na cozinha e no dia a dia. Vídeos prontos pra anúncio, pras redes da marca e pro retail media dos supermercados.</p>
+      <div class="ctas">
+        <a class="btn" href="https://wa.me/5512988729264?text=Oi%20Lara%21%20Vim%20pela%20p%C3%A1gina%20de%20UGC%20pra%20marcas%20de%20supermercado%20e%20quero%20uma%20proposta." target="_blank" rel="noopener">Montar proposta
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
+        <a class="btn btn-line" href="#cases">Ver vídeos</a>
+      </div>
+      <div class="proof"><b>+2 mil</b><span>creators cadastradas em todo o Brasil</span></div>
+    </div>
+    <div class="stack">
+      <div class="reel r1"><div class="ph">vídeo</div><div class="bottom"><span class="loc">No mercado</span><span class="cap">Achei na gôndola</span></div></div>
+      <div class="reel r2"><div class="ph">vídeo</div><div class="bottom"><span class="loc">Na cozinha</span><span class="cap">Receita em 10 minutos</span></div></div>
+      <div class="reel r3"><div class="ph">vídeo</div><div class="bottom"><span class="loc">Em casa</span><span class="cap">Review sincero</span></div></div>
+    </div>
+  </div>
+</header>
+
+<div class="logos">
+  <div class="wrap">
+    <p class="logos-label">Marcas que já trabalharam com a gente</p>
+    <div class="feat-logos four">
+      <a class="fl nolabel" href="#cases"><img class="big" src="/logo-1/26.png" alt="Trisanti"></a>
+      <a class="fl nolabel" href="#cases"><img class="big" src="/logo-1/10.png" alt="Bonduelle"></a>
+      <a class="fl nolabel" href="#cases"><img class="frooty" src="/eventos/logos/frooty.png" alt="Frooty"></a>
+      <a class="fl nolabel" href="#cases"><img class="sil" src="/mercado/logos/copacol.png" alt="Copacol"></a>
+    </div>
+  </div>
+  <div class="marquee" aria-label="Outras marcas do portfólio"><div class="track"><img src="/logo-1/22.png" alt="" loading="lazy"><img src="/logo-1/27.png" alt="" loading="lazy"><img src="/logo-1/12.png" alt="" loading="lazy"><img src="/logo-1/19.png" alt="" loading="lazy"><img src="/logo-1/25.png" alt="" loading="lazy"><img src="/logo-1/32.png" alt="" loading="lazy"><img src="/logo-1/52.png" alt="" loading="lazy"><img src="/logo-1/14.png" alt="" loading="lazy"><img src="/logo-1/2.png" alt="" loading="lazy"><img src="/logo-1/46.png" alt="" loading="lazy"><img src="/logo-1/13.png" alt="" loading="lazy"><img src="/logo-1/20.png" alt="" loading="lazy"><img src="/logo-1/7.png" alt="" loading="lazy"><img src="/logo-1/5.png" alt="" loading="lazy"><img src="/logo-1/41.png" alt="" loading="lazy"><img src="/logo-1/11.png" alt="" loading="lazy"><img src="/logo-1/22.png" alt="" aria-hidden="true" loading="lazy"><img src="/logo-1/27.png" alt="" aria-hidden="true" loading="lazy"><img src="/logo-1/12.png" alt="" aria-hidden="true" loading="lazy"><img src="/logo-1/19.png" alt="" aria-hidden="true" loading="lazy"><img src="/logo-1/25.png" alt="" aria-hidden="true" loading="lazy"><img src="/logo-1/32.png" alt="" aria-hidden="true" loading="lazy"><img src="/logo-1/52.png" alt="" aria-hidden="true" loading="lazy"><img src="/logo-1/14.png" alt="" aria-hidden="true" loading="lazy"><img src="/logo-1/2.png" alt="" aria-hidden="true" loading="lazy"><img src="/logo-1/46.png" alt="" aria-hidden="true" loading="lazy"><img src="/logo-1/13.png" alt="" aria-hidden="true" loading="lazy"><img src="/logo-1/20.png" alt="" aria-hidden="true" loading="lazy"><img src="/logo-1/7.png" alt="" aria-hidden="true" loading="lazy"><img src="/logo-1/5.png" alt="" aria-hidden="true" loading="lazy"><img src="/logo-1/41.png" alt="" aria-hidden="true" loading="lazy"><img src="/logo-1/11.png" alt="" aria-hidden="true" loading="lazy"></div></div>
+</div>
+
+<section class="light">
+  <div class="wrap split">
+    <div class="head" style="margin:0">
+      <span class="eyebrow" data-n="01">O que é UGC</span>
+      <h2>Gente real usando o seu produto.</h2>
+      <p class="lead">UGC é vídeo gravado por creators com a linguagem de quem compra e usa. Parece indicação de amiga, não anúncio. Por isso as pessoas assistem até o fim e confiam mais.</p>
+    </div>
+    <div class="compare">
+      <div class="hd"><span>Foto de catálogo</span><span>UGC</span></div>
+      <div class="row-c"><div class="a">Produto parado no fundo branco</div><div class="b">Produto sendo usado de verdade</div></div>
+      <div class="row-c"><div class="a">Ninguém lembra na hora da compra</div><div class="b">Vira referência na gôndola</div></div>
+      <div class="row-c"><div class="a">Um criativo pra tudo</div><div class="b">Vários ângulos pra testar</div></div>
+      <div class="row-c"><div class="a">Caro pra produzir</div><div class="b">Volume com custo menor</div></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow" data-n="02">Por que UGC pra marcas de mercado</span>
+      <h2>A compra começa no celular.<br>Termina na gôndola.</h2>
+    </div>
+    <div class="grid2">
+      <div class="card">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 4h2l2.4 11h11L21 7H6.2"/><circle cx="9" cy="19.5" r="1.5"/><circle cx="17" cy="19.5" r="1.5"/></svg></span>
+        <h3>Lembrado na compra</h3>
+        <p>Quem viu o vídeo reconhece a embalagem.</p>
+      </div>
+      <div class="card">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 11h14v2a7 7 0 0 1-14 0v-2Z"/><path d="M9 7c0-1.5 1-2 1-3M13 7c0-1.5 1-2 1-3"/></svg></span>
+        <h3>Uso de verdade</h3>
+        <p>Receita, rotina e sabor, mostrados por gente real.</p>
+      </div>
+      <div class="card">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="12" rx="2"/><path d="M8 21h8M12 17v4"/></svg></span>
+        <h3>Pronto pro retail media</h3>
+        <p>Vídeos no formato dos anúncios dos supermercados.</p>
+      </div>
+      <div class="card">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="7" height="7" rx="1.5"/><rect x="14" y="4" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></span>
+        <h3>Volume pra testar</h3>
+        <p>Vários criativos pra achar o que vende.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="cases" style="background:var(--bg-2)">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow" data-n="03">Marcas que já confiaram</span>
+      <h2>Creators em ação.</h2>
+      <p class="lead">Toque no vídeo pra assistir. Arraste pro lado pra ver todos.</p>
+    </div>
+    <div class="cases">
+      <article class="case">
+        <div class="case-head">
+          <div>
+            <span class="when">Bens de consumo</span>
+            <h3>Trisanti</h3>
+            <p><span class="tbd">descrição da campanha</span></p>
+          </div>
+        </div>
+        <div class="strip"><div class="ph">vídeo 1</div><div class="ph">vídeo 2</div><div class="ph">vídeo 3</div><div class="ph">vídeo 4</div><div class="ph">vídeo 5</div></div>
+      </article>
+      <article class="case">
+        <div class="case-head">
+          <div>
+            <span class="when">Alimentos</span>
+            <h3>Bonduelle</h3>
+            <p><span class="tbd">descrição da campanha</span></p>
+          </div>
+        </div>
+        <div class="strip"><div class="ph">vídeo 1</div><div class="ph">vídeo 2</div><div class="ph">vídeo 3</div><div class="ph">vídeo 4</div><div class="ph">vídeo 5</div></div>
+      </article>
+      <article class="case">
+        <div class="case-head">
+          <div>
+            <span class="when">Bebidas e açaí</span>
+            <h3>Frooty</h3>
+            <p><span class="tbd">descrição da campanha</span></p>
+          </div>
+        </div>
+        <div class="strip"><div class="ph">vídeo 1</div><div class="ph">vídeo 2</div><div class="ph">vídeo 3</div><div class="ph">vídeo 4</div><div class="ph">vídeo 5</div></div>
+      </article>
+      <article class="case">
+        <div class="case-head">
+          <div>
+            <span class="when">Alimentos</span>
+            <h3>Copacol</h3>
+            <p><span class="tbd">descrição da campanha</span></p>
+          </div>
+        </div>
+        <div class="strip"><div class="ph">vídeo 1</div><div class="ph">vídeo 2</div><div class="ph">vídeo 3</div><div class="ph">vídeo 4</div><div class="ph">vídeo 5</div></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow" data-n="04">Como funciona</span>
+      <h2>Do briefing ao vídeo pronto.</h2>
+    </div>
+    <div class="steps">
+      <div class="step"><span class="n">1</span><span class="d">Antes</span><h3>Briefing</h3><p>Produto, público e onde o vídeo vai rodar.</p></div>
+      <div class="step"><span class="n">2</span><span class="d">Antes</span><h3>Casting</h3><p>Creators com o perfil de quem compra.</p></div>
+      <div class="step"><span class="n">3</span><span class="d">Antes</span><h3>Roteiro</h3><p>Um roteiro por vídeo, aprovado pela marca.</p></div>
+      <div class="step"><span class="n">4</span><span class="d">Gravação</span><h3>Produto em uso</h3><p>No mercado, na cozinha ou na rotina.</p></div>
+      <div class="step"><span class="n">5</span><span class="d">Depois</span><h3>Entrega</h3><p>Vídeos editados, prontos pra anúncio, em <span class="tbd">X dias</span>.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="perfis" style="padding-top:0">
+  <div class="wrap region">
+    <div class="head" style="margin:0">
+      <span class="eyebrow" data-n="05">Creators por perfil</span>
+      <h2>A creator certa pra cada produto.</h2>
+      <p class="lead">São <strong>mais de 2 mil creators cadastradas</strong>, organizadas por nicho e por região. Dá pra falar com quem compra o seu produto, inclusive na região de cada rede.</p>
+      <div class="cities">
+        <span class="city on">Cozinha e receitas</span>
+        <span class="city on">Mães e família</span>
+        <span class="city on">Fitness</span>
+        <span class="city on">Casa e limpeza</span>
+      </div>
+    </div>
+    <div class="match" aria-label="Exemplos de casting">
+      <div class="m"><div><small>Produto</small><b>Congelados e frango</b></div><span class="arr">→</span><div><small>Casting</small><b>Mães que cozinham pra família</b></div></div>
+      <div class="m"><div><small>Produto</small><b>Açaí e snacks</b></div><span class="arr">→</span><div><small>Casting</small><b>Creators fitness</b></div></div>
+      <div class="m"><div><small>Produto</small><b>Legumes e conservas</b></div><span class="arr">→</span><div><small>Casting</small><b>Receitas rápidas</b></div></div>
+      <div class="m"><div><small>Produto</small><b>Limpeza e casa</b></div><span class="arr">→</span><div><small>Casting</small><b>Rotina e organização</b></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="pacote" class="light">
+  <div class="wrap">
+    <div class="cmp">
+      <div class="cmp-head">
+        <h3>Compare os pacotes</h3>
+        <p>Valores de referência. O valor final depende do número de produtos, do tipo de gravação e do prazo de anúncio.</p>
+      </div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th scope="col"><span class="sr">Item</span></th><th scope="col"><small>Essencial</small>4 vídeos</th><th scope="col" class="col-feat"><small>Destaque · mais pedido</small>10 vídeos</th><th scope="col"><small>Completo</small>20 vídeos</th><th scope="col"><small>Recorrente</small>todo mês</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Creators</th><td>até 2</td><td class="col-feat">até 5</td><td>até 10</td><td>a combinar</td></tr>
+            <tr><th scope="row">Roteiro por vídeo</th><td><span class="y">✓</span></td><td class="col-feat"><span class="y">✓</span></td><td><span class="y">✓</span></td><td><span class="y">✓</span></td></tr>
+            <tr><th scope="row">Gravação no mercado</th><td><span class="n">—</span></td><td class="col-feat"><span class="y">✓</span></td><td><span class="y">✓</span></td><td><span class="y">✓</span></td></tr>
+            <tr><th scope="row">Uso nos perfis da marca</th><td><span class="y">✓</span></td><td class="col-feat"><span class="y">✓</span></td><td><span class="y">✓</span></td><td><span class="y">✓</span></td></tr>
+            <tr><th scope="row">Uso em anúncios pagos</th><td>30 dias</td><td class="col-feat">60 dias</td><td>90 dias</td><td>enquanto durar</td></tr>
+            <tr class="price-row"><th scope="row">Investimento</th><td><small>a partir de</small>R$ 2.200</td><td class="col-feat"><small>a partir de</small>R$ 5.200</td><td><small>a partir de</small>R$ 9.800</td><td><small>a partir de</small>R$ 4.900/mês</td></tr>
+          </tbody>
+          <tfoot><tr><td></td><td><a class="btn btn-line" href="https://wa.me/5512988729264?text=Oi%20Lara%21%20Vim%20pela%20p%C3%A1gina%20de%20UGC%20pra%20marcas%20de%20supermercado%20e%20tenho%20interesse%20no%20pacote%20Essencial%20%284%20v%C3%ADdeos%29.%20Produto%3A%20" target="_blank" rel="noopener">Quero esse</a></td><td class="col-feat"><a class="btn btn-wa" href="https://wa.me/5512988729264?text=Oi%20Lara%21%20Vim%20pela%20p%C3%A1gina%20de%20UGC%20pra%20marcas%20de%20supermercado%20e%20tenho%20interesse%20no%20pacote%20Destaque%20%2810%20v%C3%ADdeos%29.%20Produto%3A%20" target="_blank" rel="noopener">Quero esse</a></td><td><a class="btn btn-line" href="https://wa.me/5512988729264?text=Oi%20Lara%21%20Vim%20pela%20p%C3%A1gina%20de%20UGC%20pra%20marcas%20de%20supermercado%20e%20tenho%20interesse%20no%20pacote%20Completo%20%2820%20v%C3%ADdeos%29.%20Produto%3A%20" target="_blank" rel="noopener">Quero esse</a></td><td><a class="btn btn-line" href="https://wa.me/5512988729264?text=Oi%20Lara%21%20Vim%20pela%20p%C3%A1gina%20de%20UGC%20pra%20marcas%20de%20supermercado%20e%20tenho%20interesse%20no%20pacote%20Recorrente.%20Produto%3A%20" target="_blank" rel="noopener">Montar o meu</a></td></tr></tfoot>
+        </table>
+      </div>
+      <div class="addons">
+        <span class="addons-t">Adicionais</span>
+        <div><b>Stories no perfil da creator</b><span>a partir de R$ 400 por creator</span></div>
+        <div><b>Mais tempo de anúncio</b><span>+40% do pacote a cada 3 meses extras</span></div>
+        <div><b>Envio de produto</b><span>por conta da marca</span></div>
+      </div>
+      <p class="cmp-note">Lançamento, várias linhas de produto ou campanha por região? A gente monta a proposta junto com você.</p>
+    </div>
+  </div>
+</section>
+
+<section id="contato" class="final">
+  <div class="wrap">
+    <span class="eyebrow">Próximo passo</span>
+    <h2>Qual produto vamos<br>colocar em vídeo?</h2>
+    <p class="lead">Manda o produto, o público e onde quer anunciar. Em <span class="tbd">24h</span> você recebe uma proposta com casting e roteiros.</p>
+    <a class="btn btn-wa" href="https://wa.me/5512988729264?text=Oi%20Lara%21%20Vim%20pela%20p%C3%A1gina%20de%20UGC%20pra%20marcas%20de%20supermercado%20e%20quero%20uma%20proposta." target="_blank" rel="noopener">Chamar no WhatsApp</a>
+    <div class="contacts">
+      <div><small>WhatsApp</small><b>(12) 98872-9264</b></div>
+      <div><small>E-mail</small><b>laradam.ugc@gmail.com</b></div>
+      <div><small>Instagram</small><b>@eilaradam</b></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap"><span>Lara Dam · UGC pra marcas de supermercado</span><span>ugc.laradam.com/mercado</span></div>
+</footer>
+
+<div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-label="Vídeo ampliado">
+  <button type="button" class="lb-x" id="lb-x" aria-label="Fechar">×</button>
+  <video id="lb-v" controls playsinline></video>
+</div>
+<script>
+(function () {
+  var lb = document.getElementById("lb"), lv = document.getElementById("lb-v"), last = null;
+  function open(src, poster, from) {
+    last = from; lv.src = src; if (poster) lv.poster = poster;
+    lb.hidden = false; document.body.style.overflow = "hidden";
+    lv.play().catch(function () {});
+    document.getElementById("lb-x").focus();
+  }
+  function close() {
+    lv.pause(); lv.removeAttribute("src"); lv.load();
+    lb.hidden = true; document.body.style.overflow = "";
+    if (last) last.focus();
+  }
+  document.querySelectorAll(".native").forEach(function (box) {
+    var v = box.querySelector("video"), b = box.querySelector(".play-btn");
+    b.addEventListener("click", function () { open(v.currentSrc || v.src, v.poster, b); });
+  });
+  document.querySelectorAll(".reel video[data-full]").forEach(function (v) {
+    v.addEventListener("click", function () { open(v.dataset.full, v.poster, null); });
+  });
+  document.getElementById("lb-x").addEventListener("click", close);
+  lb.addEventListener("click", function (e) { if (e.target === lb) close(); });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !lb.hidden) close(); });
+})();
+</script>
+</body>
+</html>

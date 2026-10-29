@@ -9,6 +9,9 @@ const nextConfig: NextConfig = {
       // Proposta do Replit (HTML estatico em public/replit/)
       { source: "/replit", destination: "/replit/index.html" },
       { source: "/replit/", destination: "/replit/index.html" },
+      // Pagina de UGC para marcas de supermercado (HTML estatico em public/mercado/)
+      { source: "/mercado", destination: "/mercado/index.html" },
+      { source: "/mercado/", destination: "/mercado/index.html" },
       // Pagina de UGC para eventos (HTML estatico em public/eventos/)
       { source: "/eventos", destination: "/eventos/index.html" },
       { source: "/eventos/", destination: "/eventos/index.html" },
