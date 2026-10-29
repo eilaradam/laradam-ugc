@@ -67,22 +67,12 @@ function Exemplos({ c }: { c: CreatorGrano }) {
   );
 }
 
-function TikTok({ c }: { c: CreatorGrano }) {
-  return c.tiktok ? (
-    <a href={`https://www.tiktok.com/@${c.tiktok}`} target="_blank" rel="noopener" className="text-sm font-semibold text-primary hover:underline">
-      Sim
-    </a>
-  ) : (
-    <span className="text-sm text-muted">Não</span>
-  );
-}
-
 type Grupo = { titulo: string; creators: CreatorGrano[] };
 type Sel = { tem: (u: string) => boolean; troca: (u: string) => void };
 
 function Planilha({ grupos, sel, cliente }: { grupos: Grupo[]; sel: Sel; cliente: string }) {
   const total = grupos.reduce((n, g) => n + g.creators.length, 0);
-  const cols = "grid-cols-[32px_minmax(210px,1.5fr)_76px_minmax(190px,1.6fr)_84px_84px_64px_56px_160px]";
+  const cols = "grid-cols-[32px_minmax(210px,1.5fr)_76px_minmax(190px,1.6fr)_84px_84px_64px_160px]";
   return (
     <div className="overflow-hidden rounded-2xl border border-border bg-background">
       <div className="flex flex-wrap items-center gap-3 border-b border-border bg-background-alt px-4 py-3">
@@ -93,7 +83,7 @@ function Planilha({ grupos, sel, cliente }: { grupos: Grupo[]; sel: Sel; cliente
         </span>
       </div>
       <div className="overflow-x-auto">
-        <div className="min-w-[1040px]">
+        <div className="min-w-[980px]">
           <div className={"grid items-center gap-3 border-b border-border bg-background-alt/60 px-4 py-2.5 text-[10px] font-bold uppercase tracking-wider text-muted " + cols}>
             <span />
             <span>Creator</span>
@@ -102,7 +92,6 @@ function Planilha({ grupos, sel, cliente }: { grupos: Grupo[]; sel: Sel; cliente
             <span className="text-right">Seguidores</span>
             <span className="text-right">Views/reel</span>
             <span className="text-right">Engaj.</span>
-            <span>TikTok</span>
             <span>Exemplos</span>
           </div>
           {grupos.map((g) => (
@@ -128,7 +117,6 @@ function Planilha({ grupos, sel, cliente }: { grupos: Grupo[]; sel: Sel; cliente
                   <span className="text-right text-sm font-semibold tabular-nums">{num(c.seguidores)}</span>
                   <span className="text-right text-sm font-semibold tabular-nums">{num(c.viewsReel)}</span>
                   <span className="text-right text-sm font-semibold tabular-nums">{engaj(c.engajamento)}</span>
-                  <TikTok c={c} />
                   <Exemplos c={c} />
                 </div>
               ))}
