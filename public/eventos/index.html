@@ -266,6 +266,13 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .addons span { font-size: 14px; color: var(--ink-muted); }
 .cmp-note { font-size: 14px; color: var(--ink-muted); }
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+/* vídeo ampliado */
+.lb { position: fixed; inset: 0; z-index: 50; display: grid; place-items: center; background: rgba(5,5,8,.86); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); padding: max(16px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) max(16px, env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); }
+.lb video { height: min(86vh, 900px); aspect-ratio: 9/16; max-width: 100%; border-radius: 18px; background: #000; object-fit: contain; box-shadow: 0 40px 120px rgba(0,0,0,.6); }
+.lb-x { position: absolute; top: max(16px, env(safe-area-inset-top, 0px)); right: max(16px, env(safe-area-inset-right, 0px)); width: 44px; height: 44px; border-radius: 50%; border: 1px solid rgba(255,255,255,.25); background: rgba(255,255,255,.08); color: #fff; font-size: 26px; line-height: 1; cursor: pointer; }
+.lb-x:focus-visible { outline: 2px solid var(--accent-soft); outline-offset: 2px; }
+.reel.has-video video { cursor: zoom-in; }
+@media (prefers-reduced-motion: no-preference) { .lb:not([hidden]) video { animation: lbin .25s ease-out; } @keyframes lbin { from { transform: scale(.92); opacity: 0; } } }
 /* CTA */
 .final { text-align: center; padding-block: 128px; position: relative; overflow: hidden; }
 .final::before { content: ""; position: absolute; left: 50%; top: 100%; width: 900px; height: 600px; margin-left: -450px; margin-top: -260px; background: radial-gradient(closest-side, rgba(123,97,255,.35), transparent); pointer-events: none; }
@@ -360,10 +367,10 @@ footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; g
       </div>
       <div class="proof"><b>+2 mil</b><span>creators cadastradas em todo o Brasil</span></div>
     </div>
-    <div class="stack" aria-hidden="true">
-      <div class="reel r1 has-video has-ig"><div class="igh"><iframe src="https://www.instagram.com/p/DHb3wK_OTH6/embed/" loading="lazy" scrolling="no" tabindex="-1" title="Vídeo do evento" allow="autoplay; encrypted-media; fullscreen"></iframe></div><div class="bottom"><span class="loc">São Paulo · SP</span><span class="cap">ZAP Imóveis na Casa ZAP</span></div></div>
-      <div class="reel r2 has-video"><video src="/eventos/videos/cama-in-box.mp4" poster="/eventos/videos/cama-in-box.jpg" autoplay muted loop playsinline preload="metadata"></video><span class="rec-tag"><span class="rec"></span>NO EVENTO</span><div class="bottom"><span class="loc">São Paulo · SP</span><span class="cap">Cama in Box na Mercado Livre Experience</span></div></div>
-      <div class="reel r3 has-video has-ig"><div class="igh"><iframe src="https://www.instagram.com/p/DNyKHwI4p_0/embed/" loading="lazy" scrolling="no" tabindex="-1" title="Vídeo do evento" allow="autoplay; encrypted-media; fullscreen"></iframe></div><div class="bottom"><span class="loc">Netshoes Run · SP</span><span class="cap">Frooty na corrida</span></div></div>
+    <div class="stack">
+      <div class="reel r1 has-video"><video src="/eventos/videos/hero-zap.mp4" poster="/eventos/videos/zap-1.jpg" data-full="/eventos/videos/zap-1.mp4" autoplay muted loop playsinline preload="auto"></video><div class="bottom"><span class="loc">São Paulo · SP</span><span class="cap">ZAP Imóveis na Casa ZAP</span></div></div>
+      <div class="reel r2 has-video"><video src="/eventos/videos/hero-cama.mp4" poster="/eventos/videos/cama-in-box.jpg" data-full="/eventos/videos/cama-in-box.mp4" autoplay muted loop playsinline preload="auto"></video><span class="rec-tag"><span class="rec"></span>NO EVENTO</span><div class="bottom"><span class="loc">São Paulo · SP</span><span class="cap">Cama in Box na Mercado Livre Experience</span></div></div>
+      <div class="reel r3 has-video"><video src="/eventos/videos/hero-frooty.mp4" poster="/eventos/videos/hero-frooty.jpg" data-full="/eventos/videos/frooty-netshoes.mp4" autoplay muted loop playsinline preload="auto"></video><div class="bottom"><span class="loc">Netshoes Run · SP</span><span class="cap">Frooty na corrida</span></div></div>
     </div>
   </div>
 </header>
@@ -466,7 +473,7 @@ footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; g
             <div><b><span class="tbd">00k</span></b><span>views</span></div>
           </div>
         </div>
-        <div class="strip"><div class="native"><video src="/eventos/videos/cama-in-box.mp4" poster="/eventos/videos/cama-in-box.jpg" playsinline preload="metadata"></video><button type="button" class="play-btn" aria-label="Assistir vídeo"></button></div><div class="igv"><iframe src="https://www.instagram.com/p/Ddy6F0HxCTf/embed/" loading="lazy" scrolling="no" title="Vídeo do evento" allow="autoplay; encrypted-media; fullscreen"></iframe></div><div class="igv"><iframe src="https://www.instagram.com/p/DdxCwgBB21i/embed/" loading="lazy" scrolling="no" title="Vídeo do evento" allow="autoplay; encrypted-media; fullscreen"></iframe></div><div class="igv"><iframe src="https://www.instagram.com/p/DdwO3ynxyYc/embed/" loading="lazy" scrolling="no" title="Vídeo do evento" allow="autoplay; encrypted-media; fullscreen"></iframe></div></div>
+        <div class="strip"><div class="native"><video src="/eventos/videos/cama-in-box.mp4" poster="/eventos/videos/cama-in-box.jpg" playsinline preload="metadata"></video><button type="button" class="play-btn" aria-label="Assistir vídeo"></button></div><div class="native"><video src="/eventos/videos/cama-1.mp4" poster="/eventos/videos/cama-1.jpg" playsinline preload="metadata"></video><button type="button" class="play-btn" aria-label="Assistir vídeo"></button></div><div class="native"><video src="/eventos/videos/cama-2.mp4" poster="/eventos/videos/cama-2.jpg" playsinline preload="metadata"></video><button type="button" class="play-btn" aria-label="Assistir vídeo"></button></div><div class="native"><video src="/eventos/videos/cama-3.mp4" poster="/eventos/videos/cama-3.jpg" playsinline preload="metadata"></video><button type="button" class="play-btn" aria-label="Assistir vídeo"></button></div></div>
       </article>
       <article class="case">
         <div class="case-head">
@@ -481,14 +488,14 @@ footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; g
             <div><b><span class="tbd">00k</span></b><span>views</span></div>
           </div>
         </div>
-        <div class="strip"><div class="igv"><iframe src="https://www.instagram.com/p/DHb3wK_OTH6/embed/" loading="lazy" scrolling="no" title="Vídeo do evento" allow="autoplay; encrypted-media; fullscreen"></iframe></div><div class="igv"><iframe src="https://www.instagram.com/p/DHn-h5yOFw5/embed/" loading="lazy" scrolling="no" title="Vídeo do evento" allow="autoplay; encrypted-media; fullscreen"></iframe></div><div class="igv"><iframe src="https://www.instagram.com/p/DHoo7i5P_-_/embed/" loading="lazy" scrolling="no" title="Vídeo do evento" allow="autoplay; encrypted-media; fullscreen"></iframe></div><div class="igv"><iframe src="https://www.instagram.com/p/DHtVGRqNylc/embed/" loading="lazy" scrolling="no" title="Vídeo do evento" allow="autoplay; encrypted-media; fullscreen"></iframe></div><div class="igv"><iframe src="https://www.instagram.com/p/DHwZLrNv0iI/embed/" loading="lazy" scrolling="no" title="Vídeo do evento" allow="autoplay; encrypted-media; fullscreen"></iframe></div></div>
+        <div class="strip"><div class="native"><video src="/eventos/videos/zap-1.mp4" poster="/eventos/videos/zap-1.jpg" playsinline preload="metadata"></video><button type="button" class="play-btn" aria-label="Assistir vídeo"></button></div><div class="native"><video src="/eventos/videos/zap-3.mp4" poster="/eventos/videos/zap-3.jpg" playsinline preload="metadata"></video><button type="button" class="play-btn" aria-label="Assistir vídeo"></button></div><div class="native"><video src="/eventos/videos/zap-4.mp4" poster="/eventos/videos/zap-4.jpg" playsinline preload="metadata"></video><button type="button" class="play-btn" aria-label="Assistir vídeo"></button></div><div class="native"><video src="/eventos/videos/zap-5.mp4" poster="/eventos/videos/zap-5.jpg" playsinline preload="metadata"></video><button type="button" class="play-btn" aria-label="Assistir vídeo"></button></div><div class="native"><video src="/eventos/videos/zap-6.mp4" poster="/eventos/videos/zap-6.jpg" playsinline preload="metadata"></video><button type="button" class="play-btn" aria-label="Assistir vídeo"></button></div></div>
       </article>
       <article class="case">
         <div class="case-head">
           <div>
-            <span class="when">Evento esportivo · Netshoes Run</span>
-            <h3>Frooty na corrida</h3>
-            <p>Creators na Netshoes Run com a Frooty, no lançamento do açaí cremoso: a prova, a medalha e o produto na mão.</p>
+            <span class="when">Corridas e eventos · SP e RS</span>
+            <h3>Frooty</h3>
+            <p>Creators com a Frooty na Netshoes Run, na Live!Run XP, no Acampamento Farroupilha e no Dia do Açaí.</p>
           </div>
           <div class="metrics">
             <div><b>5</b><span>vídeos</span></div>
@@ -496,7 +503,7 @@ footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; g
             <div><b><span class="tbd">00k</span></b><span>views</span></div>
           </div>
         </div>
-        <div class="strip"><div class="igv"><iframe src="https://www.instagram.com/p/DNyKHwI4p_0/embed/" loading="lazy" scrolling="no" title="Vídeo do evento" allow="autoplay; encrypted-media; fullscreen"></iframe></div><div class="igv"><iframe src="https://www.instagram.com/p/DPT8LSZEfO8/embed/" loading="lazy" scrolling="no" title="Vídeo do evento" allow="autoplay; encrypted-media; fullscreen"></iframe></div><div class="igv"><iframe src="https://www.instagram.com/p/DO3pWJSkZDH/embed/" loading="lazy" scrolling="no" title="Vídeo do evento" allow="autoplay; encrypted-media; fullscreen"></iframe></div><div class="igv"><iframe src="https://www.instagram.com/p/DOOfmVHEeQq/embed/" loading="lazy" scrolling="no" title="Vídeo do evento" allow="autoplay; encrypted-media; fullscreen"></iframe></div><div class="igv"><iframe src="https://www.instagram.com/p/DOMpNKnkfVZ/embed/" loading="lazy" scrolling="no" title="Vídeo do evento" allow="autoplay; encrypted-media; fullscreen"></iframe></div></div>
+        <div class="strip"><div class="native"><video src="/eventos/videos/frooty-netshoes.mp4" poster="/eventos/videos/frooty-netshoes.jpg" playsinline preload="metadata"></video><button type="button" class="play-btn" aria-label="Assistir vídeo"></button></div><div class="native"><video src="/eventos/videos/frooty-1.mp4" poster="/eventos/videos/frooty-1.jpg" playsinline preload="metadata"></video><button type="button" class="play-btn" aria-label="Assistir vídeo"></button></div><div class="native"><video src="/eventos/videos/frooty-2.mp4" poster="/eventos/videos/frooty-2.jpg" playsinline preload="metadata"></video><button type="button" class="play-btn" aria-label="Assistir vídeo"></button></div><div class="native"><video src="/eventos/videos/frooty-3.mp4" poster="/eventos/videos/frooty-3.jpg" playsinline preload="metadata"></video><button type="button" class="play-btn" aria-label="Assistir vídeo"></button></div><div class="native"><video src="/eventos/videos/frooty-4.mp4" poster="/eventos/videos/frooty-4.jpg" playsinline preload="metadata"></video><button type="button" class="play-btn" aria-label="Assistir vídeo"></button></div></div>
       </article>
       <article class="case">
         <div class="case-head">
@@ -511,7 +518,7 @@ footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; g
             <div><b><span class="tbd">00k</span></b><span>views</span></div>
           </div>
         </div>
-        <div class="strip"><div class="igv"><iframe src="https://www.instagram.com/p/DOZM18bj5kA/embed/" loading="lazy" scrolling="no" title="Vídeo do evento" allow="autoplay; encrypted-media; fullscreen"></iframe></div><div class="igv"><iframe src="https://www.instagram.com/p/DJ2WrALpezM/embed/" loading="lazy" scrolling="no" title="Vídeo do evento" allow="autoplay; encrypted-media; fullscreen"></iframe></div><div class="igv"><iframe src="https://www.instagram.com/p/DJXIlFnIgAz/embed/" loading="lazy" scrolling="no" title="Vídeo do evento" allow="autoplay; encrypted-media; fullscreen"></iframe></div><div class="igv"><iframe src="https://www.instagram.com/p/DJm6t-AtDPK/embed/" loading="lazy" scrolling="no" title="Vídeo do evento" allow="autoplay; encrypted-media; fullscreen"></iframe></div><div class="igv"><iframe src="https://www.instagram.com/p/DKLFNqvIib2/embed/" loading="lazy" scrolling="no" title="Vídeo do evento" allow="autoplay; encrypted-media; fullscreen"></iframe></div></div>
+        <div class="strip"><div class="native"><video src="/eventos/videos/olx-1.mp4" poster="/eventos/videos/olx-1.jpg" playsinline preload="metadata"></video><button type="button" class="play-btn" aria-label="Assistir vídeo"></button></div><div class="native"><video src="/eventos/videos/olx-2.mp4" poster="/eventos/videos/olx-2.jpg" playsinline preload="metadata"></video><button type="button" class="play-btn" aria-label="Assistir vídeo"></button></div><div class="native"><video src="/eventos/videos/olx-3.mp4" poster="/eventos/videos/olx-3.jpg" playsinline preload="metadata"></video><button type="button" class="play-btn" aria-label="Assistir vídeo"></button></div><div class="native"><video src="/eventos/videos/olx-maio.mp4" poster="/eventos/videos/olx-maio.jpg" playsinline preload="metadata"></video><button type="button" class="play-btn" aria-label="Assistir vídeo"></button></div><div class="native"><video src="/eventos/videos/olx-4.mp4" poster="/eventos/videos/olx-4.jpg" playsinline preload="metadata"></video><button type="button" class="play-btn" aria-label="Assistir vídeo"></button></div></div>
       </article>
     </div>
   </div>
@@ -619,16 +626,35 @@ footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; g
   <div class="wrap"><span>Lara Dam · UGC e creators para eventos</span><span>ugc.laradam.com/eventos</span></div>
 </footer>
 
+<div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-label="Vídeo ampliado">
+  <button type="button" class="lb-x" id="lb-x" aria-label="Fechar">×</button>
+  <video id="lb-v" controls playsinline></video>
+</div>
 <script>
-document.querySelectorAll(".native").forEach(function (box) {
-  var v = box.querySelector("video");
-  box.querySelector(".play-btn").addEventListener("click", function () {
-    if (v.paused) { v.play().catch(function () {}); } else { v.pause(); }
+(function () {
+  var lb = document.getElementById("lb"), lv = document.getElementById("lb-v"), last = null;
+  function open(src, poster, from) {
+    last = from; lv.src = src; if (poster) lv.poster = poster;
+    lb.hidden = false; document.body.style.overflow = "hidden";
+    lv.play().catch(function () {});
+    document.getElementById("lb-x").focus();
+  }
+  function close() {
+    lv.pause(); lv.removeAttribute("src"); lv.load();
+    lb.hidden = true; document.body.style.overflow = "";
+    if (last) last.focus();
+  }
+  document.querySelectorAll(".native").forEach(function (box) {
+    var v = box.querySelector("video"), b = box.querySelector(".play-btn");
+    b.addEventListener("click", function () { open(v.currentSrc || v.src, v.poster, b); });
   });
-  v.addEventListener("play", function () { box.classList.add("playing"); });
-  v.addEventListener("pause", function () { box.classList.remove("playing"); });
-  v.addEventListener("ended", function () { box.classList.remove("playing"); v.currentTime = 0; });
-});
+  document.querySelectorAll(".reel video[data-full]").forEach(function (v) {
+    v.addEventListener("click", function () { open(v.dataset.full, v.poster, null); });
+  });
+  document.getElementById("lb-x").addEventListener("click", close);
+  lb.addEventListener("click", function (e) { if (e.target === lb) close(); });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !lb.hidden) close(); });
+})();
 </script>
 </body>
 </html>
