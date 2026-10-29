@@ -270,7 +270,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 /* vídeo ampliado */
 .lb { position: fixed; inset: 0; z-index: 50; display: grid; place-items: center; background: rgba(5,5,8,.86); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); padding: max(16px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) max(16px, env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); }
 .lb video { height: min(86vh, 900px); aspect-ratio: 9/16; max-width: 100%; border-radius: 18px; background: #000; object-fit: contain; box-shadow: 0 40px 120px rgba(0,0,0,.6); }
-.lb[hidden] { display: none; }
+.lb[hidden], .lb [hidden] { display: none; }
 .lb-x { position: absolute; top: max(16px, env(safe-area-inset-top, 0px)); right: max(16px, env(safe-area-inset-right, 0px)); width: 44px; height: 44px; border-radius: 50%; border: 1px solid rgba(255,255,255,.25); background: rgba(255,255,255,.08); color: #fff; font-size: 26px; line-height: 1; cursor: pointer; }
 .lb-x:focus-visible { outline: 2px solid var(--accent-soft); outline-offset: 2px; }
 .reel.has-video video { cursor: zoom-in; }
@@ -339,7 +339,19 @@ footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; g
   @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
 }
 
-.feat-logos.four { grid-template-columns: repeat(4, 1fr); }
+.feat-logos.six { grid-template-columns: repeat(6, 1fr); }
+.feat-logos.six .fl { height: 96px; padding: 12px; }
+.feat-logos.six .fl img { height: 40px; }
+.feat-logos.six .fl img.big { height: 120px; margin-block: -36px; }
+.feat-logos.six .fl img.frooty { height: 58px; margin-block: 0; }
+.igv { position: relative; width: 100%; height: auto; aspect-ratio: 376/668; border-radius: 16px; overflow: hidden; background: #000; }
+.igv iframe { position: absolute; left: 0; top: 0; width: 540px; height: 900px; border: 0; transform-origin: 0 0; pointer-events: none; }
+.ig-open { position: absolute; inset: 0; width: 100%; border: 0; background: transparent; cursor: zoom-in; }
+.ig-open:focus-visible { outline: 2px solid var(--accent-soft); outline-offset: -3px; border-radius: 16px; }
+.lb-ig { position: relative; height: min(86vh, 900px); aspect-ratio: 376/668; max-width: 100%; border-radius: 18px; overflow: hidden; background: #000; }
+.lb-ig iframe { position: absolute; left: 0; top: 0; width: 540px; height: 900px; border: 0; transform-origin: 0 0; }
+@media (max-width: 1000px) { .feat-logos.six { grid-template-columns: repeat(3, 1fr); } }
+
 .fl img.sil { filter: brightness(0); opacity: .85; }
 .fl.nolabel { height: 120px; align-content: center; overflow: hidden; }
 .fl img.big { height: 150px; max-width: 95%; margin-block: -40px; }
@@ -376,9 +388,9 @@ footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; g
       <div class="proof"><b>+2 mil</b><span>creators cadastradas em todo o Brasil</span></div>
     </div>
     <div class="stack">
-      <div class="reel r1"><div class="ph">vídeo</div><div class="bottom"><span class="loc">No mercado</span><span class="cap">Achei na gôndola</span></div></div>
-      <div class="reel r2"><div class="ph">vídeo</div><div class="bottom"><span class="loc">Na cozinha</span><span class="cap">Receita em 10 minutos</span></div></div>
-      <div class="reel r3"><div class="ph">vídeo</div><div class="bottom"><span class="loc">Em casa</span><span class="cap">Review sincero</span></div></div>
+      <div class="reel r1 has-video"><video src="/mercado/videos/hero-1.mp4" poster="/mercado/videos/daki-1.jpg" data-full="/mercado/videos/daki-1.mp4" autoplay muted loop playsinline preload="auto"></video><div class="bottom"><span class="loc">Em casa</span><span class="cap">Mercado chegou em 15 minutos</span></div></div>
+      <div class="reel r2 has-video"><video src="/mercado/videos/hero-2.mp4" poster="/mercado/videos/daki-2.jpg" data-full="/mercado/videos/daki-2.mp4" autoplay muted loop playsinline preload="auto"></video><div class="bottom"><span class="loc">Daki</span><span class="cap">Compras do mês pelo app</span></div></div>
+      <div class="reel r3 has-video"><video src="/mercado/videos/hero-3.mp4" poster="/mercado/videos/daki-3.jpg" data-full="/mercado/videos/daki-3.mp4" autoplay muted loop playsinline preload="auto"></video><div class="bottom"><span class="loc">Na cozinha</span><span class="cap">Geladeira cheia</span></div></div>
     </div>
   </div>
 </header>
@@ -386,14 +398,16 @@ footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; g
 <div class="logos">
   <div class="wrap">
     <p class="logos-label">Marcas que já trabalharam com a gente</p>
-    <div class="feat-logos four">
+    <div class="feat-logos six">
+      <a class="fl nolabel" href="#cases"><img src="/mercado/logos/daki.svg" alt="Daki"></a>
+      <a class="fl nolabel" href="#cases"><img class="sil" src="/mercado/logos/copacol.png" alt="Copacol"></a>
       <a class="fl nolabel" href="#cases"><img class="big" src="/logo-1/26.png" alt="Trisanti"></a>
       <a class="fl nolabel" href="#cases"><img class="big" src="/logo-1/10.png" alt="Bonduelle"></a>
       <a class="fl nolabel" href="#cases"><img class="frooty" src="/eventos/logos/frooty.png" alt="Frooty"></a>
-      <a class="fl nolabel" href="#cases"><img class="sil" src="/mercado/logos/copacol.png" alt="Copacol"></a>
+      <a class="fl nolabel" href="#cases"><img class="big" src="/logo-1/22.png" alt="Rap10"></a>
     </div>
   </div>
-  <div class="marquee" aria-label="Outras marcas do portfólio"><div class="track"><img src="/logo-1/22.png" alt="" loading="lazy"><img src="/logo-1/27.png" alt="" loading="lazy"><img src="/logo-1/12.png" alt="" loading="lazy"><img src="/logo-1/19.png" alt="" loading="lazy"><img src="/logo-1/25.png" alt="" loading="lazy"><img src="/logo-1/32.png" alt="" loading="lazy"><img src="/logo-1/52.png" alt="" loading="lazy"><img src="/logo-1/14.png" alt="" loading="lazy"><img src="/logo-1/2.png" alt="" loading="lazy"><img src="/logo-1/46.png" alt="" loading="lazy"><img src="/logo-1/13.png" alt="" loading="lazy"><img src="/logo-1/20.png" alt="" loading="lazy"><img src="/logo-1/7.png" alt="" loading="lazy"><img src="/logo-1/5.png" alt="" loading="lazy"><img src="/logo-1/41.png" alt="" loading="lazy"><img src="/logo-1/11.png" alt="" loading="lazy"><img src="/logo-1/22.png" alt="" aria-hidden="true" loading="lazy"><img src="/logo-1/27.png" alt="" aria-hidden="true" loading="lazy"><img src="/logo-1/12.png" alt="" aria-hidden="true" loading="lazy"><img src="/logo-1/19.png" alt="" aria-hidden="true" loading="lazy"><img src="/logo-1/25.png" alt="" aria-hidden="true" loading="lazy"><img src="/logo-1/32.png" alt="" aria-hidden="true" loading="lazy"><img src="/logo-1/52.png" alt="" aria-hidden="true" loading="lazy"><img src="/logo-1/14.png" alt="" aria-hidden="true" loading="lazy"><img src="/logo-1/2.png" alt="" aria-hidden="true" loading="lazy"><img src="/logo-1/46.png" alt="" aria-hidden="true" loading="lazy"><img src="/logo-1/13.png" alt="" aria-hidden="true" loading="lazy"><img src="/logo-1/20.png" alt="" aria-hidden="true" loading="lazy"><img src="/logo-1/7.png" alt="" aria-hidden="true" loading="lazy"><img src="/logo-1/5.png" alt="" aria-hidden="true" loading="lazy"><img src="/logo-1/41.png" alt="" aria-hidden="true" loading="lazy"><img src="/logo-1/11.png" alt="" aria-hidden="true" loading="lazy"></div></div>
+  <div class="marquee" aria-label="Outras marcas do portfólio"><div class="track"><img src="/logo-1/27.png" alt="" loading="lazy"><img src="/logo-1/12.png" alt="" loading="lazy"><img src="/logo-1/19.png" alt="" loading="lazy"><img src="/logo-1/25.png" alt="" loading="lazy"><img src="/logo-1/32.png" alt="" loading="lazy"><img src="/logo-1/52.png" alt="" loading="lazy"><img src="/logo-1/14.png" alt="" loading="lazy"><img src="/logo-1/2.png" alt="" loading="lazy"><img src="/logo-1/46.png" alt="" loading="lazy"><img src="/logo-1/13.png" alt="" loading="lazy"><img src="/logo-1/20.png" alt="" loading="lazy"><img src="/logo-1/7.png" alt="" loading="lazy"><img src="/logo-1/5.png" alt="" loading="lazy"><img src="/logo-1/41.png" alt="" loading="lazy"><img src="/logo-1/11.png" alt="" loading="lazy"><img src="/logo-1/27.png" alt="" aria-hidden="true" loading="lazy"><img src="/logo-1/12.png" alt="" aria-hidden="true" loading="lazy"><img src="/logo-1/19.png" alt="" aria-hidden="true" loading="lazy"><img src="/logo-1/25.png" alt="" aria-hidden="true" loading="lazy"><img src="/logo-1/32.png" alt="" aria-hidden="true" loading="lazy"><img src="/logo-1/52.png" alt="" aria-hidden="true" loading="lazy"><img src="/logo-1/14.png" alt="" aria-hidden="true" loading="lazy"><img src="/logo-1/2.png" alt="" aria-hidden="true" loading="lazy"><img src="/logo-1/46.png" alt="" aria-hidden="true" loading="lazy"><img src="/logo-1/13.png" alt="" aria-hidden="true" loading="lazy"><img src="/logo-1/20.png" alt="" aria-hidden="true" loading="lazy"><img src="/logo-1/7.png" alt="" aria-hidden="true" loading="lazy"><img src="/logo-1/5.png" alt="" aria-hidden="true" loading="lazy"><img src="/logo-1/41.png" alt="" aria-hidden="true" loading="lazy"><img src="/logo-1/11.png" alt="" aria-hidden="true" loading="lazy"></div></div>
 </div>
 
 <section class="light">
@@ -455,42 +469,62 @@ footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; g
       <article class="case">
         <div class="case-head">
           <div>
-            <span class="when">Bens de consumo</span>
-            <h3>Trisanti</h3>
-            <p><span class="tbd">descrição da campanha</span></p>
+            <span class="when">App de supermercado</span>
+            <h3>Daki</h3>
+            <p>Creators recebendo as compras do Daki em casa: o app, a entrega rápida, a geladeira cheia e as receitas.</p>
           </div>
         </div>
-        <div class="strip"><div class="ph">vídeo 1</div><div class="ph">vídeo 2</div><div class="ph">vídeo 3</div><div class="ph">vídeo 4</div><div class="ph">vídeo 5</div></div>
+        <div class="strip"><div class="native"><video src="/mercado/videos/daki-1.mp4" poster="/mercado/videos/daki-1.jpg" playsinline preload="metadata"></video><button type="button" class="play-btn" aria-label="Assistir vídeo"></button></div><div class="native"><video src="/mercado/videos/daki-2.mp4" poster="/mercado/videos/daki-2.jpg" playsinline preload="metadata"></video><button type="button" class="play-btn" aria-label="Assistir vídeo"></button></div><div class="native"><video src="/mercado/videos/daki-3.mp4" poster="/mercado/videos/daki-3.jpg" playsinline preload="metadata"></video><button type="button" class="play-btn" aria-label="Assistir vídeo"></button></div><div class="native"><video src="/mercado/videos/daki-4.mp4" poster="/mercado/videos/daki-4.jpg" playsinline preload="metadata"></video><button type="button" class="play-btn" aria-label="Assistir vídeo"></button></div><div class="native"><video src="/mercado/videos/daki-5.mp4" poster="/mercado/videos/daki-5.jpg" playsinline preload="metadata"></video><button type="button" class="play-btn" aria-label="Assistir vídeo"></button></div></div>
       </article>
       <article class="case">
         <div class="case-head">
           <div>
-            <span class="when">Alimentos</span>
-            <h3>Bonduelle</h3>
-            <p><span class="tbd">descrição da campanha</span></p>
+            <span class="when">Alimentos · frango e empanados</span>
+            <h3>Copacol</h3>
+            <p>Creators preparando os produtos Copacol na cozinha, do pacote ao prato.</p>
           </div>
         </div>
-        <div class="strip"><div class="ph">vídeo 1</div><div class="ph">vídeo 2</div><div class="ph">vídeo 3</div><div class="ph">vídeo 4</div><div class="ph">vídeo 5</div></div>
+        <div class="strip"><div class="igv" data-ig="DIR8uSzPDE5"><iframe src="https://www.instagram.com/p/DIR8uSzPDE5/embed/" loading="lazy" scrolling="no" tabindex="-1" title="Vídeo da marca"></iframe><button type="button" class="ig-open" aria-label="Assistir vídeo"></button></div><div class="igv" data-ig="DUY_yYNCKRx"><iframe src="https://www.instagram.com/p/DUY_yYNCKRx/embed/" loading="lazy" scrolling="no" tabindex="-1" title="Vídeo da marca"></iframe><button type="button" class="ig-open" aria-label="Assistir vídeo"></button></div><div class="igv" data-ig="DKc_cAry-2T"><iframe src="https://www.instagram.com/p/DKc_cAry-2T/embed/" loading="lazy" scrolling="no" tabindex="-1" title="Vídeo da marca"></iframe><button type="button" class="ig-open" aria-label="Assistir vídeo"></button></div><div class="igv" data-ig="DK-d4MCp-QZ"><iframe src="https://www.instagram.com/p/DK-d4MCp-QZ/embed/" loading="lazy" scrolling="no" tabindex="-1" title="Vídeo da marca"></iframe><button type="button" class="ig-open" aria-label="Assistir vídeo"></button></div><div class="igv" data-ig="DLyEcLSvZPR"><iframe src="https://www.instagram.com/p/DLyEcLSvZPR/embed/" loading="lazy" scrolling="no" tabindex="-1" title="Vídeo da marca"></iframe><button type="button" class="ig-open" aria-label="Assistir vídeo"></button></div></div>
+      </article>
+      <article class="case">
+        <div class="case-head">
+          <div>
+            <span class="when">Alimentos · molhos e massas</span>
+            <h3>Trisanti</h3>
+            <p>Receitas do dia a dia com os produtos Trisanti, gravadas na cozinha de casa.</p>
+          </div>
+        </div>
+        <div class="strip"><div class="igv" data-ig="DK-JAmhxeqp"><iframe src="https://www.instagram.com/p/DK-JAmhxeqp/embed/" loading="lazy" scrolling="no" tabindex="-1" title="Vídeo da marca"></iframe><button type="button" class="ig-open" aria-label="Assistir vídeo"></button></div><div class="igv" data-ig="DIzbSv8sDob"><iframe src="https://www.instagram.com/p/DIzbSv8sDob/embed/" loading="lazy" scrolling="no" tabindex="-1" title="Vídeo da marca"></iframe><button type="button" class="ig-open" aria-label="Assistir vídeo"></button></div><div class="igv" data-ig="DHLyVXwRAB9"><iframe src="https://www.instagram.com/p/DHLyVXwRAB9/embed/" loading="lazy" scrolling="no" tabindex="-1" title="Vídeo da marca"></iframe><button type="button" class="ig-open" aria-label="Assistir vídeo"></button></div><div class="igv" data-ig="DHWGph2xplr"><iframe src="https://www.instagram.com/p/DHWGph2xplr/embed/" loading="lazy" scrolling="no" tabindex="-1" title="Vídeo da marca"></iframe><button type="button" class="ig-open" aria-label="Assistir vídeo"></button></div><div class="igv" data-ig="DBJiezGJU0Z"><iframe src="https://www.instagram.com/p/DBJiezGJU0Z/embed/" loading="lazy" scrolling="no" tabindex="-1" title="Vídeo da marca"></iframe><button type="button" class="ig-open" aria-label="Assistir vídeo"></button></div></div>
+      </article>
+      <article class="case">
+        <div class="case-head">
+          <div>
+            <span class="when">Alimentos · milho e conservas</span>
+            <h3>Bonduelle</h3>
+            <p>Receitas com milho e legumes Bonduelle: pamonha, creme, quiche e bolo, do jeito que a família faz.</p>
+          </div>
+        </div>
+        <div class="strip"><div class="igv" data-ig="C8MqO-pOp88"><iframe src="https://www.instagram.com/p/C8MqO-pOp88/embed/" loading="lazy" scrolling="no" tabindex="-1" title="Vídeo da marca"></iframe><button type="button" class="ig-open" aria-label="Assistir vídeo"></button></div><div class="igv" data-ig="C8e7Y0-OEDz"><iframe src="https://www.instagram.com/p/C8e7Y0-OEDz/embed/" loading="lazy" scrolling="no" tabindex="-1" title="Vídeo da marca"></iframe><button type="button" class="ig-open" aria-label="Assistir vídeo"></button></div><div class="igv" data-ig="C8xFMNTOJNz"><iframe src="https://www.instagram.com/p/C8xFMNTOJNz/embed/" loading="lazy" scrolling="no" tabindex="-1" title="Vídeo da marca"></iframe><button type="button" class="ig-open" aria-label="Assistir vídeo"></button></div><div class="igv" data-ig="C8pLIOJuYSx"><iframe src="https://www.instagram.com/p/C8pLIOJuYSx/embed/" loading="lazy" scrolling="no" tabindex="-1" title="Vídeo da marca"></iframe><button type="button" class="ig-open" aria-label="Assistir vídeo"></button></div><div class="igv" data-ig="C8zwf2UuCLz"><iframe src="https://www.instagram.com/p/C8zwf2UuCLz/embed/" loading="lazy" scrolling="no" tabindex="-1" title="Vídeo da marca"></iframe><button type="button" class="ig-open" aria-label="Assistir vídeo"></button></div><div class="igv" data-ig="C84rK8Cu2Rd"><iframe src="https://www.instagram.com/p/C84rK8Cu2Rd/embed/" loading="lazy" scrolling="no" tabindex="-1" title="Vídeo da marca"></iframe><button type="button" class="ig-open" aria-label="Assistir vídeo"></button></div><div class="igv" data-ig="C9KsGItO1pQ"><iframe src="https://www.instagram.com/p/C9KsGItO1pQ/embed/" loading="lazy" scrolling="no" tabindex="-1" title="Vídeo da marca"></iframe><button type="button" class="ig-open" aria-label="Assistir vídeo"></button></div><div class="igv" data-ig="C9cws8nupDI"><iframe src="https://www.instagram.com/p/C9cws8nupDI/embed/" loading="lazy" scrolling="no" tabindex="-1" title="Vídeo da marca"></iframe><button type="button" class="ig-open" aria-label="Assistir vídeo"></button></div></div>
       </article>
       <article class="case">
         <div class="case-head">
           <div>
             <span class="when">Bebidas e açaí</span>
             <h3>Frooty</h3>
-            <p><span class="tbd">descrição da campanha</span></p>
+            <p>Creators com o açaí e as bebidas Frooty na rotina: treino, trabalho e momento de descanso.</p>
           </div>
         </div>
-        <div class="strip"><div class="ph">vídeo 1</div><div class="ph">vídeo 2</div><div class="ph">vídeo 3</div><div class="ph">vídeo 4</div><div class="ph">vídeo 5</div></div>
+        <div class="strip"><div class="igv" data-ig="DSI1HbikZge"><iframe src="https://www.instagram.com/p/DSI1HbikZge/embed/" loading="lazy" scrolling="no" tabindex="-1" title="Vídeo da marca"></iframe><button type="button" class="ig-open" aria-label="Assistir vídeo"></button></div><div class="igv" data-ig="DV6u9gUkaWo"><iframe src="https://www.instagram.com/p/DV6u9gUkaWo/embed/" loading="lazy" scrolling="no" tabindex="-1" title="Vídeo da marca"></iframe><button type="button" class="ig-open" aria-label="Assistir vídeo"></button></div><div class="igv" data-ig="DPe0QJ9kRio"><iframe src="https://www.instagram.com/p/DPe0QJ9kRio/embed/" loading="lazy" scrolling="no" tabindex="-1" title="Vídeo da marca"></iframe><button type="button" class="ig-open" aria-label="Assistir vídeo"></button></div><div class="igv" data-ig="DRiMzoBET65"><iframe src="https://www.instagram.com/p/DRiMzoBET65/embed/" loading="lazy" scrolling="no" tabindex="-1" title="Vídeo da marca"></iframe><button type="button" class="ig-open" aria-label="Assistir vídeo"></button></div><div class="igv" data-ig="DSlFivyEVan"><iframe src="https://www.instagram.com/p/DSlFivyEVan/embed/" loading="lazy" scrolling="no" tabindex="-1" title="Vídeo da marca"></iframe><button type="button" class="ig-open" aria-label="Assistir vídeo"></button></div><div class="igv" data-ig="DWO1WO8ETFQ"><iframe src="https://www.instagram.com/p/DWO1WO8ETFQ/embed/" loading="lazy" scrolling="no" tabindex="-1" title="Vídeo da marca"></iframe><button type="button" class="ig-open" aria-label="Assistir vídeo"></button></div><div class="igv" data-ig="DW9lY90EQYt"><iframe src="https://www.instagram.com/p/DW9lY90EQYt/embed/" loading="lazy" scrolling="no" tabindex="-1" title="Vídeo da marca"></iframe><button type="button" class="ig-open" aria-label="Assistir vídeo"></button></div><div class="igv" data-ig="DPXFbq4kavM"><iframe src="https://www.instagram.com/p/DPXFbq4kavM/embed/" loading="lazy" scrolling="no" tabindex="-1" title="Vídeo da marca"></iframe><button type="button" class="ig-open" aria-label="Assistir vídeo"></button></div><div class="igv" data-ig="DR0QwBGEfxK"><iframe src="https://www.instagram.com/p/DR0QwBGEfxK/embed/" loading="lazy" scrolling="no" tabindex="-1" title="Vídeo da marca"></iframe><button type="button" class="ig-open" aria-label="Assistir vídeo"></button></div></div>
       </article>
       <article class="case">
         <div class="case-head">
           <div>
-            <span class="when">Alimentos</span>
-            <h3>Copacol</h3>
-            <p><span class="tbd">descrição da campanha</span></p>
+            <span class="when">Alimentos · tortilhas</span>
+            <h3>Rap10</h3>
+            <p>Receitas rápidas com Rap10: wraps, lanches e versões fit, prontos em poucos minutos.</p>
           </div>
         </div>
-        <div class="strip"><div class="ph">vídeo 1</div><div class="ph">vídeo 2</div><div class="ph">vídeo 3</div><div class="ph">vídeo 4</div><div class="ph">vídeo 5</div></div>
+        <div class="strip"><div class="igv" data-ig="DSakWE0EYO3"><iframe src="https://www.instagram.com/p/DSakWE0EYO3/embed/" loading="lazy" scrolling="no" tabindex="-1" title="Vídeo da marca"></iframe><button type="button" class="ig-open" aria-label="Assistir vídeo"></button></div><div class="igv" data-ig="DSLXOPmkmXR"><iframe src="https://www.instagram.com/p/DSLXOPmkmXR/embed/" loading="lazy" scrolling="no" tabindex="-1" title="Vídeo da marca"></iframe><button type="button" class="ig-open" aria-label="Assistir vídeo"></button></div><div class="igv" data-ig="DOoOfkyjvKa"><iframe src="https://www.instagram.com/p/DOoOfkyjvKa/embed/" loading="lazy" scrolling="no" tabindex="-1" title="Vídeo da marca"></iframe><button type="button" class="ig-open" aria-label="Assistir vídeo"></button></div><div class="igv" data-ig="DNB5GNhyiNp"><iframe src="https://www.instagram.com/p/DNB5GNhyiNp/embed/" loading="lazy" scrolling="no" tabindex="-1" title="Vídeo da marca"></iframe><button type="button" class="ig-open" aria-label="Assistir vídeo"></button></div><div class="igv" data-ig="DLVzdhEOo30"><iframe src="https://www.instagram.com/p/DLVzdhEOo30/embed/" loading="lazy" scrolling="no" tabindex="-1" title="Vídeo da marca"></iframe><button type="button" class="ig-open" aria-label="Assistir vídeo"></button></div><div class="igv" data-ig="DLDnvOfSQ9m"><iframe src="https://www.instagram.com/p/DLDnvOfSQ9m/embed/" loading="lazy" scrolling="no" tabindex="-1" title="Vídeo da marca"></iframe><button type="button" class="ig-open" aria-label="Assistir vídeo"></button></div><div class="igv" data-ig="DKuxOh5RUEq"><iframe src="https://www.instagram.com/p/DKuxOh5RUEq/embed/" loading="lazy" scrolling="no" tabindex="-1" title="Vídeo da marca"></iframe><button type="button" class="ig-open" aria-label="Assistir vídeo"></button></div><div class="igv" data-ig="DHWBeYhx9cJ"><iframe src="https://www.instagram.com/p/DHWBeYhx9cJ/embed/" loading="lazy" scrolling="no" tabindex="-1" title="Vídeo da marca"></iframe><button type="button" class="ig-open" aria-label="Assistir vídeo"></button></div></div>
       </article>
     </div>
   </div>
@@ -587,6 +621,7 @@ footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; g
 <div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-label="Vídeo ampliado">
   <button type="button" class="lb-x" id="lb-x" aria-label="Fechar">×</button>
   <video id="lb-v" controls playsinline></video>
+  <div class="lb-ig" id="lb-ig" hidden></div>
 </div>
 <script>
 (function () {
@@ -597,7 +632,22 @@ footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; g
     lv.play().catch(function () {});
     document.getElementById("lb-x").focus();
   }
+  var lig = document.getElementById("lb-ig");
+  function fit(box) { var f = box.querySelector("iframe"); if (f) f.style.transform = "scale(" + (box.clientWidth / 376) + ") translate(-82px, -56px)"; }
+  function fitAll() { document.querySelectorAll(".igv").forEach(fit); }
+  window.addEventListener("resize", function () { fitAll(); if (!lig.hidden) fit(lig); });
+  fitAll();
+  function openIg(id, from) {
+    last = from; lv.hidden = true; lig.hidden = false;
+    lig.innerHTML = '<iframe src="https://www.instagram.com/p/' + id + '/embed/" scrolling="no" allow="autoplay; encrypted-media; fullscreen" title="Vídeo ampliado"></iframe>';
+    lb.hidden = false; document.body.style.overflow = "hidden"; fit(lig);
+    document.getElementById("lb-x").focus();
+  }
+  document.querySelectorAll(".igv").forEach(function (box) {
+    box.querySelector(".ig-open").addEventListener("click", function () { openIg(box.dataset.ig, this); });
+  });
   function close() {
+    lig.innerHTML = ""; lig.hidden = true; lv.hidden = false;
     lv.pause(); lv.removeAttribute("src"); lv.load();
     lb.hidden = true; document.body.style.overflow = "";
     if (last) last.focus();
