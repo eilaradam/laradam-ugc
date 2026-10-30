@@ -31,5 +31,48 @@ export default function AnalyticsTracker() {
     return () => document.removeEventListener("click", onClick, { capture: true } as EventListenerOptions);
   }, []);
 
+  // Até onde a visita chegou: marcos de rolagem e cada seção que apareceu na tela (uma vez por página)
+  useEffect(() => {
+    if (!pathname) return;
+    const marcos = [25, 50, 75, 100];
+    const vistos = new Set<number>();
+    const onScroll = () => {
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      if (max <= 0) return;
+      const pct = (window.scrollY / max) * 100;
+      for (const m of marcos) {
+        if (pct >= m - 2 && !vistos.has(m)) {
+          vistos.add(m);
+          track("button_click", `scroll_${m}`);
+        }
+      }
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+
+    const secoes = new Set<string>();
+    const obs = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          const id = (e.target as HTMLElement).id;
+          if (e.isIntersecting && id && !secoes.has(id)) {
+            secoes.add(id);
+            track("button_click", `secao_${id}`);
+          }
+        }
+      },
+      { threshold: 0.3 }
+    );
+    // espera a página montar antes de procurar as seções
+    const t = setTimeout(() => {
+      document.querySelectorAll("main section[id], main [id^='cat-']").forEach((el) => obs.observe(el));
+    }, 500);
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      clearTimeout(t);
+      obs.disconnect();
+    };
+  }, [pathname]);
+
   return null;
 }

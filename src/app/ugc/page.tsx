@@ -15,7 +15,6 @@ import YouTubeAds from "@/components/YouTubeAds";
 import Testimonials from "@/components/Testimonials";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
-import LeadCapturePopup from "@/components/LeadCapturePopup";
 import TagBarra from "@/components/TagBarra";
 
 export const metadata: Metadata = {
@@ -53,7 +52,6 @@ export default function UgcPage() {
         <Testimonials />
         <Contact />
         <Footer />
-        <LeadCapturePopup />
       </main>
     </>
   );

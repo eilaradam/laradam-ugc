@@ -12,7 +12,6 @@ import YouTubeAds from "@/components/YouTubeAds";
 import Testimonials from "@/components/Testimonials";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
-import LeadCapturePopup from "@/components/LeadCapturePopup";
 import TagBarra from "@/components/TagBarra";
 
 // Força layout desktop também no mobile — celular vai mostrar a página
@@ -49,7 +48,6 @@ export default function Home() {
       <Testimonials />
       <Contact />
       <Footer />
-        <LeadCapturePopup />
       </main>
     </>
   );

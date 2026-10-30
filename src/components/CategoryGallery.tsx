@@ -1,17 +1,28 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { motion } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { VIDEOS } from "@/data/content";
 import VideoCard from "./VideoCard";
 import { useT } from "@/lib/i18n";
+import { getOrigem } from "@/lib/tracking";
 
 type LocalCategory = { slug: string; name: string; tagline: string };
 
 export default function CategoryGallery() {
   const t = useT();
-  const rows: LocalCategory[] = t.categories.items;
+  // Visita vinda do robô do Seu Influencer (?c=beleza): a categoria da campanha sobe pro topo.
+  // Lido depois de montar pra não divergir do HTML do servidor; categoria desconhecida não muda nada.
+  const primeira = useSyncExternalStore(
+    () => () => {},
+    () => getOrigem().c ?? null,
+    () => null
+  );
+  const itens: LocalCategory[] = t.categories.items;
+  const rows = primeira && itens.some((c) => c.slug === primeira)
+    ? [...itens.filter((c) => c.slug === primeira), ...itens.filter((c) => c.slug !== primeira)]
+    : itens;
 
   return (
     <section

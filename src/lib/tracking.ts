@@ -4,7 +4,33 @@ export type TrackEventType = "page_view" | "button_click" | "video_view";
 
 const SESSION_KEY = "ugc_session_id";
 
+const ORIGEM_KEY = "ugc_origem";
+
 let cachedSessionId: string | null = null;
+let cachedOrigem: Record<string, string> | null = null;
+
+// ?si=<codigo da campanha>&c=<categoria> vem do link do robo do Seu Influencer.
+// Guarda na sessao pra continuar valendo depois que a URL muda (ancoras, troca de idioma).
+export function getOrigem(): Record<string, string> {
+  if (cachedOrigem) return cachedOrigem;
+  if (typeof window === "undefined") return {};
+  try {
+    const q = new URLSearchParams(window.location.search);
+    const si = q.get("si")?.slice(0, 40);
+    if (si) {
+      const o: Record<string, string> = { si };
+      const c = q.get("c")?.slice(0, 40);
+      if (c) o.c = c;
+      sessionStorage.setItem(ORIGEM_KEY, JSON.stringify(o));
+      return (cachedOrigem = o);
+    }
+    const stored = sessionStorage.getItem(ORIGEM_KEY);
+    cachedOrigem = stored ? JSON.parse(stored) : {};
+  } catch {
+    cachedOrigem = {};
+  }
+  return cachedOrigem!;
+}
 
 function getSessionId(): string {
   if (cachedSessionId) return cachedSessionId;
@@ -41,7 +67,7 @@ export function track(
       page_path: window.location.pathname,
       user_agent: navigator.userAgent,
       referrer: document.referrer || null,
-      metadata: metadata ?? {},
+      metadata: { ...getOrigem(), ...(metadata ?? {}) },
     });
 
     if (typeof navigator !== "undefined" && navigator.sendBeacon) {
