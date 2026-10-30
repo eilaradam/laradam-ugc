@@ -78,7 +78,7 @@ export default function YouTubeAds() {
         </motion.div>
 
         {/* Coluna direita — grid 2x2 de vídeos horizontais */}
-        <div className="md:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
+        <div className="md:col-span-7 grid grid-cols-2 gap-3 md:gap-4">
           {YT_ADS.map((ad, i) => (
             <YouTubeAdCard key={`${ad.brand}-${i}`} ad={ad} index={i} />
           ))}

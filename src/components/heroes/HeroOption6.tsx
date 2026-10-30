@@ -17,9 +17,9 @@ export default function HeroOption6({ foto, fundo }: { foto?: string; fundo?: Fo
   return (
     <section
       id="top"
-      className={`relative bg-background ${fundo ? "pt-20 md:pt-10 pb-10 md:pb-16 min-h-[720px] flex items-center" : "pt-20 md:pt-6 pb-3 md:pb-6"}`}
+      className={`relative bg-background ${fundo ? "pt-20 md:pt-10 pb-10 md:pb-16 min-h-[560px] md:min-h-[720px] flex items-center" : "pt-20 md:pt-6 pb-3 md:pb-6"}`}
     >
-      {fundo && <FundoTrocando fotos={fundo} className="hidden md:block" />}
+      {fundo && <FundoTrocando fotos={fundo} />}
       {/* Camadas de fundo (grid + glow) — clipadas aqui pra não vazar,
           sem cortar a foto que fica no fluxo normal acima delas. */}
       {!fundo && (
@@ -50,7 +50,7 @@ export default function HeroOption6({ foto, fundo }: { foto?: string; fundo?: Fo
 
       <div className="lara-hero-grid relative max-w-7xl mx-auto px-5 md:px-8 grid md:grid-cols-2 gap-6 md:gap-12 items-center w-full">
         {/* LEFT: texto */}
-        <div className="flex flex-col md:pl-10 lg:pl-16">
+        <div className={`flex flex-col md:pl-10 lg:pl-16 ${fundo ? "max-w-[60%] md:max-w-none" : ""}`}>
           {/* Badge com check */}
           <motion.div
             initial={{ opacity: 0, y: -10 }}
@@ -98,7 +98,7 @@ export default function HeroOption6({ foto, fundo }: { foto?: string; fundo?: Fo
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6, duration: 0.7 }}
-            className="mt-8 md:mt-10 flex items-center gap-5 md:gap-6"
+            className="mt-8 md:mt-10 flex flex-wrap items-center gap-x-5 gap-y-3 md:gap-6"
           >
             <a
               href="#contato"
@@ -126,13 +126,7 @@ export default function HeroOption6({ foto, fundo }: { foto?: string; fundo?: Fo
             className="relative z-10 flex items-end justify-center origin-bottom w-full"
           >
             {fundo ? (
-              <>
-                {/* celular: as fotos trocam num quadro abaixo do texto */}
-                <div className="md:hidden relative w-full aspect-[4/5] rounded-2xl overflow-hidden">
-                  <FundoTrocando fotos={fundo} modo="bloco" />
-                </div>
-                <div className="hidden md:block h-[66vh]" />
-              </>
+              <div className="hidden md:block h-[66vh]" />
             ) : (
             <HeroPhoto src={foto} className="lara-hero-photo w-auto h-[46vh] sm:h-[56vh] md:h-[74vh] max-w-full object-contain object-bottom" />
             )}

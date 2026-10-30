@@ -36,7 +36,7 @@ export default function FundoTrocando({ fotos, modo = "fundo", className = "" }:
             src={f.src}
             alt=""
             fetchPriority={i === 0 ? "high" : "low"}
-            className={bloco ? "absolute inset-0 w-full h-full object-cover object-top" : "absolute right-0 top-0 h-full w-auto max-w-none object-cover object-top"}
+            className={bloco ? "absolute inset-0 w-full h-full object-cover object-top" : "absolute right-[-42%] md:right-0 top-0 h-full w-auto max-w-none object-cover object-top"}
             style={bloco ? undefined : {
               maskImage: "linear-gradient(to right, transparent 0%, black 22%)",
               WebkitMaskImage: "linear-gradient(to right, transparent 0%, black 22%)",

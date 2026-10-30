@@ -13,6 +13,7 @@ import Testimonials from "@/components/Testimonials";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import TagBarra from "@/components/TagBarra";
+import MenuEmbaixo from "@/components/MenuEmbaixo";
 
 // Força layout desktop também no mobile — celular vai mostrar a página
 // renderizada a 1280px, encolhida pra caber. Visitante pode pinch-zoom.
@@ -23,8 +24,8 @@ export default function Home() {
     <>
 
       <TagBarra />
-      <main className="flex-1 pt-[var(--barra-topo,0px)]">
-        <Nav />
+      <main className="flex-1 pt-[var(--barra-topo,0px)] pb-16 md:pb-0">
+        <Nav menuEmbaixo />
       <Hero
         fundo={[
           { src: "/capa/1-sorriso.webp", cor: "#D7CDC4" },
@@ -44,6 +45,7 @@ export default function Home() {
       <Testimonials />
       <Contact />
       <Footer />
+        <MenuEmbaixo />
       </main>
     </>
   );

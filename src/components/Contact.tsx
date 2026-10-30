@@ -140,7 +140,7 @@ export default function Contact() {
           className="md:col-span-7 space-y-5"
         >
           <Honeypot />
-          <div className="grid md:grid-cols-2 gap-5">
+          <div className="grid grid-cols-2 gap-3 md:gap-5">
             <Field name="name" label={t.contact.name} placeholder={t.contact.namePh} required />
             <Field
               name="email"

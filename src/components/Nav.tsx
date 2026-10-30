@@ -6,7 +6,8 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { useLang, useT } from "@/lib/i18n";
 
-export default function Nav() {
+/** menuEmbaixo: no celular o menu fica numa barra fixa embaixo (MenuEmbaixo), então some o ☰. */
+export default function Nav({ menuEmbaixo = false }: { menuEmbaixo?: boolean } = {}) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
@@ -133,7 +134,7 @@ export default function Nav() {
               onClick={() => setOpen(true)}
               aria-label="Menu"
               data-track="mobile_menu_open"
-              className="md:hidden w-9 h-9 text-foreground flex items-center justify-center hover:text-primary transition-colors"
+              className={`${menuEmbaixo ? "hidden" : "md:hidden"} w-9 h-9 text-foreground flex items-center justify-center hover:text-primary transition-colors`}
             >
               <Menu className="w-5 h-5" />
             </button>

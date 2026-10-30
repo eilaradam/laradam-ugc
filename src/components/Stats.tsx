@@ -12,7 +12,7 @@ export default function Stats() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.6 }}
-        className="grid grid-cols-2 md:grid-cols-4 gap-y-6 gap-x-4 md:gap-x-8 md:divide-x md:divide-foreground/10"
+        className="grid grid-cols-4 gap-x-3 md:gap-x-8 divide-x divide-foreground/10"
       >
         {t.stats.map((s, i) => (
           <motion.div
@@ -20,12 +20,12 @@ export default function Stats() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: i * 0.06 }}
-            className="flex flex-col md:pl-6 first:md:pl-0"
+            className="flex flex-col pl-3 md:pl-6 first:pl-0"
           >
-            <div className="font-display font-black text-2xl md:text-3xl text-foreground tracking-tight leading-none">
+            <div className="font-display font-black text-xl md:text-3xl text-foreground tracking-tight leading-none">
               <AnimatedValue value={s.value} />
             </div>
-            <div className="mt-1 text-[11px] md:text-xs uppercase tracking-[0.15em] text-muted">
+            <div className="mt-1 text-[9px] md:text-xs uppercase tracking-[0.1em] md:tracking-[0.15em] text-muted">
               {s.label}
             </div>
           </motion.div>

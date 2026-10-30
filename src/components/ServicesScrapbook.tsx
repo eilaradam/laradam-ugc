@@ -146,7 +146,7 @@ export default function ServicesScrapbook() {
         </div>
 
         {/* Direita — 2x2 cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-10 md:gap-y-12">
+        <div className="grid grid-cols-2 gap-x-3 md:gap-x-6 gap-y-8 md:gap-y-12">
           {SERVICES.map((s, i) => (
             <motion.div
               key={s.label}

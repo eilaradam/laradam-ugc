@@ -196,7 +196,7 @@ function CategoryRow({ category }: { category: LocalCategory }) {
         {videos.map((v, i) => (
           <div
             key={v.id}
-            className="flex-shrink-0 snap-start w-[calc((100%-1rem)/2)] sm:w-[calc((100%-2rem)/3)] lg:w-[calc((100%-6rem)/5)]"
+            className="flex-shrink-0 snap-start w-[calc((100%-2rem)/3)] lg:w-[calc((100%-6rem)/5)]"
           >
             <VideoCard video={v} index={i} />
           </div>

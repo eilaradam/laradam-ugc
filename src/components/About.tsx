@@ -32,7 +32,7 @@ export default function About() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
-          className="relative aspect-[4/5] max-w-[280px] md:max-w-[400px] mx-auto md:ml-auto md:mr-12 w-full"
+          className="hidden md:block relative aspect-[4/5] max-w-[280px] md:max-w-[400px] mx-auto md:ml-auto md:mr-12 w-full"
         >
           <img
             src="/sobre-circle.png"
@@ -61,6 +61,12 @@ export default function About() {
           </h2>
 
           <p className="text-sm md:text-base text-foreground-soft leading-relaxed max-w-xl">
+            {/* celular: foto ao lado do texto, o texto contorna */}
+            <img
+              src="/sobre-circle.png"
+              alt="Lara Dam"
+              className="md:hidden float-left w-[42%] aspect-[4/5] object-cover rounded-2xl mr-4 mb-2 mt-1"
+            />
             {renderBold(t.about.body1)}
           </p>
 
