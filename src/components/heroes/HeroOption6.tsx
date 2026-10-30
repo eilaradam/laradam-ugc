@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { Check } from "lucide-react";
 import { HeroPhoto } from "./_shared";
-import FundoTrocando from "./FundoTrocando";
+import FundoTrocando, { type FotoFundo } from "./FundoTrocando";
 import { useT } from "@/lib/i18n";
 
 // Acento da marca (rebranding: petróleo/teal)
@@ -12,7 +12,7 @@ const ACCENT_DARK = "var(--primary-dark)";
 const ACCENT_LIGHT = "var(--accent-on-dark)";
 
 /** `fundo`: fotos largas que ficam trocando atrás da capa (no lugar da foto recortada à direita). */
-export default function HeroOption6({ foto, fundo }: { foto?: string; fundo?: string[] } = {}) {
+export default function HeroOption6({ foto, fundo }: { foto?: string; fundo?: FotoFundo[] } = {}) {
   const t = useT();
   return (
     <section
@@ -152,6 +152,7 @@ export default function HeroOption6({ foto, fundo }: { foto?: string; fundo?: st
               },
             }}
             whileHover={{ scale: 1.06, transition: { duration: 0.25, ease: "easeOut" } }}
+            style={fundo ? { top: "62%" } : undefined}
             className="hero-balao-1 hidden md:flex absolute z-20 right-1 md:right-3 top-[35%] md:top-[38%] bg-white shadow-xl rounded-2xl p-3 md:p-3.5 items-center gap-3 max-w-[220px] border border-foreground/5 cursor-default"
           >
             <span
@@ -186,6 +187,7 @@ export default function HeroOption6({ foto, fundo }: { foto?: string; fundo?: st
               },
             }}
             whileHover={{ scale: 1.06, transition: { duration: 0.25, ease: "easeOut" } }}
+            style={fundo ? { top: "88%" } : undefined}
             className="hero-balao-2 hidden md:flex absolute z-20 left-1 md:left-3 top-[78%] md:top-[80%] bg-white shadow-xl rounded-2xl p-3 md:p-3.5 items-center gap-3 max-w-[230px] border border-foreground/5 cursor-default"
           >
             <span

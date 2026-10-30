@@ -38,7 +38,14 @@ export default function Home() {
       <TagBarra />
       <main className="flex-1 pt-[var(--barra-topo,0px)]">
         <Nav />
-      <Hero fundo={["/capa/1-sorriso.webp", "/capa/2-seria.webp", "/capa/3-cabelo.webp", "/capa/4-risada.webp"]} />
+      <Hero
+        fundo={[
+          { src: "/capa/1-sorriso.webp", cor: "#D7CDC4" },
+          { src: "/capa/2-seria.webp", cor: "#D9D0C9" },
+          { src: "/capa/3-cabelo.webp", cor: "#D6CDC5" },
+          { src: "/capa/4-risada.webp", cor: "#DAD1CA" },
+        ]}
+      />
       <Marquee />
       <Stats />
       <About />
