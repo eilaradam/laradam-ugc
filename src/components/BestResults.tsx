@@ -43,7 +43,7 @@ type Highlight = {
 };
 
 // Dados estruturais (não traduzem) — id, brand, domain
-const HIGHLIGHTS_BASE = [
+export const HIGHLIGHTS_BASE = [
   {
     youtubeId: "5wf8Fv2CTa4",
     brand: "InfinitePay",

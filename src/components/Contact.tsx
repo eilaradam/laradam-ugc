@@ -62,7 +62,7 @@ export default function Contact() {
   return (
     <section
       id="contato"
-      className="px-6 md:px-12 py-6 md:py-10 bg-foreground text-background relative overflow-hidden"
+      className="px-6 md:px-12 py-16 md:py-24 bg-foreground text-background relative overflow-hidden"
     >
       <div className="relative max-w-7xl mx-auto grid md:grid-cols-12 gap-12">
         <motion.div
@@ -86,6 +86,21 @@ export default function Contact() {
           <p className="text-background/60 text-lg leading-relaxed mb-10 max-w-md">
             {t.contact.body}
           </p>
+
+          {/* WhatsApp em destaque: marca responde mais rápido por lá do que pelo formulário */}
+          <a
+            href={`https://wa.me/${SITE.whatsapp}`}
+            target="_blank"
+            rel="noopener"
+            data-track="contact_whatsapp_botao"
+            className="mb-10 flex items-center justify-between gap-4 rounded-2xl bg-background text-foreground px-6 py-5 max-w-md hover:bg-accent-on-dark transition-colors"
+          >
+            <span>
+              <span className="block text-xs uppercase tracking-[0.15em] text-foreground-soft">{t.contact.whatsTitle}</span>
+              <span className="block mt-1 font-display font-bold text-xl">{t.contact.whatsCta}</span>
+            </span>
+            <WhatsAppIcon className="w-7 h-7 flex-shrink-0" />
+          </a>
 
           <div className="space-y-4">
             <a
@@ -151,11 +166,6 @@ export default function Contact() {
             />
           </div>
           <Field name="brand" label={t.contact.brand} placeholder={t.contact.brandPh} required />
-          <Field
-            name="budget"
-            label={t.contact.budget}
-            placeholder={t.contact.budgetPh}
-          />
           <div>
             <label className="block text-xs uppercase tracking-wider text-background/60 mb-2">
               {t.contact.message}

@@ -90,6 +90,8 @@ export type Dict = {
     metrics: string;
     cta: string;
     saibaMais: string;
+    ctaVideos: string;
+    ctaWhats: string;
     bubble1Title: string;
     bubble1Sub: string;
     bubble2Title: string;
@@ -145,6 +147,9 @@ export type Dict = {
     title2: string;
     intro: string;
     comingSoon: string;
+    tabsHint: string;
+    verTodos: string;
+    verMenos: string;
     items: CategoryItem[];
   };
   youtubeAds: {
@@ -185,6 +190,8 @@ export type Dict = {
     send: string;
     sending: string;
     sent: string;
+    whatsTitle: string;
+    whatsCta: string;
   };
   footer: {
     role: string;
@@ -322,9 +329,11 @@ const dict: Record<Lang, Dict> = {
       titleAccent: "converte",
       body1: "De hook a CTA, cada segundo pensado pra performar.",
       metrics:
-        "+500 vídeos  |  +200 marcas parceiras  |  100M+ views.",
+        "+500 vídeos  |  +300 marcas  |  140M+ views.",
       cta: "Quero criar com a Lara",
       saibaMais: "Saiba mais →",
+      ctaVideos: "Ver meus vídeos",
+      ctaWhats: "Chamar no WhatsApp",
       bubble1Title: "A entrega foi perfeita!",
       bubble1Sub: "Super alinhada",
       bubble2Title: "Recorde de CTR no Meta",
@@ -340,20 +349,20 @@ const dict: Record<Lang, Dict> = {
       "Publipost",
     ],
     stats: [
+      { value: "140M+", label: "Views em campanhas" },
       { value: "500+", label: "Vídeos gravados" },
-      { value: "200+", label: "Parceiros" },
-      { value: "100M+", label: "Views acumulados" },
-      { value: "2 anos", label: "De experiência" },
+      { value: "300+", label: "Marcas atendidas" },
+      { value: "3 anos", label: "De experiência" },
     ],
     about: {
       tag: "Sobre mim",
       greeting1: "Oie, eu sou a",
       greetingName: "Lara Dam",
       body1:
-        "Tenho **27 anos**, sou **UGC Creator e estrategista de conteúdo** no Litoral de SP. Em **2 anos**, gravei mais de **500 vídeos** e trabalhei com mais de **200 marcas**, criando conexões reais e estratégias de alta conversão. Meu olhar analítico transforma produto em desejo de consumo, com **conteúdo autêntico** que gera autoridade e resultado.",
+        "Tenho **27 anos**, sou **UGC Creator e estrategista de conteúdo** no Litoral de SP. Em **3 anos**, gravei mais de **500 vídeos** e trabalhei com mais de **300 marcas**, criando conexões reais e estratégias de alta conversão. Meu olhar analítico transforma produto em desejo de consumo, com **conteúdo autêntico** que gera autoridade e resultado.",
       body2:
         "Mais de **140M de views** em campanhas, **recorde de CTR no Meta**, **CPA reduzido em até 38%** e **ROAS de 2.4x**. Conteúdo que virou playbook de criativo pra marcas como **InfinitePay**, **Méliuz** e **DT3**.",
-      pillBrands: "+200 marcas parceiras",
+      pillBrands: "+300 marcas atendidas",
       pillLocation: "Litoral de SP · Brasil",
       etapa: "Etapa",
       primeiroContato: "Primeiro contato",
@@ -439,8 +448,11 @@ const dict: Record<Lang, Dict> = {
       titleAccent: "conteúdo",
       title2: "você precisa?",
       intro:
-        "Navegue pelos nichos. Cada linha é uma especialidade. Deslize pro lado pra ver mais.",
+        "Escolha o nicho da sua marca e veja vídeos que eu já gravei nele.",
       comingSoon: "Em breve nessa categoria.",
+      tabsHint: "Nichos",
+      verTodos: "Ver todos os {n} vídeos",
+      verMenos: "Ver menos",
       items: [
         {
           slug: "ia",
@@ -568,6 +580,8 @@ const dict: Record<Lang, Dict> = {
       send: "Enviar mensagem",
       sending: "Enviando...",
       sent: "Enviado! Respondo em breve.",
+      whatsTitle: "Mais rápido pelo WhatsApp",
+      whatsCta: "Chamar no WhatsApp",
     },
     footer: { role: "UGC Creator & Content Strategist" },
     popup: {
@@ -824,9 +838,11 @@ const dict: Record<Lang, Dict> = {
       titleAccent: "converts",
       body1: "From hook to CTA, every second built to perform.",
       metrics:
-        "500+ videos  |  200+ brand partners  |  100M+ views.",
+        "500+ videos  |  300+ brands  |  140M+ views.",
       cta: "Let's create together",
       saibaMais: "Learn more →",
+      ctaVideos: "See my videos",
+      ctaWhats: "Message on WhatsApp",
       bubble1Title: "Delivery was perfect!",
       bubble1Sub: "Super on-brief",
       bubble2Title: "CTR record on Meta",
@@ -842,20 +858,20 @@ const dict: Record<Lang, Dict> = {
       "Sponsored Posts",
     ],
     stats: [
+      { value: "140M+", label: "Campaign views" },
       { value: "500+", label: "Videos shot" },
-      { value: "200+", label: "Brand partners" },
-      { value: "100M+", label: "Total views" },
-      { value: "2 years", label: "Of experience" },
+      { value: "300+", label: "Brands served" },
+      { value: "3 years", label: "Of experience" },
     ],
     about: {
       tag: "About me",
       greeting1: "Hi, I'm",
       greetingName: "Lara Dam",
       body1:
-        "I'm **27**, a **UGC Creator and content strategist** based on the coast of São Paulo. In **2 years**, I've shot **500+ videos** and worked with **200+ brands**, building real connections and high-conversion strategies. My analytical eye turns product into desire, with **authentic content** that drives authority and results.",
+        "I'm **27**, a **UGC Creator and content strategist** based on the coast of São Paulo. In **3 years**, I've shot **500+ videos** and worked with **300+ brands**, building real connections and high-conversion strategies. My analytical eye turns product into desire, with **authentic content** that drives authority and results.",
       body2:
         "Over **140M views** in campaigns, **CTR records on Meta**, **CPA reduced by up to 38%** and **2.4x ROAS**. Content that became a creative playbook for brands like **InfinitePay**, **Méliuz** and **DT3**.",
-      pillBrands: "200+ brand partners",
+      pillBrands: "300+ brands served",
       pillLocation: "Coast of SP · Brazil",
       etapa: "Step",
       primeiroContato: "First contact",
@@ -942,8 +958,11 @@ const dict: Record<Lang, Dict> = {
       titleAccent: "content",
       title2: "do you need?",
       intro:
-        "Browse by niche. Each row is a specialty. Swipe sideways to see more.",
+        "Pick your brand's niche and see videos I've already shot in it.",
       comingSoon: "Coming soon in this category.",
+      tabsHint: "Niches",
+      verTodos: "See all {n} videos",
+      verMenos: "Show less",
       items: [
         {
           slug: "ia",
@@ -1079,6 +1098,8 @@ const dict: Record<Lang, Dict> = {
       send: "Send message",
       sending: "Sending...",
       sent: "Sent! I'll get back to you soon.",
+      whatsTitle: "Faster on WhatsApp",
+      whatsCta: "Message on WhatsApp",
     },
     footer: { role: "UGC Creator & Content Strategist" },
     popup: {
