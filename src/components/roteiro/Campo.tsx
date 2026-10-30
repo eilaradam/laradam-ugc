@@ -18,7 +18,7 @@ type Props = {
 };
 
 export default function Campo({ alvo, texto, className = "", render, multilinha = true }: Props) {
-  const { notas } = useRoteiro();
+  const { notas, lara } = useRoteiro();
   const [modo, setModo] = useState<null | "sugerir" | "comentar">(null);
   const [aberto, setAberto] = useState(false);
 
@@ -46,7 +46,7 @@ export default function Campo({ alvo, texto, className = "", render, multilinha 
         }`}
       >
         <Acao icone={<Pencil size={13} />} ativo={modo === "sugerir"} onClick={() => setModo(modo === "sugerir" ? null : "sugerir")}>
-          Sugerir mudança
+          {lara ? "Editar" : "Sugerir mudança"}
         </Acao>
         <Acao icone={<MessageCircle size={13} />} ativo={modo === "comentar"} onClick={() => setModo(modo === "comentar" ? null : "comentar")}>
           Comentar
@@ -124,7 +124,7 @@ function Formulario({
   multilinha: boolean;
   fechar: () => void;
 }) {
-  const { enviar } = useRoteiro();
+  const { enviar, lara } = useRoteiro();
   const [texto, setTexto] = useState(inicial);
   const [motivo, setMotivo] = useState("");
   const [enviando, setEnviando] = useState(false);
@@ -133,7 +133,9 @@ function Formulario({
   async function mandar() {
     setEnviando(true);
     const ok =
-      modo === "sugerir"
+      modo === "sugerir" && lara
+        ? await enviar("editar", { alvo, texto: texto.trim() })
+        : modo === "sugerir"
         ? await enviar("sugerir", { alvo, sugerido: texto.trim(), texto: motivo.trim() || undefined })
         : await enviar("comentar", { alvo, texto: texto.trim() });
     setEnviando(false);
@@ -150,7 +152,7 @@ function Formulario({
         placeholder={modo === "comentar" ? "Escreve seu comentário…" : ""}
         className="w-full resize-y rounded-lg border border-[var(--rt-linha)] px-3 py-2 text-[14px] leading-relaxed outline-none focus:border-[var(--rt-roxo)]"
       />
-      {modo === "sugerir" && (
+      {modo === "sugerir" && !lara && (
         <>
           {mudou && (
             <p className="mt-2 rounded-lg bg-[var(--rt-fundo)] px-3 py-2 text-[13px] leading-relaxed">
@@ -174,7 +176,7 @@ function Formulario({
           onClick={mandar}
           className="rounded-full bg-[var(--rt-roxo)] px-4 py-1.5 text-[13px] font-semibold text-white disabled:opacity-40"
         >
-          {enviando ? "Enviando…" : modo === "sugerir" ? "Enviar sugestão" : "Comentar"}
+          {enviando ? "Enviando…" : modo === "sugerir" ? (lara ? "Salvar" : "Enviar sugestão") : "Comentar"}
         </button>
       </div>
     </div>
@@ -214,7 +216,7 @@ function NotaCard({ nota }: { nota: Nota }) {
   const [respondendo, setRespondendo] = useState(false);
   const [resposta, setResposta] = useState("");
   const [ocupado, setOcupado] = useState(false);
-  const selo = SELO[nota.status];
+  const selo = nota.autor_lara && nota.tipo === "sugestao" ? null : SELO[nota.status];
 
   async function agir(acao: string, dados: Record<string, unknown>) {
     setOcupado(true);
@@ -228,7 +230,7 @@ function NotaCard({ nota }: { nota: Nota }) {
         <Avatar nome={nota.autor} lara={nota.autor_lara} />
         <span className="font-semibold">{nota.autor}</span>
         <span className="text-[11px] text-[var(--rt-muted)]">
-          {nota.tipo === "sugestao" ? "sugeriu" : "comentou"} · {quando(nota.created_at)}
+          {nota.tipo === "sugestao" ? (nota.autor_lara ? "editou" : "sugeriu") : "comentou"} · {quando(nota.created_at)}
         </span>
         {selo && <span className={`ml-auto rounded-full px-2 py-0.5 text-[10.5px] font-semibold ${selo.cls}`}>{selo.txt}</span>}
       </div>

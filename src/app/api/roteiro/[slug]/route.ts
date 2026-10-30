@@ -95,6 +95,20 @@ export async function POST(req: Request, ctx: Ctx) {
         linhas: [`Antes: ${atual}`, `Sugestão: ${sugerido}`, ...(texto ? [`Motivo: ${texto}`] : [])],
       };
     }
+  } else if (acao === "editar") {
+    // A Lara muda o texto direto; fica no histórico do trecho como alteração aceita.
+    if (!lara) return erro("Só a Lara pode editar direto", 403);
+    const alvo = str(body.alvo, 60);
+    const texto = str(body.texto, 3000);
+    if (!alvo || !texto) return erro("Texto vazio");
+    const atual = lerAlvo(conteudo, alvo) ?? "";
+    if (texto === atual) return erro("Nada mudou");
+    const novo = gravarAlvo(conteudo, alvo, texto);
+    if (!novo) return erro("Trecho inválido");
+    await db.from("roteiros_marca").update({ conteudo: novo, updated_at: new Date().toISOString() }).eq("id", r.id);
+    await db.from("roteiros_marca_notas").insert({
+      roteiro_id: r.id, alvo, tipo: "sugestao", autor, autor_lara: true, original: atual, sugerido: texto, status: "aceita",
+    });
   } else if (acao === "responder") {
     const pai = str(body.parent_id, 60);
     const texto = str(body.texto, 3000);

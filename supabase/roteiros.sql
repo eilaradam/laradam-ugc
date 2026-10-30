@@ -35,3 +35,16 @@ create index if not exists roteiros_marca_notas_idx on public.roteiros_marca_not
 
 alter table public.roteiros_marca enable row level security;
 alter table public.roteiros_marca_notas enable row level security;
+
+-- 30/10/2026: visualizações da marca e leitura pela aba Roteiros do admin (creators.laradam.com, só role admin)
+alter table public.roteiros_marca
+  add column if not exists visualizacoes integer not null default 0,
+  add column if not exists visto_em timestamptz;
+
+drop policy if exists "roteiros_marca admin le" on public.roteiros_marca;
+create policy "roteiros_marca admin le" on public.roteiros_marca for select to authenticated
+  using (exists (select 1 from public.usuarios where id = auth.uid() and role = 'admin'));
+
+drop policy if exists "roteiros_marca_notas admin le" on public.roteiros_marca_notas;
+create policy "roteiros_marca_notas admin le" on public.roteiros_marca_notas for select to authenticated
+  using (exists (select 1 from public.usuarios where id = auth.uid() and role = 'admin'));
