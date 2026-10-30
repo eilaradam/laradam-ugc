@@ -7,7 +7,7 @@ import { useVideoModal } from "./VideoModalProvider";
 
 // Serviços "o que podemos criar juntos": cada formato vem com um trabalho real como prova
 // (capa + resultado), e o vídeo toca no clique. Publi post usa foto do ensaio (sem métrica).
-type Servico = {
+export type Servico = {
   titulo: string;
   texto: string;
   tags: string[];
@@ -17,7 +17,7 @@ type Servico = {
   youtubeId?: string;
 };
 
-const SERVICOS: Servico[] = [
+export const SERVICOS: Servico[] = [
   {
     titulo: "Criativos para tráfego",
     texto: "Ads pra Meta, TikTok e YouTube feitos pra baixar seu CPA.",
