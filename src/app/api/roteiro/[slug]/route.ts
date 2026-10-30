@@ -1,7 +1,7 @@
 import { supabaseAdmin } from "@/lib/supabase";
 import { clientIp, emailBudgetOk, originAllowed, rateLimit, str, tooManyRequests } from "@/lib/guard";
 import { sendRoteiroAviso } from "@/lib/resend";
-import { gravarAlvo, lerAlvo, type Nota, type RoteiroConteudo } from "@/lib/roteiro";
+import { blocoDe, gravarAlvo, lerAlvo, type Nota, type RoteiroConteudo } from "@/lib/roteiro";
 
 // Ações da página /roteiro/<slug>. O slug é o acesso da marca;
 // a chave_lara (?k=) libera aceitar, recusar e resolver.
@@ -9,6 +9,7 @@ import { gravarAlvo, lerAlvo, type Nota, type RoteiroConteudo } from "@/lib/rote
 type Ctx = { params: Promise<{ slug: string }> };
 
 const SITE = "https://ugc.laradam.com";
+const BUCKET = "roteiros-marca";
 
 function erro(msg: string, status = 400) {
   return Response.json({ error: msg }, { status });
@@ -125,6 +126,23 @@ export async function POST(req: Request, ctx: Ctx) {
     }
     const status = { aceitar: "aceita", recusar: "recusada", resolver: "resolvida", reabrir: "aberta" }[acao];
     await db.from("roteiros_marca_notas").update({ status }).eq("id", n.id);
+  } else if (acao === "ref_add" || acao === "ref_rm" || acao === "foto_rm") {
+    if (!lara) return erro("Só a Lara pode fazer isso", 403);
+    const novo: RoteiroConteudo = structuredClone(conteudo);
+    const b = blocoDe(novo, str(body.bloco, 60) ?? "");
+    const url = str(body.url, 1000);
+    if (!b || !url) return erro("Bloco inválido");
+    if (acao === "ref_add") {
+      if (!/^https?:\/\//.test(url)) return erro("Link inválido");
+      b.refs = [...(b.refs ?? []), { url, titulo: str(body.titulo, 120) ?? undefined }];
+    } else if (acao === "ref_rm") {
+      b.refs = (b.refs ?? []).filter((r) => r.url !== url);
+    } else {
+      b.fotos = (b.fotos ?? []).filter((f) => f !== url);
+      const caminho = url.split(`/${BUCKET}/`)[1];
+      if (caminho) await db.storage.from(BUCKET).remove([caminho]);
+    }
+    await db.from("roteiros_marca").update({ conteudo: novo, updated_at: new Date().toISOString() }).eq("id", r.id);
   } else {
     return erro("Ação desconhecida");
   }

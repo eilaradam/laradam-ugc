@@ -1,14 +1,8 @@
 // Tipos e utilidades dos roteiros compartilhados (/roteiro/<slug>).
 // Usado no servidor e no cliente.
 
-export type Exemplo = {
-  titulo: string;
-  nota?: string;
-  /** id do YouTube (Shorts ou normal) */
-  youtube?: string;
-  /** mp4 local (public/...) ou URL */
-  mp4?: string;
-};
+/** Link de referência (Instagram, TikTok, YouTube, Drive…) que a Lara coloca pra marca assistir. */
+export type Ref = { url: string; titulo?: string };
 
 export type Gancho = {
   id: string; // "A", "B", "C"
@@ -16,7 +10,8 @@ export type Gancho = {
   fala: string;
   tela?: string;
   recomendado?: boolean;
-  exemplo?: Exemplo;
+  fotos?: string[];
+  refs?: Ref[];
 };
 
 export type Parte = {
@@ -25,7 +20,8 @@ export type Parte = {
   tempo?: string;
   fala: string;
   tela?: string;
-  exemplo?: Exemplo;
+  fotos?: string[];
+  refs?: Ref[];
 };
 
 export type RoteiroConteudo = {
@@ -37,9 +33,8 @@ export type RoteiroConteudo = {
   regra?: string;
   ganchos: Gancho[];
   partes: Parte[];
-  exemplos?: Exemplo[];
-  /** texto do botão na prévia do celular (ex.: "Saiba mais") */
-  cta?: string;
+  /** referências gerais do roteiro */
+  refs?: Ref[];
 };
 
 export type RoteiroPublico = {
@@ -141,8 +136,41 @@ export function diffPalavras(a: string, b: string): Pedaco[] {
   return out;
 }
 
-/** Segundos de fala estimados (~2,6 palavras por segundo, ritmo de UGC). */
-export function segundosDeFala(texto: string) {
-  const palavras = texto.trim().split(/\s+/).filter(Boolean).length;
-  return Math.max(3, palavras / 2.6);
+/** Bloco que guarda fotos e links: "geral", "gancho:A" ou "parte:<id>". */
+export function blocoDe(c: RoteiroConteudo, bloco: string): { fotos?: string[]; refs?: Ref[] } | undefined {
+  const [sec, id] = bloco.split(":");
+  if (sec === "geral") return c;
+  if (sec === "gancho") return c.ganchos.find((g) => g.id === id);
+  if (sec === "parte") return c.partes.find((p) => p.id === id);
+  return undefined;
+}
+
+export type TipoRef =
+  | { tipo: "youtube"; id: string }
+  | { tipo: "instagram"; id: string }
+  | { tipo: "tiktok"; id: string }
+  | { tipo: "link"; host: string };
+
+export function tipoRef(url: string): TipoRef {
+  let u: URL;
+  try {
+    u = new URL(url);
+  } catch {
+    return { tipo: "link", host: url };
+  }
+  const host = u.hostname.replace(/^www\./, "");
+  if (host === "youtu.be") return { tipo: "youtube", id: u.pathname.slice(1) };
+  if (host.endsWith("youtube.com")) {
+    const id = u.searchParams.get("v") ?? u.pathname.match(/\/(?:shorts|embed|live)\/([\w-]+)/)?.[1];
+    if (id) return { tipo: "youtube", id };
+  }
+  if (host.endsWith("instagram.com")) {
+    const id = u.pathname.match(/\/(?:reel|reels|p|tv)\/([\w-]+)/)?.[1];
+    if (id) return { tipo: "instagram", id };
+  }
+  if (host.endsWith("tiktok.com")) {
+    const id = u.pathname.match(/\/video\/(\d+)/)?.[1];
+    if (id) return { tipo: "tiktok", id };
+  }
+  return { tipo: "link", host };
 }

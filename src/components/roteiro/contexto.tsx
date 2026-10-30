@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useContext } from "react";
-import type { Exemplo, Nota } from "@/lib/roteiro";
+import type { Nota } from "@/lib/roteiro";
 
 export type Enviar = (acao: string, dados?: Record<string, unknown>) => Promise<boolean>;
 
@@ -11,7 +11,8 @@ type Ctx = {
   lara: boolean;
   notas: Nota[];
   enviar: Enviar;
-  abrirExemplo: (e: Exemplo) => void;
+  /** só no modo Lara: sobe fotos pra um bloco ("gancho:A", "parte:x", "geral") */
+  subirFotos: (bloco: string, arquivos: File[]) => Promise<void>;
 };
 
 export const RoteiroCtx = createContext<Ctx | null>(null);

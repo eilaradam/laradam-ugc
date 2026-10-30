@@ -1,11 +1,11 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { Check, CheckCircle2, Play, Sparkles, X } from "lucide-react";
-import type { Exemplo, Nota, RoteiroPublico } from "@/lib/roteiro";
+import { Check, CheckCircle2, Sparkles } from "lucide-react";
+import type { Nota, RoteiroPublico } from "@/lib/roteiro";
 import { RoteiroCtx, quando, useRoteiro } from "./contexto";
 import Campo from "./Campo";
-import Celular from "./Celular";
+import Midia from "./Midia";
 
 type Props = { inicial: RoteiroPublico; notasIniciais: Nota[]; chave?: string };
 
@@ -23,13 +23,10 @@ export default function RoteiroPage({ inicial, notasIniciais, chave }: Props) {
     }
   });
   const [erro, setErro] = useState<string | null>(null);
-  const [exemplo, setExemplo] = useState<Exemplo | null>(null);
   const [aprovando, setAprovando] = useState(false);
   const lara = Boolean(chave);
   const c = roteiro.conteudo;
 
-  const recomendado = c.ganchos.find((g) => g.recomendado)?.id ?? c.ganchos[0]?.id ?? "";
-  const [previa, setPrevia] = useState(roteiro.gancho_escolhido ?? recomendado);
 
   const setNome = useCallback((n: string) => {
     setNomeState(n);
@@ -74,6 +71,31 @@ export default function RoteiroPage({ inicial, notasIniciais, chave }: Props) {
     [roteiro.slug, nome, chave, lara, setNome]
   );
 
+  const subirFotos = useCallback(
+    async (bloco: string, arquivos: File[]) => {
+      setErro(null);
+      for (const f of arquivos) {
+        try {
+          const fd = new FormData();
+          fd.append("k", chave ?? "");
+          fd.append("bloco", bloco);
+          fd.append("foto", await reduzir(f), "foto.jpg");
+          const res = await fetch(`/api/roteiro/${roteiro.slug}/foto`, { method: "POST", body: fd });
+          const j = await res.json();
+          if (!res.ok) {
+            setErro(j.error ?? "Não deu pra subir a foto");
+            return;
+          }
+          setRoteiro(j.roteiro);
+        } catch {
+          setErro(`Não deu pra abrir ${f.name}. Tenta em JPG ou PNG.`);
+          return;
+        }
+      }
+    },
+    [roteiro.slug, chave]
+  );
+
   // Atualiza quando a aba volta pro foco (a Lara pode ter respondido).
   useEffect(() => {
     const atualizar = async () => {
@@ -91,25 +113,20 @@ export default function RoteiroPage({ inicial, notasIniciais, chave }: Props) {
   const abertas = notas.filter((n) => n.status === "aberta" && n.tipo !== "resposta");
   const sugestoes = abertas.filter((n) => n.tipo === "sugestao").length;
   const comentarios = abertas.length - sugestoes;
-  const exemplos = [
-    ...c.ganchos.flatMap((g) => (g.exemplo ? [g.exemplo] : [])),
-    ...c.partes.flatMap((p) => (p.exemplo ? [p.exemplo] : [])),
-    ...(c.exemplos ?? []),
-  ];
 
   return (
-    <RoteiroCtx.Provider value={{ nome, setNome, lara, notas, enviar, abrirExemplo: setExemplo }}>
+    <RoteiroCtx.Provider value={{ nome, setNome, lara, notas, enviar, subirFotos }}>
       <div
         className="rt min-h-screen bg-[var(--rt-fundo)] pb-32 text-[var(--rt-ink)]"
         style={{ fontFamily: "var(--rt-font), system-ui, sans-serif" }}
       >
         {lara && (
           <div className="sticky top-0 z-30 bg-[var(--rt-roxo)] px-4 py-2 text-center text-[12.5px] font-semibold text-white">
-            Modo Lara · você pode aceitar ou recusar sugestões e resolver comentários
+            Modo Lara · aceite ou recuse sugestões, resolva comentários e suba fotos e links de referência
           </div>
         )}
 
-        <div className="mx-auto grid max-w-[1180px] gap-10 px-4 pt-10 md:px-8 lg:grid-cols-[minmax(0,1fr)_300px] lg:pt-16">
+        <div className="mx-auto max-w-[880px] px-4 pt-10 md:px-8 lg:pt-16">
           <main className="min-w-0">
             {/* cabeçalho */}
             <p className="flex items-center gap-1 text-[13px] font-bold">
@@ -198,9 +215,10 @@ export default function RoteiroPage({ inicial, notasIniciais, chave }: Props) {
                         </div>
                         <Campo alvo={`gancho:${g.id}:fala`} texto={g.fala} render={(t) => <p className="text-[15.5px] leading-relaxed">“{t}”</p>} />
                         {g.tela && <Campo alvo={`gancho:${g.id}:tela`} texto={g.tela} render={(t) => <Tela>{t}</Tela>} />}
+                        <Midia bloco={`gancho:${g.id}`} fotos={g.fotos} refs={g.refs} />
                         <div className="flex flex-wrap items-center gap-2 pt-2">
                           <button
-                            onClick={() => enviar("gancho", { id: g.id }).then((ok) => ok && setPrevia(g.id))}
+                            onClick={() => enviar("gancho", { id: g.id })}
                             className={`inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-[12.5px] font-semibold transition-colors ${
                               escolhido
                                 ? "bg-[var(--rt-roxo)] text-white"
@@ -210,16 +228,6 @@ export default function RoteiroPage({ inicial, notasIniciais, chave }: Props) {
                             {escolhido && <Check size={13} />}
                             {escolhido ? "Gancho escolhido" : "Escolher este gancho"}
                           </button>
-                          <button
-                            onClick={() => {
-                              setPrevia(g.id);
-                              document.getElementById("previa")?.scrollIntoView({ behavior: "smooth", block: "center" });
-                            }}
-                            className="rounded-full px-3 py-1.5 text-[12.5px] font-medium text-[var(--rt-muted)] hover:text-[var(--rt-ink)]"
-                          >
-                            Ver no celular
-                          </button>
-                          {g.exemplo && <BotaoExemplo e={g.exemplo} onClick={() => setExemplo(g.exemplo!)} />}
                           {escolhido && roteiro.gancho_escolhido_por && (
                             <span className="text-[11.5px] text-[var(--rt-muted)]">por {roteiro.gancho_escolhido_por}</span>
                           )}
@@ -231,14 +239,6 @@ export default function RoteiroPage({ inicial, notasIniciais, chave }: Props) {
               })}
             </div>
 
-            {/* prévia no celular (celular e tablet) */}
-            <section className="mt-12 lg:hidden">
-              <Titulo>Como fica postado</Titulo>
-              <SeletorGancho ganchos={c.ganchos.map((g) => g.id)} atual={previa} onChange={setPrevia} />
-              <div className="mt-4">
-                <Celular key={previa} conteudo={c} gancho={previa} />
-              </div>
-            </section>
 
             {/* roteiro */}
             <Titulo>
@@ -272,63 +272,28 @@ export default function RoteiroPage({ inicial, notasIniciais, chave }: Props) {
                       )}
                     />
                     {p.tela && <Campo alvo={`parte:${p.id}:tela`} texto={p.tela} render={(t) => <Tela>{t}</Tela>} />}
-                    {p.exemplo && <BotaoExemplo e={p.exemplo} onClick={() => setExemplo(p.exemplo!)} />}
+                    <Midia bloco={`parte:${p.id}`} fotos={p.fotos} refs={p.refs} />
                   </div>
                 </div>
               ))}
             </div>
 
-            {/* referências */}
-            {exemplos.length > 0 && (
+            {/* referências gerais */}
+            {(lara || (c.refs?.length ?? 0) > 0) && (
               <>
                 <Titulo>
-                  Referências <span className="text-[var(--rt-muted)]">· vídeos meus nesse estilo</span>
+                  Referências <span className="text-[var(--rt-muted)]">· pra assistir antes de aprovar</span>
                 </Titulo>
-                <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
-                  {exemplos.map((e, i) => (
-                    <button key={i} onClick={() => setExemplo(e)} className="group text-left">
-                      <div className="relative aspect-[9/16] overflow-hidden rounded-2xl bg-[var(--rt-ink)]">
-                        {e.youtube ? (
-                          // eslint-disable-next-line @next/next/no-img-element
-                          <img
-                            src={`https://i.ytimg.com/vi/${e.youtube}/oar2.jpg`}
-                            onError={(ev) => (ev.currentTarget.src = `https://i.ytimg.com/vi/${e.youtube}/hqdefault.jpg`)}
-                            alt=""
-                            className="size-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
-                          />
-                        ) : (
-                          e.mp4 && <video src={`${e.mp4}#t=0.5`} muted playsInline preload="metadata" className="size-full object-cover" />
-                        )}
-                        <span className="absolute inset-0 grid place-items-center">
-                          <span className="grid size-12 place-items-center rounded-full bg-white/90 text-[var(--rt-ink)] shadow-lg">
-                            <Play size={18} fill="currentColor" />
-                          </span>
-                        </span>
-                      </div>
-                      <p className="mt-2 text-[13.5px] font-semibold">{e.titulo}</p>
-                      {e.nota && <p className="text-[12.5px] leading-snug text-[var(--rt-muted)]">{e.nota}</p>}
-                    </button>
-                  ))}
-                </div>
+                <Midia bloco="geral" refs={c.refs} vazio="Links que valem pro vídeo inteiro (tom, ritmo, edição)" />
               </>
             )}
           </main>
 
-          {/* prévia fixa (computador) */}
-          <aside id="previa" className="hidden lg:block">
-            <div className="sticky top-10">
-              <p className="mb-2 text-center text-[11px] font-bold uppercase tracking-[.14em] text-[var(--rt-muted)]">Como fica postado</p>
-              <SeletorGancho ganchos={c.ganchos.map((g) => g.id)} atual={previa} onChange={setPrevia} />
-              <div className="mt-4">
-                <Celular key={previa} conteudo={c} gancho={previa} />
-              </div>
-            </div>
-          </aside>
         </div>
 
         {/* barra de aprovação */}
         <div className="fixed inset-x-0 bottom-0 z-40 border-t border-[var(--rt-linha)] bg-white/90 backdrop-blur">
-          <div className="mx-auto flex max-w-[1180px] flex-wrap items-center gap-3 px-4 py-3 md:px-8">
+          <div className="mx-auto flex max-w-[880px] flex-wrap items-center gap-3 px-4 py-3 md:px-8">
             {erro && (
               <p className="w-full text-[12.5px] font-semibold text-[#B4321F] md:w-auto">
                 {erro}
@@ -366,7 +331,6 @@ export default function RoteiroPage({ inicial, notasIniciais, chave }: Props) {
         </div>
 
         {aprovando && <Aprovar fechar={() => setAprovando(false)} gancho={roteiro.gancho_escolhido} pendentes={sugestoes} />}
-        {exemplo && <ModalExemplo e={exemplo} fechar={() => setExemplo(null)} />}
         {pedirNome && <PedirNome responder={pedirNome} />}
       </div>
     </RoteiroCtx.Provider>
@@ -400,66 +364,8 @@ function Tela({ children }: { children: React.ReactNode }) {
   );
 }
 
-function SeletorGancho({ ganchos, atual, onChange }: { ganchos: string[]; atual: string; onChange: (g: string) => void }) {
-  if (ganchos.length < 2) return null;
-  return (
-    <div className="flex justify-center gap-1.5">
-      {ganchos.map((g) => (
-        <button
-          key={g}
-          onClick={() => onChange(g)}
-          className={`rounded-full px-3 py-1 text-[12px] font-bold ${
-            g === atual ? "bg-[var(--rt-roxo)] text-white" : "border border-[var(--rt-linha)] bg-white text-[var(--rt-muted)]"
-          }`}
-        >
-          Gancho {g}
-        </button>
-      ))}
-    </div>
-  );
-}
 
-function BotaoExemplo({ e, onClick }: { e: Exemplo; onClick: () => void }) {
-  return (
-    <button
-      onClick={onClick}
-      className="inline-flex items-center gap-1.5 rounded-full bg-[var(--rt-lilas)] px-3 py-1.5 text-[12px] font-semibold text-[var(--rt-roxo)]"
-    >
-      <Play size={11} fill="currentColor" /> Exemplo: {e.titulo}
-    </button>
-  );
-}
 
-function ModalExemplo({ e, fechar }: { e: Exemplo; fechar: () => void }) {
-  useEffect(() => {
-    const esc = (ev: KeyboardEvent) => ev.key === "Escape" && fechar();
-    window.addEventListener("keydown", esc);
-    return () => window.removeEventListener("keydown", esc);
-  }, [fechar]);
-  return (
-    <div className="fixed inset-0 z-50 grid place-items-center bg-black/75 p-4 backdrop-blur-sm" onClick={fechar}>
-      <div className="relative w-full max-w-[360px]" onClick={(ev) => ev.stopPropagation()}>
-        <button onClick={fechar} className="absolute -top-11 right-0 grid size-9 place-items-center rounded-full bg-white/15 text-white" aria-label="Fechar">
-          <X size={18} />
-        </button>
-        <div className="aspect-[9/16] overflow-hidden rounded-3xl bg-black">
-          {e.youtube ? (
-            <iframe
-              src={`https://www.youtube.com/embed/${e.youtube}?autoplay=1&playsinline=1&rel=0`}
-              allow="autoplay; encrypted-media; picture-in-picture"
-              allowFullScreen
-              className="size-full"
-            />
-          ) : (
-            <video src={e.mp4} autoPlay controls playsInline className="size-full object-cover" />
-          )}
-        </div>
-        <p className="mt-3 text-[14px] font-semibold text-white">{e.titulo}</p>
-        {e.nota && <p className="text-[13px] text-white/70">{e.nota}</p>}
-      </div>
-    </div>
-  );
-}
 
 function Aprovar({ fechar, gancho, pendentes }: { fechar: () => void; gancho: string | null; pendentes: number }) {
   const ctx = useRoteiro();
@@ -548,4 +454,15 @@ function PedirNome({ responder }: { responder: (n: string | null) => void }) {
       </form>
     </div>
   );
+}
+
+/** Reduz a foto no navegador (lado maior 1600px, JPG) pra caber no limite de upload. */
+async function reduzir(f: File): Promise<Blob> {
+  const img = await createImageBitmap(f);
+  const escala = Math.min(1, 1600 / Math.max(img.width, img.height));
+  const canvas = document.createElement("canvas");
+  canvas.width = Math.round(img.width * escala);
+  canvas.height = Math.round(img.height * escala);
+  canvas.getContext("2d")!.drawImage(img, 0, 0, canvas.width, canvas.height);
+  return new Promise((ok, falha) => canvas.toBlob((b) => (b ? ok(b) : falha(new Error("toBlob"))), "image/jpeg", 0.85));
 }
