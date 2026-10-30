@@ -5,7 +5,7 @@ import Marquee from "@/components/Marquee";
 import Stats from "@/components/Stats";
 import About from "@/components/About";
 import BrandsMarquee from "@/components/BrandsMarquee";
-import Services from "@/components/ServicesScrapbook";
+import { ServicosDestaque } from "@/components/servicos/ServicosMin";
 import BestResults from "@/components/BestResults";
 import CategoryGallery from "@/components/CategoryGallery";
 import YouTubeAds from "@/components/YouTubeAds";
@@ -41,7 +41,7 @@ export default function Home() {
       <BestResults />
       <CategoryGallery />
       <YouTubeAds />
-      <Services />
+      <ServicosDestaque />
       <Testimonials />
       <Contact />
       <Footer />
