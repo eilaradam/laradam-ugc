@@ -52,3 +52,20 @@ function escapeHtml(s: string) {
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;");
 }
+
+/** Aviso pra Lara quando a marca mexe num roteiro compartilhado. */
+export async function sendRoteiroAviso(a: { assunto: string; linhas: string[]; link: string }) {
+  if (!process.env.RESEND_API_KEY) {
+    console.warn("[resend] RESEND_API_KEY não configurada — aviso de roteiro não enviado");
+    return;
+  }
+  const resend = new Resend(process.env.RESEND_API_KEY);
+  await resend.emails.send({
+    from: FROM,
+    to: TO,
+    subject: a.assunto,
+    html:
+      a.linhas.map((l) => `<p style="white-space:pre-wrap">${escapeHtml(l)}</p>`).join("") +
+      `<p><a href="${a.link}">Abrir o roteiro</a></p>`,
+  });
+}

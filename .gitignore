@@ -40,3 +40,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# roteiros das marcas (texto fica só no banco; repo é público)
+/roteiros-dados/
