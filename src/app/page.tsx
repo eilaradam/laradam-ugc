@@ -16,9 +16,11 @@ import TagBarra from "@/components/TagBarra";
 
 // Força layout desktop também no mobile — celular vai mostrar a página
 // renderizada a 1280px, encolhida pra caber. Visitante pode pinch-zoom.
+// 0.28 = 360/1280: cabe inteiro até no celular mais estreito; nos maiores o navegador
+// limita o zoom pra encaixar a largura. (0.34 cortava ~130px da direita num iPhone de 390px.)
 export const viewport: Viewport = {
   width: 1280,
-  initialScale: 0.34,
+  initialScale: 0.28,
 };
 
 export default function Home() {
@@ -36,7 +38,7 @@ export default function Home() {
       <TagBarra />
       <main className="flex-1 pt-[var(--barra-topo,0px)]">
         <Nav />
-      <Hero />
+      <Hero fundo={["/capa/1-sorriso.webp", "/capa/2-seria.webp", "/capa/3-cabelo.webp", "/capa/4-risada.webp"]} />
       <Marquee />
       <Stats />
       <About />

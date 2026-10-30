@@ -25,10 +25,10 @@ const dmSans = Hanken_Grotesk({
 export const metadata: Metadata = {
   title: "Lara Dam — UGC Creator & Content Strategist",
   description:
-    "Portfólio de Lara Dam: UGC Creator com +500 vídeos gravados e +200 parceiros. Criativos de alta conversão para marcas que buscam destaque.",
+    "Portfólio de Lara Dam: UGC Creator com +500 vídeos gravados e +300 marcas parceiras, em 3 anos. Criativos de alta conversão para marcas que buscam destaque.",
   openGraph: {
     title: "Lara Dam — UGC Creator",
-    description: "+500 vídeos · +200 parceiros · 100M+ views",
+    description: "+500 vídeos · +300 marcas · 140M+ views",
     type: "website",
   },
 };

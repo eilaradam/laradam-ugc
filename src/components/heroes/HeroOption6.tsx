@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { Check } from "lucide-react";
 import { HeroPhoto } from "./_shared";
+import FundoTrocando from "./FundoTrocando";
 import { useT } from "@/lib/i18n";
 
 // Acento da marca (rebranding: petróleo/teal)
@@ -10,15 +11,18 @@ const ACCENT = "var(--primary)";
 const ACCENT_DARK = "var(--primary-dark)";
 const ACCENT_LIGHT = "var(--accent-on-dark)";
 
-export default function HeroOption6({ foto }: { foto?: string } = {}) {
+/** `fundo`: fotos largas que ficam trocando atrás da capa (no lugar da foto recortada à direita). */
+export default function HeroOption6({ foto, fundo }: { foto?: string; fundo?: string[] } = {}) {
   const t = useT();
   return (
     <section
       id="top"
-      className="relative bg-background pt-20 md:pt-6 pb-3 md:pb-6"
+      className={`relative bg-background ${fundo ? "pt-20 md:pt-10 pb-10 md:pb-16 min-h-[720px] flex items-center" : "pt-20 md:pt-6 pb-3 md:pb-6"}`}
     >
+      {fundo && <FundoTrocando fotos={fundo} />}
       {/* Camadas de fundo (grid + glow) — clipadas aqui pra não vazar,
           sem cortar a foto que fica no fluxo normal acima delas. */}
+      {!fundo && (
       <div
         aria-hidden
         className="absolute inset-0 overflow-hidden pointer-events-none"
@@ -42,6 +46,7 @@ export default function HeroOption6({ foto }: { foto?: string } = {}) {
           }}
         />
       </div>
+      )}
 
       <div className="lara-hero-grid relative max-w-7xl mx-auto px-5 md:px-8 grid md:grid-cols-2 gap-6 md:gap-12 items-center w-full">
         {/* LEFT: texto */}
@@ -120,7 +125,11 @@ export default function HeroOption6({ foto }: { foto?: string } = {}) {
             transition={{ delay: 0.4, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
             className="relative z-10 flex items-end justify-center origin-bottom"
           >
+            {fundo ? (
+              <div className="lara-hero-photo h-[46vh] sm:h-[56vh] md:h-[66vh]" />
+            ) : (
             <HeroPhoto src={foto} className="lara-hero-photo w-auto h-[46vh] sm:h-[56vh] md:h-[74vh] max-w-full object-contain object-bottom" />
+            )}
           </motion.div>
 
           {/* Bubble 1 — direita (flutua devagar pra cima/baixo, zoom no hover) */}
