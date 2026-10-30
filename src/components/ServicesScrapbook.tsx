@@ -1,174 +1,152 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { ArrowRight, Play } from "lucide-react";
+import type { Video } from "@/data/content";
+import { useVideoModal } from "./VideoModalProvider";
 
-// Serviços "o que podemos criar juntos" — estética scrapbook/colagem
-// (referência do print), adaptada pras cores da marca: branco + laranja.
-const SERVICES = [
+// Serviços "o que podemos criar juntos": cada formato vem com um trabalho real como prova
+// (capa + resultado), e o vídeo toca no clique. Publi post usa foto do ensaio (sem métrica).
+type Servico = {
+  titulo: string;
+  texto: string;
+  tags: string[];
+  capa: string;
+  marca?: string;
+  resultado?: string;
+  youtubeId?: string;
+};
+
+const SERVICOS: Servico[] = [
   {
-    label: "Criativos para Tráfego",
-    body: "Ads otimizados pra Meta, TikTok e YouTube, pensados pra converter de verdade e baixar seu CPA.",
+    titulo: "Criativos para tráfego",
+    texto: "Ads pra Meta, TikTok e YouTube feitos pra baixar seu CPA.",
+    tags: ["Meta", "TikTok", "YouTube"],
+    capa: "/best-infinitepay.jpg",
+    marca: "InfinitePay",
+    resultado: "100M views",
+    youtubeId: "5wf8Fv2CTa4",
   },
   {
-    label: "UGC para E-commerce",
-    body: "Vídeos autênticos de produto pra sua loja vender todo dia, com a naturalidade de quem realmente usa.",
+    titulo: "UGC para e‑commerce", // hífen que não quebra linha
+    texto: "Vídeo de produto com cara de cliente real, pra sua loja vender todo dia.",
+    tags: ["Review", "Unboxing", "Uso real"],
+    capa: "/best-bready.jpg",
+    marca: "Bready",
+    resultado: "5,94x ROAS",
+    youtubeId: "2s6BI893C74",
   },
   {
-    label: "Publi Post",
-    body: "Publieditorial no meu perfil: a sua marca com a minha cara, alcançando uma audiência que confia em mim.",
+    titulo: "Publi post",
+    texto: "Sua marca no meu perfil, falando com quem já confia em mim.",
+    tags: ["Reels", "Stories", "TikTok"],
+    capa: "/ensaio/capa-caixa-rosto.webp",
   },
   {
-    label: "Gestão em Escala",
-    body: "Campanhas com vários creators, do briefing à entrega, pra escalar seu conteúdo sem dor de cabeça.",
+    titulo: "Gestão em escala",
+    texto: "Vários creators, do briefing à entrega, sem dor de cabeça pra você.",
+    tags: ["Curadoria", "Briefing", "Entrega"],
+    capa: "/best-meliuz-cashback.jpg",
+    marca: "Méliuz",
+    resultado: "1.023 vídeos",
+    youtubeId: "dgQYEfEQTvQ",
   },
 ];
 
-const ORANGE = "var(--primary)"; // acento da marca (vem do tema)
-const INK = "var(--foreground)"; // navy (contornos/sticker)
-
-// Washi tape: faixa inclinada com o texto repetido
-function Tape({
-  text,
-  variant,
-  rotate,
-  top,
-  z,
-}: {
-  text: string;
-  variant: "orange" | "white";
-  rotate: number;
-  top: string;
-  z: number;
-}) {
-  const repeated = Array.from({ length: 14 }, () => text);
-  const isOrange = variant === "orange";
-  return (
-    <div
-      aria-hidden
-      className="absolute left-1/2 w-[160%] py-1.5 overflow-hidden shadow-sm"
-      style={{
-        top,
-        zIndex: z,
-        backgroundColor: isOrange ? ORANGE : "#ffffff",
-        border: isOrange ? "none" : `1px solid color-mix(in srgb, ${ORANGE} 20%, transparent)`,
-        transform: `translateX(-50%) rotate(${rotate}deg)`,
-      }}
-    >
-      <div className="flex gap-6 whitespace-nowrap">
-        {repeated.map((t, i) => (
-          <span
-            key={i}
-            className="font-serif-accent italic text-[13px] md:text-sm"
-            style={{ color: isOrange ? "#fff" : ORANGE }}
-          >
-            {t} <span className="not-italic mx-1">•</span>
-          </span>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function BinderClip() {
-  return (
-    <svg viewBox="0 0 90 90" className="w-14 h-14 md:w-16 md:h-16" aria-hidden>
-      <path
-        d="M30 40 L26 16 Q26 11 31 11 L59 11 Q64 11 64 16 L60 40"
-        fill="none"
-        stroke={INK}
-        strokeWidth="2.5"
-        strokeLinecap="round"
-      />
-      <path
-        d="M37 40 L34 20 Q34 17 37 17 L53 17 Q56 17 56 20 L53 40"
-        fill="none"
-        stroke={INK}
-        strokeWidth="2.5"
-        strokeLinecap="round"
-      />
-      <rect
-        x="18"
-        y="38"
-        width="54"
-        height="34"
-        rx="3"
-        fill={ORANGE}
-        stroke={INK}
-        strokeWidth="2.5"
-      />
-      <line x1="27" y1="38" x2="27" y2="72" stroke={INK} strokeWidth="2" />
-      <line x1="63" y1="38" x2="63" y2="72" stroke={INK} strokeWidth="2" />
-    </svg>
-  );
-}
-
 export default function ServicesScrapbook() {
+  const { open } = useVideoModal();
+
   return (
-    <section
-      id="servicos"
-      className="relative bg-background px-6 md:px-12 pt-24 md:pt-28 pb-16 md:pb-24 overflow-hidden"
-    >
-      {/* Washi tape cruzada no topo */}
-      <Tape text="@eilaradam • ugc creator" variant="white" rotate={-5} top="26px" z={1} />
-      <Tape text="ugc creator • @eilaradam" variant="orange" rotate={4} top="46px" z={2} />
-
-      <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 md:gap-16 items-center mt-8 md:mt-10">
-        {/* Esquerda — clipe + título + texto + cta */}
-        <div className="relative">
-          <div className="mb-2">
-            <BinderClip />
+    <section id="servicos" className="bg-background px-6 md:px-12 py-16 md:py-24">
+      <div className="max-w-7xl mx-auto">
+        <div className="grid md:grid-cols-12 gap-6 md:gap-12 items-end mb-10 md:mb-14">
+          <div className="md:col-span-7">
+            <div className="text-xs uppercase tracking-[0.3em] text-primary font-medium mb-5 flex items-center gap-3">
+              <span className="h-px w-8 bg-primary" />
+              Serviços
+            </div>
+            <h2 className="font-display font-black text-4xl md:text-6xl leading-[0.95] tracking-tighter text-foreground">
+              O que podemos <span className="font-serif-accent italic text-primary">criar</span> juntos?
+            </h2>
           </div>
-          <h2 className="font-serif-accent text-foreground text-4xl md:text-5xl leading-[1.05]">
-            <span className="italic">O que podemos</span>{" "}
-            <span
-              className="italic px-2 box-decoration-clone text-white"
-              style={{ backgroundColor: ORANGE }}
-            >
-              criar
-            </span>{" "}
-            <span className="font-display font-black not-italic block mt-1">
-              juntos?
-            </span>
-          </h2>
-
-          <p className="mt-6 md:mt-8 text-foreground-soft text-base md:text-lg leading-relaxed max-w-md">
-            Cada formato tem um objetivo: vender, escalar ou construir marca. Me
-            conta o seu que a gente monta o combo perfeito pra sua marca.
-          </p>
-
-          <a
-            href="#contato"
-            className="mt-7 inline-flex items-center gap-2 rounded-full px-7 py-3 text-sm md:text-base font-bold text-white transition-opacity hover:opacity-90"
-            style={{ backgroundColor: ORANGE }}
-          >
-            Bora criar juntos →
-          </a>
+          <div className="md:col-span-5 md:justify-self-end max-w-md">
+            <p className="text-foreground-soft text-base md:text-lg leading-relaxed">
+              Cada formato tem um objetivo: vender, escalar ou construir marca. Me conta o seu que a gente monta o
+              combo perfeito.
+            </p>
+          </div>
         </div>
 
-        {/* Direita — 2x2 cards */}
-        <div className="grid grid-cols-2 gap-x-3 md:gap-x-6 gap-y-8 md:gap-y-12">
-          {SERVICES.map((s, i) => (
-            <motion.div
-              key={s.label}
-              initial={{ opacity: 0, y: 18 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-40px" }}
-              transition={{ duration: 0.5, delay: (i % 2) * 0.08 }}
-              className="relative rounded-2xl border bg-white px-5 pt-8 pb-6"
-              style={{ borderColor: "var(--border)" }}
-            >
-              {/* Pílula do título, montada sobre a borda de cima */}
-              <span
-                className="absolute -top-3.5 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full px-4 py-1.5 text-[11px] md:text-xs font-bold uppercase tracking-wide text-white border-[1.5px]"
-                style={{ backgroundColor: ORANGE, borderColor: INK }}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
+          {SERVICOS.map((s, i) => {
+            const video: Video | null = s.youtubeId
+              ? { id: `servico-${i}`, title: s.titulo, category: "tech", brand: s.marca ?? "", youtubeId: s.youtubeId }
+              : null;
+            return (
+              <motion.article
+                key={s.titulo}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{ duration: 0.5, delay: i * 0.07 }}
+                className="group flex flex-col rounded-2xl overflow-hidden bg-white border border-foreground/10"
               >
-                {s.label}
-              </span>
-              <p className="text-sm md:text-[15px] text-foreground-soft leading-relaxed md:text-justify">
-                {s.body}
-              </p>
-            </motion.div>
-          ))}
+                <button
+                  type="button"
+                  disabled={!video}
+                  onClick={() => video && open(video)}
+                  data-track={`servico_video_${i + 1}`}
+                  data-cursor={video ? "play" : undefined}
+                  aria-label={video ? `Ver vídeo ${s.marca}` : s.titulo}
+                  className="relative aspect-[4/5] overflow-hidden bg-foreground text-left disabled:cursor-default"
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={s.capa}
+                    alt=""
+                    loading="lazy"
+                    className="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.04]"
+                  />
+                  <span className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                  {s.resultado && (
+                    <span className="absolute top-2.5 left-2.5 md:top-3 md:left-3 rounded-full bg-primary text-white px-2.5 md:px-3 py-1 text-[10px] md:text-xs font-bold uppercase tracking-wide">
+                      {s.resultado}
+                    </span>
+                  )}
+                  {s.marca && (
+                    <span className="absolute bottom-2.5 left-2.5 md:bottom-3 md:left-3 text-white text-[11px] md:text-sm font-semibold">
+                      {s.marca}
+                    </span>
+                  )}
+                  {video && (
+                    <span className="absolute bottom-2.5 right-2.5 md:bottom-3 md:right-3 w-8 h-8 md:w-10 md:h-10 rounded-full bg-white/90 flex items-center justify-center">
+                      <Play className="w-3.5 h-3.5 md:w-4 md:h-4 text-foreground fill-foreground ml-0.5" />
+                    </span>
+                  )}
+                </button>
+
+                <div className="flex flex-col flex-1 p-4 md:p-6">
+                  <span className="font-display text-xs md:text-sm text-muted">{String(i + 1).padStart(2, "0")}</span>
+                  <h3 className="mt-1 font-display font-black text-lg md:text-2xl leading-tight text-foreground">{s.titulo}</h3>
+                  <p className="mt-2 text-[13px] md:text-[15px] leading-snug md:leading-relaxed text-foreground-soft">{s.texto}</p>
+                  <div className="mt-3 flex flex-wrap gap-1 md:gap-1.5">
+                    {s.tags.map((tg) => (
+                      <span key={tg} className="rounded-full bg-primary-light text-primary px-2 py-0.5 text-[10px] md:text-xs font-semibold">
+                        {tg}
+                      </span>
+                    ))}
+                  </div>
+                  <a
+                    href="#contato"
+                    data-track={`servico_quero_${i + 1}`}
+                    className="mt-auto pt-4 md:pt-5 inline-flex items-center gap-1.5 text-sm md:text-base font-bold text-foreground hover:text-primary transition-colors"
+                  >
+                    Quero esse <ArrowRight className="w-4 h-4" />
+                  </a>
+                </div>
+              </motion.article>
+            );
+          })}
         </div>
       </div>
     </section>
