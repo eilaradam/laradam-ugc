@@ -20,9 +20,45 @@ export default function CategoryGallery() {
     () => null
   );
   const itens: LocalCategory[] = t.categories.items;
-  const rows = primeira && itens.some((c) => c.slug === primeira)
+  const valida = !!primeira && itens.some((c) => c.slug === primeira);
+  const rows = valida
     ? [...itens.filter((c) => c.slug === primeira), ...itens.filter((c) => c.slug !== primeira)]
     : itens;
+
+  // E já abre rolada nela: uma vez por visita, e só se a pessoa ainda não mexeu na página.
+  // Repete depois que as imagens de cima carregam, porque elas empurram a galeria pra baixo.
+  useEffect(() => {
+    if (!valida) return;
+    const CHAVE = "ugc_pulou_categoria";
+    try {
+      if (sessionStorage.getItem(CHAVE)) return;
+    } catch {}
+    let mexeu = false;
+    const parar = () => { mexeu = true; };
+    window.addEventListener("wheel", parar, { passive: true });
+    window.addEventListener("touchstart", parar, { passive: true });
+    window.addEventListener("keydown", parar);
+    const ir = () => {
+      if (mexeu) return;
+      const alvo = document.getElementById(`cat-${primeira}`);
+      if (!alvo) return;
+      // desconta o que fica grudado no topo (menu, faixa da Black Friday) pra o título da categoria aparecer inteiro
+      const grudado = [...document.querySelectorAll<HTMLElement>("nav, header, [class*='fixed'], [class*='sticky']")]
+        .map((e) => ({ cs: getComputedStyle(e), r: e.getBoundingClientRect() }))
+        .filter(({ cs, r }) => (cs.position === "fixed" || cs.position === "sticky") && r.top < 200 && r.height < 300)
+        .reduce((m, { r }) => Math.max(m, r.bottom), 0);
+      // +20: a linha entra com animação subindo 20px depois de aparecer
+      window.scrollTo({ top: alvo.getBoundingClientRect().top + window.scrollY - grudado - 24 + 20 });
+      try { sessionStorage.setItem(CHAVE, "1"); } catch {}
+    };
+    const timers = [300, 1200, 2500].map((ms) => setTimeout(ir, ms));
+    return () => {
+      timers.forEach(clearTimeout);
+      window.removeEventListener("wheel", parar);
+      window.removeEventListener("touchstart", parar);
+      window.removeEventListener("keydown", parar);
+    };
+  }, [valida, primeira]);
 
   return (
     <section
