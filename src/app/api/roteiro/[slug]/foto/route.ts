@@ -22,14 +22,24 @@ export async function POST(req: Request, ctx: { params: Promise<{ slug: string }
   if (!foto.type.startsWith("image/")) return Response.json({ error: "Só imagem" }, { status: 400 });
 
   const conteudo: RoteiroConteudo = structuredClone(r.conteudo);
-  const b = blocoDe(conteudo, String(fd.get("bloco") ?? ""));
+  const bloco = String(fd.get("bloco") ?? "");
+  const b = bloco === "logo" ? conteudo : blocoDe(conteudo, bloco);
   if (!b) return Response.json({ error: "Bloco inválido" }, { status: 400 });
 
-  const caminho = `${slug}/${randomUUID()}.jpg`;
-  const { error } = await db.storage.from(BUCKET).upload(caminho, foto, { contentType: "image/jpeg", upsert: false });
+  // logo vem em PNG (pra manter fundo transparente); o resto em JPG
+  const png = foto.type === "image/png";
+  const caminho = `${slug}/${randomUUID()}.${png ? "png" : "jpg"}`;
+  const { error } = await db.storage.from(BUCKET).upload(caminho, foto, { contentType: png ? "image/png" : "image/jpeg", upsert: false });
   if (error) return Response.json({ error: "Falha ao salvar a foto" }, { status: 500 });
 
-  b.fotos = [...(b.fotos ?? []), db.storage.from(BUCKET).getPublicUrl(caminho).data.publicUrl];
+  const url = db.storage.from(BUCKET).getPublicUrl(caminho).data.publicUrl;
+  if (bloco === "logo") {
+    const antigo = conteudo.logo?.split(`/${BUCKET}/`)[1];
+    if (antigo) await db.storage.from(BUCKET).remove([antigo]);
+    conteudo.logo = url;
+  } else {
+    b.fotos = [...(b.fotos ?? []), url];
+  }
   await db.from("roteiros_marca").update({ conteudo, updated_at: new Date().toISOString() }).eq("id", r.id);
 
   const { data: atualizado } = await db

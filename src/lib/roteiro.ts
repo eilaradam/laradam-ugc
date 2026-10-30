@@ -5,7 +5,7 @@
 export type Ref = { url: string; titulo?: string };
 
 export type Gancho = {
-  id: string; // "A", "B", "C"
+  id: string; // fixo; a letra mostrada sai da posição (letraDoGancho)
   titulo: string;
   fala: string;
   tela?: string;
@@ -25,6 +25,12 @@ export type Parte = {
 };
 
 export type RoteiroConteudo = {
+  /** título grande do topo (padrão "Roteiro de vídeo") */
+  titulo?: string;
+  /** cor da marca (hex); vira a cor de destaque da página */
+  cor?: string;
+  /** logo da marca (URL no bucket roteiros-marca) */
+  logo?: string;
   marca: string;
   creator: string;
   formato: string;
@@ -35,6 +41,7 @@ export type RoteiroConteudo = {
   partes: Parte[];
   /** referências gerais do roteiro */
   refs?: Ref[];
+  fotos?: string[];
 };
 
 export type RoteiroPublico = {
@@ -62,9 +69,9 @@ export type Nota = {
 };
 
 // Alvo = endereço de um trecho editável: "geral:conceito", "gancho:A:fala", "parte:antes:tela".
-const CAMPOS_GERAL = ["conceito", "regra"] as const;
+const CAMPOS_GERAL = ["conceito", "regra", "titulo", "creator", "marca", "formato", "duracao"] as const;
 const CAMPOS_GANCHO = ["titulo", "fala", "tela"] as const;
-const CAMPOS_PARTE = ["nome", "fala", "tela"] as const;
+const CAMPOS_PARTE = ["nome", "tempo", "fala", "tela"] as const;
 
 export function lerAlvo(c: RoteiroConteudo, alvo: string): string | undefined {
   const [sec, id, campo] = alvo.split(":");
@@ -173,4 +180,85 @@ export function tipoRef(url: string): TipoRef {
     if (id) return { tipo: "tiktok", id };
   }
   return { tipo: "link", host };
+}
+
+const COR_PADRAO = "#5b3df5";
+
+export function corDe(c: RoteiroConteudo) {
+  return c.cor && /^#[0-9a-f]{6}$/i.test(c.cor) ? c.cor : COR_PADRAO;
+}
+
+/** Roteiro em branco pra uma marca nova. */
+export function roteiroVazio(marca: string, cor?: string): RoteiroConteudo {
+  return {
+    titulo: "Roteiro de vídeo",
+    cor,
+    marca,
+    creator: "Lara Dam (@eilaradam)",
+    formato: "",
+    duracao: "",
+    ganchos: [
+      { id: "A", titulo: "", fala: "", recomendado: true },
+      { id: "B", titulo: "", fala: "" },
+    ],
+    partes: [
+      { id: novoId(), nome: "Abertura", tempo: "0:05", fala: "" },
+      { id: novoId(), nome: "CTA", fala: "" },
+    ],
+  };
+}
+
+/** Letra que a marca vê (A, B, C…) pela posição; o id do gancho fica fixo pros comentários não se perderem. */
+export function letraDoGancho(c: RoteiroConteudo, id: string | null | undefined) {
+  const i = c.ganchos.findIndex((g) => g.id === id);
+  return i < 0 ? null : String.fromCharCode(65 + i);
+}
+
+export function novoId() {
+  return Math.random().toString(36).slice(2, 8);
+}
+
+/**
+ * Mudanças de estrutura que só a Lara faz (adicionar, tirar, mover, recomendar).
+ * Devolve o conteúdo novo ou uma mensagem de erro.
+ */
+export function mudarEstrutura(
+  c: RoteiroConteudo,
+  acao: string,
+  bloco: string
+): RoteiroConteudo | string {
+  const novo: RoteiroConteudo = structuredClone(c);
+  const [sec, id] = bloco.split(":");
+  const lista: (Gancho | Parte)[] | null = sec === "gancho" ? novo.ganchos : sec === "parte" ? novo.partes : null;
+  if (!lista) return "Bloco inválido";
+  const i = lista.findIndex((x) => x.id === id);
+
+  if (acao === "item_add") {
+    if (sec === "gancho") {
+      if (novo.ganchos.length >= 26) return "Gancho demais";
+      novo.ganchos.push({ id: novoId(), titulo: "", fala: "" });
+    } else {
+      // entra logo depois da parte indicada (ou no fim)
+      const nova: Parte = { id: novoId(), nome: "Nova parte", fala: "" };
+      novo.partes.splice(i >= 0 ? i + 1 : novo.partes.length, 0, nova);
+    }
+    return novo;
+  }
+  if (i < 0) return "Item não encontrado";
+  if (acao === "item_rm") {
+    if (lista.length <= 1) return "Precisa ter pelo menos um";
+    lista.splice(i, 1);
+    return novo;
+  }
+  if (acao === "item_subir" || acao === "item_descer") {
+    const j = acao === "item_subir" ? i - 1 : i + 1;
+    if (j < 0 || j >= lista.length) return novo;
+    [lista[i], lista[j]] = [lista[j], lista[i]];
+    return novo;
+  }
+  if (acao === "recomendar" && sec === "gancho") {
+    novo.ganchos.forEach((g) => (g.recomendado = g.id === id ? !g.recomendado : false));
+    return novo;
+  }
+  return "Ação inválida";
 }

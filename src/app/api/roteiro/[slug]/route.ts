@@ -1,7 +1,7 @@
 import { supabaseAdmin } from "@/lib/supabase";
 import { clientIp, emailBudgetOk, originAllowed, rateLimit, str, tooManyRequests } from "@/lib/guard";
 import { sendRoteiroAviso } from "@/lib/resend";
-import { blocoDe, gravarAlvo, lerAlvo, type Nota, type RoteiroConteudo } from "@/lib/roteiro";
+import { blocoDe, gravarAlvo, lerAlvo, letraDoGancho, mudarEstrutura, type Nota, type RoteiroConteudo } from "@/lib/roteiro";
 
 // Ações da página /roteiro/<slug>. O slug é o acesso da marca;
 // a chave_lara (?k=) libera aceitar, recusar e resolver.
@@ -99,8 +99,9 @@ export async function POST(req: Request, ctx: Ctx) {
     // A Lara muda o texto direto; fica no histórico do trecho como alteração aceita.
     if (!lara) return erro("Só a Lara pode editar direto", 403);
     const alvo = str(body.alvo, 60);
-    const texto = str(body.texto, 3000);
-    if (!alvo || !texto) return erro("Texto vazio");
+    // pode apagar o texto (ex.: tirar a "Tela" de uma parte)
+    const texto = typeof body.texto === "string" ? body.texto.trim().slice(0, 3000) : null;
+    if (!alvo || texto === null) return erro("Trecho inválido");
     const atual = lerAlvo(conteudo, alvo) ?? "";
     if (texto === atual) return erro("Nada mudou");
     const novo = gravarAlvo(conteudo, alvo, texto);
@@ -118,14 +119,16 @@ export async function POST(req: Request, ctx: Ctx) {
     await db.from("roteiros_marca_notas").insert({ roteiro_id: r.id, parent_id: p.id, alvo: p.alvo, tipo: "resposta", autor, autor_lara: lara, texto });
     aviso = { assunto: `💬 ${autor} respondeu no roteiro ${marca}`, linhas: [texto] };
   } else if (acao === "gancho") {
-    const id = str(body.id, 4);
+    const id = str(body.id, 12);
     if (!id || !conteudo.ganchos.some((g) => g.id === id)) return erro("Gancho inválido");
     await db.from("roteiros_marca").update({ gancho_escolhido: id, gancho_escolhido_por: autor, updated_at: new Date().toISOString() }).eq("id", r.id);
     const g = conteudo.ganchos.find((x) => x.id === id)!;
-    aviso = { assunto: `🎯 ${autor} escolheu o gancho ${id} (${marca})`, linhas: [`${id} · ${g.titulo}`, g.fala] };
+    const letra = letraDoGancho(conteudo, id);
+    aviso = { assunto: `🎯 ${autor} escolheu o gancho ${letra} (${marca})`, linhas: [`${letra} · ${g.titulo}`, g.fala] };
   } else if (acao === "aprovar") {
     await db.from("roteiros_marca").update({ aprovado_em: new Date().toISOString(), aprovado_por: autor, updated_at: new Date().toISOString() }).eq("id", r.id);
-    const gancho = r.gancho_escolhido ? ` com o gancho ${r.gancho_escolhido}` : "";
+    const letra = letraDoGancho(conteudo, r.gancho_escolhido);
+    const gancho = letra ? ` com o gancho ${letra}` : "";
     aviso = { assunto: `✅ ${autor} aprovou o roteiro ${marca}${gancho}`, linhas: ["Pode gravar! 🎬"] };
   } else if (acao === "aceitar" || acao === "recusar" || acao === "resolver" || acao === "reabrir") {
     if (!lara) return erro("Só a Lara pode fazer isso", 403);
@@ -140,6 +143,24 @@ export async function POST(req: Request, ctx: Ctx) {
     }
     const status = { aceitar: "aceita", recusar: "recusada", resolver: "resolvida", reabrir: "aberta" }[acao];
     await db.from("roteiros_marca_notas").update({ status }).eq("id", n.id);
+  } else if (["item_add", "item_rm", "item_subir", "item_descer", "recomendar"].includes(String(acao))) {
+    if (!lara) return erro("Só a Lara pode fazer isso", 403);
+    const novo = mudarEstrutura(conteudo, String(acao), str(body.bloco, 60) ?? "");
+    if (typeof novo === "string") return erro(novo);
+    await db.from("roteiros_marca").update({ conteudo: novo, updated_at: new Date().toISOString() }).eq("id", r.id);
+  } else if (acao === "cor" || acao === "logo_rm") {
+    if (!lara) return erro("Só a Lara pode fazer isso", 403);
+    const novo: RoteiroConteudo = structuredClone(conteudo);
+    if (acao === "cor") {
+      const cor = str(body.cor, 7);
+      if (!cor || !/^#[0-9a-f]{6}$/i.test(cor)) return erro("Cor inválida");
+      novo.cor = cor;
+    } else {
+      const caminho = novo.logo?.split(`/${BUCKET}/`)[1];
+      if (caminho) await db.storage.from(BUCKET).remove([caminho]);
+      delete novo.logo;
+    }
+    await db.from("roteiros_marca").update({ conteudo: novo, updated_at: new Date().toISOString() }).eq("id", r.id);
   } else if (acao === "ref_add" || acao === "ref_rm" || acao === "foto_rm") {
     if (!lara) return erro("Só a Lara pode fazer isso", 403);
     const novo: RoteiroConteudo = structuredClone(conteudo);

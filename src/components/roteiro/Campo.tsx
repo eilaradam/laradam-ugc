@@ -15,14 +15,17 @@ type Props = {
   /** como o texto aparece (aspas, rótulo "Tela" etc.) */
   render?: (t: string) => React.ReactNode;
   multilinha?: boolean;
+  /** texto-guia quando o trecho está vazio (só a Lara vê trecho vazio) */
+  vazio?: string;
 };
 
-export default function Campo({ alvo, texto, className = "", render, multilinha = true }: Props) {
+export default function Campo({ alvo, texto, className = "", render, multilinha = true, vazio }: Props) {
   const { notas, lara } = useRoteiro();
   const [modo, setModo] = useState<null | "sugerir" | "comentar">(null);
   const [aberto, setAberto] = useState(false);
 
-  const minhas = notas.filter((n) => n.alvo === alvo && n.tipo !== "resposta");
+  // Edição direta da Lara só aparece pra ela; a marca vê o texto já pronto.
+  const minhas = notas.filter((n) => n.alvo === alvo && n.tipo !== "resposta" && (lara || !(n.autor_lara && n.tipo === "sugestao")));
   const abertas = minhas.filter((n) => n.status === "aberta");
   const fechadas = minhas.filter((n) => n.status !== "aberta");
   const [verHistorico, setVerHistorico] = useState(false);
@@ -35,7 +38,13 @@ export default function Campo({ alvo, texto, className = "", render, multilinha 
         } ${aberto ? "bg-[var(--rt-lilas)]" : "hover:bg-[var(--rt-lilas)]"}`}
         onClick={() => setAberto((v) => !v)}
       >
-        {render ? render(texto) : texto}
+        {!texto && vazio ? (
+          <span className="text-[13.5px] italic text-[var(--rt-muted)]">+ {vazio}</span>
+        ) : render ? (
+          render(texto)
+        ) : (
+          texto
+        )}
       </div>
 
       <div
@@ -128,7 +137,7 @@ function Formulario({
   const [texto, setTexto] = useState(inicial);
   const [motivo, setMotivo] = useState("");
   const [enviando, setEnviando] = useState(false);
-  const mudou = modo === "sugerir" ? texto.trim() !== inicial.trim() && texto.trim() !== "" : texto.trim() !== "";
+  const mudou = modo === "sugerir" ? texto.trim() !== inicial.trim() && (texto.trim() !== "" || lara) : texto.trim() !== "";
 
   async function mandar() {
     setEnviando(true);
