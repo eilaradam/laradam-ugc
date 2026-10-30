@@ -83,12 +83,12 @@ export default function CategoryGallery() {
           </p>
 
           {/* Pills de atalho pra cada nicho */}
-          <div className="mt-6 md:mt-8 flex flex-wrap gap-2">
+          <div className="mt-6 md:mt-8 -mx-6 px-6 md:mx-0 md:px-0 flex flex-nowrap md:flex-wrap gap-2 overflow-x-auto md:overflow-visible scrollbar-hide">
             {rows.map((cat) => (
               <a
                 key={cat.slug}
                 href={`#cat-${cat.slug}`}
-                className="px-3.5 py-1.5 rounded-full bg-background border border-foreground/10 text-xs md:text-sm font-semibold text-foreground hover:bg-primary hover:text-primary-light hover:border-primary transition-colors"
+                className="flex-shrink-0 whitespace-nowrap px-3.5 py-1.5 rounded-full bg-background border border-foreground/10 text-xs md:text-sm font-semibold text-foreground hover:bg-primary hover:text-primary-light hover:border-primary transition-colors"
               >
                 {cat.name}
               </a>
