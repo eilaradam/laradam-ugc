@@ -19,7 +19,7 @@ export default function HeroOption6({ foto, fundo }: { foto?: string; fundo?: Fo
       id="top"
       className={`relative bg-background ${fundo ? "pt-20 md:pt-10 pb-10 md:pb-16 min-h-[720px] flex items-center" : "pt-20 md:pt-6 pb-3 md:pb-6"}`}
     >
-      {fundo && <FundoTrocando fotos={fundo} />}
+      {fundo && <FundoTrocando fotos={fundo} className="hidden md:block" />}
       {/* Camadas de fundo (grid + glow) — clipadas aqui pra não vazar,
           sem cortar a foto que fica no fluxo normal acima delas. */}
       {!fundo && (
@@ -117,16 +117,22 @@ export default function HeroOption6({ foto, fundo }: { foto?: string; fundo?: Fo
         </div>
 
         {/* RIGHT: foto + UGC backdrop + bubbles */}
-        <div className="relative flex items-end justify-center self-end">
+        <div className="relative flex items-end justify-center self-end w-full">
           {/* Foto */}
           <motion.div
             initial={{ opacity: 0, scale: 0.86 }}
             animate={{ opacity: 1, scale: 0.9 }}
             transition={{ delay: 0.4, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-            className="relative z-10 flex items-end justify-center origin-bottom"
+            className="relative z-10 flex items-end justify-center origin-bottom w-full"
           >
             {fundo ? (
-              <div className="lara-hero-photo h-[46vh] sm:h-[56vh] md:h-[66vh]" />
+              <>
+                {/* celular: as fotos trocam num quadro abaixo do texto */}
+                <div className="md:hidden relative w-full aspect-[4/5] rounded-2xl overflow-hidden">
+                  <FundoTrocando fotos={fundo} modo="bloco" />
+                </div>
+                <div className="hidden md:block h-[66vh]" />
+              </>
             ) : (
             <HeroPhoto src={foto} className="lara-hero-photo w-auto h-[46vh] sm:h-[56vh] md:h-[74vh] max-w-full object-contain object-bottom" />
             )}

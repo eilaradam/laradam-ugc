@@ -85,7 +85,7 @@ export default function BestResults() {
       id="destaques"
       className="px-6 md:px-12 py-6 md:py-10 bg-background relative overflow-hidden"
     >
-      <div className="max-w-7xl mx-auto grid md:grid-cols-12 gap-10 md:gap-12 items-start">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-12 items-start">
         {/* Coluna esquerda — título + áudio */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -132,7 +132,7 @@ export default function BestResults() {
         </motion.div>
 
         {/* Coluna direita — carrossel de vídeos verticais com autoplay */}
-        <div className="md:col-span-7">
+        <div className="md:col-span-7 min-w-0">
           <HighlightsCarousel />
         </div>
       </div>
@@ -330,7 +330,7 @@ function CarouselSlide({
   return (
     <div
       ref={slideRef}
-      className={`flex-shrink-0 snap-center w-[50%] sm:w-[42%] md:w-[48%] lg:w-[44%] flex transition-all duration-500 ${
+      className={`flex-shrink-0 snap-center w-[62%] sm:w-[42%] md:w-[48%] lg:w-[44%] flex transition-all duration-500 ${
         isActive
           ? "opacity-100 blur-0 scale-100"
           : "opacity-30 blur-[2px] scale-95"

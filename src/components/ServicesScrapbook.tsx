@@ -164,7 +164,7 @@ export default function ServicesScrapbook() {
               >
                 {s.label}
               </span>
-              <p className="text-sm md:text-[15px] text-foreground-soft leading-relaxed text-justify">
+              <p className="text-sm md:text-[15px] text-foreground-soft leading-relaxed md:text-justify">
                 {s.body}
               </p>
             </motion.div>
