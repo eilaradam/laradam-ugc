@@ -32,8 +32,8 @@ export default function SobreLaranja() {
           className="relative mx-auto w-full max-w-[340px] md:max-w-[400px]"
         >
           <div className="relative rounded-[2rem] bg-primary pt-8 px-8 overflow-hidden">
-            <Brilho className="absolute top-5 left-5 w-6 h-6 text-foreground" />
-            <Brilho className="absolute bottom-24 right-5 w-4 h-4 text-foreground/70" />
+            <Brilho className="absolute top-5 left-5 w-6 h-6 text-primary-light" />
+            <Brilho className="absolute bottom-24 right-5 w-4 h-4 text-primary-light/70" />
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/lara-fundo.png" alt="Lara Dam" className="relative w-full h-auto" />
           </div>
@@ -54,7 +54,7 @@ export default function SobreLaranja() {
           <Etiqueta escuro>{t.about.tag}</Etiqueta>
           <h2 className="font-display font-extrabold text-3xl md:text-5xl tracking-tight leading-[1.05]">
             {en ? "Who is " : "Quem é a "}
-            <span className="relative inline-block text-primary">
+            <span className="relative inline-block text-primary-light">
               Lara?
               <Risquinhos className="absolute -right-7 -top-2 w-7 h-7 text-background" />
             </span>
@@ -62,7 +62,7 @@ export default function SobreLaranja() {
           <p className="mt-5 text-sm md:text-base text-background/70 leading-relaxed max-w-xl">{renderBold(t.about.body1)}</p>
           <p className="mt-3 text-sm md:text-base text-background/70 leading-relaxed max-w-xl">{renderBold(t.about.body2)}</p>
           <div className="mt-7 flex flex-wrap gap-2">
-            <span className="rounded-full bg-primary text-foreground px-4 py-2 text-sm font-semibold">{t.about.pillBrands}</span>
+            <span className="rounded-full bg-primary text-primary-light px-4 py-2 text-sm font-semibold">{t.about.pillBrands}</span>
             <span className="rounded-full border border-background/25 px-4 py-2 text-sm font-semibold">{t.about.pillLocation}</span>
           </div>
         </motion.div>

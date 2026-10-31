@@ -46,11 +46,11 @@ export function BotaoPilula({
   track?: string;
 }) {
   const cores = {
-    laranja: "bg-primary text-foreground border-foreground",
+    laranja: "bg-primary text-primary-light border-foreground",
     contorno: "bg-background text-foreground border-foreground",
     escuro: "bg-foreground text-background border-foreground",
   }[variante];
-  const bolinha = variante === "escuro" ? "bg-primary text-foreground" : "bg-foreground text-background";
+  const bolinha = variante === "escuro" ? "bg-primary text-primary-light" : "bg-foreground text-background";
   return (
     <a
       href={href}
@@ -79,7 +79,7 @@ export function SeloGirando({ texto, className = "" }: { texto: string; classNam
           <textPath href="#selo-circulo">{texto}</textPath>
         </text>
       </svg>
-      <span className="absolute inset-0 m-auto w-9 h-9 md:w-10 md:h-10 rounded-full bg-primary text-foreground flex items-center justify-center">
+      <span className="absolute inset-0 m-auto w-9 h-9 md:w-10 md:h-10 rounded-full bg-primary text-primary-light flex items-center justify-center">
         <svg viewBox="0 0 24 24" className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
           <path d="M7 17 17 7M8 7h9v9" />
         </svg>

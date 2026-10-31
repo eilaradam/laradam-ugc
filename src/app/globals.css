@@ -217,19 +217,19 @@ body {
   }
 }
 
-/* Versão laranja (/laranja): creme + preto + laranja, display em Outfit.
+/* Versão nova (/laranja): paleta rust + butter + navy, display em Outfit.
    Troca só as variáveis, então os componentes antigos entram no tema sozinhos. */
 .tema-laranja {
-  --background: #F6F1E7;
-  --background-alt: #EFE7D8;
-  --foreground: #1B1814;
-  --foreground-soft: #5C554C;
-  --primary: #F59E0B;
-  --primary-dark: #C77A00;
-  --primary-light: #FDEBC8;
-  --accent-on-dark: #F7A928;
-  --muted: #857D72;
-  --border: #E6DDCC;
+  --background: #FFF9E0;
+  --background-alt: #FFF2B8;
+  --foreground: #4A69B3; /* navy: textos e superfícies escuras */
+  --foreground-soft: #3A4F86;
+  --primary: #BA3801; /* rust: destaques */
+  --primary-dark: #962D00;
+  --primary-light: #FFEC89; /* butter: texto sobre rust/navy e tons claros */
+  --accent-on-dark: #FFEC89;
+  --muted: #6E7BA0;
+  --border: #F1E3A6;
   --font-be-vietnam: var(--font-outfit);
   background: var(--background);
   color: var(--foreground);
@@ -242,5 +242,5 @@ body {
 }
 .tema-laranja ::selection {
   background: var(--primary);
-  color: var(--foreground);
+  color: var(--primary-light);
 }
