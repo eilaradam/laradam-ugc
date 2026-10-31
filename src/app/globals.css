@@ -216,3 +216,31 @@ body {
     transform: translateY(12px) rotate(-4deg) scale(0.92);
   }
 }
+
+/* Versão laranja (/laranja): creme + preto + laranja, display em Outfit.
+   Troca só as variáveis, então os componentes antigos entram no tema sozinhos. */
+.tema-laranja {
+  --background: #F6F1E7;
+  --background-alt: #EFE7D8;
+  --foreground: #1B1814;
+  --foreground-soft: #5C554C;
+  --primary: #F59E0B;
+  --primary-dark: #C77A00;
+  --primary-light: #FDEBC8;
+  --accent-on-dark: #F7A928;
+  --muted: #857D72;
+  --border: #E6DDCC;
+  --font-be-vietnam: var(--font-outfit);
+  background: var(--background);
+  color: var(--foreground);
+}
+.tema-laranja .font-display {
+  letter-spacing: -0.03em;
+}
+.tema-laranja .font-serif-accent {
+  font-style: normal;
+}
+.tema-laranja ::selection {
+  background: var(--primary);
+  color: var(--foreground);
+}
