@@ -217,19 +217,19 @@ body {
   }
 }
 
-/* Versão nova (/laranja): paleta rust + butter + navy, display em Outfit.
+/* Versão nova (/laranja): creme predominante + índigo + laranja + lima, display em Outfit.
    Troca só as variáveis, então os componentes antigos entram no tema sozinhos. */
 .tema-laranja {
-  --background: #FFF9E0;
-  --background-alt: #FFF2B8;
-  --foreground: #4A69B3; /* navy: textos e superfícies escuras */
-  --foreground-soft: #3A4F86;
-  --primary: #BA3801; /* rust: destaques */
-  --primary-dark: #962D00;
-  --primary-light: #FFEC89; /* butter: texto sobre rust/navy e tons claros */
-  --accent-on-dark: #FFEC89;
-  --muted: #6E7BA0;
-  --border: #F1E3A6;
+  --background: #E9D8BE; /* creme: cor predominante */
+  --background-alt: #E1CDAE;
+  --foreground: #1C0D76; /* índigo: textos e superfícies escuras */
+  --foreground-soft: #43397F;
+  --primary: #FE5A22; /* laranja: destaques (texto em cima dele = índigo) */
+  --primary-dark: #D2400C;
+  --primary-light: #F8CDB6; /* laranja bem clarinho pra tons de fundo */
+  --accent-on-dark: #BECF58; /* lima: texto e brilhos em cima do índigo */
+  --muted: #6F6690;
+  --border: #D8C3A1;
   --font-be-vietnam: var(--font-outfit);
   background: var(--background);
   color: var(--foreground);
@@ -242,5 +242,5 @@ body {
 }
 .tema-laranja ::selection {
   background: var(--primary);
-  color: var(--primary-light);
+  color: var(--foreground);
 }

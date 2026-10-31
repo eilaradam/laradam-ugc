@@ -25,11 +25,11 @@ export default function NavLaranja() {
     >
       <div className="max-w-6xl mx-auto flex items-center justify-between gap-3 rounded-full bg-foreground text-background pl-2 pr-2 py-2 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)]">
         <a href="#top" data-track="nav_logo" className="flex items-center gap-2 pl-1">
-          <span className="w-8 h-8 md:w-9 md:h-9 rounded-full bg-primary text-primary-light flex items-center justify-center font-display font-extrabold text-base">
+          <span className="w-8 h-8 md:w-9 md:h-9 rounded-full bg-primary text-foreground flex items-center justify-center font-display font-extrabold text-base">
             L
           </span>
           <span className="font-display font-bold text-sm md:text-base tracking-tight">
-            Lara Dam<span className="text-primary-light">.</span>
+            Lara Dam<span className="text-accent-on-dark">.</span>
           </span>
         </a>
 
@@ -39,7 +39,7 @@ export default function NavLaranja() {
               key={l.href}
               href={l.href}
               data-track={`nav_link_${l.href.replace(/[^a-z0-9]+/gi, "_").replace(/^_|_$/g, "")}`}
-              className={`text-[13px] font-medium transition-colors ${i === 0 ? "text-primary-light" : "text-background/80 hover:text-primary-light"}`}
+              className={`text-[13px] font-medium transition-colors ${i === 0 ? "text-accent-on-dark" : "text-background/80 hover:text-accent-on-dark"}`}
             >
               {l.label}
             </a>
@@ -62,7 +62,7 @@ export default function NavLaranja() {
           <a
             href="#contato"
             data-track="nav_trabalhe_comigo"
-            className="rounded-full bg-background text-foreground px-4 md:px-5 py-2 md:py-2.5 text-xs md:text-[13px] font-semibold hover:bg-primary hover:text-primary-light transition-colors whitespace-nowrap"
+            className="rounded-full bg-background text-foreground px-4 md:px-5 py-2 md:py-2.5 text-xs md:text-[13px] font-semibold hover:bg-primary hover:text-foreground transition-colors whitespace-nowrap"
           >
             {t.nav.trabalheComigo}
           </a>

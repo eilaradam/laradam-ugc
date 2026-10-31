@@ -43,7 +43,7 @@ export default function ServicosLaranja() {
                 }`}
               >
                 <div className="grid grid-cols-[3rem_1fr_auto] md:grid-cols-[7rem_1fr_auto] items-center gap-3 px-4 md:px-6 py-4 md:py-5">
-                  <span className={`font-display font-bold text-sm ${ativo ? "text-primary-light" : "text-primary"}`}>
+                  <span className={`font-display font-bold text-sm ${ativo ? "text-accent-on-dark" : "text-primary-dark"}`}>
                     {String(i + 1).padStart(2, "0")}.
                   </span>
                   <h3 className="font-display font-bold text-lg md:text-2xl tracking-tight">{s.titulo}</h3>
@@ -52,7 +52,7 @@ export default function ServicosLaranja() {
                     data-track={`servico_quero_${i + 1}`}
                     onClick={(e) => e.stopPropagation()}
                     aria-label={`${en ? "I want" : "Quero"} ${s.titulo}`}
-                    className={`w-9 h-9 rounded-full flex items-center justify-center transition-transform ${ativo ? "bg-primary text-primary-light rotate-45" : "bg-primary text-primary-light rotate-0"}`}
+                    className={`w-9 h-9 rounded-full flex items-center justify-center transition-transform ${ativo ? "bg-primary text-foreground rotate-45" : "bg-primary text-foreground rotate-0"}`}
                   >
                     <svg viewBox="0 0 24 24" className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                       <path d="M7 17 17 7M8 7h9v9" />
@@ -78,7 +78,7 @@ export default function ServicosLaranja() {
                               </span>
                             ))}
                             {s.resultado && (
-                              <span className="rounded-full bg-primary text-primary-light px-3 py-1 text-xs font-semibold">
+                              <span className="rounded-full bg-primary text-foreground px-3 py-1 text-xs font-semibold">
                                 {s.marca} · {s.resultado}
                               </span>
                             )}

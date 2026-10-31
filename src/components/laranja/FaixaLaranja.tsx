@@ -13,7 +13,7 @@ export default function FaixaLaranja() {
         {itens.map((item, i) => (
           <span key={i} className="flex items-center gap-8 md:gap-10 font-display font-bold text-xl md:text-3xl tracking-tight">
             {item}
-            <Brilho className="w-5 h-5 md:w-6 md:h-6 text-primary-light" />
+            <Brilho className="w-5 h-5 md:w-6 md:h-6 text-accent-on-dark" />
           </span>
         ))}
       </div>

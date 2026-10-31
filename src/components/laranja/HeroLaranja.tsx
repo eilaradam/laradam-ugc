@@ -72,17 +72,17 @@ export default function HeroLaranja({ fundo }: { fundo: FotoFundo[] }) {
               </div>
               <div className="leading-tight">
                 <div className="font-display font-bold text-foreground">
-                  <span className="text-primary">+300 {en ? "brands" : "marcas"}</span> · 140M+ views
+                  <span className="text-primary-dark">+300 {en ? "brands" : "marcas"}</span> · 140M+ views
                 </div>
                 <div className="text-xs text-foreground-soft">{en ? "+500 videos in 3 years" : "+500 vídeos em 3 anos"}</div>
               </div>
             </div>
             <div className="flex items-center gap-2">
               <span className="text-xs text-foreground-soft mr-1">{en ? "Follow me" : "Me segue"}</span>
-              <a href={`https://instagram.com/${SITE.instagram.replace("@", "")}`} target="_blank" rel="noreferrer" data-track="hero_instagram" aria-label="Instagram" className="w-9 h-9 rounded-full bg-foreground text-background flex items-center justify-center hover:bg-primary hover:text-primary-light transition-colors">
+              <a href={`https://instagram.com/${SITE.instagram.replace("@", "")}`} target="_blank" rel="noreferrer" data-track="hero_instagram" aria-label="Instagram" className="w-9 h-9 rounded-full bg-foreground text-background flex items-center justify-center hover:bg-primary hover:text-foreground transition-colors">
                 <IconeInstagram className="w-4 h-4" />
               </a>
-              <a href={`https://tiktok.com/${SITE.tiktok}`} target="_blank" rel="noreferrer" data-track="hero_tiktok" aria-label="TikTok" className="w-9 h-9 rounded-full bg-foreground text-background flex items-center justify-center hover:bg-primary hover:text-primary-light transition-colors">
+              <a href={`https://tiktok.com/${SITE.tiktok}`} target="_blank" rel="noreferrer" data-track="hero_tiktok" aria-label="TikTok" className="w-9 h-9 rounded-full bg-foreground text-background flex items-center justify-center hover:bg-primary hover:text-foreground transition-colors">
                 <IconeTiktok className="w-4 h-4" />
               </a>
             </div>
@@ -127,7 +127,7 @@ export default function HeroLaranja({ fundo }: { fundo: FotoFundo[] }) {
                 initial={{ opacity: 0, x: 16 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.8 + i * 0.08 }}
-                className={`rounded-full px-3 py-1 text-[11px] md:text-xs font-semibold border-2 border-foreground ${n.laranja ? "bg-primary text-primary-light" : "bg-foreground text-background"}`}
+                className={`rounded-full px-3 py-1 text-[11px] md:text-xs font-semibold border-2 border-foreground ${n.laranja ? "bg-primary text-foreground" : i === 2 ? "bg-accent-on-dark text-foreground" : "bg-foreground text-background"}`}
               >
                 {n.label}
               </motion.span>
