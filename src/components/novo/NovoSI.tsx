@@ -347,7 +347,7 @@ function Nichos() {
 function Sobre() {
   return (
     <section id="sobre" className="py-14">
-      <div className="max-w-6xl mx-auto px-5 flex flex-col md:flex-row gap-8 md:gap-12 items-center">
+      <div className="max-w-4xl mx-auto px-5 flex flex-col md:flex-row gap-8 md:gap-12 items-center justify-center text-center md:text-left">
         <div className="relative w-[200px] flex-shrink-0">
           <span className="absolute -inset-3 -rotate-3 rounded-[2rem]" style={{ background: C.rosa }} />
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -356,11 +356,11 @@ function Sobre() {
         <div>
           <span className={`${mao.className} text-2xl -rotate-2 inline-block`} style={{ color: C.roxo }}>oie, prazer!</span>
           <h2 className={`${titulo.className} text-4xl font-extrabold tracking-[-0.04em]`} style={{ color: C.preto }}>Eu sou a Lara Dam.</h2>
-          <p className="mt-3 max-w-2xl text-lg leading-relaxed" style={{ color: C.suave }}>
+          <p className="mt-3 max-w-xl text-lg leading-relaxed" style={{ color: C.suave }}>
             27 anos, <b style={{ color: C.preto }}>UGC Creator e estrategista de conteúdo</b> no Litoral de SP. Mais de 500 vídeos pra mais de 300 marcas,
             com recorde de CTR no Meta e CPA até 38% menor.
           </p>
-          <div className="mt-4 flex flex-wrap gap-2">
+          <div className="mt-4 flex flex-wrap justify-center md:justify-start gap-2">
             {["+100 campanhas aprovadas no Seu Influencer", "InfinitePay", "Méliuz", "DT3"].map((t, i) => (
               <span key={t} className="rounded-full px-3.5 py-1.5 text-sm font-semibold" style={i ? { background: "#fff", color: C.preto } : { background: C.limao, color: C.preto }}>{t}</span>
             ))}
