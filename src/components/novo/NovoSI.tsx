@@ -306,11 +306,16 @@ function ComoFunciona() {
   );
 }
 
+// ordem dos nichos pelo que mais aprova no Seu Influencer (03/11: beleza e moda na frente, IA tem pouco vídeo)
+const ORDEM_NICHOS = ["beleza", "moda", "saude", "casa", "gastronomia", "food", "tech", "financas", "ia", "viagem"];
+const ordemNicho = (slug: string) => { const i = ORDEM_NICHOS.indexOf(slug); return i < 0 ? 99 : i; };
+
 function Nichos() {
   const { open } = useVideoModal();
   const nichos = CATEGORIES.filter((c) => c.slug !== "all")
     .map((c) => ({ ...c, videos: VIDEOS.filter((v) => v.category === c.slug && (v.youtubeId || v.videoLocal)) }))
-    .filter((c) => c.videos.length >= 3);
+    .filter((c) => c.videos.length >= 3)
+    .sort((a, b) => ordemNicho(a.slug) - ordemNicho(b.slug));
   const [ativo, setAtivo] = useState(nichos[0]?.slug);
   const n = nichos.find((x) => x.slug === ativo) ?? nichos[0];
   return (
