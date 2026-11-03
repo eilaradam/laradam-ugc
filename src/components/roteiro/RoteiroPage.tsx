@@ -2,18 +2,24 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { ArrowDown, ArrowUp, Check, CheckCircle2, Eye, ImagePlus, Plus, Sparkles, Star, Trash2, X } from "lucide-react";
-import { corDe, letraDoGancho, type Nota, type Opcao, type RoteiroPublico } from "@/lib/roteiro";
+import { corDe, letraDoGancho, type Nota, type RoteiroPublico } from "@/lib/roteiro";
 import { RoteiroCtx, quando, useRoteiro } from "./contexto";
 import Campo from "./Campo";
 import Midia from "./Midia";
 
-type Props = { inicial: RoteiroPublico; notasIniciais: Nota[]; chave?: string; opcoes?: Opcao[] };
+/** Um roteiro da página. A chave só vem quando quem abriu é a Lara. */
+export type Item = { inicial: RoteiroPublico; notas: Nota[]; chave?: string };
+
+type Props = { itens: Item[]; atual: string };
 
 const CHAVE_NOME = "roteiro:nome";
 
-export default function RoteiroPage({ inicial, notasIniciais, chave, opcoes }: Props) {
-  const [roteiro, setRoteiro] = useState(inicial);
-  const [notas, setNotas] = useState(notasIniciais);
+// Roteiros do mesmo grupo aparecem um embaixo do outro. Cada um tem comentários,
+// gancho e aprovação próprios; cor e logo saem do primeiro.
+export default function RoteiroPage({ itens: iniciais, atual }: Props) {
+  const [itens, setItens] = useState(() => iniciais.map((i) => ({ roteiro: i.inicial, notas: i.notas })));
+  const chaves = iniciais.map((i) => i.chave);
+  const chave = chaves[0];
   const [nome, setNomeState] = useState(() => {
     if (typeof window === "undefined") return "";
     try {
@@ -23,13 +29,12 @@ export default function RoteiroPage({ inicial, notasIniciais, chave, opcoes }: P
     }
   });
   const [erro, setErro] = useState<string | null>(null);
-  const [aprovando, setAprovando] = useState(false);
   // "Ver como a marca": a Lara esconde os próprios controles pra conferir a página.
   const [comoMarca, setComoMarca] = useState(false);
   const lara = Boolean(chave) && !comoMarca;
-  const c = roteiro.conteudo;
-  const cor = corDe(c);
-
+  const varios = itens.length > 1;
+  const primeiro = itens[0].roteiro.conteudo;
+  const cor = corDe(primeiro);
 
   const setNome = useCallback((n: string) => {
     setNomeState(n);
@@ -41,393 +46,481 @@ export default function RoteiroPage({ inicial, notasIniciais, chave, opcoes }: P
   // Sem nome ainda: abre a caixinha de nome e só manda depois.
   const [pedirNome, setPedirNome] = useState<null | ((n: string | null) => void)>(null);
 
-  const enviar = useCallback(
-    async (acao: string, dados: Record<string, unknown> = {}) => {
-      setErro(null);
-      let autor = (dados.autor as string | undefined) ?? nome;
-      if (!chave && !autor) {
-        const n = await new Promise<string | null>((resolve) => setPedirNome(() => resolve));
-        setPedirNome(null);
-        if (!n) return false;
-        setNome(n);
-        autor = n;
-      }
-      try {
-        const res = await fetch(`/api/roteiro/${roteiro.slug}`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ acao, k: chave, ...dados, autor }),
-        });
-        const j = await res.json();
-        if (!res.ok) {
-          setErro(j.error ?? "Não deu certo, tenta de novo");
-          return false;
-        }
-        setRoteiro(j.roteiro);
-        setNotas(j.notas);
-        return true;
-      } catch {
-        setErro("Sem conexão. Tenta de novo.");
+  const trocar = (i: number, j: { roteiro?: RoteiroPublico; notas?: Nota[] }) =>
+    setItens((xs) => xs.map((x, k) => (k === i ? { roteiro: j.roteiro ?? x.roteiro, notas: j.notas ?? x.notas } : x)));
+
+  async function enviarEm(i: number, acao: string, dados: Record<string, unknown> = {}) {
+    setErro(null);
+    let autor = (dados.autor as string | undefined) ?? nome;
+    if (!chaves[i] && !autor) {
+      const n = await new Promise<string | null>((resolve) => setPedirNome(() => resolve));
+      setPedirNome(null);
+      if (!n) return false;
+      setNome(n);
+      autor = n;
+    }
+    try {
+      const res = await fetch(`/api/roteiro/${itens[i].roteiro.slug}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ acao, k: chaves[i], ...dados, autor }),
+      });
+      const j = await res.json();
+      if (!res.ok) {
+        setErro(j.error ?? "Não deu certo, tenta de novo");
         return false;
       }
-    },
-    [roteiro.slug, nome, chave, setNome]
-  );
+      trocar(i, j);
+      return true;
+    } catch {
+      setErro("Sem conexão. Tenta de novo.");
+      return false;
+    }
+  }
 
-  const subirFotos = useCallback(
-    async (bloco: string, arquivos: File[]) => {
-      setErro(null);
-      for (const f of arquivos) {
-        try {
-          const fd = new FormData();
-          fd.append("k", chave ?? "");
-          fd.append("bloco", bloco);
-          const logo = bloco === "logo";
-          fd.append("foto", await reduzir(f, logo ? 800 : 1600, logo ? "image/png" : "image/jpeg"), logo ? "logo.png" : "foto.jpg");
-          const res = await fetch(`/api/roteiro/${roteiro.slug}/foto`, { method: "POST", body: fd });
-          const j = await res.json();
-          if (!res.ok) {
-            setErro(j.error ?? "Não deu pra subir a foto");
-            return;
-          }
-          setRoteiro(j.roteiro);
-        } catch {
-          setErro(`Não deu pra abrir ${f.name}. Tenta em JPG ou PNG.`);
+  async function subirFotosEm(i: number, bloco: string, arquivos: File[]) {
+    setErro(null);
+    for (const f of arquivos) {
+      try {
+        const fd = new FormData();
+        fd.append("k", chaves[i] ?? "");
+        fd.append("bloco", bloco);
+        const logo = bloco === "logo";
+        fd.append("foto", await reduzir(f, logo ? 800 : 1600, logo ? "image/png" : "image/jpeg"), logo ? "logo.png" : "foto.jpg");
+        const res = await fetch(`/api/roteiro/${itens[i].roteiro.slug}/foto`, { method: "POST", body: fd });
+        const j = await res.json();
+        if (!res.ok) {
+          setErro(j.error ?? "Não deu pra subir a foto");
           return;
         }
+        trocar(i, j);
+      } catch {
+        setErro(`Não deu pra abrir ${f.name}. Tenta em JPG ou PNG.`);
+        return;
       }
-    },
-    [roteiro.slug, chave]
-  );
+    }
+  }
 
   // Atualiza quando a aba volta pro foco (a Lara pode ter respondido).
+  const slugs = itens.map((x) => x.roteiro.slug).join(",");
   useEffect(() => {
     const atualizar = async () => {
       if (document.visibilityState !== "visible") return;
-      const res = await fetch(`/api/roteiro/${roteiro.slug}`);
-      if (!res.ok) return;
-      const j = await res.json();
-      setRoteiro(j.roteiro);
-      setNotas(j.notas);
+      for (const [i, slug] of slugs.split(",").entries()) {
+        const res = await fetch(`/api/roteiro/${slug}`);
+        if (res.ok) trocar(i, await res.json());
+      }
     };
     document.addEventListener("visibilitychange", atualizar);
     return () => document.removeEventListener("visibilitychange", atualizar);
-  }, [roteiro.slug]);
+  }, [slugs]);
 
-  const abertas = notas.filter((n) => n.status === "aberta" && n.tipo !== "resposta");
-  const sugestoes = abertas.filter((n) => n.tipo === "sugestao").length;
+  // Link de um roteiro do meio do grupo (ex.: e-mail de comentário) já desce até ele.
+  useEffect(() => {
+    if (varios && atual !== itens[0].roteiro.slug) document.getElementById(atual)?.scrollIntoView();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const [criando, setCriando] = useState(false);
+  async function novoRoteiro(copiar: boolean) {
+    setCriando(true);
+    const ok = await enviarEm(itens.length - 1, "roteiro_add", { copiar });
+    if (ok) window.location.reload();
+    else setCriando(false);
+  }
+
+  return (
+    <div
+      className="rt min-h-screen bg-[var(--rt-fundo)] pb-32 text-[var(--rt-ink)]"
+      style={
+        {
+          fontFamily: "var(--rt-font), system-ui, sans-serif",
+          "--rt-roxo": cor,
+          "--rt-lilas": `color-mix(in srgb, ${cor} 11%, white)`,
+        } as React.CSSProperties
+      }
+    >
+      {chave && (
+        <BarraLara
+          comoMarca={comoMarca}
+          setComoMarca={setComoMarca}
+          cor={cor}
+          logo={primeiro.logo}
+          enviar={(acao, dados) => enviarEm(0, acao, dados)}
+          subirLogo={(f) => subirFotosEm(0, "logo", [f])}
+        />
+      )}
+
+      <div className="mx-auto max-w-[880px] px-4 pt-10 md:px-8 lg:pt-14">
+        <main className="min-w-0">
+          {primeiro.logo ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={primeiro.logo} alt={primeiro.marca} className="h-9 w-auto max-w-[180px] object-contain object-left" />
+          ) : (
+            <p className="flex items-center gap-1 text-[13px] font-bold">
+              {primeiro.marca} <Sparkles size={13} className="text-[var(--rt-roxo)]" />
+            </p>
+          )}
+
+          {varios && (
+            <p className="mt-3 text-[14.5px] text-[var(--rt-muted)]">
+              <b className="text-[var(--rt-ink)]">{itens.length} roteiros</b> nesta página. Cada um tem a própria aprovação.
+            </p>
+          )}
+
+          {itens.map((x, i) => (
+            <RoteiroCtx.Provider
+              key={x.roteiro.slug}
+              value={{
+                nome,
+                setNome,
+                lara,
+                notas: x.notas,
+                enviar: (acao, dados) => enviarEm(i, acao, dados),
+                subirFotos: (bloco, arquivos) => subirFotosEm(i, bloco, arquivos),
+              }}
+            >
+              <Secao roteiro={x.roteiro} notas={x.notas} chave={chaves[i]} lara={lara} varios={varios} n={i + 1} erro={varios ? null : erro} />
+            </RoteiroCtx.Provider>
+          ))}
+
+          {lara && (
+            <div className="mt-14 rounded-2xl border border-dashed border-[var(--rt-roxo)]/50 p-5 text-center">
+              <p className="text-[13px] text-[var(--rt-muted)]">Mais um roteiro pra {primeiro.marca} nesta mesma página</p>
+              <div className="mt-3 flex flex-wrap justify-center gap-2">
+                <button
+                  disabled={criando}
+                  onClick={() => novoRoteiro(false)}
+                  className="inline-flex items-center gap-1.5 rounded-full bg-[var(--rt-roxo)] px-4 py-2 text-[13px] font-semibold text-white disabled:opacity-50"
+                >
+                  <Plus size={15} /> {criando ? "Criando…" : "Novo roteiro em branco"}
+                </button>
+                <button
+                  disabled={criando}
+                  onClick={() => novoRoteiro(true)}
+                  className="rounded-full border border-[var(--rt-linha)] bg-white px-4 py-2 text-[13px] font-semibold hover:border-[var(--rt-roxo)] disabled:opacity-50"
+                >
+                  Copiar o último
+                </button>
+              </div>
+            </div>
+          )}
+        </main>
+      </div>
+
+      {varios && erro && (
+        <p className="fixed inset-x-4 bottom-4 z-40 mx-auto max-w-[560px] rounded-xl bg-[#B4321F] px-4 py-3 text-center text-[13px] font-semibold text-white">
+          {erro}
+        </p>
+      )}
+      {pedirNome && <PedirNome responder={pedirNome} />}
+    </div>
+  );
+}
+
+function Secao({
+  roteiro,
+  notas,
+  chave,
+  lara,
+  varios,
+  n,
+  erro,
+}: {
+  roteiro: RoteiroPublico;
+  notas: Nota[];
+  chave?: string;
+  lara: boolean;
+  varios: boolean;
+  n: number;
+  erro: string | null;
+}) {
+  const { enviar } = useRoteiro();
+  const [aprovando, setAprovando] = useState(false);
+  const c = roteiro.conteudo;
+  const abertas = notas.filter((x) => x.status === "aberta" && x.tipo !== "resposta");
+  const sugestoes = abertas.filter((x) => x.tipo === "sugestao").length;
   const comentarios = abertas.length - sugestoes;
-
   const letraEscolhida = letraDoGancho(c, roteiro.gancho_escolhido);
 
   return (
-    <RoteiroCtx.Provider value={{ nome, setNome, lara, notas, enviar, subirFotos }}>
-      <div
-        className="rt min-h-screen bg-[var(--rt-fundo)] pb-32 text-[var(--rt-ink)]"
-        style={
-          {
-            fontFamily: "var(--rt-font), system-ui, sans-serif",
-            "--rt-roxo": cor,
-            "--rt-lilas": `color-mix(in srgb, ${cor} 11%, white)`,
-          } as React.CSSProperties
-        }
-      >
-        {chave && (
-          <BarraLara
-            comoMarca={comoMarca}
-            setComoMarca={setComoMarca}
-            cor={cor}
-            logo={c.logo}
-            enviar={enviar}
-            subirLogo={(f) => subirFotos("logo", [f])}
-          />
-        )}
+    <section id={roteiro.slug} className={varios && n > 1 ? "mt-16 scroll-mt-16 border-t-2 border-[var(--rt-ink)] pt-12" : "scroll-mt-16"}>
+      {varios && (
+        <p className={`${n === 1 ? "mt-8" : ""} text-[12px] font-bold uppercase tracking-[.12em] text-[var(--rt-roxo)]`}>Roteiro {n}</p>
+      )}
+      <Campo
+        alvo="geral:titulo"
+        texto={c.titulo ?? "Roteiro de vídeo"}
+        multilinha={false}
+        className={varios ? "mt-1" : "mt-3"}
+        render={(t) => <h1 className="text-[40px] font-extrabold leading-[1.02] tracking-[-0.035em] md:text-[56px]">{t}</h1>}
+      />
 
-        <div className="mx-auto max-w-[880px] px-4 pt-10 md:px-8 lg:pt-14">
-          <main className="min-w-0">
-            {opcoes && <Opcoes opcoes={opcoes} atual={roteiro.slug} />}
+      <Status roteiro={roteiro} />
 
-            {/* cabeçalho */}
-            {c.logo ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img src={c.logo} alt={c.marca} className="h-9 w-auto max-w-[180px] object-contain object-left" />
+      <div className="mt-6 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-[var(--rt-linha)] bg-[var(--rt-linha)] md:grid-cols-4">
+        {(
+          [
+            ["Creator", "creator", c.creator],
+            ["Marca", "marca", c.marca],
+            ["Formato", "formato", c.formato],
+            ["Duração", "duracao", c.duracao],
+          ] as const
+        ).map(([rotulo, campo, v]) => (
+          <div key={campo} className="bg-white px-4 py-3.5">
+            <p className="text-[10.5px] font-bold uppercase tracking-[.12em] text-[var(--rt-muted)]">{rotulo}</p>
+            {v || lara ? (
+              <Campo
+                alvo={`geral:${campo}`}
+                texto={v ?? ""}
+                multilinha={false}
+                vazio="preencher"
+                render={(t) => <p className="mt-1 text-[14px] font-semibold leading-snug">{t}</p>}
+              />
             ) : (
-              <p className="flex items-center gap-1 text-[13px] font-bold">
-                {c.marca} <Sparkles size={13} className="text-[var(--rt-roxo)]" />
-              </p>
+              <p className="mt-1 text-[14px] text-[var(--rt-muted)]">—</p>
             )}
+          </div>
+        ))}
+      </div>
+
+      {(c.conceito || c.regra || lara) && (
+        <div className="mt-5 space-y-3 rounded-2xl bg-[var(--rt-lilas)] px-5 py-4 text-[14.5px] leading-relaxed">
+          {(c.conceito || lara) && (
             <Campo
-              alvo="geral:titulo"
-              texto={c.titulo ?? "Roteiro de vídeo"}
-              multilinha={false}
-              className="mt-3"
-              render={(t) => <h1 className="text-[40px] font-extrabold leading-[1.02] tracking-[-0.035em] md:text-[56px]">{t}</h1>}
+              alvo="geral:conceito"
+              texto={c.conceito ?? ""}
+              vazio="a ideia do vídeo numa frase"
+              render={(t) => (
+                <p>
+                  <b className="text-[var(--rt-roxo)]">Conceito</b> {t}
+                </p>
+              )}
             />
-
-            <Status roteiro={roteiro} />
-
-            <div className="mt-6 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-[var(--rt-linha)] bg-[var(--rt-linha)] md:grid-cols-4">
-              {(
-                [
-                  ["Creator", "creator", c.creator],
-                  ["Marca", "marca", c.marca],
-                  ["Formato", "formato", c.formato],
-                  ["Duração", "duracao", c.duracao],
-                ] as const
-              ).map(([rotulo, campo, v]) => (
-                <div key={campo} className="bg-white px-4 py-3.5">
-                  <p className="text-[10.5px] font-bold uppercase tracking-[.12em] text-[var(--rt-muted)]">{rotulo}</p>
-                  {v || lara ? (
-                    <Campo
-                      alvo={`geral:${campo}`}
-                      texto={v ?? ""}
-                      multilinha={false}
-                      vazio="preencher"
-                      render={(t) => <p className="mt-1 text-[14px] font-semibold leading-snug">{t}</p>}
-                    />
-                  ) : (
-                    <p className="mt-1 text-[14px] text-[var(--rt-muted)]">—</p>
-                  )}
-                </div>
-              ))}
-            </div>
-
-            {(c.conceito || c.regra || lara) && (
-              <div className="mt-5 space-y-3 rounded-2xl bg-[var(--rt-lilas)] px-5 py-4 text-[14.5px] leading-relaxed">
-                {(c.conceito || lara) && (
-                  <Campo
-                    alvo="geral:conceito"
-                    texto={c.conceito ?? ""}
-                    vazio="a ideia do vídeo numa frase"
-                    render={(t) => (
-                      <p>
-                        <b className="text-[var(--rt-roxo)]">Conceito</b> {t}
-                      </p>
-                    )}
-                  />
-                )}
-                {(c.regra || lara) && (
-                  <Campo
-                    alvo="geral:regra"
-                    texto={c.regra ?? ""}
-                    vazio="o que não pode faltar (ou não pode aparecer)"
-                    render={(t) => (
-                      <p>
-                        <b className="text-[var(--rt-roxo)]">Regra principal</b> {t}
-                      </p>
-                    )}
-                  />
-                )}
-              </div>
-            )}
-
-            <p className="mt-5 rounded-xl border border-dashed border-[var(--rt-linha)] px-4 py-3 text-[13px] leading-relaxed text-[var(--rt-muted)]">
-              <b className="text-[var(--rt-ink)]">Como revisar:</b> passe o mouse (ou toque) em qualquer texto pra{" "}
-              <b className="text-[var(--rt-ink)]">sugerir uma mudança</b> ou <b className="text-[var(--rt-ink)]">comentar</b>.
-              {c.ganchos.length > 1 && " Escolha o gancho que mais combina com a marca e,"} quando estiver tudo certo, aprove lá embaixo.
-            </p>
-
-            {/* ganchos */}
-            <Titulo>
-              {c.ganchos.length > 1 ? "Ganchos" : "Gancho"}{" "}
-              {c.ganchos.length > 1 && <span className="text-[var(--rt-muted)]">· escolher um</span>}
-            </Titulo>
-            <div className="space-y-3">
-              {c.ganchos.map((g, i) => {
-                const escolhido = roteiro.gancho_escolhido === g.id;
-                const letra = String.fromCharCode(65 + i);
-                return (
-                  <article
-                    key={g.id}
-                    className={`relative rounded-2xl border bg-white p-5 transition-shadow md:p-6 ${
-                      escolhido
-                        ? "border-[var(--rt-roxo)] shadow-[0_0_0_3px_color-mix(in_srgb,var(--rt-roxo)_18%,transparent)]"
-                        : "border-[var(--rt-linha)]"
-                    }`}
-                  >
-                    {lara && (
-                      <Ordem
-                        bloco={`gancho:${g.id}`}
-                        primeiro={i === 0}
-                        ultimo={i === c.ganchos.length - 1}
-                        recomendado={g.recomendado}
-                        podeTirar={c.ganchos.length > 1}
-                      />
-                    )}
-                    <div className="flex gap-4 md:gap-5">
-                      <span className="text-[34px] font-extrabold leading-none text-[var(--rt-roxo)]">{letra}</span>
-                      <div className="min-w-0 flex-1 space-y-2">
-                        <div className="flex flex-wrap items-center gap-2 pr-20">
-                          {(g.titulo || lara) && (
-                            <Campo
-                              alvo={`gancho:${g.id}:titulo`}
-                              texto={g.titulo}
-                              multilinha={false}
-                              vazio="nome do gancho"
-                              render={(t) => <h3 className="text-[18px] font-bold tracking-tight">{t}</h3>}
-                            />
-                          )}
-                          {g.recomendado && (
-                            <span className="rounded-full bg-[var(--rt-lilas)] px-2 py-0.5 text-[11px] font-semibold text-[var(--rt-roxo)]">
-                              recomendado
-                            </span>
-                          )}
-                        </div>
-                        {(g.fala || lara) && (
-                          <Campo
-                            alvo={`gancho:${g.id}:fala`}
-                            texto={g.fala}
-                            vazio="o que você fala nos primeiros segundos"
-                            render={(t) => <p className="text-[15.5px] leading-relaxed">“{t}”</p>}
-                          />
-                        )}
-                        {(g.tela || lara) && (
-                          <Campo alvo={`gancho:${g.id}:tela`} texto={g.tela ?? ""} vazio="o que aparece na tela" render={(t) => <Tela>{t}</Tela>} />
-                        )}
-                        <Midia bloco={`gancho:${g.id}`} fotos={g.fotos} refs={g.refs} />
-                        {c.ganchos.length > 1 && (
-                          <div className="flex flex-wrap items-center gap-2 pt-2">
-                            <button
-                              onClick={() => enviar("gancho", { id: g.id })}
-                              className={`inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-[12.5px] font-semibold transition-colors ${
-                                escolhido
-                                  ? "bg-[var(--rt-roxo)] text-white"
-                                  : "border border-[var(--rt-linha)] hover:border-[var(--rt-roxo)] hover:text-[var(--rt-roxo)]"
-                              }`}
-                            >
-                              {escolhido && <Check size={13} />}
-                              {escolhido ? "Gancho escolhido" : "Escolher este gancho"}
-                            </button>
-                            {escolhido && roteiro.gancho_escolhido_por && (
-                              <span className="text-[11.5px] text-[var(--rt-muted)]">por {roteiro.gancho_escolhido_por}</span>
-                            )}
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  </article>
-                );
-              })}
-              {lara && <Adicionar onClick={() => enviar("item_add", { bloco: "gancho:" })}>Adicionar gancho</Adicionar>}
-            </div>
-
-            {/* roteiro */}
-            <Titulo>
-              Roteiro <span className="text-[var(--rt-muted)]">· depois do gancho</span>
-            </Titulo>
-            <div className="overflow-hidden rounded-2xl border border-[var(--rt-linha)] bg-white">
-              {c.partes.map((p, i) => (
-                <div
-                  key={p.id}
-                  className={`relative grid gap-3 px-5 py-5 md:grid-cols-[150px_minmax(0,1fr)] md:gap-6 md:px-6 ${i ? "border-t border-[var(--rt-linha)]" : ""}`}
-                >
-                  {lara && (
-                    <Ordem bloco={`parte:${p.id}`} primeiro={i === 0} ultimo={i === c.partes.length - 1} podeTirar={c.partes.length > 1} />
-                  )}
-                  <div className="pr-20 md:pr-0">
-                    <Campo
-                      alvo={`parte:${p.id}:nome`}
-                      texto={p.nome}
-                      multilinha={false}
-                      vazio="nome da parte"
-                      render={(t) => <p className="text-[15px] font-bold text-[var(--rt-roxo)]">{t}</p>}
-                    />
-                    {(p.tempo || lara) && (
-                      <Campo
-                        alvo={`parte:${p.id}:tempo`}
-                        texto={p.tempo ?? ""}
-                        multilinha={false}
-                        vazio="0:00"
-                        render={(t) => <p className="mt-0.5 text-[12px] tabular-nums text-[var(--rt-muted)]">{t}</p>}
-                      />
-                    )}
-                  </div>
-                  <div className="min-w-0 space-y-2.5 md:pr-16">
-                    {(p.fala || lara) && (
-                      <Campo
-                        alvo={`parte:${p.id}:fala`}
-                        texto={p.fala}
-                        vazio="o que você fala nessa parte"
-                        render={(t) => (
-                          <div className="space-y-2.5 text-[15px] leading-[1.7]">
-                            {t.split(/\n+/).map((par, j) => (
-                              <p key={j}>{par}</p>
-                            ))}
-                          </div>
-                        )}
-                      />
-                    )}
-                    {(p.tela || lara) && (
-                      <Campo alvo={`parte:${p.id}:tela`} texto={p.tela ?? ""} vazio="o que aparece na tela" render={(t) => <Tela>{t}</Tela>} />
-                    )}
-                    <Midia bloco={`parte:${p.id}`} fotos={p.fotos} refs={p.refs} />
-                  </div>
-                </div>
-              ))}
-            </div>
-            {lara && (
-              <div className="mt-3">
-                <Adicionar onClick={() => enviar("item_add", { bloco: "parte:" })}>Adicionar parte</Adicionar>
-              </div>
-            )}
-
-            {/* referências gerais */}
-            {(lara || (c.refs?.length ?? 0) > 0 || (c.fotos?.length ?? 0) > 0) && (
-              <>
-                <Titulo>
-                  Referências <span className="text-[var(--rt-muted)]">· pra ver antes de aprovar</span>
-                </Titulo>
-                <Midia bloco="geral" fotos={c.fotos} refs={c.refs} vazio="Imagens e links que valem pro vídeo inteiro (tom, ritmo, cenário, edição)" />
-              </>
-            )}
-          </main>
+          )}
+          {(c.regra || lara) && (
+            <Campo
+              alvo="geral:regra"
+              texto={c.regra ?? ""}
+              vazio="o que não pode faltar (ou não pode aparecer)"
+              render={(t) => (
+                <p>
+                  <b className="text-[var(--rt-roxo)]">Regra principal</b> {t}
+                </p>
+              )}
+            />
+          )}
         </div>
+      )}
 
-        {/* barra de aprovação */}
-        <div className="fixed inset-x-0 bottom-0 z-40 border-t border-[var(--rt-linha)] bg-white/90 backdrop-blur">
-          <div className="mx-auto flex max-w-[880px] flex-wrap items-center gap-3 px-4 py-3 md:px-8">
-            {erro && (
-              <p className="w-full text-[12.5px] font-semibold text-[#B4321F] md:w-auto">
-                {erro}
-              </p>
+      {n === 1 && (
+        <p className="mt-5 rounded-xl border border-dashed border-[var(--rt-linha)] px-4 py-3 text-[13px] leading-relaxed text-[var(--rt-muted)]">
+          <b className="text-[var(--rt-ink)]">Como revisar:</b> passe o mouse (ou toque) em qualquer texto pra{" "}
+          <b className="text-[var(--rt-ink)]">sugerir uma mudança</b> ou <b className="text-[var(--rt-ink)]">comentar</b>.
+          {(varios || c.ganchos.length > 1) && " Escolha o gancho que mais combina com a marca e,"} quando estiver tudo certo, aprove{" "}
+          {varios ? "no fim de cada roteiro" : "lá embaixo"}.
+        </p>
+      )}
+
+      {/* ganchos */}
+      <Titulo>
+        {c.ganchos.length > 1 ? "Ganchos" : "Gancho"}{" "}
+        {c.ganchos.length > 1 && <span className="text-[var(--rt-muted)]">· escolher um</span>}
+      </Titulo>
+      <div className="space-y-3">
+        {c.ganchos.map((g, i) => {
+          const escolhido = roteiro.gancho_escolhido === g.id;
+          const letra = String.fromCharCode(65 + i);
+          return (
+            <article
+              key={g.id}
+              className={`relative rounded-2xl border bg-white p-5 transition-shadow md:p-6 ${
+                escolhido
+                  ? "border-[var(--rt-roxo)] shadow-[0_0_0_3px_color-mix(in_srgb,var(--rt-roxo)_18%,transparent)]"
+                  : "border-[var(--rt-linha)]"
+              }`}
+            >
+              {lara && (
+                <Ordem
+                  bloco={`gancho:${g.id}`}
+                  primeiro={i === 0}
+                  ultimo={i === c.ganchos.length - 1}
+                  recomendado={g.recomendado}
+                  podeTirar={c.ganchos.length > 1}
+                />
+              )}
+              <div className="flex gap-4 md:gap-5">
+                <span className="text-[34px] font-extrabold leading-none text-[var(--rt-roxo)]">{letra}</span>
+                <div className="min-w-0 flex-1 space-y-2">
+                  <div className="flex flex-wrap items-center gap-2 pr-20">
+                    {(g.titulo || lara) && (
+                      <Campo
+                        alvo={`gancho:${g.id}:titulo`}
+                        texto={g.titulo}
+                        multilinha={false}
+                        vazio="nome do gancho"
+                        render={(t) => <h3 className="text-[18px] font-bold tracking-tight">{t}</h3>}
+                      />
+                    )}
+                    {g.recomendado && (
+                      <span className="rounded-full bg-[var(--rt-lilas)] px-2 py-0.5 text-[11px] font-semibold text-[var(--rt-roxo)]">
+                        recomendado
+                      </span>
+                    )}
+                  </div>
+                  {(g.fala || lara) && (
+                    <Campo
+                      alvo={`gancho:${g.id}:fala`}
+                      texto={g.fala}
+                      vazio="o que você fala nos primeiros segundos"
+                      render={(t) => <p className="text-[15.5px] leading-relaxed">“{t}”</p>}
+                    />
+                  )}
+                  {(g.tela || lara) && (
+                    <Campo alvo={`gancho:${g.id}:tela`} texto={g.tela ?? ""} vazio="o que aparece na tela" render={(t) => <Tela>{t}</Tela>} />
+                  )}
+                  <Midia bloco={`gancho:${g.id}`} fotos={g.fotos} refs={g.refs} />
+                  {c.ganchos.length > 1 && (
+                    <div className="flex flex-wrap items-center gap-2 pt-2">
+                      <button
+                        onClick={() => enviar("gancho", { id: g.id })}
+                        className={`inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-[12.5px] font-semibold transition-colors ${
+                          escolhido
+                            ? "bg-[var(--rt-roxo)] text-white"
+                            : "border border-[var(--rt-linha)] hover:border-[var(--rt-roxo)] hover:text-[var(--rt-roxo)]"
+                        }`}
+                      >
+                        {escolhido && <Check size={13} />}
+                        {escolhido ? "Gancho escolhido" : "Escolher este gancho"}
+                      </button>
+                      {escolhido && roteiro.gancho_escolhido_por && (
+                        <span className="text-[11.5px] text-[var(--rt-muted)]">por {roteiro.gancho_escolhido_por}</span>
+                      )}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </article>
+          );
+        })}
+        {lara && <Adicionar onClick={() => enviar("item_add", { bloco: "gancho:" })}>Adicionar gancho</Adicionar>}
+      </div>
+
+      {/* roteiro */}
+      <Titulo>
+        Roteiro <span className="text-[var(--rt-muted)]">· depois do gancho</span>
+      </Titulo>
+      <div className="overflow-hidden rounded-2xl border border-[var(--rt-linha)] bg-white">
+        {c.partes.map((p, i) => (
+          <div
+            key={p.id}
+            className={`relative grid gap-3 px-5 py-5 md:grid-cols-[150px_minmax(0,1fr)] md:gap-6 md:px-6 ${i ? "border-t border-[var(--rt-linha)]" : ""}`}
+          >
+            {lara && (
+              <Ordem bloco={`parte:${p.id}`} primeiro={i === 0} ultimo={i === c.partes.length - 1} podeTirar={c.partes.length > 1} />
             )}
-            <p className="text-[12.5px] text-[var(--rt-muted)]">
-              {sugestoes + comentarios === 0 ? (
-                "Nenhuma sugestão em aberto"
-              ) : (
-                <>
-                  {sugestoes > 0 && <b className="text-[var(--rt-ink)]">{sugestoes} sugest{sugestoes > 1 ? "ões" : "ão"}</b>}
-                  {sugestoes > 0 && comentarios > 0 && " · "}
-                  {comentarios > 0 && <b className="text-[var(--rt-ink)]">{comentarios} comentário{comentarios > 1 ? "s" : ""}</b>}
-                  {" em aberto"}
-                </>
+            <div className="pr-20 md:pr-0">
+              <Campo
+                alvo={`parte:${p.id}:nome`}
+                texto={p.nome}
+                multilinha={false}
+                vazio="nome da parte"
+                render={(t) => <p className="text-[15px] font-bold text-[var(--rt-roxo)]">{t}</p>}
+              />
+              {(p.tempo || lara) && (
+                <Campo
+                  alvo={`parte:${p.id}:tempo`}
+                  texto={p.tempo ?? ""}
+                  multilinha={false}
+                  vazio="0:00"
+                  render={(t) => <p className="mt-0.5 text-[12px] tabular-nums text-[var(--rt-muted)]">{t}</p>}
+                />
               )}
-            </p>
-            <div className="ml-auto flex items-center gap-2">
-              {roteiro.aprovado_em ? (
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-[#DDF5E6] px-4 py-2 text-[13px] font-bold text-[#13703A]">
-                  <CheckCircle2 size={16} /> Aprovado por {roteiro.aprovado_por}
-                </span>
-              ) : chave ? (
-                <span className="text-[12.5px] text-[var(--rt-muted)]">Aguardando a marca aprovar</span>
-              ) : (
-                <button
-                  onClick={() => setAprovando(true)}
-                  className="rounded-full bg-[var(--rt-ink)] px-5 py-2.5 text-[13.5px] font-bold text-white transition-transform hover:scale-[1.02]"
-                >
-                  Aprovar roteiro
-                </button>
+            </div>
+            <div className="min-w-0 space-y-2.5 md:pr-16">
+              {(p.fala || lara) && (
+                <Campo
+                  alvo={`parte:${p.id}:fala`}
+                  texto={p.fala}
+                  vazio="o que você fala nessa parte"
+                  render={(t) => (
+                    <div className="space-y-2.5 text-[15px] leading-[1.7]">
+                      {t.split(/\n+/).map((par, j) => (
+                        <p key={j}>{par}</p>
+                      ))}
+                    </div>
+                  )}
+                />
               )}
+              {(p.tela || lara) && (
+                <Campo alvo={`parte:${p.id}:tela`} texto={p.tela ?? ""} vazio="o que aparece na tela" render={(t) => <Tela>{t}</Tela>} />
+              )}
+              <Midia bloco={`parte:${p.id}`} fotos={p.fotos} refs={p.refs} />
             </div>
           </div>
-        </div>
-
-        {aprovando && (
-          <Aprovar fechar={() => setAprovando(false)} gancho={letraEscolhida} temGanchos={c.ganchos.length > 1} pendentes={sugestoes} />
-        )}
-        {pedirNome && <PedirNome responder={pedirNome} />}
+        ))}
       </div>
-    </RoteiroCtx.Provider>
+      {lara && (
+        <div className="mt-3">
+          <Adicionar onClick={() => enviar("item_add", { bloco: "parte:" })}>Adicionar parte</Adicionar>
+        </div>
+      )}
+
+      {/* referências gerais */}
+      {(lara || (c.refs?.length ?? 0) > 0 || (c.fotos?.length ?? 0) > 0) && (
+        <>
+          <Titulo>
+            Referências <span className="text-[var(--rt-muted)]">· pra ver antes de aprovar</span>
+          </Titulo>
+          <Midia bloco="geral" fotos={c.fotos} refs={c.refs} vazio="Imagens e links que valem pro vídeo inteiro (tom, ritmo, cenário, edição)" />
+        </>
+      )}
+
+      {/* aprovação: barra fixa com um roteiro, cartão no fim de cada um quando são vários */}
+      <div
+        className={
+          varios
+            ? "mt-8 rounded-2xl border border-[var(--rt-linha)] bg-white"
+            : "fixed inset-x-0 bottom-0 z-40 border-t border-[var(--rt-linha)] bg-white/90 backdrop-blur"
+        }
+      >
+        <div className={`mx-auto flex max-w-[880px] flex-wrap items-center gap-3 px-4 py-3 ${varios ? "md:px-5" : "md:px-8"}`}>
+          {erro && <p className="w-full text-[12.5px] font-semibold text-[#B4321F] md:w-auto">{erro}</p>}
+          <p className="text-[12.5px] text-[var(--rt-muted)]">
+            {sugestoes + comentarios === 0 ? (
+              "Nenhuma sugestão em aberto"
+            ) : (
+              <>
+                {sugestoes > 0 && <b className="text-[var(--rt-ink)]">{sugestoes} sugest{sugestoes > 1 ? "ões" : "ão"}</b>}
+                {sugestoes > 0 && comentarios > 0 && " · "}
+                {comentarios > 0 && <b className="text-[var(--rt-ink)]">{comentarios} comentário{comentarios > 1 ? "s" : ""}</b>}
+                {" em aberto"}
+              </>
+            )}
+          </p>
+          <div className="ml-auto flex items-center gap-2">
+            {roteiro.aprovado_em ? (
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-[#DDF5E6] px-4 py-2 text-[13px] font-bold text-[#13703A]">
+                <CheckCircle2 size={16} /> Aprovado por {roteiro.aprovado_por}
+              </span>
+            ) : chave ? (
+              <span className="text-[12.5px] text-[var(--rt-muted)]">Aguardando a marca aprovar</span>
+            ) : (
+              <button
+                onClick={() => setAprovando(true)}
+                className="rounded-full bg-[var(--rt-ink)] px-5 py-2.5 text-[13.5px] font-bold text-white transition-transform hover:scale-[1.02]"
+              >
+                {varios ? `Aprovar o roteiro ${n}` : "Aprovar roteiro"}
+              </button>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {aprovando && (
+        <Aprovar fechar={() => setAprovando(false)} gancho={letraEscolhida} temGanchos={c.ganchos.length > 1} pendentes={sugestoes} />
+      )}
+    </section>
   );
 }
 
@@ -442,38 +535,6 @@ function Status({ roteiro }: { roteiro: RoteiroPublico }) {
     <p className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-[var(--rt-amarelo)] px-3 py-1 text-[12.5px] font-semibold text-[#7A5A00]">
       <span className="size-1.5 animate-pulse rounded-full bg-[#C99A00]" /> Em revisão
     </p>
-  );
-}
-
-// Abas das opções do mesmo grupo. Cada uma é um roteiro com comentários e aprovação próprios.
-function Opcoes({ opcoes, atual }: { opcoes: Opcao[]; atual: string }) {
-  return (
-    <nav className="mb-8">
-      <p className="mb-2 text-[12px] font-bold uppercase tracking-[.12em]">
-        {opcoes.length} opções <span className="text-[var(--rt-muted)]">· revise cada uma</span>
-      </p>
-      <div className="flex flex-wrap gap-2">
-        {opcoes.map((o) =>
-          o.slug === atual ? (
-            <span
-              key={o.slug}
-              aria-current="page"
-              className="rounded-full bg-[var(--rt-roxo)] px-4 py-2 text-[13px] font-semibold text-white"
-            >
-              {o.titulo}
-            </span>
-          ) : (
-            <a
-              key={o.slug}
-              href={o.href}
-              className="rounded-full border border-[var(--rt-linha)] bg-white px-4 py-2 text-[13px] font-semibold transition-colors hover:border-[var(--rt-roxo)]"
-            >
-              {o.titulo}
-            </a>
-          )
-        )}
-      </div>
-    </nav>
   );
 }
 

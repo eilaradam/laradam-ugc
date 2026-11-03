@@ -1,7 +1,8 @@
+import { randomBytes } from "node:crypto";
 import { supabaseAdmin } from "@/lib/supabase";
 import { clientIp, emailBudgetOk, originAllowed, rateLimit, str, tooManyRequests } from "@/lib/guard";
 import { sendRoteiroAviso } from "@/lib/resend";
-import { blocoDe, gravarAlvo, lerAlvo, letraDoGancho, mudarEstrutura, type Nota, type RoteiroConteudo } from "@/lib/roteiro";
+import { blocoDe, gravarAlvo, lerAlvo, letraDoGancho, mudarEstrutura, roteiroVazio, type Nota, type RoteiroConteudo } from "@/lib/roteiro";
 
 // Ações da página /roteiro/<slug>. O slug é o acesso da marca;
 // a chave_lara (?k=) libera aceitar, recusar e resolver.
@@ -178,6 +179,28 @@ export async function POST(req: Request, ctx: Ctx) {
       if (caminho) await db.storage.from(BUCKET).remove([caminho]);
     }
     await db.from("roteiros_marca").update({ conteudo: novo, updated_at: new Date().toISOString() }).eq("id", r.id);
+  } else if (acao === "roteiro_add") {
+    // Mais um roteiro na mesma página: entra no grupo deste (que nasce aqui se ainda não tinha).
+    if (!lara) return erro("Só a Lara pode fazer isso", 403);
+    const grupo = conteudo.grupo ?? r.slug;
+    if (!conteudo.grupo) {
+      await db.from("roteiros_marca").update({ conteudo: { ...conteudo, grupo } }).eq("id", r.id);
+    }
+    let novo: RoteiroConteudo;
+    if (body.copiar === true) {
+      // fotos ficam de fora: o arquivo é do outro roteiro e apagar lá quebraria aqui
+      const c = structuredClone(conteudo);
+      const semFotos = <T extends { fotos?: string[] }>(x: T) => (delete x.fotos, x);
+      novo = { ...semFotos(c), titulo: `${c.titulo ?? "Roteiro de vídeo"} (cópia)`, ganchos: c.ganchos.map(semFotos), partes: c.partes.map(semFotos) };
+    } else {
+      novo = roteiroVazio(marca, conteudo.cor);
+      novo.creator = conteudo.creator;
+    }
+    delete novo.logo;
+    novo.grupo = grupo;
+    const slugNovo = `${r.slug.replace(/-[0-9a-f]{6}$/, "")}-${randomBytes(3).toString("hex")}`;
+    const { error } = await db.from("roteiros_marca").insert({ slug: slugNovo, chave_lara: randomBytes(12).toString("hex"), conteudo: novo });
+    if (error) return erro("Não consegui criar", 500);
   } else {
     return erro("Ação desconhecida");
   }

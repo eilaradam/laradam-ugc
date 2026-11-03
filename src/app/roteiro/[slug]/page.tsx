@@ -3,9 +3,9 @@ import { notFound } from "next/navigation";
 import { headers } from "next/headers";
 import { Poppins } from "next/font/google";
 import { supabaseAdmin } from "@/lib/supabase";
-import type { Nota, Opcao, RoteiroConteudo, RoteiroPublico } from "@/lib/roteiro";
+import type { Nota, RoteiroConteudo, RoteiroPublico } from "@/lib/roteiro";
 import { sendRoteiroAviso } from "@/lib/resend";
-import RoteiroPage from "@/components/roteiro/RoteiroPage";
+import RoteiroPage, { type Item } from "@/components/roteiro/RoteiroPage";
 
 // Roteiro compartilhado com a marca. Link direto, fora do menu e do Google.
 const poppins = Poppins({ variable: "--rt-font", subsets: ["latin"], weight: ["400", "500", "600", "700", "800"] });
@@ -15,41 +15,36 @@ type Props = {
   searchParams: Promise<{ k?: string }>;
 };
 
+const CAMPOS = "id, slug, chave_lara, conteudo, gancho_escolhido, gancho_escolhido_por, aprovado_em, aprovado_por, updated_at, visualizacoes";
+
 async function buscar(slug: string) {
-  const db = supabaseAdmin();
-  const { data } = await db
-    .from("roteiros_marca")
-    .select("id, slug, chave_lara, conteudo, gancho_escolhido, gancho_escolhido_por, aprovado_em, aprovado_por, updated_at, visualizacoes")
-    .eq("slug", slug)
-    .maybeSingle();
+  const { data } = await supabaseAdmin().from("roteiros_marca").select(CAMPOS).eq("slug", slug).maybeSingle();
   return data;
 }
 
 // Prévia de link (WhatsApp, Gmail, Slack…) e robôs não contam como a marca abrindo.
 const NAO_CONTA = /bot|crawl|spider|preview|facebookexternalhit|whatsapp|telegram|slack|discord|twitter|linkedin|skype|curl|wget|headless/i;
 
-type Irmao = { id: string; slug: string; chave_lara: string; conteudo: RoteiroConteudo; visualizacoes: number | null };
+type Linha = NonNullable<Awaited<ReturnType<typeof buscar>>>;
 
-// Os outros roteiros do mesmo grupo (as opções), na ordem em que foram criados.
-async function buscarGrupo(grupo: string | undefined): Promise<Irmao[]> {
-  if (!grupo) return [];
+// Os roteiros do mesmo grupo (vários pra mesma marca), na ordem em que foram criados.
+async function buscarGrupo(r: Linha): Promise<Linha[]> {
+  const grupo = (r.conteudo as RoteiroConteudo).grupo;
+  if (!grupo) return [r];
   const { data } = await supabaseAdmin()
     .from("roteiros_marca")
-    .select("id, slug, chave_lara, conteudo, visualizacoes")
+    .select(CAMPOS)
     .eq("conteudo->>grupo", grupo)
     .order("created_at", { ascending: true });
-  return (data ?? []) as Irmao[];
+  return data?.length ? data : [r];
 }
 
-async function contarVisita(
-  r: { id: string; slug: string; chave_lara: string; conteudo: unknown; visualizacoes: number | null },
-  grupo: Irmao[]
-) {
+async function contarVisita(r: Linha, grupo: Linha[]) {
   const ua = (await headers()).get("user-agent") ?? "";
   if (!ua || NAO_CONTA.test(ua)) return;
   const n = (r.visualizacoes ?? 0) + 1;
   await supabaseAdmin().from("roteiros_marca").update({ visualizacoes: n, visto_em: new Date().toISOString() }).eq("id", r.id);
-  // num grupo, o aviso sai só quando a marca abre a primeira das opções
+  // num grupo, o aviso sai só uma vez
   const jaAbriuOutra = grupo.some((g) => g.id !== r.id && (g.visualizacoes ?? 0) > 0);
   if (n === 1 && !jaAbriuOutra) {
     const marca = (r.conteudo as RoteiroConteudo).marca;
@@ -78,31 +73,29 @@ export default async function Page({ params, searchParams }: Props) {
   const r = await buscar(slug);
   if (!r) notFound();
 
+  const lara = typeof k === "string" && k === r.chave_lara;
+  const grupo = await buscarGrupo(r);
+  if (!lara) await contarVisita(r, grupo);
+
   const { data: notas } = await supabaseAdmin()
     .from("roteiros_marca_notas")
-    .select("id, parent_id, alvo, tipo, autor, autor_lara, texto, original, sugerido, status, created_at")
-    .eq("roteiro_id", r.id)
+    .select("roteiro_id, id, parent_id, alvo, tipo, autor, autor_lara, texto, original, sugerido, status, created_at")
+    .in("roteiro_id", grupo.map((g) => g.id))
     .order("created_at", { ascending: true });
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { id, chave_lara, visualizacoes, ...roteiro } = r;
-  const lara = typeof k === "string" && k === chave_lara;
-  const grupo = await buscarGrupo((r.conteudo as RoteiroConteudo).grupo);
-  if (!lara) await contarVisita(r, grupo);
-  const opcoes: Opcao[] = grupo.map((g) => ({
-    slug: g.slug,
-    titulo: g.conteudo.titulo ?? "Roteiro de vídeo",
-    href: `/roteiro/${g.slug}${lara ? `?k=${g.chave_lara}` : ""}`,
-  }));
+  const itens: Item[] = grupo.map((g) => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { id, chave_lara, visualizacoes, ...roteiro } = g;
+    return {
+      inicial: roteiro as RoteiroPublico,
+      notas: (notas ?? []).filter((n) => n.roteiro_id === id) as Nota[],
+      chave: lara ? chave_lara : undefined,
+    };
+  });
 
   return (
     <div className={poppins.variable}>
-      <RoteiroPage
-        inicial={roteiro as RoteiroPublico}
-        notasIniciais={(notas ?? []) as Nota[]}
-        chave={lara ? k : undefined}
-        opcoes={opcoes.length > 1 ? opcoes : undefined}
-      />
+      <RoteiroPage itens={itens} atual={r.slug} />
     </div>
   );
 }
