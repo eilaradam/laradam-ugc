@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Bricolage_Grotesque, Caveat } from "next/font/google";
-import { ArrowRight, Play, Volume2 } from "lucide-react";
+import { ArrowRight, Volume2 } from "lucide-react";
 import { BRAND_LOGO_FILES, CATEGORIES, VIDEOS, type Video } from "@/data/content";
 import { useVideoModal } from "../VideoModalProvider";
 
@@ -28,12 +28,6 @@ const BARALHO: Item[] = [
   { video: ig("Dc1KSq6xN9G", "Creamy", "beleza"), capa: "/capas-ig/Dc1KSq6xN9G.webp", local: "/videos-ig/Dc1KSq6xN9G.mp4", nota: "Creamy · beleza" },
 ];
 
-const CASES = [
-  { video: yt("2s6BI893C74", "Bready", "gastronomia"), capa: "/best-bready.jpg", numero: "5,94x", txt: "de ROAS", marca: "Bready", cor: C.roxo, tinta: "#fff" },
-  { video: yt("5wf8Fv2CTa4", "InfinitePay", "financas"), capa: "/best-infinitepay.jpg", numero: "+100M", txt: "de views", marca: "InfinitePay", cor: C.limao, tinta: C.preto },
-  { video: yt("wesTfq67X9o", "Méliuz", "financas"), capa: "/best-meliuz.jpg", numero: "+30M", txt: "de views", marca: "Méliuz", cor: C.rosa, tinta: "#fff" },
-  { video: yt("dgQYEfEQTvQ", "Méliuz Cashback", "financas"), capa: "/best-meliuz-cashback.jpg", numero: "1.023", txt: "vídeos", marca: "Méliuz Cashback", cor: C.preto, tinta: "#fff" },
-];
 
 // as etapas da própria plataforma, contadas do lado da Lara
 const ETAPAS = [
@@ -82,8 +76,8 @@ function TextoCapa() {
             ))}
           </dl>
 
-          <a href="#cases" className="mt-8 inline-flex items-center gap-2 rounded-2xl px-7 py-4 text-base font-bold text-white shadow-lg" style={{ background: C.roxo }}>
-            Ver os resultados <ArrowRight className="h-4 w-4" />
+          <a href="#nichos" className="mt-8 inline-flex items-center gap-2 rounded-2xl px-7 py-4 text-base font-bold text-white shadow-lg" style={{ background: C.roxo }}>
+            Ver vídeos do meu nicho <ArrowRight className="h-4 w-4" />
           </a>
         </div>
   );
@@ -154,11 +148,12 @@ function CapaBaralho() {
 }
 
 type Adesivo = { item: Item; tocar: boolean; numero: string; txt: string; cor: string; tinta: string; giro: number };
+// os quatro rodam sozinhos, mudos: cortes de 12 s em /public/si (o clique abre o vídeo inteiro com som)
 const ADESIVOS: Adesivo[] = [
-  { item: { video: yt("2s6BI893C74", "Bready", "gastronomia"), capa: "/best-bready.jpg", nota: "" }, tocar: false, numero: "5,94x", txt: "de ROAS", cor: C.roxo, tinta: "#fff", giro: -3 },
-  { item: BARALHO[0], tocar: true, numero: "+500", txt: "vídeos como esse", cor: C.limao, tinta: C.preto, giro: 2 },
-  { item: { video: yt("wesTfq67X9o", "Méliuz", "financas"), capa: "/best-meliuz.jpg", nota: "" }, tocar: false, numero: "+30M", txt: "de views", cor: C.rosa, tinta: "#fff", giro: -2 },
-  { item: { video: yt("5wf8Fv2CTa4", "InfinitePay", "financas"), capa: "/best-infinitepay.jpg", nota: "" }, tocar: false, numero: "+100M", txt: "de views", cor: C.preto, tinta: "#fff", giro: 3 },
+  { item: { video: yt("2s6BI893C74", "Bready", "gastronomia"), capa: "/best-bready.jpg", local: "/si/bready.mp4", nota: "" }, tocar: true, numero: "5,94x", txt: "de ROAS", cor: C.roxo, tinta: "#fff", giro: -3 },
+  { item: { ...BARALHO[0], local: "/si/atelie.mp4" }, tocar: true, numero: "+500", txt: "vídeos como esse", cor: C.limao, tinta: C.preto, giro: 2 },
+  { item: { video: yt("wesTfq67X9o", "Méliuz", "financas"), capa: "/best-meliuz.jpg", local: "/si/meliuz.mp4", nota: "" }, tocar: true, numero: "+30M", txt: "de views", cor: C.rosa, tinta: "#fff", giro: -2 },
+  { item: { video: yt("5wf8Fv2CTa4", "InfinitePay", "financas"), capa: "/best-infinitepay.jpg", local: "/si/infinitepay.mp4", nota: "" }, tocar: true, numero: "+100M", txt: "de views", cor: C.preto, tinta: "#fff", giro: 3 },
 ];
 
 /** 2: mural 2x2 com adesivos de número colados nos vídeos */
@@ -183,7 +178,7 @@ function CapaAdesivos() {
               </span>
               <span className="absolute -bottom-4 -left-3 rounded-2xl px-3.5 py-2 text-left shadow-lg" style={{ background: a.cor, color: a.tinta, transform: `rotate(${-a.giro * 2}deg)` }}>
                 <span className={`${titulo.className} block text-2xl font-extrabold leading-none`}>{a.numero}</span>
-                <span className="block text-xs font-semibold opacity-90">{a.txt}{a.tocar ? "" : ` · ${a.item.video.brand}`}</span>
+                <span className="block text-xs font-semibold opacity-90">{a.txt}{a.item.video.brand === "Ateliê" ? "" : ` · ${a.item.video.brand}`}</span>
               </span>
             </button>
           ))}
@@ -285,41 +280,6 @@ function CapaVitrine() {
 const CAPAS = { baralho: CapaBaralho, adesivos: CapaAdesivos, stories: CapaStories, vitrine: CapaVitrine } as const;
 export type CapaSI = keyof typeof CAPAS;
 
-function Cases() {
-  const { open } = useVideoModal();
-  return (
-    <section id="cases" className="py-20">
-      <div className="max-w-6xl mx-auto px-5">
-        <div className="flex flex-wrap items-end justify-between gap-4">
-          <h2 className={`${titulo.className} text-5xl font-extrabold tracking-[-0.04em]`} style={{ color: C.preto }}>
-            Quatro vídeos,
-            <span className="block" style={{ color: C.roxo }}>quatro números.</span>
-          </h2>
-          <span className={`${mao.className} text-2xl -rotate-2`} style={{ color: C.rosa }}>todos de campanha real ↓</span>
-        </div>
-        <div className="mt-10 grid md:grid-cols-4 gap-5">
-          {CASES.map((c, i) => (
-            <button key={c.video.id} type="button" onClick={() => open(c.video)}
-              className={`group overflow-hidden rounded-[1.8rem] bg-white text-left shadow-sm transition-transform hover:-translate-y-1 ${i % 2 ? "md:mt-10" : ""}`}>
-              <span className="block px-5 pt-5 pb-4" style={{ background: c.cor, color: c.tinta }}>
-                <span className={`${titulo.className} block text-5xl font-extrabold tracking-tight leading-none`}>{c.numero}</span>
-                <span className="mt-1 block text-sm font-medium opacity-90">{c.txt} · {c.marca}</span>
-              </span>
-              <span className="relative block aspect-[4/5]">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={c.capa} alt={c.marca} className="absolute inset-0 h-full w-full object-cover" />
-                <span className="absolute bottom-3 right-3 flex h-11 w-11 items-center justify-center rounded-full bg-white shadow-lg transition-transform group-hover:scale-110">
-                  <Play className="h-4 w-4 translate-x-[1px]" fill={C.preto} style={{ color: C.preto }} />
-                </span>
-              </span>
-            </button>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
 function ComoFunciona() {
   return (
     <section className="py-20">
@@ -384,7 +344,7 @@ function Nichos() {
 
 function Sobre() {
   return (
-    <section className="py-20">
+    <section id="sobre" className="py-20">
       <div className="max-w-6xl mx-auto px-5 grid md:grid-cols-[0.8fr_1.2fr] gap-12 items-center">
         <div className="relative mx-auto w-full max-w-[340px]">
           <span className="absolute -inset-4 -rotate-3 rounded-[2.5rem]" style={{ background: C.rosa }} />
@@ -444,16 +404,15 @@ export default function NovoSI({ capa = "adesivos" }: { capa?: CapaSI }) {
             lara<span style={{ color: C.roxo }}>dam</span>
           </span>
           <div className="hidden md:flex gap-8 text-[15px] font-semibold" style={{ color: C.suave }}>
-            <a href="#cases">Resultados</a><a href="#nichos">Nichos</a>
+            <a href="#sobre">Sobre</a><a href="#nichos">Nichos</a>
           </div>
-          <a href="#nichos" className="rounded-2xl px-5 py-2.5 text-sm font-bold" style={{ background: C.limao, color: C.preto }}>Ver vídeos do meu nicho</a>
+          <a href="#nichos" className="rounded-2xl px-5 py-2.5 text-sm font-bold" style={{ background: C.limao, color: C.preto }}>Ver vídeos</a>
         </div>
       </nav>
       <Capa />
-      <Cases />
+      <Sobre />
       <ComoFunciona />
       <Nichos />
-      <Sobre />
       <Fim />
       <style>{`
         .si-logos { animation: si-logos 80s linear infinite; }
