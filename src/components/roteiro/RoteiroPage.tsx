@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { Fragment, useCallback, useEffect, useState } from "react";
 import { ArrowDown, ArrowUp, Check, CheckCircle2, Eye, ImagePlus, Plus, Sparkles, Star, Trash2, X } from "lucide-react";
 import { LINGUAS, corDe, letraDoGancho, traduzir, type Lingua, type Nota, type RoteiroPublico } from "@/lib/roteiro";
 import { RoteiroCtx, quando, useRoteiro } from "./contexto";
@@ -179,11 +179,37 @@ export default function RoteiroPage({ itens: iniciais, atual, lang }: Props) {
             {disponiveis.length > 1 && <Linguas linguas={disponiveis} atual={lingua} mudar={setLingua} />}
           </div>
 
-          {varios && <p className="mt-3 text-[14.5px] text-[var(--rt-muted)]">{t.roteiros(itens.length)}</p>}
+          {varios && !itens.some((x) => x.roteiro.conteudo.secao) && (
+            <p className="mt-3 text-[14.5px] text-[var(--rt-muted)]">
+              {t.roteiros(itens.filter((x) => !x.roteiro.conteudo.semAprovacao).length)}
+            </p>
+          )}
+          {itens.some((x) => x.roteiro.conteudo.secao) && <Indice itens={itens.map((x) => x.roteiro)} titulo={t.nestaPagina} />}
 
-          {itens.map((x, i) => (
+          {itens.map((x, i) => {
+            const secao = x.roteiro.conteudo.secao;
+            // só conta como opção o que é alternativa um do outro (rótulo "Opção …"), não entregas diferentes
+            const opcoesNaSecao = (k: number) => {
+              let q = 0;
+              for (let j = k; itens[j]?.roteiro.conteudo.secao === secao; j++) if (ehOpcao(itens[j].roteiro)) q++;
+              return q;
+            };
+            const abre = Boolean(secao) && secao !== itens[i - 1]?.roteiro.conteudo.secao;
+            const dentro = Boolean(secao) && !abre;
+            return (
+            <Fragment key={x.roteiro.slug}>
+            {abre && (
+              <h2
+                id={`secao-${x.roteiro.slug}`}
+                className={`scroll-mt-16 border-t-4 border-[var(--rt-ink)] pt-10 text-[30px] font-extrabold leading-tight tracking-[-0.03em] md:text-[38px] ${i ? "mt-20" : "mt-10"}`}
+              >
+                {secao}
+              </h2>
+            )}
+            {abre && opcoesNaSecao(i) > 1 && (
+              <p className="mt-2 text-[14px] text-[var(--rt-muted)]">{t.opcoesNaSecao(opcoesNaSecao(i))}</p>
+            )}
             <RoteiroCtx.Provider
-              key={x.roteiro.slug}
               value={{
                 nome,
                 setNome,
@@ -196,9 +222,21 @@ export default function RoteiroPage({ itens: iniciais, atual, lang }: Props) {
                 traduzir: (alvo, original) => traduzir(x.roteiro.conteudo, lingua, alvo, original),
               }}
             >
-              <Secao roteiro={x.roteiro} notas={x.notas} chave={chaves[i]} lara={lara} varios={varios} n={i + 1} erro={varios ? null : erro} />
+              <Secao
+                roteiro={x.roteiro}
+                notas={x.notas}
+                chave={chaves[i]}
+                lara={lara}
+                varios={varios}
+                n={i + 1}
+                erro={varios ? null : erro}
+                abre={abre}
+                dentro={dentro}
+              />
             </RoteiroCtx.Provider>
-          ))}
+            </Fragment>
+            );
+          })}
 
           {lara && (
             <div className="mt-14 rounded-2xl border border-dashed border-[var(--rt-roxo)]/50 p-5 text-center">
@@ -242,6 +280,8 @@ function Secao({
   varios,
   n,
   erro,
+  abre,
+  dentro,
 }: {
   roteiro: RoteiroPublico;
   notas: Nota[];
@@ -250,6 +290,10 @@ function Secao({
   varios: boolean;
   n: number;
   erro: string | null;
+  /** primeiro roteiro de uma seção (o título da seção vem logo acima) */
+  abre?: boolean;
+  /** roteiro seguinte dentro da mesma seção */
+  dentro?: boolean;
 }) {
   const { enviar, t } = useRoteiro();
   const [aprovando, setAprovando] = useState(false);
@@ -260,9 +304,16 @@ function Secao({
   const letraEscolhida = letraDoGancho(c, roteiro.gancho_escolhido);
 
   return (
-    <section id={roteiro.slug} className={varios && n > 1 ? "mt-16 scroll-mt-16 border-t-2 border-[var(--rt-ink)] pt-12" : "scroll-mt-16"}>
+    <section
+      id={roteiro.slug}
+      className={`scroll-mt-16 ${
+        abre ? "mt-8" : dentro ? "mt-14 border-t border-[var(--rt-linha)] pt-12" : varios && n > 1 ? "mt-16 border-t-2 border-[var(--rt-ink)] pt-12" : ""
+      }`}
+    >
       {varios && (
-        <p className={`${n === 1 ? "mt-8" : ""} text-[12px] font-bold uppercase tracking-[.12em] text-[var(--rt-roxo)]`}>{t.roteiro} {n}</p>
+        <p className={`${n === 1 && !abre ? "mt-8" : ""} text-[12px] font-bold uppercase tracking-[.12em] text-[var(--rt-roxo)]`}>
+          {c.rotulo ?? `${t.roteiro} ${n}`}
+        </p>
       )}
       <Campo
         alvo="geral:titulo"
@@ -272,7 +323,7 @@ function Secao({
         render={(x) => <h1 className="text-[40px] font-extrabold leading-[1.02] tracking-[-0.035em] md:text-[56px]">{x}</h1>}
       />
 
-      <Status roteiro={roteiro} />
+      {!c.semAprovacao && <Status roteiro={roteiro} />}
 
       <div className="mt-6 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-[var(--rt-linha)] bg-[var(--rt-linha)] md:grid-cols-4">
         {(
@@ -335,15 +386,18 @@ function Secao({
         </p>
       )}
 
-      {/* ganchos */}
+      {/* ganchos (blocos informativos, como a agenda, podem não ter) */}
+      {(c.ganchos.length > 0 || lara) && (
+        <>
       <Titulo>
         {c.ganchos.length > 1 ? t.ganchos : t.gancho}{" "}
-        {c.ganchos.length > 1 && <span className="text-[var(--rt-muted)]">· {t.escolherUm}</span>}
+        {c.ganchos.length > 1 && <span className="text-[var(--rt-muted)]">· {c.ganchosTodos ? t.gravamosTodos : t.escolherUm}</span>}
       </Titulo>
       <div className="space-y-3">
         {c.ganchos.map((g, i) => {
           const escolhido = roteiro.gancho_escolhido === g.id;
-          const letra = String.fromCharCode(65 + i);
+          // gravando todos, vira 1, 2… pra não confundir com Opção A, B, C
+          const letra = c.ganchosTodos ? String(i + 1) : String.fromCharCode(65 + i);
           return (
             <article
               key={g.id}
@@ -394,7 +448,7 @@ function Secao({
                     <Campo alvo={`gancho:${g.id}:tela`} texto={g.tela ?? ""} vazio="o que aparece na tela" render={(x) => <Tela>{x}</Tela>} />
                   )}
                   <Midia bloco={`gancho:${g.id}`} fotos={g.fotos} refs={g.refs} />
-                  {c.ganchos.length > 1 && (
+                  {c.ganchos.length > 1 && !c.ganchosTodos && (
                     <div className="flex flex-wrap items-center gap-2 pt-2">
                       <button
                         onClick={() => enviar("gancho", { id: g.id })}
@@ -419,10 +473,21 @@ function Secao({
         })}
         {lara && <Adicionar onClick={() => enviar("item_add", { bloco: "gancho:" })}>Adicionar gancho</Adicionar>}
       </div>
+        </>
+      )}
 
       {/* roteiro */}
       <Titulo>
-        {t.roteiro} <span className="text-[var(--rt-muted)]">· {t.depoisDoGancho}</span>
+        {c.partesTitulo ? (
+          <>
+            {c.partesTitulo.split(" · ")[0]}
+            {c.partesTitulo.includes(" · ") && <span className="text-[var(--rt-muted)]"> · {c.partesTitulo.split(" · ").slice(1).join(" · ")}</span>}
+          </>
+        ) : (
+          <>
+            {t.roteiro} <span className="text-[var(--rt-muted)]">· {t.depoisDoGancho}</span>
+          </>
+        )}
       </Titulo>
       <div className="overflow-hidden rounded-2xl border border-[var(--rt-linha)] bg-white">
         {c.partes.map((p, i) => (
@@ -481,6 +546,30 @@ function Secao({
         </div>
       )}
 
+      {/* o que precisa estar pronto no set */}
+      {(c.noSet || lara) && (
+        <>
+          <Titulo>{t.noSet}</Titulo>
+          <div className="rounded-2xl border border-[var(--rt-linha)] bg-white px-5 py-4">
+            <Campo
+              alvo="geral:noSet"
+              texto={c.noSet ?? ""}
+              vazio="o que precisa estar pronto no set (um item por linha)"
+              render={(x) => (
+                <ul className="space-y-1.5 text-[14px] leading-relaxed">
+                  {x.split(/\n+/).map((item, j) => (
+                    <li key={j} className="flex gap-2">
+                      <Check size={15} className="mt-[3px] shrink-0 text-[var(--rt-roxo)]" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            />
+          </div>
+        </>
+      )}
+
       {/* referências gerais */}
       {(lara || (c.refs?.length ?? 0) > 0 || (c.fotos?.length ?? 0) > 0) && (
         <>
@@ -492,6 +581,7 @@ function Secao({
       )}
 
       {/* aprovação: barra fixa com um roteiro, cartão no fim de cada um quando são vários */}
+      {!c.semAprovacao && (
       <div
         className={
           varios
@@ -525,15 +615,16 @@ function Secao({
                 onClick={() => setAprovando(true)}
                 className="rounded-full bg-[var(--rt-ink)] px-5 py-2.5 text-[13.5px] font-bold text-white transition-transform hover:scale-[1.02]"
               >
-                {varios ? t.aprovarRoteiroN(n) : t.aprovarRoteiro}
+                {varios ? (c.rotulo ? `${t.aprovar} ${c.rotulo.split(" · ")[0]}` : t.aprovarRoteiroN(n)) : t.aprovarRoteiro}
               </button>
             )}
           </div>
         </div>
       </div>
+      )}
 
       {aprovando && (
-        <Aprovar fechar={() => setAprovando(false)} gancho={letraEscolhida} temGanchos={c.ganchos.length > 1} pendentes={sugestoes} />
+        <Aprovar fechar={() => setAprovando(false)} gancho={letraEscolhida} temGanchos={c.ganchos.length > 1 && !c.ganchosTodos} pendentes={sugestoes} />
       )}
     </section>
   );
@@ -572,6 +663,34 @@ function Linguas({ linguas, atual, mudar }: { linguas: Lingua[]; atual: Lingua; 
         </button>
       ))}
     </div>
+  );
+}
+
+const ehOpcao = (r: RoteiroPublico) => /^op(ç|c)(ã|a)o\b/i.test(r.conteudo.rotulo ?? "");
+
+// Índice do topo quando a página tem seções (ex.: um produto por seção, com as opções dentro).
+function Indice({ itens, titulo }: { itens: RoteiroPublico[]; titulo: string }) {
+  const entradas: { id: string; nome: string; qtd: number }[] = [];
+  for (const r of itens) {
+    const nome = r.conteudo.secao ?? r.conteudo.titulo ?? "Roteiro";
+    const ult = entradas[entradas.length - 1];
+    if (r.conteudo.secao && ult && ult.nome === nome) ult.qtd += ehOpcao(r) ? 1 : 0;
+    else entradas.push({ id: r.conteudo.secao ? `secao-${r.slug}` : r.slug, nome, qtd: ehOpcao(r) ? 1 : 0 });
+  }
+  return (
+    <nav className="mt-6 rounded-2xl border border-[var(--rt-linha)] bg-white px-5 py-4">
+      <p className="text-[10.5px] font-bold uppercase tracking-[.12em] text-[var(--rt-muted)]">{titulo}</p>
+      <ol className="mt-2 grid gap-x-6 gap-y-1 text-[14px] sm:grid-cols-2">
+        {entradas.map((e) => (
+          <li key={e.id}>
+            <a href={`#${e.id}`} className="font-semibold hover:text-[var(--rt-roxo)] hover:underline">
+              {e.nome}
+            </a>
+            {e.qtd > 1 && <span className="text-[var(--rt-muted)]"> · {e.qtd} opções</span>}
+          </li>
+        ))}
+      </ol>
+    </nav>
   );
 }
 

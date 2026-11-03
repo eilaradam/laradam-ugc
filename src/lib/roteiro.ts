@@ -50,6 +50,18 @@ export type RoteiroConteudo = {
   fotos?: string[];
   /** roteiros com o mesmo grupo aparecem um embaixo do outro, na mesma página */
   grupo?: string;
+  /** título que junta roteiros seguidos do mesmo grupo (ex.: "01 · Forno Napoli") e vira item do índice */
+  secao?: string;
+  /** rótulo em cima do título (ex.: "Opção C · versão mais recente"); sem ele, "Roteiro N" */
+  rotulo?: string;
+  /** os ganchos não são pra escolher: todos são gravados (ex.: com preço e sem preço) */
+  ganchosTodos?: boolean;
+  /** título da lista de partes (padrão "Roteiro · depois do gancho") */
+  partesTitulo?: string;
+  /** o que precisa estar pronto no set, um item por linha */
+  noSet?: string;
+  /** bloco só informativo (ex.: agenda do dia): sem status nem aprovação */
+  semAprovacao?: boolean;
   /** traduções pra marca revisar em outra língua, por alvo ("gancho:A:fala") ou "ref:<url>" pro nome do link */
   traducoes?: Partial<Record<Exclude<Lingua, "pt">, Record<string, Traducao>>>;
 };
@@ -87,7 +99,7 @@ export type Nota = {
 };
 
 // Alvo = endereço de um trecho editável: "geral:conceito", "gancho:A:fala", "parte:antes:tela".
-const CAMPOS_GERAL = ["conceito", "regra", "titulo", "creator", "marca", "formato", "duracao"] as const;
+const CAMPOS_GERAL = ["conceito", "regra", "titulo", "creator", "marca", "formato", "duracao", "noSet"] as const;
 const CAMPOS_GANCHO = ["titulo", "fala", "tela"] as const;
 const CAMPOS_PARTE = ["nome", "tempo", "fala", "tela"] as const;
 

@@ -69,7 +69,8 @@ export async function POST(req: Request, ctx: Ctx) {
   const acao = body.acao;
   const db = supabaseAdmin();
   const conteudo = r.conteudo as RoteiroConteudo;
-  const marca = conteudo.marca;
+  // nos e-mails, diz qual roteiro da página foi (ex.: "EOS · 01 · Forno Napoli · Opção C")
+  const marca = [conteudo.marca, conteudo.secao, conteudo.rotulo?.split(" · ")[0]].filter(Boolean).join(" · ");
   let aviso: { assunto: string; linhas: string[] } | null = null;
 
   if (!autor) return erro("Coloca seu nome antes");
