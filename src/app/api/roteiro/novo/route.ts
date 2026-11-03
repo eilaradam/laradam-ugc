@@ -60,7 +60,7 @@ export async function POST(req: Request) {
       delete x.refs;
       return x;
     };
-    conteudo = { ...limpa(c), marca, cor: cor ?? c.cor, logo: undefined, ganchos: c.ganchos.map(limpa), partes: c.partes.map(limpa) };
+    conteudo = { ...limpa(c), marca, cor: cor ?? c.cor, logo: undefined, grupo: undefined, ganchos: c.ganchos.map(limpa), partes: c.partes.map(limpa) };
   }
 
   const { data, error } = await db

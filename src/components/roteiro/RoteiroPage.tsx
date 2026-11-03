@@ -2,16 +2,16 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { ArrowDown, ArrowUp, Check, CheckCircle2, Eye, ImagePlus, Plus, Sparkles, Star, Trash2, X } from "lucide-react";
-import { corDe, letraDoGancho, type Nota, type RoteiroPublico } from "@/lib/roteiro";
+import { corDe, letraDoGancho, type Nota, type Opcao, type RoteiroPublico } from "@/lib/roteiro";
 import { RoteiroCtx, quando, useRoteiro } from "./contexto";
 import Campo from "./Campo";
 import Midia from "./Midia";
 
-type Props = { inicial: RoteiroPublico; notasIniciais: Nota[]; chave?: string };
+type Props = { inicial: RoteiroPublico; notasIniciais: Nota[]; chave?: string; opcoes?: Opcao[] };
 
 const CHAVE_NOME = "roteiro:nome";
 
-export default function RoteiroPage({ inicial, notasIniciais, chave }: Props) {
+export default function RoteiroPage({ inicial, notasIniciais, chave, opcoes }: Props) {
   const [roteiro, setRoteiro] = useState(inicial);
   const [notas, setNotas] = useState(notasIniciais);
   const [nome, setNomeState] = useState(() => {
@@ -145,6 +145,8 @@ export default function RoteiroPage({ inicial, notasIniciais, chave }: Props) {
 
         <div className="mx-auto max-w-[880px] px-4 pt-10 md:px-8 lg:pt-14">
           <main className="min-w-0">
+            {opcoes && <Opcoes opcoes={opcoes} atual={roteiro.slug} />}
+
             {/* cabeçalho */}
             {c.logo ? (
               // eslint-disable-next-line @next/next/no-img-element
@@ -440,6 +442,38 @@ function Status({ roteiro }: { roteiro: RoteiroPublico }) {
     <p className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-[var(--rt-amarelo)] px-3 py-1 text-[12.5px] font-semibold text-[#7A5A00]">
       <span className="size-1.5 animate-pulse rounded-full bg-[#C99A00]" /> Em revisão
     </p>
+  );
+}
+
+// Abas das opções do mesmo grupo. Cada uma é um roteiro com comentários e aprovação próprios.
+function Opcoes({ opcoes, atual }: { opcoes: Opcao[]; atual: string }) {
+  return (
+    <nav className="mb-8">
+      <p className="mb-2 text-[12px] font-bold uppercase tracking-[.12em]">
+        {opcoes.length} opções <span className="text-[var(--rt-muted)]">· revise cada uma</span>
+      </p>
+      <div className="flex flex-wrap gap-2">
+        {opcoes.map((o) =>
+          o.slug === atual ? (
+            <span
+              key={o.slug}
+              aria-current="page"
+              className="rounded-full bg-[var(--rt-roxo)] px-4 py-2 text-[13px] font-semibold text-white"
+            >
+              {o.titulo}
+            </span>
+          ) : (
+            <a
+              key={o.slug}
+              href={o.href}
+              className="rounded-full border border-[var(--rt-linha)] bg-white px-4 py-2 text-[13px] font-semibold transition-colors hover:border-[var(--rt-roxo)]"
+            >
+              {o.titulo}
+            </a>
+          )
+        )}
+      </div>
+    </nav>
   );
 }
 

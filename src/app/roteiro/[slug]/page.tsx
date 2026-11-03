@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { headers } from "next/headers";
 import { Poppins } from "next/font/google";
 import { supabaseAdmin } from "@/lib/supabase";
-import type { Nota, RoteiroConteudo, RoteiroPublico } from "@/lib/roteiro";
+import type { Nota, Opcao, RoteiroConteudo, RoteiroPublico } from "@/lib/roteiro";
 import { sendRoteiroAviso } from "@/lib/resend";
 import RoteiroPage from "@/components/roteiro/RoteiroPage";
 
@@ -28,12 +28,30 @@ async function buscar(slug: string) {
 // Prévia de link (WhatsApp, Gmail, Slack…) e robôs não contam como a marca abrindo.
 const NAO_CONTA = /bot|crawl|spider|preview|facebookexternalhit|whatsapp|telegram|slack|discord|twitter|linkedin|skype|curl|wget|headless/i;
 
-async function contarVisita(r: { id: string; slug: string; chave_lara: string; conteudo: unknown; visualizacoes: number | null }) {
+type Irmao = { id: string; slug: string; chave_lara: string; conteudo: RoteiroConteudo; visualizacoes: number | null };
+
+// Os outros roteiros do mesmo grupo (as opções), na ordem em que foram criados.
+async function buscarGrupo(grupo: string | undefined): Promise<Irmao[]> {
+  if (!grupo) return [];
+  const { data } = await supabaseAdmin()
+    .from("roteiros_marca")
+    .select("id, slug, chave_lara, conteudo, visualizacoes")
+    .eq("conteudo->>grupo", grupo)
+    .order("created_at", { ascending: true });
+  return (data ?? []) as Irmao[];
+}
+
+async function contarVisita(
+  r: { id: string; slug: string; chave_lara: string; conteudo: unknown; visualizacoes: number | null },
+  grupo: Irmao[]
+) {
   const ua = (await headers()).get("user-agent") ?? "";
   if (!ua || NAO_CONTA.test(ua)) return;
   const n = (r.visualizacoes ?? 0) + 1;
   await supabaseAdmin().from("roteiros_marca").update({ visualizacoes: n, visto_em: new Date().toISOString() }).eq("id", r.id);
-  if (n === 1) {
+  // num grupo, o aviso sai só quando a marca abre a primeira das opções
+  const jaAbriuOutra = grupo.some((g) => g.id !== r.id && (g.visualizacoes ?? 0) > 0);
+  if (n === 1 && !jaAbriuOutra) {
     const marca = (r.conteudo as RoteiroConteudo).marca;
     await sendRoteiroAviso({
       assunto: `👀 ${marca} abriu o roteiro`,
@@ -69,7 +87,13 @@ export default async function Page({ params, searchParams }: Props) {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { id, chave_lara, visualizacoes, ...roteiro } = r;
   const lara = typeof k === "string" && k === chave_lara;
-  if (!lara) await contarVisita(r);
+  const grupo = await buscarGrupo((r.conteudo as RoteiroConteudo).grupo);
+  if (!lara) await contarVisita(r, grupo);
+  const opcoes: Opcao[] = grupo.map((g) => ({
+    slug: g.slug,
+    titulo: g.conteudo.titulo ?? "Roteiro de vídeo",
+    href: `/roteiro/${g.slug}${lara ? `?k=${g.chave_lara}` : ""}`,
+  }));
 
   return (
     <div className={poppins.variable}>
@@ -77,6 +101,7 @@ export default async function Page({ params, searchParams }: Props) {
         inicial={roteiro as RoteiroPublico}
         notasIniciais={(notas ?? []) as Nota[]}
         chave={lara ? k : undefined}
+        opcoes={opcoes.length > 1 ? opcoes : undefined}
       />
     </div>
   );

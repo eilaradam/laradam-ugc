@@ -42,7 +42,12 @@ export type RoteiroConteudo = {
   /** referências gerais do roteiro */
   refs?: Ref[];
   fotos?: string[];
+  /** roteiros com o mesmo grupo aparecem como abas (Opção 1, Opção 2…) no mesmo link */
+  grupo?: string;
 };
+
+/** Aba de uma opção do grupo; o link já leva a chave da Lara quando é ela. */
+export type Opcao = { slug: string; titulo: string; href: string };
 
 export type RoteiroPublico = {
   slug: string;
