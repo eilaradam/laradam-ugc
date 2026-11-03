@@ -12,7 +12,7 @@ const poppins = Poppins({ variable: "--rt-font", subsets: ["latin"], weight: ["4
 
 type Props = {
   params: Promise<{ slug: string }>;
-  searchParams: Promise<{ k?: string }>;
+  searchParams: Promise<{ k?: string; lang?: string }>;
 };
 
 const CAMPOS = "id, slug, chave_lara, conteudo, gancho_escolhido, gancho_escolhido_por, aprovado_em, aprovado_por, updated_at, visualizacoes";
@@ -69,7 +69,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function Page({ params, searchParams }: Props) {
   const { slug } = await params;
-  const { k } = await searchParams;
+  const { k, lang } = await searchParams;
   const r = await buscar(slug);
   if (!r) notFound();
 
@@ -95,7 +95,7 @@ export default async function Page({ params, searchParams }: Props) {
 
   return (
     <div className={poppins.variable}>
-      <RoteiroPage itens={itens} atual={r.slug} />
+      <RoteiroPage itens={itens} atual={r.slug} lang={lang} />
     </div>
   );
 }

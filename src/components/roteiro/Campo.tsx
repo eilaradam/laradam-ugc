@@ -17,10 +17,16 @@ type Props = {
   multilinha?: boolean;
   /** texto-guia quando o trecho está vazio (só a Lara vê trecho vazio) */
   vazio?: string;
+  /** fala gravada: em outra língua, mostra também o original em português */
+  falado?: boolean;
 };
 
-export default function Campo({ alvo, texto, className = "", render, multilinha = true, vazio }: Props) {
-  const { notas, lara } = useRoteiro();
+export default function Campo({ alvo, texto, className = "", render, multilinha = true, vazio, falado }: Props) {
+  const { notas, lara, lingua, t, traduzir } = useRoteiro();
+  // Em inglês ou espanhol a marca só comenta: a sugestão mexeria no português gravado.
+  const podeSugerir = lara || lingua === "pt";
+  const tr = traduzir(alvo, texto);
+  const traduzido = tr && !tr.velha ? tr.texto : null;
   const [modo, setModo] = useState<null | "sugerir" | "comentar">(null);
   const [aberto, setAberto] = useState(false);
 
@@ -41,9 +47,19 @@ export default function Campo({ alvo, texto, className = "", render, multilinha 
         {!texto && vazio ? (
           <span className="text-[13.5px] italic text-[var(--rt-muted)]">+ {vazio}</span>
         ) : render ? (
-          render(texto)
+          render(traduzido ?? texto)
         ) : (
-          texto
+          (traduzido ?? texto)
+        )}
+        {traduzido && falado && (
+          <p className="mt-1.5 text-[12.5px] leading-relaxed text-[var(--rt-muted)]">
+            <span className="font-semibold">{t.original}</span> {texto}
+          </p>
+        )}
+        {lingua !== "pt" && texto && !traduzido && (lara || falado) && (
+          <p className="mt-1 text-[11px] font-semibold text-[#9A6B00]">
+            {lara ? (tr ? "tradução desatualizada (pede pra atualizar)" : "sem tradução") : t.semTraducao}
+          </p>
         )}
       </div>
 
@@ -54,11 +70,13 @@ export default function Campo({ alvo, texto, className = "", render, multilinha 
             : "pointer-events-none absolute -top-4 right-0 z-10 opacity-0 md:group-hover:pointer-events-auto md:group-hover:opacity-100"
         }`}
       >
-        <Acao icone={<Pencil size={13} />} ativo={modo === "sugerir"} onClick={() => setModo(modo === "sugerir" ? null : "sugerir")}>
-          {lara ? "Editar" : "Sugerir mudança"}
-        </Acao>
+        {podeSugerir && (
+          <Acao icone={<Pencil size={13} />} ativo={modo === "sugerir"} onClick={() => setModo(modo === "sugerir" ? null : "sugerir")}>
+            {lara ? "Editar" : t.sugerirMudanca}
+          </Acao>
+        )}
         <Acao icone={<MessageCircle size={13} />} ativo={modo === "comentar"} onClick={() => setModo(modo === "comentar" ? null : "comentar")}>
-          Comentar
+          {t.comentar}
         </Acao>
       </div>
 
@@ -89,7 +107,7 @@ export default function Campo({ alvo, texto, className = "", render, multilinha 
           className="mt-1.5 text-[11px] font-medium text-[var(--rt-muted)] underline-offset-2 hover:underline"
           onClick={() => setVerHistorico((v) => !v)}
         >
-          {verHistorico ? "esconder histórico" : `histórico (${fechadas.length})`}
+          {verHistorico ? t.esconderHistorico : t.historico(fechadas.length)}
         </button>
       )}
       {verHistorico && (
@@ -133,7 +151,7 @@ function Formulario({
   multilinha: boolean;
   fechar: () => void;
 }) {
-  const { enviar, lara } = useRoteiro();
+  const { enviar, lara, t } = useRoteiro();
   const [texto, setTexto] = useState(inicial);
   const [motivo, setMotivo] = useState("");
   const [enviando, setEnviando] = useState(false);
@@ -158,7 +176,7 @@ function Formulario({
         value={texto}
         onChange={(e) => setTexto(e.target.value)}
         rows={multilinha ? Math.min(8, Math.max(2, Math.ceil(inicial.length / 70))) : 1}
-        placeholder={modo === "comentar" ? "Escreve seu comentário…" : ""}
+        placeholder={modo === "comentar" ? t.escrevaComentario : ""}
         className="w-full resize-y rounded-lg border border-[var(--rt-linha)] px-3 py-2 text-[14px] leading-relaxed outline-none focus:border-[var(--rt-roxo)]"
       />
       {modo === "sugerir" && !lara && (
@@ -171,21 +189,21 @@ function Formulario({
           <input
             value={motivo}
             onChange={(e) => setMotivo(e.target.value)}
-            placeholder="Por quê? (opcional)"
+            placeholder={t.porque}
             className="mt-2 w-full rounded-lg border border-[var(--rt-linha)] px-3 py-2 text-[13px] outline-none focus:border-[var(--rt-roxo)]"
           />
         </>
       )}
       <div className="mt-2 flex justify-end gap-2">
         <button onClick={fechar} className="rounded-full px-3 py-1.5 text-[13px] font-medium text-[var(--rt-muted)] hover:text-[var(--rt-ink)]">
-          Cancelar
+          {t.cancelar}
         </button>
         <button
           disabled={!mudou || enviando}
           onClick={mandar}
           className="rounded-full bg-[var(--rt-roxo)] px-4 py-1.5 text-[13px] font-semibold text-white disabled:opacity-40"
         >
-          {enviando ? "Enviando…" : modo === "sugerir" ? (lara ? "Salvar" : "Enviar sugestão") : "Comentar"}
+          {enviando ? t.enviando : modo === "sugerir" ? (lara ? "Salvar" : t.enviarSugestao) : t.comentar}
         </button>
       </div>
     </div>
@@ -212,7 +230,7 @@ export function Diff({ de, para }: { de: string; para: string }) {
   );
 }
 
-const SELO: Record<Nota["status"], { txt: string; cls: string } | null> = {
+const SELO: Record<Nota["status"], { txt: "aceita" | "recusada" | "resolvido"; cls: string } | null> = {
   aberta: null,
   aceita: { txt: "aceita", cls: "bg-[#DDF5E6] text-[#13703A]" },
   recusada: { txt: "recusada", cls: "bg-[#FDE2DF] text-[#B4321F]" },
@@ -220,7 +238,7 @@ const SELO: Record<Nota["status"], { txt: string; cls: string } | null> = {
 };
 
 function NotaCard({ nota }: { nota: Nota }) {
-  const { notas, lara, enviar } = useRoteiro();
+  const { notas, lara, enviar, t, lingua } = useRoteiro();
   const respostas = notas.filter((n) => n.parent_id === nota.id);
   const [respondendo, setRespondendo] = useState(false);
   const [resposta, setResposta] = useState("");
@@ -239,9 +257,9 @@ function NotaCard({ nota }: { nota: Nota }) {
         <Avatar nome={nota.autor} lara={nota.autor_lara} />
         <span className="font-semibold">{nota.autor}</span>
         <span className="text-[11px] text-[var(--rt-muted)]">
-          {nota.tipo === "sugestao" ? (nota.autor_lara ? "editou" : "sugeriu") : "comentou"} · {quando(nota.created_at)}
+          {nota.tipo === "sugestao" ? (nota.autor_lara ? t.editou : t.sugeriu) : t.comentou} · {quando(nota.created_at, lingua)}
         </span>
-        {selo && <span className={`ml-auto rounded-full px-2 py-0.5 text-[10.5px] font-semibold ${selo.cls}`}>{selo.txt}</span>}
+        {selo && <span className={`ml-auto rounded-full px-2 py-0.5 text-[10.5px] font-semibold ${selo.cls}`}>{t[selo.txt]}</span>}
       </div>
 
       {nota.tipo === "sugestao" && nota.sugerido != null && (
@@ -256,7 +274,7 @@ function NotaCard({ nota }: { nota: Nota }) {
           <div className="flex items-center gap-2">
             <Avatar nome={r.autor} lara={r.autor_lara} />
             <span className="font-semibold">{r.autor}</span>
-            <span className="text-[11px] text-[var(--rt-muted)]">{quando(r.created_at)}</span>
+            <span className="text-[11px] text-[var(--rt-muted)]">{quando(r.created_at, lingua)}</span>
           </div>
           <p className="mt-1 leading-relaxed">{r.texto}</p>
         </div>
@@ -269,12 +287,12 @@ function NotaCard({ nota }: { nota: Nota }) {
             rows={2}
             value={resposta}
             onChange={(e) => setResposta(e.target.value)}
-            placeholder="Responder…"
+            placeholder={t.responderPh}
             className="w-full rounded-lg border border-[var(--rt-linha)] px-3 py-2 outline-none focus:border-[var(--rt-roxo)]"
           />
           <div className="mt-1 flex justify-end gap-2">
             <button onClick={() => setRespondendo(false)} className="px-2 text-[var(--rt-muted)]">
-              Cancelar
+              {t.cancelar}
             </button>
             <button
               disabled={!resposta.trim() || ocupado}
@@ -289,7 +307,7 @@ function NotaCard({ nota }: { nota: Nota }) {
               }}
               className="rounded-full bg-[var(--rt-ink)] px-3 py-1 font-semibold text-white disabled:opacity-40"
             >
-              Responder
+              {t.responder}
             </button>
           </div>
         </div>
@@ -298,7 +316,7 @@ function NotaCard({ nota }: { nota: Nota }) {
       <div className="mt-2 flex flex-wrap items-center gap-1.5">
         {!respondendo && (
           <button onClick={() => setRespondendo(true)} className="rounded-full px-2 py-1 text-[12px] font-medium text-[var(--rt-muted)] hover:text-[var(--rt-ink)]">
-            Responder
+            {t.responder}
           </button>
         )}
         {lara && nota.status === "aberta" && nota.tipo === "sugestao" && (

@@ -107,7 +107,16 @@ function Tirar({ onClick }: { onClick: () => void }) {
 
 const NOME_REDE = { youtube: "YouTube", instagram: "Instagram", tiktok: "TikTok" } as const;
 
+/** Nome do link na língua escolhida (a tradução fica em "ref:<url>"). */
+function useNomeRef(r: Ref) {
+  const { t, traduzir } = useRoteiro();
+  const tr = r.titulo ? traduzir(`ref:${r.url}`, r.titulo) : null;
+  return (tr && !tr.velha ? tr.texto : r.titulo) || t.referencia;
+}
+
 function CartaoRef({ r, abrir }: { r: Ref; abrir: () => void }) {
+  const { t: txt } = useRoteiro();
+  const nome = useNomeRef(r);
   const t = tipoRef(r.url);
   const conteudo = (
     <>
@@ -125,8 +134,8 @@ function CartaoRef({ r, abrir }: { r: Ref; abrir: () => void }) {
         )}
       </span>
       <span className="min-w-0 pr-1 text-left">
-        <span className="block max-w-[220px] truncate text-[13px] font-semibold leading-tight">{r.titulo || "Referência"}</span>
-        <span className="block text-[11.5px] text-[var(--rt-muted)]">{t.tipo === "link" ? t.host : `Assistir no ${NOME_REDE[t.tipo]}`}</span>
+        <span className="block max-w-[220px] truncate text-[13px] font-semibold leading-tight">{nome}</span>
+        <span className="block text-[11.5px] text-[var(--rt-muted)]">{t.tipo === "link" ? t.host : txt.assistirNo(NOME_REDE[t.tipo])}</span>
       </span>
     </>
   );
@@ -235,6 +244,8 @@ function Seta({ lado, onClick }: { lado: "esq" | "dir"; onClick: () => void }) {
 
 function ModalRef({ r, fechar }: { r: Ref; fechar: () => void }) {
   useEsc(fechar);
+  const { t: txt } = useRoteiro();
+  const nome = useNomeRef(r);
   const t = tipoRef(r.url);
   const src =
     t.tipo === "youtube"
@@ -248,9 +259,9 @@ function ModalRef({ r, fechar }: { r: Ref; fechar: () => void }) {
     <div className="fixed inset-0 z-50 grid place-items-center bg-black/80 p-4 backdrop-blur-sm" onClick={fechar}>
       <div className="w-[min(92vw,380px)]" onClick={(e) => e.stopPropagation()}>
         <div className="mb-2 flex items-center gap-2 text-white">
-          <p className="min-w-0 flex-1 truncate text-[14px] font-semibold">{r.titulo || "Referência"}</p>
+          <p className="min-w-0 flex-1 truncate text-[14px] font-semibold">{nome}</p>
           <a href={r.url} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 text-[12px] text-white/75 hover:text-white">
-            abrir <ExternalLink size={12} />
+            {txt.abrir} <ExternalLink size={12} />
           </a>
           <button onClick={fechar} className="grid size-8 place-items-center rounded-full bg-white/15" aria-label="Fechar">
             <X size={16} />

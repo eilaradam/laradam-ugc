@@ -1,0 +1,247 @@
+import type { Lingua } from "@/lib/roteiro";
+
+// Textos da página do roteiro que a marca vê, em português, inglês e espanhol.
+// Os controles que só a Lara usa ficam em português.
+
+const b = (t: string) => <b className="text-[var(--rt-ink)]">{t}</b>;
+
+const pt = {
+  nomeLingua: "Português",
+  roteiros: (n: number) => (
+    <>
+      {b(`${n} roteiros`)} nesta página. Cada um tem a própria aprovação.
+    </>
+  ),
+  roteiro: "Roteiro",
+  emRevisao: "Em revisão",
+  aprovadoPorEm: (quem: string, quando: string) => `Aprovado por ${quem} em ${quando}`,
+  aprovadoPor: (quem: string) => `Aprovado por ${quem}`,
+  creator: "Creator",
+  marca: "Marca",
+  formato: "Formato",
+  duracao: "Duração",
+  conceito: "Conceito",
+  regra: "Regra principal",
+  comoRevisar: (varios: boolean, ganchos: boolean) => (
+    <>
+      {b("Como revisar:")} passe o mouse (ou toque) em qualquer texto pra {b("sugerir uma mudança")} ou {b("comentar")}.
+      {ganchos && " Escolha o gancho que mais combina com a marca e,"} quando estiver tudo certo, aprove{" "}
+      {varios ? "no fim de cada roteiro" : "lá embaixo"}.
+    </>
+  ),
+  ganchos: "Ganchos",
+  gancho: "Gancho",
+  escolherUm: "escolher um",
+  recomendado: "recomendado",
+  escolherGancho: "Escolher este gancho",
+  ganchoEscolhido: "Gancho escolhido",
+  por: (quem: string) => `por ${quem}`,
+  depoisDoGancho: "depois do gancho",
+  tela: "Tela",
+  referencias: "Referências",
+  antesDeAprovar: "pra ver antes de aprovar",
+  nenhumaAberta: "Nenhuma sugestão em aberto",
+  sugestoes: (n: number) => `${n} sugest${n > 1 ? "ões" : "ão"}`,
+  comentarios: (n: number) => `${n} comentário${n > 1 ? "s" : ""}`,
+  emAberto: " em aberto",
+  aprovarRoteiro: "Aprovar roteiro",
+  aprovarRoteiroN: (n: number) => `Aprovar o roteiro ${n}`,
+  aprovarTitulo: "Aprovar o roteiro?",
+  ganchoLinha: "Gancho:",
+  nenhumGancho: "nenhum escolhido (a Lara usa o recomendado)",
+  pendentes: (n: number) => `As ${n} sugestões em aberto vão junto, pra Lara aplicar`,
+  seuNome: "Seu nome",
+  voltar: "Voltar",
+  aprovar: "Aprovar",
+  aprovando: "Aprovando…",
+  aprovadoTitulo: "Roteiro aprovado!",
+  aprovadoMsg: "A Lara já recebeu o aviso e vai começar a gravar. 🎬",
+  fechar: "Fechar",
+  nomeTitulo: "Como posso te chamar?",
+  nomeDesc: "Seu nome aparece junto das sugestões e comentários.",
+  continuar: "Continuar",
+  sugerirMudanca: "Sugerir mudança",
+  comentar: "Comentar",
+  escrevaComentario: "Escreve seu comentário…",
+  porque: "Por quê? (opcional)",
+  cancelar: "Cancelar",
+  enviando: "Enviando…",
+  enviarSugestao: "Enviar sugestão",
+  historico: (n: number) => `histórico (${n})`,
+  esconderHistorico: "esconder histórico",
+  sugeriu: "sugeriu",
+  comentou: "comentou",
+  editou: "editou",
+  aceita: "aceita",
+  recusada: "recusada",
+  resolvido: "resolvido",
+  responder: "Responder",
+  responderPh: "Responder…",
+  original: "Em português, como vai ser gravado:",
+  semTraducao: "tradução a caminho",
+  referencia: "Referência",
+  assistirNo: (rede: string) => `Assistir no ${rede}`,
+  abrir: "abrir",
+};
+
+export type Textos = typeof pt;
+
+const en: Textos = {
+  nomeLingua: "English",
+  roteiros: (n) => (
+    <>
+      {b(`${n} scripts`)} on this page. Each one has its own approval.
+    </>
+  ),
+  roteiro: "Script",
+  emRevisao: "In review",
+  aprovadoPorEm: (quem, quando) => `Approved by ${quem} on ${quando}`,
+  aprovadoPor: (quem) => `Approved by ${quem}`,
+  creator: "Creator",
+  marca: "Brand",
+  formato: "Format",
+  duracao: "Length",
+  conceito: "Concept",
+  regra: "Main rule",
+  comoRevisar: (varios, ganchos) => (
+    <>
+      {b("How to review:")} the video is recorded in Portuguese, and this is a translation for review. Hover over (or tap) any line to{" "}
+      {b("leave a comment")}, in English or Spanish.
+      {ganchos && " Pick the hook that fits the brand best and,"} when everything looks right, approve {varios ? "at the end of each script" : "at the bottom"}.
+    </>
+  ),
+  ganchos: "Hooks",
+  gancho: "Hook",
+  escolherUm: "pick one",
+  recomendado: "recommended",
+  escolherGancho: "Choose this hook",
+  ganchoEscolhido: "Hook chosen",
+  por: (quem) => `by ${quem}`,
+  depoisDoGancho: "after the hook",
+  tela: "On screen",
+  referencias: "References",
+  antesDeAprovar: "worth watching before you approve",
+  nenhumaAberta: "No open comments",
+  sugestoes: (n) => `${n} suggestion${n > 1 ? "s" : ""}`,
+  comentarios: (n) => `${n} comment${n > 1 ? "s" : ""}`,
+  emAberto: " open",
+  aprovarRoteiro: "Approve script",
+  aprovarRoteiroN: (n) => `Approve script ${n}`,
+  aprovarTitulo: "Approve this script?",
+  ganchoLinha: "Hook:",
+  nenhumGancho: "none chosen (Lara will use the recommended one)",
+  pendentes: (n) => `The ${n} open suggestions go along for Lara to apply`,
+  seuNome: "Your name",
+  voltar: "Back",
+  aprovar: "Approve",
+  aprovando: "Approving…",
+  aprovadoTitulo: "Script approved!",
+  aprovadoMsg: "Lara has been notified and will start recording. 🎬",
+  fechar: "Close",
+  nomeTitulo: "What should we call you?",
+  nomeDesc: "Your name shows up next to your comments.",
+  continuar: "Continue",
+  sugerirMudanca: "Suggest a change",
+  comentar: "Comment",
+  escrevaComentario: "Write your comment…",
+  porque: "Why? (optional)",
+  cancelar: "Cancel",
+  enviando: "Sending…",
+  enviarSugestao: "Send suggestion",
+  historico: (n) => `history (${n})`,
+  esconderHistorico: "hide history",
+  sugeriu: "suggested",
+  comentou: "commented",
+  editou: "edited",
+  aceita: "accepted",
+  recusada: "declined",
+  resolvido: "resolved",
+  responder: "Reply",
+  responderPh: "Reply…",
+  original: "In Portuguese, as it will be recorded:",
+  semTraducao: "translation on its way",
+  referencia: "Reference",
+  assistirNo: (rede) => `Watch on ${rede}`,
+  abrir: "open",
+};
+
+const es: Textos = {
+  nomeLingua: "Español",
+  roteiros: (n) => (
+    <>
+      {b(`${n} guiones`)} en esta página. Cada uno tiene su propia aprobación.
+    </>
+  ),
+  roteiro: "Guion",
+  emRevisao: "En revisión",
+  aprovadoPorEm: (quem, quando) => `Aprobado por ${quem} el ${quando}`,
+  aprovadoPor: (quem) => `Aprobado por ${quem}`,
+  creator: "Creadora",
+  marca: "Marca",
+  formato: "Formato",
+  duracao: "Duración",
+  conceito: "Concepto",
+  regra: "Regla principal",
+  comoRevisar: (varios, ganchos) => (
+    <>
+      {b("Cómo revisar:")} el video se graba en portugués y esta es una traducción para la revisión. Pasa el mouse (o toca) cualquier línea para{" "}
+      {b("dejar un comentario")}, en español o en inglés.
+      {ganchos && " Elige el gancho que mejor encaje con la marca y,"} cuando todo esté bien, aprueba {varios ? "al final de cada guion" : "abajo"}.
+    </>
+  ),
+  ganchos: "Ganchos",
+  gancho: "Gancho",
+  escolherUm: "elige uno",
+  recomendado: "recomendado",
+  escolherGancho: "Elegir este gancho",
+  ganchoEscolhido: "Gancho elegido",
+  por: (quem) => `por ${quem}`,
+  depoisDoGancho: "después del gancho",
+  tela: "En pantalla",
+  referencias: "Referencias",
+  antesDeAprovar: "para ver antes de aprobar",
+  nenhumaAberta: "No hay comentarios abiertos",
+  sugestoes: (n) => `${n} sugerencia${n > 1 ? "s" : ""}`,
+  comentarios: (n) => `${n} comentario${n > 1 ? "s" : ""}`,
+  emAberto: " abiertos",
+  aprovarRoteiro: "Aprobar guion",
+  aprovarRoteiroN: (n) => `Aprobar el guion ${n}`,
+  aprovarTitulo: "¿Aprobar este guion?",
+  ganchoLinha: "Gancho:",
+  nenhumGancho: "ninguno elegido (Lara usará el recomendado)",
+  pendentes: (n) => `Las ${n} sugerencias abiertas van incluidas para que Lara las aplique`,
+  seuNome: "Tu nombre",
+  voltar: "Volver",
+  aprovar: "Aprobar",
+  aprovando: "Aprobando…",
+  aprovadoTitulo: "¡Guion aprobado!",
+  aprovadoMsg: "Lara ya recibió el aviso y va a empezar a grabar. 🎬",
+  fechar: "Cerrar",
+  nomeTitulo: "¿Cómo te llamamos?",
+  nomeDesc: "Tu nombre aparece junto a tus comentarios.",
+  continuar: "Continuar",
+  sugerirMudanca: "Sugerir un cambio",
+  comentar: "Comentar",
+  escrevaComentario: "Escribe tu comentario…",
+  porque: "¿Por qué? (opcional)",
+  cancelar: "Cancelar",
+  enviando: "Enviando…",
+  enviarSugestao: "Enviar sugerencia",
+  historico: (n) => `historial (${n})`,
+  esconderHistorico: "ocultar historial",
+  sugeriu: "sugirió",
+  comentou: "comentó",
+  editou: "editó",
+  aceita: "aceptada",
+  recusada: "rechazada",
+  resolvido: "resuelto",
+  responder: "Responder",
+  responderPh: "Responder…",
+  original: "En portugués, como se va a grabar:",
+  semTraducao: "traducción en camino",
+  referencia: "Referencia",
+  assistirNo: (rede) => `Ver en ${rede}`,
+  abrir: "abrir",
+};
+
+export const TEXTOS: Record<Lingua, Textos> = { pt, en, es };

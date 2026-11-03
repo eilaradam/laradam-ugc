@@ -1,6 +1,12 @@
 // Tipos e utilidades dos roteiros compartilhados (/roteiro/<slug>).
 // Usado no servidor e no cliente.
 
+export type Lingua = "pt" | "en" | "es";
+export const LINGUAS: Lingua[] = ["pt", "en", "es"];
+
+/** Tradução de um trecho. Guarda de qual texto em português ela saiu, pra saber quando ficou velha. */
+export type Traducao = { de: string; t: string };
+
 /** Link de referência (Instagram, TikTok, YouTube, Drive…) que a Lara coloca pra marca assistir. */
 export type Ref = { url: string; titulo?: string };
 
@@ -44,7 +50,17 @@ export type RoteiroConteudo = {
   fotos?: string[];
   /** roteiros com o mesmo grupo aparecem um embaixo do outro, na mesma página */
   grupo?: string;
+  /** traduções pra marca revisar em outra língua, por alvo ("gancho:A:fala") ou "ref:<url>" pro nome do link */
+  traducoes?: Partial<Record<Exclude<Lingua, "pt">, Record<string, Traducao>>>;
 };
+
+/** Texto traduzido do trecho, ou null quando a página está em português ou não há tradução. */
+export function traduzir(c: RoteiroConteudo, lingua: Lingua, alvo: string, original: string) {
+  if (lingua === "pt" || !original) return null;
+  const tr = c.traducoes?.[lingua]?.[alvo];
+  if (!tr) return null;
+  return { texto: tr.t, velha: tr.de.trim() !== original.trim() };
+}
 
 export type RoteiroPublico = {
   slug: string;

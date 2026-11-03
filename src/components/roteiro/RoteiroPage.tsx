@@ -2,21 +2,22 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { ArrowDown, ArrowUp, Check, CheckCircle2, Eye, ImagePlus, Plus, Sparkles, Star, Trash2, X } from "lucide-react";
-import { corDe, letraDoGancho, type Nota, type RoteiroPublico } from "@/lib/roteiro";
+import { LINGUAS, corDe, letraDoGancho, traduzir, type Lingua, type Nota, type RoteiroPublico } from "@/lib/roteiro";
 import { RoteiroCtx, quando, useRoteiro } from "./contexto";
 import Campo from "./Campo";
 import Midia from "./Midia";
+import { TEXTOS, type Textos } from "./textos";
 
 /** Um roteiro da página. A chave só vem quando quem abriu é a Lara. */
 export type Item = { inicial: RoteiroPublico; notas: Nota[]; chave?: string };
 
-type Props = { itens: Item[]; atual: string };
+type Props = { itens: Item[]; atual: string; lang?: string };
 
 const CHAVE_NOME = "roteiro:nome";
 
 // Roteiros do mesmo grupo aparecem um embaixo do outro. Cada um tem comentários,
 // gancho e aprovação próprios; cor e logo saem do primeiro.
-export default function RoteiroPage({ itens: iniciais, atual }: Props) {
+export default function RoteiroPage({ itens: iniciais, atual, lang }: Props) {
   const [itens, setItens] = useState(() => iniciais.map((i) => ({ roteiro: i.inicial, notas: i.notas })));
   const chaves = iniciais.map((i) => i.chave);
   const chave = chaves[0];
@@ -35,6 +36,19 @@ export default function RoteiroPage({ itens: iniciais, atual }: Props) {
   const varios = itens.length > 1;
   const primeiro = itens[0].roteiro.conteudo;
   const cor = corDe(primeiro);
+
+  // PT/EN/ES: só aparece quando o roteiro tem tradução. A língua fica no link (?lang=en).
+  const disponiveis = LINGUAS.filter((l) => l === "pt" || itens.some((x) => x.roteiro.conteudo.traducoes?.[l]));
+  const [lingua, setLinguaState] = useState<Lingua>(() => disponiveis.find((l) => l === lang) ?? "pt");
+  const t = TEXTOS[lingua];
+  function setLingua(l: Lingua) {
+    setLinguaState(l);
+    const u = new URL(window.location.href);
+    if (l === "pt") u.searchParams.delete("lang");
+    else u.searchParams.set("lang", l);
+    window.history.replaceState(null, "", u);
+    document.documentElement.lang = l === "pt" ? "pt-BR" : l;
+  }
 
   const setNome = useCallback((n: string) => {
     setNomeState(n);
@@ -153,20 +167,19 @@ export default function RoteiroPage({ itens: iniciais, atual }: Props) {
 
       <div className="mx-auto max-w-[880px] px-4 pt-10 md:px-8 lg:pt-14">
         <main className="min-w-0">
-          {primeiro.logo ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img src={primeiro.logo} alt={primeiro.marca} className="h-9 w-auto max-w-[180px] object-contain object-left" />
-          ) : (
-            <p className="flex items-center gap-1 text-[13px] font-bold">
-              {primeiro.marca} <Sparkles size={13} className="text-[var(--rt-roxo)]" />
-            </p>
-          )}
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            {primeiro.logo ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img src={primeiro.logo} alt={primeiro.marca} className="h-9 w-auto max-w-[180px] object-contain object-left" />
+            ) : (
+              <p className="flex items-center gap-1 text-[13px] font-bold">
+                {primeiro.marca} <Sparkles size={13} className="text-[var(--rt-roxo)]" />
+              </p>
+            )}
+            {disponiveis.length > 1 && <Linguas linguas={disponiveis} atual={lingua} mudar={setLingua} />}
+          </div>
 
-          {varios && (
-            <p className="mt-3 text-[14.5px] text-[var(--rt-muted)]">
-              <b className="text-[var(--rt-ink)]">{itens.length} roteiros</b> nesta página. Cada um tem a própria aprovação.
-            </p>
-          )}
+          {varios && <p className="mt-3 text-[14.5px] text-[var(--rt-muted)]">{t.roteiros(itens.length)}</p>}
 
           {itens.map((x, i) => (
             <RoteiroCtx.Provider
@@ -178,6 +191,9 @@ export default function RoteiroPage({ itens: iniciais, atual }: Props) {
                 notas: x.notas,
                 enviar: (acao, dados) => enviarEm(i, acao, dados),
                 subirFotos: (bloco, arquivos) => subirFotosEm(i, bloco, arquivos),
+                lingua,
+                t,
+                traduzir: (alvo, original) => traduzir(x.roteiro.conteudo, lingua, alvo, original),
               }}
             >
               <Secao roteiro={x.roteiro} notas={x.notas} chave={chaves[i]} lara={lara} varios={varios} n={i + 1} erro={varios ? null : erro} />
@@ -213,7 +229,7 @@ export default function RoteiroPage({ itens: iniciais, atual }: Props) {
           {erro}
         </p>
       )}
-      {pedirNome && <PedirNome responder={pedirNome} />}
+      {pedirNome && <PedirNome responder={pedirNome} t={t} />}
     </div>
   );
 }
@@ -235,7 +251,7 @@ function Secao({
   n: number;
   erro: string | null;
 }) {
-  const { enviar } = useRoteiro();
+  const { enviar, t } = useRoteiro();
   const [aprovando, setAprovando] = useState(false);
   const c = roteiro.conteudo;
   const abertas = notas.filter((x) => x.status === "aberta" && x.tipo !== "resposta");
@@ -246,14 +262,14 @@ function Secao({
   return (
     <section id={roteiro.slug} className={varios && n > 1 ? "mt-16 scroll-mt-16 border-t-2 border-[var(--rt-ink)] pt-12" : "scroll-mt-16"}>
       {varios && (
-        <p className={`${n === 1 ? "mt-8" : ""} text-[12px] font-bold uppercase tracking-[.12em] text-[var(--rt-roxo)]`}>Roteiro {n}</p>
+        <p className={`${n === 1 ? "mt-8" : ""} text-[12px] font-bold uppercase tracking-[.12em] text-[var(--rt-roxo)]`}>{t.roteiro} {n}</p>
       )}
       <Campo
         alvo="geral:titulo"
         texto={c.titulo ?? "Roteiro de vídeo"}
         multilinha={false}
         className={varios ? "mt-1" : "mt-3"}
-        render={(t) => <h1 className="text-[40px] font-extrabold leading-[1.02] tracking-[-0.035em] md:text-[56px]">{t}</h1>}
+        render={(x) => <h1 className="text-[40px] font-extrabold leading-[1.02] tracking-[-0.035em] md:text-[56px]">{x}</h1>}
       />
 
       <Status roteiro={roteiro} />
@@ -261,10 +277,10 @@ function Secao({
       <div className="mt-6 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-[var(--rt-linha)] bg-[var(--rt-linha)] md:grid-cols-4">
         {(
           [
-            ["Creator", "creator", c.creator],
-            ["Marca", "marca", c.marca],
-            ["Formato", "formato", c.formato],
-            ["Duração", "duracao", c.duracao],
+            [t.creator, "creator", c.creator],
+            [t.marca, "marca", c.marca],
+            [t.formato, "formato", c.formato],
+            [t.duracao, "duracao", c.duracao],
           ] as const
         ).map(([rotulo, campo, v]) => (
           <div key={campo} className="bg-white px-4 py-3.5">
@@ -275,7 +291,7 @@ function Secao({
                 texto={v ?? ""}
                 multilinha={false}
                 vazio="preencher"
-                render={(t) => <p className="mt-1 text-[14px] font-semibold leading-snug">{t}</p>}
+                render={(x) => <p className="mt-1 text-[14px] font-semibold leading-snug">{x}</p>}
               />
             ) : (
               <p className="mt-1 text-[14px] text-[var(--rt-muted)]">—</p>
@@ -291,9 +307,9 @@ function Secao({
               alvo="geral:conceito"
               texto={c.conceito ?? ""}
               vazio="a ideia do vídeo numa frase"
-              render={(t) => (
+              render={(x) => (
                 <p>
-                  <b className="text-[var(--rt-roxo)]">Conceito</b> {t}
+                  <b className="text-[var(--rt-roxo)]">{t.conceito}</b> {x}
                 </p>
               )}
             />
@@ -303,9 +319,9 @@ function Secao({
               alvo="geral:regra"
               texto={c.regra ?? ""}
               vazio="o que não pode faltar (ou não pode aparecer)"
-              render={(t) => (
+              render={(x) => (
                 <p>
-                  <b className="text-[var(--rt-roxo)]">Regra principal</b> {t}
+                  <b className="text-[var(--rt-roxo)]">{t.regra}</b> {x}
                 </p>
               )}
             />
@@ -315,17 +331,14 @@ function Secao({
 
       {n === 1 && (
         <p className="mt-5 rounded-xl border border-dashed border-[var(--rt-linha)] px-4 py-3 text-[13px] leading-relaxed text-[var(--rt-muted)]">
-          <b className="text-[var(--rt-ink)]">Como revisar:</b> passe o mouse (ou toque) em qualquer texto pra{" "}
-          <b className="text-[var(--rt-ink)]">sugerir uma mudança</b> ou <b className="text-[var(--rt-ink)]">comentar</b>.
-          {(varios || c.ganchos.length > 1) && " Escolha o gancho que mais combina com a marca e,"} quando estiver tudo certo, aprove{" "}
-          {varios ? "no fim de cada roteiro" : "lá embaixo"}.
+          {t.comoRevisar(varios, varios || c.ganchos.length > 1)}
         </p>
       )}
 
       {/* ganchos */}
       <Titulo>
-        {c.ganchos.length > 1 ? "Ganchos" : "Gancho"}{" "}
-        {c.ganchos.length > 1 && <span className="text-[var(--rt-muted)]">· escolher um</span>}
+        {c.ganchos.length > 1 ? t.ganchos : t.gancho}{" "}
+        {c.ganchos.length > 1 && <span className="text-[var(--rt-muted)]">· {t.escolherUm}</span>}
       </Titulo>
       <div className="space-y-3">
         {c.ganchos.map((g, i) => {
@@ -359,12 +372,12 @@ function Secao({
                         texto={g.titulo}
                         multilinha={false}
                         vazio="nome do gancho"
-                        render={(t) => <h3 className="text-[18px] font-bold tracking-tight">{t}</h3>}
+                        render={(x) => <h3 className="text-[18px] font-bold tracking-tight">{x}</h3>}
                       />
                     )}
                     {g.recomendado && (
                       <span className="rounded-full bg-[var(--rt-lilas)] px-2 py-0.5 text-[11px] font-semibold text-[var(--rt-roxo)]">
-                        recomendado
+                        {t.recomendado}
                       </span>
                     )}
                   </div>
@@ -373,11 +386,12 @@ function Secao({
                       alvo={`gancho:${g.id}:fala`}
                       texto={g.fala}
                       vazio="o que você fala nos primeiros segundos"
-                      render={(t) => <p className="text-[15.5px] leading-relaxed">“{t}”</p>}
+                      falado
+                      render={(x) => <p className="text-[15.5px] leading-relaxed">“{x}”</p>}
                     />
                   )}
                   {(g.tela || lara) && (
-                    <Campo alvo={`gancho:${g.id}:tela`} texto={g.tela ?? ""} vazio="o que aparece na tela" render={(t) => <Tela>{t}</Tela>} />
+                    <Campo alvo={`gancho:${g.id}:tela`} texto={g.tela ?? ""} vazio="o que aparece na tela" render={(x) => <Tela>{x}</Tela>} />
                   )}
                   <Midia bloco={`gancho:${g.id}`} fotos={g.fotos} refs={g.refs} />
                   {c.ganchos.length > 1 && (
@@ -391,10 +405,10 @@ function Secao({
                         }`}
                       >
                         {escolhido && <Check size={13} />}
-                        {escolhido ? "Gancho escolhido" : "Escolher este gancho"}
+                        {escolhido ? t.ganchoEscolhido : t.escolherGancho}
                       </button>
                       {escolhido && roteiro.gancho_escolhido_por && (
-                        <span className="text-[11.5px] text-[var(--rt-muted)]">por {roteiro.gancho_escolhido_por}</span>
+                        <span className="text-[11.5px] text-[var(--rt-muted)]">{t.por(roteiro.gancho_escolhido_por)}</span>
                       )}
                     </div>
                   )}
@@ -408,7 +422,7 @@ function Secao({
 
       {/* roteiro */}
       <Titulo>
-        Roteiro <span className="text-[var(--rt-muted)]">· depois do gancho</span>
+        {t.roteiro} <span className="text-[var(--rt-muted)]">· {t.depoisDoGancho}</span>
       </Titulo>
       <div className="overflow-hidden rounded-2xl border border-[var(--rt-linha)] bg-white">
         {c.partes.map((p, i) => (
@@ -425,7 +439,7 @@ function Secao({
                 texto={p.nome}
                 multilinha={false}
                 vazio="nome da parte"
-                render={(t) => <p className="text-[15px] font-bold text-[var(--rt-roxo)]">{t}</p>}
+                render={(x) => <p className="text-[15px] font-bold text-[var(--rt-roxo)]">{x}</p>}
               />
               {(p.tempo || lara) && (
                 <Campo
@@ -433,7 +447,7 @@ function Secao({
                   texto={p.tempo ?? ""}
                   multilinha={false}
                   vazio="0:00"
-                  render={(t) => <p className="mt-0.5 text-[12px] tabular-nums text-[var(--rt-muted)]">{t}</p>}
+                  render={(x) => <p className="mt-0.5 text-[12px] tabular-nums text-[var(--rt-muted)]">{x}</p>}
                 />
               )}
             </div>
@@ -443,9 +457,10 @@ function Secao({
                   alvo={`parte:${p.id}:fala`}
                   texto={p.fala}
                   vazio="o que você fala nessa parte"
-                  render={(t) => (
+                  falado
+                  render={(x) => (
                     <div className="space-y-2.5 text-[15px] leading-[1.7]">
-                      {t.split(/\n+/).map((par, j) => (
+                      {x.split(/\n+/).map((par, j) => (
                         <p key={j}>{par}</p>
                       ))}
                     </div>
@@ -453,7 +468,7 @@ function Secao({
                 />
               )}
               {(p.tela || lara) && (
-                <Campo alvo={`parte:${p.id}:tela`} texto={p.tela ?? ""} vazio="o que aparece na tela" render={(t) => <Tela>{t}</Tela>} />
+                <Campo alvo={`parte:${p.id}:tela`} texto={p.tela ?? ""} vazio="o que aparece na tela" render={(x) => <Tela>{x}</Tela>} />
               )}
               <Midia bloco={`parte:${p.id}`} fotos={p.fotos} refs={p.refs} />
             </div>
@@ -470,7 +485,7 @@ function Secao({
       {(lara || (c.refs?.length ?? 0) > 0 || (c.fotos?.length ?? 0) > 0) && (
         <>
           <Titulo>
-            Referências <span className="text-[var(--rt-muted)]">· pra ver antes de aprovar</span>
+            {t.referencias} <span className="text-[var(--rt-muted)]">· {t.antesDeAprovar}</span>
           </Titulo>
           <Midia bloco="geral" fotos={c.fotos} refs={c.refs} vazio="Imagens e links que valem pro vídeo inteiro (tom, ritmo, cenário, edição)" />
         </>
@@ -488,20 +503,20 @@ function Secao({
           {erro && <p className="w-full text-[12.5px] font-semibold text-[#B4321F] md:w-auto">{erro}</p>}
           <p className="text-[12.5px] text-[var(--rt-muted)]">
             {sugestoes + comentarios === 0 ? (
-              "Nenhuma sugestão em aberto"
+              t.nenhumaAberta
             ) : (
               <>
-                {sugestoes > 0 && <b className="text-[var(--rt-ink)]">{sugestoes} sugest{sugestoes > 1 ? "ões" : "ão"}</b>}
+                {sugestoes > 0 && <b className="text-[var(--rt-ink)]">{t.sugestoes(sugestoes)}</b>}
                 {sugestoes > 0 && comentarios > 0 && " · "}
-                {comentarios > 0 && <b className="text-[var(--rt-ink)]">{comentarios} comentário{comentarios > 1 ? "s" : ""}</b>}
-                {" em aberto"}
+                {comentarios > 0 && <b className="text-[var(--rt-ink)]">{t.comentarios(comentarios)}</b>}
+                {t.emAberto}
               </>
             )}
           </p>
           <div className="ml-auto flex items-center gap-2">
             {roteiro.aprovado_em ? (
               <span className="inline-flex items-center gap-1.5 rounded-full bg-[#DDF5E6] px-4 py-2 text-[13px] font-bold text-[#13703A]">
-                <CheckCircle2 size={16} /> Aprovado por {roteiro.aprovado_por}
+                <CheckCircle2 size={16} /> {t.aprovadoPor(roteiro.aprovado_por ?? "")}
               </span>
             ) : chave ? (
               <span className="text-[12.5px] text-[var(--rt-muted)]">Aguardando a marca aprovar</span>
@@ -510,7 +525,7 @@ function Secao({
                 onClick={() => setAprovando(true)}
                 className="rounded-full bg-[var(--rt-ink)] px-5 py-2.5 text-[13.5px] font-bold text-white transition-transform hover:scale-[1.02]"
               >
-                {varios ? `Aprovar o roteiro ${n}` : "Aprovar roteiro"}
+                {varios ? t.aprovarRoteiroN(n) : t.aprovarRoteiro}
               </button>
             )}
           </div>
@@ -525,16 +540,38 @@ function Secao({
 }
 
 function Status({ roteiro }: { roteiro: RoteiroPublico }) {
+  const { t, lingua } = useRoteiro();
   if (roteiro.aprovado_em)
     return (
       <p className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-[#DDF5E6] px-3 py-1 text-[12.5px] font-semibold text-[#13703A]">
-        <CheckCircle2 size={14} /> Aprovado por {roteiro.aprovado_por} em {quando(roteiro.aprovado_em)}
+        <CheckCircle2 size={14} /> {t.aprovadoPorEm(roteiro.aprovado_por ?? "", quando(roteiro.aprovado_em, lingua))}
       </p>
     );
   return (
     <p className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-[var(--rt-amarelo)] px-3 py-1 text-[12.5px] font-semibold text-[#7A5A00]">
-      <span className="size-1.5 animate-pulse rounded-full bg-[#C99A00]" /> Em revisão
+      <span className="size-1.5 animate-pulse rounded-full bg-[#C99A00]" /> {t.emRevisao}
     </p>
+  );
+}
+
+// Seletor de língua do topo. A tradução é pra revisar; o vídeo é gravado em português.
+function Linguas({ linguas, atual, mudar }: { linguas: Lingua[]; atual: Lingua; mudar: (l: Lingua) => void }) {
+  return (
+    <div className="flex rounded-full border border-[var(--rt-linha)] bg-white p-0.5" role="group" aria-label="Idioma / Language">
+      {linguas.map((l) => (
+        <button
+          key={l}
+          onClick={() => mudar(l)}
+          aria-pressed={l === atual}
+          title={TEXTOS[l].nomeLingua}
+          className={`rounded-full px-3 py-1 text-[12px] font-bold uppercase tracking-wide transition-colors ${
+            l === atual ? "bg-[var(--rt-ink)] text-white" : "text-[var(--rt-muted)] hover:text-[var(--rt-ink)]"
+          }`}
+        >
+          {l}
+        </button>
+      ))}
+    </div>
   );
 }
 
@@ -543,9 +580,10 @@ function Titulo({ children }: { children: React.ReactNode }) {
 }
 
 function Tela({ children }: { children: React.ReactNode }) {
+  const { t } = useRoteiro();
   return (
     <p className="text-[13px] leading-relaxed text-[var(--rt-muted)]">
-      <b className="mr-1.5 text-[var(--rt-roxo)]">Tela</b>
+      <b className="mr-1.5 text-[var(--rt-roxo)]">{t.tela}</b>
       {children}
     </p>
   );
@@ -566,6 +604,7 @@ function Aprovar({
   pendentes: number;
 }) {
   const ctx = useRoteiro();
+  const t = ctx.t;
   const [nome, setNome] = useState(ctx.nome);
   const [ok, setOk] = useState(false);
   const [enviando, setEnviando] = useState(false);
@@ -586,37 +625,37 @@ function Aprovar({
             <div className="mx-auto grid size-14 place-items-center rounded-full bg-[#DDF5E6] text-[#13703A]">
               <Check size={28} />
             </div>
-            <h3 className="mt-4 text-[22px] font-extrabold tracking-tight">Roteiro aprovado!</h3>
-            <p className="mt-2 text-[14px] text-[var(--rt-muted)]">A Lara já recebeu o aviso e vai começar a gravar. 🎬</p>
+            <h3 className="mt-4 text-[22px] font-extrabold tracking-tight">{t.aprovadoTitulo}</h3>
+            <p className="mt-2 text-[14px] text-[var(--rt-muted)]">{t.aprovadoMsg}</p>
             <button onClick={fechar} className="mt-5 rounded-full bg-[var(--rt-ink)] px-5 py-2.5 text-[13.5px] font-bold text-white">
-              Fechar
+              {t.fechar}
             </button>
           </div>
         ) : (
           <>
-            <h3 className="text-[22px] font-extrabold tracking-tight">Aprovar o roteiro?</h3>
+            <h3 className="text-[22px] font-extrabold tracking-tight">{t.aprovarTitulo}</h3>
             <ul className="mt-3 space-y-1.5 text-[13.5px] text-[var(--rt-muted)]">
               {temGanchos && (
-                <li>• Gancho: {gancho ? <b className="text-[var(--rt-ink)]">{gancho}</b> : "nenhum escolhido (a Lara usa o recomendado)"}</li>
+                <li>• {t.ganchoLinha} {gancho ? <b className="text-[var(--rt-ink)]">{gancho}</b> : t.nenhumGancho}</li>
               )}
-              {pendentes > 0 && <li>• As {pendentes} sugestões em aberto vão junto, pra Lara aplicar</li>}
+              {pendentes > 0 && <li>• {t.pendentes(pendentes)}</li>}
             </ul>
             <input
               value={nome}
               onChange={(e) => setNome(e.target.value)}
-              placeholder="Seu nome"
+              placeholder={t.seuNome}
               className="mt-4 w-full rounded-xl border border-[var(--rt-linha)] px-3.5 py-2.5 text-[14px] outline-none focus:border-[var(--rt-roxo)]"
             />
             <div className="mt-4 flex justify-end gap-2">
               <button onClick={fechar} className="rounded-full px-4 py-2 text-[13.5px] font-medium text-[var(--rt-muted)]">
-                Voltar
+                {t.voltar}
               </button>
               <button
                 disabled={!nome.trim() || enviando}
                 onClick={aprovar}
                 className="rounded-full bg-[#13703A] px-5 py-2 text-[13.5px] font-bold text-white disabled:opacity-40"
               >
-                {enviando ? "Aprovando…" : "Aprovar"}
+                {enviando ? t.aprovando : t.aprovar}
               </button>
             </div>
           </>
@@ -626,7 +665,7 @@ function Aprovar({
   );
 }
 
-function PedirNome({ responder }: { responder: (n: string | null) => void }) {
+function PedirNome({ responder, t }: { responder: (n: string | null) => void; t: Textos }) {
   const [nome, setNome] = useState("");
   return (
     <div className="fixed inset-0 z-50 grid place-items-center bg-black/50 p-4 backdrop-blur-sm" onClick={() => responder(null)}>
@@ -638,17 +677,17 @@ function PedirNome({ responder }: { responder: (n: string | null) => void }) {
           if (nome.trim()) responder(nome.trim());
         }}
       >
-        <h3 className="text-[20px] font-extrabold tracking-tight">Como posso te chamar?</h3>
-        <p className="mt-1 text-[13.5px] text-[var(--rt-muted)]">Seu nome aparece junto das sugestões e comentários.</p>
+        <h3 className="text-[20px] font-extrabold tracking-tight">{t.nomeTitulo}</h3>
+        <p className="mt-1 text-[13.5px] text-[var(--rt-muted)]">{t.nomeDesc}</p>
         <input
           autoFocus
           value={nome}
           onChange={(e) => setNome(e.target.value)}
-          placeholder="Seu nome"
+          placeholder={t.seuNome}
           className="mt-4 w-full rounded-xl border border-[var(--rt-linha)] px-3.5 py-2.5 text-[14px] outline-none focus:border-[var(--rt-roxo)]"
         />
         <button disabled={!nome.trim()} className="mt-4 w-full rounded-full bg-[var(--rt-ink)] py-2.5 text-[13.5px] font-bold text-white disabled:opacity-40">
-          Continuar
+          {t.continuar}
         </button>
       </form>
     </div>
