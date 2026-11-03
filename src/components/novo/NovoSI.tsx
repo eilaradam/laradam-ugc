@@ -31,10 +31,10 @@ const BARALHO: Item[] = [
 
 // as etapas da própria plataforma, contadas do lado da Lara
 const ETAPAS = [
-  { n: "1", t: "Você me aprova", d: "Eu leio o briefing e já começo pelo gancho." },
-  { n: "3", t: "Roteiro em andamento", d: "Você recebe um link do roteiro pra aprovar ou comentar cada fala." },
-  { n: "5", t: "Em gravação", d: "Gravo com o roteiro aprovado, mais de um gancho quando faz sentido." },
-  { n: "6", t: "Aprovar gravação", d: "Vídeo editado, pensado pra rodar como anúncio." },
+  { n: "1", t: "Você me aprova", d: "Leio o briefing e começo pelo gancho." },
+  { n: "3", t: "Roteiro", d: "Link pra você aprovar cada fala." },
+  { n: "5", t: "Gravação", d: "Gravo com o roteiro aprovado." },
+  { n: "6", t: "Entrega", d: "Editado pra rodar como anúncio." },
 ];
 
 const CAPAS_YT = ["maxresdefault.jpg", "sddefault.jpg", "hqdefault.jpg", "mqdefault.jpg"];
@@ -280,21 +280,23 @@ function CapaVitrine() {
 const CAPAS = { baralho: CapaBaralho, adesivos: CapaAdesivos, stories: CapaStories, vitrine: CapaVitrine } as const;
 export type CapaSI = keyof typeof CAPAS;
 
+// etapas numa faixa só: pouco texto, pra não segurar quem quer ver vídeo
 function ComoFunciona() {
   return (
-    <section className="py-20">
+    <section className="py-12">
       <div className="max-w-6xl mx-auto px-5">
-        <div className="rounded-[2.5rem] p-8 md:p-12" style={{ background: C.roxo }}>
-          <h2 className={`${titulo.className} text-4xl md:text-5xl font-extrabold tracking-[-0.04em] text-white`}>
-            Depois que você me aprova
-            <span className="block" style={{ color: C.limao }}>é assim, etapa por etapa.</span>
+        <div className="rounded-[2rem] px-7 py-8 md:px-10 grid md:grid-cols-[0.9fr_2.1fr] gap-6 items-center" style={{ background: C.roxo }}>
+          <h2 className={`${titulo.className} text-3xl font-extrabold tracking-[-0.03em] leading-tight text-white`}>
+            Depois que você <span style={{ color: C.limao }}>me aprova</span>
           </h2>
-          <ol className="mt-10 grid md:grid-cols-4 gap-4">
+          <ol className="grid grid-cols-2 md:grid-cols-4 gap-3">
             {ETAPAS.map((e) => (
-              <li key={e.t} className="rounded-3xl bg-white p-6">
-                <span className="text-xs font-bold uppercase tracking-[0.18em]" style={{ color: C.roxo }}>Etapa {e.n}</span>
-                <p className={`${titulo.className} mt-2 text-xl font-bold`} style={{ color: C.preto }}>{e.t}</p>
-                <p className="mt-2 text-[15px] leading-snug" style={{ color: C.suave }}>{e.d}</p>
+              <li key={e.t} className="rounded-2xl bg-white px-4 py-3.5">
+                <p className="flex items-center gap-2 font-bold" style={{ color: C.preto }}>
+                  <span className="flex h-6 w-6 items-center justify-center rounded-full text-xs" style={{ background: C.limao }}>{e.n}</span>
+                  {e.t}
+                </p>
+                <p className="mt-1.5 text-sm leading-snug" style={{ color: C.suave }}>{e.d}</p>
               </li>
             ))}
           </ol>
@@ -344,25 +346,23 @@ function Nichos() {
 
 function Sobre() {
   return (
-    <section id="sobre" className="py-20">
-      <div className="max-w-6xl mx-auto px-5 grid md:grid-cols-[0.8fr_1.2fr] gap-12 items-center">
-        <div className="relative mx-auto w-full max-w-[340px]">
-          <span className="absolute -inset-4 -rotate-3 rounded-[2.5rem]" style={{ background: C.rosa }} />
+    <section id="sobre" className="py-14">
+      <div className="max-w-6xl mx-auto px-5 flex flex-col md:flex-row gap-8 md:gap-12 items-center">
+        <div className="relative w-[200px] flex-shrink-0">
+          <span className="absolute -inset-3 -rotate-3 rounded-[2rem]" style={{ background: C.rosa }} />
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/capa/1-sorriso.webp" alt="Lara Dam" className="relative aspect-[4/5] w-full rounded-[2rem] object-cover object-[70%_20%]" />
+          <img src="/capa/1-sorriso.webp" alt="Lara Dam" className="relative aspect-square w-full rounded-[1.6rem] object-cover object-[70%_20%]" />
         </div>
         <div>
-          <span className={`${mao.className} text-3xl -rotate-2 inline-block`} style={{ color: C.roxo }}>oie, prazer!</span>
-          <h2 className={`${titulo.className} mt-2 text-5xl font-extrabold tracking-[-0.04em]`} style={{ color: C.preto }}>
-            Eu sou a Lara Dam.
-          </h2>
-          <p className="mt-6 max-w-xl text-lg leading-relaxed" style={{ color: C.suave }}>
-            Tenho 27 anos, sou <b style={{ color: C.preto }}>UGC Creator e estrategista de conteúdo</b> no Litoral de SP. Em 3 anos, gravei mais de
-            500 vídeos pra mais de 300 marcas, com recorde de CTR no Meta, CPA reduzido em até 38% e ROAS de 2.4x.
+          <span className={`${mao.className} text-2xl -rotate-2 inline-block`} style={{ color: C.roxo }}>oie, prazer!</span>
+          <h2 className={`${titulo.className} text-4xl font-extrabold tracking-[-0.04em]`} style={{ color: C.preto }}>Eu sou a Lara Dam.</h2>
+          <p className="mt-3 max-w-2xl text-lg leading-relaxed" style={{ color: C.suave }}>
+            27 anos, <b style={{ color: C.preto }}>UGC Creator e estrategista de conteúdo</b> no Litoral de SP. Mais de 500 vídeos pra mais de 300 marcas,
+            com recorde de CTR no Meta e CPA até 38% menor.
           </p>
-          <div className="mt-6 flex flex-wrap gap-2.5">
+          <div className="mt-4 flex flex-wrap gap-2">
             {["+100 campanhas aprovadas no Seu Influencer", "InfinitePay", "Méliuz", "DT3"].map((t, i) => (
-              <span key={t} className="rounded-full px-4 py-2 text-sm font-semibold" style={i ? { background: "#fff", color: C.preto } : { background: C.limao, color: C.preto }}>{t}</span>
+              <span key={t} className="rounded-full px-3.5 py-1.5 text-sm font-semibold" style={i ? { background: "#fff", color: C.preto } : { background: C.limao, color: C.preto }}>{t}</span>
             ))}
           </div>
         </div>
@@ -404,15 +404,15 @@ export default function NovoSI({ capa = "adesivos" }: { capa?: CapaSI }) {
             lara<span style={{ color: C.roxo }}>dam</span>
           </span>
           <div className="hidden md:flex gap-8 text-[15px] font-semibold" style={{ color: C.suave }}>
-            <a href="#sobre">Sobre</a><a href="#nichos">Nichos</a>
+            <a href="#nichos">Nichos</a><a href="#sobre">Sobre</a>
           </div>
           <a href="#nichos" className="rounded-2xl px-5 py-2.5 text-sm font-bold" style={{ background: C.limao, color: C.preto }}>Ver vídeos</a>
         </div>
       </nav>
       <Capa />
+      <Nichos />
       <Sobre />
       <ComoFunciona />
-      <Nichos />
       <Fim />
       <style>{`
         .si-logos { animation: si-logos 80s linear infinite; }
