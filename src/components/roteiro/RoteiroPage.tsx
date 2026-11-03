@@ -603,13 +603,24 @@ function Secao({
                   texto={p.fala}
                   vazio="o que você fala nessa parte"
                   falado
-                  render={(x) => (
-                    <div className="space-y-2.5 text-[15px] leading-[1.7]">
-                      {x.split(/\n+/).map((par, j) => (
-                        <p key={j}>{par}</p>
-                      ))}
-                    </div>
-                  )}
+                  render={(x) =>
+                    p.exemplo ? (
+                      <div className="rounded-xl border border-[#E8C77A] bg-[#FFF6DF] px-4 py-3">
+                        <p className="text-[10.5px] font-bold uppercase tracking-[.12em] text-[#9A6B00]">{t.exemplo}</p>
+                        <div className="mt-1.5 space-y-2.5 text-[15px] italic leading-[1.7] text-[#6B4A00]">
+                          {x.split(/\n+/).map((par, j) => (
+                            <p key={j}>“{par}”</p>
+                          ))}
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="space-y-2.5 text-[15px] leading-[1.7]">
+                        {x.split(/\n+/).map((par, j) => (
+                          <p key={j}>{par}</p>
+                        ))}
+                      </div>
+                    )
+                  }
                 />
               )}
               {(p.tela || lara) && (

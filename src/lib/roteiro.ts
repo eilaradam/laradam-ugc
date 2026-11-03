@@ -25,6 +25,8 @@ export type Parte = {
   nome: string;
   tempo?: string;
   fala: string;
+  /** a fala é só um exemplo (ex.: resposta de um convidado, que fala com as próprias palavras) */
+  exemplo?: boolean;
   tela?: string;
   fotos?: string[];
   refs?: Ref[];
