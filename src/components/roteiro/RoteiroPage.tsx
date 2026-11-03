@@ -136,6 +136,16 @@ export default function RoteiroPage({ itens: iniciais, atual, lang }: Props) {
   const [aberta, setAberta] = useState<string | null>(() =>
     temSecoes && atual !== itens[0].roteiro.slug ? (itens.find((x) => x.roteiro.slug === atual)?.roteiro.conteudo.secao ?? null) : null
   );
+  // Dentro de cada seção, a opção aprovada vai pro topo; as outras seguem a ordem original.
+  const ordem = itens.map((_, i) => i);
+  ordem.sort((a, b) => {
+    const sa = itens[a].roteiro.conteudo.secao;
+    const sb = itens[b].roteiro.conteudo.secao;
+    if (!sa || sa !== sb) return a - b;
+    return Number(Boolean(itens[b].roteiro.aprovado_em)) - Number(Boolean(itens[a].roteiro.aprovado_em)) || a - b;
+  });
+  const [expandidos, setExpandidos] = useState<Set<string>>(() => new Set());
+
   function abrirSecao(nome: string | null) {
     setAberta(nome);
     if (nome) requestAnimationFrame(() => document.getElementById("secao-aberta")?.scrollIntoView({ behavior: "smooth" }));
@@ -198,19 +208,21 @@ export default function RoteiroPage({ itens: iniciais, atual, lang }: Props) {
           )}
           {temSecoes && <Cartoes secoes={secoes} aberta={aberta} abrir={abrirSecao} t={t} />}
 
-          {itens.map((x, i) => {
+          {ordem.map((i, k) => {
+            const x = itens[i];
             const secao = x.roteiro.conteudo.secao;
-            // só conta como opção o que é alternativa um do outro (rótulo "Opção …"), não entregas diferentes
-            const opcoesNaSecao = (k: number) => {
-              let q = 0;
-              for (let j = k; itens[j]?.roteiro.conteudo.secao === secao; j++) if (ehOpcao(itens[j].roteiro)) q++;
-              return q;
-            };
-            const abre = Boolean(secao) && secao !== itens[i - 1]?.roteiro.conteudo.secao;
+            const secaoDe = (j: number | undefined) => (j === undefined ? undefined : itens[j].roteiro.conteudo.secao);
+            const abre = Boolean(secao) && (k === 0 || secaoDe(ordem[k - 1]) !== secao);
             const dentro = Boolean(secao) && !abre;
-            const fecha = Boolean(secao) && secao !== itens[i + 1]?.roteiro.conteudo.secao;
+            const fecha = Boolean(secao) && secaoDe(ordem[k + 1]) !== secao;
             if (temSecoes && secao !== aberta) return null;
+            const grupo = secoes.find((g) => g.nome === secao);
             const proxima = secoes[secoes.findIndex((g) => g.nome === secao) + 1];
+            // com uma opção aprovada, as outras da mesma seção ficam recolhidas (dá pra abrir)
+            const recolhido = Boolean(grupo?.aprovados.length) && !x.roteiro.aprovado_em && ehOpcao(x.roteiro);
+            const primeiroRecolhido = recolhido && (k === 0 || itens[ordem[k - 1]].roteiro.aprovado_em);
+            const expandido = expandidos.has(x.roteiro.slug);
+            const c = x.roteiro.conteudo;
             return (
             <Fragment key={x.roteiro.slug}>
             {abre && (
@@ -221,9 +233,40 @@ export default function RoteiroPage({ itens: iniciais, atual, lang }: Props) {
                 {secao}
               </h2>
             )}
-            {abre && opcoesNaSecao(i) > 1 && (
-              <p className="mt-2 text-[14px] text-[var(--rt-muted)]">{t.opcoesNaSecao(opcoesNaSecao(i))}</p>
+            {abre && grupo && grupo.opcoes > 1 && (
+              grupo.aprovados.length ? (
+                <p className="mt-2 flex items-center gap-1.5 text-[14px] font-semibold text-[#13703A]">
+                  <CheckCircle2 size={15} /> {t.opcaoAprovada(grupo.aprovados.join(", "))}
+                </p>
+              ) : (
+                <p className="mt-2 text-[14px] text-[var(--rt-muted)]">{t.opcoesNaSecao(grupo.opcoes)}</p>
+              )
             )}
+            {primeiroRecolhido && (
+              <p className="mt-14 text-[12px] font-bold uppercase tracking-[.12em] text-[var(--rt-muted)]">{t.outrasOpcoes}</p>
+            )}
+            {recolhido && (
+              <div className="mt-3 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-dashed border-[var(--rt-linha)] bg-white/60 px-4 py-3">
+                <p className="min-w-0 text-[13.5px]">
+                  <b>{(c.rotulo ?? "").split(" · ")[0]}</b>
+                  <span className="text-[var(--rt-muted)]"> · {c.titulo} · {t.naoEscolhida}</span>
+                </p>
+                <button
+                  onClick={() =>
+                    setExpandidos((e) => {
+                      const n = new Set(e);
+                      if (n.has(x.roteiro.slug)) n.delete(x.roteiro.slug);
+                      else n.add(x.roteiro.slug);
+                      return n;
+                    })
+                  }
+                  className="rounded-full border border-[var(--rt-linha)] bg-white px-3 py-1 text-[12px] font-semibold hover:border-[var(--rt-roxo)]"
+                >
+                  {expandido ? t.recolher : t.verMesmoAssim}
+                </button>
+              </div>
+            )}
+            {(!recolhido || expandido) && (
             <RoteiroCtx.Provider
               value={{
                 nome,
@@ -246,9 +289,10 @@ export default function RoteiroPage({ itens: iniciais, atual, lang }: Props) {
                 n={i + 1}
                 erro={varios ? null : erro}
                 abre={abre}
-                dentro={dentro}
+                dentro={dentro && !recolhido}
               />
             </RoteiroCtx.Provider>
+            )}
             {fecha && temSecoes && (
               <div className="mt-10 flex flex-wrap items-center justify-between gap-3 border-t border-[var(--rt-linha)] pt-6">
                 <button
