@@ -5,6 +5,7 @@ import { Bricolage_Grotesque, Caveat } from "next/font/google";
 import { ArrowRight, Volume2 } from "lucide-react";
 import { BRAND_LOGO_FILES, CATEGORIES, VIDEOS, type Video } from "@/data/content";
 import { useVideoModal } from "../VideoModalProvider";
+import { CAPAS_SI } from "@/data/capasSI";
 
 // Prévia "na vibe do Seu Influencer" (/novo?estilo=si): mesmas cores e energia da plataforma
 // (off-white, roxo, limão, rosa, cantos bem redondos), mas com estrutura e frases da Lara,
@@ -38,9 +39,11 @@ const ETAPAS = [
 ];
 
 const CAPAS_YT = ["maxresdefault.jpg", "sddefault.jpg", "hqdefault.jpg", "mqdefault.jpg"];
-const thumb = (v: Video) => v.thumbnail ?? `https://i.ytimg.com/vi/${v.youtubeId}/${CAPAS_YT[0]}`;
+// capa que a Lara escolheu (quando tem); senão a do YouTube
+const thumb = (v: Video) =>
+  (v.youtubeId && CAPAS_SI.has(v.youtubeId) ? `/si/capas/${v.youtubeId}.jpg` : null) ?? v.thumbnail ?? `https://i.ytimg.com/vi/${v.youtubeId}/${CAPAS_YT[0]}`;
 function proximaCapa(img: HTMLImageElement, v: Video) {
-  if (v.thumbnail || !v.youtubeId) return;
+  if (v.thumbnail || !v.youtubeId || CAPAS_SI.has(v.youtubeId)) return;
   const i = Number(img.dataset.i ?? "0") + 1;
   if (i >= CAPAS_YT.length) return;
   img.dataset.i = String(i);
