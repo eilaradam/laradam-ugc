@@ -129,6 +129,18 @@ export default function RoteiroPage({ itens: iniciais, atual, lang }: Props) {
     return () => document.removeEventListener("visibilitychange", atualizar);
   }, [slugs]);
 
+  // Com seções, a página abre só com os quadrados; clicar num deles mostra aquela seção.
+  // O link de um roteiro específico (ex.: e-mail de comentário) já abre a seção dele.
+  const temSecoes = itens.some((x) => x.roteiro.conteudo.secao);
+  const secoes = secoesDe(itens.map((x) => x.roteiro), itens.map((x) => x.notas));
+  const [aberta, setAberta] = useState<string | null>(() =>
+    temSecoes && atual !== itens[0].roteiro.slug ? (itens.find((x) => x.roteiro.slug === atual)?.roteiro.conteudo.secao ?? null) : null
+  );
+  function abrirSecao(nome: string | null) {
+    setAberta(nome);
+    if (nome) requestAnimationFrame(() => document.getElementById("secao-aberta")?.scrollIntoView({ behavior: "smooth" }));
+  }
+
   // Link de um roteiro do meio do grupo (ex.: e-mail de comentário) já desce até ele.
   useEffect(() => {
     if (varios && atual !== itens[0].roteiro.slug) document.getElementById(atual)?.scrollIntoView();
@@ -184,7 +196,7 @@ export default function RoteiroPage({ itens: iniciais, atual, lang }: Props) {
               {t.roteiros(itens.filter((x) => !x.roteiro.conteudo.semAprovacao).length)}
             </p>
           )}
-          {itens.some((x) => x.roteiro.conteudo.secao) && <Indice itens={itens.map((x) => x.roteiro)} titulo={t.nestaPagina} />}
+          {temSecoes && <Cartoes secoes={secoes} aberta={aberta} abrir={abrirSecao} t={t} />}
 
           {itens.map((x, i) => {
             const secao = x.roteiro.conteudo.secao;
@@ -196,12 +208,15 @@ export default function RoteiroPage({ itens: iniciais, atual, lang }: Props) {
             };
             const abre = Boolean(secao) && secao !== itens[i - 1]?.roteiro.conteudo.secao;
             const dentro = Boolean(secao) && !abre;
+            const fecha = Boolean(secao) && secao !== itens[i + 1]?.roteiro.conteudo.secao;
+            if (temSecoes && secao !== aberta) return null;
+            const proxima = secoes[secoes.findIndex((g) => g.nome === secao) + 1];
             return (
             <Fragment key={x.roteiro.slug}>
             {abre && (
               <h2
-                id={`secao-${x.roteiro.slug}`}
-                className={`scroll-mt-16 border-t-4 border-[var(--rt-ink)] pt-10 text-[30px] font-extrabold leading-tight tracking-[-0.03em] md:text-[38px] ${i ? "mt-20" : "mt-10"}`}
+                id="secao-aberta"
+                className="mt-10 scroll-mt-16 border-t-4 border-[var(--rt-ink)] pt-10 text-[30px] font-extrabold leading-tight tracking-[-0.03em] md:text-[38px]"
               >
                 {secao}
               </h2>
@@ -234,6 +249,27 @@ export default function RoteiroPage({ itens: iniciais, atual, lang }: Props) {
                 dentro={dentro}
               />
             </RoteiroCtx.Provider>
+            {fecha && temSecoes && (
+              <div className="mt-10 flex flex-wrap items-center justify-between gap-3 border-t border-[var(--rt-linha)] pt-6">
+                <button
+                  onClick={() => {
+                    abrirSecao(null);
+                    window.scrollTo({ top: 0, behavior: "smooth" });
+                  }}
+                  className="rounded-full border border-[var(--rt-linha)] bg-white px-4 py-2 text-[13px] font-semibold hover:border-[var(--rt-roxo)]"
+                >
+                  {t.voltarAosQuadros}
+                </button>
+                {proxima && (
+                  <button
+                    onClick={() => abrirSecao(proxima.nome)}
+                    className="rounded-full bg-[var(--rt-ink)] px-4 py-2 text-[13px] font-semibold text-white"
+                  >
+                    {t.proximo}: {proxima.nome} →
+                  </button>
+                )}
+              </div>
+            )}
             </Fragment>
             );
           })}
@@ -380,7 +416,7 @@ function Secao({
         </div>
       )}
 
-      {n === 1 && (
+      {(n === 1 || abre) && !c.semAprovacao && (
         <p className="mt-5 rounded-xl border border-dashed border-[var(--rt-linha)] px-4 py-3 text-[13px] leading-relaxed text-[var(--rt-muted)]">
           {t.comoRevisar(varios, varios || c.ganchos.length > 1)}
         </p>
@@ -668,29 +704,70 @@ function Linguas({ linguas, atual, mudar }: { linguas: Lingua[]; atual: Lingua; 
 
 const ehOpcao = (r: RoteiroPublico) => /^op(ç|c)(ã|a)o\b/i.test(r.conteudo.rotulo ?? "");
 
-// Índice do topo quando a página tem seções (ex.: um produto por seção, com as opções dentro).
-function Indice({ itens, titulo }: { itens: RoteiroPublico[]; titulo: string }) {
-  const entradas: { id: string; nome: string; qtd: number }[] = [];
-  for (const r of itens) {
-    const nome = r.conteudo.secao ?? r.conteudo.titulo ?? "Roteiro";
-    const ult = entradas[entradas.length - 1];
-    if (r.conteudo.secao && ult && ult.nome === nome) ult.qtd += ehOpcao(r) ? 1 : 0;
-    else entradas.push({ id: r.conteudo.secao ? `secao-${r.slug}` : r.slug, nome, qtd: ehOpcao(r) ? 1 : 0 });
-  }
+type GrupoSecao = { nome: string; opcoes: number; total: number; aprovados: string[]; abertas: number; informativo: boolean };
+
+/** Seções na ordem da página, com o que o quadrado de cada uma mostra. */
+function secoesDe(roteiros: RoteiroPublico[], notas: Nota[][]): GrupoSecao[] {
+  const out: GrupoSecao[] = [];
+  roteiros.forEach((r, i) => {
+    const nome = r.conteudo.secao;
+    if (!nome) return;
+    let g = out[out.length - 1];
+    if (!g || g.nome !== nome) out.push((g = { nome, opcoes: 0, total: 0, aprovados: [], abertas: 0, informativo: true }));
+    g.total++;
+    if (ehOpcao(r)) g.opcoes++;
+    if (!r.conteudo.semAprovacao) g.informativo = false;
+    if (r.aprovado_em) g.aprovados.push((r.conteudo.rotulo ?? r.conteudo.titulo ?? "").split(" · ")[0]);
+    g.abertas += notas[i].filter((n) => n.status === "aberta" && n.tipo !== "resposta").length;
+  });
+  return out;
+}
+
+// Um quadrado por seção (ex.: um por produto). Clicar abre a seção embaixo; clicar de novo fecha.
+function Cartoes({ secoes, aberta, abrir, t }: { secoes: GrupoSecao[]; aberta: string | null; abrir: (s: string | null) => void; t: Textos }) {
   return (
-    <nav className="mt-6 rounded-2xl border border-[var(--rt-linha)] bg-white px-5 py-4">
-      <p className="text-[10.5px] font-bold uppercase tracking-[.12em] text-[var(--rt-muted)]">{titulo}</p>
-      <ol className="mt-2 grid gap-x-6 gap-y-1 text-[14px] sm:grid-cols-2">
-        {entradas.map((e) => (
-          <li key={e.id}>
-            <a href={`#${e.id}`} className="font-semibold hover:text-[var(--rt-roxo)] hover:underline">
-              {e.nome}
-            </a>
-            {e.qtd > 1 && <span className="text-[var(--rt-muted)]"> · {e.qtd} opções</span>}
-          </li>
-        ))}
-      </ol>
-    </nav>
+    <div className="mt-6">
+      <p className="text-[13px] text-[var(--rt-muted)]">{t.toqueNoQuadrado}</p>
+      <div className="mt-3 grid grid-cols-2 gap-3 md:grid-cols-3">
+        {secoes.map((g) => {
+          const [num, ...resto] = g.nome.split(" · ");
+          const numerado = /^\d+$/.test(num) && resto.length > 0;
+          const ativo = g.nome === aberta;
+          return (
+            <button
+              key={g.nome}
+              onClick={() => abrir(ativo ? null : g.nome)}
+              aria-expanded={ativo}
+              className={`flex min-h-[132px] flex-col rounded-2xl border bg-white p-4 text-left transition-all md:p-5 ${
+                ativo
+                  ? "border-[var(--rt-roxo)] shadow-[0_0_0_3px_color-mix(in_srgb,var(--rt-roxo)_18%,transparent)]"
+                  : "border-[var(--rt-linha)] hover:-translate-y-0.5 hover:border-[var(--rt-roxo)]"
+              }`}
+            >
+              {numerado && <span className="text-[22px] font-extrabold leading-none text-[var(--rt-roxo)]">{num}</span>}
+              <span className={`text-[16px] font-bold leading-tight tracking-tight md:text-[18px] ${numerado ? "mt-2" : ""}`}>
+                {numerado ? resto.join(" · ") : g.nome}
+              </span>
+              <span className="mt-auto pt-3 text-[12px] leading-snug text-[var(--rt-muted)]">
+                {g.informativo
+                  ? t.informativo
+                  : g.opcoes > 1
+                    ? t.opcoesN(g.opcoes)
+                    : t.entregasN(g.total)}
+                {g.aprovados.length > 0 ? (
+                  <b className="mt-1 flex items-center gap-1 text-[#13703A]">
+                    <CheckCircle2 size={13} /> {t.aprovadoLista(g.aprovados.join(", "))}
+                  </b>
+                ) : (
+                  !g.informativo && <span className="block">{t.emRevisao}</span>
+                )}
+                {g.abertas > 0 && <span className="mt-0.5 block font-semibold text-[#9A6B00]">{t.comentarios(g.abertas)}</span>}
+              </span>
+            </button>
+          );
+        })}
+      </div>
+    </div>
   );
 }
 
