@@ -56,7 +56,7 @@ function TextoCapa() {
           <span className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-sm font-semibold" style={{ background: C.roxoClaro, color: C.roxo }}>
             <span className="h-2 w-2 rounded-full animate-pulse" style={{ background: C.roxo }} /> UGC Creator · agenda aberta
           </span>
-          <h1 className={`${titulo.className} mt-6 text-5xl lg:text-[4.8rem] font-extrabold tracking-[-0.045em] leading-[0.92]`} style={{ color: C.preto }}>
+          <h1 className={`${titulo.className} mt-[2.4vh] text-5xl font-extrabold tracking-[-0.045em] leading-[0.92] md:text-[clamp(2.4rem,min(8.4vh,4.6vw),5rem)]`} style={{ color: C.preto }}>
             Lara Dam.
             <span className="block">
               UGC que{" "}
@@ -66,20 +66,20 @@ function TextoCapa() {
               </span>
             </span>
           </h1>
-          <p className="mt-6 max-w-md text-lg" style={{ color: C.suave }}>
+          <p className="mt-[2.6vh] max-w-md text-lg md:text-[clamp(0.95rem,2.3vh,1.15rem)]" style={{ color: C.suave }}>
             Do gancho ao CTA, com roteiro aprovado antes de gravar. Dá o play e vê se combina com a sua marca.
           </p>
 
-          <dl className="mt-8 grid grid-cols-3 max-w-md overflow-hidden rounded-3xl bg-white shadow-sm">
+          <dl className="mt-[3.2vh] grid grid-cols-3 max-w-md overflow-hidden rounded-3xl bg-white shadow-sm">
             {[["+500", "vídeos"], ["+300", "marcas"], ["140M+", "views"]].map(([n, k], i) => (
-              <div key={k} className={`px-5 py-4 ${i ? "border-l border-black/5" : ""}`}>
-                <dt className={`${titulo.className} text-3xl font-extrabold tracking-tight`} style={{ color: i === 1 ? C.roxo : C.preto }}>{n}</dt>
+              <div key={k} className={`px-5 py-[1.7vh] ${i ? "border-l border-black/5" : ""}`}>
+                <dt className={`${titulo.className} text-3xl md:text-[clamp(1.4rem,3.7vh,1.9rem)] font-extrabold tracking-tight`} style={{ color: i === 1 ? C.roxo : C.preto }}>{n}</dt>
                 <dd className="text-sm" style={{ color: C.suave }}>{k}</dd>
               </div>
             ))}
           </dl>
 
-          <a href="#nichos" className="mt-8 inline-flex items-center gap-2 rounded-2xl px-7 py-4 text-base font-bold text-white shadow-lg" style={{ background: C.roxo }}>
+          <a href="#nichos" className="mt-[3.2vh] inline-flex items-center gap-2 rounded-2xl px-7 py-[1.9vh] text-base font-bold text-white shadow-lg" style={{ background: C.roxo }}>
             Ver vídeos do meu nicho <ArrowRight className="h-4 w-4" />
           </a>
         </div>
@@ -89,7 +89,7 @@ function TextoCapa() {
 // logos grandes correndo numa faixa branca
 function Logos({ compacta }: { compacta?: boolean }) {
   return (
-    <div className={`${compacta ? "mt-10" : "mt-16"} border-y border-black/5 bg-white py-7 overflow-hidden`}>
+    <div className={`${compacta ? "mt-0" : "mt-16"} border-y border-black/5 bg-white py-7 overflow-hidden`}>
       <div className="flex w-max items-center gap-16 si-logos">
         {[...BRAND_LOGO_FILES, ...BRAND_LOGO_FILES].map((f, i) => (
           // eslint-disable-next-line @next/next/no-img-element
@@ -160,35 +160,63 @@ const ADESIVOS: Adesivo[] = [
 ];
 
 /** 2: mural 2x2 com adesivos de número colados nos vídeos */
+function Adesivo({ a }: { a: Adesivo }) {
+  return (
+    <span className="absolute -bottom-4 -left-3 z-10 rounded-2xl px-3.5 py-2 text-left shadow-lg" style={{ background: a.cor, color: a.tinta, transform: `rotate(${-a.giro * 2}deg)` }}>
+      <span className={`${titulo.className} block text-2xl font-extrabold leading-none`}>{a.numero}</span>
+      <span className="block text-xs font-semibold opacity-90">{a.txt}{a.item.video.brand === "Ateliê" ? "" : ` · ${a.item.video.brand}`}</span>
+    </span>
+  );
+}
+
+function TelaAdesivo({ a }: { a: Adesivo }) {
+  return (
+    <span className="absolute inset-0 overflow-hidden rounded-[1.3rem]">
+      {a.tocar && a.item.local ? (
+        <video src={a.item.local} poster={a.item.capa} autoPlay muted loop playsInline className="h-full w-full object-cover" />
+      ) : (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img src={a.item.capa} alt={a.item.video.brand} className="h-full w-full object-cover" />
+      )}
+    </span>
+  );
+}
+
+// leque de 4 vídeos: no computador a capa ocupa exatamente a altura da janela e os vídeos crescem com ela
+const LEQUE = [{ giro: -5, desce: "2.5vh" }, { giro: -1.5, desce: "-2vh" }, { giro: 2, desce: "1.5vh" }, { giro: 5, desce: "-1vh" }];
+
+/** 2: mural com adesivos de número colados nos vídeos */
 function CapaAdesivos() {
   const { open } = useVideoModal();
   return (
-    <section className="pt-24 pb-6">
-      <div className="max-w-6xl mx-auto px-5 grid md:grid-cols-[1.15fr_0.85fr] gap-10 items-center">
-        <TextoCapa />
-        <div className="grid grid-cols-2 gap-4 mx-auto w-full max-w-[370px]">
-          {ADESIVOS.map((a, i) => (
-            <button key={a.item.video.id} type="button" onClick={() => open(a.item.video)}
-              className={`relative aspect-[9/14] rounded-[1.6rem] border-[5px] border-white shadow-xl ${i % 2 ? "mt-10" : ""}`}
-              style={{ transform: `rotate(${a.giro}deg)` }}>
-              <span className="absolute inset-0 overflow-hidden rounded-[1.3rem]">
-                {a.tocar && a.item.local ? (
-                  <video src={a.item.local} poster={a.item.capa} autoPlay muted loop playsInline className="h-full w-full object-cover" />
-                ) : (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img src={a.item.capa} alt={a.item.video.brand} className="h-full w-full object-cover" />
-                )}
-              </span>
-              <span className="absolute -bottom-4 -left-3 rounded-2xl px-3.5 py-2 text-left shadow-lg" style={{ background: a.cor, color: a.tinta, transform: `rotate(${-a.giro * 2}deg)` }}>
-                <span className={`${titulo.className} block text-2xl font-extrabold leading-none`}>{a.numero}</span>
-                <span className="block text-xs font-semibold opacity-90">{a.txt}{a.item.video.brand === "Ateliê" ? "" : ` · ${a.item.video.brand}`}</span>
-              </span>
-            </button>
-          ))}
+    <>
+      <section className="pt-24 pb-10 md:pt-16 md:pb-0 md:h-[100svh] md:min-h-[600px] flex items-center overflow-hidden">
+        <div className="max-w-[1320px] mx-auto px-5 md:px-10 grid md:grid-cols-[minmax(380px,0.72fr)_1.28fr] gap-10 md:gap-6 items-center w-full">
+          <TextoCapa />
+          <div className="hidden md:flex items-center justify-center min-w-0">
+            {ADESIVOS.map((a, i) => (
+              <button key={a.item.video.id} type="button" onClick={() => open(a.item.video)}
+                className="relative flex-shrink-0 aspect-[9/16] w-[min(29%,calc(min(68vh,620px)*0.5625))] rounded-[1.6rem] border-[5px] border-white shadow-2xl transition-transform duration-300 hover:-translate-y-2 hover:z-20"
+                style={{ transform: `rotate(${LEQUE[i].giro}deg) translateY(${LEQUE[i].desce})`, marginLeft: i ? "-5%" : 0, zIndex: i + 1 }}>
+                <TelaAdesivo a={a} />
+                <Adesivo a={a} />
+              </button>
+            ))}
+          </div>
+          <div className="md:hidden grid grid-cols-2 gap-4 mx-auto w-full max-w-[370px]">
+            {ADESIVOS.map((a, i) => (
+              <button key={a.item.video.id} type="button" onClick={() => open(a.item.video)}
+                className={`relative aspect-[9/14] rounded-[1.6rem] border-[5px] border-white shadow-xl ${i % 2 ? "mt-10" : ""}`}
+                style={{ transform: `rotate(${a.giro}deg)` }}>
+                <TelaAdesivo a={a} />
+                <Adesivo a={a} />
+              </button>
+            ))}
+          </div>
         </div>
-      </div>
+      </section>
       <Logos compacta />
-    </section>
+    </>
   );
 }
 
