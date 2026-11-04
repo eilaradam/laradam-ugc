@@ -20,12 +20,6 @@ type Item = {
 };
 
 const C = { fundo: "#F2F1ED", roxo: "#6C3CF5", roxoClaro: "#EEE8FE", limao: "#DCFB4E", rosa: "#FF4FA3", preto: "#18181B", suave: "#5B5B66" };
-const TIPO: Record<string, { nome: string; cor: string; tinta: string }> = {
-  roteiro: { nome: "Roteiro", cor: C.roxo, tinta: "#fff" },
-  conteudo: { nome: "Conteúdo", cor: C.preto, tinta: "#fff" },
-  espera_roteiro: { nome: "Marca aprovando roteiro", cor: C.roxoClaro, tinta: C.roxo },
-  espera_video: { nome: "Marca aprovando vídeo", cor: C.roxoClaro, tinta: C.roxo },
-};
 
 const hojeSP = () => new Date().toLocaleDateString("en-CA", { timeZone: "America/Sao_Paulo" });
 const dias = (de: string, ate: string) => Math.round((Date.parse(ate + "T12:00:00Z") - Date.parse(de + "T12:00:00Z")) / 864e5);
@@ -101,8 +95,13 @@ export default function Entregas() {
     xs.length > 0 && (
       <section className="mt-7">
         <h2 className="text-sm font-bold uppercase tracking-[0.14em]" style={{ color: cor }}>{titulo} · {xs.length}</h2>
-        <div className="mt-3 flex flex-col gap-3">
-          {xs.map((x) => <Cartao key={x.id} x={x} hoje={hoje} aberto={aberto === x.id} abrir={setAberto} mudar={mudar} />)}
+        <div className="mt-2 overflow-hidden rounded-2xl bg-white shadow-sm">
+          <div className="grid grid-cols-[76px_104px_1fr] gap-2 border-b border-black/10 px-3 py-2 text-[11px] font-bold uppercase tracking-[0.12em]" style={{ color: C.suave }}>
+            <span>Dias</span><span>Pendência</span><span>Marca</span>
+          </div>
+          <div className="divide-y divide-black/5">
+            {xs.map((x) => <Cartao key={x.id} x={x} hoje={hoje} aberto={aberto === x.id} abrir={setAberto} mudar={mudar} />)}
+          </div>
         </div>
       </section>
     );
@@ -133,7 +132,6 @@ export default function Entregas() {
 function Cartao({ x, hoje, aberto, abrir, mudar }: {
   x: Item; hoje: string; aberto: boolean; abrir: (id: string | null) => void; mudar: (id: string, c: Record<string, unknown>) => Promise<void>;
 }) {
-  const t = TIPO[x.tipo];
   const esperando = x.tipo.startsWith("espera");
   const e = esperando ? null : etiqueta(x.prazo, hoje);
   const campoPrazo = x.tipo === "roteiro" ? "prazo_roteiro" : "prazo_conteudo";
@@ -141,27 +139,23 @@ function Cartao({ x, hoje, aberto, abrir, mudar }: {
   const fazer = async (c: Record<string, unknown>) => { setSalvando(true); await mudar(x.id, c); setSalvando(false); };
 
   return (
-    <article id={x.id} className="rounded-2xl bg-white shadow-sm">
-      <button type="button" onClick={() => abrir(aberto ? null : x.id)} className="flex w-full items-center gap-3 p-4 text-left">
-        {e ? (
-          <span className="flex h-8 w-[78px] flex-shrink-0 items-center justify-center rounded-lg text-[13px] font-black" style={{ background: e.fundo, color: e.letra, border: e.fundo === "#fff" ? `1.5px solid ${C.roxoClaro}` : "none" }}>
-            {e.txt}
-          </span>
-        ) : (
-          <span className="flex h-8 w-[78px] flex-shrink-0 items-center justify-center rounded-lg text-[12px] font-bold" style={{ background: C.fundo, color: C.suave }}>
-            {x.desde ? `há ${Math.max(0, dias(x.desde, hoje))}d` : "—"}
-          </span>
-        )}
-        <span className="min-w-0 flex-1">
-          <span className="rounded-full px-2 py-0.5 text-[11px] font-bold" style={{ background: t.cor, color: t.tinta }}>{t.nome}</span>
-          {x.destaque ? <span className="ml-1 text-[12px]">⭐</span> : null}
-          <span className="mt-1 block font-bold leading-snug">{nomeLimpo(x.nome)}</span>
-          {x.cliente && <span className="block text-xs" style={{ color: C.suave }}>{x.cliente}{x.valor ? ` · R$${x.valor}` : ""}</span>}
+    <article id={x.id} style={{ background: aberto ? "#FAF9F6" : "#fff" }}>
+      {/* linha da planilha: Dias | Pendência | Marca */}
+      <button type="button" onClick={() => abrir(aberto ? null : x.id)} className="grid w-full grid-cols-[76px_104px_1fr] items-center gap-2 px-3 py-3 text-left">
+        <span className="text-[14px] font-extrabold" style={{ color: e ? (e.fundo === C.rosa ? "#E0307F" : e.txt === "HOJE" ? "#2F8F2F" : e.txt === "sem prazo" ? C.suave : C.preto) : C.suave }}>
+          {e ? (e.txt === "HOJE" ? "hoje" : e.txt === "sem prazo" ? "—" : e.txt.replace(/^em /, "")) : x.desde ? `há ${Math.max(0, dias(x.desde, hoje))} d` : "—"}
+        </span>
+        <span className="text-[13px] font-bold" style={{ color: x.tipo === "roteiro" ? C.roxo : x.tipo === "conteudo" ? C.preto : C.suave }}>
+          {x.tipo === "roteiro" ? "Roteiro" : x.tipo === "conteudo" ? "Conteúdo" : x.tipo === "espera_roteiro" ? "Aprov. roteiro" : "Aprov. vídeo"}
+        </span>
+        <span className="min-w-0 truncate text-[14px] font-semibold">
+          {x.destaque ? "⭐ " : ""}{nomeLimpo(x.nome)}
         </span>
       </button>
 
       {aberto && (
         <div className="border-t border-black/5 px-4 pb-4 pt-3 text-[15px]">
+          {x.cliente && <p style={{ color: C.suave }}>{x.cliente}{x.valor ? ` · R$${x.valor}` : ""}</p>}
           {x.prazo && !esperando && <p>Prazo: <b>{dataBonita(x.prazo)}</b></p>}
           {x.aprovada_em && <p style={{ color: C.suave }}>Campanha aprovada em {dataBonita(x.aprovada_em)}</p>}
           {x.roteiro_aprovado_em && <p style={{ color: C.suave }}>Roteiro aprovado em {dataBonita(x.roteiro_aprovado_em)}</p>}
