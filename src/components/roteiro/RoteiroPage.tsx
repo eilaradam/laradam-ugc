@@ -145,6 +145,12 @@ export default function RoteiroPage({ itens: iniciais, atual, lang }: Props) {
     return Number(Boolean(itens[b].roteiro.aprovado_em)) - Number(Boolean(itens[a].roteiro.aprovado_em)) || a - b;
   });
   const [expandidos, setExpandidos] = useState<Set<string>>(() => new Set());
+  // Modo gravação: só o que foi aprovado, tudo em sequência, sem abrir quadrado por quadrado.
+  // Abre sozinho quando toda seção com opções já tem uma aprovada.
+  const temAprovado = itens.some((x) => x.roteiro.aprovado_em);
+  const [soAprovados, setSoAprovados] = useState(
+    () => temSecoes && secoes.filter((g) => !g.informativo).every((g) => g.aprovados.length > 0)
+  );
 
   function abrirSecao(nome: string | null) {
     setAberta(nome);
@@ -206,7 +212,20 @@ export default function RoteiroPage({ itens: iniciais, atual, lang }: Props) {
               {t.roteiros(itens.filter((x) => !x.roteiro.conteudo.semAprovacao).length)}
             </p>
           )}
-          {temSecoes && <Cartoes secoes={secoes} aberta={aberta} abrir={abrirSecao} t={t} />}
+          {temSecoes && temAprovado && (
+            <div className="mt-6 inline-flex rounded-full border border-[var(--rt-linha)] bg-white p-1 text-[13px] font-semibold">
+              {[true, false].map((v) => (
+                <button
+                  key={String(v)}
+                  onClick={() => setSoAprovados(v)}
+                  className={`rounded-full px-4 py-1.5 ${soAprovados === v ? "bg-[var(--rt-ink)] text-white" : "text-[var(--rt-muted)]"}`}
+                >
+                  {v ? `✓ ${t.soAprovados}` : t.todasOpcoes}
+                </button>
+              ))}
+            </div>
+          )}
+          {temSecoes && !soAprovados && <Cartoes secoes={secoes} aberta={aberta} abrir={abrirSecao} t={t} />}
 
           {ordem.map((i, k) => {
             const x = itens[i];
@@ -215,7 +234,7 @@ export default function RoteiroPage({ itens: iniciais, atual, lang }: Props) {
             const abre = Boolean(secao) && (k === 0 || secaoDe(ordem[k - 1]) !== secao);
             const dentro = Boolean(secao) && !abre;
             const fecha = Boolean(secao) && secaoDe(ordem[k + 1]) !== secao;
-            if (temSecoes && secao !== aberta) return null;
+            if (soAprovados ? ehOpcao(x.roteiro) && !x.roteiro.aprovado_em : temSecoes && secao !== aberta) return null;
             const grupo = secoes.find((g) => g.nome === secao);
             const proxima = secoes[secoes.findIndex((g) => g.nome === secao) + 1];
             // com uma opção aprovada, as outras da mesma seção ficam recolhidas (dá pra abrir)
@@ -293,7 +312,7 @@ export default function RoteiroPage({ itens: iniciais, atual, lang }: Props) {
               />
             </RoteiroCtx.Provider>
             )}
-            {fecha && temSecoes && (
+            {fecha && temSecoes && !soAprovados && (
               <div className="mt-10 flex flex-wrap items-center justify-between gap-3 border-t border-[var(--rt-linha)] pt-6">
                 <button
                   onClick={() => {
