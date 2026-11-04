@@ -251,32 +251,59 @@ export default function RoteiroPage({ itens: iniciais, atual, lang }: Props) {
             const expandido = expandidos.has(x.roteiro.slug);
             const c = x.roteiro.conteudo;
             // no modo gravação, cada roteiro aprovado começa como uma linha; abre só na hora de gravar
+            const gravado = Boolean(c.gravado_em);
+            const botaoGravado = !c.semAprovacao && (
+              <button
+                onClick={() => enviarEm(i, "gravado")}
+                className={`flex-shrink-0 rounded-full border px-3.5 py-1.5 text-[12.5px] font-semibold ${
+                  gravado ? "border-[#13703A] bg-[#13703A] text-white" : "border-[var(--rt-linha)] bg-white text-[var(--rt-ink)] hover:border-[#13703A]"
+                }`}
+              >
+                {gravado ? `✓ ${t.gravado}` : t.marcarGravado}
+              </button>
+            );
+            // no modo gravação, cada roteiro aprovado começa como uma linha; abre só na hora de gravar
             if (soAprovados && !abertosGravar.has(x.roteiro.slug)) {
               return (
-                <button
+                <div
                   key={x.roteiro.slug}
-                  onClick={() => alternarGravar(x.roteiro.slug)}
-                  className={`${k === 0 ? "mt-6" : "mt-3"} flex w-full items-center justify-between gap-3 rounded-2xl border border-[var(--rt-linha)] bg-white px-4 py-4 text-left hover:border-[var(--rt-roxo)]`}
+                  className={`${k === 0 ? "mt-6" : "mt-3"} flex flex-col gap-3 rounded-2xl border px-4 py-4 sm:flex-row sm:items-center sm:justify-between ${
+                    gravado ? "border-[#13703A]/40 bg-[#E8F5EC]" : "border-[var(--rt-linha)] bg-white"
+                  }`}
                 >
-                  <span className="min-w-0">
-                    <span className="block text-[17px] font-extrabold leading-tight tracking-tight">{secao ?? c.titulo}</span>
+                  <button onClick={() => alternarGravar(x.roteiro.slug)} className="min-w-0 text-left sm:flex-1">
+                    <span className="block text-[17px] font-extrabold leading-tight tracking-tight">
+                      {gravado && <CheckCircle2 size={16} className="mr-1 inline -translate-y-px text-[#13703A]" />}
+                      {secao ?? c.titulo}
+                    </span>
                     <span className="mt-0.5 block text-[13.5px] text-[var(--rt-muted)]">
                       {[c.rotulo, secao ? c.titulo : null].filter(Boolean).join(" · ")}
                     </span>
+                  </button>
+                  <span className="flex flex-shrink-0 gap-2">
+                    {botaoGravado}
+                    <button
+                      onClick={() => alternarGravar(x.roteiro.slug)}
+                      className="rounded-full bg-[var(--rt-ink)] px-3.5 py-1.5 text-[12.5px] font-semibold text-white first-letter:uppercase"
+                    >
+                      {c.semAprovacao ? t.abrir : t.abrirGravar}
+                    </button>
                   </span>
-                  <span className="flex-shrink-0 rounded-full bg-[var(--rt-ink)] px-3.5 py-1.5 text-[12.5px] font-semibold text-white">{c.semAprovacao ? t.abrir : t.abrirGravar}</span>
-                </button>
+                </div>
               );
             }
             return (
             <Fragment key={x.roteiro.slug}>
             {soAprovados && (
-              <button
-                onClick={() => alternarGravar(x.roteiro.slug)}
-                className="mt-10 rounded-full border border-[var(--rt-linha)] bg-white px-3.5 py-1.5 text-[12.5px] font-semibold hover:border-[var(--rt-roxo)]"
-              >
-                ↑ {t.recolher}
-              </button>
+              <div className="mt-10 flex flex-wrap gap-2">
+                <button
+                  onClick={() => alternarGravar(x.roteiro.slug)}
+                  className="rounded-full border border-[var(--rt-linha)] bg-white px-3.5 py-1.5 text-[12.5px] font-semibold hover:border-[var(--rt-roxo)]"
+                >
+                  ↑ {t.recolher}
+                </button>
+                {botaoGravado}
+              </div>
             )}
             {abre && (
               <h2

@@ -132,6 +132,17 @@ export async function POST(req: Request, ctx: Ctx) {
     const letra = letraDoGancho(conteudo, r.gancho_escolhido);
     const gancho = letra ? ` com o gancho ${letra}` : "";
     aviso = { assunto: `✅ ${autor} aprovou o roteiro ${marca}${gancho}`, linhas: ["Pode gravar! 🎬"] };
+  } else if (acao === "gravado") {
+    // liga/desliga o "Gravado" do dia da gravação
+    const novo: RoteiroConteudo = structuredClone(conteudo);
+    if (novo.gravado_em) {
+      delete novo.gravado_em;
+      delete novo.gravado_por;
+    } else {
+      novo.gravado_em = new Date().toISOString();
+      novo.gravado_por = autor;
+    }
+    await db.from("roteiros_marca").update({ conteudo: novo, updated_at: new Date().toISOString() }).eq("id", r.id);
   } else if (acao === "aceitar" || acao === "recusar" || acao === "resolver" || acao === "reabrir") {
     if (!lara) return erro("Só a Lara pode fazer isso", 403);
     const id = str(body.id, 60);

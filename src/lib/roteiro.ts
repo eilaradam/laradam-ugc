@@ -33,6 +33,9 @@ export type Parte = {
 };
 
 export type RoteiroConteudo = {
+  /** marcado no dia da gravação (botão "Gravado" no modo só os aprovados) */
+  gravado_em?: string;
+  gravado_por?: string;
   /** título grande do topo (padrão "Roteiro de vídeo") */
   titulo?: string;
   /** cor da marca (hex); vira a cor de destaque da página */
