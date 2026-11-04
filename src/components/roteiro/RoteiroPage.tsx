@@ -148,6 +148,14 @@ export default function RoteiroPage({ itens: iniciais, atual, lang }: Props) {
   // Modo gravação: só o que foi aprovado, tudo em sequência, sem abrir quadrado por quadrado.
   // Abre sozinho quando toda seção com opções já tem uma aprovada.
   const temAprovado = itens.some((x) => x.roteiro.aprovado_em);
+  const [abertosGravar, setAbertosGravar] = useState<Set<string>>(() => new Set());
+  const alternarGravar = (slug: string) =>
+    setAbertosGravar((e) => {
+      const n = new Set(e);
+      if (n.has(slug)) n.delete(slug);
+      else n.add(slug);
+      return n;
+    });
   const [soAprovados, setSoAprovados] = useState(
     () => temSecoes && secoes.filter((g) => !g.informativo).every((g) => g.aprovados.length > 0)
   );
@@ -242,8 +250,34 @@ export default function RoteiroPage({ itens: iniciais, atual, lang }: Props) {
             const primeiroRecolhido = recolhido && (k === 0 || itens[ordem[k - 1]].roteiro.aprovado_em);
             const expandido = expandidos.has(x.roteiro.slug);
             const c = x.roteiro.conteudo;
+            // no modo gravação, cada roteiro aprovado começa como uma linha; abre só na hora de gravar
+            if (soAprovados && !abertosGravar.has(x.roteiro.slug)) {
+              return (
+                <button
+                  key={x.roteiro.slug}
+                  onClick={() => alternarGravar(x.roteiro.slug)}
+                  className={`${k === 0 ? "mt-6" : "mt-3"} flex w-full items-center justify-between gap-3 rounded-2xl border border-[var(--rt-linha)] bg-white px-4 py-4 text-left hover:border-[var(--rt-roxo)]`}
+                >
+                  <span className="min-w-0">
+                    <span className="block text-[17px] font-extrabold leading-tight tracking-tight">{secao ?? c.titulo}</span>
+                    <span className="mt-0.5 block text-[13.5px] text-[var(--rt-muted)]">
+                      {[c.rotulo, secao ? c.titulo : null].filter(Boolean).join(" · ")}
+                    </span>
+                  </span>
+                  <span className="flex-shrink-0 rounded-full bg-[var(--rt-ink)] px-3.5 py-1.5 text-[12.5px] font-semibold text-white">{c.semAprovacao ? t.abrir : t.abrirGravar}</span>
+                </button>
+              );
+            }
             return (
             <Fragment key={x.roteiro.slug}>
+            {soAprovados && (
+              <button
+                onClick={() => alternarGravar(x.roteiro.slug)}
+                className="mt-10 rounded-full border border-[var(--rt-linha)] bg-white px-3.5 py-1.5 text-[12.5px] font-semibold hover:border-[var(--rt-roxo)]"
+              >
+                ↑ {t.recolher}
+              </button>
+            )}
             {abre && (
               <h2
                 id="secao-aberta"
