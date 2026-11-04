@@ -320,6 +320,7 @@ function Nichos() {
     .filter((c) => c.videos.length >= 3)
     .sort((a, b) => ordemNicho(a.slug) - ordemNicho(b.slug));
   const [ativo, setAtivo] = useState(nichos[0]?.slug);
+  const [previa, setPrevia] = useState<string | null>(null);
   const n = nichos.find((x) => x.slug === ativo) ?? nichos[0];
   return (
     <section id="nichos" className="py-20">
@@ -338,11 +339,17 @@ function Nichos() {
         </div>
         <div className="mt-8 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4">
           {n.videos.slice(0, 12).map((v) => (
-            <button key={v.id} type="button" onClick={() => open(v)} className="group relative aspect-[9/16] overflow-hidden rounded-[1.4rem] bg-white">
+            <button key={v.id} type="button" onClick={() => open(v)}
+              onMouseEnter={() => v.youtubeId && setPrevia(v.youtubeId)} onMouseLeave={() => setPrevia(null)}
+              className="group relative aspect-[9/16] overflow-hidden rounded-[1.4rem] bg-white">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={thumb(v)} alt={v.brand} onError={(e) => proximaCapa(e.currentTarget, v)}
                 onLoad={(e) => { if (e.currentTarget.naturalWidth <= 120) proximaCapa(e.currentTarget, v); }}
                 className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+              {/* prévia muda de 8 s enquanto o mouse está em cima (só no computador; no celular fica a capa) */}
+              {previa === v.youtubeId && (
+                <video src={`/si/previa/${v.youtubeId}.mp4`} autoPlay muted loop playsInline className="absolute inset-0 h-full w-full object-cover" />
+              )}
               <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 to-transparent p-3 text-left text-sm font-semibold text-white">{v.brand}</span>
             </button>
           ))}
