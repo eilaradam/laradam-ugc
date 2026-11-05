@@ -10,6 +10,7 @@ type Item = {
   titulo: string;
   gancho: string | null;
   roteiro: string | null;
+  legenda: string | null;
   checklist: { t: string; ok: boolean }[];
   takes_url: string | null;
   status: string;
@@ -122,6 +123,31 @@ export default function Rotina() {
   );
 }
 
+function Legenda({ x, salvar }: { x: Item; salvar: (id: string, m: Partial<Item>) => void }) {
+  const [texto, setTexto] = useState(x.legenda ?? "");
+  const [copiou, setCopiou] = useState(false);
+  const copiar = async () => {
+    await navigator.clipboard.writeText(texto);
+    setCopiou(true);
+    setTimeout(() => setCopiou(false), 2000);
+  };
+  return (
+    <>
+      <div className="mt-4 flex items-center justify-between gap-2">
+        <p className="text-xs font-bold uppercase tracking-[0.14em]" style={{ color: C.roxo }}>Legenda</p>
+        <button type="button" onClick={copiar} disabled={!texto.trim()} className="rounded-full px-3 py-1.5 text-xs font-bold disabled:opacity-40"
+          style={copiou ? { background: C.limao, color: C.preto } : { background: C.roxo, color: "#fff" }}>
+          {copiou ? "Copiada ✓" : "Copiar legenda"}
+        </button>
+      </div>
+      <textarea value={texto} rows={Math.max(4, Math.min(12, texto.split("\n").length + 2))} maxLength={2200} placeholder="Escreve a legenda aqui"
+        onChange={(e) => setTexto(e.target.value)}
+        onBlur={() => { if (texto !== (x.legenda ?? "")) salvar(x.id, { legenda: texto }); }}
+        className="mt-1.5 w-full resize-y rounded-xl p-3 text-[16px] leading-relaxed outline-none" style={{ background: C.fundo, color: "#333" }} />
+    </>
+  );
+}
+
 function Cartao({ x, aberto, abrir, salvar, atrasado }: {
   x: Item; aberto: boolean; abrir: (id: string | null) => void; salvar: (id: string, m: Partial<Item>) => void; atrasado?: boolean;
 }) {
@@ -157,6 +183,7 @@ function Cartao({ x, aberto, abrir, salvar, atrasado }: {
               <p className="mt-1 whitespace-pre-line text-[15px] leading-relaxed" style={{ color: "#333" }}>{x.roteiro}</p>
             </>
           )}
+          <Legenda x={x} salvar={salvar} />
           {x.checklist?.length > 0 && (
             <>
               <p className="mt-4 text-xs font-bold uppercase tracking-[0.14em]" style={{ color: C.roxo }}>Checklist</p>

@@ -52,6 +52,7 @@ export async function PATCH(req: Request) {
   if (typeof body.status === "string" && (STATUS as readonly string[]).includes(body.status)) mudar.status = body.status;
   if (Array.isArray(body.checklist)) mudar.checklist = body.checklist.slice(0, 30);
   if (typeof body.takes_url === "string") mudar.takes_url = body.takes_url.slice(0, 500);
+  if (typeof body.legenda === "string") mudar.legenda = body.legenda.slice(0, 2200);
   const { data, error } = await supabaseAdmin().from("conteudo_perfil").update(mudar).eq("id", id).select().maybeSingle();
   if (error) return Response.json({ error: error.message }, { status: 500 });
   return Response.json({ item: data });
