@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { Bricolage_Grotesque, Caveat } from "next/font/google";
+import localFont from "next/font/local";
+import { Bricolage_Grotesque } from "next/font/google";
 import { ArrowRight, Volume2 } from "lucide-react";
 import { BRAND_LOGO_FILES, CATEGORIES, VIDEOS, type Video } from "@/data/content";
 import { useVideoModal } from "../VideoModalProvider";
@@ -12,7 +13,7 @@ import { CAPAS_SI } from "@/data/capasSI";
 // sem repetir os blocos da home deles. Só números que já estão no portfólio dela.
 
 const titulo = Bricolage_Grotesque({ subsets: ["latin"], weight: ["600", "700", "800"] });
-const mao = Caveat({ subsets: ["latin"], weight: ["600", "700"] });
+const mao = localFont({ src: "../../fonts/Caveat.woff2", weight: "400 700", display: "swap" });
 
 const C = { fundo: "#F2F1ED", roxo: "#6C3CF5", roxoClaro: "#EEE8FE", limao: "#DCFB4E", rosa: "#DB4FA0", preto: "#18181B", suave: "#5B5B66" };
 
