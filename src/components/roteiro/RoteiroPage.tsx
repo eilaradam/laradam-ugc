@@ -581,7 +581,14 @@ function Secao({
       </div>
       )}
 
-      {(c.conceito || c.regra || lara) && (
+      {/* com escolha única, é só explicação: a marca lê, mas não tem o que editar aí */}
+      {c.escolhaUnica && !lara && (c.conceito || c.regra) && (
+        <div className="mt-4 space-y-2 text-[15px] leading-relaxed">
+          {c.conceito && <p>{c.conceito}</p>}
+          {c.regra && <p className="text-[13px] text-[var(--rt-muted)]">{c.regra}</p>}
+        </div>
+      )}
+      {(!c.escolhaUnica || lara) && (c.conceito || c.regra || lara) && (
         <div className="mt-4 space-y-2 text-[15px] leading-relaxed">
           {(c.conceito || lara) && (
             <Campo
