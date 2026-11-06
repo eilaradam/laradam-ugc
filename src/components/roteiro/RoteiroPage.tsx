@@ -211,7 +211,16 @@ export default function RoteiroPage({ itens: iniciais, atual, lang }: Props) {
       <div className="mx-auto max-w-[880px] px-4 pt-10 md:px-8 lg:pt-14">
         <main className="min-w-0">
           <div className="flex flex-wrap items-center justify-between gap-3">
-            {primeiro.logo ? (
+            {primeiro.capa ? (
+              <div className="flex min-w-0 items-center gap-4">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={primeiro.capa} alt={primeiro.produto ?? primeiro.marca} className="size-[92px] shrink-0 rounded-full border border-[var(--rt-linha)] bg-white object-cover" />
+                <div className="min-w-0">
+                  <p className="text-[24px] font-extrabold leading-tight tracking-tight">{primeiro.marca}</p>
+                  {primeiro.produto && <p className="mt-0.5 text-[14px] leading-snug text-[var(--rt-muted)]">{primeiro.produto}</p>}
+                </div>
+              </div>
+            ) : primeiro.logo ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img src={primeiro.logo} alt={primeiro.marca} className="h-9 w-auto max-w-[180px] object-contain object-left" />
             ) : (

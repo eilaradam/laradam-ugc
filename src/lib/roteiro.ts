@@ -42,6 +42,10 @@ export type RoteiroConteudo = {
   cor?: string;
   /** logo da marca (URL no bucket roteiros-marca) */
   logo?: string;
+  /** foto do produto na capa do topo, com o nome da marca (URL no bucket roteiros-marca) */
+  capa?: string;
+  /** nome do produto, embaixo da marca na capa */
+  produto?: string;
   marca: string;
   creator: string;
   formato: string;
