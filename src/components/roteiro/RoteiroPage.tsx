@@ -131,7 +131,8 @@ export default function RoteiroPage({ itens: iniciais, atual, lang }: Props) {
 
   // Com seções, a página abre só com os quadrados; clicar num deles mostra aquela seção.
   // O link de um roteiro específico (ex.: e-mail de comentário) já abre a seção dele.
-  const temSecoes = itens.some((x) => x.roteiro.conteudo.secao);
+  const escolhaUnica = itens.some((x) => x.roteiro.conteudo.escolhaUnica);
+  const temSecoes = !escolhaUnica && itens.some((x) => x.roteiro.conteudo.secao);
   const secoes = secoesDe(itens.map((x) => x.roteiro), itens.map((x) => x.notas));
   const [aberta, setAberta] = useState<string | null>(() =>
     temSecoes && atual !== itens[0].roteiro.slug ? (itens.find((x) => x.roteiro.slug === atual)?.roteiro.conteudo.secao ?? null) : null
@@ -146,7 +147,9 @@ export default function RoteiroPage({ itens: iniciais, atual, lang }: Props) {
   });
   const [expandidos, setExpandidos] = useState<Set<string>>(() => new Set());
   // Escolha única: uma opção por vez na tela, pra marca comparar sem rolar tudo.
-  const escolhaUnica = itens.some((x) => x.roteiro.conteudo.escolhaUnica);
+  // Com seções (vários vídeos), a marca escolhe uma opção por seção.
+  const videosEscolha = [...new Set(itens.map((x) => x.roteiro.conteudo.secao).filter(Boolean))];
+  const aprovadaDaSecao = (secao?: string) => itens.find((o) => o.roteiro.conteudo.secao === secao && o.roteiro.aprovado_em);
   const [opcaoAberta, setOpcaoAberta] = useState(() => Math.max(0, itens.findIndex((x) => x.roteiro.aprovado_em)));
   const alternarOpcao = (i: number, slug: string) => {
     const abrir = opcaoAberta !== i;
@@ -239,7 +242,7 @@ export default function RoteiroPage({ itens: iniciais, atual, lang }: Props) {
           )}
           {escolhaUnica && (
             <div className="mt-7">
-              <h2 className="text-[22px] font-extrabold leading-tight tracking-tight">{t.escolhaUnica(itens.length)}</h2>
+              <h2 className="text-[22px] font-extrabold leading-tight tracking-tight">{videosEscolha.length > 1 ? t.escolhaPorVideo : t.escolhaUnica(itens.length)}</h2>
               <p className="mt-1.5 text-[14px] text-[var(--rt-muted)]">{t.comoRevisarCurto}</p>
             </div>
           )}
@@ -309,10 +312,10 @@ export default function RoteiroPage({ itens: iniciais, atual, lang }: Props) {
                 erro={varios ? null : erro}
                 abre={abre}
                 dentro={dentro && !recolhido}
-                podeEscolher={escolhaUnica && !itens.some((o) => o.roteiro.aprovado_em)}
+                podeEscolher={escolhaUnica && !aprovadaDaSecao(secao)}
                 outraEscolhida={
                   x.roteiro.conteudo.escolhaUnica && !x.roteiro.aprovado_em
-                    ? itens.find((o) => o.roteiro.aprovado_em)?.roteiro.conteudo.rotulo?.split(" · ")[0] ?? null
+                    ? aprovadaDaSecao(secao)?.roteiro.conteudo.rotulo?.split(" · ")[0] ?? null
                     : null
                 }
               />
@@ -322,9 +325,11 @@ export default function RoteiroPage({ itens: iniciais, atual, lang }: Props) {
               const c = x.roteiro.conteudo;
               const on = i === opcaoAberta;
               return (
-                <div key={x.roteiro.slug} id={`opcao-${x.roteiro.slug}`} className="mt-3 scroll-mt-3 overflow-hidden rounded-2xl border border-[var(--rt-linha)] bg-white">
+                <Fragment key={x.roteiro.slug}>
+                {abre && <h2 className="mb-1 mt-8 text-[17px] font-bold tracking-tight">{secao}</h2>}
+                <div id={`opcao-${x.roteiro.slug}`} className="mt-3 scroll-mt-3 overflow-hidden rounded-2xl border border-[var(--rt-linha)] bg-white">
                   <button onClick={() => alternarOpcao(i, x.roteiro.slug)} aria-expanded={on} className="flex w-full items-center gap-3.5 p-4 text-left">
-                    <span className="text-[28px] font-extrabold leading-none text-[var(--rt-roxo)]">{i + 1}</span>
+                    <span className="text-[28px] font-extrabold leading-none text-[var(--rt-roxo)]">{c.rotulo?.match(/\d+/)?.[0] ?? i + 1}</span>
                     <span className="min-w-0 flex-1">
                       <span className="block text-[16px] font-bold leading-snug">{c.titulo}</span>
                       {c.rotulo?.includes(" · ") && (
@@ -339,6 +344,7 @@ export default function RoteiroPage({ itens: iniciais, atual, lang }: Props) {
                   </button>
                   {on && <div className="border-t border-[var(--rt-linha)] px-3.5 pb-4 md:px-5">{conteudo}</div>}
                 </div>
+                </Fragment>
               );
             }
             // no modo gravação, cada roteiro aprovado começa como uma linha; abre só na hora de gravar
