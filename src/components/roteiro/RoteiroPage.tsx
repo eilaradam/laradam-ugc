@@ -728,6 +728,11 @@ function Secao({
             {t.roteiro} <span className="text-[var(--rt-muted)]">· {t.depoisDoGancho}</span>
           </>
         )}
+        {lara && (
+          <span className="text-[var(--rt-muted)]">
+            {" "}· ≈ {Math.round(segundosDeFala([c.ganchos[0]?.fala ?? "", ...c.partes.map((p) => p.fala)].join(" ")))} s de fala com o primeiro gancho
+          </span>
+        )}
       </Titulo>
       <div className="overflow-hidden rounded-2xl border border-[var(--rt-linha)] bg-white">
         {c.partes.map((p, i) => (
@@ -750,14 +755,16 @@ function Secao({
                   </p>
                 )}
               />
-              {(p.tempo || lara) && (
+              {p.tempo ? (
                 <Campo
                   alvo={`parte:${p.id}:tempo`}
-                  texto={p.tempo ?? ""}
+                  texto={p.tempo}
                   multilinha={false}
                   vazio="0:00"
                   render={(x) => <p className="mt-0.5 text-[12px] tabular-nums text-[var(--rt-muted)]">{x}</p>}
                 />
+              ) : (
+                lara && <p className="mt-0.5 text-[12px] tabular-nums text-[var(--rt-muted)]">≈ {Math.max(1, Math.round(segundosDeFala(p.fala)))} s de fala</p>
               )}
             </div>
             <div className="min-w-0 space-y-2.5 md:pr-16">
@@ -1000,6 +1007,11 @@ function Cartoes({ secoes, aberta, abrir, t }: { secoes: GrupoSecao[]; aberta: s
       </div>
     </div>
   );
+}
+
+// Ritmo real de fala da Lara (manual de roteiro): 3,74 palavras por segundo.
+function segundosDeFala(texto: string) {
+  return (texto.match(/[\p{L}\d]+/gu)?.length ?? 0) / 3.74;
 }
 
 function Titulo({ children }: { children: React.ReactNode }) {
