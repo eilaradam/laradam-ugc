@@ -130,14 +130,14 @@ export async function POST(req: Request, ctx: Ctx) {
   } else if (acao === "aprovar") {
     if (conteudo.escolhaUnica) {
       if (conteudo.ganchos.length > 1 && !r.gancho_escolhido) return erro("Escolha o gancho 1 ou 2 antes de aprovar");
-      const { data: outra } = await db
+      const { data: outras } = await db
         .from("roteiros_marca")
-        .select("id")
+        .select("id, conteudo")
         .eq("conteudo->>grupo", conteudo.grupo ?? "")
         .neq("id", r.id)
-        .not("aprovado_em", "is", null)
-        .limit(1);
-      if (outra?.length) return erro("Outra opção já foi aprovada");
+        .not("aprovado_em", "is", null);
+      // com seções, vale uma opção por seção
+      if (outras?.some((o) => (o.conteudo as RoteiroConteudo).secao === conteudo.secao)) return erro("Outra opção já foi aprovada");
     }
     await db.from("roteiros_marca").update({ aprovado_em: new Date().toISOString(), aprovado_por: autor, updated_at: new Date().toISOString() }).eq("id", r.id);
     const letra = letraDoGancho(conteudo, r.gancho_escolhido);
