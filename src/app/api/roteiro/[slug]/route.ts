@@ -129,7 +129,7 @@ export async function POST(req: Request, ctx: Ctx) {
     aviso = { assunto: `🎯 ${autor} escolheu o gancho ${letra} (${marca})`, linhas: [`${letra} · ${g.titulo}`, g.fala] };
   } else if (acao === "aprovar") {
     if (conteudo.escolhaUnica) {
-      if (conteudo.ganchos.length > 1 && !r.gancho_escolhido) return erro("Escolha o gancho 1 ou 2 antes de aprovar");
+      if (conteudo.ganchos.length > 1 && !conteudo.ganchosTodos && !r.gancho_escolhido) return erro("Escolha o gancho 1 ou 2 antes de aprovar");
       const { data: outras } = await db
         .from("roteiros_marca")
         .select("id, conteudo")

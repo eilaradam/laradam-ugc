@@ -658,8 +658,8 @@ function Secao({
               <div className="flex gap-4 md:gap-5">
                 <span className="text-[24px] font-extrabold leading-none text-[var(--rt-roxo)]">{letra}</span>
                 <div className="min-w-0 flex-1 space-y-2">
-                  <div className={`flex flex-wrap items-center gap-2 ${c.escolhaUnica && !lara ? "hidden" : "pr-20"}`}>
-                    {((g.titulo && !c.escolhaUnica) || lara) && (
+                  <div className={`flex flex-wrap items-center gap-2 ${c.escolhaUnica && !c.ganchosTodos && !lara ? "hidden" : "pr-20"}`}>
+                    {((g.titulo && (!c.escolhaUnica || c.ganchosTodos)) || lara) && (
                       <Campo
                         alvo={`gancho:${g.id}:titulo`}
                         texto={g.titulo}
@@ -891,7 +891,7 @@ function Secao({
       )}
 
       {aprovando && (
-        <Aprovar fechar={() => setAprovando(false)} gancho={letraEscolhida} temGanchos={c.ganchos.length > 1 && !c.ganchosTodos} opcoesGancho={c.escolhaUnica ? c.ganchos : undefined} escolhidoId={roteiro.gancho_escolhido} pendentes={sugestoes} />
+        <Aprovar fechar={() => setAprovando(false)} gancho={letraEscolhida} temGanchos={c.ganchos.length > 1 && !c.ganchosTodos} opcoesGancho={c.escolhaUnica && !c.ganchosTodos ? c.ganchos : undefined} escolhidoId={roteiro.gancho_escolhido} pendentes={sugestoes} />
       )}
     </section>
   );
