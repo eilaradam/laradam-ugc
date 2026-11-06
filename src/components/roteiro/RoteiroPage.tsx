@@ -228,8 +228,8 @@ export default function RoteiroPage({ itens: iniciais, atual, lang }: Props) {
               // eslint-disable-next-line @next/next/no-img-element
               <img src={primeiro.logo} alt={primeiro.marca} className="h-9 w-auto max-w-[180px] object-contain object-left" />
             ) : (
-              <p className="flex items-center gap-1 text-[13px] font-bold">
-                {primeiro.marca} <Sparkles size={13} className="text-[var(--rt-roxo)]" />
+              <p className="flex items-center gap-1.5 text-[24px] font-extrabold tracking-tight">
+                {primeiro.marca} <Sparkles size={20} className="text-[var(--rt-roxo)]" />
               </p>
             )}
             {disponiveis.length > 1 && <Linguas linguas={disponiveis} atual={lingua} mudar={setLingua} />}
