@@ -630,7 +630,7 @@ function Secao({
         <>
       <Titulo>
         {c.ganchos.length > 1 ? t.ganchos : t.gancho}{" "}
-        {c.ganchos.length > 1 && !c.escolhaUnica && <span className="text-[var(--rt-muted)]">· {c.ganchosTodos ? t.gravamosTodos : t.escolherUm}</span>}
+        {c.ganchos.length > 1 && <span className="text-[var(--rt-muted)]">· {c.ganchosTodos ? t.gravamosTodos : t.escolherUm}</span>}
       </Titulo>
       <div className="space-y-2.5">
         {c.ganchos.map((g, i) => {
@@ -687,7 +687,7 @@ function Secao({
                     <Campo alvo={`gancho:${g.id}:tela`} texto={g.tela ?? ""} vazio="o que aparece na tela" render={(x) => <Tela>{x}</Tela>} />
                   )}
                   <Midia bloco={`gancho:${g.id}`} fotos={g.fotos} refs={g.refs} />
-                  {c.ganchos.length > 1 && !c.ganchosTodos && !c.escolhaUnica && (
+                  {c.ganchos.length > 1 && !c.ganchosTodos && (
                     <div className="flex flex-wrap items-center gap-2 pt-2">
                       <button
                         onClick={() => enviar("gancho", { id: g.id })}
