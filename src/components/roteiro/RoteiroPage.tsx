@@ -247,6 +247,9 @@ export default function RoteiroPage({ itens: iniciais, atual, lang }: Props) {
                         {x.roteiro.conteudo.rotulo?.split(" · ")[0] ?? `${t.roteiro} ${i + 1}`}
                       </span>
                       <span className="mt-1 block text-[15px] font-bold leading-snug">{x.roteiro.conteudo.titulo}</span>
+                      <span className={`mt-2 block text-[12px] font-semibold ${on ? "text-[var(--rt-muted)]" : "text-[var(--rt-roxo)] underline"}`}>
+                        {on ? t.lendoAgora : t.tocarPraLer}
+                      </span>
                     </button>
                   );
                 })}
@@ -604,7 +607,7 @@ function Secao({
       {(c.ganchos.length > 0 || lara) && (
         <>
       <Titulo>
-        {c.escolhaUnica && c.ganchos.length > 1 ? t.escolhaOGancho : c.ganchos.length > 1 ? t.ganchos : t.gancho}{" "}
+        {c.ganchos.length > 1 ? t.ganchos : t.gancho}{" "}
         {c.ganchos.length > 1 && !c.escolhaUnica && <span className="text-[var(--rt-muted)]">· {c.ganchosTodos ? t.gravamosTodos : t.escolherUm}</span>}
       </Titulo>
       <div className="space-y-2.5">
@@ -662,7 +665,7 @@ function Secao({
                     <Campo alvo={`gancho:${g.id}:tela`} texto={g.tela ?? ""} vazio="o que aparece na tela" render={(x) => <Tela>{x}</Tela>} />
                   )}
                   <Midia bloco={`gancho:${g.id}`} fotos={g.fotos} refs={g.refs} />
-                  {c.ganchos.length > 1 && !c.ganchosTodos && (
+                  {c.ganchos.length > 1 && !c.ganchosTodos && !c.escolhaUnica && (
                     <div className="flex flex-wrap items-center gap-2 pt-2">
                       <button
                         onClick={() => enviar("gancho", { id: g.id })}
@@ -814,12 +817,12 @@ function Secao({
       {!c.semAprovacao && (
       <div
         className={
-          varios
+          varios && !c.escolhaUnica
             ? "mt-8 rounded-2xl border border-[var(--rt-linha)] bg-white"
             : "fixed inset-x-0 bottom-0 z-40 border-t border-[var(--rt-linha)] bg-white/90 backdrop-blur"
         }
       >
-        <div className={`mx-auto flex max-w-[880px] flex-wrap items-center gap-3 px-4 py-3 ${varios ? "md:px-5" : "md:px-8"}`}>
+        <div className={`mx-auto flex max-w-[880px] flex-wrap items-center gap-3 px-4 py-3 ${varios && !c.escolhaUnica ? "md:px-5" : "md:px-8"}`}>
           {erro && <p className="w-full text-[12.5px] font-semibold text-[#B4321F] md:w-auto">{erro}</p>}
           <p className="text-[12.5px] text-[var(--rt-muted)]">
             {sugestoes + comentarios === 0 ? (
@@ -833,12 +836,17 @@ function Secao({
               </>
             )}
           </p>
-          <div className="ml-auto flex flex-wrap items-center gap-2">
-            {proximaOpcao && (
+          <div className={`flex flex-wrap items-center gap-2 ${c.escolhaUnica ? "w-full" : "ml-auto"}`}>
+            {proximaOpcao && !chave && (
               <button
-                onClick={proximaOpcao}
-                className="rounded-full border border-[var(--rt-linha)] px-4 py-2.5 text-[13.5px] font-semibold hover:border-[var(--rt-roxo)]"
+                onClick={() => setAprovando(true)}
+                className="w-full rounded-full bg-[#13703A] px-5 py-3.5 text-[16px] font-bold text-white"
               >
+                {t.queroEsta(c.rotulo?.split(" · ")[0] ?? "")}
+              </button>
+            )}
+            {proximaOpcao && (
+              <button onClick={proximaOpcao} className="w-full py-1 text-[13.5px] font-semibold text-[var(--rt-muted)] underline">
                 {t.verOutraOpcao}
               </button>
             )}
@@ -850,7 +858,7 @@ function Secao({
               <span className="text-[12.5px] text-[var(--rt-muted)]">{t.outraEscolhida(outraEscolhida)}</span>
             ) : chave ? (
               <span className="text-[12.5px] text-[var(--rt-muted)]">Aguardando a marca aprovar</span>
-            ) : (
+            ) : proximaOpcao ? null : (
               <button
                 onClick={() => setAprovando(true)}
                 className="rounded-full bg-[var(--rt-ink)] px-5 py-2.5 text-[13.5px] font-bold text-white transition-transform hover:scale-[1.02]"
@@ -864,7 +872,7 @@ function Secao({
       )}
 
       {aprovando && (
-        <Aprovar fechar={() => setAprovando(false)} gancho={letraEscolhida} temGanchos={c.ganchos.length > 1 && !c.ganchosTodos} exigeGancho={c.escolhaUnica} pendentes={sugestoes} />
+        <Aprovar fechar={() => setAprovando(false)} gancho={letraEscolhida} temGanchos={c.ganchos.length > 1 && !c.ganchosTodos} opcoesGancho={c.escolhaUnica ? c.ganchos : undefined} escolhidoId={roteiro.gancho_escolhido} pendentes={sugestoes} />
       )}
     </section>
   );
@@ -996,13 +1004,16 @@ function Aprovar({
   fechar,
   gancho,
   temGanchos,
-  exigeGancho,
+  opcoesGancho,
+  escolhidoId,
   pendentes,
 }: {
   fechar: () => void;
   gancho: string | null;
   temGanchos: boolean;
-  exigeGancho?: boolean;
+  /** escolha única: o gancho é escolhido aqui mesmo, antes de aprovar */
+  opcoesGancho?: { id: string; fala: string }[];
+  escolhidoId?: string | null;
   pendentes: number;
 }) {
   const ctx = useRoteiro();
@@ -1010,10 +1021,16 @@ function Aprovar({
   const [nome, setNome] = useState(ctx.nome);
   const [ok, setOk] = useState(false);
   const [enviando, setEnviando] = useState(false);
+  const [ganchoId, setGanchoId] = useState(escolhidoId ?? null);
+  const escolherAqui = (opcoesGancho?.length ?? 0) > 1;
 
   async function aprovar() {
     if (nome.trim() !== ctx.nome) ctx.setNome(nome.trim());
     setEnviando(true);
+    if (escolherAqui && ganchoId !== escolhidoId && !(await ctx.enviar("gancho", { id: ganchoId, autor: nome.trim() }))) {
+      setEnviando(false);
+      return;
+    }
     const res = await ctx.enviar("aprovar", { autor: nome.trim() });
     setEnviando(false);
     if (res) setOk(true);
@@ -1021,7 +1038,7 @@ function Aprovar({
 
   return (
     <div className="fixed inset-0 z-50 grid place-items-center bg-black/50 p-4 backdrop-blur-sm" onClick={fechar}>
-      <div className="w-full max-w-[420px] rounded-3xl bg-white p-6" onClick={(e) => e.stopPropagation()}>
+      <div className="max-h-[90dvh] w-full max-w-[420px] overflow-y-auto rounded-3xl bg-white p-6" onClick={(e) => e.stopPropagation()}>
         {ok ? (
           <div className="text-center">
             <div className="mx-auto grid size-14 place-items-center rounded-full bg-[#DDF5E6] text-[#13703A]">
@@ -1035,10 +1052,28 @@ function Aprovar({
           </div>
         ) : (
           <>
-            <h3 className="text-[22px] font-extrabold tracking-tight">{t.aprovarTitulo}</h3>
+            <h3 className="text-[22px] font-extrabold leading-tight tracking-tight">{escolherAqui ? t.qualGancho : t.aprovarTitulo}</h3>
+            {escolherAqui && (
+              <div className="mt-3 space-y-2">
+                {opcoesGancho!.map((g, i) => (
+                  <button
+                    key={g.id}
+                    onClick={() => setGanchoId(g.id)}
+                    aria-pressed={ganchoId === g.id}
+                    className={`flex w-full gap-3 rounded-2xl border-2 p-3.5 text-left text-[14.5px] leading-snug ${
+                      ganchoId === g.id ? "border-[#13703A] bg-[#E9F6EE]" : "border-[var(--rt-linha)]"
+                    }`}
+                  >
+                    <b className="text-[18px] leading-none text-[var(--rt-roxo)]">{i + 1}</b>
+                    <span className="min-w-0 flex-1">“{g.fala}”</span>
+                    {ganchoId === g.id && <Check size={18} className="shrink-0 text-[#13703A]" />}
+                  </button>
+                ))}
+              </div>
+            )}
             <ul className="mt-3 space-y-1.5 text-[13.5px] text-[var(--rt-muted)]">
-              {temGanchos && (
-                <li>• {t.ganchoLinha} {gancho ? <b className="text-[var(--rt-ink)]">{gancho}</b> : exigeGancho ? t.escolhaGancho : t.nenhumGancho}</li>
+              {temGanchos && !escolherAqui && (
+                <li>• {t.ganchoLinha} {gancho ? <b className="text-[var(--rt-ink)]">{gancho}</b> : t.nenhumGancho}</li>
               )}
               {pendentes > 0 && <li>• {t.pendentes(pendentes)}</li>}
             </ul>
@@ -1053,11 +1088,11 @@ function Aprovar({
                 {t.voltar}
               </button>
               <button
-                disabled={!nome.trim() || enviando || (exigeGancho && temGanchos && !gancho)}
+                disabled={!nome.trim() || enviando || (escolherAqui && !ganchoId)}
                 onClick={aprovar}
                 className="rounded-full bg-[#13703A] px-5 py-2 text-[13.5px] font-bold text-white disabled:opacity-40"
               >
-                {enviando ? t.aprovando : t.aprovar}
+                {enviando ? t.aprovando : escolherAqui ? t.confirmarEscolha : t.aprovar}
               </button>
             </div>
           </>
