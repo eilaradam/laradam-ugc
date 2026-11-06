@@ -145,6 +145,13 @@ export default function RoteiroPage({ itens: iniciais, atual, lang }: Props) {
     return Number(Boolean(itens[b].roteiro.aprovado_em)) - Number(Boolean(itens[a].roteiro.aprovado_em)) || a - b;
   });
   const [expandidos, setExpandidos] = useState<Set<string>>(() => new Set());
+  // Escolha única: uma opção por vez na tela, pra marca comparar sem rolar tudo.
+  const escolhaUnica = itens.some((x) => x.roteiro.conteudo.escolhaUnica);
+  const [opcaoAberta, setOpcaoAberta] = useState(() => Math.max(0, itens.findIndex((x) => x.roteiro.aprovado_em)));
+  const verOpcao = (i: number) => {
+    setOpcaoAberta(i);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
   // Modo gravação: só o que foi aprovado, tudo em sequência, sem abrir quadrado por quadrado.
   // Abre sozinho quando toda seção com opções já tem uma aprovada.
   const temAprovado = itens.some((x) => x.roteiro.aprovado_em);
@@ -215,15 +222,37 @@ export default function RoteiroPage({ itens: iniciais, atual, lang }: Props) {
             {disponiveis.length > 1 && <Linguas linguas={disponiveis} atual={lingua} mudar={setLingua} />}
           </div>
 
-          {varios && !itens.some((x) => x.roteiro.conteudo.secao) && (
+          {varios && !escolhaUnica && !itens.some((x) => x.roteiro.conteudo.secao) && (
             <p className="mt-3 text-[14.5px] text-[var(--rt-muted)]">
               {t.roteiros(itens.filter((x) => !x.roteiro.conteudo.semAprovacao).length)}
             </p>
           )}
-          {itens.some((x) => x.roteiro.conteudo.escolhaUnica) && (
-            <p className="mt-4 rounded-2xl bg-[var(--rt-lilas)] px-5 py-4 text-[15px] font-semibold leading-snug">
-              {t.escolhaUnica(itens.length)}
-            </p>
+          {escolhaUnica && (
+            <div className="mt-7">
+              <h2 className="text-[22px] font-extrabold leading-tight tracking-tight">{t.escolhaUnica(itens.length)}</h2>
+              <div className="mt-4 grid grid-cols-2 gap-2.5">
+                {itens.map((x, i) => {
+                  const on = i === opcaoAberta;
+                  return (
+                    <button
+                      key={x.roteiro.slug}
+                      onClick={() => setOpcaoAberta(i)}
+                      aria-pressed={on}
+                      className={`rounded-2xl border-2 p-3.5 text-left transition-colors ${
+                        on ? "border-[var(--rt-roxo)] bg-white" : "border-[var(--rt-linha)] bg-white/60 hover:border-[var(--rt-roxo)]"
+                      }`}
+                    >
+                      <span className="flex items-center gap-1.5 text-[12px] font-bold text-[var(--rt-roxo)]">
+                        {x.roteiro.aprovado_em && <CheckCircle2 size={14} />}
+                        {x.roteiro.conteudo.rotulo?.split(" · ")[0] ?? `${t.roteiro} ${i + 1}`}
+                      </span>
+                      <span className="mt-1 block text-[15px] font-bold leading-snug">{x.roteiro.conteudo.titulo}</span>
+                    </button>
+                  );
+                })}
+              </div>
+              <p className="mt-3 text-[13px] text-[var(--rt-muted)]">{t.comoRevisarCurto}</p>
+            </div>
           )}
           {temSecoes && temAprovado && (
             <div className="mt-6 inline-flex rounded-full border border-[var(--rt-linha)] bg-white p-1 text-[13px] font-semibold">
@@ -247,6 +276,7 @@ export default function RoteiroPage({ itens: iniciais, atual, lang }: Props) {
             const abre = Boolean(secao) && (k === 0 || secaoDe(ordem[k - 1]) !== secao);
             const dentro = Boolean(secao) && !abre;
             const fecha = Boolean(secao) && secaoDe(ordem[k + 1]) !== secao;
+            if (escolhaUnica && i !== opcaoAberta) return null;
             if (soAprovados ? ehOpcao(x.roteiro) && !x.roteiro.aprovado_em : temSecoes && secao !== aberta) return null;
             const grupo = secoes.find((g) => g.nome === secao);
             const proxima = secoes[secoes.findIndex((g) => g.nome === secao) + 1];
@@ -375,6 +405,11 @@ export default function RoteiroPage({ itens: iniciais, atual, lang }: Props) {
                 erro={varios ? null : erro}
                 abre={abre}
                 dentro={dentro && !recolhido}
+                proximaOpcao={
+                  escolhaUnica && !x.roteiro.aprovado_em && !itens.some((o) => o.roteiro.aprovado_em)
+                    ? () => verOpcao((i + 1) % itens.length)
+                    : undefined
+                }
                 outraEscolhida={
                   x.roteiro.conteudo.escolhaUnica && !x.roteiro.aprovado_em
                     ? itens.find((o) => o.roteiro.aprovado_em)?.roteiro.conteudo.rotulo?.split(" · ")[0] ?? null
@@ -453,6 +488,7 @@ function Secao({
   abre,
   dentro,
   outraEscolhida,
+  proximaOpcao,
 }: {
   roteiro: RoteiroPublico;
   notas: Nota[];
@@ -467,6 +503,8 @@ function Secao({
   dentro?: boolean;
   /** com escolha única: a opção que a marca já aprovou no lugar desta */
   outraEscolhida?: string | null;
+  /** com escolha única: botão pra ver a outra opção */
+  proximaOpcao?: () => void;
 }) {
   const { enviar, t } = useRoteiro();
   const [aprovando, setAprovando] = useState(false);
@@ -475,15 +513,17 @@ function Secao({
   const sugestoes = abertas.filter((x) => x.tipo === "sugestao").length;
   const comentarios = abertas.length - sugestoes;
   const letraEscolhida = letraDoGancho(c, roteiro.gancho_escolhido);
+  // a mesma cena em todos os ganchos aparece uma vez só
+  const telaUnica = c.ganchos.length > 1 && Boolean(c.ganchos[0].tela) && c.ganchos.every((g) => g.tela === c.ganchos[0].tela);
 
   return (
     <section
       id={roteiro.slug}
       className={`scroll-mt-16 ${
-        abre ? "mt-8" : dentro ? "mt-14 border-t border-[var(--rt-linha)] pt-12" : varios && n > 1 ? "mt-16 border-t-2 border-[var(--rt-ink)] pt-12" : ""
+        c.escolhaUnica ? "mt-9" : abre ? "mt-8" : dentro ? "mt-14 border-t border-[var(--rt-linha)] pt-12" : varios && n > 1 ? "mt-16 border-t-2 border-[var(--rt-ink)] pt-12" : ""
       }`}
     >
-      {varios && (
+      {varios && !c.escolhaUnica && (
         <p className={`${n === 1 && !abre ? "mt-8" : ""} text-[12px] font-bold uppercase tracking-[.12em] text-[var(--rt-roxo)]`}>
           {c.rotulo ?? `${t.roteiro} ${n}`}
         </p>
@@ -493,11 +533,15 @@ function Secao({
         texto={c.titulo ?? "Roteiro de vídeo"}
         multilinha={false}
         className={varios ? "mt-1" : "mt-3"}
-        render={(x) => <h1 className="text-[40px] font-extrabold leading-[1.02] tracking-[-0.035em] md:text-[56px]">{x}</h1>}
+        render={(x) => <h1 className="text-[30px] font-extrabold leading-[1.1] tracking-[-0.025em] md:text-[38px]">{x}</h1>}
       />
 
-      {!c.semAprovacao && <Status roteiro={roteiro} />}
+      {!c.semAprovacao && roteiro.aprovado_em && <Status roteiro={roteiro} />}
 
+      {!lara && (
+        <p className="mt-2 text-[13px] text-[var(--rt-muted)]">{[c.duracao, c.formato].filter(Boolean).join(" · ")}</p>
+      )}
+      {lara && (
       <div className="mt-6 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-[var(--rt-linha)] bg-[var(--rt-linha)] md:grid-cols-4">
         {(
           [
@@ -523,18 +567,17 @@ function Secao({
           </div>
         ))}
       </div>
+      )}
 
       {(c.conceito || c.regra || lara) && (
-        <div className="mt-5 space-y-3 rounded-2xl bg-[var(--rt-lilas)] px-5 py-4 text-[14.5px] leading-relaxed">
+        <div className="mt-4 space-y-2 text-[15px] leading-relaxed">
           {(c.conceito || lara) && (
             <Campo
               alvo="geral:conceito"
               texto={c.conceito ?? ""}
               vazio="a ideia do vídeo numa frase"
               render={(x) => (
-                <p>
-                  <b className="text-[var(--rt-roxo)]">{t.conceito}</b> {x}
-                </p>
+                <p>{x}</p>
               )}
             />
           )}
@@ -544,17 +587,15 @@ function Secao({
               texto={c.regra ?? ""}
               vazio="o que não pode faltar (ou não pode aparecer)"
               render={(x) => (
-                <p>
-                  <b className="text-[var(--rt-roxo)]">{t.regra}</b> {x}
-                </p>
+                <p className="text-[13px] text-[var(--rt-muted)]">{x}</p>
               )}
             />
           )}
         </div>
       )}
 
-      {(n === 1 || abre) && !c.semAprovacao && (
-        <p className="mt-5 rounded-xl border border-dashed border-[var(--rt-linha)] px-4 py-3 text-[13px] leading-relaxed text-[var(--rt-muted)]">
+      {(n === 1 || abre) && !c.semAprovacao && !c.escolhaUnica && (
+        <p className="mt-4 text-[13px] leading-relaxed text-[var(--rt-muted)]">
           {t.comoRevisar(varios, varios || c.ganchos.length > 1)}
         </p>
       )}
@@ -563,10 +604,10 @@ function Secao({
       {(c.ganchos.length > 0 || lara) && (
         <>
       <Titulo>
-        {c.ganchos.length > 1 ? t.ganchos : t.gancho}{" "}
-        {c.ganchos.length > 1 && <span className="text-[var(--rt-muted)]">· {c.ganchosTodos ? t.gravamosTodos : t.escolherUm}</span>}
+        {c.escolhaUnica && c.ganchos.length > 1 ? t.escolhaOGancho : c.ganchos.length > 1 ? t.ganchos : t.gancho}{" "}
+        {c.ganchos.length > 1 && !c.escolhaUnica && <span className="text-[var(--rt-muted)]">· {c.ganchosTodos ? t.gravamosTodos : t.escolherUm}</span>}
       </Titulo>
-      <div className="space-y-3">
+      <div className="space-y-2.5">
         {c.ganchos.map((g, i) => {
           const escolhido = roteiro.gancho_escolhido === g.id;
           // gravando todos, vira 1, 2… pra não confundir com Opção A, B, C
@@ -574,7 +615,7 @@ function Secao({
           return (
             <article
               key={g.id}
-              className={`relative rounded-2xl border bg-white p-5 transition-shadow md:p-6 ${
+              className={`relative rounded-2xl border bg-white p-4 transition-shadow md:p-5 ${
                 escolhido
                   ? "border-[var(--rt-roxo)] shadow-[0_0_0_3px_color-mix(in_srgb,var(--rt-roxo)_18%,transparent)]"
                   : "border-[var(--rt-linha)]"
@@ -590,10 +631,10 @@ function Secao({
                 />
               )}
               <div className="flex gap-4 md:gap-5">
-                <span className="text-[34px] font-extrabold leading-none text-[var(--rt-roxo)]">{letra}</span>
+                <span className="text-[24px] font-extrabold leading-none text-[var(--rt-roxo)]">{letra}</span>
                 <div className="min-w-0 flex-1 space-y-2">
-                  <div className="flex flex-wrap items-center gap-2 pr-20">
-                    {(g.titulo || lara) && (
+                  <div className={`flex flex-wrap items-center gap-2 ${c.escolhaUnica && !lara ? "hidden" : "pr-20"}`}>
+                    {((g.titulo && !c.escolhaUnica) || lara) && (
                       <Campo
                         alvo={`gancho:${g.id}:titulo`}
                         texto={g.titulo}
@@ -617,7 +658,7 @@ function Secao({
                       render={(x) => <p className="text-[15.5px] leading-relaxed">“{x}”</p>}
                     />
                   )}
-                  {(g.tela || lara) && (
+                  {((g.tela && !telaUnica) || lara) && (
                     <Campo alvo={`gancho:${g.id}:tela`} texto={g.tela ?? ""} vazio="o que aparece na tela" render={(x) => <Tela>{x}</Tela>} />
                   )}
                   <Midia bloco={`gancho:${g.id}`} fotos={g.fotos} refs={g.refs} />
@@ -645,6 +686,7 @@ function Secao({
           );
         })}
         {lara && <Adicionar onClick={() => enviar("item_add", { bloco: "gancho:" })}>Adicionar gancho</Adicionar>}
+        {telaUnica && !lara && <Tela>{c.ganchos[0].tela}</Tela>}
       </div>
         </>
       )}
@@ -666,7 +708,7 @@ function Secao({
         {c.partes.map((p, i) => (
           <div
             key={p.id}
-            className={`relative grid gap-3 px-5 py-5 md:grid-cols-[150px_minmax(0,1fr)] md:gap-6 md:px-6 ${i ? "border-t border-[var(--rt-linha)]" : ""}`}
+            className={`relative grid gap-2 px-5 py-4 md:grid-cols-[120px_minmax(0,1fr)] md:gap-6 md:px-6 ${i ? "border-t border-[var(--rt-linha)]" : ""}`}
           >
             {lara && (
               <Ordem bloco={`parte:${p.id}`} primeiro={i === 0} ultimo={i === c.partes.length - 1} podeTirar={c.partes.length > 1} />
@@ -677,7 +719,11 @@ function Secao({
                 texto={p.nome}
                 multilinha={false}
                 vazio="nome da parte"
-                render={(x) => <p className="text-[15px] font-bold text-[var(--rt-roxo)]">{x}</p>}
+                render={(x) => (
+                  <p className="text-[11.5px] font-bold uppercase tracking-[.1em] text-[var(--rt-muted)]">
+                    {!lara && c.partes[i - 1]?.nome === x ? "" : x}
+                  </p>
+                )}
               />
               {(p.tempo || lara) && (
                 <Campo
@@ -707,7 +753,7 @@ function Secao({
                         </div>
                       </div>
                     ) : (
-                      <div className="space-y-2.5 text-[15px] leading-[1.7]">
+                      <div className="space-y-2.5 text-[16px] leading-[1.6]">
                         {x.split(/\n+/).map((par, j) => (
                           <p key={j}>{par}</p>
                         ))}
@@ -777,7 +823,7 @@ function Secao({
           {erro && <p className="w-full text-[12.5px] font-semibold text-[#B4321F] md:w-auto">{erro}</p>}
           <p className="text-[12.5px] text-[var(--rt-muted)]">
             {sugestoes + comentarios === 0 ? (
-              t.nenhumaAberta
+              c.escolhaUnica ? "" : t.nenhumaAberta
             ) : (
               <>
                 {sugestoes > 0 && <b className="text-[var(--rt-ink)]">{t.sugestoes(sugestoes)}</b>}
@@ -787,7 +833,15 @@ function Secao({
               </>
             )}
           </p>
-          <div className="ml-auto flex items-center gap-2">
+          <div className="ml-auto flex flex-wrap items-center gap-2">
+            {proximaOpcao && (
+              <button
+                onClick={proximaOpcao}
+                className="rounded-full border border-[var(--rt-linha)] px-4 py-2.5 text-[13.5px] font-semibold hover:border-[var(--rt-roxo)]"
+              >
+                {t.verOutraOpcao}
+              </button>
+            )}
             {roteiro.aprovado_em ? (
               <span className="inline-flex items-center gap-1.5 rounded-full bg-[#DDF5E6] px-4 py-2 text-[13px] font-bold text-[#13703A]">
                 <CheckCircle2 size={16} /> {t.aprovadoPor(roteiro.aprovado_por ?? "")}
@@ -922,14 +976,14 @@ function Cartoes({ secoes, aberta, abrir, t }: { secoes: GrupoSecao[]; aberta: s
 }
 
 function Titulo({ children }: { children: React.ReactNode }) {
-  return <h2 className="mb-4 mt-12 text-[12px] font-bold uppercase tracking-[.12em]">{children}</h2>;
+  return <h2 className="mb-3 mt-9 text-[12px] font-bold uppercase tracking-[.12em]">{children}</h2>;
 }
 
 function Tela({ children }: { children: React.ReactNode }) {
   const { t } = useRoteiro();
   return (
     <p className="text-[13px] leading-relaxed text-[var(--rt-muted)]">
-      <b className="mr-1.5 text-[var(--rt-roxo)]">{t.tela}</b>
+      <b className="mr-1.5 font-semibold">{t.tela}</b>
       {children}
     </p>
   );
