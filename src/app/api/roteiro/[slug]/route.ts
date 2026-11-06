@@ -128,6 +128,17 @@ export async function POST(req: Request, ctx: Ctx) {
     const letra = letraDoGancho(conteudo, id);
     aviso = { assunto: `🎯 ${autor} escolheu o gancho ${letra} (${marca})`, linhas: [`${letra} · ${g.titulo}`, g.fala] };
   } else if (acao === "aprovar") {
+    if (conteudo.escolhaUnica) {
+      if (conteudo.ganchos.length > 1 && !r.gancho_escolhido) return erro("Escolha o gancho 1 ou 2 antes de aprovar");
+      const { data: outra } = await db
+        .from("roteiros_marca")
+        .select("id")
+        .eq("conteudo->>grupo", conteudo.grupo ?? "")
+        .neq("id", r.id)
+        .not("aprovado_em", "is", null)
+        .limit(1);
+      if (outra?.length) return erro("Outra opção já foi aprovada");
+    }
     await db.from("roteiros_marca").update({ aprovado_em: new Date().toISOString(), aprovado_por: autor, updated_at: new Date().toISOString() }).eq("id", r.id);
     const letra = letraDoGancho(conteudo, r.gancho_escolhido);
     const gancho = letra ? ` com o gancho ${letra}` : "";

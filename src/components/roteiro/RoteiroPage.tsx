@@ -220,6 +220,11 @@ export default function RoteiroPage({ itens: iniciais, atual, lang }: Props) {
               {t.roteiros(itens.filter((x) => !x.roteiro.conteudo.semAprovacao).length)}
             </p>
           )}
+          {itens.some((x) => x.roteiro.conteudo.escolhaUnica) && (
+            <p className="mt-4 rounded-2xl bg-[var(--rt-lilas)] px-5 py-4 text-[15px] font-semibold leading-snug">
+              {t.escolhaUnica(itens.length)}
+            </p>
+          )}
           {temSecoes && temAprovado && (
             <div className="mt-6 inline-flex rounded-full border border-[var(--rt-linha)] bg-white p-1 text-[13px] font-semibold">
               {[true, false].map((v) => (
@@ -370,6 +375,11 @@ export default function RoteiroPage({ itens: iniciais, atual, lang }: Props) {
                 erro={varios ? null : erro}
                 abre={abre}
                 dentro={dentro && !recolhido}
+                outraEscolhida={
+                  x.roteiro.conteudo.escolhaUnica && !x.roteiro.aprovado_em
+                    ? itens.find((o) => o.roteiro.aprovado_em)?.roteiro.conteudo.rotulo?.split(" · ")[0] ?? null
+                    : null
+                }
               />
             </RoteiroCtx.Provider>
             )}
@@ -442,6 +452,7 @@ function Secao({
   erro,
   abre,
   dentro,
+  outraEscolhida,
 }: {
   roteiro: RoteiroPublico;
   notas: Nota[];
@@ -454,6 +465,8 @@ function Secao({
   abre?: boolean;
   /** roteiro seguinte dentro da mesma seção */
   dentro?: boolean;
+  /** com escolha única: a opção que a marca já aprovou no lugar desta */
+  outraEscolhida?: string | null;
 }) {
   const { enviar, t } = useRoteiro();
   const [aprovando, setAprovando] = useState(false);
@@ -557,7 +570,7 @@ function Secao({
         {c.ganchos.map((g, i) => {
           const escolhido = roteiro.gancho_escolhido === g.id;
           // gravando todos, vira 1, 2… pra não confundir com Opção A, B, C
-          const letra = c.ganchosTodos ? String(i + 1) : String.fromCharCode(65 + i);
+          const letra = c.ganchosTodos || c.escolhaUnica ? String(i + 1) : String.fromCharCode(65 + i);
           return (
             <article
               key={g.id}
@@ -779,6 +792,8 @@ function Secao({
               <span className="inline-flex items-center gap-1.5 rounded-full bg-[#DDF5E6] px-4 py-2 text-[13px] font-bold text-[#13703A]">
                 <CheckCircle2 size={16} /> {t.aprovadoPor(roteiro.aprovado_por ?? "")}
               </span>
+            ) : outraEscolhida ? (
+              <span className="text-[12.5px] text-[var(--rt-muted)]">{t.outraEscolhida(outraEscolhida)}</span>
             ) : chave ? (
               <span className="text-[12.5px] text-[var(--rt-muted)]">Aguardando a marca aprovar</span>
             ) : (
@@ -795,7 +810,7 @@ function Secao({
       )}
 
       {aprovando && (
-        <Aprovar fechar={() => setAprovando(false)} gancho={letraEscolhida} temGanchos={c.ganchos.length > 1 && !c.ganchosTodos} pendentes={sugestoes} />
+        <Aprovar fechar={() => setAprovando(false)} gancho={letraEscolhida} temGanchos={c.ganchos.length > 1 && !c.ganchosTodos} exigeGancho={c.escolhaUnica} pendentes={sugestoes} />
       )}
     </section>
   );
@@ -927,11 +942,13 @@ function Aprovar({
   fechar,
   gancho,
   temGanchos,
+  exigeGancho,
   pendentes,
 }: {
   fechar: () => void;
   gancho: string | null;
   temGanchos: boolean;
+  exigeGancho?: boolean;
   pendentes: number;
 }) {
   const ctx = useRoteiro();
@@ -967,7 +984,7 @@ function Aprovar({
             <h3 className="text-[22px] font-extrabold tracking-tight">{t.aprovarTitulo}</h3>
             <ul className="mt-3 space-y-1.5 text-[13.5px] text-[var(--rt-muted)]">
               {temGanchos && (
-                <li>• {t.ganchoLinha} {gancho ? <b className="text-[var(--rt-ink)]">{gancho}</b> : t.nenhumGancho}</li>
+                <li>• {t.ganchoLinha} {gancho ? <b className="text-[var(--rt-ink)]">{gancho}</b> : exigeGancho ? t.escolhaGancho : t.nenhumGancho}</li>
               )}
               {pendentes > 0 && <li>• {t.pendentes(pendentes)}</li>}
             </ul>
@@ -982,7 +999,7 @@ function Aprovar({
                 {t.voltar}
               </button>
               <button
-                disabled={!nome.trim() || enviando}
+                disabled={!nome.trim() || enviando || (exigeGancho && temGanchos && !gancho)}
                 onClick={aprovar}
                 className="rounded-full bg-[#13703A] px-5 py-2 text-[13.5px] font-bold text-white disabled:opacity-40"
               >

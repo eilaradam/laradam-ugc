@@ -61,6 +61,8 @@ export type RoteiroConteudo = {
   rotulo?: string;
   /** os ganchos não são pra escolher: todos são gravados (ex.: com preço e sem preço) */
   ganchosTodos?: boolean;
+  /** a marca escolhe uma opção só do grupo e um gancho numerado (1 ou 2); aprovada uma, as outras travam */
+  escolhaUnica?: boolean;
   /** título da lista de partes (padrão "Roteiro · depois do gancho") */
   partesTitulo?: string;
   /** o que precisa estar pronto no set, um item por linha */
@@ -246,7 +248,8 @@ export function roteiroVazio(marca: string, cor?: string): RoteiroConteudo {
 /** Letra que a marca vê (A, B, C…) pela posição; o id do gancho fica fixo pros comentários não se perderem. */
 export function letraDoGancho(c: RoteiroConteudo, id: string | null | undefined) {
   const i = c.ganchos.findIndex((g) => g.id === id);
-  return i < 0 ? null : String.fromCharCode(65 + i);
+  if (i < 0) return null;
+  return c.escolhaUnica ? String(i + 1) : String.fromCharCode(65 + i);
 }
 
 export function novoId() {
