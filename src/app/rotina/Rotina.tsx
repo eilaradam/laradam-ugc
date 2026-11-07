@@ -1,35 +1,13 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { C, PLANO_VAZIO, SERIES, diaBonito, hojeSP, type Ideia, type Item, type Plano } from "./comum";
+import { IdeiasAba, PlanoAba } from "./Plano";
 
-type Item = {
-  id: string;
-  data: string;
-  serie: string | null;
-  formato: string | null;
-  titulo: string;
-  gancho: string | null;
-  roteiro: string | null;
-  legenda: string | null;
-  checklist: { t: string; ok: boolean }[];
-  takes_url: string | null;
-  status: string;
-};
-
-const C = { fundo: "#F2F1ED", roxo: "#6C3CF5", roxoClaro: "#EEE8FE", limao: "#DCFB4E", rosa: "#DB4FA0", preto: "#18181B", suave: "#5B5B66" };
-const SERIES: Record<string, { nome: string; cor: string; tinta: string }> = {
-  claude: { nome: "Fiz com o Claude", cor: C.roxo, tinta: "#fff" },
-  dica: { nome: "Dica completa", cor: C.limao, tinta: C.preto },
-  aluna: { nome: "Antes e depois", cor: C.rosa, tinta: "#fff" },
-  bastidor: { nome: "Bastidor", cor: C.preto, tinta: "#fff" },
-  venda: { nome: "Venda", cor: "#F5B301", tinta: C.preto },
-};
 const STATUS = ["pendente", "gravado", "editado", "agendado", "postado"];
 const NOME_STATUS: Record<string, string> = { pendente: "A fazer", gravado: "Gravado", editado: "Editado", agendado: "Agendado", postado: "Postado" };
-
-const hojeSP = () => new Date().toLocaleDateString("en-CA", { timeZone: "America/Sao_Paulo" });
-const diaBonito = (d: string) =>
-  new Date(d + "T12:00:00").toLocaleDateString("pt-BR", { weekday: "short", day: "2-digit", month: "2-digit" }).replace(".", "");
+const ABAS = [{ k: "hoje", nome: "Hoje" }, { k: "plano", nome: "Plano" }, { k: "ideias", nome: "Ideias" }] as const;
+type Aba = (typeof ABAS)[number]["k"];
 
 function lerChave(): string {
   if (typeof window === "undefined") return "";
@@ -47,13 +25,42 @@ export default function Rotina() {
   const [itens, setItens] = useState<Item[] | null>(null);
   const [erro, setErro] = useState("");
   const [aberto, setAberto] = useState<string | null>(null);
+  const [aba, setAba] = useState<Aba>("hoje");
+  const [plano, setPlano] = useState<Plano>(PLANO_VAZIO);
+  const [ideias, setIdeias] = useState<Ideia[]>([]);
 
   const carregar = useCallback(async (k: string) => {
-    const r = await fetch(`/api/rotina?k=${encodeURIComponent(k)}`);
+    const r = await fetch(`/api/rotina?k=${encodeURIComponent(k)}&plano=1`);
     if (!r.ok) return setErro("Link sem a chave certa. Abre pelo link que o Claude te mandou.");
     const j = await r.json();
     setItens(j.itens);
+    setIdeias(j.ideias ?? []);
+    if (j.plano) setPlano({ ...PLANO_VAZIO, ...j.plano, narrativa: { ...PLANO_VAZIO.narrativa, ...j.plano.narrativa }, frequencia: { ...PLANO_VAZIO.frequencia, ...j.plano.frequencia } });
   }, []);
+
+  const enviar = useCallback((corpo: Record<string, unknown>) =>
+    fetch(`/api/rotina?k=${encodeURIComponent(chave)}`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(corpo) }), [chave]);
+
+  const mudarPlano = (p: Plano) => {
+    setPlano(p);
+    enviar({ acao: "plano", plano: p });
+  };
+  const criarIdeia = async (i: { titulo: string; formato: string; tags: string[] }) => {
+    const r = await enviar({ acao: "ideia", ...i });
+    if (r.ok) { const j = await r.json(); setIdeias((xs) => [j.ideia, ...xs]); }
+  };
+  const statusIdeia = (id: string, status: string) => {
+    setIdeias((xs) => (status === "postado" ? xs.filter((x) => x.id !== id) : xs.map((x) => (x.id === id ? { ...x, status } : x))));
+    enviar({ acao: "ideia_status", id, status });
+  };
+  const pautar = async (id: string, data: string) => {
+    const r = await enviar({ acao: "pauta", id, data });
+    if (!r.ok) { alert("Não consegui colocar na pauta. Tenta de novo."); return false; }
+    const j = await r.json();
+    setItens((xs) => (xs ? [...xs, j.item].sort((a, b) => a.data.localeCompare(b.data)) : xs));
+    setIdeias((xs) => xs.map((x) => (x.id === id ? { ...x, status: "gravar" } : x)));
+    return true;
+  };
 
   useEffect(() => {
     const k = lerChave();
@@ -62,6 +69,7 @@ export default function Rotina() {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setChave(k);
     setAberto(id);
+    if (id) setAba("hoje");
     if (k) carregar(k);
     else setErro("Link sem a chave certa. Abre pelo link que o Claude te mandou.");
   }, [carregar]);
@@ -126,14 +134,26 @@ export default function Rotina() {
     <main className="min-h-screen pb-16" style={{ background: C.fundo, color: C.preto }}>
       <div className="mx-auto max-w-2xl px-4 pt-6">
         <p className="text-sm font-semibold" style={{ color: C.roxo }}>laradam · rotina de conteúdo</p>
-        <h1 className="mt-1 text-3xl font-extrabold tracking-tight">O que tem pra hoje</h1>
-        {itens && <p className="mt-1 text-sm" style={{ color: C.suave }}>{feitos} de {itens.length} posts do mês postados</p>}
+        <h1 className="mt-1 text-3xl font-extrabold tracking-tight">{aba === "hoje" ? "O que tem pra hoje" : aba === "plano" ? "Plano de conteúdo" : "Banco de ideias"}</h1>
+        {itens && aba === "hoje" && <p className="mt-1 text-sm" style={{ color: C.suave }}>{feitos} de {itens.length} posts postados</p>}
+
+        <nav className="sticky top-0 z-10 -mx-4 mt-4 px-4 py-2" style={{ background: C.fundo }}>
+          <div className="grid grid-cols-3 rounded-full bg-white p-1 shadow-sm">
+            {ABAS.map((a) => (
+              <button key={a.k} type="button" onClick={() => setAba(a.k)} className="rounded-full py-2 text-sm font-bold"
+                style={aba === a.k ? { background: C.roxo, color: "#fff" } : { color: C.suave }}>{a.nome}</button>
+            ))}
+          </div>
+        </nav>
 
         {erro && <p className="mt-6 rounded-2xl bg-white p-4 text-sm">{erro}</p>}
         {!itens && !erro && <p className="mt-6 text-sm" style={{ color: C.suave }}>Carregando…</p>}
 
-        {itens && (
-          <section className="mt-5">
+        {itens && aba === "plano" && <PlanoAba itens={itens} plano={plano} mudar={mudarPlano} />}
+        {itens && aba === "ideias" && <IdeiasAba ideias={ideias} itens={itens} criar={criarIdeia} mudarStatus={statusIdeia} pautar={pautar} />}
+
+        {itens && aba === "hoje" && (
+          <section className="mt-3">
             {agora.length === 0 ? (
               <p className="rounded-2xl bg-white p-4 text-sm">Nada pendente pra hoje. 🎉</p>
             ) : (
@@ -142,7 +162,7 @@ export default function Rotina() {
           </section>
         )}
 
-        {Object.entries(semanas).map(([seg, xs]) => (
+        {aba === "hoje" && Object.entries(semanas).map(([seg, xs]) => (
           <section key={seg} className="mt-8">
             <h2 className="text-sm font-bold uppercase tracking-[0.14em]" style={{ color: C.suave }}>Semana de {diaBonito(seg)}</h2>
             <div className="mt-3 flex flex-col gap-3">{xs.map((x) => <Cartao key={x.id} x={x} aberto={aberto === x.id} abrir={setAberto} salvar={salvar} excluir={excluir} />)}</div>
