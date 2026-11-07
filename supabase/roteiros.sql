@@ -48,3 +48,11 @@ create policy "roteiros_marca admin le" on public.roteiros_marca for select to a
 drop policy if exists "roteiros_marca_notas admin le" on public.roteiros_marca_notas;
 create policy "roteiros_marca_notas admin le" on public.roteiros_marca_notas for select to authenticated
   using (exists (select 1 from public.usuarios where id = auth.uid() and role = 'admin'));
+
+-- Finalizar roteiro pelo admin: some da lista, o link da marca continua no ar.
+alter table public.roteiros_marca add column if not exists finalizado_em timestamptz;
+
+drop policy if exists "roteiros_marca admin edita" on public.roteiros_marca;
+create policy "roteiros_marca admin edita" on public.roteiros_marca for update to authenticated
+  using (exists (select 1 from public.usuarios where id = auth.uid() and role = 'admin'))
+  with check (exists (select 1 from public.usuarios where id = auth.uid() and role = 'admin'));
