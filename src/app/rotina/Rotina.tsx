@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 type Item = {
   id: string;
@@ -75,6 +75,36 @@ export default function Rotina() {
     });
   };
 
+  // Excluir some na hora, mas só apaga no banco depois de 5 s: dá tempo de desfazer.
+  const [lixo, setLixo] = useState<Item | null>(null);
+  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const apagarNoBanco = useCallback((id: string) => {
+    fetch(`/api/rotina?k=${encodeURIComponent(chave)}&id=${encodeURIComponent(id)}`, { method: "DELETE", keepalive: true });
+  }, [chave]);
+  const excluir = (x: Item) => {
+    if (!confirm(`Excluir "${x.titulo}"?`)) return;
+    if (timer.current && lixo) { clearTimeout(timer.current); apagarNoBanco(lixo.id); }
+    setItens((xs) => xs?.filter((y) => y.id !== x.id) ?? xs);
+    setAberto(null);
+    setLixo(x);
+    timer.current = setTimeout(() => { apagarNoBanco(x.id); setLixo(null); timer.current = null; }, 5000);
+  };
+  const desfazer = () => {
+    if (!lixo) return;
+    if (timer.current) clearTimeout(timer.current);
+    timer.current = null;
+    const volta = lixo;
+    setItens((xs) => (xs ? [...xs, volta].sort((a, b) => a.data.localeCompare(b.data)) : xs));
+    setLixo(null);
+  };
+  // fechou a página antes dos 5 s: apaga mesmo assim
+  useEffect(() => {
+    if (!lixo) return;
+    const sair = () => apagarNoBanco(lixo.id);
+    window.addEventListener("pagehide", sair);
+    return () => window.removeEventListener("pagehide", sair);
+  }, [lixo, apagarNoBanco]);
+
   const hoje = hojeSP();
   const { agora, semanas } = useMemo(() => {
     const xs = itens ?? [];
@@ -107,7 +137,7 @@ export default function Rotina() {
             {agora.length === 0 ? (
               <p className="rounded-2xl bg-white p-4 text-sm">Nada pendente pra hoje. 🎉</p>
             ) : (
-              <div className="flex flex-col gap-3">{agora.map((x) => <Cartao key={x.id} x={x} aberto={aberto === x.id} abrir={setAberto} salvar={salvar} atrasado={x.data < hoje} />)}</div>
+              <div className="flex flex-col gap-3">{agora.map((x) => <Cartao key={x.id} x={x} aberto={aberto === x.id} abrir={setAberto} salvar={salvar} excluir={excluir} atrasado={x.data < hoje} />)}</div>
             )}
           </section>
         )}
@@ -115,10 +145,19 @@ export default function Rotina() {
         {Object.entries(semanas).map(([seg, xs]) => (
           <section key={seg} className="mt-8">
             <h2 className="text-sm font-bold uppercase tracking-[0.14em]" style={{ color: C.suave }}>Semana de {diaBonito(seg)}</h2>
-            <div className="mt-3 flex flex-col gap-3">{xs.map((x) => <Cartao key={x.id} x={x} aberto={aberto === x.id} abrir={setAberto} salvar={salvar} />)}</div>
+            <div className="mt-3 flex flex-col gap-3">{xs.map((x) => <Cartao key={x.id} x={x} aberto={aberto === x.id} abrir={setAberto} salvar={salvar} excluir={excluir} />)}</div>
           </section>
         ))}
       </div>
+
+      {lixo && (
+        <div className="fixed inset-x-0 bottom-5 z-10 flex justify-center px-4">
+          <div className="flex items-center gap-4 rounded-full py-2.5 pl-5 pr-2.5 text-sm text-white shadow-lg" style={{ background: C.preto }}>
+            <span>Post excluído</span>
+            <button type="button" onClick={desfazer} className="rounded-full px-3 py-1.5 text-xs font-bold" style={{ background: C.limao, color: C.preto }}>Desfazer</button>
+          </div>
+        </div>
+      )}
     </main>
   );
 }
@@ -148,8 +187,8 @@ function Legenda({ x, salvar }: { x: Item; salvar: (id: string, m: Partial<Item>
   );
 }
 
-function Cartao({ x, aberto, abrir, salvar, atrasado }: {
-  x: Item; aberto: boolean; abrir: (id: string | null) => void; salvar: (id: string, m: Partial<Item>) => void; atrasado?: boolean;
+function Cartao({ x, aberto, abrir, salvar, excluir, atrasado }: {
+  x: Item; aberto: boolean; abrir: (id: string | null) => void; salvar: (id: string, m: Partial<Item>) => void; excluir: (x: Item) => void; atrasado?: boolean;
 }) {
   const s = SERIES[x.serie ?? ""] ?? { nome: x.serie ?? "", cor: "#ddd", tinta: C.preto };
   const postado = x.status === "postado";
@@ -214,6 +253,9 @@ function Cartao({ x, aberto, abrir, salvar, atrasado }: {
               </button>
             ))}
           </div>
+          <button type="button" onClick={() => excluir(x)} className="mt-4 text-xs font-bold underline underline-offset-2" style={{ color: C.rosa }}>
+            Excluir este post
+          </button>
         </div>
       )}
     </article>

@@ -57,3 +57,12 @@ export async function PATCH(req: Request) {
   if (error) return Response.json({ error: error.message }, { status: 500 });
   return Response.json({ item: data });
 }
+
+export async function DELETE(req: Request) {
+  if (!autorizado(req)) return Response.json({ error: "Chave inválida" }, { status: 401 });
+  const id = str(new URL(req.url).searchParams.get("id"), 60);
+  if (!id) return Response.json({ error: "Sem id" }, { status: 400 });
+  const { error } = await supabaseAdmin().from("conteudo_perfil").delete().eq("id", id);
+  if (error) return Response.json({ error: error.message }, { status: 500 });
+  return Response.json({ ok: true });
+}
