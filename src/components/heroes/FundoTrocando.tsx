@@ -1,5 +1,6 @@
 // celRight: quanto a foto sai pela direita no celular (padrão -42%); menos negativo mostra mais o lado direito da foto
-export type FotoFundo = { src: string; cor: string; celRight?: string };
+// pcRight: distância da foto até a borda direita no computador (padrão 0); maior leva a foto pra esquerda
+export type FotoFundo = { src: string; cor: string; celRight?: string; pcRight?: string };
 
 // Foto de fundo da capa: só a primeira da lista, com um zoom lento ao abrir (capa-zoom no globals.css).
 // A Lara cansou do loop trocando as 4 fotos; pra mudar a foto, troque a ordem da lista na página.
@@ -19,9 +20,10 @@ export default function FundoTrocando({ fotos, modo = "fundo", className = "" }:
           src={f.src}
           alt=""
           fetchPriority="high"
-          className={`capa-zoom ${bloco ? "absolute inset-0 w-full h-full object-cover object-top" : "absolute right-[var(--cel-right,-42%)] md:right-0 top-0 h-full w-auto max-w-none object-cover object-top"}`}
+          className={`capa-zoom ${bloco ? "absolute inset-0 w-full h-full object-cover object-top" : "absolute right-[var(--cel-right,-42%)] md:right-[var(--pc-right,0px)] top-0 h-full w-auto max-w-none object-cover object-top"}`}
           style={bloco ? undefined : {
             ...(f.celRight ? { "--cel-right": f.celRight } : {}),
+            ...(f.pcRight ? { "--pc-right": f.pcRight } : {}),
             maskImage: "linear-gradient(to right, transparent 0%, black 22%)",
             WebkitMaskImage: "linear-gradient(to right, transparent 0%, black 22%)",
           }}
