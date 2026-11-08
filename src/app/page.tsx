@@ -28,6 +28,7 @@ export default function Home() {
         <Nav menuEmbaixo />
       <Hero
         fundo={[
+          { src: "/capa/5-pb-rindo.webp", cor: "#EAEAEA", celRight: "-12%" },
           { src: "/capa/1-sorriso.webp", cor: "#D7CDC4" },
           { src: "/capa/2-seria.webp", cor: "#D9D0C9" },
           { src: "/capa/3-cabelo.webp", cor: "#D6CDC5" },
