@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
-import PropostaPage from "@/components/proposta/Proposta";
-import { IMPRESSAO_3D } from "@/data/propostas/impressao-3d";
+import Impressao3D from "@/components/impressao3d/Impressao3D";
 
 // Proposta pra marcas de impressora 3D. Fora do menu e fora do Google: a Lara manda o link direto.
 // O nome da marca vem do link: /impressao-3d?marca=Creality
@@ -16,9 +15,6 @@ export const metadata: Metadata = {
 
 export default async function Impressao3DPage({ searchParams }: { searchParams: Promise<{ marca?: string | string[] }> }) {
   const { marca } = await searchParams;
-  const nome = (Array.isArray(marca) ? marca[0] : marca)?.trim().slice(0, 40);
-  const p = nome
-    ? { ...IMPRESSAO_3D, cliente: `Para a ${nome}`, whatsappMensagem: `Oi Lara! Sou da ${nome}, vi a proposta de impressão 3D e quero conversar.` }
-    : IMPRESSAO_3D;
-  return <PropostaPage p={p} />;
+  const nome = (Array.isArray(marca) ? marca[0] : marca)?.trim().slice(0, 40) || undefined;
+  return <Impressao3D marca={nome} />;
 }

@@ -14,8 +14,6 @@ export type Proposta = {
   subtitulo: string;
   destaques: { rotulo: string; valor: string }[];
   sobre: string;
-  /** Bloco em destaque logo depois do "Sobre": o diferencial da proposta, em passos. */
-  diferencial?: { titulo: string; texto: string; passos: { titulo: string; texto: string }[]; nota?: string };
   opcoesTitulo?: string;
   opcoes: {
     nome: string;
@@ -193,27 +191,6 @@ export default function PropostaPage({ p }: { p: Proposta }) {
         <Eyebrow n={secao()}>Sobre a campanha</Eyebrow>
         <p className="max-w-3xl text-lg leading-relaxed">{p.sobre}</p>
       </section>
-
-      {/* diferencial */}
-      {p.diferencial && (
-        <section className="bg-foreground text-background">
-          <div className="mx-auto max-w-5xl px-6 py-12 md:py-16">
-            <Eyebrow n={secao()} dark>O diferencial</Eyebrow>
-            <h2 className="font-display text-3xl font-black leading-tight tracking-tight md:text-5xl">{p.diferencial.titulo}</h2>
-            <p className="mt-5 max-w-3xl text-lg leading-relaxed text-background/80">{p.diferencial.texto}</p>
-            <ol className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              {p.diferencial.passos.map((s, i) => (
-                <li key={s.titulo} className="rounded-2xl border border-background/15 bg-background/5 p-5">
-                  <div className="font-serif-accent italic text-2xl text-accent-on-dark">{i + 1}</div>
-                  <div className="mt-2 font-semibold">{s.titulo}</div>
-                  <p className="mt-1 text-sm leading-relaxed text-background/70">{s.texto}</p>
-                </li>
-              ))}
-            </ol>
-            {p.diferencial.nota && <p className="mt-6 max-w-3xl text-sm text-background/60">{p.diferencial.nota}</p>}
-          </div>
-        </section>
-      )}
 
       {/* opções */}
       <section className="bg-background-alt">
