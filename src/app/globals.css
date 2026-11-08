@@ -95,6 +95,11 @@ body {
   to { transform: translateX(-50%); }
 }
 
+/* Flor da capa do /nova girando bem devagar */
+.flor-gira { animation: flor-gira 60s linear infinite; }
+@keyframes flor-gira { to { rotate: 360deg; } }
+@media (prefers-reduced-motion: reduce) { .flor-gira { animation: none; } }
+
 /* Zoom lento da foto da capa ao abrir a página */
 .capa-zoom {
   transform-origin: 70% 20%;
