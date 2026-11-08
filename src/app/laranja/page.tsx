@@ -13,7 +13,6 @@ import YouTubeAds from "@/components/YouTubeAds";
 import Testimonials from "@/components/Testimonials";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
-import TagBarra from "@/components/TagBarra";
 import MenuEmbaixo from "@/components/MenuEmbaixo";
 
 // Prévia da versão laranja (creme + preto + laranja), fora do Google até a Lara aprovar.
@@ -25,7 +24,6 @@ export const viewport: Viewport = { width: "device-width", initialScale: 1 };
 export default function Laranja() {
   return (
     <div className={`tema-laranja ${outfit.variable} flex-1 flex flex-col`}>
-      <TagBarra />
       <main className="flex-1 pt-[var(--barra-topo,0px)] pb-16 md:pb-0">
         <NavLaranja />
         <HeroLaranja

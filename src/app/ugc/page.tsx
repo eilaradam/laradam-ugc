@@ -15,7 +15,6 @@ import YouTubeAds from "@/components/YouTubeAds";
 import Testimonials from "@/components/Testimonials";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
-import TagBarra from "@/components/TagBarra";
 
 export const metadata: Metadata = {
   title: "Lara Dam — UGC Creator & Content Strategist",
@@ -36,7 +35,6 @@ export default function UgcPage() {
           .lara-hero-photo { height: 640px !important; }
         }
       ` }} />
-      <TagBarra />
       <main className="flex-1 pt-[var(--barra-topo,0px)]">
         <Nav />
         {/* capa do /ugc: foto abraçando caixas, recortada pela Lara (capa-caixas-lara). Outras recortadas em public/ensaio: capa-pilha (0350), capa-caixa-rosto, capa-torre */}

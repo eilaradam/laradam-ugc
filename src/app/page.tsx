@@ -12,7 +12,6 @@ import YouTubeAds from "@/components/YouTubeAds";
 import Testimonials from "@/components/Testimonials";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
-import TagBarra from "@/components/TagBarra";
 import MenuEmbaixo from "@/components/MenuEmbaixo";
 
 // Força layout desktop também no mobile — celular vai mostrar a página
@@ -23,7 +22,6 @@ export default function Home() {
   return (
     <>
 
-      <TagBarra />
       <main className="flex-1 pt-[var(--barra-topo,0px)] pb-16 md:pb-0">
         <Nav menuEmbaixo />
       <Hero
