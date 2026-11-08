@@ -52,7 +52,7 @@ export default function HeroCapa() {
             transition={{ delay: 0.5, duration: 0.7 }}
             className="mt-6 flex flex-wrap gap-2"
           >
-            {["500+ vídeos", "300+ marcas", "140M+ views"].map((p) => (
+            {["1000+ vídeos", "300+ marcas", "140M+ views"].map((p) => (
               <span key={p} className="px-3 py-1.5 rounded-full border border-foreground/15 text-sm font-semibold text-foreground">{p}</span>
             ))}
           </motion.div>

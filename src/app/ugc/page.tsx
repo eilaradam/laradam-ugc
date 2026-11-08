@@ -19,7 +19,7 @@ import TagBarra from "@/components/TagBarra";
 
 export const metadata: Metadata = {
   title: "Lara Dam — UGC Creator & Content Strategist",
-  description: "Portfólio de Lara Dam: UGC Creator com +500 vídeos gravados e +200 parceiros. Criativos de alta conversão para marcas que buscam destaque.",
+  description: "Portfólio de Lara Dam: UGC Creator com +1000 vídeos gravados e +200 parceiros. Criativos de alta conversão para marcas que buscam destaque.",
   robots: { index: false, follow: false },
 };
 

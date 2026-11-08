@@ -57,7 +57,7 @@ export default function HeroCapaGrande() {
 
         <p className="mx-auto mt-4 md:mt-5 max-w-[21rem] md:max-w-2xl text-sm md:text-lg text-foreground-soft leading-relaxed">
           Sou a Lara Dam:{" "}
-          <strong className="font-semibold text-foreground">+500 vídeos</strong>,{" "}
+          <strong className="font-semibold text-foreground">+1000 vídeos</strong>,{" "}
           <strong className="font-semibold text-foreground">+200 marcas parceiras</strong> e{" "}
           <strong className="font-semibold text-foreground">+100M de views</strong>.
         </p>

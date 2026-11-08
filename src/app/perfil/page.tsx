@@ -5,7 +5,7 @@ import type { Metadata } from "next";
 import PerfilApp from "@/components/perfil/PerfilApp";
 
 const TITULO = "Lara Dam · UGC creator & influenciadora";
-const DESCRICAO = "Vídeo que vende pra sua marca e publi que conversa no @eilaradam. +500 vídeos, +200 marcas, 100M+ views em campanhas. Litoral de SP.";
+const DESCRICAO = "Vídeo que vende pra sua marca e publi que conversa no @eilaradam. +1000 vídeos, +200 marcas, 100M+ views em campanhas. Litoral de SP.";
 const OG = "https://ugc.laradam.com/ensaio/og-perfil.jpg";
 
 export const metadata: Metadata = {

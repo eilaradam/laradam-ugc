@@ -322,7 +322,7 @@ const dict: Record<Lang, Dict> = {
       titleAccent: "converte",
       body1: "De hook a CTA, cada segundo pensado pra performar.",
       metrics:
-        "+500 vídeos  |  +300 marcas parceiras  |  140M+ views.",
+        "+1000 vídeos  |  +300 marcas parceiras  |  140M+ views.",
       cta: "Quero criar com a Lara",
       saibaMais: "Saiba mais →",
       bubble1Title: "A entrega foi perfeita!",
@@ -340,7 +340,7 @@ const dict: Record<Lang, Dict> = {
       "Publipost",
     ],
     stats: [
-      { value: "500+", label: "Vídeos gravados" },
+      { value: "1000+", label: "Vídeos gravados" },
       { value: "300+", label: "Parceiros" },
       { value: "140M+", label: "Views acumulados" },
       { value: "3 anos", label: "De experiência" },
@@ -350,7 +350,7 @@ const dict: Record<Lang, Dict> = {
       greeting1: "Oie, eu sou a",
       greetingName: "Lara Dam",
       body1:
-        "Tenho **27 anos**, sou **UGC Creator e estrategista de conteúdo** no Litoral de SP. Em **3 anos**, gravei mais de **500 vídeos** e trabalhei com mais de **300 marcas**, criando conexões reais e estratégias de alta conversão. Meu olhar analítico transforma produto em desejo de consumo, com **conteúdo autêntico** que gera autoridade e resultado.",
+        "Tenho **27 anos**, sou **UGC Creator e estrategista de conteúdo** no Litoral de SP. Em **3 anos**, gravei mais de **1000 vídeos** e trabalhei com mais de **300 marcas**, criando conexões reais e estratégias de alta conversão. Meu olhar analítico transforma produto em desejo de consumo, com **conteúdo autêntico** que gera autoridade e resultado.",
       body2:
         "Mais de **140M de views** em campanhas, **recorde de CTR no Meta**, **CPA reduzido em até 38%** e **ROAS de 2.4x**. Conteúdo que virou playbook de criativo pra marcas como **InfinitePay**, **Méliuz** e **DT3**.",
       pillBrands: "+300 marcas parceiras",
@@ -824,7 +824,7 @@ const dict: Record<Lang, Dict> = {
       titleAccent: "converts",
       body1: "From hook to CTA, every second built to perform.",
       metrics:
-        "500+ videos  |  300+ brand partners  |  140M+ views.",
+        "1000+ videos  |  300+ brand partners  |  140M+ views.",
       cta: "Let's create together",
       saibaMais: "Learn more →",
       bubble1Title: "Delivery was perfect!",
@@ -842,7 +842,7 @@ const dict: Record<Lang, Dict> = {
       "Sponsored Posts",
     ],
     stats: [
-      { value: "500+", label: "Videos shot" },
+      { value: "1000+", label: "Videos shot" },
       { value: "300+", label: "Brand partners" },
       { value: "140M+", label: "Total views" },
       { value: "3 years", label: "Of experience" },
@@ -852,7 +852,7 @@ const dict: Record<Lang, Dict> = {
       greeting1: "Hi, I'm",
       greetingName: "Lara Dam",
       body1:
-        "I'm **27**, a **UGC Creator and content strategist** based on the coast of São Paulo. In **3 years**, I've shot **500+ videos** and worked with **300+ brands**, building real connections and high-conversion strategies. My analytical eye turns product into desire, with **authentic content** that drives authority and results.",
+        "I'm **27**, a **UGC Creator and content strategist** based on the coast of São Paulo. In **3 years**, I've shot **1000+ videos** and worked with **300+ brands**, building real connections and high-conversion strategies. My analytical eye turns product into desire, with **authentic content** that drives authority and results.",
       body2:
         "Over **140M views** in campaigns, **CTR records on Meta**, **CPA reduced by up to 38%** and **2.4x ROAS**. Content that became a creative playbook for brands like **InfinitePay**, **Méliuz** and **DT3**.",
       pillBrands: "300+ brand partners",

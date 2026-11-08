@@ -74,7 +74,7 @@ export default function HeroLaranja({ fundo }: { fundo: FotoFundo[] }) {
                 <div className="font-display font-bold text-foreground">
                   <span className="text-primary-dark">+300 {en ? "brands" : "marcas"}</span> · 140M+ views
                 </div>
-                <div className="text-xs text-foreground-soft">{en ? "+500 videos in 3 years" : "+500 vídeos em 3 anos"}</div>
+                <div className="text-xs text-foreground-soft">{en ? "+1000 videos in 3 years" : "+1000 vídeos em 3 anos"}</div>
               </div>
             </div>
             <div className="flex items-center gap-2">

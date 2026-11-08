@@ -18,7 +18,7 @@ const EMAIL = "laradam.ugc@gmail.com";
 
 const NUMEROS = [
   { v: "100M+", k: "views em campanhas" },
-  { v: "500+", k: "vídeos gravados" },
+  { v: "1000+", k: "vídeos gravados" },
   { v: "200+", k: "marcas parceiras" },
   { v: "5,94x", k: "maior ROAS em anúncio" },
 ];

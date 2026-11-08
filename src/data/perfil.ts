@@ -23,7 +23,7 @@ export const PERFIL = {
   carimbo: "100M+ views",
 };
 
-export const FAIXA = ["500 vídeos gravados", "200 marcas", "100M+ views", "2.4x ROAS", "InfinitePay", "Méliuz", "DT3", "Logitech", "Airbnb", "Beauty Fair"];
+export const FAIXA = ["1000 vídeos gravados", "200 marcas", "100M+ views", "2.4x ROAS", "InfinitePay", "Méliuz", "DT3", "Logitech", "Airbnb", "Beauty Fair"];
 
 export const NAV = [
   { id: "sobre", rotulo: "Sobre", emoji: "👋" },
@@ -65,7 +65,7 @@ export const RESULTADOS = {
   sub: "O que o meu conteúdo já entregou pras marcas. Os vídeos abaixo são os maiores cases: clica pra assistir.",
   numeros: [
     { v: "100M+", k: "views em campanhas" },
-    { v: "500+", k: "vídeos gravados" },
+    { v: "1000+", k: "vídeos gravados" },
     { v: "200+", k: "marcas parceiras" },
     { v: "2.4x", k: "ROAS médio com ads" },
     { v: "38%", k: "de CPA a menos" },

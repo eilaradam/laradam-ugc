@@ -29,7 +29,7 @@ export const PROJETO_MARQUEE =
 
 // Números que já foram entregues. Mesmos dados do portfólio principal.
 export const PROJETO_NUMEROS = [
-  { value: "500+", label: "Vídeos gravados" },
+  { value: "1000+", label: "Vídeos gravados" },
   { value: "200+", label: "Marcas parceiras" },
   { value: "140M+", label: "Views em campanhas" },
   { value: "2 anos", label: "De estrada em UGC" },

@@ -116,7 +116,7 @@ export default function Hero() {
         <p className="text-foreground-soft text-sm md:text-base max-w-md leading-relaxed">
           Criando conteúdo que{" "}
           <span className="font-serif-accent italic text-primary">converte</span>{" "}
-          — de hook a CTA, cada segundo pensado pra performar. +500 vídeos,
+          — de hook a CTA, cada segundo pensado pra performar. +1000 vídeos,
           +200 marcas parceiras, 100M+ views.
         </p>
 
