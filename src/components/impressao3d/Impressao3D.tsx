@@ -1,10 +1,11 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Check, MessageCircle, Mail, ArrowDown, ArrowUpRight, Sparkles, Plus, Minus } from "lucide-react";
 import { VIDEOS } from "@/data/content";
 import VideoCard from "@/components/VideoCard";
 import BrandsMarquee from "@/components/BrandsMarquee";
+import { track } from "@/lib/tracking";
 import ImpressoraIso from "./ImpressoraIso";
 import SuporteIso from "./SuporteIso";
 
@@ -126,6 +127,17 @@ function Pergunta({ p, r }: { p: string; r: string }) {
 export default function Impressao3D({ marca }: { marca?: string }) {
   const [pct, setPct] = useState(100);
   const onProgresso = useCallback((n: number) => setPct(n), []);
+
+  // Qual marca abriu a proposta. O page_view normal só grava "/impressao-3d", sem o ?marca=.
+  // A Lara abre uma vez com ?eu=1 e o navegador dela fica marcado (dono: true) pra não contar.
+  useEffect(() => {
+    let dono = false;
+    try {
+      if (new URLSearchParams(window.location.search).get("eu") === "1") localStorage.setItem("ugc_dono", "1");
+      dono = localStorage.getItem("ugc_dono") === "1";
+    } catch {}
+    track("button_click", "proposta3d_aberta", { marca: marca || "(sem marca)", dono });
+  }, [marca]);
   const quem = marca || "sua marca";
   const zap = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(
     marca ? `Oi Lara! Sou da ${marca}, vi a proposta de impressão 3D e quero conversar.` : "Oi Lara! Vi a proposta de impressão 3D e quero conversar."
