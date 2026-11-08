@@ -7,33 +7,7 @@ import { useEffect, useState } from "react";
 // da frente não cortar a máquina ao meio. A peça (um vaso) sobe camada por camada
 // e o cabeçote corre de um lado pro outro. Com "reduzir movimento", fica a peça pronta.
 
-const GIRO = (-14 * Math.PI) / 180;
-const C = Math.cos(Math.PI / 6);
-const S = 0.5;
-const p = (x: number, y: number, z: number) => {
-  const dx = x - 100;
-  const dy = y - 100;
-  const rx = 100 + dx * Math.cos(GIRO) - dy * Math.sin(GIRO);
-  const ry = 100 + dx * Math.sin(GIRO) + dy * Math.cos(GIRO);
-  return [(rx - ry) * C, (rx + ry) * S - z] as const;
-};
-const pts = (a: (readonly [number, number])[]) => a.map(([x, y]) => `${x.toFixed(1)},${y.toFixed(1)}`).join(" ");
-const quad = (a: [number, number, number][]) => pts(a.map(([x, y, z]) => p(x, y, z)));
-
-type Cores = { top: string; left: string; right: string };
-const NAVY: Cores = { top: "#33436A", left: "#1E2A44", right: "#151E33" };
-const CLARO: Cores = { top: "#FBFAF5", left: "#E2E2D9", right: "#CBCBBF" };
-const TRILHO: Cores = { top: "#9AA3B5", left: "#7C8390", right: "#626A7A" };
-
-function Caixa({ x, y, z, w, d, h, c }: { x: number; y: number; z: number; w: number; d: number; h: number; c: Cores }) {
-  return (
-    <g>
-      <polygon points={quad([[x, y + d, z], [x + w, y + d, z], [x + w, y + d, z + h], [x, y + d, z + h]])} fill={c.left} />
-      <polygon points={quad([[x + w, y, z], [x + w, y + d, z], [x + w, y + d, z + h], [x + w, y, z + h]])} fill={c.right} />
-      <polygon points={quad([[x, y, z + h], [x + w, y, z + h], [x + w, y + d, z + h], [x, y + d, z + h]])} fill={c.top} />
-    </g>
-  );
-}
+import { C, S, p, quad, Caixa, NAVY, CLARO, TRILHO } from "./iso";
 
 const CAMADAS = 28;
 const ALT = 3.4;

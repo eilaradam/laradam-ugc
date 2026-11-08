@@ -6,6 +6,7 @@ import { VIDEOS } from "@/data/content";
 import VideoCard from "@/components/VideoCard";
 import BrandsMarquee from "@/components/BrandsMarquee";
 import ImpressoraIso from "./ImpressoraIso";
+import SuporteIso from "./SuporteIso";
 
 // Mini-portfólio + proposta pra marcas de impressora 3D (ugc.laradam.com/impressao-3d).
 // Uma página só pra várias marcas: o nome entra pelo link (?marca=Creality).
@@ -55,17 +56,6 @@ const VIDEOS_PLANO = [
   { n: "05", nome: "Renda extra com 3D", texto: "Peças pra vender: o ângulo de quem quer a máquina como negócio." },
 ];
 
-const CODIGO = `// suporte de celular com o nome "ANA"
-largura = 80;
-cube([largura, 70, 6]);                    // base
-translate([0, 62, 0]) rotate([-20, 0, 0])
-  cube([largura, 6, 95]);                  // encosto
-translate([0, 4, 0])
-  cube([largura, 6, 18]);                  // trava
-translate([largura/2, 30, 6])
-  linear_extrude(2)
-    text("ANA", size = 14, halign = "center");`;
-
 type Item = { nome: string; valor: number };
 const PACOTES: {
   nome: string;
@@ -79,7 +69,7 @@ const PACOTES: {
     nome: "Permuta",
     tipo: "Sem cachê",
     investimento: "Máquina + 5 kg",
-    investimentoSub: "de filamento",
+    investimentoSub: "de filamento · modelo combinado entre nós",
     itens: [
       { nome: "3 vídeos UGC pra anúncio (01, 02 e 03 do plano)", valor: 1950 },
       { nome: "Direito de uso em tráfego pago por 3 meses", valor: 585 },
@@ -90,7 +80,7 @@ const PACOTES: {
     nome: "Completo",
     tipo: "Permuta + cachê",
     investimento: "Máquina + 10 kg",
-    investimentoSub: "de filamento + R$ 2.500",
+    investimentoSub: "de filamento + R$ 2.500 · modelo combinado entre nós",
     destaque: true,
     itens: [
       { nome: "5 vídeos UGC pra anúncio (o plano inteiro)", valor: 3250 },
@@ -103,7 +93,7 @@ const PACOTES: {
 ];
 
 const FAQ = [
-  { p: "Qual máquina vocês precisam mandar?", r: "A que vocês mais querem vender. Eu adapto os roteiros ao modelo: entrada, multicolor ou resina." },
+  { p: "Qual máquina entra na parceria?", r: "A gente escolhe junto. Precisa ser um modelo que vocês queiram vender e que mostre o melhor da marca no vídeo, como uma multicolor pras peças coloridas da aula. O objetivo é ficar bom pros dois lados." },
   { p: "A aula depende de algum programa pago?", r: "Não. O Claude tem plano gratuito, o OpenSCAD é gratuito, e o fatiamento é feito no software da própria marca." },
   { p: "Onde a aula fica?", r: "Vocês recebem os arquivos em módulos curtos e colocam onde quiserem: área do cliente, YouTube, onboarding ou junto com a compra." },
   { p: "E se o roteiro não agradar?", r: "Cada roteiro passa pela aprovação de vocês antes de eu gravar. Ajusto até aprovarem, e nada é gravado no escuro." },
@@ -197,11 +187,11 @@ export default function Impressao3D({ marca }: { marca?: string }) {
           </dl>
         </div>
 
-        <div className="relative mx-auto w-full max-w-md md:max-w-none">
-          <div className="relative ml-auto aspect-[4/5] w-[78%] overflow-hidden rounded-[2rem] bg-background-alt shadow-xl">
+        <div className="relative mx-auto mb-10 w-full max-w-md md:mb-0 md:max-w-none">
+          <div className="relative mr-auto aspect-[4/5] w-[80%] overflow-hidden rounded-[2rem] bg-background-alt shadow-xl">
             <img src="/capa/1-sorriso.webp" alt="Lara Dam" className="h-full w-full object-cover object-top" />
           </div>
-          <div className="absolute -bottom-10 -left-2 w-[54%] md:-bottom-6 md:w-[62%] rounded-[1.75rem] border border-border bg-background p-3 shadow-2xl md:-left-6">
+          <div className="absolute -bottom-12 right-0 w-[46%] md:-bottom-10 md:-right-4 md:w-[50%] rounded-[1.75rem] border border-border bg-background p-3 shadow-2xl">
             <ImpressoraIso className="h-auto w-full" onProgresso={onProgresso} />
             <div className="mt-1 flex items-center justify-between gap-2 px-1 pb-1 text-[11px] font-bold uppercase tracking-[0.15em]">
               <span className="text-foreground-soft">{pct < 100 ? "Imprimindo" : "Pronto"}</span>
@@ -211,7 +201,7 @@ export default function Impressao3D({ marca }: { marca?: string }) {
               <div className="h-full rounded-full bg-primary transition-[width] duration-200" style={{ width: `${pct}%` }} />
             </div>
           </div>
-          <div className="absolute right-0 top-6 rotate-3 rounded-2xl bg-foreground px-4 py-3 text-background shadow-lg md:-right-4">
+          <div className="absolute right-0 top-8 rotate-3 rounded-2xl bg-foreground px-4 py-3 text-background shadow-lg">
             <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-accent-on-dark">Exclusivo</div>
             <div className="text-sm font-semibold">1 marca de 3D só</div>
           </div>
@@ -316,13 +306,15 @@ export default function Impressao3D({ marca }: { marca?: string }) {
                 Pronto! Fiz o modelo com base, encosto inclinado e o nome em relevo. Quer que eu deixe mais alto?
               </div>
             </div>
-            {/* 2. código */}
-            <div className="flex flex-col overflow-hidden rounded-3xl border border-background/15 bg-[#151E33]">
-              <div className="flex items-center justify-between border-b border-background/10 px-5 py-3">
-                <div className="text-[11px] font-bold uppercase tracking-[0.2em] text-accent-on-dark">2 · O Claude cria o modelo</div>
-                <span className="font-mono text-[11px] text-background/50">suporte.scad</span>
+            {/* 2. a peça */}
+            <div className="flex flex-col overflow-hidden rounded-3xl border border-background/15 bg-[#151E33] p-6">
+              <div className="text-[11px] font-bold uppercase tracking-[0.2em] text-accent-on-dark">2 · O Claude cria a peça</div>
+              <SuporteIso className="mx-auto my-2 h-auto w-full max-w-[300px]" />
+              <div className="flex flex-wrap justify-center gap-2">
+                {["Medidas sob medida", "Encosto inclinado", "Nome em relevo"].map((c) => (
+                  <span key={c} className="rounded-full border border-background/15 px-3 py-1 text-xs text-background/75">{c}</span>
+                ))}
               </div>
-              <pre className="flex-1 overflow-x-auto px-5 py-4 font-mono text-[12px] leading-relaxed text-background/85"><code>{CODIGO}</code></pre>
             </div>
             {/* 3. impressão */}
             <div className="flex flex-col rounded-3xl border border-background/15 bg-background/5 p-6">
@@ -414,6 +406,10 @@ export default function Impressao3D({ marca }: { marca?: string }) {
               );
             })}
           </div>
+
+          <p className="mt-6 text-center text-sm text-foreground-soft">
+            Os pacotes são um ponto de partida. Se outro formato fizer mais sentido pra vocês, a gente monta junto.
+          </p>
 
           <div className="mt-8 rounded-3xl border border-dashed border-primary/50 bg-primary-light p-6 md:p-8">
             <div className="font-display text-2xl font-black text-primary">Exclusividade de categoria</div>
