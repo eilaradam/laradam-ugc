@@ -33,7 +33,7 @@ const CASES = [
 ];
 
 const TECH = [
-  { id: "t7", porque: "Logitech: produto de mesa mostrado no uso real." },
+  { id: "t10", porque: "Gamma: ferramenta de criação mostrada com gancho visual forte nos primeiros segundos." },
   { id: "t-fancy", porque: "Fancy: gadget explicado em segundos, benefício antes da ficha técnica." },
   { id: "ia2", porque: "Sintra: IA explicada pra quem nunca usou. É o tom da aula." },
   { id: "t-infinitepay", porque: "InfinitePay Tap: 4 milhões de views com tecnologia no dia a dia." },
