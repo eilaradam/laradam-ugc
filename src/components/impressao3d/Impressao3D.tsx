@@ -39,13 +39,11 @@ const TECH = [
   { id: "t-infinitepay", porque: "InfinitePay Tap: 4 milhões de views com tecnologia no dia a dia." },
 ];
 
+// Reels escolhidos pela Lara (07/11), baixados em public/videos-ig e tocados no player nativo.
 const REFS = [
-  { brand: "Referência 3D", titulo: "5 coisas impressas que você precisa ter", youtubeId: "WYw_KrrOu-M", porque: "Lista de objetos úteis: faz a pessoa imaginar a máquina em casa." },
-  { brand: "Referência 3D", titulo: "Impressões pra organizar a casa", youtubeId: "oygXEApaeVI", porque: "Creator falando pra câmera, com antes e depois e a peça em uso." },
-  { brand: "Referência 3D", titulo: "Coisas úteis pra imprimir", youtubeId: "5utu8rW2hig", porque: "Série: uma gravação rende vários criativos." },
-  { brand: "Referência 3D", titulo: "Comprei minha primeira impressora", youtubeId: "zDii7WVyMCQ", porque: "Ângulo de iniciante: quebra o medo de \"não vou conseguir\"." },
-  { brand: "Referência 3D", titulo: "OpenSCAD + IA", youtubeId: "eCS01HnPdSs", porque: "IA criando o modelo e a máquina imprimindo: a base da aula." },
-  { brand: "Referência 3D", titulo: "Imprimir sem saber CAD, com o Claude", youtubeId: "PgetyN0tQSg", porque: "Prova de que o Claude já cria peças imprimíveis." },
+  { instagram: "DfRzLuDxSi-", brand: "@fabio.riudi", titulo: "Tudo que imprimi de \"planta\"", porque: "78 mil curtidas. Cada peça com uma função: ímã, gavetinha, porta-controle. Mostra a máquina resolvendo a casa." },
+  { instagram: "DVmQcihD3h4", brand: "@home_gaabycosta", titulo: "Tudo que imprimi pra decorar a casa", porque: "23 mil curtidas. Decoração feita em casa, com a marca da impressora citada na legenda." },
+  { instagram: "DTYlIabCTBu", brand: "@marlahonorato", titulo: "Tenho uma impressora 3D em casa", porque: "15 mil curtidas. Formato de conversa, como quem conta pra uma amiga: é o tom dos meus UGCs." },
 ];
 
 const VIDEOS_PLANO = [
@@ -338,11 +336,15 @@ export default function Impressao3D({ marca }: { marca?: string }) {
         <h2 className="max-w-3xl font-display text-4xl font-black leading-[0.95] tracking-tight md:text-5xl">
           O que já funciona em impressão 3D, com a minha cara.
         </h2>
-        <p className="mt-4 max-w-2xl text-foreground-soft">Conteúdos de outros criadores que mostram o tom e os formatos que eu proponho. Toque pra assistir.</p>
-        <div className="mt-10 grid grid-cols-2 gap-5 md:grid-cols-3">
+        <p className="mt-4 max-w-2xl text-foreground-soft">Reels de impressão 3D que já funcionaram com o público brasileiro e mostram o tom e os formatos que eu proponho. Toque pra assistir.</p>
+        <div className="mx-auto mt-10 grid max-w-xs grid-cols-1 gap-8 sm:max-w-none sm:grid-cols-3 sm:gap-5">
           {REFS.map((r, i) => (
-            <div key={r.youtubeId}>
-              <VideoCard video={{ id: `ref-${r.youtubeId}`, title: r.titulo, category: "", brand: r.brand, youtubeId: r.youtubeId }} index={i} size="sm" />
+            <div key={r.instagram}>
+              <VideoCard
+                video={{ id: `ref-${r.instagram}`, title: r.titulo, category: "", brand: r.brand, instagram: r.instagram, thumbnail: `/capas-ig/${r.instagram}.webp`, videoLocal: `/videos-ig/${r.instagram}.mp4` }}
+                index={i}
+                size="sm"
+              />
               <p className="mt-3 text-sm leading-relaxed text-foreground-soft">{r.porque}</p>
             </div>
           ))}
