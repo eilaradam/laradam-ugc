@@ -1,7 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { MessageCircle } from "lucide-react";
 import { useT } from "@/lib/i18n";
+import { SITE } from "@/data/content";
 
 // Renderiza **trecho** como <strong>
 function renderBold(text: string) {
@@ -85,6 +87,16 @@ export default function About() {
                 {t.about.pillLocation}
               </span>
             </div>
+            <a
+              href={`https://wa.me/${SITE.whatsapp}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-track="about_whatsapp"
+              className="inline-flex items-center gap-2 px-4 md:px-5 py-2 md:py-3 rounded-full bg-primary text-white text-xs md:text-sm font-semibold hover:bg-primary-dark transition-colors"
+            >
+              <MessageCircle className="w-4 h-4" />
+              {t.about.falaComigo}
+            </a>
           </div>
         </motion.div>
       </div>

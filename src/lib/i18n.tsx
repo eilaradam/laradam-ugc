@@ -105,6 +105,7 @@ export type Dict = {
     body2: string;
     pillBrands: string;
     pillLocation: string;
+    falaComigo: string;
     etapa: string;
     primeiroContato: string;
     criacao: string;
@@ -355,6 +356,7 @@ const dict: Record<Lang, Dict> = {
         "Mais de **140M de views** em campanhas, **recorde de CTR no Meta**, **CPA reduzido em até 38%** e **ROAS de 2.4x**. Conteúdo que virou playbook de criativo pra marcas como **InfinitePay**, **Méliuz** e **DT3**.",
       pillBrands: "+300 marcas parceiras",
       pillLocation: "Litoral de SP · Brasil",
+      falaComigo: "Fale comigo",
       etapa: "Etapa",
       primeiroContato: "Primeiro contato",
       criacao: "Criação",
@@ -857,6 +859,7 @@ const dict: Record<Lang, Dict> = {
         "Over **140M views** in campaigns, **CTR records on Meta**, **CPA reduced by up to 38%** and **2.4x ROAS**. Content that became a creative playbook for brands like **InfinitePay**, **Méliuz** and **DT3**.",
       pillBrands: "300+ brand partners",
       pillLocation: "Coast of SP · Brazil",
+      falaComigo: "Talk to me",
       etapa: "Step",
       primeiroContato: "First contact",
       criacao: "Creation",
