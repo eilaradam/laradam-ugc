@@ -15,6 +15,9 @@ const nextConfig: NextConfig = {
       // Pagina de UGC para eventos (HTML estatico em public/eventos/)
       { source: "/eventos", destination: "/eventos/index.html" },
       { source: "/eventos/", destination: "/eventos/index.html" },
+      // 5 dicas pro primeiro UGC (isca do carrossel do Instagram, HTML estatico em public/dicas-insta-2026/)
+      { source: "/dicas-insta-2026", destination: "/dicas-insta-2026/index.html" },
+      { source: "/dicas-insta-2026/", destination: "/dicas-insta-2026/index.html" },
       // Tour 3D do apartamento (Three.js estatico)
       { source: "/projeto/3d", destination: "/projeto/3d/index.html" },
       { source: "/projeto/3d/", destination: "/projeto/3d/index.html" },
