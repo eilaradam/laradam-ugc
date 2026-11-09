@@ -36,7 +36,29 @@ export type Ideia = {
   created_at: string;
 };
 
-export type Marco = { t: string; tipo: "campanha" | "data" };
+/** Um post do Instagram como o admin do creators guarda (ig_insights_cache), já enxuto. */
+export type PostIG = {
+  id: string;
+  ts: string;
+  dia: string; // data no fuso de SP
+  tipo: string; // VIDEO, CAROUSEL_ALBUM, IMAGE
+  legenda: string;
+  link: string | null;
+  views: number;
+  alcance: number;
+  curtidas: number;
+  comentarios: number;
+  salvos: number;
+  compart: number;
+  tempo: number | null; // tempo médio assistido, em segundos (só Reels)
+};
+
+export type Insta = { posts: PostIG[]; seguidores: { dia: string; followers: number }[]; atualizado: string };
+/** links: post da pauta → id do post no Instagram ("" = não é nenhum). notas: o porquê que a Lara anota. */
+export type Resultados = { links: Record<string, string>; notas: Record<string, string> };
+export const RESULTADOS_VAZIO: Resultados = { links: {}, notas: {} };
+
+export type Marco ={ t: string; tipo: "campanha" | "data" };
 export type Plano = {
   narrativa: { quem: string; praQuem: string; vende: string; quer: string; trava: string; pesquisa: string };
   frequencia: { reels: number; carrossel: number };

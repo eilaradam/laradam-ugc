@@ -1,12 +1,14 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { C, PLANO_VAZIO, SERIES, diaBonito, hojeSP, type Ideia, type Item, type Plano } from "./comum";
+import { C, PLANO_VAZIO, RESULTADOS_VAZIO, SERIES, diaBonito, hojeSP, type Ideia, type Insta, type Item, type Plano, type PostIG, type Resultados } from "./comum";
 import { IdeiasAba, PlanoAba } from "./Plano";
+import { ResultadoDoPost, ResultadosAba, Selo, fmt, medianas, vincular, type Med } from "./Resultados";
 
 const STATUS = ["pendente", "gravado", "editado", "agendado", "postado"];
 const NOME_STATUS: Record<string, string> = { pendente: "A fazer", gravado: "Gravado", editado: "Editado", agendado: "Agendado", postado: "Postado" };
-const ABAS = [{ k: "hoje", nome: "Hoje" }, { k: "plano", nome: "Plano" }, { k: "ideias", nome: "Ideias" }] as const;
+const ABAS = [{ k: "hoje", nome: "Hoje" }, { k: "resultados", nome: "Resultados" }, { k: "plano", nome: "Plano" }, { k: "ideias", nome: "Ideias" }] as const;
+const INSTA_VAZIO: Insta = { posts: [], seguidores: [], atualizado: "" };
 type Aba = (typeof ABAS)[number]["k"];
 
 function lerChave(): string {
@@ -28,6 +30,8 @@ export default function Rotina() {
   const [aba, setAba] = useState<Aba>("hoje");
   const [plano, setPlano] = useState<Plano>(PLANO_VAZIO);
   const [ideias, setIdeias] = useState<Ideia[]>([]);
+  const [insta, setInsta] = useState<Insta>(INSTA_VAZIO);
+  const [res, setRes] = useState<Resultados>(RESULTADOS_VAZIO);
 
   const carregar = useCallback(async (k: string) => {
     const r = await fetch(`/api/rotina?k=${encodeURIComponent(k)}&plano=1`);
@@ -35,6 +39,8 @@ export default function Rotina() {
     const j = await r.json();
     setItens(j.itens);
     setIdeias(j.ideias ?? []);
+    if (j.insta) setInsta(j.insta);
+    if (j.resultados) setRes({ ...RESULTADOS_VAZIO, ...j.resultados });
     if (j.plano) setPlano({ ...PLANO_VAZIO, ...j.plano, narrativa: { ...PLANO_VAZIO.narrativa, ...j.plano.narrativa }, frequencia: { ...PLANO_VAZIO.frequencia, ...j.plano.frequencia } });
   }, []);
 
@@ -53,6 +59,18 @@ export default function Rotina() {
     setIdeias((xs) => (status === "postado" ? xs.filter((x) => x.id !== id) : xs.map((x) => (x.id === id ? { ...x, status } : x))));
     enviar({ acao: "ideia_status", id, status });
   };
+  const ligarPost = (id: string, mediaId: string) => {
+    setRes((r) => ({ ...r, links: { ...r.links, [id]: mediaId } }));
+    enviar({ acao: "vinculo", id, media_id: mediaId });
+  };
+  const anotar = (id: string, texto: string) => {
+    setRes((r) => ({ ...r, notas: { ...r.notas, [id]: texto } }));
+    enviar({ acao: "nota", id, texto });
+  };
+  const med = useMemo(() => medianas(insta.posts), [insta.posts]);
+  const doIG = useMemo(() => vincular(itens ?? [], insta.posts, res), [itens, insta.posts, res]);
+  const extras = (x: Item) => ({ p: doIG.get(x.id), insta, med, res, ligarPost, anotar });
+
   const pautar = async (id: string, data: string) => {
     const r = await enviar({ acao: "pauta", id, data });
     if (!r.ok) { alert("Não consegui colocar na pauta. Tenta de novo."); return false; }
@@ -134,13 +152,13 @@ export default function Rotina() {
     <main className="min-h-screen pb-16" style={{ background: C.fundo, color: C.preto }}>
       <div className="mx-auto max-w-2xl px-4 pt-6">
         <p className="text-sm font-semibold" style={{ color: C.roxo }}>laradam · rotina de conteúdo</p>
-        <h1 className="mt-1 text-3xl font-extrabold tracking-tight">{aba === "hoje" ? "O que tem pra hoje" : aba === "plano" ? "Plano de conteúdo" : "Banco de ideias"}</h1>
+        <h1 className="mt-1 text-3xl font-extrabold tracking-tight">{aba === "hoje" ? "O que tem pra hoje" : aba === "resultados" ? "Como foram os posts" : aba === "plano" ? "Plano de conteúdo" : "Banco de ideias"}</h1>
         {itens && aba === "hoje" && <p className="mt-1 text-sm" style={{ color: C.suave }}>{feitos} de {itens.length} posts postados</p>}
 
         <nav className="sticky top-0 z-10 -mx-4 mt-4 px-4 py-2" style={{ background: C.fundo }}>
-          <div className="grid grid-cols-3 rounded-full bg-white p-1 shadow-sm">
+          <div className="grid grid-cols-4 rounded-full bg-white p-1 shadow-sm">
             {ABAS.map((a) => (
-              <button key={a.k} type="button" onClick={() => setAba(a.k)} className="rounded-full py-2 text-sm font-bold"
+              <button key={a.k} type="button" onClick={() => setAba(a.k)} className="rounded-full py-2 text-[13px] font-bold sm:text-sm"
                 style={aba === a.k ? { background: C.roxo, color: "#fff" } : { color: C.suave }}>{a.nome}</button>
             ))}
           </div>
@@ -149,6 +167,7 @@ export default function Rotina() {
         {erro && <p className="mt-6 rounded-2xl bg-white p-4 text-sm">{erro}</p>}
         {!itens && !erro && <p className="mt-6 text-sm" style={{ color: C.suave }}>Carregando…</p>}
 
+        {itens && aba === "resultados" && <ResultadosAba itens={itens} insta={insta} res={res} />}
         {itens && aba === "plano" && <PlanoAba itens={itens} plano={plano} mudar={mudarPlano} />}
         {itens && aba === "ideias" && <IdeiasAba ideias={ideias} itens={itens} criar={criarIdeia} mudarStatus={statusIdeia} pautar={pautar} />}
 
@@ -157,7 +176,7 @@ export default function Rotina() {
             {agora.length === 0 ? (
               <p className="rounded-2xl bg-white p-4 text-sm">Nada pendente pra hoje. 🎉</p>
             ) : (
-              <div className="flex flex-col gap-3">{agora.map((x) => <Cartao key={x.id} x={x} aberto={aberto === x.id} abrir={setAberto} salvar={salvar} excluir={excluir} atrasado={x.data < hoje} />)}</div>
+              <div className="flex flex-col gap-3">{agora.map((x) => <Cartao key={x.id} x={x} aberto={aberto === x.id} abrir={setAberto} salvar={salvar} excluir={excluir} atrasado={x.data < hoje} {...extras(x)} />)}</div>
             )}
           </section>
         )}
@@ -165,7 +184,7 @@ export default function Rotina() {
         {aba === "hoje" && Object.entries(semanas).map(([seg, xs]) => (
           <section key={seg} className="mt-8">
             <h2 className="text-sm font-bold uppercase tracking-[0.14em]" style={{ color: C.suave }}>Semana de {diaBonito(seg)}</h2>
-            <div className="mt-3 flex flex-col gap-3">{xs.map((x) => <Cartao key={x.id} x={x} aberto={aberto === x.id} abrir={setAberto} salvar={salvar} excluir={excluir} />)}</div>
+            <div className="mt-3 flex flex-col gap-3">{xs.map((x) => <Cartao key={x.id} x={x} aberto={aberto === x.id} abrir={setAberto} salvar={salvar} excluir={excluir} {...extras(x)} />)}</div>
           </section>
         ))}
       </div>
@@ -207,13 +226,14 @@ function Legenda({ x, salvar }: { x: Item; salvar: (id: string, m: Partial<Item>
   );
 }
 
-function Cartao({ x, aberto, abrir, salvar, excluir, atrasado }: {
+function Cartao({ x, aberto, abrir, salvar, excluir, atrasado, p, insta, med, res, ligarPost, anotar }: {
   x: Item; aberto: boolean; abrir: (id: string | null) => void; salvar: (id: string, m: Partial<Item>) => void; excluir: (x: Item) => void; atrasado?: boolean;
+  p?: PostIG; insta: Insta; med: Med; res: Resultados; ligarPost: (id: string, mediaId: string) => void; anotar: (id: string, texto: string) => void;
 }) {
   const s = SERIES[x.serie ?? ""] ?? { nome: x.serie ?? "", cor: "#ddd", tinta: C.preto };
   const postado = x.status === "postado";
   return (
-    <article id={x.id} className="rounded-2xl bg-white shadow-sm" style={{ opacity: postado ? 0.55 : 1 }}>
+    <article id={x.id} className="rounded-2xl bg-white shadow-sm" style={{ opacity: postado && !p ? 0.55 : 1 }}>
       <button type="button" onClick={() => abrir(aberto ? null : x.id)} className="flex w-full items-start gap-3 p-4 text-left">
         <span className="mt-0.5 w-14 flex-shrink-0 text-xs font-bold leading-tight" style={{ color: atrasado ? C.rosa : C.suave }}>
           {diaBonito(x.data)}{atrasado ? " · atrasado" : ""}
@@ -225,11 +245,20 @@ function Cartao({ x, aberto, abrir, salvar, excluir, atrasado }: {
             <span className="rounded-full px-2 py-0.5 text-[11px] font-semibold" style={{ background: postado ? C.limao : C.roxoClaro, color: postado ? C.preto : C.roxo }}>{NOME_STATUS[x.status] ?? x.status}</span>
           </span>
           <span className="mt-1.5 block font-bold leading-snug">{x.titulo}</span>
+          {postado && p && (
+            <span className="mt-1.5 flex flex-wrap items-center gap-x-2.5 gap-y-1 text-xs font-semibold" style={{ color: C.suave }}>
+              <span><b style={{ color: C.preto }}>{fmt(p.views)}</b> views</span>
+              <span><b style={{ color: C.preto }}>{fmt(p.curtidas)}</b> curtidas</span>
+              <span><b style={{ color: C.preto }}>{fmt(p.salvos)}</b> salvos</span>
+              <Selo p={p} med={med} />
+            </span>
+          )}
         </span>
       </button>
 
       {aberto && (
         <div className="border-t border-black/5 px-4 pb-4 pt-3">
+          {postado && <ResultadoDoPost x={x} p={p} insta={insta} med={med} res={res} vincular={ligarPost} anotar={anotar} />}
           {x.gancho && (
             <>
               <p className="text-xs font-bold uppercase tracking-[0.14em]" style={{ color: C.roxo }}>Gancho</p>
