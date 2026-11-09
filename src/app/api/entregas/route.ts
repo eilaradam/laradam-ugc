@@ -7,8 +7,8 @@ import { str } from "@/lib/guard";
 // Prazo do conteúdo: "Envie até" da Seu Influencer, ou roteiro aprovado + 5 dias corridos.
 // Usa a mesma chave da rotina (ROTINA_CHAVE).
 
-const ABERTOS = ["briefing", "roteiro", "aprovacao_roteiro", "gravacao", "aprovacao_video"];
-const PROXIMO: Record<string, string> = { briefing: "aprovacao_roteiro", roteiro: "aprovacao_roteiro", aprovacao_roteiro: "gravacao", gravacao: "aprovacao_video", aprovacao_video: "aprovado" };
+const ABERTOS = ["briefing", "roteiro", "aprovacao_roteiro", "gravacao", "edicao", "aprovacao_video"];
+const PROXIMO: Record<string, string> = { briefing: "aprovacao_roteiro", roteiro: "aprovacao_roteiro", aprovacao_roteiro: "gravacao", gravacao: "aprovacao_video", edicao: "aprovacao_video", aprovacao_video: "aprovado" };
 
 function autorizado(req: Request) {
   const k = new URL(req.url).searchParams.get("k") ?? req.headers.get("x-rotina");
@@ -54,7 +54,7 @@ export async function GET(req: Request) {
     if (c.status === "briefing" || c.status === "roteiro") {
       tipo = "roteiro";
       prazo = (c.prazo_roteiro as string | null) ?? r?.prazo_roteiro ?? maisDias(aprovada, Number(c.prazo_roteiro_dias ?? 3));
-    } else if (c.status === "gravacao") {
+    } else if (c.status === "gravacao" || c.status === "edicao") {
       tipo = "conteudo";
       prazo = (c.prazo_conteudo as string | null) ?? r?.prazo_video ?? maisDias(c.roteiro_aprovado_em as string | null, Number(c.prazo_conteudo_dias ?? 5));
     } else {
