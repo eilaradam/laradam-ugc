@@ -173,61 +173,97 @@ function Passo({ n, titulo, children }: { n: number; titulo: string; children: R
   );
 }
 
-function PassoAPasso() {
+const PROMPT_ANDROID = `Monta a minha pauta de posts do Instagram desta semana em forma de checklist, pra eu colar numa nota do Google Keep.
+
+Uma linha por post, neste formato:
+SEG 10/11 · título curto do post
+
+Sobre mim: [O QUE VOCÊ POSTA, EX.: UGC, BELEZA, ROTINA]
+Quantos posts por semana: [EX.: 3]
+Ideias que eu já tenho: [SE TIVER, ESCREVE AQUI]
+
+Só a lista, sem explicação.`;
+
+function BotaoCopiar({ texto }: { texto: string }) {
   const [copiou, setCopiou] = useState(false);
   const copiar = async () => {
-    try { await navigator.clipboard.writeText(PROMPT); } catch { return; }
+    try { await navigator.clipboard.writeText(texto); } catch { return; }
     setCopiou(true);
     setTimeout(() => setCopiou(false), 2500);
   };
   return (
     <>
+      <div className="relative mt-2 rounded-2xl p-4" style={{ background: V.escuro, color: "#EEEAFB" }}>
+        <pre className="max-h-[300px] overflow-auto whitespace-pre-wrap text-[13.5px] leading-relaxed" style={{ fontFamily: "ui-monospace, SFMono-Regular, Menlo, monospace" }}>{texto}</pre>
+      </div>
+      <button type="button" onClick={copiar} className="mt-2 w-full rounded-full py-3 text-[15px] font-extrabold"
+        style={copiou ? { background: V.vinho, color: "#fff" } : { background: "linear-gradient(135deg,#F0FF7A 0%,#DCFB4E 50%,#B8E02A 100%)", color: V.escuro }}>
+        {copiou ? "Copiado ✓" : "Copiar o prompt"}
+      </button>
+    </>
+  );
+}
+
+function PassoAPasso() {
+  const [cel, setCel] = useState<"iphone" | "android" | null>(null);
+  useEffect(() => {
+    // abre já no celular de quem está vendo
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setCel(/android/i.test(navigator.userAgent) ? "android" : "iphone");
+  }, []);
+  const aba = (k: "iphone" | "android", t: string) => (
+    <button type="button" onClick={() => setCel(k)} className="flex-1 rounded-full py-2.5 text-[15px] font-extrabold"
+      style={cel === k ? { background: V.vinho, color: "#fff" } : { background: "transparent", color: V.vinho }}>
+      {t}
+    </button>
+  );
+  return (
+    <>
       <p className="mt-6 px-1 text-[26px] leading-tight" style={{ fontFamily: "var(--font-caveat)", color: V.vinho }}>Prontinho! Bora montar o seu 👇</p>
-      <p className="px-1 text-[15px]" style={{ color: V.suave }}>Leva uns 15 minutos. Você vai precisar do Google Planilhas, do Claude e do app Scriptable (todos grátis).</p>
+      <div className="mt-2 flex gap-1 rounded-full p-1" style={{ background: V.papel, border: "1px solid #E7E4F0" }}>
+        {aba("iphone", "iPhone")}
+        {aba("android", "Android")}
+      </div>
 
-      <Passo n={1} titulo="Monte sua pauta numa planilha">
-        <p>Abre o Google Planilhas e cria uma planilha com três colunas: <b>data</b>, <b>post</b> e <b>status</b>. Uma linha pra cada post.</p>
-        <p>No status, usa sempre as mesmas palavras: <b>a fazer</b>, <b>gravado</b>, <b>editado</b> ou <b>postado</b>.</p>
-        <button type="button" onClick={baixarModelo} className="mt-1 rounded-full px-4 py-2 text-sm font-bold" style={{ background: V.creme, color: V.vinho, border: `1.5px solid ${V.vinho}` }}>
-          ⬇ Baixar planilha modelo
-        </button>
-        <p className="text-sm" style={{ color: V.suave }}>No Google Planilhas: Arquivo → Importar → Fazer upload, e escolhe esse arquivo.</p>
-      </Passo>
-
-      <Passo n={2} titulo="Publique a planilha">
-        <p>No computador, vai em <b>Arquivo → Compartilhar → Publicar na Web</b>. Escolhe a aba da pauta e o formato <b>Valores separados por vírgula (.csv)</b>. Toca em Publicar e copia o link.</p>
-        <p className="rounded-xl px-3.5 py-2.5 text-[14px]" style={{ background: "#FFF6D6" }}>⚠️ Quem tiver esse link consegue ver a planilha. Coloca só a pauta, nada pessoal.</p>
-      </Passo>
-
-      <Passo n={3} titulo="Peça o widget pro Claude">
-        <p>Copia o prompt abaixo, cola no Claude e troca o que está entre colchetes: o link da sua planilha e as suas cores.</p>
-        <div className="relative mt-2 rounded-2xl p-4" style={{ background: V.escuro, color: "#EEEAFB" }}>
-          <pre className="max-h-[340px] overflow-auto whitespace-pre-wrap text-[13.5px] leading-relaxed" style={{ fontFamily: "ui-monospace, SFMono-Regular, Menlo, monospace" }}>{PROMPT}</pre>
-        </div>
-        <button type="button" onClick={copiar} className="mt-2 w-full rounded-full py-3 text-[15px] font-extrabold"
-          style={copiou ? { background: V.vinho, color: "#fff" } : { background: "linear-gradient(135deg,#F0FF7A 0%,#DCFB4E 50%,#B8E02A 100%)", color: V.escuro }}>
-          {copiou ? "Copiado ✓" : "Copiar o prompt"}
-        </button>
-      </Passo>
-
-      <Passo n={4} titulo="Cole o código no Scriptable">
-        <p>Baixa o <b>Scriptable</b> na App Store (é grátis). Abre, toca no <b>+</b> lá em cima, cola o código que o Claude te deu e dá um nome, tipo <b>Pauta</b>.</p>
-        <p>Toca no ▶ embaixo pra testar. Se aparecer sua pauta, deu certo. Se der erro, copia a mensagem e manda pro Claude que ele arruma.</p>
-      </Passo>
-
-      <Passo n={5} titulo="Coloque na tela de início">
-        <p>Segura o dedo na tela de início até os ícones tremerem, toca no <b>+</b> (ou em Editar → Adicionar widget), procura <b>Scriptable</b> e escolhe o tamanho <b>grande</b>.</p>
-        <p>Depois toca no widget ainda tremendo, em <b>Script</b>, e escolhe o <b>Pauta</b>. Pronto ✿</p>
-      </Passo>
-
-      <section className="mt-4 rounded-[24px] p-5 sm:p-6" style={{ background: V.vinho, color: "#fff" }}>
-        <p className="text-[24px] leading-none" style={{ fontFamily: "var(--font-caveat)", color: V.lima }}>pra usar no dia a dia</p>
-        <ul className="mt-3 list-disc space-y-1.5 pl-5 text-[15px]" style={{ color: "rgba(255,255,255,.88)" }}>
-          <li>Mudou a pauta? Mexe na planilha pelo app do Google Planilhas. O widget acompanha sozinho (o iPhone atualiza de tempos em tempos).</li>
-          <li>Postou? Troca o status pra <b>postado</b> e ele sai da lista.</li>
-          <li>O Scriptable é só pra iPhone. No Android, a mesma ideia funciona com o app KWGT: pede pro Claude adaptar.</li>
-        </ul>
-      </section>
+      {cel === "android" ? (
+        <>
+          <p className="mt-3 px-1 text-[15px]" style={{ color: V.suave }}>Leva uns 5 minutos. Você só precisa do Claude e do Google Keep (já vem no Android).</p>
+          <Passo n={1} titulo="Peça sua pauta pro Claude">
+            <p>Copia o prompt, cola no Claude e troca o que está entre colchetes.</p>
+            <BotaoCopiar texto={PROMPT_ANDROID} />
+          </Passo>
+          <Passo n={2} titulo="Cole numa nota do Keep">
+            <p>Abre o <b>Google Keep</b>, cria uma nota chamada <b>Minha semana</b> e cola a lista. Toca nos três pontinhos → <b>Mostrar caixas de seleção</b> pra virar checklist.</p>
+          </Passo>
+          <Passo n={3} titulo="Coloque na tela de início">
+            <p>Segura o dedo num espaço vazio da tela → <b>Widgets</b> → <b>Keep</b> → <b>Nota única</b>, e escolhe a nota <b>Minha semana</b>.</p>
+            <p>Postou? Marca o quadradinho e ele risca na hora ✿</p>
+          </Passo>
+        </>
+      ) : (
+        <>
+          <p className="mt-3 px-1 text-[15px]" style={{ color: V.suave }}>Leva uns 15 minutos. Você vai precisar do Google Planilhas, do Claude e do app Scriptable (todos grátis).</p>
+          <Passo n={1} titulo="Sua pauta numa planilha">
+            <p>Baixa o modelo e importa no Google Planilhas (<b>Arquivo → Importar</b>). Uma linha por post, com <b>data</b>, <b>post</b> e <b>status</b>.</p>
+            <button type="button" onClick={baixarModelo} className="mt-1 rounded-full px-4 py-2 text-sm font-bold" style={{ background: V.creme, color: V.vinho, border: `1.5px solid ${V.vinho}` }}>
+              ⬇ Baixar planilha modelo
+            </button>
+          </Passo>
+          <Passo n={2} titulo="Pegue o link da planilha">
+            <p>No computador: <b>Arquivo → Compartilhar → Publicar na Web</b>, formato <b>.csv</b>. Copia o link que aparecer.</p>
+            <p className="text-sm" style={{ color: V.suave }}>Quem tiver esse link vê a planilha, então coloca só a pauta.</p>
+          </Passo>
+          <Passo n={3} titulo="Peça o widget pro Claude">
+            <p>Copia o prompt, cola no Claude e troca o que está entre colchetes.</p>
+            <BotaoCopiar texto={PROMPT} />
+          </Passo>
+          <Passo n={4} titulo="Coloque na tela de início">
+            <p>Baixa o <b>Scriptable</b> na App Store, toca no <b>+</b>, cola o código do Claude e salva como <b>Pauta</b>.</p>
+            <p>Na tela de início, segura o dedo → <b>Editar → Adicionar widget</b> → <b>Scriptable</b> (grande). Toca no widget, em <b>Script</b>, escolhe <b>Pauta</b>. Pronto ✿</p>
+            <p className="text-sm" style={{ color: V.suave }}>Deu erro? Copia a mensagem e manda pro Claude que ele arruma.</p>
+          </Passo>
+        </>
+      )}
 
       <p className="mt-8 text-center text-sm" style={{ color: V.suave }}>
         Fez o seu? Me marca no story <b style={{ color: V.vinho }}>@eilaradam</b> que eu quero ver 💜
