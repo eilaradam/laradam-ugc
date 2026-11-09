@@ -7,12 +7,12 @@ import Widget from "./Widget";
 const caveat = Caveat({ subsets: ["latin"], weight: ["600", "700"], variable: "--font-caveat" });
 
 export const metadata: Metadata = {
-  title: "Widget da pauta no iPhone · Lara Dam",
+  title: "Sua semana na tela do celular · Lara Dam",
   description: "O passo a passo com o prompt pronto pra colar no Claude e ter sua pauta na tela do celular.",
   robots: { index: false, follow: false },
 };
 
-export const viewport: Viewport = { themeColor: "#5A1230", width: "device-width", initialScale: 1 };
+export const viewport: Viewport = { themeColor: "#6C3CF5", width: "device-width", initialScale: 1 };
 
 export default function Page() {
   return (

@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 
-// Cores da identidade da Lara: vinho, chartreuse e creme.
-const V = { vinho: "#5A1230", escuro: "#2E0817", lima: "#DCFB4E", creme: "#F8F3EA", papel: "#FFFDF8", tinta: "#22181E", suave: "#6E5E64", rosa: "#FF4FA3" };
+// Roxo + verde-limão: as mesmas cores do widget da rotina que aparece no reels.
+const V = { vinho: "#6C3CF5", escuro: "#1E0F4D", lima: "#DCFB4E", creme: "#F4F2EE", papel: "#FFFFFF", tinta: "#18181B", suave: "#5B5B66" };
 const MARCA = "widget_liberado";
 
 const PROMPT = `Quero um widget no meu iPhone que mostre os posts que eu tenho que fazer.
@@ -19,7 +19,7 @@ As colunas são:
 
 Cria o script completo pra eu colar no Scriptable:
 - widget grande: mostra os posts de hoje e os 3 próximos que ainda não estão como "postado";
-- post atrasado ganha uma etiqueta rosa dizendo há quantos dias está atrasado;
+- post atrasado ganha uma etiqueta vermelha dizendo há quantos dias está atrasado;
 - post de hoje ganha a etiqueta HOJE em destaque;
 - no topo, quantos posts eu já postei;
 - cores: fundo [SUA COR DE FUNDO] e destaque [SUA COR DE DESTAQUE];
@@ -69,9 +69,9 @@ export default function Widget() {
       <div className="mx-auto max-w-xl px-4 pt-8">
         <p className="text-sm font-bold" style={{ color: V.vinho }}>@eilaradam</p>
 
-        <section className="relative mt-4 overflow-hidden rounded-[28px] p-6 sm:p-8" style={{ background: `linear-gradient(160deg, ${V.escuro} 0%, ${V.vinho} 70%, #7E1C42 100%)`, color: "#fff" }}>
+        <section className="relative mt-4 overflow-hidden rounded-[28px] p-6 sm:p-8" style={{ background: `linear-gradient(160deg, ${V.escuro} 0%, #3D1FA3 55%, ${V.vinho} 100%)`, color: "#fff" }}>
           <p className="text-[26px] leading-none" style={{ fontFamily: "var(--font-caveat)", color: V.lima }}>feito com o Claude ✿</p>
-          <h1 className="mt-2 text-[32px] font-extrabold leading-[1.05] tracking-tight sm:text-[40px]">Sua pauta na tela do celular</h1>
+          <h1 className="mt-2 text-[32px] font-extrabold leading-[1.05] tracking-tight sm:text-[40px]">Sua semana na tela do celular</h1>
           <p className="mt-3 text-[15px] leading-relaxed" style={{ color: "rgba(255,255,255,.8)" }}>
             Um widget que mostra o que você tem que postar hoje e o que vem depois. Sem pagar app e sem saber programar.
           </p>
@@ -113,7 +113,7 @@ function Cadastro({ origem, liberar }: { origem: string; liberar: () => void }) 
   const [f, setF] = useState({ nome: "", email: "", whatsapp: "", instagram: "", website: "" });
   const [indo, setIndo] = useState(false);
   const [erro, setErro] = useState("");
-  const campo = "mt-1 w-full rounded-xl border bg-white px-3.5 py-3 text-[16px] outline-none focus:border-[#5A1230]";
+  const campo = "mt-1 w-full rounded-xl border bg-white px-3.5 py-3 text-[16px] outline-none focus:border-[#6C3CF5]";
   const mudar = (k: keyof typeof f) => (e: React.ChangeEvent<HTMLInputElement>) => setF({ ...f, [k]: e.target.value });
 
   const enviar = async (e: React.FormEvent) => {
@@ -134,24 +134,24 @@ function Cadastro({ origem, liberar }: { origem: string; liberar: () => void }) 
   };
 
   return (
-    <form onSubmit={enviar} className="mt-5 rounded-[24px] p-5 shadow-sm sm:p-6" style={{ background: V.papel, border: "1px solid #EFE6D8" }}>
+    <form onSubmit={enviar} className="mt-5 rounded-[24px] p-5 shadow-sm sm:p-6" style={{ background: V.papel, border: "1px solid #E7E4F0" }}>
       <h2 className="text-xl font-extrabold">Libera o passo a passo</h2>
       <p className="mt-1 text-[14.5px]" style={{ color: V.suave }}>Preenche rapidinho que ele aparece na hora, com o prompt pronto pra colar no Claude.</p>
       <label className="mt-4 block text-sm font-bold">Seu nome
-        <input className={campo} style={{ borderColor: "#E6DCCD" }} value={f.nome} onChange={mudar("nome")} required maxLength={120} autoComplete="given-name" />
+        <input className={campo} style={{ borderColor: "#DCD8EA" }} value={f.nome} onChange={mudar("nome")} required maxLength={120} autoComplete="given-name" />
       </label>
       <label className="mt-3 block text-sm font-bold">Seu melhor e-mail
-        <input className={campo} style={{ borderColor: "#E6DCCD" }} type="email" value={f.email} onChange={mudar("email")} required maxLength={160} autoComplete="email" inputMode="email" />
+        <input className={campo} style={{ borderColor: "#DCD8EA" }} type="email" value={f.email} onChange={mudar("email")} required maxLength={160} autoComplete="email" inputMode="email" />
       </label>
       <label className="mt-3 block text-sm font-bold">WhatsApp <span className="font-normal" style={{ color: V.suave }}>(opcional)</span>
-        <input className={campo} style={{ borderColor: "#E6DCCD" }} value={f.whatsapp} onChange={mudar("whatsapp")} maxLength={40} autoComplete="tel" inputMode="tel" placeholder="(11) 99999-9999" />
+        <input className={campo} style={{ borderColor: "#DCD8EA" }} value={f.whatsapp} onChange={mudar("whatsapp")} maxLength={40} autoComplete="tel" inputMode="tel" placeholder="(11) 99999-9999" />
       </label>
       <label className="mt-3 block text-sm font-bold">@ do Instagram <span className="font-normal" style={{ color: V.suave }}>(opcional)</span>
-        <input className={campo} style={{ borderColor: "#E6DCCD" }} value={f.instagram} onChange={mudar("instagram")} maxLength={60} autoCapitalize="none" placeholder="@seuperfil" />
+        <input className={campo} style={{ borderColor: "#DCD8EA" }} value={f.instagram} onChange={mudar("instagram")} maxLength={60} autoCapitalize="none" placeholder="@seuperfil" />
       </label>
       {/* isca pra robô: gente de verdade não vê nem preenche */}
       <input tabIndex={-1} autoComplete="off" aria-hidden="true" className="absolute left-[-9999px] h-0 w-0 opacity-0" value={f.website} onChange={mudar("website")} name="website" />
-      {erro && <p className="mt-3 rounded-lg px-3 py-2 text-sm font-semibold" style={{ background: "#FDE7EF", color: "#9B1C4A" }}>{erro}</p>}
+      {erro && <p className="mt-3 rounded-lg px-3 py-2 text-sm font-semibold" style={{ background: "#FFF1E6", color: "#9A3412" }}>{erro}</p>}
       <button type="submit" disabled={indo} className="mt-5 w-full rounded-full py-3.5 text-[16px] font-extrabold disabled:opacity-60"
         style={{ background: "linear-gradient(135deg,#F0FF7A 0%,#DCFB4E 50%,#B8E02A 100%)", color: V.escuro }}>
         {indo ? "Liberando…" : "Quero o passo a passo"}
@@ -163,12 +163,12 @@ function Cadastro({ origem, liberar }: { origem: string; liberar: () => void }) 
 
 function Passo({ n, titulo, children }: { n: number; titulo: string; children: React.ReactNode }) {
   return (
-    <section className="mt-4 rounded-[24px] p-5 sm:p-6" style={{ background: V.papel, border: "1px solid #EFE6D8" }}>
+    <section className="mt-4 rounded-[24px] p-5 sm:p-6" style={{ background: V.papel, border: "1px solid #E7E4F0" }}>
       <div className="flex items-center gap-3">
         <span className="grid h-11 w-11 flex-shrink-0 place-items-center rounded-2xl text-xl font-extrabold" style={{ background: V.lima, color: V.escuro }}>{n}</span>
         <h2 className="text-[19px] font-extrabold leading-tight">{titulo}</h2>
       </div>
-      <div className="mt-3 space-y-2.5 text-[15.5px] leading-relaxed" style={{ color: "#3A2E33" }}>{children}</div>
+      <div className="mt-3 space-y-2.5 text-[15.5px] leading-relaxed" style={{ color: "#33313A" }}>{children}</div>
     </section>
   );
 }
@@ -201,7 +201,7 @@ function PassoAPasso() {
 
       <Passo n={3} titulo="Peça o widget pro Claude">
         <p>Copia o prompt abaixo, cola no Claude e troca o que está entre colchetes: o link da sua planilha e as suas cores.</p>
-        <div className="relative mt-2 rounded-2xl p-4" style={{ background: V.escuro, color: "#F4ECEF" }}>
+        <div className="relative mt-2 rounded-2xl p-4" style={{ background: V.escuro, color: "#EEEAFB" }}>
           <pre className="max-h-[340px] overflow-auto whitespace-pre-wrap text-[13.5px] leading-relaxed" style={{ fontFamily: "ui-monospace, SFMono-Regular, Menlo, monospace" }}>{PROMPT}</pre>
         </div>
         <button type="button" onClick={copiar} className="mt-2 w-full rounded-full py-3 text-[15px] font-extrabold"
