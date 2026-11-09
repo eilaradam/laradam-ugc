@@ -13,7 +13,7 @@ Minha pauta está numa planilha do Google, publicada como CSV neste link:
 [COLE AQUI O LINK DA SUA PLANILHA]
 
 As colunas são:
-- data (no formato do Brasil, DD/MM/AAAA)
+- data (no formato do Brasil, DD/MM; se não tiver ano, é o ano atual)
 - post (o título do post)
 - status (a fazer, gravado, editado ou postado)
 
