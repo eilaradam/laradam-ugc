@@ -28,27 +28,46 @@ Cria o script completo pra eu colar no Scriptable:
 
 Depois me explica, passo a passo, como colar o script no Scriptable e colocar o widget na tela de início.`;
 
-function hojeMais(n: number) {
-  const d = new Date();
-  d.setDate(d.getDate() + n);
-  return d.toLocaleDateString("pt-BR");
-}
-
-function baixarModelo() {
+function DesenhoPlanilha() {
   const linhas = [
-    ["data", "post", "status"],
-    [hojeMais(-1), "Bastidor da gravação", "postado"],
-    [hojeMais(0), "Dica completa em carrossel", "gravado"],
-    [hojeMais(2), "Antes e depois", "a fazer"],
-    [hojeMais(4), "Fiz com o Claude", "a fazer"],
+    ["10/11", "Bastidor da gravação", "postado"],
+    ["11/11", "Dica em carrossel", "gravado"],
+    ["13/11", "Antes e depois", "a fazer"],
+    ["15/11", "Fiz com o Claude", "a fazer"],
   ];
-  const csv = "﻿" + linhas.map((l) => l.map((c) => `"${c}"`).join(",")).join("\n");
-  const url = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "pauta-modelo.csv";
-  a.click();
-  setTimeout(() => URL.revokeObjectURL(url), 2000);
+  const cor: Record<string, string> = { postado: "#1E8E3E", gravado: "#B06000", "a fazer": "#5B5B66" };
+  const cel = "border px-2 py-1.5 text-[12.5px] whitespace-nowrap overflow-hidden text-ellipsis";
+  return (
+    <div className="mt-2 overflow-hidden rounded-xl border shadow-sm" style={{ borderColor: "#DADCE0", background: "#fff" }} aria-label="Exemplo da planilha">
+      <div className="flex items-center gap-2 px-3 py-2" style={{ background: "#F1F3F4", borderBottom: "1px solid #DADCE0" }}>
+        <span className="grid h-5 w-4 place-items-center rounded-[3px] text-[9px] font-bold text-white" style={{ background: "#1E8E3E" }}>▦</span>
+        <span className="text-[12px] font-semibold" style={{ color: "#3C4043" }}>Minha pauta</span>
+      </div>
+      <table className="w-full table-fixed border-collapse" style={{ color: "#202124" }}>
+        <colgroup><col style={{ width: 26 }} /><col style={{ width: "22%" }} /><col /><col style={{ width: "26%" }} /></colgroup>
+        <thead>
+          <tr style={{ background: "#F8F9FA", color: "#5F6368" }}>
+            <th className={cel + " text-[10px] font-normal"} style={{ borderColor: "#E2E3E5" }}></th>
+            {["A", "B", "C"].map((l) => <th key={l} className={cel + " text-[10px] font-normal"} style={{ borderColor: "#E2E3E5" }}>{l}</th>)}
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td className={cel + " text-center text-[10px]"} style={{ borderColor: "#E2E3E5", background: "#F8F9FA", color: "#5F6368" }}>1</td>
+            {["data", "post", "status"].map((h) => <td key={h} className={cel + " font-bold"} style={{ borderColor: "#E2E3E5" }}>{h}</td>)}
+          </tr>
+          {linhas.map((l, i) => (
+            <tr key={l[1]}>
+              <td className={cel + " text-center text-[10px]"} style={{ borderColor: "#E2E3E5", background: "#F8F9FA", color: "#5F6368" }}>{i + 2}</td>
+              <td className={cel} style={{ borderColor: "#E2E3E5" }}>{l[0]}</td>
+              <td className={cel} style={{ borderColor: "#E2E3E5" }}>{l[1]}</td>
+              <td className={cel + " font-semibold"} style={{ borderColor: "#E2E3E5", color: cor[l[2]] }}>{l[2]}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
 }
 
 export default function Widget() {
@@ -243,11 +262,9 @@ function PassoAPasso() {
       ) : (
         <>
           <p className="mt-3 px-1 text-[15px]" style={{ color: V.suave }}>Leva uns 15 minutos. Você vai precisar do Google Planilhas, do Claude e do app Scriptable (todos grátis).</p>
-          <Passo n={1} titulo="Sua pauta numa planilha">
-            <p>Baixa o modelo e importa no Google Planilhas (<b>Arquivo → Importar</b>). Uma linha por post, com <b>data</b>, <b>post</b> e <b>status</b>.</p>
-            <button type="button" onClick={baixarModelo} className="mt-1 rounded-full px-4 py-2 text-sm font-bold" style={{ background: V.creme, color: V.vinho, border: `1.5px solid ${V.vinho}` }}>
-              ⬇ Baixar planilha modelo
-            </button>
+          <Passo n={1} titulo="Crie uma planilha">
+            <p>Pode ser no <b>Google Planilhas</b>. Coloca três colunas, <b>data</b>, <b>post</b> e <b>status</b>, e uma linha pra cada post. Fica assim:</p>
+            <DesenhoPlanilha />
           </Passo>
           <Passo n={2} titulo="Pegue o link da planilha">
             <p>No computador: <b>Arquivo → Compartilhar → Publicar na Web</b>, formato <b>.csv</b>. Copia o link que aparecer.</p>
