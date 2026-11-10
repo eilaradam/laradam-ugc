@@ -10,7 +10,7 @@ import BestResults from "@/components/BestResults";
 import CategoryGallery from "@/components/CategoryGallery";
 import YouTubeAds from "@/components/YouTubeAds";
 import Testimonials from "@/components/Testimonials";
-import Contact from "@/components/Contact";
+import { ContatoNovo } from "@/components/final/FinalOpcoes";
 import Footer from "@/components/Footer";
 import MenuEmbaixo from "@/components/MenuEmbaixo";
 
@@ -42,7 +42,7 @@ export default function Home() {
       <YouTubeAds />
       <ServicosDestaque />
       <Testimonials />
-      <Contact />
+      <ContatoNovo />
       <Footer />
         <MenuEmbaixo />
       </main>
