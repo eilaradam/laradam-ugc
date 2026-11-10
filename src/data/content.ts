@@ -152,6 +152,9 @@ export const VIDEOS: Video[] = [
   { id: "ia5", title: "Hostgator", category: "ia", brand: "Hostgator", youtubeId: "rnb44YHTlAY" },
 
   // GASTRONOMIA
+  { id: "e-abelheiro-4", title: "Abelheiro", category: "gastronomia", brand: "Abelheiro", videoLocal: "/entregas/abelheiro-4.mp4", thumbnail: "/entregas/abelheiro-4.jpg" },
+  { id: "e-abelheiro-3", title: "Abelheiro", category: "gastronomia", brand: "Abelheiro", videoLocal: "/entregas/abelheiro-3.mp4", thumbnail: "/entregas/abelheiro-3.jpg" },
+  { id: "e-abelheiro-2", title: "Abelheiro", category: "gastronomia", brand: "Abelheiro", videoLocal: "/entregas/abelheiro-2.mp4", thumbnail: "/entregas/abelheiro-2.jpg" },
   { id: "g-oliv1", title: "Oliv", category: "gastronomia", brand: "Oliv", youtubeId: "UeU757r2FUw" },
   { id: "g-oliv2", title: "Oliv", category: "gastronomia", brand: "Oliv", youtubeId: "rrIv0BFvq38" },
   { id: "g1", title: "Ateliê", category: "gastronomia", brand: "Ateliê", youtubeId: "0FhBNV71z9A" },
@@ -185,6 +188,7 @@ export const VIDEOS: Video[] = [
   { id: "s-pharma-pdrn", title: "Pharmapele PDRN", category: "beleza", brand: "Pharmapele", youtubeId: "r5Ls6pbsmWQ" },
 
   // CASA & DECO
+  { id: "e-brinox-1", title: "Brinox", category: "casa", brand: "Brinox", videoLocal: "/entregas/brinox-1.mp4", thumbnail: "/entregas/brinox-1.jpg" },
   { id: "d-noroeste", title: "Noroeste Solar", category: "casa", brand: "Noroeste Solar", youtubeId: "vP3qucUXC8I" },
   { id: "d-hoomy", title: "Hoomy", category: "casa", brand: "Hoomy", youtubeId: "IcBBViuO6Gw" },
   // Short sem maxresdefault/sddefault no YouTube (dão 404): fixamos a capa
@@ -233,6 +237,7 @@ export const VIDEOS: Video[] = [
   { id: "t3", title: "BV Financeiro", category: "financas", brand: "BV", youtubeId: "Q_n4uwkxiDo" },
 
   // TECH & APPS
+  { id: "e-shopee-1", title: "Shopee", category: "tech", brand: "Shopee", videoLocal: "/entregas/shopee-1.mp4", thumbnail: "/entregas/shopee-1.jpg" },
   { id: "t-fancy", title: "Fancy Carregador Portátil", category: "tech", brand: "Fancy", youtubeId: "0VDR45qTci8" },
   { id: "t-infinitepay", title: "InfinitePay Tap", category: "tech", brand: "InfinitePay", views: "4M", youtubeId: "40q0gv_b9AM" },
   { id: "t-reforma100", title: "Reforma100", category: "tech", brand: "Reforma100", youtubeId: "XWnvZbTcHJw" },
@@ -258,6 +263,7 @@ export const VIDEOS: Video[] = [
   { id: "m6", title: "Rarissima", category: "moda", brand: "Rarissima", youtubeId: "Nhq12rZkpa8" },
 
   // VIAGEM
+  { id: "e-milhaai-1", title: "Milha.Ai", category: "viagem", brand: "Milha.Ai", videoLocal: "/entregas/milhaai-1.mp4", thumbnail: "/entregas/milhaai-1.jpg" },
   { id: "va1", title: "OKA House", category: "viagem", brand: "OKA House", youtubeId: "7TzuVW8847A" },
   { id: "va2", title: "OKA House", category: "viagem", brand: "OKA House", youtubeId: "DzIWctdbjgg" },
   { id: "va3", title: "Airbnb", category: "viagem", brand: "Airbnb", youtubeId: "s5iwpfzgxbI" },
