@@ -287,7 +287,7 @@ export const VIDEOS: Video[] = [
   { id: "m6", title: "Rarissima", category: "moda", brand: "Rarissima", youtubeId: "Nhq12rZkpa8" },
 
   // VIAGEM
-  { id: "e-topviagens-2", title: "Top Viagens", category: "viagem", brand: "Top Viagens", videoLocal: "/entregas/topviagens-2.mp4", thumbnail: "/entregas/topviagens-2.jpg" },
+  { id: "e-topviagens-2", title: "Top Viagens", category: "viagem", brand: "Top Viagens", videoLocal: "/entregas/topviagens-2.mp4", thumbnail: "/entregas/topviagens-2-capa.jpg" },
   { id: "e-milhaai-1", title: "Milha.Ai", category: "viagem", brand: "Milha.Ai", videoLocal: "/entregas/milhaai-1.mp4", thumbnail: "/entregas/milhaai-1.jpg" },
   { id: "va1", title: "OKA House", category: "viagem", brand: "OKA House", youtubeId: "7TzuVW8847A" },
   { id: "va2", title: "OKA House", category: "viagem", brand: "OKA House", youtubeId: "DzIWctdbjgg" },
