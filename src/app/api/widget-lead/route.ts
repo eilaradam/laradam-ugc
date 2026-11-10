@@ -23,6 +23,8 @@ export async function POST(req: Request) {
     origem: str(body.origem, 40) || "widget",
     interesse: "widget",
   });
+  // já cadastrada antes (tocou duas vezes ou voltou pela DM): libera do mesmo jeito
+  if (error?.code === "23505") return Response.json({ ok: true, ja: true });
   if (error) {
     console.error("[widget-lead]", error.message);
     return Response.json({ error: "Não consegui salvar agora. Tenta de novo?" }, { status: 500 });
