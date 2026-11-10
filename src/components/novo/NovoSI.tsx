@@ -170,10 +170,10 @@ function Adesivo({ a }: { a: Adesivo }) {
   );
 }
 
-// prévia de como mostrar que dá pra clicar: ?play=1 som no canto, 2 play no meio, 3 frase à mão, 4 som + frase
+// sinal de clique na capa: 3 (frase à mão) é o oficial, escolhido por ela em 09/11; ?play=1|2|4 mostra as outras prévias
 type Play = 0 | 1 | 2 | 3 | 4;
 function usePlay(): Play {
-  const [v, setV] = useState<Play>(0);
+  const [v, setV] = useState<Play>(3);
   useEffect(() => {
     const n = Number(new URLSearchParams(window.location.search).get("play"));
     if (n >= 1 && n <= 4) setV(n as Play);
@@ -235,7 +235,7 @@ function CapaAdesivos() {
         <div className="max-w-[1320px] mx-auto px-5 md:px-10 grid md:grid-cols-[minmax(380px,0.72fr)_1.28fr] gap-10 md:gap-6 items-center w-full">
           <TextoCapa />
           <div className="relative hidden md:flex items-center justify-center min-w-0">
-            <FraseClique play={play} className="absolute -top-[6vh] left-[12%]" />
+            <FraseClique play={play} className="absolute -top-[11vh] left-[12%]" />
             {ADESIVOS.map((a, i) => (
               <button key={a.item.video.id} type="button" onClick={() => open(a.item.video)}
                 className="group relative flex-shrink-0 aspect-[9/16] w-[min(29%,calc(min(68vh,620px)*0.5625))] rounded-[1.6rem] border-[5px] border-white shadow-2xl transition-transform duration-300 hover:-translate-y-2 hover:z-20"
@@ -246,7 +246,7 @@ function CapaAdesivos() {
               </button>
             ))}
           </div>
-          <FraseClique play={play} className="md:hidden block text-center -mb-4" />
+          <FraseClique play={play} className="md:hidden block text-center mb-2" />
           <div className="md:hidden grid grid-cols-2 gap-4 mx-auto w-full max-w-[370px]">
             {ADESIVOS.map((a, i) => (
               <button key={a.item.video.id} type="button" onClick={() => open(a.item.video)}
