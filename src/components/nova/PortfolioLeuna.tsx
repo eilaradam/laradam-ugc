@@ -124,7 +124,7 @@ export default function PortfolioLeuna() {
           <p className="text-[10px] md:text-sm uppercase tracking-[0.15em]">Um pouco sobre mim</p>
           <h2 className={`${serif} font-black text-[5.6vw] md:text-[2.6rem] leading-tight mt-2 md:mt-3`}>Estrategista por natureza,<br />curiosa de coração.</h2>
           <p className="mt-3 md:mt-5 text-xs md:text-lg leading-relaxed">
-            Eu crio UGC com <b>personalidade</b>: cada vídeo nasce do porquê real do produto e fica natural no feed, sem perder a <b>visão da sua marca</b>. Em 3 anos foram mais de 500 vídeos e 300 marcas.
+            Eu crio UGC com <b>personalidade</b>: cada vídeo nasce do porquê real do produto e fica natural no feed, sem perder a <b>visão da sua marca</b>. Em 3 anos foram mais de 1000 vídeos e 300 marcas.
           </p>
           <p className="mt-3 md:mt-4 text-xs md:text-lg font-bold">Bora dar vida à sua ideia.</p>
         </div>
@@ -135,7 +135,7 @@ export default function PortfolioLeuna() {
         <div>
           <h3 className={`${serif} font-bold uppercase text-xs md:text-lg`}>Experiência</h3>
           <div className="mt-3 border-l-2 pl-3 md:pl-4 space-y-5" style={{ borderColor: VINHO }}>
-            <div><p className="italic opacity-80">2023 – hoje</p><p className="font-bold uppercase">UGC Creator</p><p>+300 marcas, +500 vídeos</p></div>
+            <div><p className="italic opacity-80">2023 – hoje</p><p className="font-bold uppercase">UGC Creator</p><p>+300 marcas, +1000 vídeos</p></div>
             <div><p className="italic opacity-80">2023 – hoje</p><p className="font-bold uppercase">Estrategista de conteúdo</p><p>Roteiro e criativos pra tráfego</p></div>
           </div>
         </div>

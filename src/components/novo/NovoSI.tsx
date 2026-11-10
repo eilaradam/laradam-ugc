@@ -72,7 +72,7 @@ function TextoCapa() {
           </p>
 
           <dl className="mt-[3.2vh] grid grid-cols-3 max-w-md overflow-hidden rounded-3xl bg-white shadow-sm">
-            {[["+500", "vídeos"], ["+300", "marcas"], ["140M+", "views"]].map(([n, k], i) => (
+            {[["+1000", "vídeos"], ["+300", "marcas"], ["140M+", "views"]].map(([n, k], i) => (
               <div key={k} className={`px-5 py-[1.7vh] ${i ? "border-l border-black/5" : ""}`}>
                 <dt className={`${titulo.className} text-3xl md:text-[clamp(1.4rem,3.7vh,1.9rem)] font-extrabold tracking-tight`} style={{ color: i === 1 ? C.roxo : C.preto }}>{n}</dt>
                 <dd className="text-sm" style={{ color: C.suave }}>{k}</dd>
@@ -155,7 +155,7 @@ type Adesivo = { item: Item; tocar: boolean; numero: string; txt: string; cor: s
 // os quatro rodam sozinhos, mudos: cortes de 12 s em /public/si (o clique abre o vídeo inteiro com som)
 const ADESIVOS: Adesivo[] = [
   { item: { video: yt("2s6BI893C74", "Bready", "gastronomia"), capa: "/best-bready.jpg", local: "/si/bready.mp4", nota: "" }, tocar: true, numero: "5,94x", txt: "de ROAS", cor: C.roxo, tinta: "#fff", giro: -3 },
-  { item: { ...BARALHO[0], local: "/si/atelie.mp4" }, tocar: true, numero: "+500", txt: "vídeos como esse", cor: C.limao, tinta: C.preto, giro: 2 },
+  { item: { ...BARALHO[0], local: "/si/atelie.mp4" }, tocar: true, numero: "+1000", txt: "vídeos como esse", cor: C.limao, tinta: C.preto, giro: 2 },
   { item: { video: yt("wesTfq67X9o", "Méliuz", "financas"), capa: "/best-meliuz.jpg", local: "/si/meliuz.mp4", nota: "" }, tocar: true, numero: "+30M", txt: "de views", cor: C.rosa, tinta: "#fff", giro: -2 },
   { item: { video: yt("5wf8Fv2CTa4", "InfinitePay", "financas"), capa: "/best-infinitepay.jpg", local: "/si/infinitepay.mp4", nota: "" }, tocar: true, numero: "+100M", txt: "de views", cor: C.preto, tinta: "#fff", giro: 3 },
 ];
@@ -401,7 +401,7 @@ function Sobre() {
           <span className={`${mao.className} text-2xl -rotate-2 inline-block`} style={{ color: C.roxo }}>oie, prazer!</span>
           <h2 className={`${titulo.className} text-4xl font-extrabold tracking-[-0.04em]`} style={{ color: C.preto }}>Eu sou a Lara Dam.</h2>
           <p className="mt-3 max-w-xl text-lg leading-relaxed" style={{ color: C.suave }}>
-            27 anos, <b style={{ color: C.preto }}>UGC Creator e estrategista de conteúdo</b> no Litoral de SP. Mais de 500 vídeos pra mais de 300 marcas,
+            27 anos, <b style={{ color: C.preto }}>UGC Creator e estrategista de conteúdo</b> no Litoral de SP. Mais de 1000 vídeos pra mais de 300 marcas,
             com recorde de CTR no Meta e CPA até 38% menor.
           </p>
           <div className="mt-4 flex flex-wrap justify-center md:justify-start gap-2">

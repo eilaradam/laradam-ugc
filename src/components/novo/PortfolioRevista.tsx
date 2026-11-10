@@ -32,7 +32,7 @@ export default function PortfolioRevista() {
               <span>o vídeo que bateu recorde de CTR no Meta</span>
             </li>
             <li className="border-t pt-3 flex items-center justify-between" style={{ borderColor: MARINHO }}>
-              <span className="text-sm uppercase tracking-wider">300 marcas · 500 vídeos</span>
+              <span className="text-sm uppercase tracking-wider">300 marcas · 1000 vídeos</span>
               <a href={whats()} className="px-5 py-2.5 text-xs font-bold uppercase tracking-widest text-white" style={{ background: MARINHO }}>Contratar</a>
             </li>
           </ul>

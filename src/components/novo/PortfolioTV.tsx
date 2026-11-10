@@ -106,7 +106,7 @@ export default function PortfolioTV() {
         <div>
           <p className="font-mono text-xs tracking-[0.3em] text-white/50">BASTIDORES</p>
           <h2 className="font-[family-name:var(--tv-titulo)] uppercase text-5xl md:text-6xl mt-2">Quem apresenta</h2>
-          <p className="mt-6 text-white/75 text-lg leading-relaxed">Oie, eu sou a Lara. Em 3 anos foram mais de 500 vídeos e 300 marcas. Eu penso o roteiro como estrategista, gravo como gente comum e edito pra o vídeo rodar como anúncio.</p>
+          <p className="mt-6 text-white/75 text-lg leading-relaxed">Oie, eu sou a Lara. Em 3 anos foram mais de 1000 vídeos e 300 marcas. Eu penso o roteiro como estrategista, gravo como gente comum e edito pra o vídeo rodar como anúncio.</p>
           <div className="grid grid-cols-2 gap-4 mt-8">
             {STATS.map((s) => (
               <div key={s.label} className="rounded-xl border border-white/10 p-4">
