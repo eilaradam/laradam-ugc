@@ -7,7 +7,7 @@ type Item = {
   nome: string;
   cliente: string | null;
   status: string;
-  tipo: "roteiro" | "conteudo" | "espera_roteiro" | "espera_video";
+  tipo: "roteiro" | "conteudo" | "postar" | "espera_roteiro" | "espera_video";
   prazo: string | null;
   desde: string | null;
   aprovada_em: string | null;
@@ -78,7 +78,7 @@ export default function Entregas() {
   const hoje = hojeSP();
   const grupos = useMemo(() => {
     const xs = itens ?? [];
-    const fazer = xs.filter((x) => x.tipo === "roteiro" || x.tipo === "conteudo");
+    const fazer = xs.filter((x) => x.tipo !== "espera_roteiro" && x.tipo !== "espera_video");
     const porPrazo = (a: Item, b: Item) => (a.prazo ?? "9999").localeCompare(b.prazo ?? "9999");
     return {
       atrasadas: fazer.filter((x) => x.prazo && x.prazo < hoje).sort(porPrazo),
@@ -89,7 +89,7 @@ export default function Entregas() {
     };
   }, [itens, hoje]);
 
-  const total = (itens ?? []).filter((x) => x.tipo === "roteiro" || x.tipo === "conteudo").length;
+  const total = (itens ?? []).filter((x) => !x.tipo.startsWith("espera")).length;
 
   const secao = (titulo: string, xs: Item[], cor = C.suave) =>
     xs.length > 0 && (
@@ -134,7 +134,7 @@ function Cartao({ x, hoje, aberto, abrir, mudar }: {
 }) {
   const esperando = x.tipo.startsWith("espera");
   const e = esperando ? null : etiqueta(x.prazo, hoje);
-  const campoPrazo = x.tipo === "roteiro" ? "prazo_roteiro" : "prazo_conteudo";
+  const campoPrazo = x.tipo === "roteiro" ? "prazo_roteiro" : x.tipo === "postar" ? "data_postagem" : "prazo_conteudo";
   const [salvando, setSalvando] = useState(false);
   const fazer = async (c: Record<string, unknown>) => { setSalvando(true); await mudar(x.id, c); setSalvando(false); };
 
@@ -145,8 +145,8 @@ function Cartao({ x, hoje, aberto, abrir, mudar }: {
         <span className="text-[14px] font-extrabold" style={{ color: e ? (e.fundo === C.rosa ? "#E0307F" : e.txt === "HOJE" ? "#2F8F2F" : e.txt === "sem prazo" ? C.suave : C.preto) : C.suave }}>
           {e ? (e.txt === "HOJE" ? "hoje" : e.txt === "sem prazo" ? "—" : e.txt.replace(/^em /, "")) : x.desde ? `há ${Math.max(0, dias(x.desde, hoje))} d` : "—"}
         </span>
-        <span className="text-[13px] font-bold" style={{ color: x.tipo === "roteiro" ? C.roxo : x.tipo === "conteudo" ? C.preto : C.suave }}>
-          {x.tipo === "roteiro" ? "Roteiro" : x.tipo === "conteudo" ? "Conteúdo" : x.tipo === "espera_roteiro" ? "Aprov. roteiro" : "Aprov. vídeo"}
+        <span className="text-[13px] font-bold" style={{ color: x.tipo === "roteiro" ? C.roxo : x.tipo === "postar" ? "#E0307F" : x.tipo === "conteudo" ? C.preto : C.suave }}>
+          {x.tipo === "roteiro" ? "Roteiro" : x.tipo === "postar" ? "Postar" : x.status === "gravacao" ? "Gravação" : x.status === "edicao" ? "Edição" : x.tipo === "conteudo" ? "Conteúdo" : x.tipo === "espera_roteiro" ? "Aprov. roteiro" : "Aprov. vídeo"}
         </span>
         <span className="min-w-0 truncate text-[14px] font-semibold">
           {x.destaque ? "⭐ " : ""}{nomeLimpo(x.nome)}
@@ -174,7 +174,7 @@ function Cartao({ x, hoje, aberto, abrir, mudar }: {
           <div className="mt-4 flex flex-wrap gap-2">
             <button type="button" disabled={salvando} onClick={() => fazer({ acao: "avancar" })}
               className="rounded-xl px-4 py-2.5 text-sm font-bold disabled:opacity-50" style={{ background: C.roxo, color: "#fff" }}>
-              {x.tipo === "roteiro" ? "✓ Entreguei o roteiro" : x.tipo === "conteudo" ? "✓ Entreguei o conteúdo" : x.tipo === "espera_roteiro" ? "✓ Marca aprovou o roteiro" : "✓ Marca aprovou o vídeo"}
+              {x.tipo === "roteiro" ? "✓ Entreguei o roteiro" : x.tipo === "postar" ? "✓ Postei" : x.tipo === "conteudo" ? "✓ Entreguei o conteúdo" : x.tipo === "espera_roteiro" ? "✓ Marca aprovou o roteiro" : "✓ Marca aprovou o vídeo"}
             </button>
           </div>
         </div>
