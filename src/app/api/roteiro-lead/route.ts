@@ -7,7 +7,7 @@ export async function POST(req: Request) {
   const body = (await req.json().catch(() => null)) as Record<string, unknown> | null;
   if (!body) return Response.json({ error: "Dados inválidos" }, { status: 400 });
 
-  const barrado = guardLead(req, body, { name: "roteiro-lead", limit: 6, windowMs: 60 * 60 * 1000 });
+  const barrado = guardLead(req, body, { name: "roteiro-lead", limit: 20, windowMs: 60 * 60 * 1000 });
   if (barrado) return barrado;
 
   const nome = str(body.nome, 120);
