@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import localFont from "next/font/local";
 import { Bricolage_Grotesque } from "next/font/google";
-import { ArrowRight, Volume2 } from "lucide-react";
+import { ArrowRight, Play, Volume2 } from "lucide-react";
 import { BRAND_LOGO_FILES, CATEGORIES, VIDEOS, type Video } from "@/data/content";
 import { useVideoModal } from "../VideoModalProvider";
 import { CAPAS_SI } from "@/data/capasSI";
@@ -170,6 +170,45 @@ function Adesivo({ a }: { a: Adesivo }) {
   );
 }
 
+// prévia de como mostrar que dá pra clicar: ?play=1 som no canto, 2 play no meio, 3 frase à mão, 4 som + frase
+type Play = 0 | 1 | 2 | 3 | 4;
+function usePlay(): Play {
+  const [v, setV] = useState<Play>(0);
+  useEffect(() => {
+    const n = Number(new URLSearchParams(window.location.search).get("play"));
+    if (n >= 1 && n <= 4) setV(n as Play);
+  }, []);
+  return v;
+}
+
+function SinalClique({ play }: { play: Play }) {
+  if (play === 1 || play === 4)
+    return (
+      <span className="absolute top-3 right-3 z-10 flex items-center gap-1.5 rounded-full bg-white/95 p-2 text-xs font-bold shadow-md group-hover:pr-3" style={{ color: C.preto }}>
+        <Volume2 className="h-4 w-4" />
+        <span className="hidden group-hover:inline">ouvir com som</span>
+      </span>
+    );
+  if (play === 2)
+    return (
+      <span className="absolute inset-0 z-10 flex items-center justify-center">
+        <span className="flex h-16 w-16 items-center justify-center rounded-full bg-white/80 shadow-xl backdrop-blur-sm transition-transform group-hover:scale-110">
+          <Play className="h-7 w-7 translate-x-0.5" fill={C.preto} style={{ color: C.preto }} />
+        </span>
+      </span>
+    );
+  return null;
+}
+
+function FraseClique({ play, className = "" }: { play: Play; className?: string }) {
+  if (play !== 3 && play !== 4) return null;
+  return (
+    <span className={`${mao.className} pointer-events-none z-30 -rotate-3 text-[30px] leading-none ${className}`} style={{ color: C.roxo }}>
+      clica pra ouvir com som 👇
+    </span>
+  );
+}
+
 function TelaAdesivo({ a }: { a: Adesivo }) {
   return (
     <span className="absolute inset-0 overflow-hidden rounded-[1.3rem]">
@@ -189,27 +228,32 @@ const LEQUE = [{ giro: -5, desce: "2.5vh" }, { giro: -1.5, desce: "-2vh" }, { gi
 /** 2: mural com adesivos de número colados nos vídeos */
 function CapaAdesivos() {
   const { open } = useVideoModal();
+  const play = usePlay();
   return (
     <>
       <section className="pt-24 pb-10 md:pt-16 md:pb-0 md:h-[100svh] md:min-h-[600px] md:max-h-[860px] flex items-center overflow-hidden">
         <div className="max-w-[1320px] mx-auto px-5 md:px-10 grid md:grid-cols-[minmax(380px,0.72fr)_1.28fr] gap-10 md:gap-6 items-center w-full">
           <TextoCapa />
-          <div className="hidden md:flex items-center justify-center min-w-0">
+          <div className="relative hidden md:flex items-center justify-center min-w-0">
+            <FraseClique play={play} className="absolute -top-[6vh] left-[12%]" />
             {ADESIVOS.map((a, i) => (
               <button key={a.item.video.id} type="button" onClick={() => open(a.item.video)}
-                className="relative flex-shrink-0 aspect-[9/16] w-[min(29%,calc(min(68vh,620px)*0.5625))] rounded-[1.6rem] border-[5px] border-white shadow-2xl transition-transform duration-300 hover:-translate-y-2 hover:z-20"
+                className="group relative flex-shrink-0 aspect-[9/16] w-[min(29%,calc(min(68vh,620px)*0.5625))] rounded-[1.6rem] border-[5px] border-white shadow-2xl transition-transform duration-300 hover:-translate-y-2 hover:z-20"
                 style={{ transform: `rotate(${LEQUE[i].giro}deg) translateY(${LEQUE[i].desce})`, marginLeft: i ? "-5%" : 0, zIndex: i + 1 }}>
                 <TelaAdesivo a={a} />
+                <SinalClique play={play} />
                 <Adesivo a={a} />
               </button>
             ))}
           </div>
+          <FraseClique play={play} className="md:hidden block text-center -mb-4" />
           <div className="md:hidden grid grid-cols-2 gap-4 mx-auto w-full max-w-[370px]">
             {ADESIVOS.map((a, i) => (
               <button key={a.item.video.id} type="button" onClick={() => open(a.item.video)}
-                className={`relative aspect-[9/14] rounded-[1.6rem] border-[5px] border-white shadow-xl ${i % 2 ? "mt-10" : ""}`}
+                className={`group relative aspect-[9/14] rounded-[1.6rem] border-[5px] border-white shadow-xl ${i % 2 ? "mt-10" : ""}`}
                 style={{ transform: `rotate(${a.giro}deg)` }}>
                 <TelaAdesivo a={a} />
+                <SinalClique play={play} />
                 <Adesivo a={a} />
               </button>
             ))}
