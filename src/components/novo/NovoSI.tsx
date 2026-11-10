@@ -191,7 +191,7 @@ function CapaAdesivos() {
   const { open } = useVideoModal();
   return (
     <>
-      <section className="pt-24 pb-10 md:pt-16 md:pb-0 md:h-[100svh] md:min-h-[600px] flex items-center overflow-hidden">
+      <section className="pt-24 pb-10 md:pt-16 md:pb-0 md:h-[100svh] md:min-h-[600px] md:max-h-[860px] flex items-center overflow-hidden">
         <div className="max-w-[1320px] mx-auto px-5 md:px-10 grid md:grid-cols-[minmax(380px,0.72fr)_1.28fr] gap-10 md:gap-6 items-center w-full">
           <TextoCapa />
           <div className="hidden md:flex items-center justify-center min-w-0">
