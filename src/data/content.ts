@@ -145,6 +145,9 @@ export type Video = {
 
 export const VIDEOS: Video[] = [
   // CONTEÚDO COM IA
+  { id: "e-eitaia-1", title: "Eita IA", category: "ia", brand: "Eita IA", videoLocal: "/entregas/eitaia-1.mp4", thumbnail: "/entregas/eitaia-1.jpg" },
+  { id: "e-iveteia-1", title: "Ivete.IA", category: "ia", brand: "Ivete.IA", videoLocal: "/entregas/iveteia-1.mp4", thumbnail: "/entregas/iveteia-1.jpg" },
+  { id: "e-hicreator-1", title: "HiCreator", category: "ia", brand: "HiCreator", videoLocal: "/entregas/hicreator-1.mp4", thumbnail: "/entregas/hicreator-1.jpg" },
   { id: "ia1", title: "Vozo", category: "ia", brand: "Vozo", youtubeId: "PlrpWvdSK1s" },
   { id: "ia2", title: "Sintra", category: "ia", brand: "Sintra", youtubeId: "FlbG-BtKedg" },
   { id: "ia3", title: "Vozo", category: "ia", brand: "Vozo", youtubeId: "QmKELZR_GeM" },
@@ -162,6 +165,8 @@ export const VIDEOS: Video[] = [
   { id: "g3", title: "Rap10", category: "gastronomia", brand: "Rap10", youtubeId: "orhbzi_XYiA" },
   { id: "g4", title: "Rap10", category: "gastronomia", brand: "Rap10", youtubeId: "It7GiFzsOe0" },
   { id: "g5", title: "Copacol", category: "gastronomia", brand: "Copacol", youtubeId: "Kq93tU1dYuA" },
+  { id: "e-wine-1", title: "Wine", category: "food", brand: "Wine", videoLocal: "/entregas/wine-1.mp4", thumbnail: "/entregas/wine-1.jpg" },
+  { id: "e-voltavibe-1", title: "Volta Vibe", category: "food", brand: "Volta Vibe", videoLocal: "/entregas/voltavibe-1.mp4", thumbnail: "/entregas/voltavibe-1.jpg" },
   { id: "g6", title: "Tropical", category: "food", brand: "Tropical", youtubeId: "QgCK-EJKTm0" },
 
   // BELEZA
@@ -188,6 +193,9 @@ export const VIDEOS: Video[] = [
   { id: "s-pharma-pdrn", title: "Pharmapele PDRN", category: "beleza", brand: "Pharmapele", youtubeId: "r5Ls6pbsmWQ" },
 
   // CASA & DECO
+  { id: "e-eos-5", title: "EOS", category: "casa", brand: "EOS", videoLocal: "/entregas/eos-5.mp4", thumbnail: "/entregas/eos-5.jpg" },
+  { id: "e-eos-1", title: "EOS", category: "casa", brand: "EOS", videoLocal: "/entregas/eos-1.mp4", thumbnail: "/entregas/eos-1.jpg" },
+  { id: "e-zapimoveis-1", title: "Zap Imóveis", category: "casa", brand: "Zap Imóveis", videoLocal: "/entregas/zapimoveis-1.mp4", thumbnail: "/entregas/zapimoveis-1.jpg" },
   { id: "e-brinox-1", title: "Brinox", category: "casa", brand: "Brinox", videoLocal: "/entregas/brinox-1.mp4", thumbnail: "/entregas/brinox-1.jpg" },
   { id: "d-noroeste", title: "Noroeste Solar", category: "casa", brand: "Noroeste Solar", youtubeId: "vP3qucUXC8I" },
   { id: "d-hoomy", title: "Hoomy", category: "casa", brand: "Hoomy", youtubeId: "IcBBViuO6Gw" },
@@ -218,6 +226,9 @@ export const VIDEOS: Video[] = [
   { id: "o4", title: "Smoo Sorvete", category: "food", brand: "Smoo", youtubeId: "AXzcHi_Qq_Y" },
 
   // SAÚDE & FITNESS
+  { id: "e-creatinarosa-1", title: "Creatina Rosa", category: "saude", brand: "Creatina Rosa", videoLocal: "/entregas/creatinarosa-1.mp4", thumbnail: "/entregas/creatinarosa-1.jpg" },
+  { id: "e-eumemo-1", title: "eumemo", category: "saude", brand: "eumemo", videoLocal: "/entregas/eumemo-1.mp4", thumbnail: "/entregas/eumemo-1.jpg" },
+  { id: "e-verdurar-1", title: "Verdurar", category: "saude", brand: "Verdurar", videoLocal: "/entregas/verdurar-1.mp4", thumbnail: "/entregas/verdurar-1.jpg" },
   { id: "s1", title: "Squadz", category: "saude", brand: "Squadz", youtubeId: "vbQW-1VEjPk" },
   { id: "s-pharma-creatina", title: "Pharmapele Creatina", category: "saude", brand: "Pharmapele", youtubeId: "_6sCm4K8DRE" },
   { id: "s-pharma", title: "Pharmapele", category: "saude", brand: "Pharmapele", youtubeId: "Eul1uuQhU7g" },
@@ -225,6 +236,8 @@ export const VIDEOS: Video[] = [
   { id: "t-voy2", title: "Voy Emagrecimento", category: "saude", brand: "Voy", youtubeId: "ZVNvzvdz4Ow" },
 
   // FINANÇAS
+  { id: "e-osney-1", title: "Osney", category: "financas", brand: "Osney", videoLocal: "/entregas/osney-1.mp4", thumbnail: "/entregas/osney-1.jpg" },
+  { id: "e-pierre-2", title: "Pierre", category: "financas", brand: "Pierre", videoLocal: "/entregas/pierre-2.mp4", thumbnail: "/entregas/pierre-2.jpg" },
   { id: "t0a", title: "InfinitePay", category: "financas", brand: "InfinitePay", youtubeId: "5wf8Fv2CTa4", views: "100M", featured: true },
   { id: "t0b", title: "Méliuz", category: "financas", brand: "Méliuz", youtubeId: "wesTfq67X9o", views: "30M", featured: true },
   { id: "f-bv3", title: "Banco BV", category: "financas", brand: "BV", youtubeId: "-Znut2F7-kI" },
@@ -237,6 +250,14 @@ export const VIDEOS: Video[] = [
   { id: "t3", title: "BV Financeiro", category: "financas", brand: "BV", youtubeId: "Q_n4uwkxiDo" },
 
   // TECH & APPS
+  { id: "e-reforma100-2", title: "Reforma100", category: "tech", brand: "Reforma100", videoLocal: "/entregas/reforma100-2.mp4", thumbnail: "/entregas/reforma100-2.jpg" },
+  { id: "e-reforma100-1", title: "Reforma100", category: "tech", brand: "Reforma100", videoLocal: "/entregas/reforma100-1.mp4", thumbnail: "/entregas/reforma100-1.jpg" },
+  { id: "e-hostgator-1", title: "Hostgator", category: "tech", brand: "Hostgator", videoLocal: "/entregas/hostgator-1.mp4", thumbnail: "/entregas/hostgator-1.jpg" },
+  { id: "e-opera-1", title: "Opera", category: "tech", brand: "Opera", videoLocal: "/entregas/opera-1.mp4", thumbnail: "/entregas/opera-1.jpg" },
+  { id: "e-seuinfluencer-1", title: "Seu Influencer", category: "tech", brand: "Seu Influencer", videoLocal: "/entregas/seuinfluencer-1.mp4", thumbnail: "/entregas/seuinfluencer-1.jpg" },
+  { id: "e-marquei-3", title: "Marquei", category: "tech", brand: "Marquei", videoLocal: "/entregas/marquei-3.mp4", thumbnail: "/entregas/marquei-3.jpg" },
+  { id: "e-garimpeiros-1", title: "Garimpeiros", category: "tech", brand: "Garimpeiros", videoLocal: "/entregas/garimpeiros-1.mp4", thumbnail: "/entregas/garimpeiros-1.jpg" },
+  { id: "e-reachup-1", title: "Reach Up", category: "tech", brand: "Reach Up", videoLocal: "/entregas/reachup-1.mp4", thumbnail: "/entregas/reachup-1.jpg" },
   { id: "e-shopee-1", title: "Shopee", category: "tech", brand: "Shopee", videoLocal: "/entregas/shopee-1.mp4", thumbnail: "/entregas/shopee-1.jpg" },
   { id: "t-fancy", title: "Fancy Carregador Portátil", category: "tech", brand: "Fancy", youtubeId: "0VDR45qTci8" },
   { id: "t-infinitepay", title: "InfinitePay Tap", category: "tech", brand: "InfinitePay", views: "4M", youtubeId: "40q0gv_b9AM" },
@@ -252,6 +273,9 @@ export const VIDEOS: Video[] = [
   { id: "t10", title: "Gamma", category: "tech", brand: "Gamma", youtubeId: "nZQoMA114MA" },
 
   // MODA
+  { id: "e-cygnuss-1", title: "Cygnuss", category: "moda", brand: "Cygnuss", videoLocal: "/entregas/cygnuss-1.mp4", thumbnail: "/entregas/cygnuss-1.jpg" },
+  { id: "e-chicorei-1", title: "Chico Rei", category: "moda", brand: "Chico Rei", videoLocal: "/entregas/chicorei-1.mp4", thumbnail: "/entregas/chicorei-1.jpg" },
+  { id: "e-invisionlov-3", title: "Invision Lov", category: "moda", brand: "Invision Lov", videoLocal: "/entregas/invisionlov-3.mp4", thumbnail: "/entregas/invisionlov-3.jpg" },
   { id: "m-salvatore", title: "Salvatore Macacão", category: "moda", brand: "Salvatore", youtubeId: "fqG3TpTft5c" },
   { id: "m-invisalove", title: "Invisalove Sutiã Adesivo", category: "moda", brand: "Invisalove", youtubeId: "sRvIU18YUXg" },
   { id: "b-ds", title: "DS", category: "moda", brand: "DS", youtubeId: "CxJeyu75qQc" },
@@ -263,6 +287,7 @@ export const VIDEOS: Video[] = [
   { id: "m6", title: "Rarissima", category: "moda", brand: "Rarissima", youtubeId: "Nhq12rZkpa8" },
 
   // VIAGEM
+  { id: "e-topviagens-2", title: "Top Viagens", category: "viagem", brand: "Top Viagens", videoLocal: "/entregas/topviagens-2.mp4", thumbnail: "/entregas/topviagens-2.jpg" },
   { id: "e-milhaai-1", title: "Milha.Ai", category: "viagem", brand: "Milha.Ai", videoLocal: "/entregas/milhaai-1.mp4", thumbnail: "/entregas/milhaai-1.jpg" },
   { id: "va1", title: "OKA House", category: "viagem", brand: "OKA House", youtubeId: "7TzuVW8847A" },
   { id: "va2", title: "OKA House", category: "viagem", brand: "OKA House", youtubeId: "DzIWctdbjgg" },
