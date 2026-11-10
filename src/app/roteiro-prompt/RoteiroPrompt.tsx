@@ -5,55 +5,35 @@ import { useEffect, useState } from "react";
 // Mesmas cores do carrossel "Como eu entrego um roteiro pra marca": papel creme, marrom, caramelo e amarelo-manteiga.
 const V = { papel: "#EFE8DC", cartao: "#FFFFFF", tinta: "#3B2416", caramelo: "#8B6142", acento: "#9A5F36", manteiga: "#FFF3B0", suave: "#7A6555", linha: "#E2D6C6" };
 const MARCA = "roteiro_liberado";
-const MODELO_COPIA = "https://docs.google.com/document/d/1g7JCc1FxuayZvrMP2qiouwOxG7rH64R5zL8DTePIWb8/copy";
+const MODELO_COPIA = "https://docs.google.com/document/d/1gGXLrKakzYmVUhJ5Xww4-B_l5iUa-6eSYWOUkZnQThs/copy";
 
-const PROMPT = `Você vai me ajudar a montar um roteiro de UGC pra uma marca, no formato que a marca consegue aprovar rápido.
+const PROMPT = `Quero criar, com a sua ajuda, um sistema pra enviar meus roteiros de UGC pras marcas de um jeito profissional e receber o feedback delas por e-mail.
 
-BRIEFING DA MARCA (colei abaixo):
-[COLE AQUI O BRIEFING INTEIRO, COM O LINK DO SITE DO PRODUTO]
+Eu não sei programar. Me guie um passo de cada vez e espere eu confirmar antes de seguir pro próximo.
 
-SOBRE MIM E A GRAVAÇÃO:
-- Meu nicho e como eu falo: [EX.: BELEZA, TOM DE AMIGA, DIRETO]
-- Onde vou gravar: [EM CASA / NO ESPAÇO DA MARCA / NA RUA]
-- Eu já tenho e uso o produto? [SIM / NÃO, VOU RECEBER]
-- Duração pedida: [EX.: 30 A 45 SEGUNDOS]
+COMO EU QUERO QUE FUNCIONE:
+- Eu escrevo cada roteiro numa Planilha do Google, uma aba por roteiro, com as colunas: Parte (Gancho 1, Gancho 2, Cena 1, Cena 2…), Áudio (o que eu falo), Imagem (o que aparece) e Referência (link de vídeo ou foto).
+- Cada roteiro vira um link de uma página bonita, com o nome e o logo da marca, que eu mando pra empresa.
+- Nessa página, a marca consegue:
+  1. escolher um dos 2 ganchos;
+  2. deixar um comentário em qualquer cena;
+  3. clicar em "Aprovar roteiro", escrevendo o nome de quem aprovou.
+- Toda vez que a marca escolhe o gancho, comenta ou aprova, eu recebo um e-mail na hora, com o nome da marca, o que ela escreveu e o link do roteiro. Tudo fica salvo também numa aba "Feedback" da planilha.
+- Referência em link vira um botão "Ver referência". Foto aparece dentro da cena.
+- Visual limpo e profissional, que funcione bem no celular, nas cores [SUAS CORES, EX.: CREME E MARROM].
 
-ANTES DE ESCREVER:
-1. Me diga em 3 linhas o que você entendeu: o produto, o público e o objetivo do vídeo.
-2. Se faltar alguma informação (oferta, cupom, o que pode e o que não pode falar), me pergunte em vez de inventar.
+COMO FAZER:
+- Use Google Apps Script ligado à planilha, publicado como "App da Web" (grátis, sem servidor e sem cartão).
+- O e-mail é enviado pelo próprio Apps Script, pra este endereço: [SEU E-MAIL].
 
-COMO O ROTEIRO TEM QUE SER:
-- 2 ganchos diferentes. Os dois precisam levar à MESMA primeira fala, porque a marca vai escolher um ou testar os dois. Se o briefing trouxer um gancho sugerido pela marca, ele é o Gancho 1.
-- O gancho termina no que a primeira fala responde. Leia os dois em voz alta: tem que soar como uma conversa, e a fala não repete o gancho.
-- Divida o resto em cenas. Em cada cena: FALA (o que eu falo, do jeito que se fala) e TELA (o que aparece, em primeira pessoa: "eu abro a caixa").
-- O produto aparece em ação (usando, aplicando, abrindo), não só na minha mão.
-- Preço, composição e números vão pro lettering, não pra fala.
-- Termine com uma chamada só, com uma ação e o que a pessoa ganha.
+O QUE EU PRECISO QUE VOCÊ ME ENTREGUE:
+1. Como montar a planilha (nome das abas e das colunas, com um roteiro de exemplo preenchido).
+2. O código completo, pronto pra colar.
+3. O passo a passo pra publicar e gerar o link, incluindo como autorizar o acesso quando o Google pedir.
+4. Como criar o link de um roteiro novo depois.
+5. Como testar antes de mandar pra marca (abrir o link numa aba anônima e fazer um comentário de teste).
 
-O QUE NÃO PODE:
-- Inventar fato, experiência ou característica do produto. Só vale o que está no briefing ou no site.
-- Dizer que eu tenho, comprei ou uso o produto se eu disse que não.
-- Falar "aqui em casa" se a gravação for no espaço da marca.
-- Abrir falando de experiência ruim ("comprou e não gostou").
-- Gancho de fórmula: "Você sabia que…", "Se você gosta de X…", "Amiga…".
-- Travessão, frase de efeito no fim de cada bloco e lista de benefícios recitada.
-- Palavra com duplo sentido. Leia cada frase fora de contexto.
-- Promessa de saúde ou resultado garantido.
-
-CHECAGEM FINAL (faça antes de me entregar):
-- Cada gancho conecta com a primeira fala?
-- Conte as palavras e calcule o tempo (umas 3,5 palavras por segundo). Cabe na duração pedida?
-- Tem alguma afirmação que eu não confirmei?
-- Lendo em voz alta, soa como gente falando?
-
-ENTREGA (vou colar num modelo do Google Docs, então devolva exatamente nestas partes):
-A IDEIA DO VÍDEO: 2 ou 3 linhas
-NO SET: o que precisa aparecer
-GANCHOS: tabela com as colunas Gancho | Fala | Tela (2 linhas)
-ROTEIRO: tabela com as colunas Cena | Fala | Tela | Referência (a referência, deixe "[link ou foto]" pra eu preencher)
-LETTERING: o que entra escrito na tela
-TEMPO: palavras e segundos
-DÚVIDAS: o que eu preciso confirmar com a marca`;
+Se der algum erro, eu te mando o print e você me ajuda a arrumar.`;
 
 export default function RoteiroPrompt() {
   const [liberado, setLiberado] = useState(false);
@@ -214,30 +194,23 @@ function Liberado() {
     <>
       <p className="mt-8 text-center text-[26px] font-black tracking-[-0.02em]">Prontinho! <span style={{ color: V.acento }}>Bora entregar o seu</span> 👇</p>
 
-      <Passo n={1} titulo="Monte o roteiro com o prompt">
-        <p>Cola numa conversa nova no Claude ou no ChatGPT, troca o que está entre colchetes e cola o briefing da marca. Antes de escrever, ele te diz o que entendeu e pergunta o que faltou.</p>
-        <BotaoCopiar texto={PROMPT} />
-      </Passo>
-
-      <Passo n={2} titulo="Faça a sua cópia do modelo">
-        <p>O modelo já vem com o status de aprovação, os 2 ganchos pra marca escolher e a tabela de cenas com fala, tela e referência.</p>
+      <Passo n={1} titulo="Comece hoje: faça sua cópia do modelo">
+        <p>É o modelo que eu uso: cabeçalho com a marca, status de aprovação, os 2 ganchos pra marca escolher e a tabela de <b>áudio, imagem e referência</b> em cada cena.</p>
         <a href={MODELO_COPIA} target="_blank" rel="noopener noreferrer" className="mt-1 block w-full rounded-full py-3 text-center text-[15px] font-extrabold text-white" style={{ background: V.caramelo }}>
           Fazer minha cópia no Google Docs
         </a>
         <p className="text-sm" style={{ color: V.suave }}>Precisa estar logada no Google. A cópia vai pro seu Drive e é só sua.</p>
       </Passo>
 
-      <Passo n={3} titulo="Cole o roteiro e as referências">
-        <p>Cola cada parte que o prompt devolveu no lugar dela. Na coluna <b>Referência</b>, coloca o link de um vídeo ou uma foto de como você imagina a cena.</p>
+      <Passo n={2} titulo="Mande o link pra marca">
+        <p>Preenche o roteiro e clica em <b>Compartilhar</b> → em “Acesso geral” escolhe <b>Qualquer pessoa com o link</b> → muda pra <b>Comentarista</b> → <b>Copiar link</b>.</p>
+        <p>A marca escolhe o gancho, comenta direto na fala e marca o ✅ APROVADO, sem mexer no seu texto. Cada comentário chega no seu e-mail, mandado pelo próprio Google.</p>
       </Passo>
 
-      <Passo n={4} titulo="Mande o link pra marca">
-        <p>No Docs, clica em <b>Compartilhar</b> → em “Acesso geral” escolhe <b>Qualquer pessoa com o link</b> → muda pra <b>Comentarista</b> → <b>Copiar link</b>.</p>
-        <p>Assim a marca escolhe o gancho, comenta direto na fala e marca o ✅ Aprovado, sem mexer no seu texto.</p>
-      </Passo>
-
-      <Passo n={5} titulo="Acompanhe pelo e-mail">
-        <p>Cada comentário da marca chega no seu e-mail, mandado pelo próprio Google. Você responde ali mesmo no Docs e, quando aparecer o ✅, é só gravar 🎬</p>
+      <Passo n={3} titulo="Quer o seu sistema, igual ao meu?">
+        <p>Com este prompt, o Claude monta com você uma página de entrega: a marca escolhe o gancho, comenta cada cena e aprova, e o feedback chega no seu e-mail. Tudo grátis, usando o Google.</p>
+        <BotaoCopiar texto={PROMPT} />
+        <p className="text-sm" style={{ color: V.suave }}>Cola numa conversa nova no Claude e vai seguindo um passo de cada vez. Deu erro? Manda o print pra ele.</p>
       </Passo>
 
       <p className="mt-8 text-center text-sm" style={{ color: V.suave }}>
