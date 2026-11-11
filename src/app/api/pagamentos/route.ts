@@ -48,8 +48,12 @@ export async function GET(req: Request) {
 
   if (new URL(req.url).searchParams.get("widget")) {
     const comValor = itens.filter((i) => i.valor > 0);
+    // a produzir: campanhas ainda não pagas que não chegaram em aprovado/postado (o admin soma tudo junto)
+    const { data: prod } = await supabaseAdmin().from("conteudos").select("valor")
+      .not("status", "in", `(${[...FEITOS, "cancelado"].join(",")})`).neq("status_pagamento", "pago");
     return Response.json({
       total: comValor.reduce((s, i) => s + i.valor, 0),
+      a_produzir: (prod ?? []).reduce((s, c) => s + Number(c.valor ?? 0), 0),
       atrasados: comValor.filter((i) => i.atrasado).length,
       total_atrasado: comValor.filter((i) => i.atrasado).reduce((s, i) => s + i.valor, 0),
       sem_data: comValor.filter((i) => !i.terminei).length,
