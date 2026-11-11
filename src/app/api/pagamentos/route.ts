@@ -51,6 +51,7 @@ export async function GET(req: Request) {
     return Response.json({
       total: comValor.reduce((s, i) => s + i.valor, 0),
       atrasados: comValor.filter((i) => i.atrasado).length,
+      total_atrasado: comValor.filter((i) => i.atrasado).reduce((s, i) => s + i.valor, 0),
       sem_data: comValor.filter((i) => !i.terminei).length,
       itens: comValor.map(({ id, nome, valor, dias, vence, atrasado }) => ({ id, nome, valor, dias, vence, atrasado })),
     });
