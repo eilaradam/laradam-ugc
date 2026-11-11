@@ -93,9 +93,11 @@ export async function PATCH(req: Request) {
   const db = supabaseAdmin();
   const mudar: Record<string, unknown> = { updated_at: new Date().toISOString() };
   if (body.acao === "avancar") {
-    const { data: c } = await db.from("conteudos").select("status").eq("id", id).maybeSingle();
+    const { data: c } = await db.from("conteudos").select("status, data_aprovacao").eq("id", id).maybeSingle();
     if (!c || !PROXIMO[c.status]) return Response.json({ error: "Não dá pra avançar" }, { status: 400 });
     mudar.status = PROXIMO[c.status];
+    // marca aprovou o vídeo = terminei o conteúdo (é daqui que o widget de pagamentos conta os dias)
+    if (c.status === "aprovacao_video" && !c.data_aprovacao) mudar.data_aprovacao = new Date().toLocaleDateString("en-CA", { timeZone: "America/Sao_Paulo" });
     if (c.status === "aprovado") mudar.data_postagem = new Date().toLocaleDateString("en-CA", { timeZone: "America/Sao_Paulo" });
   }
   const data = (v: unknown) => (v === null || (typeof v === "string" && /^\d{4}-\d{2}-\d{2}$/.test(v)) ? v : undefined);
