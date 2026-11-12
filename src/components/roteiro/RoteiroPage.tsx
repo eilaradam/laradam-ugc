@@ -226,7 +226,7 @@ export default function RoteiroPage({ itens: iniciais, atual, lang }: Props) {
               </div>
             ) : primeiro.logo ? (
               // eslint-disable-next-line @next/next/no-img-element
-              <img src={primeiro.logo} alt={primeiro.marca} className="h-9 w-auto max-w-[180px] object-contain object-left" />
+              <img src={primeiro.logo} alt={primeiro.marca} className="h-16 w-auto max-w-[300px] object-contain object-left md:h-20 md:max-w-[360px]" />
             ) : (
               <p className="flex items-center gap-1.5 text-[24px] font-extrabold tracking-tight">
                 {primeiro.marca} <Sparkles size={20} className="text-[var(--rt-roxo)]" />
