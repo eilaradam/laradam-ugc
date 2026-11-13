@@ -40,7 +40,13 @@ export default function Midia({ bloco, fotos = [], refs = [], vazio }: Props) {
         <div className="flex flex-wrap gap-2">
           {refs.map((r) => (
             <div key={r.url} className="group/foto relative">
-              <CartaoRef r={r} abrir={() => setRef(r)} />
+              <CartaoRef
+                r={r}
+                abrir={() =>
+                  // TikTok bloqueia o player embutido (429) depois de alguns vídeos: abre direto no TikTok
+                  tipoRef(r.url).tipo === "tiktok" ? window.open(r.url, "_blank", "noopener") : setRef(r)
+                }
+              />
               {lara && <Tirar onClick={() => enviar("ref_rm", { bloco, url: r.url })} />}
             </div>
           ))}
