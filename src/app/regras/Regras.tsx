@@ -119,10 +119,10 @@ function Liberado() {
       </ol>
 
       <div className="mt-12">
-        <Faixa>e se o Claude seguir tudo isso sozinho?</Faixa>
-        <h2 className="mt-3 text-[40px] font-extrabold leading-none tracking-tight sm:text-[48px]" style={{ color: C.amarelo }}>aula gratuita</h2>
-        <p className="mt-2 text-[22px] font-bold">24/11, terça, 20h</p>
-        <p className="mt-3 text-[16px] leading-relaxed" style={{ color: C.claro }}>Essas são 3. A minha edição tem muito mais. Na aula eu te mostro como fazer o Claude editar com as suas regras e a identidade visual do seu perfil. O link da aula sai só no grupo do WhatsApp.</p>
+        <Faixa>essas são só 3 das minhas regras</Faixa>
+        <h2 className="mt-3 text-[40px] font-extrabold leading-[1.02] tracking-tight sm:text-[48px]" style={{ color: C.amarelo }}>o resto eu mostro ao vivo</h2>
+        <p className="mt-3 text-[20px] font-bold">aula gratuita · 24/11, terça, 20h</p>
+        <p className="mt-3 text-[16px] leading-relaxed" style={{ color: C.claro }}>Na aula eu ensino o Claude a editar com as suas regras e com a cara do seu perfil, do vídeo bruto até o pronto pra postar. O link da aula sai só no grupo do WhatsApp.</p>
         <a href={GRUPO} className="mt-6 block w-full rounded-full py-4 text-center text-[17px] font-bold" style={{ background: C.amarelo, color: C.tinta }}>Entrar no grupo da aula 👉</a>
       </div>
 
