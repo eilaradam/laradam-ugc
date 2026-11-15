@@ -680,7 +680,17 @@ function Secao({
                       texto={g.fala}
                       vazio="o que você fala nos primeiros segundos"
                       falado
-                      render={(x) => <p className="text-[15.5px] leading-relaxed">“{x}”</p>}
+                      render={(x) => {
+                        const cor = g.falante ? c.falantes?.[g.falante] : undefined;
+                        return cor ? (
+                          <div className="border-l-4 pl-3" style={{ borderColor: cor }}>
+                            <p className="text-[11px] font-bold uppercase tracking-[.1em]" style={{ color: cor }}>{g.falante}</p>
+                            <p className="text-[15.5px] leading-relaxed">“{x}”</p>
+                          </div>
+                        ) : (
+                          <p className="text-[15.5px] leading-relaxed">“{x}”</p>
+                        );
+                      }}
                     />
                   )}
                   {((g.tela && !telaUnica) || lara) && (
@@ -734,6 +744,16 @@ function Secao({
           </span>
         )}
       </Titulo>
+      {c.falantes && Object.keys(c.falantes).length > 0 && (
+        <div className="mb-3 flex flex-wrap gap-2">
+          {Object.entries(c.falantes).map(([quem, cor]) => (
+            <span key={quem} className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[12px] font-bold" style={{ background: `${cor}1A`, color: cor }}>
+              <span className="h-2.5 w-2.5 rounded-full" style={{ background: cor }} />
+              {quem}
+            </span>
+          ))}
+        </div>
+      )}
       <div className="overflow-hidden rounded-2xl border border-[var(--rt-linha)] bg-white">
         {c.partes.map((p, i) => (
           <div
@@ -749,11 +769,15 @@ function Secao({
                 texto={p.nome}
                 multilinha={false}
                 vazio="nome da parte"
-                render={(x) => (
-                  <p className="text-[11.5px] font-bold uppercase tracking-[.1em] text-[var(--rt-muted)]">
-                    {!lara && c.partes[i - 1]?.nome === x ? "" : x}
-                  </p>
-                )}
+                render={(x) => {
+                  const cor = p.falante ? c.falantes?.[p.falante] : undefined;
+                  return (
+                    <p className={`text-[11.5px] font-bold uppercase tracking-[.1em] ${cor ? "" : "text-[var(--rt-muted)]"}`} style={cor ? { color: cor } : undefined}>
+                      {cor && <span className="mr-1.5 inline-block h-2.5 w-2.5 rounded-full align-middle" style={{ background: cor }} />}
+                      {!lara && c.partes[i - 1]?.nome === x ? "" : x}
+                    </p>
+                  );
+                }}
               />
               {p.tempo ? (
                 <Campo
@@ -785,7 +809,10 @@ function Secao({
                         </div>
                       </div>
                     ) : (
-                      <div className="space-y-2.5 text-[16px] leading-[1.6]">
+                      <div
+                        className={`space-y-2.5 text-[16px] leading-[1.6] ${p.falante && c.falantes?.[p.falante] ? "border-l-4 pl-3" : ""}`}
+                        style={p.falante && c.falantes?.[p.falante] ? { borderColor: c.falantes[p.falante] } : undefined}
+                      >
                         {x.split(/\n+/).map((par, j) => (
                           <p key={j}>{par}</p>
                         ))}

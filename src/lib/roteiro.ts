@@ -16,6 +16,8 @@ export type Gancho = {
   fala: string;
   tela?: string;
   recomendado?: boolean;
+  /** quem fala (chave de RoteiroConteudo.falantes): pinta a fala com a cor da pessoa */
+  falante?: string;
   fotos?: string[];
   refs?: Ref[];
 };
@@ -27,6 +29,8 @@ export type Parte = {
   fala: string;
   /** a fala é só um exemplo (ex.: resposta de um convidado, que fala com as próprias palavras) */
   exemplo?: boolean;
+  /** quem fala (chave de RoteiroConteudo.falantes): pinta a fala com a cor da pessoa */
+  falante?: string;
   tela?: string;
   fotos?: string[];
   refs?: Ref[];
@@ -54,6 +58,8 @@ export type RoteiroConteudo = {
   regra?: string;
   ganchos: Gancho[];
   partes: Parte[];
+  /** cor de cada pessoa em esquete com mais de uma voz, ex. { "AMIGA 1": "#2563EB" } */
+  falantes?: Record<string, string>;
   /** referências gerais do roteiro */
   refs?: Ref[];
   fotos?: string[];
