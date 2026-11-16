@@ -10,9 +10,9 @@ const GRUPO = "/grupo?de=renda-pagina";
 type Item = { t: string; d: string[]; num?: string };
 const ITENS: Item[] = [
   {
-    t: "Saí do UGC só gravado em casa e comecei a fazer presencial",
+    t: "Saí do UGC só gravado em casa e comecei a oferecer novas opções, como o presencial",
     num: "R$ 6.050",
-    d: ["Gravando no espaço da marca, fechei pacote em vez de 1 vídeo e cobrei o deslocamento à parte. Cada vídeo saiu por uns R$ 600."],
+    d: ["Gravando no espaço da marca, fechei pacotes maiores em vez de apenas 1 vídeo e consegui cobrar a mais. É uma ótima forma, principalmente se você mora numa capital."],
   },
   {
     t: "Me posicionei pra fechar com marca gringa",
@@ -31,7 +31,7 @@ const ITENS: Item[] = [
   {
     t: "Gestão de campanha como UGC Manager",
     num: "R$ 14.000",
-    d: ["Além de gravar, eu faço a gestão de campanhas de UGC pra marcas."],
+    d: ["Além de gravar, eu faço a gestão de campanhas de UGC pra marcas, ou seja, sou contratada pra gerenciar campanhas grandes com outras creators!"],
   },
 ];
 
