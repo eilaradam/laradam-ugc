@@ -10,51 +10,28 @@ const GRUPO = "/grupo?de=renda-pagina";
 type Item = { t: string; d: string[]; num?: string };
 const ITENS: Item[] = [
   {
-    t: "Parei de depender só do UGC gravado em casa",
-    d: [
-      "O vídeo que eu gravo em casa continua sendo a base, mas é onde o valor é mais baixo e a concorrência é maior. Quando ele é a única entrada, o mês depende de quantas campanhas você passa.",
-      "Esse mês eu somei outras frentes em cima dele, e são elas que estão aqui embaixo.",
-    ],
-  },
-  {
-    t: "Comecei a oferecer meu trabalho presencial",
-    num: "2 trabalhos em SP · R$ 6.050",
-    d: [
-      "Foi o que mais fez diferença. Gravei no espaço das marcas, em São Paulo, e isso mudou a conversa: em vez de 1 vídeo, eu fechei pacote. Foram de 3 a 7 vídeos por marca, uma média de 5.",
-      "Como a marca já está pagando pra eu estar lá, faz sentido gravar vários vídeos no mesmo dia. E o deslocamento eu cobro à parte, separado do valor dos vídeos.",
-      "Na média, cada vídeo presencial saiu por uns R$ 600. Na plataforma, minha média é de R$ 474 por campanha.",
-    ],
+    t: "Saí do UGC só gravado em casa e comecei a fazer presencial",
+    num: "R$ 6.050",
+    d: ["Gravando no espaço da marca, fechei pacote em vez de 1 vídeo e cobrei o deslocamento à parte. Cada vídeo saiu por uns R$ 600."],
   },
   {
     t: "Me posicionei pra fechar com marca gringa",
-    num: "4 marcas · USD 2.080",
-    d: [
-      "Recebi vários e-mails de agências de fora, que procuram creator pelo conteúdo. O que me ajudou a ser encontrada: nicho claro no perfil e um e-mail fácil de achar.",
-      "Entendi o valor de mercado de lá e passei a cobrar mais. Na média, cada vídeo gringo saiu por uns USD 300, perto de R$ 1.500. É mais de três vezes o que eu ganho por campanha na plataforma.",
-    ],
+    num: "USD 2.080",
+    d: ["Agências de fora me acharam pelo conteúdo. Na média, cada vídeo saiu por uns USD 300, mais de três vezes o que eu ganho por campanha na plataforma."],
   },
   {
     t: "Negociei do jeito que agência de fora negocia",
-    d: [
-      "Preço separado por item: o vídeo, os formatos extras (vertical, horizontal, quadrado), cada mês de uso em anúncio, o post no meu perfil e o TikTok. Assim a marca monta o pacote e você não dá nada de graça.",
-      "Abri o valor mais alto e deixei espaço pra negociar. Agência sempre faz contraproposta.",
-      "Pergunto antes de fechar: prazo do roteiro, da primeira versão e da entrega final, idioma, exclusividade e o material da marca.",
-      "Prazo de pagamento: agência de fora costuma pagar de 30 a 60 dias depois da fatura, por PayPal, Wise ou Tipalti. Eu sempre peço 50% adiantado. Nem toda agência aceita, mas não custa pedir.",
-    ],
+    d: ["Preço separado por item (vídeo, formatos, uso em anúncio, post no perfil), valor de abertura mais alto e prazo de pagamento combinado antes de fechar."],
   },
   {
     t: "Me inscrevi mais na Seu Influencer",
-    num: "20 campanhas · R$ 9.480",
-    d: [
-      "Passei a me inscrever todo dia, logo que a campanha aparece. Vou fazer um conteúdo só sobre isso no perfil, com tudo o que eu mudei por lá.",
-    ],
+    num: "R$ 9.480",
+    d: ["Todo dia, logo que a campanha aparece. Vou fazer um conteúdo só sobre isso no perfil."],
   },
   {
-    t: "Comecei a fazer gestão de campanha",
-    num: "2 marcas · R$ 14.000",
-    d: [
-      "Além de gravar, eu cuido das campanhas de UGC de duas marcas como UGC Manager: escolho as creators, acompanho os roteiros e as entregas. É o mesmo mercado, só que do outro lado.",
-    ],
+    t: "Gestão de campanha como UGC Manager",
+    num: "R$ 14.000",
+    d: ["Além de gravar, eu faço a gestão de campanhas de UGC pra marcas."],
   },
 ];
 
