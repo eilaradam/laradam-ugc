@@ -136,7 +136,7 @@ function YouTubeAdCard({ ad, index }: { ad: YtAd; index: number }) {
       {/* Badge de views */}
       {ad.views && (
         <div className="absolute top-2 right-2 px-2 py-0.5 rounded-full bg-[#FF0000] text-white text-[10px] md:text-xs font-bold uppercase tracking-wider shadow-md">
-          {lang === "en" ? ad.views.replace(" mi", "M").replace(" mil", "K").replace(",", ".") : ad.views} {t.youtubeAds.viewsLabel}
+          {lang === "en" ? ad.views.replace(" mil", "K").replace(" mi", "M").replace(",", ".") : ad.views} {t.youtubeAds.viewsLabel}
         </div>
       )}
 
