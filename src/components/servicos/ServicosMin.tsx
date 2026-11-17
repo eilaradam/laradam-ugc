@@ -2,21 +2,40 @@
 
 import { motion } from "framer-motion";
 import { ArrowRight, Megaphone, ShoppingBag, Target, Users } from "lucide-react";
-import { SERVICOS } from "./dados";
+import { SERVICOS as SERVICOS_PT } from "./dados";
+import { useLang } from "@/lib/i18n";
+
+// versão em inglês dos 4 serviços (mesma ordem de SERVICOS)
+const SERVICOS_EN = [
+  { titulo: "Ad creatives", texto: "Ads for Meta, TikTok and YouTube built to lower your CPA.", tags: ["Meta", "TikTok", "YouTube"] },
+  { titulo: "UGC for e‑commerce", texto: "Product videos that feel like a real customer, so your store sells every day.", tags: ["Review", "Unboxing", "Real use"] },
+  { titulo: "Sponsored post", texto: "Your brand on my profile, talking to people who already trust me.", tags: ["Reels", "Stories", "TikTok"] },
+  { titulo: "Creator management at scale", texto: "Several creators, from brief to delivery, with zero headache for you.", tags: ["Curation", "Briefing", "Delivery"] },
+];
+const TXT = {
+  pt: { tag: "Serviços", t1: "O que podemos ", acc: "criar", t2: " juntos?", intro: "Cada formato tem um objetivo. Me conta o seu que a gente monta o combo certo.", falar: "Falar comigo", saber: "Saber mais", mais: "Mais pedido", quero: "Quero esse" },
+  en: { tag: "Services", t1: "What can we ", acc: "create", t2: " together?", intro: "Each format has a goal. Tell me yours and we'll put together the right mix.", falar: "Talk to me", saber: "Learn more", mais: "Most requested", quero: "I want this" },
+};
+function useServicos() {
+  const { lang } = useLang();
+  const SERVICOS = SERVICOS_PT.map((s, i) => (lang === "en" ? { ...s, ...SERVICOS_EN[i] } : s));
+  return { SERVICOS, x: TXT[lang] };
+}
 
 // Versões minimalistas da seção de serviços: só cards, sem foto nem enfeite.
 const ICONES = [Target, ShoppingBag, Megaphone, Users];
 
 function Cabecalho({ centro = false }: { centro?: boolean }) {
+  const { x } = useServicos();
   return (
     <div className={`mb-10 md:mb-14 ${centro ? "text-center" : ""}`}>
       <div className={`text-xs uppercase tracking-[0.3em] text-primary font-medium mb-4 flex items-center gap-3 ${centro ? "justify-center" : ""}`}>
         <span className="h-px w-8 bg-primary" />
-        Serviços
+        {x.tag}
         {centro && <span className="h-px w-8 bg-primary" />}
       </div>
       <h2 className="font-display font-black text-3xl md:text-5xl leading-[1] tracking-tight text-foreground">
-        O que podemos <span className="font-serif-accent italic text-primary">criar</span> juntos?
+        {x.t1}<span className="font-serif-accent italic text-primary">{x.acc}</span>{x.t2}
       </h2>
     </div>
   );
@@ -31,6 +50,7 @@ const entra = (i: number) => ({
 
 // 1 · Ícones: 4 cards brancos com ícone num círculo
 export function ServicosIcones({ id = "servicos" }: { id?: string }) {
+  const { SERVICOS, x } = useServicos();
   return (
     <section id={id} className="bg-background px-6 md:px-12 py-16 md:py-24">
       <div className="max-w-6xl mx-auto">
@@ -52,7 +72,7 @@ export function ServicosIcones({ id = "servicos" }: { id?: string }) {
                 <h3 className="mt-5 md:mt-6 font-display font-bold text-lg md:text-xl leading-tight text-foreground">{s.titulo}</h3>
                 <p className="mt-2 text-[13px] md:text-[15px] leading-relaxed text-foreground-soft">{s.texto}</p>
                 <span className="mt-auto pt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-primary">
-                  Saber mais <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                  {x.saber} <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                 </span>
               </motion.a>
             );
@@ -65,20 +85,21 @@ export function ServicosIcones({ id = "servicos" }: { id?: string }) {
 
 // 2 · Numerados: cards creme sem borda, número fino grande
 export function ServicosNumerados({ id = "servicos" }: { id?: string }) {
+  const { SERVICOS, x } = useServicos();
   return (
     <section id={id} className="bg-background px-6 md:px-12 py-16 md:py-24">
       <div className="max-w-6xl mx-auto grid md:grid-cols-12 gap-10 md:gap-12">
         <div className="md:col-span-4">
           <Cabecalho />
           <p className="-mt-4 md:-mt-6 text-foreground-soft text-base leading-relaxed max-w-sm">
-            Cada formato tem um objetivo. Me conta o seu que a gente monta o combo certo.
+            {x.intro}
           </p>
           <a
             href="#contato"
             data-track="servicos_cta"
             className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-foreground border-b border-foreground pb-0.5 hover:text-primary hover:border-primary transition-colors"
           >
-            Falar comigo <ArrowRight className="w-4 h-4" />
+            {x.falar} <ArrowRight className="w-4 h-4" />
           </a>
         </div>
         <div className="md:col-span-8 grid grid-cols-2 gap-3 md:gap-4">
@@ -105,6 +126,7 @@ export function ServicosNumerados({ id = "servicos" }: { id?: string }) {
 
 // 3 · Com destaque: estilo tabela de planos, o primeiro em azul-marinho com selo
 export function ServicosDestaque({ id = "servicos" }: { id?: string }) {
+  const { SERVICOS, x } = useServicos();
   return (
     <section id={id} className="bg-background px-6 md:px-12 py-16 md:py-24">
       <div className="max-w-6xl mx-auto">
@@ -125,7 +147,7 @@ export function ServicosDestaque({ id = "servicos" }: { id?: string }) {
               >
                 {top && (
                   <span className="absolute -top-3 left-5 md:left-7 rounded-full bg-accent-on-dark text-foreground px-3 py-1 text-[10px] md:text-[11px] font-bold uppercase tracking-wider">
-                    Mais pedido
+                    {x.mais}
                   </span>
                 )}
                 <Icone className={`w-6 h-6 ${top ? "text-accent-on-dark" : "text-primary"}`} strokeWidth={1.6} />
@@ -145,7 +167,7 @@ export function ServicosDestaque({ id = "servicos" }: { id?: string }) {
                       top ? "bg-background text-foreground" : "border border-foreground/20"
                     }`}
                   >
-                    Quero esse
+                    {x.quero}
                   </span>
                 </span>
               </motion.a>

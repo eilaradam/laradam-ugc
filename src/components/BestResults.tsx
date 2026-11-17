@@ -615,7 +615,7 @@ function AudioTestimonialCard() {
         {/* Velocidade + mic — decorativo (estilo WhatsApp) */}
         <div className="flex-shrink-0 flex flex-col items-center gap-1.5">
           <span className="text-[10px] md:text-xs font-semibold text-foreground/60 bg-background/60 rounded-full px-2 py-0.5">
-            1,5x
+            {t.bestResults.audioCardNow === "agora" ? "1,5x" : "1.5x"}
           </span>
           <Mic className="w-4 h-4 text-foreground/40" strokeWidth={2} />
         </div>

@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { Play } from "lucide-react";
 import { useVideoModal } from "./VideoModalProvider";
 import type { Video } from "@/data/content";
-import { useT } from "@/lib/i18n";
+import { useT, useLang } from "@/lib/i18n";
 
 type YtAd = {
   youtubeId: string; // id do YouTube (vídeo horizontal 16:9)
@@ -91,6 +91,7 @@ export default function YouTubeAds() {
 function YouTubeAdCard({ ad, index }: { ad: YtAd; index: number }) {
   const { open } = useVideoModal();
   const t = useT();
+  const { lang } = useLang();
 
   const video: Video = {
     id: `yt-ad-${index}`,
@@ -135,7 +136,7 @@ function YouTubeAdCard({ ad, index }: { ad: YtAd; index: number }) {
       {/* Badge de views */}
       {ad.views && (
         <div className="absolute top-2 right-2 px-2 py-0.5 rounded-full bg-[#FF0000] text-white text-[10px] md:text-xs font-bold uppercase tracking-wider shadow-md">
-          {ad.views} {t.youtubeAds.viewsLabel}
+          {lang === "en" ? ad.views.replace(" mi", "M").replace(" mil", "K").replace(",", ".") : ad.views} {t.youtubeAds.viewsLabel}
         </div>
       )}
 

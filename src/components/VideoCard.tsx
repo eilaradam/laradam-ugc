@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useState } from "react";
+import { useT } from "@/lib/i18n";
 import { motion } from "framer-motion";
 import { Play } from "lucide-react";
 import type { Video } from "@/data/content";
@@ -32,6 +33,7 @@ type Props = {
 
 export default function VideoCard({ video, index = 0, size = "md" }: Props) {
   const { open } = useVideoModal();
+  const t = useT();
   // Só monta o iframe do preview depois do 1º hover (evita carregar 60+
   // iframes em background logo no load). Uma vez carregado, fica pronto
   // pras próximas interações.
@@ -146,7 +148,7 @@ export default function VideoCard({ video, index = 0, size = "md" }: Props) {
             {video.title}
           </div>
           <div className="text-[10px] uppercase tracking-wider text-background/70 mt-1">
-            {video.category}
+            {t.categories.items.find((c) => c.slug === video.category)?.name ?? video.category}
           </div>
         </div>
 

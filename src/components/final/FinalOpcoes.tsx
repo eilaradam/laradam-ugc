@@ -8,6 +8,7 @@ import localFont from "next/font/local";
 import { ArrowUpRight, Mail, MessageCircle, Play, AtSign, Star } from "lucide-react";
 import { useVideoModal } from "../VideoModalProvider";
 import type { Video } from "@/data/content";
+import { useLang } from "@/lib/i18n";
 
 const mao = localFont({ src: "../../fonts/Caveat.woff2", weight: "400 700", display: "swap" });
 
@@ -39,7 +40,13 @@ function Selo({ children, cor = C.teal }: { children: React.ReactNode; cor?: str
   return <p className="flex items-center gap-3 text-[11px] uppercase tracking-[0.25em] font-semibold" style={{ color: cor }}><span className="h-px w-8" style={{ background: cor }} />{children}</p>;
 }
 
+const FORM = {
+  pt: { ok: "recebi! te respondo em até 48h ✨", nome: "Seu nome", email: "seu@email.com", marca: "Marca / empresa", msg: "O que você precisa? Formato, prazo, quantidade…", enviando: "Enviando…", enviar: "Enviar mensagem" },
+  en: { ok: "got it! I'll reply within 48h ✨", nome: "Your name", email: "you@brand.com", marca: "Brand / company", msg: "What do you need? Format, deadline, quantity…", enviando: "Sending…", enviar: "Send message" },
+};
+
 function Formulario({ escuro, servico, curto }: { escuro?: boolean; servico?: string; curto?: boolean }) {
+  const f = FORM[useLang().lang];
   const [estado, setEstado] = useState<"" | "enviando" | "ok">("");
   async function enviar(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -49,17 +56,17 @@ function Formulario({ escuro, servico, curto }: { escuro?: boolean; servico?: st
     setEstado(r?.ok ? "ok" : "");
   }
   const campo = `w-full rounded-xl px-4 py-3 text-sm outline-none ${escuro ? "bg-white/5 border border-white/15 text-white placeholder:text-white/40" : "bg-white border text-[#1E2A44] placeholder:text-[#7C8390]"}`;
-  if (estado === "ok") return <p className={`${mao.className} text-3xl`} style={{ color: escuro ? C.tealClaro : C.teal }}>recebi! te respondo em até 48h ✨</p>;
+  if (estado === "ok") return <p className={`${mao.className} text-3xl`} style={{ color: escuro ? C.tealClaro : C.teal }}>{f.ok}</p>;
   return (
     <form onSubmit={enviar} className="grid gap-3" style={{ borderColor: C.borda }}>
       <div className="grid sm:grid-cols-2 gap-3">
-        <input name="name" required placeholder="Seu nome" className={campo} style={escuro ? {} : { borderColor: C.borda }} />
-        <input name="email" type="email" required placeholder="seu@email.com" className={campo} style={escuro ? {} : { borderColor: C.borda }} />
+        <input name="name" required placeholder={f.nome} className={campo} style={escuro ? {} : { borderColor: C.borda }} />
+        <input name="email" type="email" required placeholder={f.email} className={campo} style={escuro ? {} : { borderColor: C.borda }} />
       </div>
-      {!curto && <input name="brand" placeholder="Marca / empresa" className={campo} style={escuro ? {} : { borderColor: C.borda }} />}
-      <textarea name="message" rows={curto ? 3 : 4} defaultValue={servico ? `Quero ${servico.toLowerCase()}. ` : ""} placeholder="O que você precisa? Formato, prazo, quantidade…" className={campo} style={escuro ? {} : { borderColor: C.borda }} />
+      {!curto && <input name="brand" placeholder={f.marca} className={campo} style={escuro ? {} : { borderColor: C.borda }} />}
+      <textarea name="message" rows={curto ? 3 : 4} defaultValue={servico ? `Quero ${servico.toLowerCase()}. ` : ""} placeholder={f.msg} className={campo} style={escuro ? {} : { borderColor: C.borda }} />
       <button disabled={estado === "enviando"} className="justify-self-start inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-bold" style={{ background: escuro ? C.tealClaro : C.navy, color: escuro ? C.navy : "#fff" }}>
-        {estado === "enviando" ? "Enviando…" : "Enviar mensagem"} <ArrowUpRight className="h-4 w-4" />
+        {estado === "enviando" ? f.enviando : f.enviar} <ArrowUpRight className="h-4 w-4" />
       </button>
     </form>
   );
@@ -81,16 +88,17 @@ function YtCard({ y, grande }: { y: (typeof YT)[number]; grande?: boolean }) {
 
 /* contato escolhido pela Lara em 09/11: foto + 3 caminhos + formulário (vai no fim do portfólio) */
 export function ContatoNovo({ id = "contato" }: { id?: string }) {
+  const en = useLang().lang === "en";
   return (
     <section id={id} className="scroll-mt-16 px-6 md:px-12 py-16 md:py-20" style={{ background: C.navy, color: "#fff" }}>
       <div className="max-w-6xl mx-auto grid md:grid-cols-[0.9fr_1.1fr] gap-12 items-center">
         <div>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/ensaio/avatar.webp" alt="Lara Dam" className="h-20 w-20 rounded-full object-cover border-4" style={{ borderColor: C.tealClaro }} />
-          <h2 className="font-display mt-6 text-4xl md:text-6xl font-semibold leading-[1.05]">Bora fazer seu<br />próximo <em style={{ color: C.tealClaro }}>criativo</em>?</h2>
-          <p className="mt-4 text-white/70 max-w-sm">Agenda aberta pra novembro e dezembro. Respondo em até 48h.</p>
+          <h2 className="font-display mt-6 text-4xl md:text-6xl font-semibold leading-[1.05]">{en ? <>Ready for your<br />next <em style={{ color: C.tealClaro }}>creative</em>?</> : <>Bora fazer seu<br />próximo <em style={{ color: C.tealClaro }}>criativo</em>?</>}</h2>
+          <p className="mt-4 text-white/70 max-w-sm">{en ? "Booking open for November and December. I reply within 48h." : "Agenda aberta pra novembro e dezembro. Respondo em até 48h."}</p>
           <div className="mt-6 flex flex-wrap gap-3">
-            <a href={WHATS + encodeURIComponent("Oi Lara! Vim pelo seu portfólio.")} className="inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-bold" style={{ background: C.tealClaro, color: C.navy }}><MessageCircle className="h-4 w-4" /> WhatsApp</a>
+            <a href={WHATS + encodeURIComponent(en ? "Hi Lara! I found you through your portfolio." : "Oi Lara! Vim pelo seu portfólio.")} className="inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-bold" style={{ background: C.tealClaro, color: C.navy }}><MessageCircle className="h-4 w-4" /> WhatsApp</a>
             <a href={`mailto:${EMAIL}`} className="inline-flex items-center gap-2 rounded-full border border-white/25 px-5 py-3 text-sm font-bold"><Mail className="h-4 w-4" /> E-mail</a>
             <a href="https://instagram.com/eilaradam" className="inline-flex items-center gap-2 rounded-full border border-white/25 px-5 py-3 text-sm font-bold"><AtSign className="h-4 w-4" /> @eilaradam</a>
           </div>
