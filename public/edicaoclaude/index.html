@@ -5,19 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Intensivo Edição com Claude | Turma 05</title>
 <meta name="description" content="Conteúdo UGC em nível premium, do roteiro à entrega, com o Claude. Turma 05 com Lara Dam (@eilaradam).">
-<meta name="theme-color" content="#33241B">
+<meta name="theme-color" content="#171513">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
-    --marrom:#33241B;
-    --marrom-texto:#2B1E16;
-    --creme:#FBF7F0;
-    --amarelo:#F4EDB2;
-    --oliva:#9A8657;
+    --fundo:#171513;
+    --fundo-card:#211E1B;
+    --linha:rgba(244,241,234,.09);
+    --creme:#F4F1EA;
+    --amarelo:#F6E27A;
+    --escuro:#1A1714;
     --raio:24px;
-    --sombra:0 10px 30px rgba(0,0,0,.22), 0 2px 6px rgba(0,0,0,.12);
     --gutter:20px;
   }
   *{box-sizing:border-box;margin:0;padding:0}
@@ -26,68 +26,70 @@
     font-family:'Poppins',system-ui,sans-serif;
     font-weight:400;
     color:var(--creme);
-    background-color:var(--marrom);
-    background-image:
-      linear-gradient(rgba(251,247,240,.07) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(251,247,240,.07) 1px, transparent 1px);
-    background-size:28px 28px;
+    background-color:var(--fundo);
     line-height:1.6;
     font-size:17px;
     overflow-x:hidden;
     padding-bottom:96px;
+    position:relative;
   }
+  /* granulado leve por cima do fundo, igual à arte */
+  body::before{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.09;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  body>*{position:relative;z-index:1}
   img{max-width:100%;display:block}
   a{color:inherit}
 
   .wrap{width:100%;max-width:1080px;margin:0 auto;padding:0 var(--gutter)}
   section{padding:72px 0}
 
-  h1,h2,h3{font-weight:800;color:var(--amarelo);line-height:1.12;letter-spacing:-.01em}
-  h1{font-size:clamp(34px,8.6vw,64px)}
-  h2{font-size:clamp(28px,6.6vw,46px);margin-bottom:16px}
-  h3{font-size:20px}
-  .lead{font-size:clamp(17px,4.4vw,20px);font-weight:500;opacity:.95;max-width:640px}
-  .apoio{max-width:640px;opacity:.9}
+  h1,h2,h3{font-weight:800;color:var(--creme);line-height:1.08;letter-spacing:-.02em}
+  h1{font-size:clamp(36px,9vw,68px)}
+  h2{font-size:clamp(30px,7vw,50px);margin-bottom:16px}
+  h3{font-size:20px;letter-spacing:-.01em}
+  .lead{font-size:clamp(17px,4.4vw,20px);font-weight:400;color:rgba(244,241,234,.78);max-width:640px}
+  .apoio{max-width:640px;color:rgba(244,241,234,.72)}
 
+  /* etiqueta no estilo "AULA GRATUITA": texto amarelo espaçado, sem caixa */
   .etiqueta{
-    display:inline-block;background:var(--oliva);color:var(--creme);
-    font-weight:700;font-size:13px;letter-spacing:.08em;text-transform:uppercase;
-    padding:7px 14px;border-radius:999px;margin-bottom:20px;
+    display:inline-block;color:var(--amarelo);
+    font-weight:600;font-size:13px;letter-spacing:.28em;text-transform:uppercase;
+    margin-bottom:18px;
   }
 
-  /* Botão */
+  /* Botão: pílula amarela */
   .btn{
     display:inline-flex;align-items:center;justify-content:center;gap:8px;
-    background:var(--amarelo);color:var(--marrom-texto);
-    font-family:inherit;font-weight:700;font-size:17px;text-decoration:none;
-    padding:18px 30px;border-radius:16px;border:0;cursor:pointer;
-    box-shadow:0 6px 0 rgba(0,0,0,.25);
+    background:var(--amarelo);color:var(--escuro);
+    font-family:inherit;font-weight:600;font-size:17px;text-decoration:none;
+    padding:18px 34px;border-radius:999px;border:0;cursor:pointer;
     transition:transform .2s ease, box-shadow .2s ease, background .2s ease;
     width:100%;max-width:420px;text-align:center;
   }
-  .btn:hover{transform:translateY(-3px);box-shadow:0 9px 0 rgba(0,0,0,.25);background:#F8F3C8}
-  .btn:active{transform:translateY(2px);box-shadow:0 3px 0 rgba(0,0,0,.25)}
+  .btn:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(246,226,122,.22);background:#F9EA98}
+  .btn:active{transform:translateY(1px);box-shadow:none}
   .btn:focus-visible{outline:3px solid var(--creme);outline-offset:3px}
 
-  /* Card */
+  /* Card escuro */
   .card{
-    background:var(--creme);color:var(--marrom-texto);
-    border-radius:var(--raio);box-shadow:var(--sombra);padding:28px 24px;
+    background:var(--fundo-card);color:var(--creme);
+    border:1px solid var(--linha);border-radius:var(--raio);padding:28px 24px;
   }
-  .card h3{color:var(--marrom-texto)}
+  .card p{color:rgba(244,241,234,.75)}
 
   /* Placeholder */
   .slot{
-    border:2px dashed rgba(251,247,240,.45);border-radius:var(--raio);
+    border:2px dashed rgba(244,241,234,.3);border-radius:var(--raio);
     display:flex;align-items:center;justify-content:center;text-align:center;
-    color:var(--creme);font-weight:500;font-size:14px;opacity:.85;padding:20px;
-    background:rgba(251,247,240,.04);
+    color:var(--creme);font-weight:500;font-size:14px;opacity:.8;padding:20px;
+    background:rgba(244,241,234,.03);
   }
-  .preencher{background:var(--amarelo);color:var(--marrom-texto);font-weight:700;padding:1px 6px;border-radius:6px;font-size:.9em}
-  .card .preencher{background:var(--oliva);color:var(--creme)}
+  .preencher{background:var(--amarelo);color:var(--escuro);font-weight:600;padding:1px 8px;border-radius:999px;font-size:.9em}
 
   /* Topo */
-  .topo{display:flex;justify-content:space-between;align-items:center;padding:22px 0;font-size:14px;font-weight:500;opacity:.9}
+  .topo{display:flex;justify-content:space-between;align-items:center;padding:22px 0;font-size:14px;font-weight:500;color:rgba(244,241,234,.75)}
 
   /* Hero */
   .hero{padding:32px 0 72px}
@@ -100,11 +102,11 @@
   /* Números */
   .numeros{display:grid;grid-template-columns:1fr 1fr;gap:14px}
   .numero{text-align:left;padding:22px 18px}
-  .numero strong{display:block;font-weight:800;font-size:clamp(26px,7vw,38px);line-height:1.05;color:var(--marrom-texto)}
-  .numero span{display:block;font-size:14px;font-weight:500;margin-top:6px}
+  .numero strong{display:block;font-weight:800;font-size:clamp(30px,8vw,44px);line-height:1;letter-spacing:-.03em;color:var(--creme)}
+  .numero span{display:block;font-size:14px;font-weight:500;margin-top:8px;color:var(--amarelo)}
 
-  /* Faixa oliva */
-  .faixa{background:var(--oliva);color:var(--creme);padding:16px 0;font-weight:700;text-align:center;font-size:15px;letter-spacing:.02em}
+  /* Faixa amarela */
+  .faixa{background:var(--amarelo);color:var(--escuro);padding:16px var(--gutter);font-weight:600;text-align:center;font-size:15px}
 
   /* Pra quem é */
   .lista-cards{display:grid;gap:16px;margin-top:32px}
@@ -114,96 +116,97 @@
   /* Módulos */
   .modulo{display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:start}
   .modulo .n{
-    width:52px;height:52px;border-radius:16px;background:var(--marrom);color:var(--amarelo);
-    display:flex;align-items:center;justify-content:center;font-weight:800;font-size:20px;
+    width:52px;height:52px;border-radius:50%;background:var(--amarelo);color:var(--escuro);
+    display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px;
   }
-  .modulo .tag{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--oliva);display:block;margin-bottom:4px}
+  .modulo .tag{font-size:12px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--amarelo);display:block;margin-bottom:6px}
   .modulo p{margin-top:8px;font-size:16px}
-  .modulo.bonus{background:var(--oliva);color:var(--creme)}
-  .modulo.bonus h3,.modulo.bonus .tag{color:var(--creme)}
-  .modulo.bonus .n{background:var(--amarelo);color:var(--marrom-texto)}
+  .modulo.bonus{background:var(--amarelo);color:var(--escuro);border-color:transparent}
+  .modulo.bonus h3,.modulo.bonus .tag{color:var(--escuro)}
+  .modulo.bonus p{color:rgba(26,23,20,.8)}
+  .modulo.bonus .n{background:var(--escuro);color:var(--amarelo)}
 
   /* Como funciona */
   .passos{display:grid;gap:16px;margin-top:32px}
-  .passo{border:1px solid rgba(251,247,240,.18);border-radius:var(--raio);padding:24px;background:rgba(51,36,27,.6)}
+  .passo{border:1px solid var(--linha);border-radius:var(--raio);padding:24px;background:transparent}
+  .passo p{color:rgba(244,241,234,.75)}
   .passo h3{margin:6px 0 8px}
 
   /* Resultados */
   .destaques{display:grid;gap:14px;margin-top:32px}
-  .destaque strong{display:block;font-weight:800;font-size:clamp(30px,8vw,42px);line-height:1.05}
-  .destaque span{display:block;font-weight:500;margin-top:4px}
-  .marca{font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--oliva);display:block;margin-bottom:8px}
+  .destaque strong{display:block;font-weight:800;font-size:clamp(40px,11vw,56px);line-height:1;letter-spacing:-.03em}
+  .destaque span{display:block;font-weight:500;margin-top:6px;color:rgba(244,241,234,.75)}
+  .destaque span.marca{color:var(--amarelo)}
+  .marca{font-size:12px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--amarelo);display:block;margin-bottom:10px}
   .prints{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:32px}
   .prints .slot{aspect-ratio:9/16}
 
   /* Sobre */
   .sobre-grid{display:grid;gap:32px;align-items:center}
   .sobre-foto{aspect-ratio:1/1;max-width:380px;width:100%;justify-self:center}
+  .sobre p{color:rgba(244,241,234,.8)}
   .sobre p+p{margin-top:14px}
 
   /* Oferta */
-  .oferta-card{padding:36px 24px;max-width:640px;margin:0 auto;text-align:center}
-  .oferta-card h2{color:var(--marrom-texto)}
-  .inclusos{list-style:none;text-align:left;margin:24px 0 28px;display:grid;gap:12px}
+  .oferta-card{padding:40px 24px;max-width:640px;margin:0 auto;text-align:center;border-color:rgba(246,226,122,.35)}
+  .inclusos{list-style:none;text-align:left;margin:24px 0 32px;display:grid;gap:12px}
   .inclusos li{display:grid;grid-template-columns:28px 1fr;gap:10px;font-weight:500;font-size:16px}
   .inclusos li::before{
-    content:"✓";width:26px;height:26px;border-radius:50%;background:var(--oliva);color:var(--creme);
+    content:"✓";width:26px;height:26px;border-radius:50%;background:var(--amarelo);color:var(--escuro);
     display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;margin-top:1px;
   }
-  .preco{font-weight:800;font-size:clamp(52px,15vw,76px);line-height:1;color:var(--marrom-texto);letter-spacing:-.02em}
-  .preco small{font-size:.4em;font-weight:700;vertical-align:.9em;margin-right:4px}
-  .parcela{margin:10px 0 26px;font-weight:500}
-  .oferta-card .btn{background:var(--marrom-texto);color:var(--amarelo);max-width:100%}
-  .oferta-card .btn:hover{background:#3d2b20}
+  .preco{font-weight:800;font-size:clamp(64px,18vw,96px);line-height:1;color:var(--creme);letter-spacing:-.04em}
+  .preco small{font-size:.32em;font-weight:600;vertical-align:1.3em;margin-right:6px;letter-spacing:0;color:var(--amarelo)}
+  .parcela{margin:12px 0 28px;font-weight:500}
+  .oferta-card .btn{max-width:100%}
 
   /* Garantia */
   .garantia{display:flex;gap:20px;align-items:center;max-width:640px;margin:28px auto 0}
   .selo{
-    flex:0 0 auto;width:96px;height:96px;border-radius:50%;background:var(--oliva);color:var(--creme);
+    flex:0 0 auto;width:96px;height:96px;border-radius:50%;background:var(--amarelo);color:var(--escuro);
     display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
-    box-shadow:0 0 0 6px rgba(154,134,87,.25);
   }
-  .selo b{font-size:30px;font-weight:800;line-height:1}
-  .selo span{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em}
+  .selo b{font-size:32px;font-weight:800;line-height:1}
+  .selo span{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.1em}
   .garantia h3{margin-bottom:4px}
-  .garantia p{font-size:15px;opacity:.9}
+  .garantia p{font-size:15px;color:rgba(244,241,234,.75)}
 
   /* FAQ */
   .faq{max-width:720px;margin:32px auto 0;display:grid;gap:12px}
-  .faq details{background:var(--creme);color:var(--marrom-texto);border-radius:20px;box-shadow:var(--sombra);overflow:hidden}
+  .faq details{background:var(--fundo-card);color:var(--creme);border:1px solid var(--linha);border-radius:20px;overflow:hidden}
   .faq summary{
-    list-style:none;cursor:pointer;padding:20px 56px 20px 22px;font-weight:700;font-size:16px;position:relative;
+    list-style:none;cursor:pointer;padding:20px 60px 20px 22px;font-weight:600;font-size:16px;position:relative;
   }
   .faq summary::-webkit-details-marker{display:none}
   .faq summary::after{
     content:"+";position:absolute;right:20px;top:50%;transform:translateY(-50%);
-    width:28px;height:28px;border-radius:50%;background:var(--oliva);color:var(--creme);
-    display:flex;align-items:center;justify-content:center;font-weight:700;transition:transform .25s ease;
+    width:28px;height:28px;border-radius:50%;background:var(--amarelo);color:var(--escuro);
+    display:flex;align-items:center;justify-content:center;font-weight:700;
   }
   .faq details[open] summary::after{content:"−"}
-  .faq .resp{padding:0 22px 20px;font-size:15px;line-height:1.65}
-  .faq summary:focus-visible{outline:3px solid var(--oliva);outline-offset:-3px;border-radius:20px}
+  .faq .resp{padding:0 22px 20px;font-size:15px;line-height:1.65;color:rgba(244,241,234,.78)}
+  .faq summary:focus-visible{outline:3px solid var(--amarelo);outline-offset:-3px;border-radius:20px}
 
   /* CTA final */
-  .final{text-align:center;padding:96px 0}
-  .final h2{font-size:clamp(34px,9vw,60px);margin-bottom:16px}
+  .final{text-align:center;padding:104px 0}
+  .final h2{font-size:clamp(38px,10vw,72px);margin-bottom:16px}
   .final .apoio{margin:0 auto 32px}
 
-  footer{border-top:1px solid rgba(251,247,240,.15);padding:28px 0;text-align:center;font-size:14px;opacity:.8}
+  footer{border-top:1px solid var(--linha);padding:28px 0;text-align:center;font-size:14px;color:rgba(244,241,234,.6)}
 
   /* Barra fixa mobile */
   .barra{
-    position:fixed;left:0;right:0;bottom:0;z-index:50;
-    background:rgba(43,30,22,.97);border-top:1px solid rgba(244,237,178,.2);
+    position:fixed !important;left:0;right:0;bottom:0;z-index:50 !important;
+    background:rgba(23,21,19,.96);border-top:1px solid var(--linha);
     padding:12px var(--gutter) calc(12px + env(safe-area-inset-bottom));
     display:flex;align-items:center;gap:14px;
     transform:translateY(110%);transition:transform .35s ease;
   }
   .barra.on{transform:none}
   .barra .info{line-height:1.2;flex:0 0 auto}
-  .barra .info b{display:block;font-weight:800;color:var(--amarelo);font-size:18px}
-  .barra .info span{font-size:12px;opacity:.85}
-  .barra .btn{padding:14px 18px;font-size:15px;max-width:none;flex:1;box-shadow:none}
+  .barra .info b{display:block;font-weight:800;color:var(--creme);font-size:18px}
+  .barra .info span{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--amarelo)}
+  .barra .btn{padding:14px 18px;font-size:15px;max-width:none;flex:1}
 
   /* Animação de entrada */
   .reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1)}
@@ -229,7 +232,7 @@
     .destaques{grid-template-columns:repeat(3,1fr)}
     .prints{grid-template-columns:repeat(4,1fr)}
     .sobre-grid{grid-template-columns:.8fr 1.2fr}
-    .oferta-card{padding:48px}
+    .oferta-card{padding:56px}
     .barra{display:none}
   }
 </style>
@@ -415,7 +418,7 @@
 </section>
 
 <!-- SOBRE MIM -->
-<section>
+<section class="sobre">
   <div class="wrap sobre-grid">
     <div class="sobre-foto reveal">
       <!-- Troque por: <img src="foto-sobre.jpg" alt="Lara Dam" style="border-radius:24px;width:100%;height:100%;object-fit:cover"> -->
