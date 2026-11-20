@@ -18,6 +18,9 @@ const nextConfig: NextConfig = {
       // 5 dicas pro primeiro UGC (isca do carrossel do Instagram, HTML estatico em public/dicas-insta-2026/)
       { source: "/dicas-insta-2026", destination: "/dicas-insta-2026/index.html" },
       { source: "/dicas-insta-2026/", destination: "/dicas-insta-2026/index.html" },
+      // Landing page do Intensivo Edicao com Claude, Turma 05 (HTML estatico em public/edicaoclaude/)
+      { source: "/edicaoclaude", destination: "/edicaoclaude/index.html" },
+      { source: "/edicaoclaude/", destination: "/edicaoclaude/index.html" },
       // Tour 3D do apartamento (Three.js estatico)
       { source: "/projeto/3d", destination: "/projeto/3d/index.html" },
       { source: "/projeto/3d/", destination: "/projeto/3d/index.html" },
