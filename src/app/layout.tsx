@@ -31,6 +31,26 @@ export const metadata: Metadata = {
     description: "+1000 vídeos · +300 marcas · 140M+ views",
     type: "website",
   },
+  metadataBase: new URL("https://ugc.laradam.com"),
+};
+
+const pessoaJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Lara Dam",
+  alternateName: ["Lara Damasceno", "eilaradam"],
+  url: "https://ugc.laradam.com/",
+  jobTitle: "UGC Creator e Content Strategist",
+  description:
+    "UGC Creator com +1000 vídeos gravados e +300 marcas parceiras. Criativos de alta conversão para marcas.",
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Caraguatatuba",
+    addressRegion: "SP",
+    addressCountry: "BR",
+  },
+  knowsAbout: ["UGC", "Conteúdo para marcas", "Criativos para anúncios", "Inteligência artificial para creators"],
+  sameAs: ["https://www.instagram.com/eilaradam/"],
 };
 
 export default function RootLayout({
@@ -44,6 +64,10 @@ export default function RootLayout({
       className={`${beVietnam.variable} ${dmSans.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(pessoaJsonLd) }}
+        />
         <LanguageProvider>
           <AnalyticsTracker />
           <CustomCursor />
