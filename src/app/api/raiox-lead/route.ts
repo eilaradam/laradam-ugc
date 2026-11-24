@@ -1,12 +1,9 @@
 import { supabaseAdmin } from "@/lib/supabase";
 import { guardLead, validEmail, str } from "@/lib/guard";
 
-// Formulário do Raio-X do Reels (ugc.laradam.com/raiox), liberado no fim da aula grátis de Edição com Claude.
-// As respostas completas vão pra bio_leads (produto "Raio-X do Reels", respostas em jsonb) e o contato
+// Formulário do bônus da aula grátis Edição com Claude (ugc.laradam.com/raiox): 4 campos e libera o e-book.
+// Vai pra bio_leads (produto "Bônus aula Edição com Claude": nome, WhatsApp e e-mail; origem em respostas) e o contato
 // também entra na lista_espera (interesse "raiox"), que o admin do creators já mostra.
-const EDITA = ["Sim, eu mesma edito", "Às vezes, depende do trabalho", "Não, pago alguém pra editar", "Não faço vídeo pra marca ainda"];
-const VIDEOS = ["Nenhum ainda", "De 1 a 3", "De 4 a 10", "Mais de 10"];
-const TRAVA = ["O corte, tirar pausa e erro", "A legenda", "Os títulos e as animações", "O som e a música", "O tempo que leva"];
 
 export async function POST(req: Request) {
   const body = (await req.json().catch(() => null)) as Record<string, unknown> | null;
@@ -21,12 +18,7 @@ export async function POST(req: Request) {
   if (!validEmail(body.email)) return Response.json({ error: "Esse e-mail não parece certo" }, { status: 400 });
   const zap = str(body.whatsapp, 40);
   if (!zap || zap.replace(/\D/g, "").length < 10) return Response.json({ error: "Coloca seu WhatsApp com DDD" }, { status: 400 });
-  const insta = str(body.instagram, 60)?.replace(/^@+/, "").trim();
-  if (!insta) return Response.json({ error: "Coloca seu @ do Instagram" }, { status: 400 });
-  const edita = str(body.edita, 80), videos = str(body.videos, 40), trava = str(body.trava, 80);
-  if (!edita || !EDITA.includes(edita)) return Response.json({ error: "Responde se você edita seus vídeos" }, { status: 400 });
-  if (!videos || !VIDEOS.includes(videos)) return Response.json({ error: "Responde quantos vídeos você entrega por mês" }, { status: 400 });
-  if (!trava || !TRAVA.includes(trava)) return Response.json({ error: "Responde o que mais te trava na edição" }, { status: 400 });
+  const insta = str(body.instagram, 60)?.replace(/^@+/, "").trim() || null; // opcional: o formulário de 24/11 não pede mais
 
   const email = String(body.email).trim().toLowerCase();
   const origem = str(body.origem, 40) || "aula-edicao";
@@ -35,8 +27,8 @@ export async function POST(req: Request) {
     nome,
     email,
     whatsapp: zap,
-    produto: "Raio-X do Reels",
-    respostas: { instagram: insta, edita, videos_por_mes: videos, trava, origem },
+    produto: "Bônus aula Edição com Claude",
+    respostas: { instagram: insta, origem },
   });
   if (error) {
     console.error("[raiox-lead]", error.message);
