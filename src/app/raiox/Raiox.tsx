@@ -164,7 +164,7 @@ function Ebook() {
         <div>
           <Pilula>Aula gratuita · 24/11 · 20h</Pilula>
           <h1 className="mt-4 text-[38px] font-extrabold leading-[1.02] tracking-[-0.03em] sm:text-[48px]">
-            Edição com o <span style={{ color: C.acento }}>Claude</span>
+            Edição com <span style={{ color: C.acento }}>Claude</span>
           </h1>
           <p className="mt-2 text-[17px] font-semibold" style={{ color: C.fraco }}>o bônus da aula</p>
           <AssinaturaLara />
@@ -199,7 +199,7 @@ function Ebook() {
             ["Legenda difícil de ler", "Ou a legenda de todo mundo."],
             ["Tela parada", "Sem zoom, sem rastreio de rosto, sem B-roll."],
             ["Áudio e sound", "Sempre os mesmos efeitos, que já estão saturando."],
-            ["A área que o Instagram cobre", "Nada acima de 250 px, nada abaixo de 1560 px, 100 px livres nas laterais, e abaixo de 1250 px nada depois de 920 px (num vídeo 1080 x 1920)."],
+            ["A área que o Instagram cobre", "Texto embaixo dos botões e da legenda do próprio Instagram."],
           ].map(([t, d], i) => (
             <li key={t} className="flex gap-4 rounded-2xl p-4" style={{ background: C.papel }}>
               <span className="grid h-8 w-8 flex-shrink-0 place-items-center rounded-full text-[14px] font-bold" style={{ background: C.texto, color: C.marca }}>{i + 1}</span>
@@ -233,7 +233,7 @@ function Ebook() {
           </div>
         </div>
         <p className="mt-5 rounded-2xl p-4 text-[15px] leading-relaxed" style={{ background: C.papel }}>
-          <b>O passo final:</b> depois que ele corrigir, peça pra ele <b>salvar como regra</b>. Assim você nunca mais pede a mesma coisa duas vezes.
+          <b>O passo final:</b> depois que ele corrigir, peça pra ele <b>salvar como regra</b>. Assim cada correção vira regra, e o seu Claude aprende com você.
         </p>
       </Parte>
 
@@ -265,7 +265,8 @@ function Ebook() {
         <p className="mt-4 text-[16px] leading-relaxed" style={{ color: "rgba(255,255,255,.82)" }}>
           Isso é o começo. Na Turma 05 você leva o kit completo: 8 skills, uma pra cada etapa da edição, a biblioteca de sons e títulos, o Estúdio, os formatos que vendem, a skill de roteiro e a identidade de cada marca no seu vídeo.
         </p>
-        <a href="https://ugc.laradam.com/edicaoclaude" className="nao-imprime mt-6 inline-block rounded-full px-6 py-3.5 text-[15px] font-semibold" style={{ background: C.marca, color: C.texto }}>Conhecer a Turma 05</a>
+        <p className="mt-6 text-[15px] font-semibold" style={{ color: C.marca }}>R$297 · 7 dias de garantia</p>
+        <a href="https://ugc.laradam.com/edicaoclaude" className="nao-imprime mt-3 inline-block rounded-full px-6 py-3.5 text-[15px] font-semibold" style={{ background: C.marca, color: C.texto }}>Conhecer a Turma 05</a>
         <p className="mt-3 text-[13px]" style={{ color: "rgba(255,255,255,.6)" }}>Carrinho fecha em 01/12.</p>
       </section>
 
