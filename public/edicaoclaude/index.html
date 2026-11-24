@@ -1,564 +1,1443 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Intensivo Edição com Claude | Turma 05</title>
-<meta name="description" content="Conteúdo UGC em nível premium, do roteiro à entrega, com o Claude. Turma 05 com Lara Dam (@eilaradam).">
-<meta name="theme-color" content="#171513">
+<title>Turma 05 | Edição com Claude · Lara Dam</title>
+<meta name="description" content="O mesmo bruto do seu celular, editado no nível que marca gringa paga em dólar. Turma 05 da Lara Dam: edição com o Claude, no seu estilo, vídeo após vídeo.">
+<meta property="og:title" content="Turma 05 | Edição com Claude · Lara Dam">
+<meta property="og:description" content="O mesmo bruto do seu celular, editado no nível que marca gringa paga em dólar.">
+<meta property="og:image" content="/edicaoclaude/midia/depois.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --fundo:#171513;
-    --fundo-card:#211E1B;
-    --linha:rgba(244,241,234,.09);
-    --creme:#F4F1EA;
-    --amarelo:#F6E27A;
-    --escuro:#1A1714;
-    --raio:24px;
-    --gutter:20px;
+  :root {
+    --fundo: #f1f0ea;
+    --papel: #f7f6f2;
+    --cartao: #ffffff;
+    --texto: #141414;
+    --fraco: #55534e;
+    --apoio: #8d8b84;
+    --acento: #c4673f;
+    --marca: #fdf6cf;
+    --linha: #e4e2da;
+    --raio: 22px;
+    --raio-g: 30px;
   }
-  *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-  body{
-    font-family:'Poppins',system-ui,sans-serif;
-    font-weight:400;
-    color:var(--creme);
-    background-color:var(--fundo);
-    line-height:1.6;
-    font-size:17px;
-    overflow-x:hidden;
-    padding-bottom:96px;
-    position:relative;
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  body {
+    font-family: "Poppins", system-ui, sans-serif;
+    background: var(--fundo);
+    color: var(--texto);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-wrap: break-word;
+    overflow-x: hidden;
   }
-  /* granulado leve por cima do fundo, igual à arte */
-  body::before{
-    content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.09;
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  }
-  body>*{position:relative;z-index:1}
-  img{max-width:100%;display:block}
-  a{color:inherit}
+  img, video { display: block; max-width: 100%; }
+  a { color: inherit; }
+  .wrap { width: 100%; max-width: 1120px; margin: 0 auto; padding: 0 20px; }
+  section { padding: 56px 0; }
+  .papel { background: var(--papel); }
 
-  .wrap{width:100%;max-width:1080px;margin:0 auto;padding:0 var(--gutter)}
-  section{padding:72px 0}
-
-  h1,h2,h3{font-weight:800;color:var(--creme);line-height:1.08;letter-spacing:-.02em}
-  h1{font-size:clamp(36px,9vw,68px)}
-  h2{font-size:clamp(30px,7vw,50px);margin-bottom:16px}
-  h3{font-size:20px;letter-spacing:-.01em}
-  .lead{font-size:clamp(17px,4.4vw,20px);font-weight:400;color:rgba(244,241,234,.78);max-width:640px}
-  .apoio{max-width:640px;color:rgba(244,241,234,.72)}
-
-  /* etiqueta no estilo "AULA GRATUITA": texto amarelo espaçado, sem caixa */
-  .etiqueta{
-    display:inline-block;color:var(--amarelo);
-    font-weight:600;font-size:13px;letter-spacing:.28em;text-transform:uppercase;
-    margin-bottom:18px;
+  .selo {
+    display: inline-block;
+    background: var(--texto);
+    color: var(--marca);
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: .02em;
+    padding: 6px 14px;
+    border-radius: 999px;
   }
+  h1, h2, h3 { font-weight: 700; letter-spacing: -0.025em; line-height: 1.1; }
+  h1 { font-size: clamp(31px, 8.6vw, 62px); font-weight: 800; }
+  h2 { font-size: clamp(28px, 7vw, 46px); margin: 16px 0 14px; font-weight: 800; }
+  h3 { font-size: 19px; margin-bottom: 6px; }
+  .acento { color: var(--acento); }
+  .grifo { background: var(--marca); padding: 0 .18em; border-radius: 6px; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+  .intro { color: var(--fraco); font-size: 17px; max-width: 660px; }
 
-  /* Botão: pílula amarela */
-  .btn{
-    display:inline-flex;align-items:center;justify-content:center;gap:8px;
-    background:var(--amarelo);color:var(--escuro);
-    font-family:inherit;font-weight:600;font-size:17px;text-decoration:none;
-    padding:18px 34px;border-radius:999px;border:0;cursor:pointer;
-    transition:transform .2s ease, box-shadow .2s ease, background .2s ease;
-    width:100%;max-width:420px;text-align:center;
+  .botao {
+    display: inline-block;
+    background: var(--acento);
+    color: #fff;
+    font-weight: 700;
+    font-size: 19px;
+    text-decoration: none;
+    padding: 17px 32px;
+    border-radius: 999px;
+    text-align: center;
+    text-wrap: balance;
+    transition: transform .15s ease, background .15s ease;
   }
-  .btn:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(246,226,122,.22);background:#F9EA98}
-  .btn:active{transform:translateY(1px);box-shadow:none}
-  .btn:focus-visible{outline:3px solid var(--creme);outline-offset:3px}
+  .botao:hover { background: #b25a35; }
+  .botao:active { transform: scale(.98); }
+  .botao:focus-visible, button:focus-visible { outline: 3px solid var(--texto); outline-offset: 3px; }
 
-  /* Card escuro */
-  .card{
-    background:var(--fundo-card);color:var(--creme);
-    border:1px solid var(--linha);border-radius:var(--raio);padding:28px 24px;
+  /* Faixa da contagem */
+  .faixa {
+    background: var(--texto);
+    color: #fff;
+    font-size: 13px;
+    text-align: center;
+    padding: 9px 16px;
+    line-height: 1.4;
   }
-  .card p{color:rgba(244,241,234,.75)}
-
-  /* Placeholder */
-  .slot{
-    border:2px dashed rgba(244,241,234,.3);border-radius:var(--raio);
-    display:flex;align-items:center;justify-content:center;text-align:center;
-    color:var(--creme);font-weight:500;font-size:14px;opacity:.8;padding:20px;
-    background:rgba(244,241,234,.03);
-  }
-  .preencher{background:var(--amarelo);color:var(--escuro);font-weight:600;padding:1px 8px;border-radius:999px;font-size:.9em}
+  .faixa b { color: var(--marca); font-weight: 600; }
+  .faixa .relogio { font-variant-numeric: tabular-nums; font-weight: 700; color: var(--marca); white-space: nowrap; letter-spacing: .02em; }
 
   /* Topo */
-  .topo{display:flex;justify-content:space-between;align-items:center;padding:22px 0;font-size:14px;font-weight:500;color:rgba(244,241,234,.75)}
+  .topo { padding: 22px 0 96px; }
+  .marca-nome { display: flex; justify-content: space-between; align-items: center; font-size: 14px; color: var(--fraco); margin-bottom: 28px; }
+  .marca-nome strong { color: var(--texto); font-weight: 600; }
+  .topo-grade { display: grid; gap: 40px; align-items: center; }
+  .topo h1 { margin: 16px 0 14px; }
+  .sub-extra { margin-top: 10px; font-size: 15px; color: var(--fraco); max-width: 560px; }
+  .sub-extra b { color: var(--texto); font-weight: 600; }
+  .topo .sub { font-size: clamp(16px, 4.2vw, 20px); color: var(--fraco); max-width: 560px; }
+  .acao { margin-top: 24px; display: flex; flex-direction: column; gap: 12px; align-items: flex-start; }
+  .acao .botao { width: 100%; }
+  .acao-info { font-size: 14px; color: var(--fraco); }
+  .acao-info strong { color: var(--texto); }
 
-  /* Hero */
-  .hero{padding:32px 0 72px}
-  .hero-grid{display:grid;gap:40px;align-items:center}
-  .hero h1{margin-bottom:20px}
-  .hero .lead{margin-bottom:32px}
-  .hero-foto{aspect-ratio:4/5;width:100%;max-width:460px;justify-self:center}
-  .hero-foto img{width:100%;height:100%;object-fit:cover;border-radius:var(--raio)}
-
-  /* Números */
-  .numeros{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-  .numero{text-align:left;padding:22px 18px}
-  .numero strong{display:block;font-weight:800;font-size:clamp(30px,8vw,44px);line-height:1;letter-spacing:-.03em;color:var(--creme)}
-  .numero span{display:block;font-size:14px;font-weight:500;margin-top:8px;color:var(--amarelo)}
-
-  /* Faixa amarela */
-  .faixa{background:var(--amarelo);color:var(--escuro);padding:16px var(--gutter);font-weight:600;text-align:center;font-size:15px}
-
-  /* Pra quem é */
-  .lista-cards{display:grid;gap:16px;margin-top:32px}
-  .quem .card p{margin-top:8px}
-  .icone{font-size:26px;line-height:1;margin-bottom:14px;display:block}
-
-  /* Módulos */
-  .modulo{display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:start}
-  .modulo .n{
-    width:52px;height:52px;border-radius:50%;background:var(--amarelo);color:var(--escuro);
-    display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px;
+  .vitrine { position: relative; display: flex; justify-content: center; }
+  .celular {
+    position: relative;
+    width: min(300px, 78vw);
+    aspect-ratio: 9 / 16;
+    border-radius: 34px;
+    overflow: hidden;
+    background: #ddd;
+    border: 6px solid #fff;
+    box-shadow: 0 18px 50px rgba(20,20,20,.10);
   }
-  .modulo .tag{font-size:12px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--amarelo);display:block;margin-bottom:6px}
-  .modulo p{margin-top:8px;font-size:16px}
-  .modulo.bonus{background:var(--amarelo);color:var(--escuro);border-color:transparent}
-  .modulo.bonus h3,.modulo.bonus .tag{color:var(--escuro)}
-  .modulo.bonus p{color:rgba(26,23,20,.8)}
-  .modulo.bonus .n{background:var(--escuro);color:var(--amarelo)}
+  .celular video, .celular img { width: 100%; height: 100%; object-fit: cover; }
+  .etiqueta-video {
+    position: absolute; top: 14px; left: 14px;
+    background: rgba(20,20,20,.82); color: #fff;
+    font-size: 12px; font-weight: 600; padding: 5px 11px; border-radius: 999px;
+  }
+  .etiqueta-video.depois { background: var(--acento); }
+  .som {
+    position: absolute; bottom: 14px; right: 14px;
+    background: rgba(255,255,255,.94); color: var(--texto);
+    border: 0; font: 600 13px "Poppins", sans-serif;
+    padding: 8px 14px; border-radius: 999px; cursor: pointer;
+  }
+  .foto-lara {
+    position: absolute; left: -6px; bottom: -22px;
+    width: 120px; aspect-ratio: 4/5; border-radius: 20px; overflow: hidden;
+    border: 5px solid #fff; box-shadow: 0 10px 30px rgba(20,20,20,.10);
+    transform: rotate(-5deg);
+  }
+  .foto-lara img { width: 100%; height: 100%; object-fit: cover; }
 
-  /* Como funciona */
-  .passos{display:grid;gap:16px;margin-top:32px}
-  .passo{border:1px solid var(--linha);border-radius:var(--raio);padding:24px;background:transparent}
-  .passo p{color:rgba(244,241,234,.75)}
-  .passo h3{margin:6px 0 8px}
+  /* Antes e depois */
+  .duelo { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 32px; }
+  .duelo .celular { width: 100%; border-width: 4px; border-radius: 24px; }
+  .duelo figcaption { margin-top: 12px; font-size: 14px; color: var(--fraco); }
+  .duelo figcaption strong { display: block; color: var(--texto); font-size: 16px; }
+  .historia { margin-top: 28px; background: var(--cartao); border-radius: var(--raio-g); padding: 26px 24px; }
+  .historia p { font-size: clamp(17px, 4.4vw, 21px); font-weight: 500; line-height: 1.45; }
+  .historia p + p { margin-top: 12px; color: var(--fraco); font-size: 16px; font-weight: 400; }
 
-  /* Resultados */
-  .destaques{display:grid;gap:14px;margin-top:32px}
-  .destaque strong{display:block;font-weight:800;font-size:clamp(40px,11vw,56px);line-height:1;letter-spacing:-.03em}
-  .destaque span{display:block;font-weight:500;margin-top:6px;color:rgba(244,241,234,.75)}
-  .destaque span.marca{color:var(--amarelo)}
-  .marca{font-size:12px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--amarelo);display:block;margin-bottom:10px}
-  .prints{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:32px}
-  .prints .slot{aspect-ratio:9/16}
+  /* Cartões */
+  .grade { display: grid; gap: 14px; margin-top: 32px; }
+  .cartao { background: var(--cartao); border-radius: var(--raio); padding: 24px; }
+  .cartao p { color: var(--fraco); }
+  .cartao.escuro { background: var(--texto); color: #fff; }
+  .cartao.escuro h3 { color: var(--marca); }
+  .cartao.escuro p { color: #e9e7e0; }
+  .num { font-weight: 700; color: var(--acento); font-size: 15px; display: block; margin-bottom: 6px; }
+  .tempo { display: inline-block; margin-top: 12px; font-size: 13px; font-weight: 600; background: var(--marca); color: var(--texto); padding: 3px 10px; border-radius: 999px; }
 
-  /* Sobre */
-  .sobre-grid{display:grid;gap:32px;align-items:center}
-  .sobre-foto{aspect-ratio:1/1;max-width:380px;width:100%;justify-self:center}
-  .sobre p{color:rgba(244,241,234,.8)}
-  .sobre p+p{margin-top:14px}
+  /* Diferencial */
+  .compara { margin-top: 32px; display: grid; gap: 14px; }
+  .coluna { border-radius: var(--raio-g); padding: 26px 22px; }
+  .coluna.comum { background: var(--fundo); border: 1.5px solid var(--linha); }
+  .coluna.nosso { background: var(--texto); color: #fff; }
+  .coluna h3 { font-size: 20px; margin-bottom: 4px; }
+  .coluna .quem { font-size: 14px; color: var(--fraco); margin-bottom: 18px; }
+  .coluna.nosso .quem { color: #d9d6cd; }
+  .coluna.nosso h3 { color: var(--marca); }
+  .coluna ul { list-style: none; display: grid; gap: 14px; }
+  .coluna li { display: grid; grid-template-columns: 92px 1fr; gap: 10px; font-size: 15px; align-items: baseline; }
+  .coluna li b { font-weight: 600; font-size: 13px; text-transform: uppercase; letter-spacing: .04em; }
+  .coluna.comum li b, .coluna.comum li span { color: var(--fraco); }
+  .coluna.nosso li b { color: var(--marca); }
+  .produtora { margin-top: 18px; background: var(--marca); border-radius: var(--raio); padding: 22px; }
+  .produtora p { font-size: 17px; font-weight: 500; }
+
+  /* Prova */
+  .sobre { display: grid; gap: 28px; align-items: center; }
+  .sobre-foto { border-radius: var(--raio-g); overflow: hidden; aspect-ratio: 4/5; max-width: 260px; }
+  .sobre-foto img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+  .sobre-texto p { color: var(--fraco); font-size: 17px; }
+  .sobre-texto p + p { margin-top: 12px; }
+  .numeros { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 32px; }
+  .numeros .cartao { padding: 20px; }
+  .numeros strong.big { display: block; font-size: clamp(28px, 8vw, 44px); font-weight: 800; color: var(--acento); line-height: 1.05; letter-spacing: -0.03em; margin-bottom: 6px; }
+  .numeros p { font-size: 14px; }
+  .cartao.foto { padding: 0; overflow: hidden; display: grid; grid-template-columns: 38% 1fr; grid-column: span 2; }
+  .cartao.foto img { width: 100%; height: 100%; object-fit: cover; min-height: 190px; }
+  .cartao.foto div { padding: 20px; align-self: center; }
+  .destaque { background: var(--cartao); border-radius: var(--raio-g); padding: 28px 24px; margin-top: 14px; }
+  .destaque p { font-size: clamp(19px, 5vw, 26px); font-weight: 600; line-height: 1.35; letter-spacing: -0.01em; }
 
   /* Oferta */
-  .oferta-card{padding:40px 24px;max-width:640px;margin:0 auto;text-align:center;border-color:rgba(246,226,122,.35)}
-  .inclusos{list-style:none;text-align:left;margin:24px 0 32px;display:grid;gap:12px}
-  .inclusos li{display:grid;grid-template-columns:28px 1fr;gap:10px;font-weight:500;font-size:16px}
-  .inclusos li::before{
-    content:"✓";width:26px;height:26px;border-radius:50%;background:var(--amarelo);color:var(--escuro);
-    display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;margin-top:1px;
-  }
-  .preco{font-weight:800;font-size:clamp(64px,18vw,96px);line-height:1;color:var(--creme);letter-spacing:-.04em}
-  .preco small{font-size:.32em;font-weight:600;vertical-align:1.3em;margin-right:6px;letter-spacing:0;color:var(--amarelo)}
-  .parcela{margin:12px 0 28px;font-weight:500}
-  .oferta-card .btn{max-width:100%}
-
-  /* Garantia */
-  .garantia{display:flex;gap:20px;align-items:center;max-width:640px;margin:28px auto 0}
-  .selo{
-    flex:0 0 auto;width:96px;height:96px;border-radius:50%;background:var(--amarelo);color:var(--escuro);
-    display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
-  }
-  .selo b{font-size:32px;font-weight:800;line-height:1}
-  .selo span{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.1em}
-  .garantia h3{margin-bottom:4px}
-  .garantia p{font-size:15px;color:rgba(244,241,234,.75)}
+  .oferta-caixa { background: var(--cartao); border-radius: var(--raio-g); padding: 30px 20px; margin-top: 28px; display: grid; gap: 26px; }
+  .preco-rotulo { font-weight: 600; font-size: 18px; }
+  .preco { font-size: clamp(76px, 22vw, 128px); font-weight: 800; color: var(--acento); line-height: 1; letter-spacing: -0.04em; margin: 4px 0 16px; }
+  .itens { list-style: none; display: grid; gap: 8px; }
+  .itens li { background: var(--papel); border-radius: 14px; padding: 12px 16px; display: flex; gap: 12px; align-items: baseline; }
+  .itens li b { color: var(--texto); font-weight: 700; min-width: 64px; flex-shrink: 0; }
+  .itens li span { color: var(--fraco); }
+  .itens li.extra { background: var(--marca); }
+  .itens li.extra span { color: var(--texto); }
+  .pendente { background: #fff; border: 1.5px dashed var(--acento); border-radius: 6px; padding: 0 6px; font-weight: 600; }
+  .garantia { margin-top: 16px; background: var(--papel); border-radius: var(--raio); padding: 18px 20px; }
+  .garantia strong { display: block; font-size: 17px; }
+  .garantia span { color: var(--fraco); font-size: 15px; }
+  .oferta-caixa .botao { width: 100%; margin-top: 20px; }
+  .relogio-oferta { margin-top: 12px; font-size: 14px; color: var(--fraco); text-align: center; }
+  .relogio-oferta b { color: var(--texto); font-variant-numeric: tabular-nums; }
+  .linha-tempo { display: grid; gap: 12px; margin-top: 16px; }
+  .vip { margin-top: 16px; border: 1.5px solid var(--linha); border-radius: var(--raio-g); padding: 26px 22px; background: var(--fundo); }
+  .vip h3 { font-size: 22px; margin-top: 14px; }
+  .vip .itens { margin-top: 14px; }
+  .vip .itens li { background: var(--cartao); }
+  .vip .nota { font-size: 15px; color: var(--fraco); margin-top: 14px; }
+  .vip .nota strong { color: var(--texto); }
 
   /* FAQ */
-  .faq{max-width:720px;margin:32px auto 0;display:grid;gap:12px}
-  .faq details{background:var(--fundo-card);color:var(--creme);border:1px solid var(--linha);border-radius:20px;overflow:hidden}
-  .faq summary{
-    list-style:none;cursor:pointer;padding:20px 60px 20px 22px;font-weight:600;font-size:16px;position:relative;
-  }
-  .faq summary::-webkit-details-marker{display:none}
-  .faq summary::after{
-    content:"+";position:absolute;right:20px;top:50%;transform:translateY(-50%);
-    width:28px;height:28px;border-radius:50%;background:var(--amarelo);color:var(--escuro);
-    display:flex;align-items:center;justify-content:center;font-weight:700;
-  }
-  .faq details[open] summary::after{content:"−"}
-  .faq .resp{padding:0 22px 20px;font-size:15px;line-height:1.65;color:rgba(244,241,234,.78)}
-  .faq summary:focus-visible{outline:3px solid var(--amarelo);outline-offset:-3px;border-radius:20px}
+  .faq { display: grid; gap: 12px; margin-top: 28px; }
+  details { background: var(--cartao); border-radius: var(--raio); padding: 0 22px; }
+  summary { cursor: pointer; list-style: none; font-weight: 600; font-size: 17px; padding: 20px 32px 20px 0; position: relative; }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: "+"; position: absolute; right: 0; top: 16px; font-size: 24px; color: var(--acento); font-weight: 500; transition: transform .2s ease; }
+  details[open] summary::after { transform: rotate(45deg); }
+  details p { color: var(--fraco); padding-bottom: 20px; }
 
-  /* CTA final */
-  .final{text-align:center;padding:104px 0}
-  .final h2{font-size:clamp(38px,10vw,72px);margin-bottom:16px}
-  .final .apoio{margin:0 auto 32px}
+  /* Fechamento */
+  .fecha .cartao.escuro { padding: 32px 24px; border-radius: var(--raio-g); }
+  .fecha .cartao.escuro h2 { color: #fff; margin-top: 0; }
+  .fecha .cartao.escuro p { font-size: 17px; margin-bottom: 12px; }
+  .fecha .botao { margin-top: 14px; width: 100%; }
 
-  footer{border-top:1px solid var(--linha);padding:28px 0;text-align:center;font-size:14px;color:rgba(244,241,234,.6)}
+  footer { padding: 36px 0 120px; font-size: 14px; color: var(--fraco); }
+  footer .wrap { display: flex; flex-direction: column; gap: 6px; }
+  footer strong { color: var(--texto); font-weight: 600; }
 
-  /* Barra fixa mobile */
-  .barra{
-    position:fixed !important;left:0;right:0;bottom:0;z-index:50 !important;
-    background:rgba(23,21,19,.96);border-top:1px solid var(--linha);
-    padding:12px var(--gutter) calc(12px + env(safe-area-inset-bottom));
-    display:flex;align-items:center;gap:14px;
-    transform:translateY(110%);transition:transform .35s ease;
+  /* Barra fixa no celular */
+  .barra-fixa {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 20;
+    background: rgba(247,246,242,.97);
+    border-top: 1px solid var(--linha);
+    padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
+    display: flex; align-items: center; gap: 12px; justify-content: space-between;
+    transform: translateY(110%); transition: transform .25s ease;
   }
-  .barra.on{transform:none}
-  .barra .info{line-height:1.2;flex:0 0 auto}
-  .barra .info b{display:block;font-weight:800;color:var(--creme);font-size:18px}
-  .barra .info span{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--amarelo)}
-  .barra .btn{padding:14px 18px;font-size:15px;max-width:none;flex:1}
+  .barra-fixa.visivel { transform: translateY(0); }
+  .barra-fixa .info { font-size: 13px; color: var(--fraco); line-height: 1.3; }
+  .barra-fixa .info strong { display: block; font-size: 18px; color: var(--texto); }
+  .barra-fixa .botao { font-size: 16px; padding: 12px 20px; flex-shrink: 0; }
 
-  /* Animação de entrada */
-  .reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1)}
-  .reveal.in{opacity:1;transform:none}
-  @media (prefers-reduced-motion:reduce){
-    .reveal{opacity:1;transform:none;transition:none}
-    .btn,.barra{transition:none}
-    html{scroll-behavior:auto}
-  }
+  /* Antes e depois Pierre */
+  .duelo2 { display: grid; grid-template-columns: 1fr 1fr; grid-template-areas: "v1 v2" "o1 o1" "o2 o2"; gap: 12px; margin-top: 32px; }
+  .duelo2 .v1 { grid-area: v1; } .duelo2 .v2 { grid-area: v2; }
+  .duelo2 .o1 { grid-area: o1; } .duelo2 .o2 { grid-area: o2; }
+  .duelo2 .celular { width: 100%; border-width: 4px; border-radius: 24px; }
+  .duelo2 .etiqueta-video { font-size: 11px; white-space: nowrap; top: 10px; left: 8px; padding: 4px 9px; }
+  .obs { border-radius: var(--raio); padding: 22px; }
+  .obs.o1 { background: var(--fundo); border: 1.5px solid var(--linha); }
+  .obs.o2 { background: var(--texto); color: #fff; }
+  .obs h3 { font-size: 18px; }
+  .obs.o2 h3 { color: var(--marca); }
+  .obs-sub { font-size: 14px; color: var(--fraco); margin-bottom: 14px; }
+  .obs.o2 .obs-sub { color: #d9d6cd; }
+  .obs ul { list-style: none; display: grid; gap: 10px; }
+  .obs li { position: relative; padding-left: 26px; font-size: 15px; line-height: 1.5; }
+  .obs.o1 li { color: var(--fraco); }
+  .obs li::before { content: ""; position: absolute; left: 2px; top: 7px; width: 10px; height: 10px; border-radius: 50%; }
+  .obs.o1 li::before { border: 2px solid var(--apoio); width: 6px; height: 6px; }
+  .obs.o2 li::before { background: var(--acento); }
 
-  /* Desktop */
-  @media (min-width:760px){
-    :root{--gutter:40px}
-    body{padding-bottom:0}
-    section{padding:104px 0}
-    .hero-grid{grid-template-columns:1.15fr .85fr}
-    .btn{width:auto}
-    .numeros{grid-template-columns:repeat(4,1fr)}
-    .lista-cards{grid-template-columns:repeat(3,1fr)}
-    .modulos{grid-template-columns:1fr 1fr}
-    .modulos .bonus{grid-column:1/-1}
-    .passos{grid-template-columns:repeat(3,1fr)}
-    .destaques{grid-template-columns:repeat(3,1fr)}
-    .prints{grid-template-columns:repeat(4,1fr)}
-    .sobre-grid{grid-template-columns:.8fr 1.2fr}
-    .oferta-card{padding:56px}
-    .barra{display:none}
+  /* Muito além da edição */
+  .curso { background: var(--texto); color: #fff; }
+  .curso h2 { color: #fff; max-width: 900px; }
+  .curso .intro { color: #d9d6cd; }
+  .jornada { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; margin-top: 28px; counter-reset: none; }
+  .jornada li { display: flex; align-items: center; gap: 8px; background: #26252280; border: 1px solid #3a3936; color: #fff; font-size: 14px; font-weight: 500; padding: 7px 14px 7px 8px; border-radius: 999px; position: relative; }
+  .jornada li b { background: var(--acento); color: #fff; font-size: 12px; font-weight: 700; padding: 2px 8px; border-radius: 999px; }
+  .jornada li:last-child b { background: var(--marca); color: var(--texto); }
+  .horas { margin-top: 28px; background: var(--marca); color: var(--texto); border-radius: var(--raio-g); padding: 24px; display: grid; gap: 6px; }
+  .horas strong { font-size: clamp(34px, 9vw, 56px); font-weight: 800; letter-spacing: -.03em; line-height: 1; }
+  .horas span { font-size: 16px; color: var(--fraco); max-width: 560px; }
+  .modulos { display: grid; gap: 14px; margin-top: 18px; }
+  .mod { background: var(--cartao); color: var(--texto); border-radius: var(--raio-g); padding: 24px 22px; display: flex; flex-direction: column; }
+  .mod-topo { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .mod-n { font-size: 30px; font-weight: 800; color: var(--acento); letter-spacing: -.03em; line-height: 1; }
+  .mod-tag { font-size: 12px; font-weight: 600; background: var(--fundo); color: var(--texto); padding: 4px 10px; border-radius: 999px; }
+  .mod-tag.bonus { background: var(--acento); color: #fff; }
+  .mod .tempo { margin-top: 0; margin-left: auto; }
+  .mod h3 { font-size: 22px; margin: 14px 0 12px; }
+  .mod ul { list-style: none; display: grid; gap: 9px; }
+  .mod li { position: relative; padding-left: 22px; font-size: 15px; color: var(--fraco); line-height: 1.5; }
+  .mod li::before { content: ""; position: absolute; left: 2px; top: 8px; width: 8px; height: 8px; border-radius: 50%; background: var(--acento); }
+  .mod-sai { margin-top: auto; padding-top: 16px; font-weight: 600; font-size: 15px; }
+  .mod.escuro { background: #262522; color: #fff; border: 1px solid #3a3936; }
+  .mod.escuro li { color: #d9d6cd; }
+  .mod.escuro .mod-tag { background: var(--acento); color: #fff; }
+  .mod.vivo { background: var(--marca); color: var(--texto); }
+  .mod.vivo .mod-tag { background: var(--texto); color: var(--marca); }
+  .mod.vivo li { color: var(--texto); }
+
+  /* Estúdio no notebook */
+  .note { margin: 36px auto 0; max-width: 1000px; }
+  @media (max-width: 759px) { .note { margin-left: -8px; margin-right: -8px; } .cur svg { width: 14px; height: 16px; } .cur b { left: 10px; top: 14px; padding: 3px 6px; } }
+  .note-tampa { background: #1b1b1d; border-radius: 22px 22px 6px 6px; padding: 2.2% 2.2% 2.6%; position: relative; border: 1px solid #2c2c2f; }
+  .note-camera { position: absolute; top: .8%; left: 50%; width: 6px; height: 6px; margin-left: -3px; border-radius: 50%; background: #3a3a3e; }
+  .note-zoom { position: absolute; inset: 0; transform-origin: 50% 50%; transition: transform .35s ease; }
+  .note-tela { cursor: zoom-in; }
+  .note-tela { position: relative; aspect-ratio: 1440 / 900; overflow: hidden; border-radius: 4px; background: #09090b; }
+  .note-base { position: relative; height: 14px; background: #d4d3cd; border-radius: 0 0 16px 16px; margin: 0 -3.5%; }
+  .note-base span { position: absolute; left: 50%; top: 0; width: 14%; height: 6px; margin-left: -7%; background: #bebdb6; border-radius: 0 0 8px 8px; }
+  .som-cliques { text-align: center; margin-top: 18px; }
+  .som-cliques button { font: 600 14px "Poppins", sans-serif; background: var(--texto); color: var(--marca); border: 0; padding: 9px 18px; border-radius: 999px; cursor: pointer; }
+  .legenda-cur { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 22px; }
+  .legenda-cur li { font-size: 13px; font-weight: 600; color: var(--texto); background: var(--cartao); padding: 5px 12px 5px 26px; border-radius: 999px; position: relative; }
+  .legenda-cur li::before { content: ""; position: absolute; left: 11px; top: 50%; width: 9px; height: 9px; margin-top: -4.5px; border-radius: 50%; background: var(--c); }
+  .st-legenda { margin-top: 10px; font-size: 13px; color: var(--fraco); text-align: center; }
+
+  .est { position: absolute; left: 0; top: 0; width: 1440px; height: 900px; transform-origin: 0 0; background: #09090b; color: #ececee;
+         font: 13px/1.35 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; letter-spacing: 0; }
+  .est * { box-sizing: border-box; }
+  .est i { font-style: normal; }
+  .est-card { position: absolute; left: 8px; width: 1424px; background: #161618; border-radius: 14px; }
+  .est-c1 { top: 8px; height: 540px; }
+  .est-c2 { top: 556px; height: 336px; }
+  .est-topo { height: 46px; display: flex; align-items: center; gap: 10px; padding: 0 12px; }
+  .est-logo { font-size: 15px; font-weight: 700; margin-right: 6px; }
+  .est-sel { background: #1e1e21; border: 1px solid #34343a; border-radius: 8px; padding: 4px 10px; font-size: 12.5px; }
+  .est-sel i { color: #85858e; margin-left: 10px; }
+  .est-a { background: #f2f2f3; color: #111; border-radius: 8px; width: 26px; height: 25px; display: grid; place-items: center; font-size: 12px; }
+  .est-cinza { background: #26262a; border-radius: 8px; padding: 4px 9px; font-size: 12px; color: #cfcfd6; }
+  .est-esp { flex: 1; }
+  .est-salvo { color: #7d7d86; font-size: 12px; margin-right: 8px; }
+  .est-btn { background: #26262a; border-radius: 8px; height: 32px; padding: 0 14px; display: inline-flex; align-items: center; transition: background .3s, color .3s, transform .15s; }
+  .est-pri { background: #f2f2f3; color: #111; font-weight: 700; }
+  .est-btn.ok { background: #2fb39a; color: #04211c; font-weight: 700; }
+  .est-btn.apertado, .est-linha.apertado, .est-passo.apertado, .est-trilho span.apertado { transform: scale(.94); }
+  .est-corpo { display: grid; grid-template-columns: 168px 882px 372px; height: 492px; }
+  .est-trilho { padding: 10px 8px; display: flex; flex-direction: column; gap: 2px; }
+  .est-trilho span { white-space: nowrap; overflow: hidden; height: 36px; border-radius: 9px; display: flex; align-items: center; gap: 10px; padding: 0 10px; color: #a9a9b1; transition: background .25s, color .25s, transform .15s; }
+  .est-trilho span.on { background: #26262b; color: #fff; }
+  .est-trilho em { font-style: normal; font-size: 11px; color: #6c6c75; letter-spacing: .06em; padding: 14px 10px 4px; }
+  .est .ic { width: 14px; height: 14px; border: 1.6px solid currentColor; border-radius: 3.5px; opacity: .85; flex-shrink: 0; }
+  .est-palco { background: #0f0f11; position: relative; }
+  .est-cheia { position: absolute; right: 12px; top: 10px; height: 26px; font-size: 12px; padding: 0 10px; }
+  .est-tela { position: absolute; left: 311px; top: 14px; width: 261px; height: 464px; background: #000; border-radius: 8px; overflow: hidden; }
+  .est-tela video { width: 100%; height: 100%; object-fit: cover; }
+  .est-zona { position: absolute; left: 9.3%; right: 14.8%; top: 13%; bottom: 18.8%; border: 2px dashed rgba(47,179,154,0); border-radius: 4px; transition: border-color .4s; }
+  .est-zona.on { border-color: rgba(47,179,154,.95); }
+  .est-ok { position: absolute; left: 50%; bottom: 12px; transform: translate(-50%, 10px); opacity: 0; background: #2fb39a; color: #04211c; font-weight: 700; font-size: 12px; padding: 4px 10px; border-radius: 999px; transition: all .35s; white-space: nowrap; }
+  .est-ok.on { opacity: 1; transform: translate(-50%, 0); }
+  .est-painel { padding: 12px 21px; position: relative; overflow: hidden; }
+  .est-ptit { display: flex; justify-content: space-between; align-items: center; height: 36px; font-size: 13px; }
+  .est-ptit span:first-child { display: flex; align-items: center; gap: 9px; }
+  .est-qm { width: 22px; height: 22px; border-radius: 50%; background: #2a2a30; color: #cfcfd6; display: grid; place-items: center; font-weight: 700; font-size: 12px; }
+  .est-passo { margin-top: 14px; height: 38px; border-radius: 999px; background: #23232a; display: flex; align-items: center; gap: 10px; padding: 0 6px 0 14px; font-size: 12.5px; transition: transform .15s; }
+  .est-passo span { color: #85858e; }
+  .est-passo i { margin-left: auto; width: 24px; height: 24px; border-radius: 50%; background: #ffd24a; color: #111; display: grid; place-items: center; font-weight: 700; }
+  .est-p { display: none; margin-top: 18px; }
+  .est-p.on { display: block; }
+  .est-p h6 { font-size: 11.5px; font-weight: 700; letter-spacing: .04em; color: #ececee; margin: 16px 0 8px; }
+  .est-p h6:first-child { margin-top: 0; }
+  .est-dim { color: #85858e; font-size: 12px; margin: 6px 0; }
+  .est-linha { display: flex; align-items: center; justify-content: center; height: 32px; border-radius: 8px; background: #26262a; font-size: 12.5px; transition: background .3s, transform .15s; margin-bottom: 8px; }
+  .est-linha.forte, .est-forte { background: #3a3a40; }
+  .est-linha.vermelho { background: #d8432f; color: #fff; }
+  .est-verde { background: #1d3b35; color: #8be3cf; justify-content: flex-start; padding: 0 12px; }
+  .est-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .est-chk span { display: flex; align-items: center; gap: 8px; font-size: 12.5px; }
+  .est-chk i { width: 14px; height: 14px; border-radius: 4px; background: #3f51e0; }
+  .est-chk i.vazio { background: transparent; border: 1.5px solid #6c6c75; }
+  .est-estilos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px; }
+  .est-estilos span { background: #1e1e21; border: 1.5px solid #2c2c31; border-radius: 8px; height: 58px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; font-size: 10.5px; color: #85858e; transition: border-color .25s; }
+  .est-estilos span b { color: #fff; font-size: 14px; font-weight: 800; }
+  .est-estilos b.cond { letter-spacing: -.02em; font-stretch: condensed; }
+  .est-estilos b.ital { font-family: Georgia, serif; font-style: italic; font-weight: 400; }
+  .est-estilos span.on { border-color: #f2f2f3; }
+  .est-tl { background: #1e1e21; border-radius: 8px; padding: 8px 10px; margin-bottom: 7px; border-left: 3px solid #c4673f; opacity: .35; transition: opacity .3s; }
+  .est-tl.on { opacity: 1; }
+  .est-tl b { display: block; font-size: 12.5px; }
+  .est-tl small { color: #85858e; font-size: 11px; }
+  .est-lib { display: grid; gap: 5px; }
+  .est-lib span { display: flex; align-items: center; gap: 8px; height: 28px; padding: 0 10px; background: #1e1e21; border-radius: 7px; font-size: 12.5px; position: relative; }
+  .est-lib span i { margin-left: auto; color: #85858e; font-size: 11.5px; }
+  .est-lib em { font-style: normal; position: absolute; right: 40px; background: #f2f2f3; color: #111; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 6px; opacity: 0; transition: opacity .2s; }
+  .est-lib span.on em { opacity: 1; }
+  .est-barra { height: 8px; border-radius: 99px; background: #26262a; overflow: hidden; margin-top: 4px; }
+  .est-barra i { display: block; height: 100%; width: 0; background: #2fb39a; transition: width .25s linear; }
+
+  .est-tlbarra { height: 44px; display: flex; align-items: center; gap: 6px; padding: 0 10px; }
+  .est-ic { width: 30px; height: 30px; border-radius: 7px; display: grid; place-items: center; color: #cfcfd6; font-size: 13px; }
+  .est-ic.on { background: #f2f2f3; color: #111; }
+  .est-sep { width: 1px; height: 20px; background: #34343a; margin: 0 4px; }
+  .est-relogio { color: #85858e; font-size: 12.5px; margin-left: 6px; font-variant-numeric: tabular-nums; }
+  .est-relogio b { color: #ececee; font-weight: 600; }
+  .est-zoom { width: 150px; height: 4px; border-radius: 9px; background: #34343a; position: relative; margin-right: 20px; }
+  .est-zoom i { position: absolute; left: 0; top: -5px; width: 14px; height: 14px; border-radius: 50%; background: #f2f2f3; }
+  .est-trilhas { position: relative; height: 290px; display: grid; grid-template-columns: 54px 1fr; }
+  .est-cab { display: grid; grid-template-rows: 24px 34px 32px 84px 30px 30px; justify-items: center; align-items: center; }
+  .est-cab i { width: 12px; height: 8px; border: 1.5px solid #6c6c75; border-radius: 50%; }
+  .est-cab i:first-child { visibility: hidden; }
+  .est-tl-area { position: relative; margin-right: 4px; }
+  .est-regua { height: 24px; display: flex; justify-content: space-between; align-items: center; color: #6c6c75; font-size: 11px; border-bottom: 1px solid #26262a; padding-right: 30px; }
+  .est-faixa { position: relative; }
+  .est-faixa > i { position: absolute; top: 4px; bottom: 4px; border-radius: 5px; font-size: 11px; font-weight: 600; color: #fff; padding: 0 6px; white-space: nowrap; overflow: hidden; text-overflow: clip; display: flex; align-items: center; }
+  .ft { height: 34px; }
+  .ft > i { background: #c4673f; transform: translateY(-40px) scale(.6); opacity: 0; transition: transform .35s cubic-bezier(.3,1.4,.5,1), opacity .25s; }
+  .ft > i.on { transform: none; opacity: 1; }
+  .fl { height: 32px; }
+  .fl > i { background: #3f51e0; font-weight: 500; font-size: 10.5px; padding: 0 4px; transform: scaleX(0); transform-origin: left; transition: transform .18s ease; }
+  .fl > i.on { transform: scaleX(1); }
+  .fv { height: 84px; display: flex; gap: 2px; padding: 4px 0; }
+  .fv .clipe { position: relative; flex-basis: 0; border-radius: 6px; background: #0e0e10 url(/edicaoclaude/midia/estudio-tira.jpg) left top / auto 54px repeat-x; overflow: hidden; transition: flex-grow .55s cubic-bezier(.2,.8,.2,1); }
+  .fv .clipe::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 22px; background: #b327c7; -webkit-mask: repeating-linear-gradient(90deg, #000 0 2px, transparent 2px 3px); mask: repeating-linear-gradient(90deg, #000 0 2px, transparent 2px 3px); }
+  .fv .clipe b { position: absolute; left: 6px; top: 4px; font-size: 10px; font-weight: 600; background: rgba(20,20,22,.78); padding: 1px 5px; border-radius: 4px; }
+  .fv .pausa { flex: 4 1 0; border-radius: 6px; background: repeating-linear-gradient(135deg, #4a2a22 0 5px, #2a1d19 5px 10px); border: 1.5px dashed #d8432f; transition: flex-grow .55s cubic-bezier(.2,.8,.2,1), opacity .35s, border-width .3s; }
+  .fv .pausa.fora { flex-grow: 0; opacity: 0; border-width: 0; }
+  .fs { height: 30px; }
+  .fs > i { background: #2fb39a; color: #04211c; font-size: 10.5px; transform: scale(0); transition: transform .3s cubic-bezier(.3,1.5,.5,1); }
+  .fs > i.on { transform: scale(1); }
+  .fm { height: 30px; }
+  .fm > i { left: 0; width: 0; background: #34343a; color: #cfcfd6; font-weight: 500; transition: width 1.4s ease; }
+  .fm > i.on { width: 100%; }
+  .est-agulha { position: absolute; top: 0; bottom: 0; left: 0; width: 2px; background: #ff5a4a; z-index: 3; }
+  .est-agulha::before { content: ""; position: absolute; top: 0; left: -5px; border: 6px solid transparent; border-top-color: #ff5a4a; }
+  .est-toast { position: absolute; left: 50%; top: 70px; transform: translate(-50%, -20px); opacity: 0; background: #f2f2f3; color: #111; font-weight: 700; font-size: 14px; padding: 10px 18px; border-radius: 10px; transition: all .35s; }
+  .est-toast.on { opacity: 1; transform: translate(-50%, 0); }
+
+  .cursores { position: absolute; inset: 0; pointer-events: none; z-index: 5; }
+  .cur { position: absolute; left: 50%; top: 50%; display: block; transition: left .3s cubic-bezier(.3,.7,.2,1), top .3s cubic-bezier(.3,.7,.2,1); will-change: left, top; }
+  .cur svg { width: 17px; height: 19px; display: block; fill: var(--c); stroke: #fff; stroke-width: 1.4; stroke-linejoin: round; filter: drop-shadow(0 1px 2px rgba(0,0,0,.35)); transition: transform .12s; }
+  .cur b { position: absolute; left: 13px; top: 17px; background: var(--c); color: #fff; font-size: 10px; font-weight: 600; line-height: 1; padding: 4px 7px; border-radius: 6px; white-space: nowrap; box-shadow: 0 1px 3px rgba(0,0,0,.25); }
+  .cur.esq b { left: auto; right: 8px; }
+  .cur.claro b { color: #141414; }
+  .cur b { box-shadow: 0 0 0 1px rgba(255,255,255,.35), 0 0 10px var(--c); }
+  .cur svg { filter: drop-shadow(0 0 4px var(--c)) drop-shadow(0 1px 2px rgba(0,0,0,.4)); }
+  .cur.clica svg { transform: scale(.82); }
+  .cur::after { content: ""; position: absolute; left: -7px; top: -7px; width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--c); opacity: 0; transform: scale(.3); }
+  .cur.clica::after { animation: onda .45s ease-out; }
+  @keyframes onda { 0% { opacity: .9; transform: scale(.3); } 100% { opacity: 0; transform: scale(1.8); } }
+
+  /* ===== Revisão final ===== */
+  .compara-vs { margin-top: 28px; }
+  .vs-secao .coluna.comum { background: #262522; border-color: #3a3936; color: #fff; }
+  .vs-secao .coluna.comum h3 { color: #fff; }
+  .vs-secao .coluna.comum li b, .vs-secao .coluna.comum li span { color: #d9d6cd; }
+  .vs-secao .coluna.nosso { background: var(--cartao); color: var(--texto); }
+  .vs-secao .coluna.nosso h3 { color: var(--texto); }
+  .vs-secao .coluna.nosso li b { color: var(--acento); }
+  .kit-linhas { margin-top: 18px; background: #262522; border: 1px solid #3a3936; border-radius: var(--raio); padding: 18px 22px; display: grid; gap: 8px; }
+  .kit-linhas p { color: #d9d6cd; font-size: 15px; line-height: 1.5; }
+  .kit-linhas b { color: var(--marca); font-weight: 600; }
+  h2 { line-height: 1.2; }
+  .grifo { padding: .02em .18em; }
+  /* Versus */
+  .vs-secao { background: var(--texto); color: #fff; }
+  .vs-cab { text-align: center; max-width: 760px; margin: 0 auto; }
+  .vs-cab h2 { color: #fff; }
+  .vs-cab .intro { color: #d9d6cd; margin: 0 auto; }
+  .vs-x { color: var(--apoio); font-weight: 600; }
+  .vs { display: grid; grid-template-columns: 1fr 44px 1fr; grid-template-areas: "v1 meio v2" "d1 d1 d1" "d2 d2 d2"; gap: 14px 8px; align-items: center; margin-top: 32px; }
+  .vs .v1 { grid-area: v1; } .vs .v2 { grid-area: v2; } .vs-meio { grid-area: meio; }
+  .vs .esq { grid-area: d1; } .vs .dir { grid-area: d2; }
+  .vs-video .celular { width: 100%; border-width: 3px; border-radius: 22px; box-shadow: none; }
+  .vs-video.v1 .celular { border-color: #3a3936; }
+  .vs-video.v2 .celular { border-color: var(--acento); }
+  .vs-video figcaption { text-align: center; font-size: 13px; font-weight: 600; margin-top: 10px; color: #d9d6cd; }
+  .vs-video.v2 figcaption { color: var(--marca); }
+  .vs-meio span { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; background: var(--marca); color: var(--texto); font-weight: 800; font-size: 15px; }
+  .vs-desc { border-radius: var(--raio); padding: 20px; }
+  .vs-desc.esq { background: #262522; border: 1px solid #3a3936; }
+  .vs-desc.dir { background: var(--cartao); color: var(--texto); }
+  .vs-rot { display: inline-block; font-size: 12px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; padding: 3px 10px; border-radius: 999px; background: #3a3936; color: #d9d6cd; }
+  .vs-desc.dir .vs-rot { background: var(--acento); color: #fff; }
+  .vs-desc h3 { font-size: 18px; margin: 10px 0 10px; }
+  .vs-desc ul { list-style: none; display: grid; gap: 8px; }
+  .vs-desc li { position: relative; padding-left: 20px; font-size: 15px; line-height: 1.45; }
+  .vs-desc.esq li { color: #d9d6cd; }
+  .vs-desc li::before { content: ""; position: absolute; left: 2px; top: 7px; width: 8px; height: 8px; border-radius: 50%; }
+  .vs-desc.esq li::before { border: 2px solid var(--apoio); width: 5px; height: 5px; }
+  .vs-desc.dir li::before { background: var(--acento); }
+  /* Pra quem é */
+  .perfis { display: grid; gap: 12px; margin-top: 28px; }
+  .perfil { background: var(--cartao); border-radius: var(--raio); padding: 22px; border-left: 4px solid var(--acento); }
+  .perfil h3 { font-size: 18px; }
+  .perfil p { color: var(--fraco); font-size: 15px; }
+  .perfil.destaque-p { background: var(--texto); color: #fff; border-left-color: var(--marca); }
+  .perfil.destaque-p h3 { color: var(--marca); }
+  .perfil.destaque-p p { color: #d9d6cd; }
+  .dominar { margin-top: 18px; background: var(--marca); border-radius: var(--raio); padding: 20px 22px; }
+  .dominar b { display: block; font-size: 15px; margin-bottom: 10px; }
+  .dominar ul { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; }
+  .dominar li { background: var(--cartao); font-size: 14px; font-weight: 600; padding: 6px 12px; border-radius: 999px; }
+  /* Diferencial */
+  .nivel { display: inline-block; font-size: 12px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; padding: 3px 10px; border-radius: 999px; background: var(--linha); color: var(--fraco); margin-bottom: 10px; }
+  .coluna.nosso .nivel { background: var(--acento); color: #fff; }
+  .coluna.nosso { border: 2px solid var(--acento); }
+  .coluna h3 { margin-bottom: 16px; }
+  /* Kit embaixo do Estúdio */
+  .kit-itens { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 26px; }
+  .kit-itens div { background: var(--cartao); border-radius: var(--raio); padding: 16px 18px; }
+  .kit-itens b { display: block; font-size: 16px; }
+  .kit-itens span { font-size: 14px; color: var(--fraco); line-height: 1.45; display: block; margin-top: 4px; }
+  .mod ul { gap: 7px; }
+  .mod h3 { margin: 12px 0 10px; }
+
+  /* ===== v6 ===== */
+  .ok-lista, .h1-lista { list-style: none; }
+  .ok-ic, .ok-lista li::before, .h1-lista span::before {
+    content: ""; display: inline-block; flex-shrink: 0; width: 1em; height: 1em; border-radius: 50%;
+    background: var(--acento) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 12.5l4 4 8-9' fill='none' stroke='white' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 72% no-repeat;
   }
+  .h1-lista { font-size: clamp(28px, 7.4vw, 50px); font-weight: 800; line-height: 1.12; letter-spacing: -0.025em; margin: 16px 0 16px; display: grid; gap: 6px; }
+  .h1-lista span { display: flex; align-items: center; gap: .32em; }
+  .h1-lista span::before { width: .82em; height: .82em; }
+  /* versus: sem direcionamento com marcador cinza */
+  /* pra quem é: balões de chat */
+  .chat { display: grid; gap: 12px; margin-top: 28px; }
+  .bolha { padding: 20px 22px; border-radius: 26px 26px 26px 6px; background: var(--cartao); position: relative; }
+  .bolha:nth-child(even) { background: var(--texto); color: #fff; }
+  .bolha:nth-child(even) h3 { color: var(--marca); }
+  .bolha:nth-child(even) p { color: #e6e3db; }
+  .bolha h3 { font-size: 18px; margin-bottom: 4px; }
+  .bolha p { color: var(--fraco); font-size: 15.5px; line-height: 1.5; }
+  .bolha.dir { justify-self: end; border-radius: 26px 26px 6px 26px; background: var(--texto); color: #fff; }
+  .bolha.dir h3 { color: var(--marca); }
+  .bolha.dir p { color: #e6e3db; }
+  .bolha.forte { background: var(--acento); color: #fff; }
+  .bolha.forte h3 { color: #fff; font-size: 20px; }
+  .bolha.forte p { color: #fff; font-weight: 500; font-size: 16.5px; }
+  /* quem te ensina */
+  .quem-card { display: grid; grid-template-columns: 1fr; gap: 14px; align-items: center; }
+  .oferta-preco .selo, .curso .selo, .vs-secao .selo { background: var(--marca); color: var(--texto); }
+  .quem-foto { width: 88px; height: 88px; border-radius: 50%; object-fit: cover; object-position: top; border: 4px solid #fff; }
+  .quem-texto h2 { font-size: clamp(24px, 6vw, 34px); margin: 10px 0 8px; }
+  .quem-texto p { color: var(--fraco); font-size: 15.5px; max-width: 640px; }
+  .stats { margin-top: 24px; background: var(--cartao); border-radius: var(--raio-g); display: grid; grid-template-columns: 1fr 1fr; }
+  .stats div { padding: 20px; display: grid; gap: 4px; align-content: start; }
+  .stats div:nth-child(odd) { border-right: 1px solid var(--linha); }
+  .stats div:nth-child(-n+2) { border-bottom: 1px solid var(--linha); }
+  .stats strong { font-size: clamp(24px, 6.5vw, 36px); font-weight: 800; color: var(--acento); letter-spacing: -.03em; line-height: 1.05; }
+  .stats span { font-size: 14px; color: var(--fraco); line-height: 1.4; }
+  /* oferta */
+  .oferta-cab { text-align: center; }
+  .oferta2 { display: grid; gap: 14px; margin-top: 26px; }
+  .oferta-lista { background: var(--cartao); border-radius: var(--raio-g); padding: 26px 22px; }
+  .oferta-lista h3 { font-size: 20px; margin-bottom: 16px; }
+  .ok-lista { display: grid; gap: 12px; }
+  .ok-lista li { position: relative; padding-left: 34px; font-size: 16px; color: var(--fraco); line-height: 1.45; }
+  .ok-lista li::before { position: absolute; left: 0; top: 1px; width: 22px; height: 22px; }
+  .ok-lista b { color: var(--texto); font-weight: 600; }
+  .oferta-nota { margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--linha); font-size: 13.5px; color: var(--fraco); }
+  .oferta-preco { background: var(--texto); color: #fff; border-radius: var(--raio-g); padding: 28px 24px; display: flex; flex-direction: column; align-items: center; text-align: center; }
+  .oferta-preco .preco-rotulo { margin-top: 16px; color: #d9d6cd; font-weight: 500; font-size: 16px; }
+  .oferta-preco .preco { color: var(--marca); margin: 6px 0 10px; font-size: clamp(72px, 20vw, 112px); }
+  .ancora { color: #d9d6cd; font-size: 15px; max-width: 340px; }
+  .ancora b { color: #fff; }
+  .oferta-preco .botao { width: 100%; margin-top: 20px; }
+  .garantia2 { margin-top: 16px; display: grid; gap: 2px; font-size: 14px; color: #d9d6cd; }
+  .garantia2 b { color: var(--marca); font-size: 15px; }
+
+
+  /* ===== v7: faixas, aprender, oferta e feedbacks ===== */
+  .rotulo { display: block; font-size: 13px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--acento); }
+  .rotulo::before { content: "// "; }
+  .fitas { position: relative; height: 150px; overflow: hidden; background: transparent; margin: -75px 0; z-index: 3; pointer-events: none; }
+  .fitas:not(.atras) + .vs-secao { padding-top: 100px; }
+  .fita { position: absolute; left: -5%; width: 110%; top: 50%; height: 46px; display: flex; align-items: center; overflow: hidden; }
+  .fita.clara { background: var(--marca); color: var(--texto); transform: translateY(-50%) rotate(2.4deg); border-top: 1px solid #e8dfb0; border-bottom: 1px solid #e8dfb0; }
+  .fita.escura { background: var(--texto); color: var(--marca); transform: translateY(-50%) rotate(-2.4deg); }
+  .fita-trilho { display: flex; align-items: center; gap: 26px; white-space: nowrap; animation: fita 38s linear infinite; padding-left: 26px; }
+  .fita.clara .fita-trilho { animation-direction: reverse; }
+  .fita span { font-size: 16px; font-weight: 600; }
+  .fita i { width: 16px; height: 16px; border-radius: 50%; border: 2px dotted currentColor; opacity: .7; flex-shrink: 0; }
+  @keyframes fita { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  .aprender { background: var(--cartao); color: var(--texto); border-radius: var(--raio-g); padding: 26px 20px; margin-top: 18px; }
+  .aprender-cab h3 { font-size: clamp(24px, 6vw, 34px); font-weight: 800; letter-spacing: -.02em; margin: 6px 0 18px; }
+  .aprender-grade { list-style: none; display: grid; gap: 8px; }
+  .aprender-grade li { position: relative; background: var(--papel); border-radius: 14px; padding: 12px 14px 12px 48px; font-size: 14.5px; font-weight: 500; line-height: 1.35; min-height: 52px; display: flex; align-items: center; }
+  .aprender-grade li::before { content: ""; position: absolute; left: 16px; top: 50%; margin-top: -12px; width: 24px; height: 24px; border-radius: 50%;
+    background: var(--acento) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 12.5l4 4 8-9' fill='none' stroke='white' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 70% no-repeat; }
+
+  .oferta3 { position: relative; background: var(--papel); overflow: hidden; }
+  .fitas.atras { position: absolute; left: 0; right: 0; top: 50%; transform: translateY(-50%); height: 220px; margin: 0; background: transparent; z-index: 0; }
+  .oferta3 .wrap { position: relative; z-index: 1; }
+  .oferta-card { position: relative; display: grid; border-radius: var(--raio-g); overflow: visible; max-width: 1000px; margin: 0 auto; border: 1px solid var(--linha); }
+  .oferta-esq { background: var(--fundo); padding: 34px 24px 28px; border-radius: var(--raio-g) var(--raio-g) 0 0; }
+  .oferta-esq h2 { margin: 8px 0 18px; }
+  .oferta-dir { background: var(--cartao); padding: 34px 24px; border-radius: 0 0 var(--raio-g) var(--raio-g); display: flex; flex-direction: column; align-items: center; text-align: center; }
+  .marca-turma { display: flex; align-items: center; gap: 12px; }
+  .marca-turma b { white-space: nowrap; font-size: 22px; font-weight: 800; padding-right: 12px; border-right: 1.5px solid var(--linha); }
+  .marca-turma span { white-space: nowrap; font-size: 11px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--fraco); }
+  .preco3 { display: flex; align-items: flex-end; gap: 6px; font-size: clamp(96px, 26vw, 150px); font-weight: 800; line-height: .9; letter-spacing: -.05em; color: var(--acento); margin: 22px 0 14px; }
+  .preco3 small { font-size: 32px; letter-spacing: 0; margin-bottom: 14px; color: var(--texto); }
+  .vale-tag { margin-top: 20px; background: var(--marca); color: var(--texto); font-size: 13px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; padding: 6px 14px; border-radius: 999px; }
+  .vale-tag + .preco3 { margin-top: 12px; }
+  .pilula b { color: var(--acento); }
+  .pilula { border: 1.5px dashed var(--apoio); border-radius: 999px; padding: 8px 18px; font-size: 14px; color: var(--texto); max-width: 380px; }
+  .botao-quadrado { border-radius: 10px; text-transform: uppercase; letter-spacing: .04em; font-size: 16px; padding: 18px 26px; }
+  .oferta-dir .botao { width: 100%; max-width: 380px; margin-top: 20px; background: var(--texto); }
+  .oferta-dir .botao:hover { background: #2a2926; }
+  .oferta-info { display: flex; align-items: flex-start; justify-content: center; gap: 8px; margin-top: 14px; font-size: 14px; line-height: 1.4; color: var(--texto); text-align: left; max-width: 340px; }
+  .oferta-info > span:last-child { min-width: 0; }
+  .oferta-info.fraca { margin-top: 6px; color: var(--fraco); font-size: 13px; }
+  .ic-cadeado, .ic-escudo { width: 16px; height: 16px; flex-shrink: 0; margin-top: 2px; background: var(--acento); }
+  .ic-cadeado { -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M7 10V7a5 5 0 0 1 10 0v3h1a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V11a1 1 0 0 1 1-1h1zm2 0h6V7a3 3 0 0 0-6 0v3z'/%3E%3C/svg%3E") center/contain no-repeat; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M7 10V7a5 5 0 0 1 10 0v3h1a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V11a1 1 0 0 1 1-1h1zm2 0h6V7a3 3 0 0 0-6 0v3z'/%3E%3C/svg%3E") center/contain no-repeat; }
+  .ic-escudo { -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2l8 3v6c0 5-3.4 9.4-8 11-4.6-1.6-8-6-8-11V5z'/%3E%3C/svg%3E") center/contain no-repeat; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2l8 3v6c0 5-3.4 9.4-8 11-4.6-1.6-8-6-8-11V5z'/%3E%3C/svg%3E") center/contain no-repeat; }
+  .selo-giro { position: absolute; left: 50%; top: -46px; margin-left: -46px; width: 92px; height: 92px; border-radius: 50%; background: var(--cartao); border: 1px solid var(--linha); display: grid; place-items: center; z-index: 2; }
+  .selo-giro svg { position: absolute; inset: 4px; width: calc(100% - 8px); height: calc(100% - 8px); animation: girar-selo 18s linear infinite; }
+  .selo-giro text { font-size: 10.5px; font-weight: 600; letter-spacing: .12em; fill: var(--fraco); }
+  .selo-giro b { font-size: 24px; font-weight: 800; color: var(--acento); letter-spacing: -.03em; }
+  @keyframes girar-selo { to { transform: rotate(360deg); } }
+
+  .feedbacks { background: var(--fundo); }
+  .feed-cab { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; }
+  .feed-cab h2 { margin-bottom: 0; }
+  .feed-setas { display: flex; gap: 8px; flex-shrink: 0; }
+  .feed-setas button { width: 44px; height: 44px; border-radius: 50%; border: 1.5px solid var(--texto); background: transparent; color: var(--texto); font-size: 18px; cursor: pointer; }
+  .feed-setas button[data-dir="1"] { background: var(--texto); color: var(--marca); }
+  .feed-trilho { display: flex; gap: 14px; overflow-x: auto; padding: 26px 20px 10px; scrollbar-width: none; }
+  .feed-trilho::-webkit-scrollbar { display: none; }
+  .feed { flex: 0 0 min(250px, 68vw); background: var(--cartao); border: 1px solid var(--linha); border-radius: var(--raio); padding: 10px; aspect-ratio: 3 / 5; display: grid; place-items: center; position: relative; overflow: hidden; }
+  .feed img { width: 100%; height: 100%; object-fit: cover; object-position: center top; border-radius: 14px; }
+  .feed span { display: none; }
+  .feed.vazio img { display: none; }
+  .feed.vazio { border: 2px dashed var(--apoio); background: var(--papel); }
+  .feed.vazio span { display: block; font-size: 14px; font-weight: 600; color: var(--fraco); }
+  .feed-acao { text-align: center; margin-top: 26px; }
+  .feed-acao .botao { background: var(--texto); }
+  @media (prefers-reduced-motion: reduce) { .fita-trilho, .selo-giro svg { animation: none; } }
+
+  @media (min-width: 760px) {
+    .fitas { height: 170px; margin: -85px 0; }
+    .fitas:not(.atras) + .vs-secao { padding-top: 120px; }
+    .fita { height: 52px; }
+    .aprender { padding: 40px 40px; margin-top: 22px; }
+    .aprender-grade { grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .aprender-grade li { padding: 16px 16px 16px 50px; min-height: 64px; font-size: 15px; }
+    .oferta-card { grid-template-columns: 1fr 1fr; }
+    .oferta-esq { padding: 48px 44px; border-radius: var(--raio-g) 0 0 var(--raio-g); }
+    .oferta-dir { padding: 48px 40px; border-radius: 0 var(--raio-g) var(--raio-g) 0; justify-content: center; }
+    .feed-trilho { padding-left: max(40px, calc((100% - 1300px) / 2 + 40px)); padding-right: 40px; }
+    .feed { flex-basis: 260px; }
+
+    .quem-card { grid-template-columns: 150px 1fr; gap: 32px; }
+    .quem-foto { width: 150px; height: 150px; }
+    .stats { grid-template-columns: repeat(4, 1fr); }
+    .stats div { padding: 26px 24px; border-bottom: 0 !important; border-right: 1px solid var(--linha); }
+    .stats div:last-child { border-right: 0; }
+    .oferta2 { grid-template-columns: 1.15fr 1fr; gap: 18px; max-width: 1040px; margin-left: auto; margin-right: auto; }
+    .oferta-lista { padding: 36px 36px; }
+    .oferta-preco { padding: 36px 36px; justify-content: center; }
+    .chat.lado { grid-template-columns: repeat(6, 1fr); gap: 14px; }
+    .chat.lado .bolha { grid-column: span 2; }
+    .chat.lado .bolha:nth-child(4), .chat.lado .bolha:nth-child(5) { grid-column: span 3; }
+
+    .vs { grid-template-columns: 1fr 230px 56px 230px 1fr; grid-template-areas: "d1 v1 meio v2 d2"; gap: 24px; }
+    .vs-meio span { width: 56px; height: 56px; font-size: 18px; }
+    .vs-desc { padding: 26px; }
+    .vs-desc.esq { text-align: right; }
+    .vs-desc.esq li { padding-left: 0; padding-right: 20px; }
+    .vs-desc.esq li::before { left: auto; right: 2px; }
+    .perfis { grid-template-columns: repeat(3, 1fr); }
+    .perfil.destaque-p { grid-column: span 2; }
+    .dominar { display: flex; align-items: center; gap: 18px; }
+    .dominar b { margin: 0; white-space: nowrap; }
+    .kit-itens { grid-template-columns: repeat(4, 1fr); }
+    .modulos { grid-template-columns: repeat(3, 1fr) !important; }
+
+    .cur svg { width: 20px; height: 22px; }
+    .cur b { font-size: 12px; left: 15px; top: 19px; }
+    .modulos { grid-template-columns: 1fr 1fr; gap: 18px; }
+    .mod { padding: 32px 30px; }
+    .horas { grid-template-columns: auto 1fr; align-items: center; gap: 24px; padding: 28px 36px; }
+    .duelo2 { grid-template-areas: "v1 v2" "o1 o2"; gap: 18px 24px; max-width: 760px; }
+    .duelo2 .celular { max-width: 340px; }
+
+    .wrap { padding: 0 40px; max-width: 1300px; }
+    section { padding: 60px 0; }
+    .topo { padding: 24px 0 110px; }
+    .marca-nome { margin-bottom: 56px; }
+    .topo-grade { grid-template-columns: 1.35fr .65fr; gap: 56px; }
+    .topo h1 { max-width: 760px; }
+    .acao { flex-direction: row; flex-wrap: wrap; align-items: center; gap: 14px 20px; }
+    .acao .botao { white-space: nowrap; }
+    .acao .botao, .fecha .botao { width: auto; }
+    .foto-lara { width: 150px; left: -30px; }
+    .duelo { gap: 24px; max-width: 560px; }
+    .g2 { grid-template-columns: 1fr 1fr; }
+    .g3 { grid-template-columns: repeat(3, 1fr); }
+    .cartao { padding: 28px; }
+    .compara { grid-template-columns: 1fr 1fr; }
+    .coluna { padding: 34px 32px; }
+    .sobre { grid-template-columns: .8fr 1.2fr; gap: 56px; }
+    .numeros { grid-template-columns: repeat(4, 1fr); }
+    .cartao.foto { grid-column: span 2; grid-row: span 2; grid-template-columns: 1fr; grid-template-rows: 1fr auto; }
+    .cartao.foto img { min-height: 220px; max-height: 300px; }
+    .oferta-caixa { grid-template-columns: 1fr 1.1fr; padding: 36px 40px; align-items: start; gap: 32px; }
+    .vip { padding: 32px 36px; }
+    .linha-tempo { grid-template-columns: 2fr 1fr; }
+    .fecha .cartao.escuro { padding: 40px 48px; }
+    footer { padding-bottom: 44px; }
+    footer .wrap { flex-direction: row; justify-content: space-between; }
+    .barra-fixa { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { transition: none !important; }
+  }
+  /* tamanho geral: no computador a página aparece como no zoom de 80%, no tablet 90% */
+  @media (min-width: 760px) and (max-width: 1099px) { body { zoom: .9; } }
+  @media (min-width: 1100px) { body { zoom: .8; } }
 </style>
 </head>
 <body>
 
 <!--
-  COMO PREENCHER
-  1. Link do checkout: troque o valor de CHECKOUT_URL no <script> lá no fim. Todos os botões usam ele.
-  2. Fotos e prints: troque cada <div class="slot"> por <img src="sua-foto.jpg" alt="...">.
-  3. Busque por "PREENCHER" pra achar todos os espaços que faltam.
+  LINK DE COMPRA: todos os botões apontam para #checkout.
+  Quando o link existir, troque href="#checkout" pelo link do checkout
+  em todos os botões com a classe "botao" (são 5, contando a barra fixa do celular).
+
+  CONTAGEM E BÔNUS DE MEIA-NOITE: tirados enquanto o bônus não estiver definido.
+  A urgência da página é só o carrinho fechando em 01/12.
+
+  VÍDEOS E FOTOS ficam na pasta "midia", que precisa ir junto com este arquivo.
 -->
 
-<div class="wrap">
-  <header class="topo">
-    <span>@eilaradam</span>
-    <span>Lara Dam</span>
-  </header>
-</div>
-
-<!-- HERO -->
-<section class="hero">
-  <div class="wrap hero-grid">
-    <div class="reveal">
-      <span class="etiqueta">Turma 05</span>
-      <h1>Conteúdo UGC em nível premium, do roteiro à entrega, com o Claude</h1>
-      <p class="lead">Aprenda os formatos que todo portfólio precisa ter, use a minha skill de roteiro e edite vídeos avançados com a identidade visual da marca</p>
-      <a class="btn js-checkout" href="#oferta">Quero entrar na Turma 05 ✨</a>
-    </div>
-    <div class="hero-foto reveal">
-      <!-- Troque por: <img src="foto-lara.jpg" alt="Lara Dam"> -->
-      <div class="slot" style="width:100%;height:100%">[PREENCHER FOTO]<br>foto da Lara, vertical 4:5</div>
-    </div>
-  </div>
-</section>
-
-<!-- NÚMEROS -->
-<div class="wrap">
-  <div class="numeros">
-    <div class="card numero reveal"><strong>+1000</strong><span>vídeos entregues</span></div>
-    <div class="card numero reveal"><strong>+300</strong><span>marcas</span></div>
-    <div class="card numero reveal"><strong>+140M</strong><span>de views</span></div>
-    <div class="card numero reveal"><strong>quase 3</strong><span>anos vivendo de UGC</span></div>
-  </div>
-</div>
-
-<!-- PRA QUEM É -->
-<section class="quem">
+<!-- 1. TOPO -->
+<header class="topo">
   <div class="wrap">
-    <div class="reveal">
-      <span class="etiqueta">Pra quem é</span>
-      <h2>Feito pra quem quer vídeo com cara de profissional</h2>
-      <p class="apoio">Se você se encaixa em algum desses, a Turma 05 foi pensada pra você.</p>
-    </div>
-    <div class="lista-cards">
-      <div class="card reveal">
-        <span class="icone">🎬</span>
-        <h3>Creators de UGC</h3>
-        <p>Você entrega vídeos com acabamento de agência, monta um portfólio que chama atenção e ganha argumento pra cobrar mais.</p>
-      </div>
-      <div class="card reveal">
-        <span class="icone">📱</span>
-        <h3>Criadores de conteúdo pra Instagram</h3>
-        <p>Seus Reels ganham ritmo, legenda bem feita e títulos animados, e você publica com mais constância.</p>
-      </div>
-      <div class="card reveal">
-        <span class="icone">✨</span>
-        <h3>Quem quer mais retenção</h3>
-        <p>Você aprende a segurar a atenção do começo ao fim e entrega vídeos com aquela cara de produção profissional.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="faixa">Do roteiro à entrega, tudo com o Claude do seu lado ✨</div>
-
-<!-- O QUE VOCÊ APRENDE -->
-<section>
-  <div class="wrap">
-    <div class="reveal">
-      <span class="etiqueta">O que você aprende</span>
-      <h2>4 módulos e um bônus ao vivo</h2>
-      <p class="apoio">Cada módulo é uma etapa do seu vídeo, na ordem em que você trabalha.</p>
-    </div>
-    <div class="lista-cards modulos">
-      <article class="card modulo reveal">
-        <div class="n">01</div>
-        <div>
-          <span class="tag">Módulo 1</span>
-          <h3>Formatos de portfólio + skill de roteiro</h3>
-          <p>Os formatos que fazem o seu portfólio sair do comum: falado com b-roll, personagens, experiência e antes e depois. E você usa a minha skill de roteiro pra escrever cada um deles.</p>
-        </div>
-      </article>
-      <article class="card modulo reveal">
-        <div class="n">02</div>
-        <div>
-          <span class="tag">Módulo 2</span>
-          <h3>Edição avançada em etapas com o Claude</h3>
-          <p>Corte, legenda, títulos animados e revisão final. Uma etapa de cada vez, com o Claude fazendo o trabalho pesado junto com você.</p>
-        </div>
-      </article>
-      <article class="card modulo reveal">
-        <div class="n">03</div>
-        <div>
-          <span class="tag">Módulo 3</span>
-          <h3>Identidade visual da marca no vídeo</h3>
-          <p>O Claude estuda o site e o Instagram da marca e aplica as fontes, as cores e o estilo dela direto na sua edição.</p>
-        </div>
-      </article>
-      <article class="card modulo reveal">
-        <div class="n">04</div>
-        <div>
-          <span class="tag">Módulo 4</span>
-          <h3>Como entregar pra marca com cara de premium</h3>
-          <p>A forma de apresentar e entregar o vídeo pra marca sentir que contratou uma profissional de alto nível.</p>
-        </div>
-      </article>
-      <article class="card modulo bonus reveal">
-        <div class="n">✨</div>
-        <div>
-          <span class="tag">Bônus ao vivo</span>
-          <h3>Como fechar com marcas gringas e receber em dólar</h3>
-          <p>Um encontro ao vivo pra você abrir portas lá fora e começar a faturar em outra moeda.</p>
-        </div>
-      </article>
-    </div>
-  </div>
-</section>
-
-<!-- COMO FUNCIONA -->
-<section>
-  <div class="wrap">
-    <div class="reveal">
-      <span class="etiqueta">Como funciona</span>
-      <h2>Você assiste no seu ritmo e tira dúvidas ao vivo</h2>
-    </div>
-    <div class="passos">
-      <div class="passo reveal">
-        <span class="icone">▶️</span>
-        <h3>Aulas gravadas</h3>
-        <p>Todas as aulas ficam na plataforma pra você assistir quando quiser e voltar sempre que precisar.</p>
-      </div>
-      <div class="passo reveal">
-        <span class="icone">🎙️</span>
-        <h3>1 encontro ao vivo</h3>
-        <p>Um encontro comigo pra tirar suas dúvidas.<br>Data: <span class="preencher">[PREENCHER DATA DO AO VIVO]</span></p>
-      </div>
-      <div class="passo reveal">
-        <span class="icone">🎥</span>
-        <h3>Mão na massa</h3>
-        <p>Você aplica cada etapa nos seus próprios vídeos enquanto assiste e sai com o portfólio atualizado.</p>
-      </div>
-    </div>
-    <div class="reveal" style="margin-top:36px">
-      <a class="btn js-checkout" href="#oferta">Quero entrar na Turma 05</a>
-    </div>
-  </div>
-</section>
-
-<!-- RESULTADOS -->
-<section>
-  <div class="wrap">
-    <div class="reveal">
-      <span class="etiqueta">Resultados</span>
-      <h2>O que esse jeito de criar já entregou</h2>
-      <p class="apoio">Alguns destaques das minhas campanhas.</p>
-    </div>
-    <div class="destaques">
-      <div class="card destaque reveal"><span class="marca">InfinitePay</span><strong>+100M</strong><span>de views</span></div>
-      <div class="card destaque reveal"><span class="marca">Méliuz</span><strong>+10M</strong><span>de views</span></div>
-      <div class="card destaque reveal"><span class="marca">Bready</span><strong>5,94x</strong><span>de ROAS</span></div>
-    </div>
-
-    <h3 class="reveal" style="margin-top:56px">Prints de alunas e de marcas</h3>
-    <div class="prints">
-      <!-- Troque cada slot por: <img src="print-1.jpg" alt="Print de resultado" style="border-radius:24px"> -->
-      <div class="slot reveal">[PREENCHER PRINTS]<br>aluna</div>
-      <div class="slot reveal">[PREENCHER PRINTS]<br>aluna</div>
-      <div class="slot reveal">[PREENCHER PRINTS]<br>marca</div>
-      <div class="slot reveal">[PREENCHER PRINTS]<br>marca</div>
-    </div>
-  </div>
-</section>
-
-<!-- SOBRE MIM -->
-<section class="sobre">
-  <div class="wrap sobre-grid">
-    <div class="sobre-foto reveal">
-      <!-- Troque por: <img src="foto-sobre.jpg" alt="Lara Dam" style="border-radius:24px;width:100%;height:100%;object-fit:cover"> -->
-      <div class="slot" style="width:100%;height:100%">[PREENCHER FOTO]</div>
-    </div>
-    <div class="reveal">
-      <span class="etiqueta">Quem vai te ensinar</span>
-      <h2>Oi, eu sou a Lara ✨</h2>
-      <p>Comecei no UGC em janeiro de 2024. Na primeira semana fechei meu primeiro trabalho, com pouco mais de 100 seguidores.</p>
-      <p>Hoje eu vivo 100% de UGC, já entreguei mais de 1000 vídeos pra mais de 300 marcas e formei turmas com 50 a 70 alunas cada.</p>
-      <p>Tudo o que eu uso no meu dia a dia pra criar, editar e entregar está dentro desse intensivo.</p>
-    </div>
-  </div>
-</section>
-
-<!-- OFERTA -->
-<section id="oferta">
-  <div class="wrap">
-    <div class="card oferta-card reveal">
-      <span class="etiqueta">Turma 05</span>
-      <h2>Intensivo Edição com Claude</h2>
-      <ul class="inclusos">
-        <li>Módulo 1: formatos de portfólio + a minha skill de roteiro</li>
-        <li>Módulo 2: edição avançada em etapas com o Claude</li>
-        <li>Módulo 3: identidade visual da marca aplicada no vídeo</li>
-        <li>Módulo 4: entrega pra marca com cara de premium</li>
-        <li>Bônus ao vivo: fechar com marcas gringas e receber em dólar</li>
-        <li>1 encontro ao vivo pra tirar dúvidas</li>
-        <li>Aulas gravadas na plataforma pra assistir no seu ritmo</li>
-        <li>Garantia de 7 dias</li>
-      </ul>
-      <div class="preco"><small>R$</small>197</div>
-      <p class="parcela"><span class="preencher">[PREENCHER PARCELAMENTO]</span></p>
-      <a class="btn js-checkout" href="#oferta">Quero entrar na Turma 05 ✨</a>
-    </div>
-
-    <div class="garantia reveal">
-      <div class="selo"><b>7</b><span>dias de<br>garantia</span></div>
+    <div class="marca-nome"><strong>Lara Dam</strong><span>@eilaradam</span></div>
+    <div class="topo-grade">
       <div>
-        <h3>Garantia de 7 dias</h3>
-        <p>Você tem 7 dias pra assistir, testar e decidir. Se pedir o reembolso dentro desse prazo, recebe 100% do valor de volta.</p>
+        <span class="selo">Turma 05 | Edição com Claude</span>
+        <h1 class="h1-lista"><span>Mais formatos no portfólio</span><span>Vídeo pronto mais rápido</span><span class="acento">Com a cara de cada marca</span></h1>
+        <p class="sub">Você grava, o Claude edita no seu estilo de forma profissional e avançada. Na turma você aprende os formatos que fazem a marca te escolher, o roteiro e a edição que faz o vídeo parecer daquela marca.</p>
+        <div class="acao">
+          <a class="botao" href="#checkout">Quero entrar na Turma 05</a><!-- TROCAR LINK DE COMPRA -->
+          <span class="acao-info"><strong>R$297</strong> · 7 dias de garantia · carrinho fecha 01/12</span>
+        </div>
+      </div>
+      <div class="vitrine">
+        <div class="celular">
+          <video id="video-topo" src="/edicaoclaude/midia/depois.mp4" poster="/edicaoclaude/midia/depois.jpg" autoplay muted loop playsinline preload="metadata"></video>
+          <span class="etiqueta-video depois">ARQ · editado com o Claude</span>
+          <button class="som" type="button" data-video="video-topo">Ouvir</button>
+        </div>
+        <div class="foto-lara"><img src="/edicaoclaude/midia/lara-capa.webp" alt="Lara Dam sorrindo"></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- DIVISÃO: faixas cruzadas animadas -->
+<div class="fitas " aria-hidden="true">
+  <div class="fita clara"><div class="fita-trilho"><span>Mais formatos no portfólio</span><i></i><span>Vídeo pronto mais rápido</span><i></i><span>Com a cara de cada marca</span><i></i><span>Mais formatos no portfólio</span><i></i><span>Vídeo pronto mais rápido</span><i></i><span>Com a cara de cada marca</span><i></i><span>Mais formatos no portfólio</span><i></i><span>Vídeo pronto mais rápido</span><i></i><span>Com a cara de cada marca</span><i></i><span>Mais formatos no portfólio</span><i></i><span>Vídeo pronto mais rápido</span><i></i><span>Com a cara de cada marca</span><i></i><span>Mais formatos no portfólio</span><i></i><span>Vídeo pronto mais rápido</span><i></i><span>Com a cara de cada marca</span><i></i><span>Mais formatos no portfólio</span><i></i><span>Vídeo pronto mais rápido</span><i></i><span>Com a cara de cada marca</span><i></i><span>Mais formatos no portfólio</span><i></i><span>Vídeo pronto mais rápido</span><i></i><span>Com a cara de cada marca</span><i></i><span>Mais formatos no portfólio</span><i></i><span>Vídeo pronto mais rápido</span><i></i><span>Com a cara de cada marca</span><i></i></div></div>
+  <div class="fita escura"><div class="fita-trilho"><span>Turma 05 | Edição com Claude</span><i></i><span>Carrinho fecha 01/12</span><i></i><span>Turma 05 | Edição com Claude</span><i></i><span>Carrinho fecha 01/12</span><i></i><span>Turma 05 | Edição com Claude</span><i></i><span>Carrinho fecha 01/12</span><i></i><span>Turma 05 | Edição com Claude</span><i></i><span>Carrinho fecha 01/12</span><i></i><span>Turma 05 | Edição com Claude</span><i></i><span>Carrinho fecha 01/12</span><i></i><span>Turma 05 | Edição com Claude</span><i></i><span>Carrinho fecha 01/12</span><i></i><span>Turma 05 | Edição com Claude</span><i></i><span>Carrinho fecha 01/12</span><i></i><span>Turma 05 | Edição com Claude</span><i></i><span>Carrinho fecha 01/12</span><i></i></div></div>
+</div>
+
+<!-- 2. ANTES E DEPOIS + DIFERENCIAL: Claude sem direcionamento x com direcionamento (Pierre) -->
+<section class="vs-secao" id="antes-depois">
+  <div class="wrap">
+    <div class="vs-cab">
+      <span class="selo claro">Antes e depois</span>
+      <h2>Claude sem direcionamento <span class="vs-x">x</span> <span class="acento">Claude com direcionamento</span></h2>
+      <p class="intro">Mesmo bruto, mesma IA. A diferença está no treinamento que você passa pra ele: na direita, o Claude recebeu o treinamento da Turma 05, o briefing e a identidade da Pierre.</p>
+    </div>
+    <div class="vs">
+      <div class="vs-desc esq">
+        <span class="vs-rot">Claude puro</span>
+        <h3>Edição sem direcionamento</h3>
+        <ul>
+          <li>Título em cima do rosto</li>
+          <li>Legenda solta padrão</li>
+          <li>Cortes secos</li>
+          <li>Sem personalidade</li>
+        </ul>
+      </div>
+      <figure class="vs-video v1">
+        <div class="celular">
+          <video src="/edicaoclaude/midia/pierre-sem.mp4" poster="/edicaoclaude/midia/pierre-sem.jpg" autoplay muted loop playsinline preload="metadata"></video>
+        </div>
+        <figcaption>Sem direcionamento</figcaption>
+      </figure>
+      <div class="vs-meio" aria-hidden="true"><span>VS</span></div>
+      <figure class="vs-video v2">
+        <div class="celular">
+          <video src="/edicaoclaude/midia/pierre-com.mp4" poster="/edicaoclaude/midia/pierre-com.jpg" autoplay muted loop playsinline preload="metadata"></video>
+        </div>
+        <figcaption>Com direcionamento</figcaption>
+      </figure>
+      <div class="vs-desc dir">
+        <span class="vs-rot">Treinado na Turma 05</span>
+        <h3>Edição com direcionamento</h3>
+        <ul>
+          <li>Cartão com ID da marca</li>
+          <li>Legenda criativa e dinâmica</li>
+          <li>Elementos do app e B-roll</li>
+          <li>Logo e botão da marca</li>
+        </ul>
+      </div>
+    </div>
+    <div class="compara compara-vs">
+      <div class="coluna comum">
+        <h3>Claude puro</h3>
+        <ul>
+          <li><b>Corte</b><span>Corta as pausas do jeito dele.</span></li>
+          <li><b>Legenda</b><span>Cai na área que o Instagram cobre.</span></li>
+          <li><b>Títulos</b><span>Vão onde tem espaço, inclusive no seu rosto.</span></li>
+          <li><b>Marca</b><span>O vídeo padrão que todo mundo entrega.</span></li>
+          <li><b>Memória</b><span>Você corrige hoje e amanhã ele erra igual.</span></li>
+        </ul>
+      </div>
+      <div class="coluna nosso">
+        <h3>Claude treinado na Turma 05</h3>
+        <ul>
+          <li><b>Corte</b><span>Colado na fala, com as medidas corretas e ajustadas.</span></li>
+          <li><b>Legenda</b><span>Na zona segura, em uma linha, fora do rosto.</span></li>
+          <li><b>Títulos</b><span>Animados, fora do rosto, com som.</span></li>
+          <li><b>Marca</b><span>Cores, fontes e a cara de cada marca.</span></li>
+          <li><b>Memória</b><span>Cada correção vira regra pro próximo vídeo.</span></li>
+        </ul>
       </div>
     </div>
   </div>
 </section>
 
-<!-- FAQ -->
+<!-- 3. PRA QUEM É -->
+<section id="pra-quem">
+  <div class="wrap">
+    <span class="selo">Pra quem é</span>
+    <h2>Pra quem quer ser a creator que <span class="grifo">a marca escolhe</span></h2>
+    <div class="chat lado">
+      <div class="bolha"><h3>Está começando no UGC</h3><p>Você aprende o que gravar, como roteirizar e como editar, com o Claude fazendo o trabalho pesado.</p></div>
+      <div class="bolha"><h3>Grava, mas trava na edição</h3><p>O Claude corta, legenda, coloca títulos e som. Você só dá o retoque.</p></div>
+      <div class="bolha"><h3>Tem um portfólio todo igual</h3><p>Você grava os 8 formatos validados no meu portfólio, os que fazem a marca te escolher.</p></div>
+      <div class="bolha"><h3>Quer entregar no nível das marcas</h3><p>Gravação, roteiro e edição no padrão que a marca espera receber.</p></div>
+      <div class="bolha forte"><h3>Quer fechar com marca gringa</h3><p>Identidade da marca no vídeo, entrega premium e uma aula ao vivo sobre marca gringa.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 5. O ESTÚDIO: uma skill pra cada função (réplica animada do editor do kit) -->
+<section id="estudio">
+  <div class="wrap">
+    <span class="selo">O kit por dentro</span>
+    <h2>Uma skill pra cada função, <span class="grifo">todas editando no automático</span></h2>
+    <p class="intro">Corte, legenda, títulos, som e revisão: cada etapa tem a sua skill, e a diretora conduz a ordem. Você pede uma vez e acompanha tudo no Estúdio, o editor que vem no kit.</p>
+
+    <div class="note" id="note" role="img" aria-label="Animação do Estúdio no notebook: as skills de corte, legenda, títulos, som, revisão e a diretora editando o vídeo da Pierre ao mesmo tempo.">
+      <div class="note-tampa">
+        <span class="note-camera"></span>
+        <div class="note-tela" id="noteTela">
+         <div class="note-zoom" id="noteZoom">
+          <div class="est" id="est" aria-hidden="true">
+            <!-- topo + corpo -->
+            <div class="est-card est-c1">
+              <div class="est-topo">
+                <b class="est-logo">Estúdio</b>
+                <span class="est-sel">pierre <i>▾</i></span>
+                <span class="est-a">A</span>
+                <span class="est-cinza">+ versão</span>
+                <span class="est-esp"></span>
+                <span class="est-salvo">salvo</span>
+                <span class="est-btn" id="eConferir">Conferir</span>
+                <span class="est-btn est-pri" id="eExportar">Exportar</span>
+              </div>
+              <div class="est-corpo">
+                <nav class="est-trilho" id="eTrilho">
+                  <span data-p="corte" class="on"><i class="ic"></i>Clipes e corte</span>
+                  <span><i class="ic"></i>Bruto e tomadas</span>
+                  <span><i class="ic"></i>B-roll</span>
+                  <span><i class="ic"></i>Cor</span>
+                  <span data-p="legenda"><i class="ic"></i>Legenda</span>
+                  <span data-p="titulos"><i class="ic"></i>Títulos</span>
+                  <span data-p="sons"><i class="ic"></i>Sons e música</span>
+                  <span data-p="exportar"><i class="ic"></i>Exportar</span>
+                  <em>GUIAS</em>
+                  <span><i class="ic"></i>Zonas do Instagram</span>
+                  <span><i class="ic"></i>Rosto</span>
+                </nav>
+                <div class="est-palco">
+                  <span class="est-btn est-cheia">Tela cheia</span>
+                  <div class="est-tela">
+                    <video id="eVideo" src="/edicaoclaude/midia/pierre-com.mp4" poster="/edicaoclaude/midia/pierre-com.jpg" autoplay muted loop playsinline preload="auto"></video>
+                    <span class="est-zona" id="eZona"></span>
+                    <span class="est-ok" id="eOk">Margens ok</span>
+                  </div>
+                </div>
+                <aside class="est-painel">
+                  <div class="est-ptit"><span><i class="ic"></i><b id="eTit">Clipes e corte</b></span><span class="est-qm">?</span></div>
+                  <div class="est-passo" id="ePasso"><span>Próximo (<b id="eN">1</b>/6)</span><b id="ePassoTxt">Confira a legenda</b><i>→</i></div>
+                  <div class="est-p" data-p="corte">
+                    <h6>CLIPES DO VÍDEO</h6><p class="est-dim" id="eClipes">Procurando pausas longas…</p>
+                    <h6>TIRAR SILÊNCIOS</h6><span class="est-linha" id="ePausas">Procurar pausas longas</span>
+                    <h6>CORTAR UM TRECHO</h6>
+                    <div class="est-2"><span class="est-linha">Marcar início (-)</span><span class="est-linha">Marcar fim (-)</span></div>
+                    <div class="est-2"><span class="est-linha est-forte">Cortar o trecho</span><span class="est-linha">Limpar</span></div>
+                  </div>
+                  <div class="est-p" data-p="legenda">
+                    <div class="est-2 est-chk"><span><i></i>Legenda ligada</span><span><i class="vazio"></i>Sombra (fundo claro)</span></div>
+                    <h6>ESTILO DA LEGENDA</h6>
+                    <div class="est-estilos" id="eEstilos">
+                      <span><b>sua legenda</b>Clássica</span><span><b>sua legenda</b>Frase curta</span><span class="on"><b>sua legenda</b>Inter</span>
+                      <span><b>sua legenda</b>Lexend</span><span><b>sua legenda</b>Jakarta</span><span><b>sua legenda</b>Sora</span>
+                      <span><b>sua legenda</b>Outfit frase</span><span><b class="cond">SUA LEGENDA</b>Condensada</span><span><b class="ital">sua legenda</b>Serifa itálica</span>
+                    </div>
+                    <p class="est-dim">Altura da legenda: 1329 px (limite 1560)</p>
+                  </div>
+                  <div class="est-p" data-p="titulos">
+                    <span class="est-linha">+ Título em 0:00.0</span>
+                    <div class="est-tl"><b>ASSINATURAS EM 1 ANO · R$ 12 mil</b><small>Número Pierre (cartão) · 0:00.1 · 3.9 s</small></div>
+                    <div class="est-tl"><b>nem usei direito</b><small>Ícones de app (Pierre) · 0:04.2 · 1.3 s</small></div>
+                    <div class="est-tl"><b>Meu agente de assinaturas</b><small>Selinho colorido (Pierre) · 0:07.0 · 2.4 s</small></div>
+                    <div class="est-tl"><b>logo</b><small>Logo Pierre · 0:09.4 · 0.6 s</small></div>
+                    <div class="est-tl"><b>Frequência · Canal</b><small>Lista de cards (Pierre) · 0:14.7 · 2.3 s</small></div>
+                  </div>
+                  <div class="est-p" data-p="sons">
+                    <h6>VOZ</h6><span class="est-linha est-verde">Áudio aprimorado (clique pra desligar)</span>
+                    <h6>EFEITOS NO VÍDEO (<b id="eNsfx">0</b>)</h6>
+                    <h6>BIBLIOTECA DE SONS</h6>
+                    <div class="est-lib">
+                      <span>▸ Preferidos <i>59</i></span><span id="eLibClique">▸ Cliques <i>31</i><em>+ na linha</em></span><span>▸ Acerto e erro <i>3</i></span>
+                      <span>▸ Câmera <i>4</i></span><span>▸ Comemoração <i>2</i></span><span>▸ Notificações <i>5</i></span><span>▸ Pops <i>10</i></span>
+                    </div>
+                  </div>
+                  <div class="est-p" data-p="exportar">
+                    <h6>EXPORTAR</h6>
+                    <p class="est-dim">1080 x 1920 · 30 quadros · legenda e títulos queimados</p>
+                    <span class="est-linha est-forte" id="eExpBtn">Exportar o vídeo</span>
+                    <div class="est-barra"><i id="eBarra"></i></div>
+                    <p class="est-dim" id="eExpTxt">Pronto pra exportar</p>
+                  </div>
+                </aside>
+              </div>
+            </div>
+            <!-- linha do tempo -->
+            <div class="est-card est-c2">
+              <div class="est-tlbarra">
+                <span class="est-ic">▷</span><span class="est-ic">|◁</span><span class="est-relogio"><b id="eTempo">00:00:00</b> / 00:38:07</span>
+                <span class="est-esp"></span>
+                <span class="est-ic on">↖</span><span class="est-ic">✂</span><span class="est-sep"></span><span class="est-ic">⟦</span><span class="est-ic">⟧</span><span class="est-ic">⇥</span><span class="est-ic">‹</span><span class="est-ic">›</span>
+                <span class="est-sep"></span><span class="est-ic">↶</span><span class="est-ic">↷</span>
+                <span class="est-esp"></span>
+                <span class="est-zoom"><i></i></span>
+              </div>
+              <div class="est-trilhas">
+                <div class="est-cab"><i></i><i></i><i></i><i></i><i></i></div>
+                <div class="est-tl-area" id="eArea">
+                  <div class="est-regua"><span>00:00</span><span>00:04</span><span>00:08</span><span>00:12</span><span>00:16</span><span>00:20</span><span>00:24</span><span>00:28</span><span>00:32</span><span>00:36</span></div>
+                  <div class="est-faixa ft" id="eTits">
+                    <i style="left:.2%;width:10.2%">ASSINATURAS EM 1 ANO</i><i style="left:11%;width:3.4%">nem usei</i><i style="left:18.4%;width:6.3%">brilho · Meu agente</i><i style="left:24.7%;width:1.6%">logo</i>
+                    <i style="left:38.6%;width:6%">Frequência</i><i style="left:44.9%;width:5%">+1 assinatura</i><i style="left:49.9%;width:8.7%">Streaming · Academia</i>
+                    <i style="left:67.2%;width:5.2%">TOTAL EM</i><i style="left:76.9%;width:6.4%">Agora eu sei</i><i style="left:84.3%;width:15.5%">Conectar é grátis</i>
+                  </div>
+                  <div class="est-faixa fl" id="eLegs"></div>
+                  <div class="est-faixa fv" id="eVid">
+                    <i class="clipe" style="flex-grow:26"><b>clipe 1</b></i><i class="pausa"></i>
+                    <i class="clipe" style="flex-grow:10"><b>clipe 2</b></i><i class="pausa"></i>
+                    <i class="clipe" style="flex-grow:21"><b>clipe 3</b></i><i class="pausa"></i>
+                    <i class="clipe" style="flex-grow:12"><b>clipe 4</b></i><i class="pausa"></i>
+                    <i class="clipe" style="flex-grow:31"><b>clipe 5</b></i>
+                  </div>
+                  <div class="est-faixa fs" id="eSfx">
+                    <i style="left:.4%">whoosh</i><i style="left:11%">clique</i><i style="left:24.7%">pop</i><i style="left:38.6%">whoosh</i><i style="left:67.2%">dinheiro</i><i style="left:84.3%">clique</i>
+                  </div>
+                  <div class="est-faixa fm"><i id="eMus">Untold Secrets · Funk tranquilo</i></div>
+                  <span class="est-agulha" id="eAgulha"></span>
+                </div>
+              </div>
+            </div>
+            <div class="est-toast" id="eToast">Exportando 1080 x 1920 · <b id="eToastPct">0</b>%</div>
+          </div>
+          <!-- cursores (fora da escala, nomes sempre legíveis) -->
+          <div class="cursores" aria-hidden="true">
+            <span class="cur" id="cCorte" style="--c:#ff2d55"><svg viewBox="0 0 20 22"><path d="M2 1l15 9.5-6.6 1.4L7.6 19z"/></svg><b>Corte</b></span>
+            <span class="cur" id="cLegenda" style="--c:#2f6bff"><svg viewBox="0 0 20 22"><path d="M2 1l15 9.5-6.6 1.4L7.6 19z"/></svg><b>Legenda</b></span>
+            <span class="cur claro" id="cTitulos" style="--c:#ff8a00"><svg viewBox="0 0 20 22"><path d="M2 1l15 9.5-6.6 1.4L7.6 19z"/></svg><b>Títulos</b></span>
+            <span class="cur" id="cSom" style="--c:#d500f9"><svg viewBox="0 0 20 22"><path d="M2 1l15 9.5-6.6 1.4L7.6 19z"/></svg><b>Som</b></span>
+            <span class="cur claro" id="cRevisao" style="--c:#00e676"><svg viewBox="0 0 20 22"><path d="M2 1l15 9.5-6.6 1.4L7.6 19z"/></svg><b>Revisão</b></span>
+            <span class="cur claro" id="cDiretora" style="--c:#ffe600"><svg viewBox="0 0 20 22"><path d="M2 1l15 9.5-6.6 1.4L7.6 19z"/></svg><b>Diretora</b></span>
+          </div>
+         </div>
+        </div>
+      </div>
+      <div class="note-base"><span></span></div>
+    </div>
+    <div class="som-cliques"><button type="button" id="btnSom" aria-pressed="false">Ouvir os cliques</button></div>
+    <ul class="legenda-cur">
+      <li style="--c:#ff2d55">Corte</li><li style="--c:#2f6bff">Legenda</li><li style="--c:#ff8a00">Títulos</li><li style="--c:#d500f9">Som</li><li style="--c:#00e676">Revisão</li><li style="--c:#ffe600">Diretora</li>
+    </ul>
+    <p class="st-legenda">Ilustração do Estúdio com o projeto da Pierre. Cada cor é uma skill trabalhando.</p>
+  </div>
+</section>
+
+<!-- 6. O QUE VOCÊ APRENDE: muito além da edição -->
+<section class="curso" id="curso">
+  <div class="wrap">
+    <span class="selo claro">O que você aprende</span>
+    <h2>Muito além da edição</h2>
+    <div class="horas">
+      <strong>+4h de aula gravada</strong>
+      <span>em 5 módulos e uma aula ao vivo.</span>
+    </div>
+    <div class="aprender">
+      <div class="aprender-cab"><span class="rotulo">Cronograma</span><h3>O que você vai aprender</h3></div>
+      <ul class="aprender-grade">
+        <li>Qual plano do Claude usar e como o limite funciona</li>
+        <li>O kit instalado com um pedido só</li>
+        <li>Como pedir pro Claude: como está e como quero</li>
+        <li>O que a marca olha antes de te contratar</li>
+        <li>O que já está saturado no UGC</li>
+        <li>Os 8 formatos validados no meu portfólio</li>
+        <li>O que a gringa está comprando</li>
+        <li>Roteiro com a sua voz, do gancho ao fechamento</li>
+        <li>Ganchos que soam naturais</li>
+        <li>A duração certa pelo seu ritmo de fala</li>
+        <li>Do briefing ao roteiro, pra anúncio e orgânico</li>
+        <li>Corte colado na fala, palavra inteira</li>
+        <li>Legenda discreta, fora do rosto</li>
+        <li>Títulos animados na zona segura do Reels</li>
+        <li>Som e música na medida</li>
+        <li>Retoque e exportação no Estúdio</li>
+        <li>Cores, fontes e logo da marca no vídeo</li>
+        <li>Entrega premium pra marca</li>
+      </ul>
+    </div>
+    <div class="modulos">
+      <article class="mod">
+        <div class="mod-topo"><span class="mod-n">01</span><span class="mod-tag">Claude e kit</span><span class="tempo">41 min</span></div>
+        <h3>Configurando seu Claude</h3>
+        <ul><li>O plano certo e o kit instalado com um pedido só</li><li>Como pedir: como está e como quero</li></ul>
+      </article>
+      <article class="mod">
+        <div class="mod-topo"><span class="mod-n">02</span><span class="mod-tag">Conteúdo</span><span class="tempo">1h54</span></div>
+        <h3>Formatos que vendem</h3>
+        <ul><li>Os 8 formatos validados no meu portfólio, com vídeo real de cada</li><li>O que a marca olha antes de contratar</li></ul>
+      </article>
+      <article class="mod">
+        <div class="mod-topo"><span class="mod-n">03</span><span class="mod-tag">Roteiro</span></div>
+        <h3>Roteiro com Claude</h3>
+        <ul><li>A minha skill de roteiro, com a sua voz</li><li>Ganchos naturais e o tempo certo pelo seu ritmo</li></ul>
+      </article>
+      <article class="mod escuro">
+        <div class="mod-topo"><span class="mod-n">04</span><span class="mod-tag">Edição</span></div>
+        <h3>Edição avançada</h3>
+        <ul><li>Corte, legenda, títulos animados e som, do bruto ao pronto</li><li>Zona segura do Reels e retoque no Estúdio</li></ul>
+      </article>
+      <article class="mod">
+        <div class="mod-topo"><span class="mod-n">05</span><span class="mod-tag bonus">Bônus</span></div>
+        <h3>Bônus: ID da marca</h3>
+        <ul><li>Cores, fontes e logo da marca no seu vídeo</li><li>Entrega premium. Libera até 01/12</li></ul>
+      </article>
+      <article class="mod vivo">
+        <div class="mod-topo"><span class="mod-n">Ao vivo</span><span class="mod-tag">03/12, às 20h</span></div>
+        <h3>Aula ao vivo comigo</h3>
+        <ul><li>Suas dúvidas e como fechar com marca gringa</li><li>Você chega com um vídeo editado pra me mostrar</li></ul>
+      </article>
+    </div>
+    <div class="kit-linhas">
+      <p><b>8 skills:</b> corte, legenda, títulos, som e revisão, com uma diretora conduzindo a ordem.</p>
+      <p><b>Biblioteca:</b> sons, fontes, estilos de legenda e títulos animados.</p>
+      <p><b>Estúdio:</b> o editor no navegador pro retoque final e pra exportar.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 7. QUEM TE ENSINA / PROVA -->
+<section id="quem">
+  <div class="wrap">
+    <div class="quem-card">
+      <img class="quem-foto" src="/edicaoclaude/midia/lara-sobre.webp" alt="Lara Dam" loading="lazy">
+      <div class="quem-texto">
+        <span class="selo">Quem te ensina</span>
+        <h2>Tudo aqui eu aprendi entregando vídeo pra marca</h2>
+        <p>Eu sou a Lara Dam e vivo de UGC. A cada trabalho eu somei um formato novo, e a edição acompanhou. Cada regra do kit nasceu de um vídeo que eu entreguei e de uma correção que eu fiz.</p>
+      </div>
+    </div>
+    <div class="stats">
+      <div><strong>+100 milhões</strong><span>de visualizações no vídeo em que eu vendo na rua</span></div>
+      <div><strong>+30 milhões</strong><span>na entrevista no mercado</span></div>
+      <div><strong>+1000</strong><span>entregas pra marcas</span></div>
+      <div><strong>+100</strong><span>campanhas pela Seu Influencer</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 8B. FEEDBACKS: troque cada cartão pelo print da aluna (veja a pasta midia/feedbacks) -->
+<section class="feedbacks" id="feedbacks">
+  <div class="wrap">
+    <div class="feed-cab">
+      <div><span class="rotulo">Feedbacks</span><h2>Feedbacks de quem já participou</h2></div>
+      <div class="feed-setas"><button type="button" data-dir="-1" aria-label="Voltar">&#8592;</button><button type="button" data-dir="1" aria-label="Avançar">&#8594;</button></div>
+    </div>
+  </div>
+  <!--
+    PRINTS: ficam na pasta midia/feedbacks (feedback-1.jpg até feedback-13.jpg). Cada cartão abaixo mostra o print
+    sozinho quando o arquivo existir. Pra ter mais cartões, copie um <figure> e troque o número.
+  -->
+  <div class="feed-trilho" id="feedTrilho">
+    <figure class="feed"><img src="/edicaoclaude/midia/feedbacks/feedback-1.jpg" alt="Story de aluna marcando a Lara" loading="lazy" onerror="this.parentNode.classList.add('vazio')"><span>Print da aluna</span></figure>
+    <figure class="feed"><img src="/edicaoclaude/midia/feedbacks/feedback-2.jpg" alt="Story de aluna marcando a Lara" loading="lazy" onerror="this.parentNode.classList.add('vazio')"><span>Print da aluna</span></figure>
+    <figure class="feed"><img src="/edicaoclaude/midia/feedbacks/feedback-3.jpg" alt="Story de aluna marcando a Lara" loading="lazy" onerror="this.parentNode.classList.add('vazio')"><span>Print da aluna</span></figure>
+    <figure class="feed"><img src="/edicaoclaude/midia/feedbacks/feedback-4.jpg" alt="Story de aluna marcando a Lara" loading="lazy" onerror="this.parentNode.classList.add('vazio')"><span>Print da aluna</span></figure>
+    <figure class="feed"><img src="/edicaoclaude/midia/feedbacks/feedback-5.jpg" alt="Story de aluna marcando a Lara" loading="lazy" onerror="this.parentNode.classList.add('vazio')"><span>Print da aluna</span></figure>
+    <figure class="feed"><img src="/edicaoclaude/midia/feedbacks/feedback-6.jpg" alt="Story de aluna marcando a Lara" loading="lazy" onerror="this.parentNode.classList.add('vazio')"><span>Print da aluna</span></figure>
+    <figure class="feed"><img src="/edicaoclaude/midia/feedbacks/feedback-7.jpg" alt="Story de aluna marcando a Lara" loading="lazy" onerror="this.parentNode.classList.add('vazio')"><span>Print da aluna</span></figure>
+    <figure class="feed"><img src="/edicaoclaude/midia/feedbacks/feedback-8.jpg" alt="Story de aluna marcando a Lara" loading="lazy" onerror="this.parentNode.classList.add('vazio')"><span>Print da aluna</span></figure>
+    <figure class="feed"><img src="/edicaoclaude/midia/feedbacks/feedback-9.jpg" alt="Story de aluna marcando a Lara" loading="lazy" onerror="this.parentNode.classList.add('vazio')"><span>Print da aluna</span></figure>
+    <figure class="feed"><img src="/edicaoclaude/midia/feedbacks/feedback-10.jpg" alt="Story de aluna marcando a Lara" loading="lazy" onerror="this.parentNode.classList.add('vazio')"><span>Print da aluna</span></figure>
+    <figure class="feed"><img src="/edicaoclaude/midia/feedbacks/feedback-11.jpg" alt="Story de aluna marcando a Lara" loading="lazy" onerror="this.parentNode.classList.add('vazio')"><span>Print da aluna</span></figure>
+    <figure class="feed"><img src="/edicaoclaude/midia/feedbacks/feedback-12.jpg" alt="Story de aluna marcando a Lara" loading="lazy" onerror="this.parentNode.classList.add('vazio')"><span>Print da aluna</span></figure>
+    <figure class="feed"><img src="/edicaoclaude/midia/feedbacks/feedback-13.jpg" alt="Story de aluna marcando a Lara" loading="lazy" onerror="this.parentNode.classList.add('vazio')"><span>Print da aluna</span></figure>
+  </div>
+  <div class="wrap feed-acao"><a class="botao botao-quadrado" href="#oferta">Quero garantir minha vaga</a></div>
+</section>
+
+<!-- 8. OFERTA -->
+<section class="oferta3" id="oferta">
+<div class="fitas atras" aria-hidden="true">
+  <div class="fita clara"><div class="fita-trilho"><span>Mais formatos no portfólio</span><i></i><span>Vídeo pronto mais rápido</span><i></i><span>Com a cara de cada marca</span><i></i><span>Mais formatos no portfólio</span><i></i><span>Vídeo pronto mais rápido</span><i></i><span>Com a cara de cada marca</span><i></i><span>Mais formatos no portfólio</span><i></i><span>Vídeo pronto mais rápido</span><i></i><span>Com a cara de cada marca</span><i></i><span>Mais formatos no portfólio</span><i></i><span>Vídeo pronto mais rápido</span><i></i><span>Com a cara de cada marca</span><i></i><span>Mais formatos no portfólio</span><i></i><span>Vídeo pronto mais rápido</span><i></i><span>Com a cara de cada marca</span><i></i><span>Mais formatos no portfólio</span><i></i><span>Vídeo pronto mais rápido</span><i></i><span>Com a cara de cada marca</span><i></i><span>Mais formatos no portfólio</span><i></i><span>Vídeo pronto mais rápido</span><i></i><span>Com a cara de cada marca</span><i></i><span>Mais formatos no portfólio</span><i></i><span>Vídeo pronto mais rápido</span><i></i><span>Com a cara de cada marca</span><i></i></div></div>
+  <div class="fita escura"><div class="fita-trilho"><span>Turma 05 | Edição com Claude</span><i></i><span>Carrinho fecha 01/12</span><i></i><span>Turma 05 | Edição com Claude</span><i></i><span>Carrinho fecha 01/12</span><i></i><span>Turma 05 | Edição com Claude</span><i></i><span>Carrinho fecha 01/12</span><i></i><span>Turma 05 | Edição com Claude</span><i></i><span>Carrinho fecha 01/12</span><i></i><span>Turma 05 | Edição com Claude</span><i></i><span>Carrinho fecha 01/12</span><i></i><span>Turma 05 | Edição com Claude</span><i></i><span>Carrinho fecha 01/12</span><i></i><span>Turma 05 | Edição com Claude</span><i></i><span>Carrinho fecha 01/12</span><i></i><span>Turma 05 | Edição com Claude</span><i></i><span>Carrinho fecha 01/12</span><i></i></div></div>
+</div>
+  <div class="wrap">
+    <div class="oferta-card">
+      <div class="selo-giro" aria-hidden="true">
+        <svg viewBox="0 0 120 120"><defs><path id="circ" d="M60,60 m-44,0 a44,44 0 1,1 88,0 a44,44 0 1,1 -88,0"/></defs>
+          <text><textPath href="#circ">TURMA 05 · EDIÇÃO COM CLAUDE · TURMA 05 · EDIÇÃO COM CLAUDE ·</textPath></text></svg>
+        <b>05</b>
+      </div>
+      <div class="oferta-esq">
+        <span class="rotulo">Investimento</span>
+        <h2>Garanta sua vaga</h2>
+        <ul class="ok-lista">
+          <li><b>5 módulos gravados:</b> formatos que vendem, roteiro, edição e ID da marca</li>
+          <li><b>Kit de edição:</b> 8 skills, biblioteca de sounds, músicas avançadas e Estúdio para ajustes</li>
+          <li><b>Skill de roteiro</b> com o meu método</li>
+          <li><b>Modelos de conteúdo</b> para ter no seu portfólio</li>
+          <li><b>Aula ao vivo</b> em 03/12, às 20h</li>
+          <li><b>Suporte comigo e grupo no WhatsApp,</b> pra quando você travar</li>
+          <li><b>Bônus:</b> identidade visual da marca (avançado)</li>
+        </ul>
+        <p class="oferta-nota">Módulos 01 e 02 liberados na hora. Os módulos 03, 04 e o bônus liberam até 01/12.</p>
+      </div>
+      <div class="oferta-dir">
+        <p class="marca-turma"><b>Turma 05</b><span>Edição com Claude</span></p>
+        <p class="vale-tag">O valor de 1 vídeo UGC</p>
+        <p class="preco3"><small>R$</small>297</p>
+        <p class="pilula">Um vídeo UGC sai, em média, de <b>R$250 a R$350</b>. A turma inteira se paga com o <b>primeiro vídeo</b> que você fechar depois das aulas.</p>
+        <a class="botao botao-quadrado" href="#checkout">Quero garantir minha vaga</a><!-- TROCAR LINK DE COMPRA -->
+        <p class="oferta-info"><span class="ic-cadeado"></span><span><b>Carrinho fecha 01/12</b></span></p>
+        <p class="oferta-info fraca"><span class="ic-escudo"></span><span>7 dias de garantia: entra, assiste, instala o kit e edita</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 9. PERGUNTAS FREQUENTES -->
 <section>
   <div class="wrap">
-    <div class="reveal" style="text-align:center">
-      <span class="etiqueta">Dúvidas</span>
-      <h2>Perguntas frequentes</h2>
-    </div>
+    <span class="selo">Perguntas frequentes</span>
+    <h2>As perguntas que eu mais recebo</h2>
     <div class="faq">
-      <details class="reveal">
-        <summary>Preciso do Claude pago?</summary>
-        <div class="resp"><span class="preencher">[PREENCHER RESPOSTA]</span></div>
+      <details>
+        <summary>Precisa pagar o Claude?</summary>
+        <p>Sim. O plano Pro é o mínimo, e a assinatura é sua, direto com o Claude. Mas lembre que o Claude é um investimento de tempo pro seu trabalho: além da edição, você constrói com ele a estrutura do seu portfólio, a abordagem às marcas, o fechamento e muito mais.</p>
       </details>
-      <details class="reveal">
-        <summary>Funciona no Windows e no celular?</summary>
-        <div class="resp"><span class="preencher">[PREENCHER RESPOSTA]</span></div>
+      <details>
+        <summary>Serve em Windows?</summary>
+        <p>Serve. Você edita num computador, Mac ou Windows, e as alunas testaram o kit em Mac novo, Mac antigo e Windows antes da turma abrir. As aulas você assiste até pelo celular.</p>
       </details>
-      <details class="reveal">
+      <details>
         <summary>Quanto tempo leva pra editar um vídeo?</summary>
-        <div class="resp">Hoje meus vídeos saem em nível avançado em 15 a 30 minutos.</div>
+        <p>Você pede, e enquanto o Claude edita você faz outra coisa. Em notebook mais antigo a exportação leva mais, por isso na turma eu ensino a revisar tudo na prévia e exportar uma vez só.</p>
+        <!-- PREENCHER: a aula cita "15 a 30 minutos por vídeo, no meu computador". Fica de fora porque esse número não está na lista de provas. Se a Lara liberar, entra aqui. -->
       </details>
-      <details class="reveal">
-        <summary>Por quanto tempo tenho acesso?</summary>
-        <div class="resp"><span class="preencher">[PREENCHER]</span></div>
-      </details>
-      <details class="reveal">
-        <summary>Quando é o ao vivo?</summary>
-        <div class="resp"><span class="preencher">[PREENCHER]</span></div>
+      <details>
+        <summary>Precisa saber programar?</summary>
+        <p>Basta saber escrever o que você quer. Você pede em português e o Claude faz. A instalação também é um pedido só: você cola uma mensagem e o Claude instala tudo e te avisa quando termina.</p>
       </details>
     </div>
   </div>
 </section>
 
-<!-- CTA FINAL -->
-<section class="final" id="final">
-  <div class="wrap reveal">
-    <h2>Bora melhorar seus vídeos?</h2>
-    <p class="apoio">A Turma 05 está com as inscrições abertas. Te vejo lá dentro ✨</p>
-    <a class="btn js-checkout" href="#oferta">Quero entrar na Turma 05</a>
+<!-- FECHAMENTO: só aqui aparece o que se perde ficando de fora -->
+<section class="fecha papel">
+  <div class="wrap">
+    <div class="cartao escuro">
+      <h2>Carrinho fecha em 01/12</h2>
+      <p>Quem entra agora chega na aula ao vivo do dia 03/12 com o primeiro vídeo editado.</p>
+      <p>Quem fica de fora continua corrigindo o mesmo erro em todo vídeo, editando na mão, e vendo a vaga da marca ir pra quem entrega mais rápido e com mais formato.</p>
+      <a class="botao" href="#checkout">Entrar na Turma 05</a><!-- TROCAR LINK DE COMPRA -->
+    </div>
   </div>
 </section>
 
 <footer>
-  <div class="wrap">@eilaradam</div>
+  <div class="wrap">
+    <span><strong>Lara Dam LTDA</strong> · CNPJ 55.446.568/0001-22</span>
+    <span>@eilaradam</span>
+  </div>
 </footer>
 
-<!-- Barra fixa no celular -->
-<div class="barra" id="barra" aria-hidden="true">
-  <div class="info"><b>R$ 197</b><span>Turma 05</span></div>
-  <a class="btn js-checkout" href="#oferta" tabindex="-1">Quero entrar</a>
+<!-- BARRA FIXA (só no celular, aparece depois do topo) -->
+<div class="barra-fixa" id="barra-fixa">
+  <div class="info"><strong>R$297</strong>7 dias de garantia</div>
+  <a class="botao" href="#checkout">Quero entrar</a><!-- TROCAR LINK DE COMPRA -->
 </div>
 
 <script>
-  // Cole aqui o link do checkout da Kiwify:
-  const CHECKOUT_URL = "[PREENCHER LINK DO CHECKOUT KIWIFY]";
+  // Botões de som e play dos vídeos
+  document.querySelectorAll(".som").forEach(function (btn) {
+    var v = document.getElementById(btn.dataset.video);
+    var autoplay = v.hasAttribute("autoplay");
+    btn.addEventListener("click", function () {
+      if (autoplay) {
+        v.muted = !v.muted;
+        if (!v.muted) { v.currentTime = 0; v.play(); }
+        btn.textContent = v.muted ? "Ouvir" : "Silenciar";
+        return;
+      }
+      if (v.paused) {
+        document.querySelectorAll("video").forEach(function (o) {
+          if (o === v) return;
+          o.muted = true;
+          if (!o.hasAttribute("autoplay")) o.pause();
+        });
+        document.querySelectorAll(".som").forEach(function (b) {
+          if (b === btn) return;
+          b.textContent = document.getElementById(b.dataset.video).hasAttribute("autoplay") ? "Ouvir" : "Play";
+        });
+        v.muted = false; v.play(); btn.textContent = "Pausar";
+      } else {
+        v.pause(); btn.textContent = "Play";
+      }
+    });
+  });
 
-  // Todos os botões de compra usam o mesmo link.
-  // Enquanto o link está vazio, eles levam até a oferta.
-  if (CHECKOUT_URL.startsWith("http")) {
-    document.querySelectorAll(".js-checkout").forEach(a => { a.href = CHECKOUT_URL; });
-  }
+  // Estúdio no notebook: réplica do editor com um mouse por skill
+  (function () {
+    var tela = document.getElementById("noteTela"); if (!tela) return;
+    var est = document.getElementById("est");
+    function escala() { est.style.transform = "scale(" + (tela.clientWidth / 1440) + ")"; }
+    escala(); window.addEventListener("resize", escala);
+    if ("ResizeObserver" in window) new ResizeObserver(escala).observe(tela);
 
-  // Animação de entrada ao rolar
-  const els = document.querySelectorAll(".reveal");
-  if ("IntersectionObserver" in window) {
-    const io = new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
+    var $ = function (id) { return document.getElementById(id); };
+    var video = $("eVideo"), agulha = $("eAgulha"), tempo = $("eTempo");
+    // legendas: blocos azuis pequenos ao longo da faixa
+    var palavras = "Eu pago 12 mil reais por ano em assinatura nem usei direito Pierre Eu abri o WhatsApp e uma única vez Eu cancelei três graça e o Conectar".split(" ");
+    var legs = $("eLegs"), pos = 0.3;
+    var medidas = palavras.map(function (p) { return 1.4 + p.length * 0.28; });
+    var total = medidas.reduce(function (a, b) { return a + b + 0.35; }, 0), k = 99.4 / total;
+    palavras.forEach(function (p, n) { var w = medidas[n] * k; var i = document.createElement("i"); i.style.left = pos + "%"; i.style.width = w + "%"; i.textContent = p; legs.appendChild(i); pos += w + 0.35 * k; });
+    var legBlocos = legs.querySelectorAll("i"), titBlocos = $("eTits").querySelectorAll("i"), sfx = $("eSfx").querySelectorAll("i");
+    var pausas = $("eVid").querySelectorAll(".pausa"), trilho = $("eTrilho").querySelectorAll("span[data-p]");
+    var paineis = est.querySelectorAll(".est-p"), tls = est.querySelectorAll(".est-tl"), estilos = $("eEstilos").querySelectorAll("span");
+    var NOMES = { corte: "Clipes e corte", legenda: "Legenda", titulos: "Títulos", sons: "Sons e música", exportar: "Exportar" };
+    var PASSO = { corte: [1, "Confira a legenda"], legenda: [2, "Veja os títulos"], titulos: [3, "Ajuste o som"], sons: [4, "Revise as margens"], exportar: [6, "Exporte o vídeo"] };
+    function painel(p) {
+      trilho.forEach(function (s) { s.classList.toggle("on", s.dataset.p === p); });
+      paineis.forEach(function (s) { s.classList.toggle("on", s.dataset.p === p); });
+      $("eTit").textContent = NOMES[p]; $("eN").textContent = PASSO[p][0]; $("ePassoTxt").textContent = PASSO[p][1];
+    }
+    // posição em pixels da tela de 1440 x 900 -> porcentagem
+    var cur = {};
+    ["Corte", "Legenda", "Titulos", "Som", "Revisao", "Diretora"].forEach(function (n) { cur[n] = $("c" + n); });
+    function vai(n, x, y) { cur[n].style.left = (x / 14.4) + "%"; cur[n].style.top = (y / 9) + "%"; var w = tela.clientWidth, lw = cur[n].querySelector("b").offsetWidth; cur[n].classList.toggle("esq", x / 1440 * w + lw + 22 > w); }
+    // barulhinho de clique (feito no navegador, sem arquivo de som)
+    var ctx = null, somLigado = true, btnSom = document.getElementById("btnSom");
+    function atualizaBtn() { btnSom.textContent = (ctx && somLigado) ? "Silenciar os cliques" : "Ouvir os cliques"; btnSom.setAttribute("aria-pressed", ctx && somLigado ? "true" : "false"); }
+    var recem = false;
+    function ativa() { if (!ctx) { var A = window.AudioContext || window.webkitAudioContext; if (!A) return; ctx = new A(); recem = true; setTimeout(function () { recem = false; }, 600); } if (ctx.state === "suspended") ctx.resume(); atualizaBtn(); }
+    ["pointerdown", "keydown", "touchstart"].forEach(function (ev) { window.addEventListener(ev, ativa, { once: true, passive: true }); });
+    btnSom.addEventListener("click", function () { if (!ctx || recem) { somLigado = true; ativa(); } else { somLigado = !somLigado; atualizaBtn(); } });
+    function visivel() { var r = tela.getBoundingClientRect(); return r.bottom > 0 && r.top < window.innerHeight; }
+    function tic(tom) {
+      if (!ctx || !somLigado || ctx.state !== "running" || !visivel()) return;
+      var t = ctx.currentTime, n = Math.floor(ctx.sampleRate * 0.03), buf = ctx.createBuffer(1, n, ctx.sampleRate), d = buf.getChannelData(0);
+      for (var i = 0; i < n; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / n, 6);
+      var src = ctx.createBufferSource(); src.buffer = buf;
+      var f = ctx.createBiquadFilter(); f.type = "bandpass"; f.frequency.value = tom; f.Q.value = 3;
+      var g = ctx.createGain(); g.gain.setValueAtTime(0.55, t); g.gain.exponentialRampToValueAtTime(0.001, t + 0.05);
+      src.connect(f); f.connect(g); g.connect(ctx.destination); src.start(t);
+    }
+    var TOM = { Corte: 2600, Legenda: 3400, Titulos: 2200, Som: 1800, Revisao: 3000, Diretora: 1500 };
+    function clica(n, el) {
+      tic(TOM[n] || 2500);
+      var c = cur[n]; c.classList.remove("clica"); void c.offsetWidth; c.classList.add("clica");
+      if (el) { el.classList.add("apertado"); setTimeout(function () { el.classList.remove("apertado"); }, 160); }
+    }
+    function centro(el) { // centro de um elemento da réplica, em pixels de 1440 x 900
+      var r = el.getBoundingClientRect(), b = est.getBoundingClientRect(), s = b.width / 1440;
+      return [(r.left - b.left + r.width / 2) / s, (r.top - b.top + r.height / 2) / s];
+    }
+    function vaiEl(n, el, dx, dy) { var c = centro(el); vai(n, c[0] + (dx || 0), c[1] + (dy || 0)); }
+
+    var T = [];
+    var VEL = 0.5; // metade do tempo: tudo acontece duas vezes mais rápido
+    function em(ms, f) { T.push(setTimeout(f, ms * VEL)); }
+    function zerar() {
+      T.forEach(clearTimeout); T = [];
+      painel("corte");
+      pausas.forEach(function (p) { p.classList.remove("fora"); });
+      [legBlocos, titBlocos, sfx, tls].forEach(function (l) { l.forEach(function (e) { e.classList.remove("on"); }); });
+      $("eMus").classList.remove("on"); $("eZona").classList.remove("on"); $("eOk").classList.remove("on");
+      $("eConferir").classList.remove("ok"); $("eConferir").textContent = "Conferir";
+      $("eToast").classList.remove("on"); $("eBarra").style.width = "0"; $("eExpTxt").textContent = "Pronto pra exportar";
+      $("eClipes").textContent = "Procurando pausas longas…"; $("ePausas").classList.remove("vermelho"); $("eNsfx").textContent = "0";
+      $("eLibClique").classList.remove("on");
+      estilos.forEach(function (s, i) { s.classList.toggle("on", i === 2); });
+      vai("Corte", 1180, 260); vai("Legenda", 700, 640); vai("Titulos", 360, 600); vai("Som", 1300, 470); vai("Revisao", 1000, 380); vai("Diretora", 1250, 150);
+    }
+    function ciclo() {
+      zerar();
+      try { video.currentTime = 0; var pr = video.play(); if (pr) pr.catch(function () {}); } catch (e) {}
+      // Diretora abre o passo a passo
+      em(200, function () { vaiEl("Diretora", $("ePasso"), 60, 4); });
+      em(950, function () { clica("Diretora", $("ePasso")); });
+      // Corte: procura pausas e tira uma por uma
+      em(400, function () { vaiEl("Corte", $("ePausas"), -30, 4); });
+      em(1150, function () { clica("Corte", $("ePausas")); $("ePausas").classList.add("vermelho"); $("eClipes").textContent = "4 pausas longas encontradas"; });
+      pausas.forEach(function (p, k) {
+        em(1600 + k * 650, function () { vaiEl("Corte", p, 0, 8); });
+        em(2050 + k * 650, function () { clica("Corte"); p.classList.add("fora"); });
       });
-    }, { threshold: .12, rootMargin: "0px 0px -40px 0px" });
-    els.forEach(el => io.observe(el));
-  } else {
-    els.forEach(el => el.classList.add("in"));
-  }
+      em(4300, function () { $("eClipes").textContent = "5 clipes, pausas tiradas"; $("ePausas").classList.remove("vermelho"); vai("Corte", 1240, 300); });
+      // Diretora troca pra Legenda
+      em(3900, function () { vaiEl("Diretora", trilho[1], 10, 4); });
+      em(4600, function () { clica("Diretora", trilho[1]); painel("legenda"); });
+      // Legenda: escolhe o estilo e preenche a faixa
+      em(4200, function () { vaiEl("Legenda", estilos[0], 10, 8); });
+      em(4950, function () { clica("Legenda", estilos[0]); estilos.forEach(function (s, i) { s.classList.toggle("on", i === 0); }); });
+      em(5300, function () { vaiEl("Legenda", legBlocos[0], 0, 6); });
+      legBlocos.forEach(function (b, k) { em(5800 + k * 75, function () { b.classList.add("on"); if (k % 4 === 0) vaiEl("Legenda", b, 4, 6); }); });
+      // Diretora troca pra Títulos
+      em(7400, function () { vaiEl("Diretora", trilho[2], 10, 4); });
+      em(8100, function () { clica("Diretora", trilho[2]); painel("titulos"); });
+      // Títulos: solta cada cartão na faixa
+      titBlocos.forEach(function (b, k) {
+        em(7700 + k * 330, function () { vaiEl("Titulos", b, 0, 4); });
+        em(7950 + k * 330, function () { clica("Titulos"); b.classList.add("on"); if (tls[k]) tls[k].classList.add("on"); });
+      });
+      // Diretora troca pra Sons e música
+      em(11200, function () { vaiEl("Diretora", trilho[3], 10, 4); });
+      em(11900, function () { clica("Diretora", trilho[3]); painel("sons"); });
+      // Som: coloca os efeitos e a música
+      em(12100, function () { vaiEl("Som", $("eLibClique"), 70, 0); });
+      em(12750, function () { clica("Som", $("eLibClique")); $("eLibClique").classList.add("on"); });
+      sfx.forEach(function (s, k) {
+        em(13000 + k * 260, function () { s.classList.add("on"); $("eNsfx").textContent = k + 1; if (k === 2) vaiEl("Som", s, 0, 4); });
+      });
+      em(14300, function () { $("eMus").classList.add("on"); vaiEl("Som", $("eMus"), -200, 4); });
+      // Revisão: confere as margens e libera
+      em(12600, function () { vaiEl("Revisao", $("eZona"), 40, -60); });
+      em(13400, function () { clica("Revisao"); $("eZona").classList.add("on"); });
+      em(14200, function () { $("eOk").classList.add("on"); vaiEl("Revisao", $("eConferir"), 6, 4); });
+      em(15000, function () { clica("Revisao", $("eConferir")); $("eConferir").classList.add("ok"); $("eConferir").textContent = "Conferido"; $("eZona").classList.remove("on"); });
+      // Diretora exporta
+      em(15200, function () { vaiEl("Diretora", $("eExportar"), 4, 4); });
+      em(16000, function () { clica("Diretora", $("eExportar")); painel("exportar"); $("eToast").classList.add("on"); });
+      for (var p = 1; p <= 10; p++) (function (p) { em(16000 + p * 180, function () { $("eBarra").style.width = p * 10 + "%"; $("eToastPct").textContent = p * 10; if (p === 10) { $("eExpTxt").textContent = "Vídeo pronto: pierre_final.mp4"; } }); })(p);
+      em(19200, ciclo);
+    }
+    // agulha acompanha o vídeo
+    (function agulhaLoop() {
+      if (video.duration) {
+        var f = video.currentTime / video.duration; agulha.style.left = (f * 100) + "%";
+        var s = Math.floor(video.currentTime); tempo.textContent = "00:" + (s < 10 ? "0" : "") + s + ":" + String(Math.floor((video.currentTime % 1) * 30)).padStart(2, "0");
+      }
+      requestAnimationFrame(agulhaLoop);
+    })();
 
-  // Barra fixa: aparece depois do hero, some quando a oferta ou o CTA final estão na tela
-  const barra = document.getElementById("barra");
-  const hero = document.querySelector(".hero");
-  const alvos = [document.getElementById("oferta"), document.getElementById("final")];
-  const visiveis = new Set();
-  let passouHero = false;
-  const atualiza = () => {
-    const on = passouHero && visiveis.size === 0;
-    barra.classList.toggle("on", on);
-    barra.setAttribute("aria-hidden", on ? "false" : "true");
-    barra.querySelector("a").tabIndex = on ? 0 : -1;
-  };
-  if ("IntersectionObserver" in window) {
-    new IntersectionObserver(([e]) => { passouHero = !e.isIntersecting; atualiza(); }).observe(hero);
-    const io2 = new IntersectionObserver(entries => {
-      entries.forEach(e => e.isIntersecting ? visiveis.add(e.target) : visiveis.delete(e.target));
-      atualiza();
-    }, { threshold: .25 });
-    alvos.forEach(a => io2.observe(a));
+    var reduz = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduz) {
+      zerar(); pausas.forEach(function (p) { p.classList.add("fora"); });
+      [legBlocos, titBlocos, sfx].forEach(function (l) { l.forEach(function (e) { e.classList.add("on"); }); }); $("eMus").classList.add("on");
+      return;
+    }
+    var rodando = false;
+    function iniciar() { if (!rodando) { rodando = true; zerar(); setTimeout(ciclo, 300); } }
+    if ("IntersectionObserver" in window) new IntersectionObserver(function (e) { if (e[0].isIntersecting) iniciar(); }, { rootMargin: "200px" }).observe(tela);
+    window.addEventListener("scroll", function () { if (tela.getBoundingClientRect().top < window.innerHeight + 200) iniciar(); }, { passive: true });
+    zerar();
+  })();
+
+  // Feedbacks: carrossel em loop contínuo (pausa com o mouse em cima, no toque e ao usar as setas)
+  (function () {
+    var t = document.getElementById("feedTrilho"); if (!t) return;
+    var originais = Array.prototype.slice.call(t.children);
+    originais.forEach(function (f) { var c = f.cloneNode(true); c.setAttribute("aria-hidden", "true"); t.appendChild(c); });
+    var pausa = 0, sobre = false, VEL = 0.5; // pixels por quadro
+    var n = originais.length;
+    function metade() { return t.children[n].offsetLeft - t.children[0].offsetLeft; }
+    function passo() {
+      if (!sobre && Date.now() > pausa) {
+        t.scrollLeft += VEL;
+      }
+      if (t.scrollLeft >= metade()) t.scrollLeft -= metade();
+      if (t.scrollLeft <= 0 && Date.now() <= pausa) t.scrollLeft += metade();
+      requestAnimationFrame(passo);
+    }
+    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) requestAnimationFrame(passo);
+    t.addEventListener("mouseenter", function () { sobre = true; });
+    t.addEventListener("mouseleave", function () { sobre = false; });
+    t.addEventListener("touchstart", function () { pausa = Date.now() + 4000; }, { passive: true });
+    t.addEventListener("wheel", function () { pausa = Date.now() + 3000; }, { passive: true });
+    document.querySelectorAll(".feed-setas button").forEach(function (b) {
+      b.addEventListener("click", function () {
+        pausa = Date.now() + 2500;
+        if (+b.dataset.dir < 0 && t.scrollLeft < 300) t.scrollLeft += metade();
+        t.scrollBy({ left: +b.dataset.dir * 280, behavior: "smooth" });
+      });
+    });
+  })();
+
+  // Estúdio: zoom leve seguindo o mouse (só em computador)
+  (function () {
+    var tela = document.getElementById("noteTela"), z = document.getElementById("noteZoom");
+    if (!tela || !z || !window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+    tela.addEventListener("mousemove", function (e) {
+      var r = tela.getBoundingClientRect();
+      z.style.transformOrigin = ((e.clientX - r.left) / r.width * 100) + "% " + ((e.clientY - r.top) / r.height * 100) + "%";
+      z.style.transform = "scale(1.6)";
+    });
+    tela.addEventListener("mouseleave", function () { z.style.transform = "scale(1)"; });
+  })();
+
+  // Barra fixa no celular: aparece depois que o botão do topo sai da tela e some na oferta
+  var barra = document.getElementById("barra-fixa");
+  var alvo = document.querySelector(".acao .botao");
+  var oferta = document.querySelector(".oferta-card");
+  function conferirBarra() {
+    var b = alvo.getBoundingClientRect();
+    var o = oferta.getBoundingClientRect();
+    var foraTopo = b.bottom < 0;
+    var naOferta = o.top < window.innerHeight && o.bottom > 0;
+    barra.classList.toggle("visivel", foraTopo && !naOferta);
   }
+  window.addEventListener("scroll", conferirBarra, { passive: true });
+  window.addEventListener("resize", conferirBarra);
+  conferirBarra();
 </script>
 </body>
 </html>
