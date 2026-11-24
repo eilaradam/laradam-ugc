@@ -90,11 +90,12 @@ function Rotulo({ children }: { children: React.ReactNode }) {
 }
 
 function Formulario({ origem, liberar }: { origem: string; liberar: () => void }) {
-  const [f, setF] = useState({ nome: "", whatsapp: "", email: "", website: "" });
+  const [f, setF] = useState({ nome: "", whatsapp: "", email: "", achou: "", website: "" });
+  const [anonimo, setAnonimo] = useState(false);
   const [indo, setIndo] = useState(false);
   const [erro, setErro] = useState("");
   const campo = "mt-1.5 w-full rounded-2xl border px-4 py-3 text-[16px] font-normal outline-none transition focus:border-[#141414]";
-  const mudar = (k: keyof typeof f) => (e: React.ChangeEvent<HTMLInputElement>) => setF({ ...f, [k]: e.target.value });
+  const mudar = (k: keyof typeof f) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => setF({ ...f, [k]: e.target.value });
 
   const enviar = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -102,7 +103,7 @@ function Formulario({ origem, liberar }: { origem: string; liberar: () => void }
     setErro("");
     setIndo(true);
     try {
-      const r = await fetch("/api/raiox-lead", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...f, origem }) });
+      const r = await fetch("/api/raiox-lead", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...f, anonimo, origem }) });
       const j = await r.json().catch(() => ({}));
       if (!r.ok) { setErro(j.error || "Não consegui salvar agora. Tenta de novo?"); setIndo(false); return; }
       liberar();
@@ -125,6 +126,15 @@ function Formulario({ origem, liberar }: { origem: string; liberar: () => void }
       </label>
       <label className="mt-3 block text-[14px] font-semibold">Seu e-mail
         <input className={campo} style={{ borderColor: C.linha, background: C.papel }} type="email" value={f.email} onChange={mudar("email")} required maxLength={160} autoComplete="email" inputMode="email" />
+      </label>
+      <label className="mt-3 block text-[14px] font-semibold">O que você achou da aula? <span className="font-normal" style={{ color: C.apoio }}>(opcional)</span>
+        <textarea className={`${campo} h-24 resize-none`} style={{ borderColor: C.linha, background: C.papel }} value={f.achou} onChange={mudar("achou")} maxLength={2000} placeholder="Pode ser sincera, é isso que me faz melhorar a próxima." />
+      </label>
+      <label className="mt-2 flex cursor-pointer items-start gap-3 rounded-2xl border p-3.5" style={{ borderColor: anonimo ? C.texto : C.linha, background: C.papel }}>
+        <input type="checkbox" checked={anonimo} onChange={(e) => setAnonimo(e.target.checked)} className="mt-0.5 h-4 w-4 flex-shrink-0 accent-[#141414]" />
+        <span className="text-[13px] leading-snug" style={{ color: C.fraco }}>
+          <b style={{ color: C.texto }}>Mandar a opinião no anônimo.</b> Ela chega pra mim separada do seu cadastro, sem nome, e-mail nem horário.
+        </span>
       </label>
       {/* isca pra robô: gente de verdade não vê nem preenche */}
       <input tabIndex={-1} autoComplete="off" aria-hidden="true" className="absolute left-[-9999px] h-0 w-0 opacity-0" value={f.website} onChange={mudar("website")} name="website" />
