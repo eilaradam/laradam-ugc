@@ -1357,33 +1357,32 @@
     zerar();
   })();
 
-  // Feedbacks: carrossel em loop contínuo (pausa com o mouse em cima, no toque e ao usar as setas)
+  // Feedbacks: carrossel em loop contínuo, sem pausar (a posição fica num número com casas decimais pra não travar com o zoom)
   (function () {
     var t = document.getElementById("feedTrilho"); if (!t) return;
     var originais = Array.prototype.slice.call(t.children);
     originais.forEach(function (f) { var c = f.cloneNode(true); c.setAttribute("aria-hidden", "true"); t.appendChild(c); });
-    var pausa = 0, sobre = false, VEL = 0.5; // pixels por quadro
-    var n = originais.length;
+    var n = originais.length, VEL = 40; // pixels por segundo
+    var pos = 0, extra = 0, dedo = false, antes = 0;
     function metade() { return t.children[n].offsetLeft - t.children[0].offsetLeft; }
-    function passo() {
-      if (!sobre && Date.now() > pausa) {
-        t.scrollLeft += VEL;
+    function passo(agora) {
+      var dt = antes ? Math.min(agora - antes, 100) / 1000 : 0; antes = agora;
+      var m = metade();
+      if (dedo) { pos = t.scrollLeft; }
+      else {
+        var salto = extra * Math.min(1, dt * 8); extra -= salto;
+        pos += VEL * dt + salto;
+        if (m > 0) { while (pos >= m) pos -= m; while (pos < 0) pos += m; }
+        t.scrollLeft = pos;
       }
-      if (t.scrollLeft >= metade()) t.scrollLeft -= metade();
-      if (t.scrollLeft <= 0 && Date.now() <= pausa) t.scrollLeft += metade();
       requestAnimationFrame(passo);
     }
-    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) requestAnimationFrame(passo);
-    t.addEventListener("mouseenter", function () { sobre = true; });
-    t.addEventListener("mouseleave", function () { sobre = false; });
-    t.addEventListener("touchstart", function () { pausa = Date.now() + 4000; }, { passive: true });
-    t.addEventListener("wheel", function () { pausa = Date.now() + 3000; }, { passive: true });
+    requestAnimationFrame(passo);
+    t.addEventListener("touchstart", function () { dedo = true; }, { passive: true });
+    t.addEventListener("touchend", function () { dedo = false; pos = t.scrollLeft; }, { passive: true });
+    t.addEventListener("wheel", function (e) { var d = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : 0; if (d) { e.preventDefault(); extra += d; } }, { passive: false });
     document.querySelectorAll(".feed-setas button").forEach(function (b) {
-      b.addEventListener("click", function () {
-        pausa = Date.now() + 2500;
-        if (+b.dataset.dir < 0 && t.scrollLeft < 300) t.scrollLeft += metade();
-        t.scrollBy({ left: +b.dataset.dir * 280, behavior: "smooth" });
-      });
+      b.addEventListener("click", function () { extra += +b.dataset.dir * 280; });
     });
   })();
 
