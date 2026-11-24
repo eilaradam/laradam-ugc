@@ -33,9 +33,9 @@ export default function Raiox() {
           .caixa-prompt { max-height: none !important; overflow: visible !important; }
         }
       `}</style>
-      <div className={`mx-auto px-5 pt-8 sm:pt-12 ${liberado ? "max-w-2xl" : "max-w-4xl"}`}>
+      <div className={`mx-auto px-5 pt-8 sm:pt-12 max-w-2xl`}>
         {!liberado && (
-          <header className="grid items-center gap-8 sm:grid-cols-[1.25fr_.75fr] sm:gap-10">
+          <header>
             <div>
               <Pilula>Aula gratuita · 24/11 · 20h</Pilula>
               <h1 className="mt-4 text-[38px] font-extrabold leading-[1.02] tracking-[-0.03em] sm:text-[54px]">
@@ -46,7 +46,6 @@ export default function Raiox() {
               </p>
               <AssinaturaLara />
             </div>
-            <FotoLara src="/edicaoclaude/midia/lara-capa.webp" giro={3} className="hidden sm:block" />
           </header>
         )}
 
