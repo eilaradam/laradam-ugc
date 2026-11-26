@@ -1022,7 +1022,7 @@ function Cartoes({ secoes, aberta, abrir, t }: { secoes: GrupoSecao[]; aberta: s
   return (
     <div className="mt-6">
       <p className="text-[13px] text-[var(--rt-muted)]">{t.toqueNoQuadrado}</p>
-      <div className="mt-3 grid grid-cols-2 gap-3 md:grid-cols-3">
+      <div className={`mt-3 grid grid-cols-2 gap-3 ${secoes.length === 4 ? "md:grid-cols-4" : "md:grid-cols-3"}`}>
         {secoes.map((g) => {
           const [num, ...resto] = g.nome.split(" · ");
           const numerado = /^\d+$/.test(num) && resto.length > 0;
