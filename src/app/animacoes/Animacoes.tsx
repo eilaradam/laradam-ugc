@@ -71,18 +71,10 @@ const P_CARRINHO = `Animação 3, com 4 segundos: carrinho dos favoritos.
 - Entra um balão: "meus favoritos 🛒".
 - No alto, o número 3 na estrela e a tarja "carrinho dos favoritos".`;
 
-const AJUSTES = [
-  "O produto está de cabeça pra baixo, deixa ele de pé.",
-  "O produto ficou fora da cesta, coloca dentro.",
-  "Ficou uma borda azul em volta do meu cabelo, tira.",
-  "Está trocando de expressão rápido demais, troca só 2 ou 3 vezes.",
-  "O texto está em cima do meu rosto, sobe ele.",
-  "Usa só as minhas cores, tira o rosa.",
-];
 
 const ROTEIRO = `Episódio 1. Como eu faria uma animação com o Claude pra uma marca de skincare? Três ideias. Um: um varal com os produtos passando, e a minha mão escolhe o queridinho. Dois: o sérum abre, pinga no meu rosto, e eu mostro como a pele fica depois. Três: um carrinho com os meus favoritos caindo dentro. Quer os três prompts? Comenta Claude UGC que eu te mando.`;
 
-const fundoBolinha = { backgroundColor: C.creme, backgroundImage: `radial-gradient(${C.amarelo} 1.6px, transparent 1.7px)`, backgroundSize: "22px 22px" };
+const fundoBolinha = { backgroundColor: C.creme, backgroundImage: `linear-gradient(${C.linha} 1px, transparent 1px), linear-gradient(90deg, ${C.linha} 1px, transparent 1px)`, backgroundSize: "40px 40px" };
 
 export default function Animacoes() {
   const [liberado, setLiberado] = useState(false);
@@ -102,22 +94,10 @@ export default function Animacoes() {
       <div className="mx-auto max-w-xl px-4 pt-8">
         <p className="text-sm font-bold" style={{ color: C.marrom }}>@eilaradam</p>
 
-        <section className="relative mt-4 overflow-hidden rounded-[28px] p-6 sm:p-8" style={{ background: C.marrom, color: C.creme }}>
-          <Estrela className="absolute -right-6 -top-6 h-28 w-28 opacity-90" cor={C.amarelo} />
-          <span className="inline-block -rotate-2 rounded-md px-3 py-1 text-[13px] font-extrabold uppercase tracking-wide" style={{ background: C.amarelo, color: C.tinta }}>
-            episódio 1 · skincare
-          </span>
-          <h1 className="mt-4 text-[34px] font-extrabold leading-[1.02] tracking-tight sm:text-[42px]">Animações com o Claude</h1>
-          <p className="mt-2 text-[26px] leading-none" style={{ fontFamily: "var(--font-caveat)", color: C.amarelo }}>com as suas fotos ✦</p>
-          <p className="mt-3 text-[15px] leading-relaxed" style={{ color: "rgba(248,241,223,.85)" }}>
-            Um guia curtinho pra você criar as 3 animações do vídeo: o varal de produtos, o produto passando no rosto e o carrinho dos favoritos.
-          </p>
-          <div className="mt-5 flex flex-wrap gap-2">
-            {["1 · varal de produtos", "2 · produto no rosto", "3 · carrinho dos favoritos"].map((t, i) => (
-              <span key={t} className="rounded-full px-3 py-1.5 text-[12.5px] font-bold" style={{ background: C.creme, color: C.marrom, transform: `rotate(${[-1.5, 1, -0.5][i]}deg)` }}>{t}</span>
-            ))}
-          </div>
-        </section>
+        <div className="mt-4 overflow-hidden rounded-[22px] border-[6px] bg-white shadow-[0_10px_0_rgba(26,20,17,.10)]" style={{ borderColor: C.papel }}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/animacoes/pag01.jpg" alt="Animações com o Claude · episódio 1 · skincare: guia + 3 prompts" className="block w-full" width={1080} height={1351} />
+        </div>
 
         {liberado ? <Guia /> : <Cadastro origem={origem} liberar={() => { try { localStorage.setItem(MARCA, "1"); } catch {} setLiberado(true); }} />}
       </div>
@@ -125,13 +105,6 @@ export default function Animacoes() {
   );
 }
 
-function Estrela({ className, cor }: { className?: string; cor: string }) {
-  return (
-    <svg viewBox="0 0 100 100" className={className} aria-hidden="true">
-      <path d="M50 4 61 36 95 37 68 57 78 91 50 71 22 91 32 57 5 37 39 36Z" fill={cor} />
-    </svg>
-  );
-}
 
 function Cadastro({ origem, liberar }: { origem: string; liberar: () => void }) {
   const [f, setF] = useState({ nome: "", whatsapp: "", email: "", instagram: "", website: "" });
@@ -184,41 +157,7 @@ function Cadastro({ origem, liberar }: { origem: string; liberar: () => void }) 
   );
 }
 
-function Prompt({ titulo, texto }: { titulo?: string; texto: string }) {
-  const [copiou, setCopiou] = useState(false);
-  const copiar = async () => {
-    try { await navigator.clipboard.writeText(texto); } catch { return; }
-    setCopiou(true);
-    setTimeout(() => setCopiou(false), 2500);
-  };
-  return (
-    <div className="mt-3">
-      {titulo && <p className="text-[14px] font-extrabold" style={{ color: C.marrom }}>{titulo}</p>}
-      <div className="mt-1.5 rounded-2xl p-4" style={{ background: C.tinta, color: "#F3EBD7" }}>
-        <pre className="max-h-[260px] overflow-auto whitespace-pre-wrap text-[13.5px] leading-relaxed" style={{ fontFamily: "ui-monospace, SFMono-Regular, Menlo, monospace" }}>{texto}</pre>
-      </div>
-      <button type="button" onClick={copiar} className="mt-2 w-full rounded-full py-2.5 text-[14.5px] font-extrabold"
-        style={copiou ? { background: C.marrom, color: C.creme } : { background: C.amarelo, color: C.tinta }}>
-        {copiou ? "Copiado ✓" : "Copiar o prompt"}
-      </button>
-    </div>
-  );
-}
 
-function Passo({ n, titulo, children }: { n: number | string; titulo: string; children: React.ReactNode }) {
-  return (
-    <section className="mt-4 rounded-[24px] p-5 sm:p-6" style={{ background: C.papel, border: `1px solid ${C.linha}` }}>
-      <div className="flex items-center gap-3">
-        <span className="relative grid h-12 w-12 flex-shrink-0 place-items-center">
-          <Estrela className="absolute inset-0 h-12 w-12" cor={C.marrom} />
-          <span className="relative text-[17px] font-extrabold" style={{ color: C.creme }}>{n}</span>
-        </span>
-        <h2 className="text-[19px] font-extrabold leading-tight">{titulo}</h2>
-      </div>
-      <div className="mt-3 space-y-2.5 text-[15.5px] leading-relaxed" style={{ color: "#3A2E26" }}>{children}</div>
-    </section>
-  );
-}
 
 function Turma5({ grande }: { grande?: boolean }) {
   return (
@@ -231,81 +170,58 @@ function Turma5({ grande }: { grande?: boolean }) {
   );
 }
 
+const PDF = "/animacoes/Animacoes_com_o_Claude_Ep1_Skincare.pdf";
+const PAGINAS: { n: number; prompts?: [string, string][] }[] = [
+  { n: 2 },
+  { n: 3, prompts: [["Prompt base", P_BASE]] },
+  { n: 4, prompts: [["Olhos fechados", P_FOTOS[0]], ["Piscadinha", P_FOTOS[1]], ["Corpo inteiro", P_FOTOS[2]], ["Mão em pinça", P_FOTOS[3]]] },
+  { n: 5, prompts: [["Produto", P_PRODUTO], ["Produto aberto", P_ABERTO], ["Gota", P_GOTA], ["Pincelada", P_PINCELADA]] },
+  { n: 6, prompts: [["Prompt de estilo", P_ESTILO]] },
+  { n: 7, prompts: [["Ideia 1 · varal", P_VARAL]] },
+  { n: 8, prompts: [["Ideia 2 · rosto", P_ROSTO]] },
+  { n: 9, prompts: [["Ideia 3 · carrinho", P_CARRINHO]] },
+  { n: 10, prompts: [["Roteiro que eu usei", ROTEIRO]] },
+  { n: 11 },
+];
+
+function Copiar({ titulo, texto }: { titulo: string; texto: string }) {
+  const [copiou, setCopiou] = useState(false);
+  const copiar = async () => {
+    try { await navigator.clipboard.writeText(texto); } catch { return; }
+    setCopiou(true);
+    setTimeout(() => setCopiou(false), 2200);
+  };
+  return (
+    <button type="button" onClick={copiar} className="rounded-full border-2 px-4 py-2 text-[13.5px] font-extrabold"
+      style={copiou ? { background: C.marrom, color: C.creme, borderColor: C.marrom } : { background: C.amarelo, color: C.tinta, borderColor: C.marrom }}>
+      {copiou ? "Copiado ✓" : `Copiar · ${titulo}`}
+    </button>
+  );
+}
+
 function Guia() {
   return (
     <>
       <p className="mt-6 px-1 text-[28px] leading-tight" style={{ fontFamily: "var(--font-caveat)", color: C.marrom }}>Prontinho! Bora criar as suas 👇</p>
-
-      <section className="mt-3 rounded-[24px] p-5 sm:p-6" style={{ background: C.amarelo }}>
-        <h2 className="text-[18px] font-extrabold">Antes de começar</h2>
-        <ul className="mt-2 space-y-1 text-[15px]">
-          <li>✦ Uma conta no <b>ChatGPT</b> ou no <b>Gemini</b> (pras suas fotos e as do produto)</li>
-          <li>✦ Uma conta no <b>Claude</b> (claude.ai)</li>
-          <li>✦ Uma foto sua de rosto, bem iluminada, olhando pra câmera</li>
-        </ul>
-        <div className="mt-4 grid grid-cols-3 gap-2 text-center text-[12.5px] font-bold">
-          {["Você cria as fotos em fundo azul liso", "Manda pro Claude com o prompt", "O Claude anima e você grava a tela"].map((t, i) => (
-            <div key={t} className="rounded-2xl p-2.5" style={{ background: C.papel }}><span className="block text-[18px]" style={{ color: C.marrom }}>{i + 1}</span>{t}</div>
-          ))}
-        </div>
-        <p className="mt-3 text-[13.5px]" style={{ color: C.marrom }}><b>Por que fundo azul?</b> Porque fica fácil de recortar: cabelo escuro e roupa clara se separam muito bem do azul.</p>
-      </section>
-
-      <Passo n={1} titulo="Suas fotos (no ChatGPT ou Gemini)">
-        <p>Mande a sua foto junto com o prompt base. Peça <b>uma imagem por vez</b>, sempre na mesma conversa, pra ele manter o seu rosto.</p>
-        <Prompt titulo="Prompt base (cole primeiro)" texto={P_BASE} />
-        <p className="pt-2 font-bold">Depois, uma por vez:</p>
-        {P_FOTOS.map((t, i) => <Prompt key={i} titulo={["Olhos fechados", "Piscadinha", "Corpo inteiro", "Mão em pinça"][i]} texto={t} />)}
-      </Passo>
-
-      <Passo n={2} titulo="O produto (no ChatGPT ou Gemini)">
-        <p>Se você tem a foto do produto da marca, use como referência. Se não tem, descreva o produto.</p>
-        <Prompt titulo="Produto de pé" texto={P_PRODUTO} />
-        <Prompt titulo="Versão aberta (sérum ou produto com tampa)" texto={P_ABERTO} />
-        <p className="pt-2 font-bold">Dois extras que deixam a animação mais bonita:</p>
-        <Prompt titulo="Gota" texto={P_GOTA} />
-        <Prompt titulo="Pincelada" texto={P_PINCELADA} />
-        <p className="text-[14px]" style={{ color: C.suave }}><b>Dica:</b> salve tudo numa pasta só, com nomes fáceis (busto_lado, busto_olhos_fechados, mao_pinca, serum_fechado…). Isso ajuda o Claude a entender cada arquivo.</p>
-      </Passo>
-
-      <Passo n={3} titulo="As animações (no Claude)">
-        <p>Abra uma conversa nova no Claude, anexe as imagens e cole <b>um prompt por vez</b>. Comece sempre pelo de estilo, que vale pras três.</p>
-        <Prompt titulo="Prompt de estilo (cole primeiro)" texto={P_ESTILO} />
-        <Prompt titulo="Ideia 1 · Varal de produtos" texto={P_VARAL} />
-        <Prompt titulo="Ideia 2 · Produto no rosto" texto={P_ROSTO} />
-        <Prompt titulo="Ideia 3 · Carrinho dos favoritos" texto={P_CARRINHO} />
-      </Passo>
-
-      <Passo n={4} titulo="Ajustes que mais aparecem">
-        <p>Depois de ver a animação, peça ajustes curtinhos, um por vez. Os que eu mais precisei:</p>
-        <ul className="space-y-1.5">
-          {AJUSTES.map((a) => <li key={a} className="rounded-xl px-3 py-2 text-[14.5px]" style={{ background: C.creme }}>“{a}”</li>)}
-        </ul>
-      </Passo>
-
-      <Passo n={5} titulo="Do Claude pro Reels">
-        <ol className="list-decimal space-y-1 pl-5">
-          <li>Abra a animação em tela cheia.</li>
-          <li>Grave a tela (no celular, pela gravação de tela; no computador, com o gravador de tela).</li>
-          <li>Corte o começo e o fim no editor que você já usa.</li>
-          <li>Junte as 3 ideias, grave a sua narração por cima e coloque a legenda.</li>
-        </ol>
-        <Prompt titulo="Roteiro que eu usei" texto={ROTEIRO} />
-      </Passo>
-
-      <section className="mt-4 rounded-[24px] p-5 sm:p-6" style={{ background: C.papel, border: `2px dashed ${C.marrom}` }}>
-        <h2 className="text-[17px] font-extrabold">Antes de postar pra uma marca</h2>
-        <ul className="mt-2 space-y-1.5 text-[14.5px]" style={{ color: "#3A2E26" }}>
-          <li>✦ Use produto da marca só com autorização dela. Se for ideia sua, deixe claro na legenda que não é publi.</li>
-          <li>✦ Benefício na tela só se estiver escrito na embalagem ou no briefing.</li>
-          <li>✦ Fotos suas geradas por IA: vale avisar na legenda que a colagem é montada.</li>
-        </ul>
-      </section>
-
+      <a href={PDF} download className="mt-3 block rounded-full py-3.5 text-center text-[16px] font-extrabold" style={{ background: C.tinta, color: C.creme }}>
+        Baixar o e-book em PDF 📌
+      </a>
+      <p className="mt-2 px-1 text-center text-[13px]" style={{ color: C.suave }}>Embaixo de cada página tem o botão pra copiar o prompt.</p>
+      {PAGINAS.map((p) => (
+        <section key={p.n} className="mt-5">
+          <div className="overflow-hidden rounded-[18px] border-[5px] bg-white shadow-[0_8px_0_rgba(26,20,17,.08)]" style={{ borderColor: C.papel }}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={`/animacoes/pag${String(p.n).padStart(2, "0")}.jpg`} alt={`Página ${p.n} do guia`} loading="lazy" className="block w-full" width={1080} height={1351} />
+          </div>
+          {p.prompts && (
+            <div className="mt-2.5 flex flex-wrap gap-2">
+              {p.prompts.map(([t, x]) => <Copiar key={t} titulo={t} texto={x} />)}
+            </div>
+          )}
+        </section>
+      ))}
       <Turma5 grande />
-
-      <p className="mt-8 text-center text-[22px]" style={{ fontFamily: "var(--font-caveat)", color: C.marrom }}>Salva esse guia pra testar 📌 · o episódio 2 (pipoca) vem aí</p>
-      <p className="mt-2 text-center text-sm" style={{ color: C.suave }}>Fez a sua? Me marca no story <b style={{ color: C.marrom }}>@eilaradam</b> que eu quero ver ✦</p>
+      <p className="mt-6 text-center text-sm" style={{ color: C.suave }}>Fez a sua? Me marca no story <b style={{ color: C.marrom }}>@eilaradam</b> que eu quero ver ✦</p>
     </>
   );
 }
