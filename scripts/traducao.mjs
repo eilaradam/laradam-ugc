@@ -41,6 +41,7 @@ function trechos(c) {
     for (const k of ["nome", "tempo", "fala", "tela"]) por(`parte:${p.id}:${k}`, p[k]);
     refs(p.refs);
   }
+  (c.motions ?? []).forEach((m, i) => { por(`motion:${i}:titulo`, m.titulo); por(`motion:${i}:quando`, m.quando); });
   return out;
 }
 

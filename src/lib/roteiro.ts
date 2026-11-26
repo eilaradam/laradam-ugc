@@ -77,6 +77,8 @@ export type RoteiroConteudo = {
   partesTitulo?: string;
   /** o que precisa estar pronto no set, um item por linha */
   noSet?: string;
+  /** motions pra edição (PNG transparente), numa seção no fim do roteiro */
+  motions?: { url: string; titulo: string; quando?: string }[];
   /** bloco só informativo (ex.: agenda do dia): sem status nem aprovação */
   semAprovacao?: boolean;
   /** traduções pra marca revisar em outra língua, por alvo ("gancho:A:fala") ou "ref:<url>" pro nome do link */

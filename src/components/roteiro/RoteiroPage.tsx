@@ -522,7 +522,7 @@ function Secao({
   /** com escolha única: ninguém escolheu ainda, mostra o botão verde */
   podeEscolher?: boolean;
 }) {
-  const { enviar, t } = useRoteiro();
+  const { enviar, t, traduzir: trad } = useRoteiro();
   const [aprovando, setAprovando] = useState(false);
   const c = roteiro.conteudo;
   const abertas = notas.filter((x) => x.status === "aberta" && x.tipo !== "resposta");
@@ -866,6 +866,35 @@ function Secao({
             {t.referencias} <span className="text-[var(--rt-muted)]">· {t.antesDeAprovar}</span>
           </Titulo>
           <Midia bloco="geral" fotos={c.fotos} refs={c.refs} vazio="Imagens e links que valem pro vídeo inteiro (tom, ritmo, cenário, edição)" />
+        </>
+      )}
+
+      {/* motions pra edição: PNG transparente sobre xadrez escuro */}
+      {(c.motions?.length ?? 0) > 0 && (
+        <>
+          <Titulo>
+            {t.motions} <span className="text-[var(--rt-muted)]">· {t.motionsSub}</span>
+          </Titulo>
+          <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
+            {c.motions!.map((m, i) => {
+              const nome = trad(`motion:${i}:titulo`, m.titulo);
+              const quando = m.quando ? trad(`motion:${i}:quando`, m.quando) : null;
+              return (
+                <a key={i} href={m.url} target="_blank" rel="noopener" className="group block overflow-hidden rounded-2xl border border-[var(--rt-linha)] bg-white">
+                  <div
+                    className="flex aspect-[4/3] items-center justify-center p-4"
+                    style={{ backgroundColor: "#1d1d1d", backgroundImage: "conic-gradient(#262626 25%, #1d1d1d 0 50%, #262626 0 75%, #1d1d1d 0)", backgroundSize: "18px 18px" }}
+                  >
+                    <img src={m.url} alt={m.titulo} loading="lazy" className="max-h-full max-w-full object-contain transition-transform group-hover:scale-[1.03]" />
+                  </div>
+                  <div className="px-3.5 py-3">
+                    <p className="text-[13px] font-semibold leading-snug">{nome && !nome.velha ? nome.texto : m.titulo}</p>
+                    {m.quando && <p className="mt-0.5 text-[12px] leading-snug text-[var(--rt-muted)]">{quando && !quando.velha ? quando.texto : m.quando}</p>}
+                  </div>
+                </a>
+              );
+            })}
+          </div>
         </>
       )}
 
